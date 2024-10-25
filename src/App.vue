@@ -1,15 +1,24 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app"> <!-- Added a div wrapper for proper layout -->
+    <img alt="Vue logo" src="./assets/logo.png">
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div>
+      <CustomButton text="Click me!" />
+      <CustomButton text="Or this?" />
+      <CustomButton text="Who knows..." />
+    </div>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+import CustomButton from './components/CustomButton.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    CustomButton // Added CustomButton to components object
   }
 }
 </script>
