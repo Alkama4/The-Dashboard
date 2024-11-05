@@ -1,0 +1,103 @@
+:root {
+    /* font sizes */
+    --font-size-small: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-large: 1.25rem;
+    --font-size-heading: 2rem;
+
+    /* spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 32px;
+
+    /* border radius */
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 16px;
+
+    /* Specific things */
+    --height-navigation-bar: 50px;
+
+    /* LIGHT MODE */
+    /* General colors */
+    --color-primary: #3498db;
+    --color-secondary: #2ecc71;
+    --color-accent: #e74c3c;
+    --color-text: #333;
+    --color-background: #f9f9f9;
+    --color-background-element: #a1a1a1;
+
+    /* Button colors */
+    --color-button-general: #ccc;
+    --color-button-general-hover: #eee;
+    --color-button-general-active: #ddd;
+    --color-button-general-disabled: #aaa;
+}
+
+.dark-mode {
+    /* DARK MODE */
+    /* General colors */
+    --color-primary: #3498db;
+    --color-secondary: #2ecc71;
+    --color-accent: #e74c3c;
+    --color-text: #dddddd;
+    --color-background: #252525;
+    --color-background-element: #3a3a3a;
+
+    /* Button colors */
+    --color-button-general: #555;
+    --color-button-general-hover: #777;
+    --color-button-general-active: #666;
+    --color-button-general-disabled: #aaa;
+}
+
+/* - - - - PAGE SETUP - - - - */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Poppins';
+    background-color: var(--color-background);
+    color: var(--color-text);
+}
+
+#app {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    margin-top: calc(var(--height-navigation-bar) + var(--spacing-md));
+    flex: 1;
+}
+
+footer {
+    margin-top: auto;
+}
+
+/* - - - - GENERIC ELEMENTS - - - - */
+p {
+    text-align: justify;
+    margin-inline: auto;
+    width: fit-content;
+}
+
+button {
+    border-width: 0;
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-xs);
+    margin: var(--spacing-sm);
+    background-color: var(--color-button-general);
+}
+button:hover {
+    background-color: var(--color-button-general-hover);
+}
+button:active {
+    background-color: var(--color-button-general-active);
+}
+button:disabled {
+    background-color: var(--color-button-general-disabled);
+    cursor: not-allowed;
+    opacity: 0.6;
+}

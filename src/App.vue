@@ -1,35 +1,41 @@
 <template>
-  <div id="app"> <!-- Added a div wrapper for proper layout -->
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <div>
-      <CustomButton text="Click me!" />
-      <CustomButton text="Or this?" />
-      <CustomButton text="Who knows..." />
-    </div>
+  <div id="app">
+    <NavigationBar @toggle-dark-mode="toggleDarkMode"/>
+    <main>
+      <LoremIpsum seed="1134234"/>
+      <LoremIpsum seed="4234151"/>
+      <LoremIpsum seed="5234232"/>
+      <LoremIpsum seed="3234232"/>
+    </main>
+    <footer>
+      <p>&copy; 2024 Aleksi Malkki. All rights reserved.</p>
+    </footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue';
-import CustomButton from './components/CustomButton.vue';
+import NavigationBar from './components/NavigationBar.vue';
+import LoremIpsum from './components/LoremIpsum.vue';
+import { toggleDarkMode, initializeDarkMode } from './utils/darkMode';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld,
-    CustomButton // Added CustomButton to components object
+    NavigationBar,
+    LoremIpsum,
+  },
+  mounted() {
+    initializeDarkMode();
+  },
+  methods: {
+    toggleDarkMode() {
+      console.info("Dark mode toggled!");
+      toggleDarkMode(); // What is going on in here???
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  /* Use the global.css file */
 </style>
