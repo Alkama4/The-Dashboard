@@ -1,41 +1,45 @@
 <template>
-  <div id="app">
-    <NavigationBar @toggle-dark-mode="toggleDarkMode"/>
+    <TopBar @toggle-dark-mode="toggleDarkMode"/>
+    <SideBar @toggle-side-bar="toggleSideBar"/>
     <main>
-      <LoremIpsum seed="1134234"/>
-      <LoremIpsum seed="4234151"/>
-      <LoremIpsum seed="5234232"/>
-      <LoremIpsum seed="3234232"/>
+        <RouterView/>
     </main>
     <footer>
-      <p>&copy; 2024 Aleksi Malkki. All rights reserved.</p>
+        <p>&copy; 2024 Aleksi Malkki.</p>
     </footer>
-  </div>
 </template>
 
 <script>
-import NavigationBar from './components/NavigationBar.vue';
-import LoremIpsum from './components/LoremIpsum.vue';
+// Imports
 import { toggleDarkMode, initializeDarkMode } from './utils/darkMode';
+import { toggleSideBar , initializeSideBar} from './utils/sideBar';
+import TopBar from './components/TopBar.vue';
+import SideBar from './components/SideBar.vue';
 
+// Exports
 export default {
-  name: 'App',
-  components: {
-    NavigationBar,
-    LoremIpsum,
-  },
-  mounted() {
-    initializeDarkMode();
-  },
-  methods: {
-    toggleDarkMode() {
-      console.info("Dark mode toggled!");
-      toggleDarkMode(); // What is going on in here???
+    name: 'App',
+    components: {
+        TopBar,
+        SideBar,
+    },
+    mounted() {
+        initializeDarkMode();
+        initializeSideBar();
+    },
+    methods: {
+        toggleDarkMode() {
+            console.info("Dark mode toggled!");
+            toggleDarkMode(); // What is going on in here???
+        },
+        toggleSideBar() {
+            console.info("Side bar toggled!");
+            toggleSideBar();
+        }
     }
-  }
 }
 </script>
 
 <style>
-  /* Use the global.css file */
+    /* Use the global.css file instead of this */
 </style>
