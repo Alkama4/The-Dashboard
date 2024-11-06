@@ -11,13 +11,13 @@
     --spacing-md: 16px;
     --spacing-lg: 32px;
 
+    /* Sizes */
+    --size-icon: 25px;
+
     /* border radius */
     --border-radius-small: 4px;
     --border-radius-medium: 8px;
     --border-radius-large: 16px;
-
-    /* Specific things */
-    --height-navigation-bar: 50px;
 
     /* LIGHT MODE */
     /* General colors */
@@ -25,22 +25,26 @@
     --color-secondary: #2ecc71;
     --color-accent: #e74c3c;
     --color-text: #333;
+    --color-icon: #000000;
+    --color-divider: hsla(0, 0%, 0%, 0.25);
+
 
     /* Backgrounds */
     --color-background: #f0f0f0;
     --color-background-top-bar: #ffffff;
-    --color-background-side-bar: #24375a;
+    --color-background-side-bar: #3877eb;
     --color-background-card: #ffffff;
 
     /* Button colors */
-    --color-button-general: #ccc;
-    --color-button-general-hover: #685e5e;
-    --color-button-general-active: #ddd;
+    --color-button-general: #ddd;
+    --color-button-general-hover: #fff;
+    --color-button-general-active: #eee;
     --color-button-general-disabled: #aaa;
+    --color-button-general-text: #000000;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
-    --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
-    --color-button-clean-active: hsla(0, 0%, 0%, 0.05);
+    --color-button-clean-hover: hsla(0, 0%, 0%, 0.175);
+    --color-button-clean-active: hsla(0, 0%, 0%, 0.125);
 }
 
 .dark-mode {
@@ -50,22 +54,26 @@
     --color-secondary: #2ecc71;
     --color-accent: #e74c3c;
     --color-text: #dddddd;
+    --color-icon: #ffffff;
+    --color-divider: hsla(0, 0%, 100%, 0.25);
     
     /* Backgrounds */
     --color-background: #252525;
     --color-background-top-bar: #3a3a3a;
     --color-background-side-bar: #192d52;
-    --color-background-card: #525252;
+    --color-background-card: #303030;
 
     /* Button colors */
     --color-button-general: #555;
     --color-button-general-hover: #777;
     --color-button-general-active: #666;
     --color-button-general-disabled: #aaa;
+    --color-button-general-text: #ffffff;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
+
 }
 
 /* - - - - PAGE SETUP - - - - */
@@ -81,12 +89,14 @@ html, body {
     min-height: 100vh;
     display: grid;
     /* From now on handled by sideBar.js */
-    /* grid-template-columns: ? ?; */
-    grid-template-rows: 75px 1fr auto;
+    /* grid-template-columns: ? ?; */ 
+    grid-template-rows: 60px 1fr auto;
     grid-template-areas: 
         "sidebar topbar"
         "sidebar maincontent"
-        "sidebar footer";
+        "sidebar footer";        
+    transition: grid-template-columns 0.1s;
+
 }
 
 main {
@@ -105,28 +115,42 @@ p {
     width: fit-content;
 }
 
-a {
-    text-decoration: none;
-    color: var(--color-text);
+h1 {
+    margin-inline: 20px;
 }
 
-button {
+button, .button-link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+
     border-width: 0;
     border-radius: var(--border-radius-small);
-    background-color: var(--color-button-general);
-    margin: var(--spacing-sm);
+    margin: var(--spacing-xs);
+    margin-inline: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    
     cursor: pointer;
-    transition: background-color 0.1s;
+    text-decoration: none;
+    font-family: 'Poppins';
+    font-size: var(--font-size-base);
+    color: var(--color-button-general-text);
+    background-color: var(--color-button-general);
+
+    transition: background-color 0.1s,
+                box-shadow 0.1s;
 }
-button:hover {
+button:hover, .button-link:hover {
     background-color: var(--color-button-general-hover);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-button:active {
+button:active, .button-link:active {
     background-color: var(--color-button-general-active);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-button:disabled {
+button:disabled, .button-link:disabled {
     background-color: var(--color-button-general-disabled);
     cursor: not-allowed;
     opacity: 0.6;

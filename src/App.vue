@@ -1,11 +1,11 @@
 <template>
-    <TopBar @toggle-dark-mode="toggleDarkMode"/>
-    <SideBar @toggle-side-bar="toggleSideBar"/>
+    <TopBar/>
+    <SideBar @toggle-dark-mode="toggleDarkMode" @toggle-side-bar="toggleSideBar"/>
     <main>
         <RouterView/>
     </main>
     <footer>
-        <p>&copy; 2024 Aleksi Malkki.</p>
+        <p>&copy; 2024 Aleksi Malkki</p>
     </footer>
 </template>
 
@@ -30,7 +30,7 @@ export default {
     methods: {
         toggleDarkMode() {
             console.info("Dark mode toggled!");
-            toggleDarkMode(); // What is going on in here???
+            toggleDarkMode();
         },
         toggleSideBar() {
             console.info("Side bar toggled!");
