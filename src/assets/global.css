@@ -4,15 +4,13 @@
     --font-size-base: 1rem;
     --font-size-large: 1.25rem;
     --font-size-heading: 2rem;
+    --font-size-logo: 1.75rem;
 
     /* spacing */
     --spacing-xs: 4px;
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 32px;
-
-    /* Sizes */
-    --size-icon: 25px;
 
     /* border radius */
     --border-radius-small: 4px;
@@ -24,9 +22,11 @@
     --color-primary: #3498db;
     --color-secondary: #2ecc71;
     --color-accent: #e74c3c;
-    --color-text: #333;
+    --color-text: #292929;
+    --color-text-bold: #000000;
+    --color-text-light: #5a5a5a;
     --color-icon: #000000;
-    --color-divider: hsla(0, 0%, 0%, 0.25);
+    --color-border: hsla(0, 0%, 0%, 0.25);
 
 
     /* Backgrounds */
@@ -45,6 +45,9 @@
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.175);
     --color-button-clean-active: hsla(0, 0%, 0%, 0.125);
+
+    --color-button-nav: #7c7c7c;
+    --color-button-nav-hover: var(--color-text);
 }
 
 .dark-mode {
@@ -53,13 +56,14 @@
     --color-primary: #3498db;
     --color-secondary: #2ecc71;
     --color-accent: #e74c3c;
-    --color-text: #dddddd;
-    --color-icon: #ffffff;
-    --color-divider: hsla(0, 0%, 100%, 0.25);
+    --color-text: #ddd;
+    --color-text-bold: #fff;
+    --color-text-light: #888;
+    --color-border: hsla(0, 0%, 100%, 0.25);
     
     /* Backgrounds */
-    --color-background: #252525;
-    --color-background-top-bar: #3a3a3a;
+    --color-background: #111111;
+    --color-background-top-bar: #111;
     --color-background-side-bar: #192d52;
     --color-background-card: #303030;
 
@@ -74,6 +78,9 @@
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
 
+    --color-button-nav: #888;
+    --color-button-nav-hover: var(--color-text);
+
 }
 
 /* - - - - PAGE SETUP - - - - */
@@ -87,25 +94,17 @@ html, body {
 
 #app {
     min-height: 100vh;
-    display: grid;
-    /* From now on handled by sideBar.js */
-    /* grid-template-columns: ? ?; */ 
-    grid-template-rows: 60px 1fr auto;
-    grid-template-areas: 
-        "sidebar topbar"
-        "sidebar maincontent"
-        "sidebar footer";        
-    transition: grid-template-columns 0.1s;
-
+    display: flex;
+    flex-direction: column;
 }
 
 main {
     margin-top: calc(var(--height-navigation-bar) + var(--spacing-md));
-    grid-area: maincontent;
 }
 
 footer {
-    grid-area: footer;
+    color: var(--color-text-light);
+    margin-top: auto;
 }
 
 /* - - - - GENERIC ELEMENTS - - - - */
@@ -117,6 +116,9 @@ p {
 
 h1 {
     margin-inline: 20px;
+}
+h1, h2, h3, h4 {
+    color: var(--color-text-bold);
 }
 
 button, .button-link {

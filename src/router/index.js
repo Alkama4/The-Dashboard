@@ -1,23 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomePage from '../views/HomePage.vue'; // Make sure to import your Home component
-import AboutPage from '../views/AboutPage.vue'; // Import the new About page
-import SettingsPage from '../views/SettingsPage.vue'; // Import the new About page
+import HomePage from '../views/HomePage.vue';
+import AboutPage from '../views/AboutPage.vue';
+import SettingsPage from '../views/SettingsPage.vue';
+import SpendingsPage from '../views/SpendingsPage.vue';
 
 const routes = [
     {
         path: '/',
         name: 'Home',
-        component: HomePage // Your existing home component
+        component: HomePage
     },
     {
-        path: '/about', // Use a lowercase path for consistency
+        path: '/about',
         name: 'About',
-        component: AboutPage // Reference to the new component
+        component: AboutPage
     },
     {
-        path: '/settings', // Use a lowercase path for consistency
+        path: '/settings',
         name: 'Settings',
-        component: SettingsPage // Reference to the new component
+        component: SettingsPage
+    },
+    {
+        path: '/spendings',
+        name: 'Spendings',
+        component: SpendingsPage
     }
 ];
 

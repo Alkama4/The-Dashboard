@@ -1,6 +1,6 @@
 <template>
-    <TopBar/>
-    <SideBar @toggle-dark-mode="toggleDarkMode" @toggle-side-bar="toggleSideBar"/>
+    <TopBar @toggle-dark-mode="toggleDarkMode"/>
+    <!-- <SideBar @toggle-dark-mode="toggleDarkMode" @toggle-side-bar="toggleSideBar"/> -->
     <main>
         <RouterView/>
     </main>
@@ -14,14 +14,14 @@
 import { toggleDarkMode, initializeDarkMode } from './utils/darkMode';
 import { toggleSideBar , initializeSideBar} from './utils/sideBar';
 import TopBar from './components/TopBar.vue';
-import SideBar from './components/SideBar.vue';
+// import SideBar from './components/SideBar.vue';
 
 // Exports
 export default {
     name: 'App',
     components: {
         TopBar,
-        SideBar,
+        // SideBar,
     },
     mounted() {
         initializeDarkMode();
