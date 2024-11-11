@@ -33,6 +33,7 @@
 
     #topBar {
         width: 100vw;
+        position: fixed;
         background-color: var(--color-background-top-bar);
         border-bottom: 1px solid var(--color-border);
         transition: box-shadow 0.3s;
@@ -40,10 +41,10 @@
         
     #topBarContent {
         background-color: transparent;
+        height: var(--top-bar-height);
         width: 100vw;
-        max-width: 1600px;
+        max-width: var(--top-bar-width);
         margin-inline: auto;
-        height: 60px;
 
         display: flex;
         flex-direction: row;
