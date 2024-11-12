@@ -1,4 +1,3 @@
-<!-- src/components/icons/BaseIcon.vue -->
 <template>
     <svg
         :width="size"
@@ -11,10 +10,7 @@
             transition: transition,
             cursor: 'pointer'
         }"
-        @mouseenter="onMouseEnter"
-        @mouseleave="onMouseLeave"
     >
-        <!-- Use `<slot />` to let each icon inject its unique SVG paths -->
         <slot />
     </svg>
 </template>
@@ -33,11 +29,11 @@ export default {
         },
         colorHover: {
             type: String,
-            default: "var(--color-text)",
+            default: "var(--color-text-bold)",
         },
         transition: {
             type: String,
-            default: "0s",
+            default: "0.1s",
         },
     },
     data() {
@@ -45,11 +41,30 @@ export default {
             currentColor: this.color,
         };
     },
+    mounted() {
+        // Find the parent element
+        const parentElement = this.$el.parentNode;
+
+        if (parentElement) {
+            // Attach event listeners to the parent element
+            parentElement.addEventListener("mouseenter", this.onParentMouseEnter);
+            parentElement.addEventListener("mouseleave", this.onParentMouseLeave);
+        }
+    },
+    beforeUnmount() {
+        // Cleanup event listeners when component is destroyed
+        const parentElement = this.$el.parentNode;
+        
+        if (parentElement) {
+            parentElement.removeEventListener("mouseenter", this.onParentMouseEnter);
+            parentElement.removeEventListener("mouseleave", this.onParentMouseLeave);
+        }
+    },
     methods: {
-        onMouseEnter() {
+        onParentMouseEnter() {
             this.currentColor = this.colorHover;
         },
-        onMouseLeave() {
+        onParentMouseLeave() {
             this.currentColor = this.color;
         },
     },

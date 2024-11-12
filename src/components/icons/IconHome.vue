@@ -1,31 +1,30 @@
 <!-- src/components/icons/IconHome.vue -->
  
 <template>
-    <svg
-        :width="size"
-        :height="size"
-        :fill="color"
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        aria-hidden="true"
+    <BaseIcon
+        :size="size"
+        :color="color"
+        :color-hover="colorHover"
+        :transition="transition"
     >
+        <!-- Unique SVG path for the Dark Mode icon goes here -->
         <path d="M12.71 2.29a1 1 0 0 0-1.42 0l-9 9a1 1 0 0 0 0 1.42A1 1 0 0 0 3 13h1v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7h1a1 1 0 0 0 1-1 1 1 0 0 0-.29-.71zM6 20v-9.59l6-6 6 6V20z"/>
-    </svg>
+    </BaseIcon>
 </template>
-  
+
 <script>
-    export default {
-        name: "IconHome",
-        props: {
-            size: {
-                type: [String, Number],
-                default: "var(--size-icon)",
-            },
-            color: {
-                type: String,
-                default: "var(--color-button-general-text)",
-            },
-        },
-    };
+import BaseIcon from './BaseIcon.vue';
+
+export default {
+    name: "IconHome",
+    components: { BaseIcon },
+    props: {
+        size: [String, Number],
+        color: String,
+        colorHover: String,
+        transition: String,
+    },
+};
 </script>
+
   

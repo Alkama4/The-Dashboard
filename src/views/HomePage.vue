@@ -2,12 +2,14 @@
 	<div>
 		<h1>Home page</h1>
 		<div class="cardHolder">
-			<InfoCard><h3>Hieno kuva</h3><img src="../assets/reference.png" width="400px" alt="reference image"></InfoCard>
-			<InfoCard><LoremIpsum :seed="123"/></InfoCard>
 			<InfoCard><h3>Ala otsikko</h3><LoremIpsum :seed="764"/></InfoCard>
-			<InfoCard><p>Wow! It actually works?</p></InfoCard>
+			<InfoCard><LoremIpsum :seed="123"/></InfoCard>
+			<InfoCard><h3>Hieno kuva</h3><img src="../assets/test.png" width="400px" alt="test image"></InfoCard>
 			<InfoCard><h3>Kiinnostavaa eikö!</h3> <LoremIpsum :seed="735"/></InfoCard>
-			<InfoCard><LoremIpsum :seed="237"/></InfoCard>
+			<InfoCard><h3>Joku otsikko hommeli</h3><LoremIpsum :seed="76234"/></InfoCard>
+			<InfoCard><LoremIpsum :seed="12123"/></InfoCard>
+			<InfoCard><h3>Toinen kuva</h3><img src="../assets/logo.png" width="250px" alt="test image"></InfoCard>
+			<InfoCard><h3>Kiinnostavaa eikö!</h3> <LoremIpsum :seed="73235"/></InfoCard>
 		</div>
 	</div>
 </template>

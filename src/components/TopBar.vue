@@ -1,18 +1,25 @@
 <template>
-    <div id="topBar">
-        <div id="topBarContent">
-            <div class="topBarSide">
-                <router-link to="/" class="websiteName">The Dashboard</router-link>
+    <div id="top-bar">
+        <div id="top-bar-content">
+            <div class="top-bar-side">
+                <router-link to="/" class="website-name">The Dashboard</router-link>
             </div>
-            <div class="topBarSide">
-                <router-link class="navButton" to="/spendings">Spendings</router-link>
-                <router-link class="navButton" to="/about">About page</router-link>
-                <router-link class="navButton" to="/settings">Settings</router-link>
-                <IconDarkMode class="navButton" @click="$emit('toggle-dark-mode')" 
-                    color="var(--color-button-nav)" 
-                    color-hover="var(--color-button-nav-hover)"
-                    transition="0.1s"
-                />
+            <div class="top-bar-side">
+                <router-link class="nav-button desktop-button" to="/spendings">Spendings</router-link>
+                <router-link class="nav-button desktop-button" to="/about">About page</router-link>
+                <router-link class="nav-button desktop-button" to="/settings">Settings</router-link>
+                <button class="nav-button desktop-button">
+                    <IconDarkMode @click="$emit('toggle-dark-mode')" 
+                        color="var(--color-button-nav)" 
+                        color-hover="var(--color-button-nav-hover)"
+                    />
+                </button>
+                <button class="nav-button mobile-button">
+                    <IconMenu @click="toggleMenu()"
+                        color="var(--color-button-nav)" 
+                        color-hover="var(--color-button-nav-hover)"
+                    />
+                </button>
             </div>
         </div>
     </div>
@@ -20,27 +27,35 @@
 
 <script>
     import IconDarkMode from './icons/IconDarkMode.vue';
+    import IconMenu from './icons/IconMenu.vue';
 
     export default {
-        name: 'TopBar',
+        name: 'top-bar',
         components: {
             IconDarkMode,
+            IconMenu
         },
+        methods: {
+            toggleMenu() {
+               console.log("Menu toggled");
+            }
+        }
     }
 </script>
 
 <style scoped>
 
-    #topBar {
+    #top-bar {
         width: 100vw;
         position: fixed;
         background-color: var(--color-background-top-bar);
         /* border-bottom: 1px solid var(--color-border); */
         transition: box-shadow 0.3s;
+        z-index: var(--z-top-bar);
     }
         
-    #topBarContent {
-        background-color: transparent;
+    #top-bar-content {
+        background-color: var(--color-background-top-bar);
         height: var(--top-bar-height);
         width: 100vw;
         max-width: var(--top-bar-width);
@@ -53,11 +68,11 @@
         white-space: nowrap;
     }
 
-    .topBarSide {
+    .top-bar-side {
         margin-inline: var(--spacing-md);
     }
 
-    .navButton {
+    .nav-button {
         color: var(--color-button-nav);
         font-size: large;
         font-weight: 500;
@@ -73,16 +88,34 @@
         justify-content: center;
         vertical-align: middle; /* Align the icon with text */
     }
-    .navButton:hover {
+    .nav-button:hover {
         color: var(--color-button-nav-hover);
-        box-shadow: 0 0 0 transparent;
+        box-shadow: 0 0 0 transparent;  /* To keep from the default box-shadow popping up */
     }
 
-    .websiteName {
-        font-weight: 700;
+    .website-name {
+        font-weight: 800;
         font-size: var(--font-size-logo);
         text-decoration: none;
         color: var(--color-text-bold);
+        transition: transform 0.2s ease;
     }
+    .website-name:hover {
+        transform: rotate(20deg);
+    }
+
+    .mobile-button {
+        display: none;
+    }
+
+    @media (max-width: 666px)  {
+        .desktop-button {
+            display: none;
+        }
+        .mobile-button {
+            display: inline-flex;
+        }
+    }
+
 
 </style>

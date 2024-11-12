@@ -11,13 +11,13 @@
             <div class="spendings-expanded" ref="spendingsExpanded">
                 <div class="spendings-expanded-content" ref="spendingsExpandedContent">
                     <div class="control-buttons">
-                        <button class="button-delete" @click.stop="deleteEntry">❌</button>
-                        <button class="button-edit" @click.stop="editEntry">✏️</button>
-                        <button class="button-duplicate" @click.stop="duplicateEntry">🖇️</button>
-                        <button class="button-details" @click.stop="showDetails">ℹ️ Details</button>
+                        <button class="button-delete" @click.stop="deleteEntry"><IconTrash size="18px" color-hover="white"/></button>
+                        <button class="button-edit" @click.stop="editEntry"><IconEdit size="18px"/></button>
+                        <button class="button-duplicate" @click.stop="duplicateEntry"><IconCopy size="18px"/></button>
+                        <button class="button-details" @click.stop="showDetails"><IconDetails size="18px"/>More details</button>
                     </div>
         
-                    <ModalWindow v-if="showModal" @close="showModal = false">
+                    <ModalWindow v-if="showDetailsModal" @close="showDetailsModal = false">
                         <h3>Details for Entry #{{ id }}</h3>
                         <ul>
                             <li><strong>ID:</strong> {{ id }}</li>
@@ -29,6 +29,11 @@
                             <li><strong>Notes:</strong> {{ notes }}</li>
                         </ul>
                     </ModalWindow>
+
+                    <ModalWindow v-if="showEditModal" @close="showEditModal = false">
+                        <h3>Details for Entry #{{ id }}</h3>
+                        <input type="text">
+                    </ModalWindow>
                 </div>
             </div>
         </td>
@@ -36,11 +41,21 @@
 </template>
 
 <script>
+import IconCopy from './icons/IconCopy.vue';
+import IconEdit from './icons/IconEdit.vue';
+import IconDetails from './icons/IconDetails.vue';
+import IconTrash from './icons/IconTrash.vue';
 import ModalWindow from './ModalWindow.vue';
 
 export default {
     name: "SpendingsEntry",
-    components: { ModalWindow },
+    components: { 
+        ModalWindow,
+        IconDetails,
+        IconCopy,
+        IconEdit,
+        IconTrash,
+    },
     props: {
         id: { type: Number, required: true },
         isIncome: { type: Boolean, required: true },
@@ -53,7 +68,8 @@ export default {
     data() {
         return {
             isExpanded: false,
-            showModal: false,
+            showDetailsModal: false,
+            showEditModal: false,
         };
     },
     methods: {
@@ -70,6 +86,7 @@ export default {
             this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
         },
         editEntry() { 
+            this.showEditModal = true;
             console.log('Editing entry', this.id);
         },
         deleteEntry() { 
@@ -79,7 +96,7 @@ export default {
             console.log('Duplicating entry', this.id);
         },
         showDetails() {
-            this.showModal = true;
+            this.showDetailsModal = true;
         },
     },
     computed: {
@@ -99,6 +116,7 @@ export default {
 
 
 <style scoped>
+
     /* Styles for the whole thing */
     .spendings-summary {
         cursor: pointer;
@@ -107,19 +125,47 @@ export default {
         transition: background-color 0.1s;
         padding: var(--spacing-xs);
     }
-    .spendings-summary:hover { background-color: var(--color-button-clean-hover); }
-    .spendings-summary:active { background-color: var(--color-button-clean-active); }
+    .spendings-summary::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: var(--color-button-clean);
+        border-radius: var(--border-radius-small);
+        transform: scale(0.975);
+        transition: transform 0.1s ease-out,
+                    background-color 0.1s ease-out;
+        z-index: 0;
+    } .spendings-summary:hover::after {
+        transform: scale(1); 
+        background-color: var(--color-button-clean-hover);
+    } .spendings-summary:active::after {
+        transform: scale(1.01); 
+        background-color: var(--color-button-clean-active);
+    }
 
     .spendings-summary td {
+        white-space: nowrap;
         padding-top: var(--spacing-xs);
         padding-bottom: var(--spacing-xs);
         padding-inline: var(--spacing-sm);
     }
 
-    /* The closed portion or the summary */
+    /* Individual columns */
     .column-amount {
         text-align: end;
     }
+    .column-notes {
+        max-width: 20vw;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+        background-clip: text;
+        color: transparent;
+    }
+
 
     /* The expanded stuff or the extra stuff like buttons*/
     .spendings-expanded {
@@ -139,13 +185,24 @@ export default {
         min-width: 30px;
         white-space: nowrap;
     }
-
+    
     .button-delete:hover {
+        /* box-shadow: 0 0 50px var(--color-button-delete-hover); */
         background-color: var(--color-button-delete-hover);
     } 
     .button-delete:active {
         background-color: var(--color-button-delete-active);
     }
 
+    @media (max-width: 666px) {
+        .spendings-summary td:nth-child(5) {
+            display: none;
+        }
+    }
+    @media (max-width: 500px) {
+        .spendings-summary td:nth-child(3) {
+            display: none;
+        }
+    }
 
 </style>

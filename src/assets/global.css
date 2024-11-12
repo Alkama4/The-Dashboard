@@ -21,6 +21,15 @@
     --top-bar-height: 60px;
     --top-bar-width: 1200px;
 
+    /* Z-indexes */
+    --z-top-bar: 100;
+
+    /* Media break of points */
+    /* 
+        - 666px: top bar, Notes
+        - 500px: Type
+    */
+
     /* LIGHT MODE */
     /* General colors */
     --color-primary: #3498db;
@@ -31,7 +40,6 @@
     --color-text-light: #5a5a5a;
     --color-icon: #000000;
     --color-border: hsla(0, 0%, 0%, 0.25);
-
 
     /* Backgrounds */
     --color-background: #f5f5f5;
@@ -44,7 +52,6 @@
     --color-button-general-hover: #fff;
     --color-button-general-active: #fafafa;
     --color-button-general-disabled: #aaa;
-    --color-button-general-text: #000000;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
@@ -60,9 +67,9 @@
 .dark-mode {
     /* DARK MODE */
     /* General colors */
-    --color-primary: #3498db;
-    --color-secondary: #2ecc71;
-    --color-accent: #e74c3c;
+    --color-primary: #158cdb;
+    --color-secondary: #0c4bd3;
+    --color-accent: #00ccff;
     --color-text: #ddd;
     --color-text-bold: #fff;
     --color-text-light: #888;
@@ -70,16 +77,15 @@
     
     /* Backgrounds */
     --color-background: #111;
-    --color-background-top-bar: transparent;
+    --color-background-top-bar: #111;
     --color-background-side-bar: #192d52;
-    --color-background-card: #202020;
+    --color-background-card: #181818;
 
     /* Button colors */
-    --color-button-general: #555;
-    --color-button-general-hover: #777;
-    --color-button-general-active: #666;
+    --color-button-general: #282828;
+    --color-button-general-hover: #333;
+    --color-button-general-active: #303030;
     --color-button-general-disabled: #aaa;
-    --color-button-general-text: #ffffff;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
@@ -126,10 +132,20 @@ p {
     max-width: 60ch;
 }
 
+.dark-mode h1 {
+    text-shadow: 
+    0 0 150px var(--color-primary),
+    100px 100px 100px var(--color-primary),
+    -100px -50px 80px var(--color-secondary),
+    50px -50px 100px var(--color-accent),
+    -75px 50px 70px var(--color-primary),
+    0 0 0px var(--color-primary),
+    0 0 0px var(--color-primary);
+}
+
 h1 {
     margin-inline: auto;
     width: 610px;
-
 }
 h1, h2, h3, h4 {
     color: var(--color-text-bold);
@@ -152,13 +168,15 @@ button, .button-link {
     text-decoration: none;
     font-family: 'Poppins';
     font-size: var(--font-size-base);
-    color: var(--color-button-general-text);
+    color: var(--color-text);
     background-color: var(--color-button-general);
 
-    transition: background-color 0.1s,
+    transition: color 0.1s,
+                background-color 0.1s,
                 box-shadow 0.1s;
 }
 button:hover, .button-link:hover {
+    color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

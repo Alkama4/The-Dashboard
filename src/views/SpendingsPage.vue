@@ -12,9 +12,13 @@
                 <th>Amount</th>
                 <th>Notes</th>
             </tr>
-            <SpendingsEntry :id="1" :isIncome="false" :date="new Date('2024-10-12')" counterparty="Cotton Club" type="Opiskelija lounas" :amount="2.95" notes="Hernekeittoa"/>
-            <SpendingsEntry :id="2" :isIncome="true" :date="new Date('2024-10-12')" counterparty="Kela" type="Asumistuki" :amount="99.99"/>
-            <SpendingsEntry :id="3" :isIncome="false" :date="new Date('2024-10-13')" counterparty="Minimani" type="Ruokaostokset" :amount="8.75" notes="Ruokaa ja palaa"/>
+            <SpendingsEntry :id="1" :isIncome="false" :date="new Date('2023-12-24')" counterparty="Cotton Club" type="Opiskelija lounas" :amount="2.95" notes="Hernekeittoa"/>
+            <SpendingsEntry :id="2" :isIncome="true" :date="new Date('2023-12-24')" counterparty="Kela" type="Asumistuki" :amount="99.99"/>
+            <SpendingsEntry :id="3" :isIncome="false" :date="new Date('2023-12-25')" counterparty="K-Citymarket" type="Yleinen eläminen" :amount="8.75" notes="Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan"/>
+            <SpendingsEntry :id="4" :isIncome="false" :date="new Date('2023-12-26')" counterparty="Minimani" type="Ruokaostokset" :amount="20.24" notes="safkaa"/>
+            <SpendingsEntry :id="5" :isIncome="false" :date="new Date('2023-12-29')" counterparty="Cotton Club" type="Kulutustavara" :amount="12.46" notes="Hyvää ruokaa"/>
+            <SpendingsEntry :id="6" :isIncome="false" :date="new Date('2023-12-31')" counterparty="S-Market" type="Herkut" :amount="1.99" notes="Mässy pussi"/>
+            <SpendingsEntry :id="7" :isIncome="false" :date="new Date('2024-1-1')" counterparty="Minimani" type="Ruokaostokset" :amount="15.96" notes="Ruokaa ja palaa"/>
         </table>
     </div>
 </template>
@@ -35,6 +39,17 @@
     table {
         margin-inline: auto;
         border-collapse: collapse;
+        overflow: visible;
+    }
+    @media (max-width: 666px) {
+        table th:nth-child(5) {
+            display: none;
+        }
+    }
+    @media (max-width: 500px) {
+        table th:nth-child(3) {
+            display: none;
+        }
     }
 </style>
   
