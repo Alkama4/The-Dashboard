@@ -34,21 +34,21 @@
 
 
     /* Backgrounds */
-    --color-background: #f0f0f0;
-    --color-background-top-bar: #ffffff;
+    --color-background: #f5f5f5;
+    --color-background-top-bar: #f5f5f5;
     --color-background-side-bar: #3877eb;
     --color-background-card: #ffffff;
 
     /* Button colors */
-    --color-button-general: #f3f3f3;
+    --color-button-general: #ffffff;
     --color-button-general-hover: #fff;
     --color-button-general-active: #fafafa;
     --color-button-general-disabled: #aaa;
     --color-button-general-text: #000000;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
-    --color-button-clean-hover: hsla(0, 0%, 0%, 0.175);
-    --color-button-clean-active: hsla(0, 0%, 0%, 0.125);
+    --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
+    --color-button-clean-active: hsla(0, 0%, 0%, 0.0666);
 
     --color-button-nav: #7c7c7c;
     --color-button-nav-hover: var(--color-text);
@@ -109,7 +109,7 @@ html, body {
 }
 
 main {
-
+    margin-inline: 1vw;
     margin-top: var(--top-bar-height);
 }
 
@@ -123,10 +123,13 @@ p {
     text-align: justify;
     margin-inline: auto;
     width: fit-content;
+    max-width: 60ch;
 }
 
 h1 {
-    margin-inline: 20px;
+    margin-inline: auto;
+    width: 610px;
+
 }
 h1, h2, h3, h4 {
     color: var(--color-text-bold);

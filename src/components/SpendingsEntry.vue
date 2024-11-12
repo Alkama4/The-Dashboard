@@ -1,43 +1,38 @@
 <template>
-    <div class="spendings-entry" @click="toggleEntry">
-        <!-- Main Details (Visible in collapsed and expanded states) -->
-        <div class="spendings-summary">
-            <span class="column-date">{{ formattedDate }}</span>
-            <span class="column-counterparty">{{ counterparty }}</span>
-            <span class="column-type">{{ type }}</span>
-            <span class="column-amount">{{ amount ? `${amount.toFixed(2)} €` : '' }}</span>
-            <span class="column-notes">{{ notes }}</span>
-        </div>
+    <tr class="spendings-summary" @click="toggleEntry">
+        <td class="column-date">{{ formattedDate }}</td>
+        <td class="column-counterparty">{{ counterparty }}</td>
+        <td class="column-type">{{ type }}</td>
+        <td class="column-amount">{{ amount ? `${amount.toFixed(2)} €` : '' }}</td>
+        <td class="column-notes">{{ notes }}</td>
+    </tr>
+    <tr>
+        <td colspan="5" >
+            <div class="spendings-expanded" ref="spendingsExpanded">
+                <div class="spendings-expanded-content" ref="spendingsExpandedContent">
+                    <div class="control-buttons">
+                        <button class="button-delete" @click.stop="deleteEntry">❌</button>
+                        <button class="button-edit" @click.stop="editEntry">✏️</button>
+                        <button class="button-duplicate" @click.stop="duplicateEntry">🖇️</button>
+                        <button class="button-details" @click.stop="showDetails">ℹ️ Details</button>
+                    </div>
         
-        <!-- Expanded Section (only visible when expanded) -->
-        <div class="spendings-expanded" ref="spendingsExpanded">
-            <div class="spendings-expanded-content" ref="spendingsExpandedContent">
-                <div class="controlButtons">
-                    <button class="button-delete" @click.stop="deleteEntry">❌</button>
-                    <button class="button-edit" @click.stop="editEntry">✏️</button>
-                    <button class="button-duplicate" @click.stop="duplicateEntry">🖇️</button>
-                    <button class="button-details" @click.stop="showDetails">ℹ️ Details</button>
-                </div>
-                <div>
-                    morestuff
+                    <ModalWindow v-if="showModal" @close="showModal = false">
+                        <h3>Details for Entry #{{ id }}</h3>
+                        <ul>
+                            <li><strong>ID:</strong> {{ id }}</li>
+                            <li><strong>Income:</strong> {{ isIncome ? 'Yes' : 'No' }}</li>
+                            <li><strong>Date:</strong> {{ formattedDate }}</li>
+                            <li><strong>Counterparty:</strong> {{ counterparty }}</li>
+                            <li><strong>Type:</strong> {{ type }}</li>
+                            <li><strong>Amount:</strong> {{ amount ? `${amount.toFixed(2)} €` : '' }}</li>
+                            <li><strong>Notes:</strong> {{ notes }}</li>
+                        </ul>
+                    </ModalWindow>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal for additional details -->
-    <ModalWindow v-if="showModal" @close="showModal = false">
-        <h3>Details for Entry #{{ id }}</h3>
-        <ul>
-            <li><strong>ID:</strong> {{ id }}</li>
-            <li><strong>Income:</strong> {{ isIncome ? 'Yes' : 'No' }}</li>
-            <li><strong>Date:</strong> {{ formattedDate }}</li>
-            <li><strong>Counterparty:</strong> {{ counterparty }}</li>
-            <li><strong>Type:</strong> {{ type }}</li>
-            <li><strong>Amount:</strong> {{ amount ? `${amount.toFixed(2)} €` : '' }}</li>
-            <li><strong>Notes:</strong> {{ notes }}</li>
-        </ul>
-    </ModalWindow>
+        </td>
+    </tr>
 </template>
 
 <script>
@@ -105,64 +100,41 @@ export default {
 
 <style scoped>
     /* Styles for the whole thing */
-    .spendings-entry {
-        background-color: var(--color-background-card);
-        border-radius: var(--border-radius-small);
-        margin: 10px;
-        display: grid;
+    .spendings-summary {
         cursor: pointer;
         user-select: none;
-        
-        max-width: 800px;
-        margin-inline: auto;
+        position: relative;
+        transition: background-color 0.1s;
+        padding: var(--spacing-xs);
     }
-    @media screen and (max-width: 800px) {
-        .spendings-entry {
-            border-radius: 0;
-        }
+    .spendings-summary:hover { background-color: var(--color-button-clean-hover); }
+    .spendings-summary:active { background-color: var(--color-button-clean-active); }
+
+    .spendings-summary td {
+        padding-top: var(--spacing-xs);
+        padding-bottom: var(--spacing-xs);
+        padding-inline: var(--spacing-sm);
     }
 
     /* The closed portion or the summary */
-    .spendings-summary {
-        display: grid;
-        grid-template-columns: 110px 165px 175px 106px 1fr;
-        padding: var(--spacing-xs);
-        white-space: nowrap;
-    }
-
     .column-amount {
         text-align: end;
     }
 
-    .spendings-summary span {
-        margin-inline: var(--spacing-sm);
-    }
-
-
     /* The expanded stuff or the extra stuff like buttons*/
     .spendings-expanded {
-        display: flex;
         overflow: hidden;
         transition: height 0.2s ease-out;
         height: 0; /* Initial collapsed state */
     }
-    .spendings-expanded-content {   /* Content div that doesn't morph during animation */
-        height: fit-content;
-        width: 100%;
-        padding-inline: var(--spacing-xs);
-        padding-bottom: var(--spacing-sm);
-        display: grid;
-        gap: var(--spacing-sm);
-        grid-template-columns: 275px 1fr;
-    }
 
     /* Buttons */
-    .controlButtons {
+    .control-buttons {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 3fr;
     }
 
-    .controlButtons button {
+    .control-buttons button {
         height: 30px;
         min-width: 30px;
         white-space: nowrap;
