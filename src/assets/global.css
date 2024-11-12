@@ -52,6 +52,9 @@
 
     --color-button-nav: #7c7c7c;
     --color-button-nav-hover: var(--color-text);
+
+    --color-button-delete-hover: rgb(212, 37, 37);
+    --color-button-delete-active: rgb(182, 29, 29);
 }
 
 .dark-mode {
@@ -66,8 +69,8 @@
     --color-border: hsla(0, 0%, 100%, 0.25);
     
     /* Backgrounds */
-    --color-background: #111111;
-    --color-background-top-bar: #000000;
+    --color-background: #111;
+    --color-background-top-bar: transparent;
     --color-background-side-bar: #192d52;
     --color-background-card: #202020;
 
@@ -84,6 +87,9 @@
 
     --color-button-nav: #888;
     --color-button-nav-hover: var(--color-text);
+
+    --color-button-delete-hover: rgb(187, 30, 30);
+    --color-button-delete-active: rgb(145, 13, 13);
 
 }
 

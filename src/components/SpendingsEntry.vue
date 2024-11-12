@@ -2,22 +2,27 @@
     <div class="spendings-entry" @click="toggleEntry">
         <!-- Main Details (Visible in collapsed and expanded states) -->
         <div class="spendings-summary">
-            <span>{{ formattedDate }}</span>
-            <span>{{ counterparty }}</span>
-            <span>{{ type }}</span>
-            <span>{{ amount ? `${amount.toFixed(2)} €` : '' }}</span>
-            <span>{{ notes }}</span>
+            <span class="column-date">{{ formattedDate }}</span>
+            <span class="column-counterparty">{{ counterparty }}</span>
+            <span class="column-type">{{ type }}</span>
+            <span class="column-amount">{{ amount ? `${amount.toFixed(2)} €` : '' }}</span>
+            <span class="column-notes">{{ notes }}</span>
         </div>
         
         <!-- Expanded Section (only visible when expanded) -->
-        <transition name="expand">
-            <div class="spendings-expanded" v-if="isExpanded">
-                <button @click.stop="editEntry">Edit</button>
-                <button @click.stop="deleteEntry">Delete</button>
-                <button @click.stop="duplicateEntry">Duplicate</button>
-                <button @click.stop="showDetails">More details</button>
+        <div class="spendings-expanded" ref="spendingsExpanded">
+            <div class="spendings-expanded-content" ref="spendingsExpandedContent">
+                <div class="controlButtons">
+                    <button class="button-delete" @click.stop="deleteEntry">❌</button>
+                    <button class="button-edit" @click.stop="editEntry">✏️</button>
+                    <button class="button-duplicate" @click.stop="duplicateEntry">🖇️</button>
+                    <button class="button-details" @click.stop="showDetails">ℹ️ Details</button>
+                </div>
+                <div>
+                    morestuff
+                </div>
             </div>
-        </transition>
+        </div>
     </div>
 
     <!-- Modal for additional details -->
@@ -42,34 +47,13 @@ export default {
     name: "SpendingsEntry",
     components: { ModalWindow },
     props: {
-        id: {
-            type: Number,
-            required: true,
-        },
-        isIncome: {
-            type: Boolean,
-            required: true,
-        },
-        date: {
-            type: Date,
-            required: true,
-        },
-        counterparty: {
-            type: String,
-            required: true,
-        },
-        type: {
-            type: String,
-            required: true,
-        },
-        amount: {
-            type: Number,
-            required: true,
-        },
-        notes: {
-            type: String,
-            default: "",
-        },
+        id: { type: Number, required: true },
+        isIncome: { type: Boolean, required: true },
+        date: { type: Date, required: true },
+        counterparty: { type: String, required: true },
+        type: { type: String, required: true },
+        amount: { type: Number, required: true },
+        notes: { type: String, default: "" },
     },
     data() {
         return {
@@ -80,39 +64,28 @@ export default {
     methods: {
         toggleEntry() {
             this.isExpanded = !this.isExpanded;
+            if (this.isExpanded) {
+                this.setExpandedHeight();
+            } else {
+                this.$refs['spendingsExpanded'].style.height = '0';
+            }
+        },
+        setExpandedHeight() {
+            const expandedContentHeight = this.$refs['spendingsExpandedContent'].getBoundingClientRect().height;
+            this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
         },
         editEntry() { 
-            // Placeholder for edit logic
             console.log('Editing entry', this.id);
         },
         deleteEntry() { 
-            // Placeholder for delete logic
             console.log('Deleting entry', this.id);
         },
         duplicateEntry() { 
-            // Placeholder for duplicate logic
             console.log('Duplicating entry', this.id);
         },
         showDetails() {
             this.showModal = true;
         },
-        beforeEnter(el) {
-            el.style.maxHeight = '0px';
-            el.style.opacity = '0';
-        },
-        enter(el, done) {
-            el.offsetHeight; // Trigger reflow to apply styles
-            el.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
-            el.style.maxHeight = '500px'; // Set a max height large enough to accommodate the expanded content
-            el.style.opacity = '1';
-            done();
-        },
-        leave(el, done) {
-            el.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
-            el.style.maxHeight = '0px';
-            el.style.opacity = '0';
-            done();
-        }
     },
     computed: {
         formattedDate() {
@@ -121,12 +94,14 @@ export default {
                 const month = (this.date.getMonth() + 1).toString().padStart(2, '0');
                 const year = this.date.getFullYear();
                 return `${day}.${month}.${year}`;
+            } else {
+                return '';
             }
-            return '';
         },
     },
 };
 </script>
+
 
 <style scoped>
     /* Styles for the whole thing */
@@ -136,38 +111,69 @@ export default {
         margin: 10px;
         display: grid;
         cursor: pointer;
+        user-select: none;
         
-        /* Temp starts */
         max-width: 800px;
         margin-inline: auto;
-        /* Temp ends */
+    }
+    @media screen and (max-width: 800px) {
+        .spendings-entry {
+            border-radius: 0;
+        }
     }
 
     /* The closed portion or the summary */
-    .spendings-entry .spendings-summary {
+    .spendings-summary {
         display: grid;
-        grid-template-columns: auto auto auto auto auto;
-        gap: 10px;
+        grid-template-columns: 110px 165px 175px 106px 1fr;
         padding: var(--spacing-xs);
-        padding-inline: var(--spacing-md);
         white-space: nowrap;
     }
 
+    .column-amount {
+        text-align: end;
+    }
+
+    .spendings-summary span {
+        margin-inline: var(--spacing-sm);
+    }
+
+
     /* The expanded stuff or the extra stuff like buttons*/
-    .spendings-entry .spendings-expanded {
+    .spendings-expanded {
         display: flex;
-        padding: var(--spacing-sm);
+        overflow: hidden;
+        transition: height 0.2s ease-out;
+        height: 0; /* Initial collapsed state */
+    }
+    .spendings-expanded-content {   /* Content div that doesn't morph during animation */
+        height: fit-content;
+        width: 100%;
+        padding-inline: var(--spacing-xs);
+        padding-bottom: var(--spacing-sm);
+        display: grid;
+        gap: var(--spacing-sm);
+        grid-template-columns: 275px 1fr;
     }
 
-    /* Transition styles */
-    .expand-enter-active, 
-    .expand-leave-active {
-        transition: all 0.2s ease;
+    /* Buttons */
+    .controlButtons {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 3fr;
     }
 
-    .expand-enter-from, 
-    .expand-leave-to {
-        transform: translateY(-20px);
-        opacity: 0;
+    .controlButtons button {
+        height: 30px;
+        min-width: 30px;
+        white-space: nowrap;
     }
+
+    .button-delete:hover {
+        background-color: var(--color-button-delete-hover);
+    } 
+    .button-delete:active {
+        background-color: var(--color-button-delete-active);
+    }
+
+
 </style>

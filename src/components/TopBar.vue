@@ -35,7 +35,7 @@
         width: 100vw;
         position: fixed;
         background-color: var(--color-background-top-bar);
-        border-bottom: 1px solid var(--color-border);
+        /* border-bottom: 1px solid var(--color-border); */
         transition: box-shadow 0.3s;
     }
         
