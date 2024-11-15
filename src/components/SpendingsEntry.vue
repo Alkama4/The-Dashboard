@@ -1,38 +1,73 @@
 <template>
+    <tr class="spendings-seperator"><td colspan="5"></td></tr>
     <tr class="spendings-summary" @click="toggleEntry">
-        <td class="column-date">{{ formattedDate }}</td>
-        <td class="column-counterparty">{{ counterparty }}</td>
+        <td class="column-date" style="position: relative;">
+            <span class="pseudo-element"></span>
+            {{ formattedDate }}
+        </td>
+        <td class="column-counterparty column-with-overflow">{{ counterparty }}</td>
         <td class="column-type">{{ type }}</td>
         <td class="column-amount">{{ amount ? `${amount.toFixed(2)} €` : '' }}</td>
-        <td class="column-notes">{{ notes }}</td>
+        <td class="column-notes column-with-overflow">{{ notes }}</td>
     </tr>
     <tr>
-        <td colspan="5" >
+        <td colspan="5" style="padding: 0;">
             <div class="spendings-expanded" ref="spendingsExpanded">
                 <div class="spendings-expanded-content" ref="spendingsExpandedContent">
                     <div class="control-buttons">
                         <button class="button-delete" @click.stop="deleteEntry"><IconTrash size="18px" color-hover="white"/></button>
+                        <button disabled="true" class="button-duplicate" @click.stop="duplicateEntry"><IconCopy size="18px"/></button>
                         <button class="button-edit" @click.stop="editEntry"><IconEdit size="18px"/></button>
-                        <button class="button-duplicate" @click.stop="duplicateEntry"><IconCopy size="18px"/></button>
                         <button class="button-details" @click.stop="showDetails"><IconDetails size="18px"/>More details</button>
                     </div>
         
-                    <ModalWindow v-if="showDetailsModal" @close="showDetailsModal = false">
-                        <h3>Details for Entry #{{ id }}</h3>
-                        <ul>
-                            <li><strong>ID:</strong> {{ id }}</li>
-                            <li><strong>Income:</strong> {{ isIncome ? 'Yes' : 'No' }}</li>
-                            <li><strong>Date:</strong> {{ formattedDate }}</li>
-                            <li><strong>Counterparty:</strong> {{ counterparty }}</li>
-                            <li><strong>Type:</strong> {{ type }}</li>
-                            <li><strong>Amount:</strong> {{ amount ? `${amount.toFixed(2)} €` : '' }}</li>
-                            <li><strong>Notes:</strong> {{ notes }}</li>
-                        </ul>
+                    <ModalWindow header="Details of an entry"
+                    v-if="showDetailsModal" @close="showDetailsModal = false">
+                        <div class="details-modal-content">
+                            <div style="grid-area: a;">
+                                <h4>ID:</h4>
+                                <span>{{ id }}</span>
+                                <h4>Income or expense:</h4>
+                                <span>{{ isIncome ? 'Income' : 'Expense' }}</span>
+                                <h4>Date:</h4> 
+                                <span>{{ formattedDate }}</span>
+                            </div>
+                            <div style="grid-area: b;">
+                                <h4>Counterparty:</h4> 
+                                <span>{{ counterparty }}</span>
+                                <h4>Type:</h4> 
+                                <span>{{ type }}</span>
+                                <h4>Amount:</h4> 
+                                <span>{{ amount ? `${amount.toFixed(2)} €` : '' }}</span>
+                            </div>
+                            <div style="grid-area: c;">
+                                <h4>Notes:</h4> 
+                                <span>{{ notes }}</span>
+                            </div>
+                        </div>
                     </ModalWindow>
 
-                    <ModalWindow v-if="showEditModal" @close="showEditModal = false">
-                        <h3>Details for Entry #{{ id }}</h3>
-                        <input type="text">
+                    <ModalWindow v-if="showEditModal" @close="showEditModal = false"
+                        header="Edit entry"
+                    >
+                        <p>Under construction... Check back later :)</p>
+                    </ModalWindow>
+
+                    <ModalWindow v-if="showDuplicationModal" @close="showDuplicationModal = false"
+                        header="Make a copy of entry"
+                    >
+                        <p>Under construction... Check back later :)</p>
+                    </ModalWindow>
+
+                    <ModalWindow v-if="showDeletionModal" @close="showDeletionModal = false"
+                        header="Delete entry"
+                    >
+                        <p>Are you sure you wan't to delete the entry? <strong style="color: red; text-transform: uppercase;">This action cannot be undone</strong>!</p>
+                        <!-- Tähän kantsii varmaan laittaa muutaki tietoo ku toi id, ku sitä ei ees näytetä normisti -->
+                        <div>
+                            <button>Delete</button>
+                            <button class="button-highlighted">Cancel</button>
+                        </div>
                     </ModalWindow>
                 </div>
             </div>
@@ -70,6 +105,8 @@ export default {
             isExpanded: false,
             showDetailsModal: false,
             showEditModal: false,
+            showDuplicationModal: false,
+            showDeletionModal: false,
         };
     },
     methods: {
@@ -90,9 +127,11 @@ export default {
             console.log('Editing entry', this.id);
         },
         deleteEntry() { 
+            this.showDeletionModal = true;
             console.log('Deleting entry', this.id);
         },
         duplicateEntry() { 
+            this.showDuplicationModal = true;
             console.log('Duplicating entry', this.id);
         },
         showDetails() {
@@ -116,7 +155,6 @@ export default {
 
 
 <style scoped>
-
     /* Styles for the whole thing */
     .spendings-summary {
         cursor: pointer;
@@ -125,7 +163,7 @@ export default {
         transition: background-color 0.1s;
         padding: var(--spacing-xs);
     }
-    .spendings-summary::after {
+    /* .spendings-summary::after {
         content: '';
         position: absolute;
         top: 0;
@@ -134,38 +172,38 @@ export default {
         bottom: 0;
         background-color: var(--color-button-clean);
         border-radius: var(--border-radius-small);
-        transform: scale(0.975);
+        transform: scaleX(0.975) scaleY(0.9);
         transition: transform 0.1s ease-out,
                     background-color 0.1s ease-out;
-        z-index: 0;
+        z-index: var(--z-spendings-entry-after);
     } .spendings-summary:hover::after {
         transform: scale(1); 
         background-color: var(--color-button-clean-hover);
     } .spendings-summary:active::after {
-        transform: scale(1.01); 
+        transform: scale(1); 
         background-color: var(--color-button-clean-active);
-    }
+    } */
 
-    .spendings-summary td {
-        white-space: nowrap;
-        padding-top: var(--spacing-xs);
-        padding-bottom: var(--spacing-xs);
-        padding-inline: var(--spacing-sm);
-    }
-
-    /* Individual columns */
-    .column-amount {
-        text-align: end;
-    }
-    .column-notes {
-        max-width: 20vw;
-        overflow: hidden;
+    /* Seperate tr for seperator, since the after is already in use */
+    .spendings-seperator {
         position: relative;
-        background: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
-        background-clip: text;
-        color: transparent;
+        height: 4px;
     }
-
+    .spendings-seperator td {
+        padding: 0;
+        height: 0px;
+    }
+    .spendings-seperator::after {
+        content: '';
+        position: absolute;
+        top: 1px;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: var(--color-button-clean-active);
+        border-radius: var(--border-radius-small);
+        z-index: var(--z-spendings-entry-after);
+    }
 
     /* The expanded stuff or the extra stuff like buttons*/
     .spendings-expanded {
@@ -194,12 +232,24 @@ export default {
         background-color: var(--color-button-delete-active);
     }
 
-    @media (max-width: 666px) {
+    /* Modal window */
+    .details-modal-content {
+        display: grid;
+        grid-template: 
+            "a b"
+            "c c";
+
+    }
+    .details-modal-content h4 {
+        margin-bottom: 0;
+    }
+
+    @media (max-width: 777px) {
         .spendings-summary td:nth-child(5) {
             display: none;
         }
     }
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
         .spendings-summary td:nth-child(3) {
             display: none;
         }

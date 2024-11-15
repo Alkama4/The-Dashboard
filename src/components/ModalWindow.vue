@@ -1,9 +1,9 @@
 <template>
     <div class="modal-backdrop" @click.self="closeModal">
         <div class="modal-content">
-            <button class="modal-close" @click="closeModal">&times;</button>
+            <button class="modal-close button-simple" @click="closeModal"><IconCross size="29"/></button>
             <div class="modal-body">
-                <!-- Slot for modal content -->
+                <h3 style="margin-top: 0;">{{ header }}</h3>
                 <slot></slot>
             </div>
         </div>
@@ -11,8 +11,16 @@
 </template>
 
 <script>
+import IconCross from './icons/IconCross.vue';
+
 export default {
     name: "ModalWindow",
+    components: {
+        IconCross,
+    },
+    props: {
+        header: { type: String, required: true },
+    },
     methods: {
         closeModal() {
             this.$emit("close");
@@ -32,15 +40,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: var(--z-modal);
 }
 
 .modal-content {
     background: var(--color-background-card);
-    border-radius: 8px;
-    width: 90%;
-    max-width: 500px;
-    padding: 20px;
+    border-radius: var(--border-radius-medium);
+    width: var(--width-modal);
+    margin-inline: 8vw;
+    padding: var(--spacing-lg);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
     animation: fadeInUp 0.3s ease-out; /* Smooth fade-in effect */
@@ -48,15 +56,10 @@ export default {
 
 .modal-close {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
     aspect-ratio: 1;
-    padding: 10px;
     margin: 0;
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
 }
 
 .modal-body {

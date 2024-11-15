@@ -17,24 +17,34 @@
     --border-radius-medium: 8px;
     --border-radius-large: 16px;
     
-    /* Top bar */
-    --top-bar-height: 60px;
-    --top-bar-width: 1200px;
+    /* Widths and heights*/
+    --width-top-bar: 1200px;
+    --height-top-bar: 60px;
+    --width-max-page: 800px;
+    --width-modal: 400px;
 
     /* Z-indexes */
-    --z-top-bar: 100;
+    --z-modal: 300;
+    --z-top-bar: 200;
+    --z-app: 100;
+    --z-spendings-entry-after: 90;
+    --z-background-colors: 0;
 
-    /* Media break of points */
+    /* Media break off points */
     /* 
-        - 666px: top bar, Notes
-        - 500px: Type
+        - 777px: notes      !! two locations for td and th !!
+        - 666px: top bar
+        - 600px: Type       !! two locations for td and th !!
     */
+    
 
-    /* LIGHT MODE */
+    /* - - - - - - - - - - - - - - - - */
+    /* - - - - - LIGHT  MODE - - - - - */
+    /* - - - - - - - - - - - - - - - - */
     /* General colors */
-    --color-primary: #3498db;
-    --color-secondary: #2ecc71;
-    --color-accent: #e74c3c;
+    --color-primary: #7ff91a;
+    --color-secondary: #6afbc3;
+    --color-accent: #42fafa;
     --color-text: #292929;
     --color-text-bold: #000000;
     --color-text-light: #5a5a5a;
@@ -51,7 +61,7 @@
     --color-button-general: #ffffff;
     --color-button-general-hover: #fff;
     --color-button-general-active: #fafafa;
-    --color-button-general-disabled: #aaa;
+    --color-button-general-disabled: #ccc;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
@@ -65,12 +75,14 @@
 }
 
 .dark-mode {
-    /* DARK MODE */
+    /* - - - - - - - - - - - - - - - */
+    /* - - - - - DARK MODE - - - - - */
+    /* - - - - - - - - - - - - - - - */
     /* General colors */
-    --color-primary: #158cdb;
-    --color-secondary: #0c4bd3;
-    --color-accent: #00ccff;
-    --color-text: #ddd;
+    --color-primary: #a4afc9;
+    --color-secondary: #3a4f85;
+    --color-accent: #677cb4;
+    --color-text: #e9ebf0;
     --color-text-bold: #fff;
     --color-text-light: #888;
     --color-border: hsla(0, 0%, 100%, 0.25);
@@ -85,7 +97,7 @@
     --color-button-general: #282828;
     --color-button-general-hover: #333;
     --color-button-general-active: #303030;
-    --color-button-general-disabled: #aaa;
+    --color-button-general-disabled: #222;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
@@ -101,22 +113,26 @@
 
 /* - - - - PAGE SETUP - - - - */
 html, body {
-    min-height: 100vh;
     margin: 0;
     font-family: 'Poppins';
-    background-color: var(--color-background);
     color: var(--color-text);
+    background-color: var(--color-background) !important;
+}
+
+body {
+    display: flex;
+    justify-content: center;
 }
 
 #app {
-    min-height: 100vh;
+    min-height: calc(100vh - var(--height-top-bar));
     display: flex;
     flex-direction: column;
-}
-
-main {
-    margin-inline: 1vw;
-    margin-top: var(--top-bar-height);
+    width: 100%;
+    max-width: var(--width-max-page);
+    margin-inline: 5vw;
+    margin-top: var(--height-top-bar);
+    z-index: var(--z-app);
 }
 
 footer {
@@ -132,7 +148,7 @@ p {
     max-width: 60ch;
 }
 
-.dark-mode h1 {
+/* .dark-mode h1 {
     text-shadow: 
     0 0 150px var(--color-primary),
     100px 100px 100px var(--color-primary),
@@ -141,17 +157,13 @@ p {
     -75px 50px 70px var(--color-primary),
     0 0 0px var(--color-primary),
     0 0 0px var(--color-primary);
-}
+} */
 
-h1 {
-    margin-inline: auto;
-    width: 610px;
-}
 h1, h2, h3, h4 {
     color: var(--color-text-bold);
 }
 
-button, .button-link {
+button {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -175,17 +187,31 @@ button, .button-link {
                 background-color 0.1s,
                 box-shadow 0.1s;
 }
-button:hover, .button-link:hover {
+button:hover {
     color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-button:active, .button-link:active {
+button:active {
     background-color: var(--color-button-general-active);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-button:disabled, .button-link:disabled {
+button:disabled {
     background-color: var(--color-button-general-disabled);
     cursor: not-allowed;
     opacity: 0.6;
+} button:disabled:hover {
+    box-shadow: 0 0 0 transparent;
+}
+
+button.button-simple {
+    box-shadow: 0 0 0 transparent;
+    background-color: transparent;
+    padding: 0;
+}
+
+.center {
+    margin-inline: auto;
+    display: block;
+    position: static;
 }

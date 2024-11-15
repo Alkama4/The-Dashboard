@@ -8,7 +8,7 @@
         aria-hidden="true"
         :style="{
             transition: transition,
-            cursor: 'pointer'
+            cursor: 'inherit'
         }"
     >
         <slot />
@@ -41,20 +41,23 @@ export default {
             currentColor: this.color,
         };
     },
+    computed: {
+        isParentDisabled() {
+            const parentElement = this.$el.parentNode;
+            return parentElement && (parentElement.hasAttribute("disabled") || parentElement.classList.contains("disabled"));
+        },
+    },
     mounted() {
-        // Find the parent element
         const parentElement = this.$el.parentNode;
 
         if (parentElement) {
-            // Attach event listeners to the parent element
             parentElement.addEventListener("mouseenter", this.onParentMouseEnter);
             parentElement.addEventListener("mouseleave", this.onParentMouseLeave);
         }
     },
     beforeUnmount() {
-        // Cleanup event listeners when component is destroyed
         const parentElement = this.$el.parentNode;
-        
+
         if (parentElement) {
             parentElement.removeEventListener("mouseenter", this.onParentMouseEnter);
             parentElement.removeEventListener("mouseleave", this.onParentMouseLeave);
@@ -62,7 +65,9 @@ export default {
     },
     methods: {
         onParentMouseEnter() {
-            this.currentColor = this.colorHover;
+            if (!this.isParentDisabled) {
+                this.currentColor = this.colorHover;
+            }
         },
         onParentMouseLeave() {
             this.currentColor = this.color;

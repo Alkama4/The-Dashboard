@@ -47,6 +47,8 @@
 
     #top-bar {
         width: 100vw;
+        top: 0;
+        left: 0;
         position: fixed;
         background-color: var(--color-background-top-bar);
         /* border-bottom: 1px solid var(--color-border); */
@@ -56,9 +58,9 @@
         
     #top-bar-content {
         background-color: var(--color-background-top-bar);
-        height: var(--top-bar-height);
+        height: var(--height-top-bar);
         width: 100vw;
-        max-width: var(--top-bar-width);
+        max-width: var(--width-top-bar);
         margin-inline: auto;
 
         display: flex;
@@ -97,12 +99,31 @@
         font-weight: 800;
         font-size: var(--font-size-logo);
         text-decoration: none;
-        color: var(--color-text-bold);
-        transition: transform 0.2s ease;
+        color: var(--color-text-bold); /* Default text color */
+        display: inline-block;
+        background-image: linear-gradient(-45deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary));
+        background-clip: text; /* Clipping background to text */
+        color: inherit; /* Inherit color to use the default text color */
+        transition: color 0.3s ease-out, background-position 0.3s ease-out; /* Transition for both color and gradient position */
+        background-size: 200% 100%; /* Make the gradient larger than the text */
     }
+    
     .website-name:hover {
-        transform: rotate(20deg);
+        color: transparent; /* Make text transparent on hover */
+        animation: gradient-move 3s linear infinite; /* Infinite animation of the gradient */
     }
+
+    @keyframes gradient-move {
+        0% {
+            background-position: 0% 0%;
+        }
+        100% {
+            background-position: 200% 0%;
+        }
+    }
+
+
+
 
     .mobile-button {
         display: none;
