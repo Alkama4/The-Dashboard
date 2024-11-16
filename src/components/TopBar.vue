@@ -8,17 +8,11 @@
                 <router-link class="nav-button desktop-button" to="/spendings">Spendings</router-link>
                 <router-link class="nav-button desktop-button" to="/about">About page</router-link>
                 <router-link class="nav-button desktop-button" to="/settings">Settings</router-link>
-                <button class="nav-button desktop-button">
-                    <IconDarkMode @click="$emit('toggle-dark-mode')" 
-                        color="var(--color-button-nav)" 
-                        color-hover="var(--color-button-nav-hover)"
-                    />
+                <button @click="$emit('toggle-dark-mode')" class="nav-button desktop-button">
+                    <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
                 </button>
-                <button class="nav-button mobile-button">
-                    <IconMenu @click="toggleMenu()"
-                        color="var(--color-button-nav)" 
-                        color-hover="var(--color-button-nav-hover)"
-                    />
+                <button @click="toggleMenu()" class="nav-button mobile-button">
+                    <IconMenu color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
                 </button>
             </div>
         </div>

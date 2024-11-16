@@ -1,9 +1,52 @@
 <template>
     <div class="modal-backdrop" @click.self="closeModal">
         <div class="modal-content">
-            <button class="modal-close button-simple" @click="closeModal"><IconCross size="29"/></button>
+            <button class="modal-close button-simple" @click="closeModal">
+                <IconCross size="36"/>
+            </button>
             <div class="modal-body">
-                <h3 style="margin-top: 0;">{{ header }}</h3>
+                <h2 style="margin-top: 0;">{{ header }}</h2>
+                
+                <!-- Conditional Content -->
+                <div v-if="type === 'details'">
+                    <div class="details-modal-content">
+                        <div style="grid-area: a;">
+                            <h4>ID:</h4>
+                            <span>{{ data.id }}</span>
+                            <h4>Income or expense:</h4>
+                            <span>{{ data.isIncome ? 'Income' : 'Expense' }}</span>
+                            <h4>Date:</h4> 
+                            <span>{{ data.formattedDate }}</span>
+                        </div>
+                        <div style="grid-area: b;">
+                            <h4>Counterparty:</h4> 
+                            <span>{{ data.counterparty }}</span>
+                            <h4>Type:</h4> 
+                            <span>{{ data.type }}</span>
+                            <h4>Amount:</h4> 
+                            <span>{{ data.amount ? `${data.amount.toFixed(2)} €` : '' }}</span>
+                        </div>
+                        <div style="grid-area: c;">
+                            <h4>Notes:</h4> 
+                            <span>{{ data.notes }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="type === 'edit'">
+                    <p>Under construction... Check back later :)</p>
+                </div>
+                
+                <div v-if="type === 'duplicate'">
+                    <p>Under construction... Check back later :)</p>
+                </div>
+                
+                <div v-if="type === 'delete'">
+                    <p>Are you sure you want to delete this entry? This action cannot be undone. {{ id }}</p>
+                    <button @click="deleteEntry">Delete</button>
+                    <button @click="closeModal">Cancel</button>
+                </div>
+                <!-- Default Slot for Any Other Content -->
                 <slot></slot>
             </div>
         </div>
@@ -20,10 +63,15 @@ export default {
     },
     props: {
         header: { type: String, required: true },
+        type: { type: String, required: true }, // Defines the type of modal (details, edit, delete)
+        data: { type: Object, required: true }, // Dynamic data for the modal
     },
     methods: {
         closeModal() {
             this.$emit("close");
+        },
+        deleteEntry() {
+            this.$emit("delete", this.data.id); // Emit delete event with the entry ID
         },
     },
 };
@@ -40,10 +88,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
     z-index: var(--z-modal);
 }
 
 .modal-content {
+    cursor: auto;
     background: var(--color-background-card);
     border-radius: var(--border-radius-medium);
     width: var(--width-modal);
@@ -65,6 +115,17 @@ export default {
 .modal-body {
     max-height: 70vh;
     overflow-y: auto;
+}
+
+.details-modal-content {
+    display: grid;
+    grid-template: 
+        "a b"
+        "c c";
+
+}
+.details-modal-content h4 {
+    margin-bottom: 0;
 }
 
 /* Animations */

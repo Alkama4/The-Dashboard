@@ -1,14 +1,19 @@
 <template>
     <tr class="spendings-seperator"><td colspan="5"></td></tr>
     <tr class="spendings-summary" @click="toggleEntry">
-        <td class="column-date" style="position: relative;">
-            <span class="pseudo-element"></span>
-            {{ formattedDate }}
-        </td>
+        <td class="column-date" style="position: relative;">{{ formattedDate }}</td>
         <td class="column-counterparty column-with-overflow">{{ counterparty }}</td>
         <td class="column-type">{{ type }}</td>
-        <td class="column-amount">{{ amount ? `${amount.toFixed(2)} €` : '' }}</td>
-        <td class="column-notes column-with-overflow">{{ notes }}</td>
+        <td class="column-amount">
+            {{ amount ? `${amount.toLocaleString('fi-FI', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €` : '' }}
+        </td>
+        <td class="column-notes column-with-overflow" ref="columnNotes">
+            <div ref="notesExpanded" style="height: 25px;">
+                <div ref="notesExpandedContent">
+                    {{ notes }}
+                </div>
+            </div>
+        </td>
     </tr>
     <tr>
         <td colspan="5" style="padding: 0;">
@@ -21,54 +26,14 @@
                         <button class="button-details" @click.stop="showDetails"><IconDetails size="18px"/>More details</button>
                     </div>
         
-                    <ModalWindow header="Details of an entry"
-                    v-if="showDetailsModal" @close="showDetailsModal = false">
-                        <div class="details-modal-content">
-                            <div style="grid-area: a;">
-                                <h4>ID:</h4>
-                                <span>{{ id }}</span>
-                                <h4>Income or expense:</h4>
-                                <span>{{ isIncome ? 'Income' : 'Expense' }}</span>
-                                <h4>Date:</h4> 
-                                <span>{{ formattedDate }}</span>
-                            </div>
-                            <div style="grid-area: b;">
-                                <h4>Counterparty:</h4> 
-                                <span>{{ counterparty }}</span>
-                                <h4>Type:</h4> 
-                                <span>{{ type }}</span>
-                                <h4>Amount:</h4> 
-                                <span>{{ amount ? `${amount.toFixed(2)} €` : '' }}</span>
-                            </div>
-                            <div style="grid-area: c;">
-                                <h4>Notes:</h4> 
-                                <span>{{ notes }}</span>
-                            </div>
-                        </div>
-                    </ModalWindow>
-
-                    <ModalWindow v-if="showEditModal" @close="showEditModal = false"
-                        header="Edit entry"
-                    >
-                        <p>Under construction... Check back later :)</p>
-                    </ModalWindow>
-
-                    <ModalWindow v-if="showDuplicationModal" @close="showDuplicationModal = false"
-                        header="Make a copy of entry"
-                    >
-                        <p>Under construction... Check back later :)</p>
-                    </ModalWindow>
-
-                    <ModalWindow v-if="showDeletionModal" @close="showDeletionModal = false"
-                        header="Delete entry"
-                    >
-                        <p>Are you sure you wan't to delete the entry? <strong style="color: red; text-transform: uppercase;">This action cannot be undone</strong>!</p>
-                        <!-- Tähän kantsii varmaan laittaa muutaki tietoo ku toi id, ku sitä ei ees näytetä normisti -->
-                        <div>
-                            <button>Delete</button>
-                            <button class="button-highlighted">Cancel</button>
-                        </div>
-                    </ModalWindow>
+                    <ModalWindow
+                        v-if="showModal"
+                        :type="modalType"
+                        :data="modalData"
+                        :header="modalHeader"
+                        @close="showModal = false"
+                        @delete="deleteEntry"
+                    />
                 </div>
             </div>
         </td>
@@ -80,16 +45,16 @@ import IconCopy from './icons/IconCopy.vue';
 import IconEdit from './icons/IconEdit.vue';
 import IconDetails from './icons/IconDetails.vue';
 import IconTrash from './icons/IconTrash.vue';
-import ModalWindow from './ModalWindow.vue';
+import { defineAsyncComponent } from 'vue';
 
 export default {
     name: "SpendingsEntry",
     components: { 
-        ModalWindow,
         IconDetails,
         IconCopy,
         IconEdit,
         IconTrash,
+        ModalWindow: defineAsyncComponent(() => import('./ModalWindow.vue')),
     },
     props: {
         id: { type: Number, required: true },
@@ -103,51 +68,68 @@ export default {
     data() {
         return {
             isExpanded: false,
-            showDetailsModal: false,
-            showEditModal: false,
-            showDuplicationModal: false,
-            showDeletionModal: false,
+            showModal: false, // Control whether the modal is visible
+            modalType: '', // Type of modal (Details, Edit, etc.)
+            modalData: {}, // Data to pass to the modal
+            modalHeader: '', // Header text for the modal
+            ModalWindow: null,
         };
     },
     methods: {
         toggleEntry() {
             this.isExpanded = !this.isExpanded;
             if (this.isExpanded) {
-                this.setExpandedHeight();
+                const expandedContentHeight = this.$refs['spendingsExpandedContent']?.getBoundingClientRect().height || 0;
+                this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
+
+                const expandedColumnWithOverflowHight = this.$refs['notesExpandedContent']?.getBoundingClientRect().height || 0;
+                this.$refs['notesExpanded'].style.height = `${expandedColumnWithOverflowHight}px`;
+                this.$refs['columnNotes'].classList.add("hide-mask");
             } else {
                 this.$refs['spendingsExpanded'].style.height = '0';
+                this.$refs['notesExpanded'].style.height = '25px';
+                this.$refs['columnNotes'].classList.remove("hide-mask");
             }
         },
-        setExpandedHeight() {
-            const expandedContentHeight = this.$refs['spendingsExpandedContent'].getBoundingClientRect().height;
-            this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
-        },
-        editEntry() { 
-            this.showEditModal = true;
-            console.log('Editing entry', this.id);
-        },
-        deleteEntry() { 
-            this.showDeletionModal = true;
-            console.log('Deleting entry', this.id);
-        },
-        duplicateEntry() { 
-            this.showDuplicationModal = true;
-            console.log('Duplicating entry', this.id);
-        },
         showDetails() {
-            this.showDetailsModal = true;
+            this.modalType = 'details';
+            this.modalData = {
+                id: this.id,
+                isIncome: this.isIncome,
+                formattedDate: this.formattedDate,
+                counterparty: this.counterparty,
+                type: this.type,
+                amount: this.amount,
+                notes: this.notes
+            };
+            this.modalHeader = "Details of an entry";
+            this.showModal = true;
+        },
+        editEntry() {
+            this.modalType = 'edit';
+            this.modalData = { /* any data needed for editing */ };
+            this.modalHeader = "Edit entry";
+            this.showModal = true;
+        },
+        duplicateEntry() {
+            this.modalType = 'duplicate';
+            this.modalData = { /* data for duplication */ };
+            this.modalHeader = "Make a copy of entry";
+            this.showModal = true;
+        },
+        deleteEntry() {
+            this.modalType = 'delete';
+            this.modalData = { id: this.id };
+            this.modalHeader = "Delete entry";
+            this.showModal = true;
         },
     },
     computed: {
         formattedDate() {
-            if (this.date) {
-                const day = this.date.getDate().toString().padStart(2, '0');
-                const month = (this.date.getMonth() + 1).toString().padStart(2, '0');
-                const year = this.date.getFullYear();
-                return `${day}.${month}.${year}`;
-            } else {
-                return '';
-            }
+            const day = this.date.getDate().toString().padStart(2, '0');
+            const month = (this.date.getMonth() + 1).toString().padStart(2, '0');
+            const year = this.date.getFullYear();
+            return `${day}.${month}.${year}`;
         },
     },
 };
@@ -160,9 +142,11 @@ export default {
         cursor: pointer;
         user-select: none;
         position: relative;
-        transition: background-color 0.1s;
+        transition: background-color 0.1s;  /* For the hover effect */
         padding: var(--spacing-xs);
     }
+    
+    /* Hover effect */
     /* .spendings-summary::after {
         content: '';
         position: absolute;
@@ -207,9 +191,15 @@ export default {
 
     /* The expanded stuff or the extra stuff like buttons*/
     .spendings-expanded {
+        position: relative; /* In order to have the possibility of content stuck to the bottom */
         overflow: hidden;
         transition: height 0.2s ease-out;
         height: 0; /* Initial collapsed state */
+    }
+    .spendings-expanded-content {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
     }
 
     /* Buttons */
@@ -217,11 +207,13 @@ export default {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 3fr;
     }
-
+    
     .control-buttons button {
         height: 30px;
         min-width: 30px;
         white-space: nowrap;
+        padding-inline: 0;
+        font-weight: 400;
     }
     
     .button-delete:hover {
@@ -230,18 +222,6 @@ export default {
     } 
     .button-delete:active {
         background-color: var(--color-button-delete-active);
-    }
-
-    /* Modal window */
-    .details-modal-content {
-        display: grid;
-        grid-template: 
-            "a b"
-            "c c";
-
-    }
-    .details-modal-content h4 {
-        margin-bottom: 0;
     }
 
     @media (max-width: 777px) {
