@@ -198,7 +198,7 @@ export default {
         display: inline-block;
     } .date-short {
         display: none;
-    }@media (max-width: 900px) {
+    }@media (max-width: 1500px) {
         .date-full {
             display: none;
         } .date-short {

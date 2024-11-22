@@ -30,7 +30,7 @@ const routes = [
 // Create the router instance
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
-    routes
+    routes,
 });
 
 // Export the router instance

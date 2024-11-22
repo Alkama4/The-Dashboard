@@ -13,7 +13,7 @@
             this or anywhere else on the website. One liners babyyyy...</p>
         <table>
             <thead>
-                <th @click="sortBy('date')" class="column-date">
+                <th @click="sortEntries('date')" class="column-date">
                     <div class="header-content">
                         Date
                         <component
@@ -24,7 +24,7 @@
                         />
                     </div>
                 </th>
-                <th @click="sortBy('counterparty')" class="column-counterparty">
+                <th @click="sortEntries('counterparty')" class="column-counterparty">
                     <div class="header-content">
                         Counterparty
                         <component
@@ -35,7 +35,7 @@
                         />
                     </div>
                 </th>
-                <th @click="sortBy('type')" class="column-type">
+                <th @click="sortEntries('type')" class="column-type">
                     <div class="header-content">
                         Type
                         <component
@@ -46,7 +46,7 @@
                         />
                     </div>
                 </th>
-                <th @click="sortBy('amount')" class="column-amount">
+                <th @click="sortEntries('amount')" class="column-amount">
                     <div class="header-content">
                         Amount
                         <component
@@ -57,7 +57,7 @@
                         />
                     </div>
                 </th>
-                <th @click="sortBy('notes')" class="column-notes">
+                <th @click="sortEntries('notes')" class="column-notes">
                     <div class="header-content">
                         Notes
                         <component
@@ -86,8 +86,7 @@
         </table>
     
         <!-- Button to load more entries -->
-        <button @click="generateRandomEntries(100)" class="center">Generate 100 random</button>
-        <button @click="loadMoreEntries()" class="center">Load more</button>
+        <button @click="loadMultipleEntries(5)" class="center">Load more</button>
     </div>
 </template>
   
@@ -135,55 +134,55 @@
             };
         },
         methods: {
-            // Update this to fethc the data later
-            loadMoreEntries() {
-                const newEntries = [
-                    {
-                        id: 70,
-                        direction: false,
-                        date: new Date('2000-1-1'),
-                        counterparty: "Kauppa",
-                        type: "Ostos",
-                        amount: 10,
-                        notes: "Kuvaus"
-                    },
-                ];
-        
-                // Add the new entries to the existing list
-                this.entries.push(...newEntries);
-            },
-            generateRandomEntries(count) {
-                const newEntries = [];
-                const randomString = (length) =>
-                    Math.random().toString(36).substring(2, 2 + length);
-
-                for (let i = 1; i <= count; i++) {
-                    newEntries.push({
-                        id: this.entries.length + i, // Incremental ID
-                        direction: Math.random() < 0.5,
-                        date: new Date(
-                            2000 + Math.floor(Math.random() * 23), // Random year between 2000 and 2023
-                            Math.floor(Math.random() * 12),       // Random month
-                            Math.floor(Math.random() * 28) + 1    // Random day
-                        ),
-                        counterparty: randomString(6), // Random string of 6 characters
-                        type: randomString(5),         // Random string of 5 characters
-                        amount: Math.floor(Math.random() * 1000), // Random amount between 0 and 999
-                        notes: randomString(15),       // Random string of 15 characters
-                    });
+            validateID(id) {
+                // Ensure the ID is unique
+                while (this.entries.some(entry => entry.id === id)) {
+                    id++;  // Increment the ID until it's unique
                 }
-
-                // Add the new entries to the existing list
-                this.entries.push(...newEntries);
+                return id;
             },
-            sortBy(column) {
-                if (this.sortColumn === column) {
-                    // Toggle direction if the same column is clicked
-                    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+
+            // Update this to fetch the data later
+            loadEntry() {
+                const randomString = (length) => Math.random().toString(36).substring(2, 2 + length);
+                const newEntry = {
+                    id: this.validateID(this.entries.length + 1), // Incremental ID that is validated
+                    direction: Math.random() < 0.5,
+                    date: new Date(
+                        2000 + Math.floor(Math.random() * 23), // Random year between 2000 and 2023
+                        Math.floor(Math.random() * 12),       // Random month
+                        Math.floor(Math.random() * 28) + 1    // Random day
+                    ),
+                    counterparty: randomString(6), // Random string of 6 characters
+                    type: randomString(5),         // Random string of 5 characters
+                    amount: Math.floor(Math.random() * 1000), // Random amount between 0 and 999
+                    notes: randomString(15),       // Random string of 15 characters
+                };
+
+                // Add the new entry to the existing list
+                this.entries.push(newEntry);
+            },
+
+            loadMultipleEntries(count) {
+                for (let i = 0; i < count; i++) {
+                    this.loadEntry();  // Generate one random entry at a time
+                }
+                this.sortEntries();
+            },
+
+            sortEntries(column) {
+                // If no column is given, use the previous column and direction
+                if (!column) {
+                    column = this.sortColumn;
                 } else {
-                    // Change column and default to 'desc' when switching
-                    this.sortColumn = column;
-                    this.sortDirection = 'desc';
+                    if (this.sortColumn === column) {
+                        // Toggle direction if the same column is clicked
+                        this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        // Change column and default to 'desc' when switching
+                        this.sortColumn = column;
+                        this.sortDirection = 'desc';
+                    }
                 }
 
                 // Update icons
@@ -196,9 +195,44 @@
                     }
                 });
 
-                // Placeholder for sorting logic
-                console.log(`Sorting ${column} in ${this.sortDirection} order.`);
+                // Sort the entries based on the selected column and direction
+                this.entries.sort((a, b) => {
+                    let valueA = a[column];
+                    let valueB = b[column];
+
+                    // Handle date comparison
+                    if (valueA instanceof Date && valueB instanceof Date) {
+                        return this.sortDirection === 'asc'
+                            ? valueA - valueB
+                            : valueB - valueA;
+                    }
+
+                    // Handle numerical comparison (amount)
+                    if (column === 'amount') {
+                        // Ensure sorting based on the amount and direction (income/expense)
+                        return this.sortDirection === 'asc'
+                            ? (a.amount * (a.direction ? 1 : -1)) - (b.amount * (b.direction ? 1 : -1))
+                            : (b.amount * (b.direction ? 1 : -1)) - (a.amount * (a.direction ? 1 : -1));
+                    }
+
+                    // Handle numerical comparison (e.g. amount)
+                    if (typeof valueA === 'number' && typeof valueB === 'number') {
+                        return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
+                    }
+
+                    // Handle string comparison (counterparty, type, notes)
+                    if (typeof valueA === 'string' && typeof valueB === 'string') {
+                        return this.sortDirection === 'asc'
+                            ? valueA.localeCompare(valueB)
+                            : valueB.localeCompare(valueA);
+                    }
+
+                    return 0; // If types don't match or are uncomparable, leave unchanged
+                });
             },
+        },
+        mounted() {
+            this.sortEntries();
         }
     };
 </script>

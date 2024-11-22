@@ -4,7 +4,7 @@ const path = require('path');
 module.exports = defineConfig({
   // Check the environment
   outputDir: process.env.NODE_ENV === 'production'
-    ? '\\\\pinas.local\\WebserverDev' // Network drive for production build
+    ? '\\\\192.168.0.2\\www\\local-nginx' // Network drive for production build
     : path.resolve(__dirname, 'dist'), // Local folder for development (you can change 'dist' to any folder you prefer)
 
   transpileDependencies: true,
