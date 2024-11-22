@@ -2,20 +2,29 @@
     <div id="top-bar">
         <div id="top-bar-content">
             <div class="top-bar-side">
-                <router-link to="/" class="website-name">The Dashboard</router-link>
+                <router-link class="website-name" to="/" >The Dashboard</router-link>
             </div>
             <div class="top-bar-side">
                 <router-link class="nav-button desktop-button" to="/spendings">Spendings</router-link>
                 <router-link class="nav-button desktop-button" to="/about">About page</router-link>
                 <router-link class="nav-button desktop-button" to="/settings">Settings</router-link>
-                <button @click="$emit('toggle-dark-mode')" class="nav-button desktop-button">
+                <button @click="$emit('toggle-dark-mode')" class="nav-button desktop-button square-button">
                     <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
                 </button>
-                <button @click="toggleMenu()" class="nav-button mobile-button">
+                <button @click="toggleMenu()" class="nav-button mobile-button square-button">
                     <IconMenu color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
                 </button>
             </div>
         </div>
+    </div>
+    <div @click="toggleMenu()" ref="mobileNav" class="mobile-nav">
+        <router-link class="website-name" to="/" style="padding-bottom: var(--spacing-md);">The Dashboard</router-link>
+        <router-link class="nav-button" to="/spendings">Spendings</router-link>
+        <router-link class="nav-button" to="/about">About page</router-link>
+        <router-link class="nav-button" to="/settings">Settings</router-link>
+        <button @click="$emit('toggle-dark-mode'); toggleMenu()" class="nav-button square-button">
+            <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
+        </button>
     </div>
 </template>
 
@@ -32,6 +41,7 @@
         methods: {
             toggleMenu() {
                console.log("Menu toggled");
+               this.$refs['mobileNav'].classList.toggle("expanded");
             }
         }
     }
@@ -88,39 +98,28 @@
         color: var(--color-button-nav-hover);
         box-shadow: 0 0 0 transparent;  /* To keep from the default box-shadow popping up */
     }
+    .nav-button:active {
+        color: var(--color-button-nav-hover);
+        box-shadow: 0 0 0 transparent;  /* To keep from the default box-shadow popping up */
+    }
 
     .website-name {
         font-weight: 800;
         font-size: var(--font-size-logo);
         text-decoration: none;
-        color: var(--color-text-bold); /* Default text color */
-        display: inline-block;
-        background-image: linear-gradient(-45deg, var(--color-primary), var(--color-secondary), var(--color-accent), var(--color-primary));
-        background-clip: text; /* Clipping background to text */
-        color: inherit; /* Inherit color to use the default text color */
-        transition: color 0.3s ease-out, background-position 0.3s ease-out; /* Transition for both color and gradient position */
-        background-size: 200% 100%; /* Make the gradient larger than the text */
+        color: var(--color-primary);
+        padding: var(--spacing-sm);
+        padding-left: 0;
     }
-    
-    .website-name:hover {
-        color: transparent; /* Make text transparent on hover */
-        animation: gradient-move 3s linear infinite; /* Infinite animation of the gradient */
-    }
-
-    @keyframes gradient-move {
-        0% {
-            background-position: 0% 0%;
-        }
-        100% {
-            background-position: 200% 0%;
-        }
-    }
-
-
-
 
     .mobile-button {
         display: none;
+        position: relative;
+        /* z-index: var(--z-mobile-nav-toggle-button); */
+    }
+
+    .square-button {
+        aspect-ratio: 1;
     }
 
     @media (max-width: 666px)  {
@@ -131,6 +130,75 @@
             display: inline-flex;
         }
     }
+    @media (min-width: 667px)  {
+        .mobile-nav {
+            display: none !important;
+        }
+    }
 
+
+    /* - - - - Mobile Navigation - - - - */
+    .mobile-nav {
+        cursor: pointer;
+        position: fixed;
+        width: calc(100vw - var(--spacing-lg) * 2);
+        height: calc(100vh - var(--spacing-lg) * 2);
+        background-color: var(--color-background-mobile-nav);
+        backdrop-filter: blur(50px);
+        z-index: var(--z-mobile-nav);
+        top: 0;
+        right: 0;
+        padding: var(--spacing-lg);
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease-out, visibility 0s 0.2s;
+    }
+
+    .mobile-nav.expanded {
+        opacity: 1;
+        visibility: visible;
+        transition: opacity 0.2s ease-out;
+    }
+
+    .mobile-nav .nav-button {
+        display: block;
+        font-size: var(--font-size-large);
+        opacity: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    }
+
+    .mobile-nav.expanded .nav-button {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .mobile-nav .nav-button:nth-child(2) {
+        transition-delay: 0.05s;
+    }
+
+    .mobile-nav .nav-button:nth-child(3) {
+        transition-delay: 0.1s;
+    }
+
+    .mobile-nav .nav-button:nth-child(4) {
+        transition-delay: 0.15s;
+    }
+
+    .mobile-nav .nav-button:nth-child(5) {
+        transition-delay: 0.2s;
+    }
+
+    /* Ensure buttons stay in place when nav is collapsed */
+    .mobile-nav:not(.expanded) .nav-button {
+        opacity: 0;
+        transform: translateX(100%);
+    }
 
 </style>

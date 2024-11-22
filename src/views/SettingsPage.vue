@@ -2,17 +2,14 @@
     <div>
         <h1>Settings page</h1>
         <p>Settings go here</p>
-        <TestingComponent/>
+        <TestComponent/>
     </div>
 </template>
   
 <script>
-    import TestingComponent from '../components/TestingComponent.vue'
-
     export default {
         name: 'SettingsPage',
         components: {
-            TestingComponent,
         }
     }
 </script>

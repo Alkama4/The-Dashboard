@@ -1,12 +1,16 @@
 <template>
-    <tr class="spendings-seperator"><td colspan="5"></td></tr>
+    <!-- <tr class="spendings-seperator"><td colspan="5"></td></tr> -->
     <tr class="spendings-summary" @click="toggleEntry">
-        <td class="column-date" style="position: relative;">{{ formattedDate }}</td>
+        <td class="column-date">
+            <span class="date-full">{{ formattedDate }}</span>
+            <span class="date-short">{{ shortFormattedDate }}</span>
+        </td>
         <td class="column-counterparty column-with-overflow">{{ counterparty }}</td>
         <td class="column-type">{{ type }}</td>
-        <td class="column-amount">
+        <td class="column-amount" :class="{ 'income': direction, 'expense': !direction }">
             {{ amount ? `${amount.toLocaleString('fi-FI', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €` : '' }}
         </td>
+
         <td class="column-notes column-with-overflow" ref="columnNotes">
             <div ref="notesExpanded" style="height: 25px;">
                 <div ref="notesExpandedContent">
@@ -15,12 +19,12 @@
             </div>
         </td>
     </tr>
-    <tr>
+    <tr> 
         <td colspan="5" style="padding: 0;">
             <div class="spendings-expanded" ref="spendingsExpanded">
                 <div class="spendings-expanded-content" ref="spendingsExpandedContent">
                     <div class="control-buttons">
-                        <button class="button-delete" @click.stop="deleteEntry"><IconTrash size="18px" color-hover="white"/></button>
+                        <button class="button-delete" @click.stop="deleteEntry"><IconTrash size="18px" colorHover="white"/></button>
                         <button disabled="true" class="button-duplicate" @click.stop="duplicateEntry"><IconCopy size="18px"/></button>
                         <button class="button-edit" @click.stop="editEntry"><IconEdit size="18px"/></button>
                         <button class="button-details" @click.stop="showDetails"><IconDetails size="18px"/>More details</button>
@@ -58,7 +62,7 @@ export default {
     },
     props: {
         id: { type: Number, required: true },
-        isIncome: { type: Boolean, required: true },
+        direction: { type: Boolean, required: true },
         date: { type: Date, required: true },
         counterparty: { type: String, required: true },
         type: { type: String, required: true },
@@ -95,8 +99,8 @@ export default {
             this.modalType = 'details';
             this.modalData = {
                 id: this.id,
-                isIncome: this.isIncome,
-                formattedDate: this.formattedDate,
+                direction: this.direction,
+                formattedDate: this.detailsDate,
                 counterparty: this.counterparty,
                 type: this.type,
                 amount: this.amount,
@@ -125,13 +129,46 @@ export default {
         },
     },
     computed: {
-        formattedDate() {
-            const day = this.date.getDate().toString().padStart(2, '0');
-            const month = (this.date.getMonth() + 1).toString().padStart(2, '0');
-            const year = this.date.getFullYear();
-            return `${day}.${month}.${year}`;
+        detailsDate() {
+            // Get the formatted date
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const formattedDate = this.date.toLocaleDateString('fi-FI', options);
+
+            // Get the week number
+            const getWeekNumber = (date) => {
+                const startDate = new Date(date.getFullYear(), 0, 1);
+                const days = Math.floor((date - startDate) / (24 * 60 * 60 * 1000));
+                return Math.ceil((days + 1) / 7);
+            };
+            const weekNumber = getWeekNumber(this.date);
+
+            // Return formatted date with the week number
+            return `${formattedDate}, viikko ${weekNumber}`;
         },
-    },
+        formattedDate() {
+            const options = { 
+                weekday: 'short', 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            };
+            return this.date.toLocaleDateString('fi-FI', options);
+        },
+        shortFormattedDate() {
+            const options = { 
+                year: 'numeric', 
+                month: '2-digit', 
+                day: '2-digit' 
+            };
+        return this.date.toLocaleDateString('fi-FI', options);
+    }
+}
+
 };
 </script>
 
@@ -143,31 +180,79 @@ export default {
         user-select: none;
         position: relative;
         transition: background-color 0.1s;  /* For the hover effect */
-        padding: var(--spacing-xs);
+        transition: transform 0.1s ease-out;
+        border-top: 2px solid var(--color-button-clean-active);
+    }
+    td {
+        white-space: nowrap;
+        padding: var(--spacing-xs) var(--spacing-sm);
+        vertical-align: top;
+        color: var(--color-text-light);
+    }
+
+    /* Individual columns in summary*/
+    .column-date {
+        text-align: center;
+        width: fit-content;
+    } .date-full {
+        display: inline-block;
+    } .date-short {
+        display: none;
+    }@media (max-width: 900px) {
+        .date-full {
+            display: none;
+        } .date-short {
+            display: inline-block;
+        }
+    }
+    .column-counterparty {
+        text-align: start;
+        max-width: 140px;
+        overflow: hidden;
+        color: var(--color-text);
+    }    
+    .column-type {
+        text-align: start;
+        width: fit-content;
+    }
+    .column-amount {
+        text-align: end;
+        width: fit-content;
+        font-weight: 500;
+    }
+    .column-notes {
+        overflow: hidden;
+    } .column-notes div {
+        transition: height 0.2s ease-out;
+    } .column-notes div div {
+        white-space: normal;
+        word-break: break-word;
+        word-wrap: break-word;
+        text-align: justify;
+    }
+
+    /* Special column properties */
+    .column-with-overflow {
+        mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+        mask-size: 100%;
+        transition: mask-size 0.2s ease;
+    }
+    .column-with-overflow.hide-mask {
+        mask-size: 125%;
+    }
+
+    .column-amount.expense {
+        color: var(--color-negative);
+    } .column-amount.expense::before {
+        content: "-";
     }
     
-    /* Hover effect */
-    /* .spendings-summary::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: var(--color-button-clean);
-        border-radius: var(--border-radius-small);
-        transform: scaleX(0.975) scaleY(0.9);
-        transition: transform 0.1s ease-out,
-                    background-color 0.1s ease-out;
-        z-index: var(--z-spendings-entry-after);
-    } .spendings-summary:hover::after {
-        transform: scale(1); 
-        background-color: var(--color-button-clean-hover);
-    } .spendings-summary:active::after {
-        transform: scale(1); 
-        background-color: var(--color-button-clean-active);
-    } */
-
+    .column-amount.income {
+        color: var(--color-positive);
+    } .column-amount.income::before {
+        content: "+";
+    }
+    
     /* Seperate tr for seperator, since the after is already in use */
     .spendings-seperator {
         position: relative;
@@ -205,7 +290,7 @@ export default {
     /* Buttons */
     .control-buttons {
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr 3fr;
+        grid-template-columns: 1fr 1fr 1fr 2fr;
     }
     
     .control-buttons button {
@@ -222,6 +307,10 @@ export default {
     } 
     .button-delete:active {
         background-color: var(--color-button-delete-active);
+    }
+
+    .button-details {
+        background-color: var(--color-primary);
     }
 
     @media (max-width: 777px) {

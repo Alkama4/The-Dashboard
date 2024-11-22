@@ -2,7 +2,7 @@
     <div class="modal-backdrop" @click.self="closeModal">
         <div class="modal-content">
             <button class="modal-close button-simple" @click="closeModal">
-                <IconCross size="36"/>
+                <IconCross size="30" color="var(--color-text-light)"/>
             </button>
             <div class="modal-body">
                 <h2 style="margin-top: 0;">{{ header }}</h2>
@@ -13,7 +13,7 @@
                         <div style="grid-area: a;">
                             <h4>ID:</h4>
                             <span>{{ data.id }}</span>
-                            <h4>Income or expense:</h4>
+                            <h4>Direction:</h4>
                             <span>{{ data.isIncome ? 'Income' : 'Expense' }}</span>
                             <h4>Date:</h4> 
                             <span>{{ data.formattedDate }}</span>
@@ -106,6 +106,7 @@ export default {
 
 .modal-close {
     position: absolute;
+    padding: 3px;
     top: var(--spacing-lg);
     right: var(--spacing-lg);
     aspect-ratio: 1;
@@ -117,16 +118,24 @@ export default {
     overflow-y: auto;
 }
 
+/* Details specific */
 .details-modal-content {
     display: grid;
+    grid-template-columns: 1fr 1fr;
     grid-template: 
         "a b"
         "c c";
-
+    gap: 0 20px;
 }
 .details-modal-content h4 {
     margin-bottom: 0;
 }
+.details-modal-content span {
+    white-space: wrap;
+    font-weight: 400;
+    color: var(--color-text-light);
+}
+
 
 /* Animations */
 @keyframes fadeInUp {

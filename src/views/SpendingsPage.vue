@@ -1,5 +1,11 @@
 <template>
     <div id="spendings-page">
+        <!-- Holder for temp icons so that vue doesn't complain -->
+        <div style="display: none;">
+            <IconSortDown/>
+            <IconSortUp/>
+        </div>
+
         <h1>Spendings page</h1>
         <p> Descriptive text about the spendings page that will be longer 
             and more detailed in the future possibly but that is uncertain 
@@ -7,13 +13,61 @@
             this or anywhere else on the website. One liners babyyyy...</p>
         <table>
             <thead>
-                <tr>
-                    <th class="column-date">Date</th>
-                    <th class="column-counterparty">Counterparty</th>
-                    <th class="column-type">Type</th>
-                    <th class="column-amount">Amount</th>
-                    <th class="column-notes">Notes</th>
-                </tr>
+                <th @click="sortBy('date')" class="column-date">
+                    <div class="header-content">
+                        Date
+                        <component
+                            :is="sortIcons.date"
+                            :color="sortColumn === 'date' ? activeColor : inactiveColor"
+                            :colorHover="sortColumn === 'date' ? activeHoverColor : inactiveHoverColor"
+                            size="20px"
+                        />
+                    </div>
+                </th>
+                <th @click="sortBy('counterparty')" class="column-counterparty">
+                    <div class="header-content">
+                        Counterparty
+                        <component
+                            :is="sortIcons.counterparty"
+                            :color="sortColumn === 'counterparty' ? activeColor : inactiveColor"
+                            :colorHover="sortColumn === 'counterparty' ? activeHoverColor : inactiveHoverColor"
+                            size="20px"
+                        />
+                    </div>
+                </th>
+                <th @click="sortBy('type')" class="column-type">
+                    <div class="header-content">
+                        Type
+                        <component
+                            :is="sortIcons.type"
+                            :color="sortColumn === 'type' ? activeColor : inactiveColor"
+                            :colorHover="sortColumn === 'type' ? activeHoverColor : inactiveHoverColor"
+                            size="20px"
+                        />
+                    </div>
+                </th>
+                <th @click="sortBy('amount')" class="column-amount">
+                    <div class="header-content">
+                        Amount
+                        <component
+                            :is="sortIcons.amount"
+                            :color="sortColumn === 'amount' ? activeColor : inactiveColor"
+                            :colorHover="sortColumn === 'amount' ? activeHoverColor : inactiveHoverColor"
+                            size="20px"
+                        />
+                    </div>
+                </th>
+                <th @click="sortBy('notes')" class="column-notes">
+                    <div class="header-content">
+                        Notes
+                        <component
+                            :is="sortIcons.notes"
+                            :color="sortColumn === 'notes' ? activeColor : inactiveColor"
+                            :colorHover="sortColumn === 'notes' ? activeHoverColor : inactiveHoverColor"
+                            size="20px"
+                        />
+                    </div>
+                </th>
             </thead>
             <tbody ref="placeForEntries">
                 <!-- Dynamically rendering SpendingsEntry components -->
@@ -21,7 +75,7 @@
                     v-for="entry in entries"
                     :key="entry.id"
                     :id="entry.id"
-                    :isIncome="entry.isIncome"
+                    :direction="entry.direction"
                     :date="entry.date"
                     :counterparty="entry.counterparty"
                     :type="entry.type"
@@ -32,32 +86,52 @@
         </table>
     
         <!-- Button to load more entries -->
+        <button @click="generateRandomEntries(100)" class="center">Generate 100 random</button>
         <button @click="loadMoreEntries()" class="center">Load more</button>
     </div>
 </template>
   
 <script>
     import SpendingsEntry from '../components/SpendingsEntry.vue';
+    import IconSortBoth from '../components/icons/IconSortBoth.vue';
+    import IconSortDown from '../components/icons/IconSortDown.vue';
+    import IconSortUp from '../components/icons/IconSortUp.vue';
     
     export default {
         name: 'SpendingsPage',
         components: {
             SpendingsEntry,
+            IconSortBoth,
+            IconSortDown,
+            IconSortUp,
         },
         data() {
             return {
                 // Initial entries to display, wipe when we get to that point
                 entries: [
-                { id: 1, isIncome: false, date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
-                    { id: 2, isIncome: true, date: new Date('2023-12-24'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
-                    { id: 3, isIncome: false, date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
-                    { id: 4, isIncome: false, date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
-                    { id: 69, isIncome: false, date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
-                    { id: 5, isIncome: false, date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
-                    { id: 6, isIncome: false, date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
-                    { id: 7, isIncome: false, date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
-                    { id: 689, isIncome: false, date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
+                    { id: 1, direction: false, date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
+                    { id: 2, direction: true, date: new Date('2023-12-24'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
+                    { id: 3, direction: false, date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
+                    { id: 4, direction: false, date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
+                    { id: 69, direction: false, date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
+                    { id: 5, direction: false, date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
+                    { id: 6, direction: false, date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
+                    { id: 7, direction: false, date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
+                    { id: 689, direction: false, date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
                 ],
+                sortColumn: 'date',     // Default to date 
+                sortDirection: 'desc',  // Default to descending
+                inactiveColor: '#555',
+                inactiveHoverColor: '#bbb',
+                activeColor: 'var(--color-secondary)',
+                activeHoverColor: 'color-mix(in srgb, var(--color-secondary) 50%, #fff 50%)',
+                sortIcons: {
+                    date: IconSortDown, // Default to date 
+                    counterparty: IconSortBoth,
+                    type: IconSortBoth,
+                    amount: IconSortBoth,
+                    notes: IconSortBoth,
+                },
             };
         },
         methods: {
@@ -66,7 +140,7 @@
                 const newEntries = [
                     {
                         id: 70,
-                        isIncome: false,
+                        direction: false,
                         date: new Date('2000-1-1'),
                         counterparty: "Kauppa",
                         type: "Ostos",
@@ -77,87 +151,94 @@
         
                 // Add the new entries to the existing list
                 this.entries.push(...newEntries);
-            }
+            },
+            generateRandomEntries(count) {
+                const newEntries = [];
+                const randomString = (length) =>
+                    Math.random().toString(36).substring(2, 2 + length);
+
+                for (let i = 1; i <= count; i++) {
+                    newEntries.push({
+                        id: this.entries.length + i, // Incremental ID
+                        direction: Math.random() < 0.5,
+                        date: new Date(
+                            2000 + Math.floor(Math.random() * 23), // Random year between 2000 and 2023
+                            Math.floor(Math.random() * 12),       // Random month
+                            Math.floor(Math.random() * 28) + 1    // Random day
+                        ),
+                        counterparty: randomString(6), // Random string of 6 characters
+                        type: randomString(5),         // Random string of 5 characters
+                        amount: Math.floor(Math.random() * 1000), // Random amount between 0 and 999
+                        notes: randomString(15),       // Random string of 15 characters
+                    });
+                }
+
+                // Add the new entries to the existing list
+                this.entries.push(...newEntries);
+            },
+            sortBy(column) {
+                if (this.sortColumn === column) {
+                    // Toggle direction if the same column is clicked
+                    this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+                } else {
+                    // Change column and default to 'desc' when switching
+                    this.sortColumn = column;
+                    this.sortDirection = 'desc';
+                }
+
+                // Update icons
+                Object.keys(this.sortIcons).forEach((key) => {
+                    if (key === column) {
+                        this.sortIcons[key] =
+                            this.sortDirection === 'asc' ? IconSortUp : IconSortDown;
+                    } else {
+                        this.sortIcons[key] = IconSortBoth;
+                    }
+                });
+
+                // Placeholder for sorting logic
+                console.log(`Sorting ${column} in ${this.sortDirection} order.`);
+            },
         }
     };
 </script>
   
-<style>
+<style scoped>
+table {
+    margin-inline: auto;
+    border-collapse: collapse;
+}
+th {
+    cursor: pointer;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    text-align: start;
+    color: var(--color-text);
+    font-weight: 900;
+    user-select: none;
+    vertical-align: middle; /* Ensures proper alignment in table layout */
+}
+th .header-content {
+    display: flex;
+    align-items: center; /* Aligns items vertically */
+    justify-content: left; /* Optional: Center horizontally */
+    gap: 0.5rem; /* Adds spacing between text and icon */
+}
+th.column-date {
+    text-align: center;
+}
+th.column-amount {
+    text-align: end;
+}
+@media (max-width: 777px) {
+    table th:nth-child(5) {    /* Notes */
+        display: none;
+    }
+}
+@media (max-width: 600px) {
+    table th:nth-child(3) {     /* Type */
+        display: none;
+    }
+}
 
-    /* Design overhaul please */
-    /* Design overhaul please */
-    /* Design overhaul please */
-    /* Design overhaul please */
-    /* Design overhaul please */
-    /* Design overhaul please */
-    table {
-        margin-inline: auto;
-        border-collapse: collapse;
-        overflow: scroll;
-        max-width: 100%;
-    }
-
-    #spendings-page .spendings-summary td, #spendings-page th {
-        white-space: nowrap;
-        padding-top: var(--spacing-xs);
-        padding-bottom: var(--spacing-xs);
-        padding-inline: var(--spacing-sm);
-        vertical-align: top;
-    }
-    #spendings-page .spendings-summary td {
-        font-weight: 300;
-    }
-
-    /* Individual columns */
-    #spendings-page .spendings-summary .column-date {
-        text-align: end;
-        width: fit-content;
-    }
-    #spendings-page .spendings-summary .column-counterparty {
-        text-align: start;
-        max-width: 140px;
-        overflow: hidden;
-    }    
-    #spendings-page .spendings-summary .column-type {
-        text-align: start;
-        width: fit-content;
-    }
-    #spendings-page .spendings-summary .column-amount {
-        text-align: end;
-        width: fit-content;
-        font-weight: 500;
-    }
-    #spendings-page .spendings-summary .column-notes {
-        overflow: hidden;
-    } #spendings-page .spendings-summary .column-notes div {
-        transition: height 0.2s ease-out;
-    } #spendings-page .spendings-summary .column-notes div div {
-        white-space: normal;
-        word-break: break-word;
-        word-wrap: break-word;
-        text-align: justify;
-    }
-    
-    .column-with-overflow {
-        color: var(--color-text);
-        mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
-        mask-size: 100%;
-        transition: mask-size 0.2s ease;
-    }
-
-    .column-with-overflow.hide-mask {
-        mask-size: 125%;
-    }
-
-    @media (max-width: 777px) {
-        table th:nth-child(5) {
-            display: none;
-        }
-    }
-    @media (max-width: 600px) {
-        table th:nth-child(3) {
-            display: none;
-        }
-    }
 </style>
   
