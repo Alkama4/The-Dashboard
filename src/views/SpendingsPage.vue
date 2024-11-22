@@ -13,61 +13,63 @@
             this or anywhere else on the website. One liners babyyyy...</p>
         <table>
             <thead>
-                <th @click="sortEntries('date')" class="column-date">
-                    <div class="header-content">
-                        Date
-                        <component
-                            :is="sortIcons.date"
-                            :color="sortColumn === 'date' ? activeColor : inactiveColor"
-                            :colorHover="sortColumn === 'date' ? activeHoverColor : inactiveHoverColor"
-                            size="20px"
-                        />
-                    </div>
-                </th>
-                <th @click="sortEntries('counterparty')" class="column-counterparty">
-                    <div class="header-content">
-                        Counterparty
-                        <component
-                            :is="sortIcons.counterparty"
-                            :color="sortColumn === 'counterparty' ? activeColor : inactiveColor"
-                            :colorHover="sortColumn === 'counterparty' ? activeHoverColor : inactiveHoverColor"
-                            size="20px"
-                        />
-                    </div>
-                </th>
-                <th @click="sortEntries('type')" class="column-type">
-                    <div class="header-content">
-                        Type
-                        <component
-                            :is="sortIcons.type"
-                            :color="sortColumn === 'type' ? activeColor : inactiveColor"
-                            :colorHover="sortColumn === 'type' ? activeHoverColor : inactiveHoverColor"
-                            size="20px"
-                        />
-                    </div>
-                </th>
-                <th @click="sortEntries('amount')" class="column-amount">
-                    <div class="header-content">
-                        Amount
-                        <component
-                            :is="sortIcons.amount"
-                            :color="sortColumn === 'amount' ? activeColor : inactiveColor"
-                            :colorHover="sortColumn === 'amount' ? activeHoverColor : inactiveHoverColor"
-                            size="20px"
-                        />
-                    </div>
-                </th>
-                <th @click="sortEntries('notes')" class="column-notes">
-                    <div class="header-content">
-                        Notes
-                        <component
-                            :is="sortIcons.notes"
-                            :color="sortColumn === 'notes' ? activeColor : inactiveColor"
-                            :colorHover="sortColumn === 'notes' ? activeHoverColor : inactiveHoverColor"
-                            size="20px"
-                        />
-                    </div>
-                </th>
+                <tr>
+                    <th @click="sortEntries('date')" class="column-date">
+                        <div class="header-content">
+                            Date
+                            <component
+                                :is="sortIcons.date"
+                                :color="sortColumn === 'date' ? activeColor : inactiveColor"
+                                :colorHover="sortColumn === 'date' ? activeHoverColor : inactiveHoverColor"
+                                size="20px"
+                            />
+                        </div>
+                    </th>
+                    <th @click="sortEntries('counterparty')" class="column-counterparty">
+                        <div class="header-content">
+                            Counterparty
+                            <component
+                                :is="sortIcons.counterparty"
+                                :color="sortColumn === 'counterparty' ? activeColor : inactiveColor"
+                                :colorHover="sortColumn === 'counterparty' ? activeHoverColor : inactiveHoverColor"
+                                size="20px"
+                            />
+                        </div>
+                    </th>
+                    <th @click="sortEntries('type')" class="column-type">
+                        <div class="header-content">
+                            Type
+                            <component
+                                :is="sortIcons.type"
+                                :color="sortColumn === 'type' ? activeColor : inactiveColor"
+                                :colorHover="sortColumn === 'type' ? activeHoverColor : inactiveHoverColor"
+                                size="20px"
+                            />
+                        </div>
+                    </th>
+                    <th @click="sortEntries('amount')" class="column-amount">
+                        <div class="header-content">
+                            Amount
+                            <component
+                                :is="sortIcons.amount"
+                                :color="sortColumn === 'amount' ? activeColor : inactiveColor"
+                                :colorHover="sortColumn === 'amount' ? activeHoverColor : inactiveHoverColor"
+                                size="20px"
+                            />
+                        </div>
+                    </th>
+                    <th @click="sortEntries('notes')" class="column-notes">
+                        <div class="header-content">
+                            Notes
+                            <component
+                                :is="sortIcons.notes"
+                                :color="sortColumn === 'notes' ? activeColor : inactiveColor"
+                                :colorHover="sortColumn === 'notes' ? activeHoverColor : inactiveHoverColor"
+                                size="20px"
+                            />
+                        </div>
+                    </th>
+                </tr>
             </thead>
             <tbody ref="placeForEntries">
                 <!-- Dynamically rendering SpendingsEntry components -->
@@ -120,10 +122,10 @@
                 ],
                 sortColumn: 'date',     // Default to date 
                 sortDirection: 'desc',  // Default to descending
-                inactiveColor: '#555',
-                inactiveHoverColor: '#bbb',
-                activeColor: 'var(--color-secondary)',
-                activeHoverColor: 'color-mix(in srgb, var(--color-secondary) 50%, #fff 50%)',
+                inactiveColor: 'var(--color-text-hidden)',
+                inactiveHoverColor: 'var(--color-text-light)',
+                activeColor: 'var(--color-primary)',
+                activeHoverColor: 'var(--color-primary-hover)',
                 sortIcons: {
                     date: IconSortDown, // Default to date 
                     counterparty: IconSortBoth,
@@ -247,7 +249,7 @@ th {
     padding: var(--spacing-xs) var(--spacing-sm);
     text-align: start;
     color: var(--color-text);
-    font-weight: 900;
+    /* font-weight: 900; */
     user-select: none;
     vertical-align: middle; /* Ensures proper alignment in table layout */
 }

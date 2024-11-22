@@ -110,6 +110,10 @@
         color: var(--color-primary);
         padding: var(--spacing-sm);
         padding-left: 0;
+        transition: color 0.2s ease;
+    }
+    .website-name:hover {
+        color: var(--color-primary-hover);
     }
 
     .mobile-button {

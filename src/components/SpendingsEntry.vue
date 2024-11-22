@@ -27,7 +27,7 @@
                         <button class="button-delete" @click.stop="deleteEntry"><IconTrash size="18px" colorHover="white"/></button>
                         <button disabled="true" class="button-duplicate" @click.stop="duplicateEntry"><IconCopy size="18px"/></button>
                         <button class="button-edit" @click.stop="editEntry"><IconEdit size="18px"/></button>
-                        <button class="button-details" @click.stop="showDetails"><IconDetails size="18px"/>More details</button>
+                        <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px" color="#e9ebf0" colorHover="white"/>More details</button>
                     </div>
         
                     <ModalWindow
@@ -307,10 +307,6 @@ export default {
     } 
     .button-delete:active {
         background-color: var(--color-button-delete-active);
-    }
-
-    .button-details {
-        background-color: var(--color-primary);
     }
 
     @media (max-width: 777px) {

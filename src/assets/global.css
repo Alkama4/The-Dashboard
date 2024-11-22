@@ -38,24 +38,42 @@
         - 666px: top bar
         - 600px: Type
     */
-    
+
+    /* Always one color */
+    --color-text-white: #e9ebf0;
+    --color-text-white-hover: white;
+    --color-text-black: #292929;
+    --color-text-black-hover: black;
 
     /* - - - - - - - - - - - - - - - - */
     /* - - - - - LIGHT  MODE - - - - - */
     /* - - - - - - - - - - - - - - - - */
     /* General colors */
     --color-primary: #007BFF;
+    --color-primary-hover: #007BFF;
+    --color-primary-active: #007BFF;
+
     --color-secondary: #28A745;
+    --color-secondary-hover: #4ece6c;
+    --color-secondary-active: #35b854;
+
     --color-accent: #17A2B8;
+    --color-accent-hover: #39c6db;
+    --color-accent-active: #2cbbd1;
+    
+    --color-positive: green;
+    --color-negative: red;
+
+    /* Text */
     --color-text: #292929;
     --color-text-bold: #000000;
     --color-text-light: #666666;
     --color-text-lighter: #969696;
     --color-text-hidden: #c4c4c4;
-    --color-icon: #000000;
+    --color-text-inverted: #e9ebf0;
+    --color-text-inverted-hover: #ffffff;
+
     --color-border: hsla(0, 0%, 0%, 0.25);
-    --color-positive: green;
-    --color-negative: red;
 
     /* Backgrounds */
     --color-background: #f5f5f5;
@@ -64,16 +82,15 @@
     --color-background-card: #ffffff;
 
     /* Button colors */
-    --color-button-general: #ddd;
-    --color-button-general-hover: #d3d3d3;
-    --color-button-general-active: #ccc;
-    --color-button-general-disabled: #ccc;
+    --color-button-general: hsl(0, 0%, 80%);
+    --color-button-general-hover: hsl(0, 0%, 88%);
+    --color-button-general-active: hsl(0, 0%, 84%);
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 0%, 0.0666);
 
-    --color-button-nav: var(--color-text-lighter);
+    --color-button-nav: var(--color-text-light);
     --color-button-nav-hover: var(--color-text-bold);
 
     --color-button-delete-hover: rgb(212, 37, 37);
@@ -86,16 +103,30 @@
     /* - - - - - - - - - - - - - - - */
     /* General colors */
     --color-primary: #155fb4;
+    --color-primary-hover: #3389eb;
+    --color-primary-active: #186ccc;
+
     --color-secondary: #eb882c;
+    --color-secondary-hover: #ffa754;
+    --color-secondary-active: #f59943;
+
     --color-accent: #00ffdd;
+    --color-accent-hover: #c5fff7;
+    --color-accent-active: #75ffed;
+
+    --color-positive: rgb(11, 190, 107);
+    --color-negative: rgb(185, 70, 70);
+    
+    /* Text */
     --color-text: #e9ebf0;
     --color-text-bold: #fff;
     --color-text-light: #aaa;
     --color-text-lighter: #888;
     --color-text-hidden: #555;
+    --color-text-inverted: #292929;
+    --color-text-inverted-hover: #000;
+
     --color-border: hsla(0, 0%, 100%, 0.25);
-    --color-positive: rgb(11, 190, 107);
-    --color-negative: rgb(185, 70, 70);
     
     /* Backgrounds */
     --color-background: #111;
@@ -107,13 +138,12 @@
     --color-button-general: #282828;
     --color-button-general-hover: #333;
     --color-button-general-active: #303030;
-    --color-button-general-disabled: #222;
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
 
-    --color-button-nav: var(--color-text-lighter);
+    --color-button-nav: var(--color-text-light);
     --color-button-nav-hover: var(--color-text);
 
     --color-button-delete-hover: rgb(187, 30, 30);
@@ -166,6 +196,7 @@ img {
     max-width: 100%;
 }
 
+/* Default button */
 button {
     display: flex;
     flex-direction: row;
@@ -202,11 +233,35 @@ button:active {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 button:disabled {
-    background-color: var(--color-button-general-disabled);
+    background-color: var(--color-button-general);
     cursor: not-allowed;
     opacity: 0.6;
 } button:disabled:hover {
     box-shadow: 0 0 0 transparent;
+}
+
+/* Button primary */
+button.color-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
+} 
+button.color-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white-hover);
+}
+button.color-primary:active {
+    background-color: var(--color-primary-active);
+}
+
+/* Button secondary */
+button.color-secondary {
+    background-color: var(--color-secondary);
+} 
+button.color-secondary:hover {
+    background-color: var(--color-secondary-hover);
+}
+button.color-secondary:active {
+    background-color: var(--color-secondary-active);
 }
 
 button.button-simple {

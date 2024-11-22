@@ -51,6 +51,11 @@ export default {
         const parentElement = this.$el.parentNode;
 
         if (parentElement) {
+            // Check if the parent is already hovered
+            if (parentElement.matches(":hover") && !this.isParentDisabled) {
+                this.currentColor = this.colorHover;
+            }
+
             parentElement.addEventListener("mouseenter", this.onParentMouseEnter);
             parentElement.addEventListener("mouseleave", this.onParentMouseLeave);
         }
