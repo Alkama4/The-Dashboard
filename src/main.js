@@ -3,8 +3,9 @@ import App from './App.vue';
 import './assets/poppins.css';
 import './assets/global.css';
 import router from './router';
+import VueSelect from "vue-select";
 
-const app = createApp(App);
-
-app.use(router);
-app.mount('#app');
+createApp(App)
+    .use(router)
+    .component("v-select", VueSelect)
+    .mount('#app');

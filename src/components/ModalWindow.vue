@@ -10,15 +10,15 @@
                 <!-- Conditional Content -->
                 <div v-if="type === 'details'">
                     <div class="details-modal-content">
-                        <div style="grid-area: a;">
+                        <div style="grid-area: a; max-width: 25ch;">
                             <h4>ID:</h4>
-                            <span>{{ data.id }}</span>
+                            <span>{{ data.entryId }}</span>
                             <h4>Direction:</h4>
-                            <span>{{ data.isIncome ? 'Income' : 'Expense' }}</span>
+                            <span>{{ data.direction }}</span>
                             <h4>Date:</h4> 
                             <span>{{ data.formattedDate }}</span>
                         </div>
-                        <div style="grid-area: b;">
+                        <div style="grid-area: b; max-width: 25ch;">
                             <h4>Counterparty:</h4> 
                             <span>{{ data.counterparty }}</span>
                             <h4>Type:</h4> 
@@ -26,15 +26,15 @@
                             <h4>Amount:</h4> 
                             <span>{{ data.amount ? `${data.amount.toFixed(2)} €` : '' }}</span>
                         </div>
-                        <div style="grid-area: c;">
+                        <div style="grid-area: c; max-width: 50ch;">
                             <h4>Notes:</h4> 
                             <span>{{ data.notes }}</span>
                         </div>
                     </div>
                 </div>
 
-                <div v-if="type === 'edit'">
-                    <p>Under construction... Check back later :)</p>
+                <div v-if="type === 'edit'" class="edit-modal">
+                    <EntryForm @submit="handleEditSubmit" :initialData="data"/>
                 </div>
                 
                 <div v-if="type === 'duplicate'">
@@ -42,9 +42,12 @@
                 </div>
                 
                 <div v-if="type === 'delete'">
-                    <p>Are you sure you want to delete this entry? This action cannot be undone. {{ id }}</p>
-                    <button @click="deleteEntry">Delete</button>
-                    <button @click="closeModal">Cancel</button>
+                    <p style="margin-left: 0;"> Are you sure you want to delete this entry? <br>
+                        <strong style="color: var(--color-negative)">This action cannot be undone.</strong> {{ id }}</p>
+                    <div class="delete-buttons">
+                        <button class="color-primary" @click="closeModal">Cancel</button>
+                        <button class="color-warning" @click="deleteEntry">Delete</button>
+                    </div>
                 </div>
                 <!-- Default Slot for Any Other Content -->
                 <slot></slot>
@@ -55,11 +58,13 @@
 
 <script>
 import IconCross from './icons/IconCross.vue';
+import EntryForm from './EntryForm.vue';
 
 export default {
     name: "ModalWindow",
     components: {
         IconCross,
+        EntryForm,
     },
     props: {
         header: { type: String, required: true },
@@ -72,7 +77,15 @@ export default {
         },
         deleteEntry() {
             this.$emit("delete", this.data.id); // Emit delete event with the entry ID
+            this.$emit("close");                // And close the modal
         },
+        handleEditSubmit(formData) {
+            console.log("Saving edited data:", formData);
+        },
+        handleCopySubmit(formData) {
+            console.log("Saving a duplicatea of something:", formData);
+            // Muista vaihtaa id. Oikeestaan menee varmaa parhaiten ku ei vaan ilmota sitä ne se menee uudeks
+        }
     },
 };
 </script>
@@ -97,6 +110,7 @@ export default {
     background: var(--color-background-card);
     border-radius: var(--border-radius-medium);
     width: var(--width-modal);
+    min-width: fit-content;
     margin-inline: 8vw;
     padding: var(--spacing-lg);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -116,7 +130,25 @@ export default {
 .modal-body {
     max-height: 70vh;
     overflow-y: auto;
+    white-space: wrap;
 }
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* - - - - - - - - - - - */
+/* - - - Specific  - - - */
+/* - - - - - - - - - - - */
 
 /* Details specific */
 .details-modal-content {
@@ -131,21 +163,14 @@ export default {
     margin-bottom: 0;
 }
 .details-modal-content span {
-    white-space: wrap;
     font-weight: 400;
     color: var(--color-text-light);
 }
 
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Delete modal */
+.delete-buttons {
+    display: flex;
+    flex-direction: row;
 }
+
 </style>

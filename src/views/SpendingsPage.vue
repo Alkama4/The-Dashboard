@@ -76,7 +76,7 @@
                 <SpendingsEntry
                     v-for="entry in entries"
                     :key="entry.id"
-                    :id="entry.id"
+                    :entryId="entry.entryId"
                     :direction="entry.direction"
                     :date="entry.date"
                     :counterparty="entry.counterparty"
@@ -110,15 +110,15 @@
             return {
                 // Initial entries to display, wipe when we get to that point
                 entries: [
-                    { id: 1, direction: false, date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
-                    { id: 2, direction: true, date: new Date('2023-12-24'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
-                    { id: 3, direction: false, date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
-                    { id: 4, direction: false, date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
-                    { id: 69, direction: false, date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
-                    { id: 5, direction: false, date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
-                    { id: 6, direction: false, date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
-                    { id: 7, direction: false, date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
-                    { id: 689, direction: false, date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
+                    { entryId: 1, direction: "expense", date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
+                    { entryId: 2, direction: "income", date: new Date('2023-12-24'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
+                    { entryId: 3, direction: "expense", date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
+                    { entryId: 4, direction: "expense", date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
+                    { entryId: 69, direction: "expense", date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
+                    { entryId: 5, direction: "expense", date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
+                    { entryId: 6, direction: "expense", date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
+                    { entryId: 7, direction: "expense", date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
+                    { entryId: 689, direction: "expense", date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
                 ],
                 sortColumn: 'date',     // Default to date 
                 sortDirection: 'desc',  // Default to descending
@@ -148,8 +148,8 @@
             loadEntry() {
                 const randomString = (length) => Math.random().toString(36).substring(2, 2 + length);
                 const newEntry = {
-                    id: this.validateID(this.entries.length + 1), // Incremental ID that is validated
-                    direction: Math.random() < 0.5,
+                    entryId: this.validateID(this.entries.length + 1), // Incremental ID that is validated
+                    direction: (Math.random() < 0.5 ? "expense" : "income"),
                     date: new Date(
                         2000 + Math.floor(Math.random() * 23), // Random year between 2000 and 2023
                         Math.floor(Math.random() * 12),       // Random month
@@ -211,10 +211,12 @@
 
                     // Handle numerical comparison (amount)
                     if (column === 'amount') {
-                        // Ensure sorting based on the amount and direction (income/expense)
+                        // Map direction to numerical values for sorting
+                        const getDirectionMultiplier = (direction) => direction === 'income' ? 1 : -1;
+
                         return this.sortDirection === 'asc'
-                            ? (a.amount * (a.direction ? 1 : -1)) - (b.amount * (b.direction ? 1 : -1))
-                            : (b.amount * (b.direction ? 1 : -1)) - (a.amount * (a.direction ? 1 : -1));
+                            ? (a.amount * getDirectionMultiplier(a.direction)) - (b.amount * getDirectionMultiplier(b.direction))
+                            : (b.amount * getDirectionMultiplier(b.direction)) - (a.amount * getDirectionMultiplier(a.direction));
                     }
 
                     // Handle numerical comparison (e.g. amount)

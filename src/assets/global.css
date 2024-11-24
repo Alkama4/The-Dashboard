@@ -48,6 +48,9 @@
     /* - - - - - - - - - - - - - - - - */
     /* - - - - - LIGHT  MODE - - - - - */
     /* - - - - - - - - - - - - - - - - */
+    /* Mode */
+    color-scheme: light;
+
     /* General colors */
     --color-primary: #007BFF;
     --color-primary-hover: #007BFF;
@@ -73,13 +76,14 @@
     --color-text-inverted: #e9ebf0;
     --color-text-inverted-hover: #ffffff;
 
-    --color-border: hsla(0, 0%, 0%, 0.25);
+    --color-border: hsla(0, 0%, 0%, 0.1);
 
     /* Backgrounds */
     --color-background: #f5f5f5;
     --color-background-top-bar: #f5f5f5;
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
-    --color-background-card: #ffffff;
+    --color-background-card: #f5f5f5;
+    --color-background-input: #ffffff;
 
     /* Button colors */
     --color-button-general: hsl(0, 0%, 80%);
@@ -101,9 +105,12 @@
     /* - - - - - - - - - - - - - - - */
     /* - - - - - DARK MODE - - - - - */
     /* - - - - - - - - - - - - - - - */
+    /* Mode */
+    color-scheme: dark;
+
     /* General colors */
     --color-primary: #155fb4;
-    --color-primary-hover: #3389eb;
+    --color-primary-hover: #2479db;
     --color-primary-active: #186ccc;
 
     --color-secondary: #eb882c;
@@ -126,13 +133,14 @@
     --color-text-inverted: #292929;
     --color-text-inverted-hover: #000;
 
-    --color-border: hsla(0, 0%, 100%, 0.25);
+    --color-border: hsla(0, 0%, 100%, 0.1);
     
     /* Backgrounds */
     --color-background: #111;
     --color-background-top-bar: #111;
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0.3);
-    --color-background-card: #181818;
+    --color-background-card: #111;
+    --color-background-input: #1f1f1f;
 
     /* Button colors */
     --color-button-general: #282828;
@@ -264,10 +272,46 @@ button.color-secondary:active {
     background-color: var(--color-secondary-active);
 }
 
+/* Button warning */
+button.color-warning:hover {
+    background-color: var(--color-button-delete-hover);
+    color: var(--color-text-white-hover);
+}
+button.color-warning:active {
+    background-color: var(--color-button-delete-active);
+}
+
+/* Button simple */
 button.button-simple {
     box-shadow: 0 0 0 transparent;
     background-color: transparent;
     padding: 0;
+}
+
+
+/* Inputs */
+input, textarea{
+    background-color: var(--color-background-input);
+    padding: 6px;
+    width: calc(100% - 14px);       /* 2 x 6px ja 2 lisää koska v-select?? */
+    max-width: calc(100% - 14px);   /* 2 x 6px ja 2 lisää koska v-select?? */
+
+    color: var(--color-text-light);
+    font-size: var(--font-size-base);
+
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-border);
+    border-radius: var(--border-radius-small);
+}
+
+textarea {
+    resize: vertical;
+    height: 66px;
+}
+
+input[type="radio"] {
+    width: fit-content;
 }
 
 /* - - - - QUICK AND DIRTY CLASSES - - - - */

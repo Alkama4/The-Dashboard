@@ -6,6 +6,7 @@
             </div>
             <div class="top-bar-side">
                 <router-link class="nav-button desktop-button" to="/spendings">Spendings</router-link>
+                <router-link class="nav-button desktop-button" to="/newentry">New entry</router-link>
                 <router-link class="nav-button desktop-button" to="/about">About page</router-link>
                 <router-link class="nav-button desktop-button" to="/settings">Settings</router-link>
                 <button @click="$emit('toggle-dark-mode')" class="nav-button desktop-button square-button">
@@ -20,6 +21,7 @@
     <div @click="toggleMenu()" ref="mobileNav" class="mobile-nav">
         <router-link class="website-name" to="/" style="padding-bottom: var(--spacing-md);">The Dashboard</router-link>
         <router-link class="nav-button" to="/spendings">Spendings</router-link>
+        <router-link class="nav-button" to="/newentry">New entry</router-link>
         <router-link class="nav-button" to="/about">About page</router-link>
         <router-link class="nav-button" to="/settings">Settings</router-link>
         <button @click="$emit('toggle-dark-mode'); toggleMenu()" class="nav-button square-button">
@@ -174,8 +176,9 @@
         display: block;
         font-size: var(--font-size-large);
         opacity: 0;
-        transform: translateX(100%);
+        transform: translateX(100px);
         transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+        transition-delay: 0.3s;
     }
 
     .mobile-nav.expanded .nav-button {
@@ -183,26 +186,20 @@
         transform: translateX(0);
     }
 
-    .mobile-nav .nav-button:nth-child(2) {
+    .mobile-nav.expanded .nav-button:nth-child(2) {
         transition-delay: 0.05s;
     }
 
-    .mobile-nav .nav-button:nth-child(3) {
+    .mobile-nav.expanded .nav-button:nth-child(3) {
         transition-delay: 0.1s;
     }
 
-    .mobile-nav .nav-button:nth-child(4) {
+    .mobile-nav.expanded .nav-button:nth-child(4) {
         transition-delay: 0.15s;
     }
 
-    .mobile-nav .nav-button:nth-child(5) {
+    .mobile-nav.expanded .nav-button:nth-child(5) {
         transition-delay: 0.2s;
-    }
-
-    /* Ensure buttons stay in place when nav is collapsed */
-    .mobile-nav:not(.expanded) .nav-button {
-        opacity: 0;
-        transform: translateX(100%);
     }
 
 </style>
