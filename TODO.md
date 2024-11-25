@@ -2,18 +2,20 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- Fix modal overflow and z-issues
+- Pick your poison
 
 ### Features to add
 - When opening an entry:
     - Auto collapse when opening an other entry
         - And when sorting so make it pagewide
     - Show the items within a transaction
+    - Toggles an area which is shown when hovering but expands further
 - Navigation
     - link highlight when page open
     - Increase top bar margins
 - Finish the modal windows:
     - Edit and duplicate
+    - Custom submit text eg. "Create a dubplicate", "Confirm edits"
 - popup notification
 - Home on splash screen
     - Sää
@@ -29,7 +31,9 @@ In here I will collect my notes about this website and list the stuff that need 
         - Edit
         - New
         - Delete
-
+- Form QOL
+    - autofill
+    - calculator / multiple in one entry
 
 ### Known issues
 - Performance issues on mobile when expanding entries

@@ -1,52 +1,41 @@
 <template>
     <form @submit.prevent="handleSubmit">
-        <div class="form-wide">
+        <div class="grid-direction">
             <label for="direction">Direction:</label><br>
-            <input 
-                type="radio" 
-                id="radioExpense" 
-                name="direction" 
-                value="expense" 
-                v-model="formData.direction" 
-            />
-            <label for="radioExpense" class="label-normal-text">Expense</label>
-            
-            <input 
-                type="radio" 
-                id="radioIncome" 
-                name="direction" 
-                value="income" 
-                v-model="formData.direction" 
-            />
-            <label for="radioIncome" class="label-normal-text">Income</label>
+            <SliderToggle v-model="formData.direction" />
         </div>
-        <div>
+        <div class="grid-date">
             <label for="date">Date:</label><br>
             <input v-model="formattedDate" id="date" type="date" required/>
         </div>
-        <div>
-            <label for="amount">Amount:</label><br>
-            <input v-model="formData.amount" id="amount" type="number" step="0.01" placeholder="Type value here..." required/>
-        </div>
-        <div>
-            <label for="type">Type:</label><br>
-            <v-select v-model="formData.type" label="type" :options="spendingsData.typeOptions" taggable></v-select>
-        </div>
-        <div>
+        <div class="grid-counterparty">
             <label for="counterparty">Counterparty:</label><br>
-            <v-select v-model="formData.counterparty" label="counterparty" :options="spendingsData.counterpartyOptions" taggable></v-select>
+            <v-select v-model="formData.counterparty" label="counterparty" :options="spendingsData.counterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
         </div>
-        <div class="form-wide">
+        <div class="grid-amount">
+            <label for="amount">Amount:</label><br>
+            <input v-model="formData.amount" id="amount" type="number" step="0.01" placeholder="Type value..." required/>
+        </div>
+        <div class="grid-type">
+            <label for="type">Type:</label><br>
+            <v-select v-model="formData.type" label="type" :options="spendingsData.typeOptions" placeholder="Select type..." taggable></v-select>
+        </div>
+        <div class="grid-notes">
             <label for="notes">Notes:</label><br>
-            <textarea v-model="formData.notes" id="notes" placeholder="Add notes/description here..."/>
+            <textarea v-model="formData.notes" id="notes" placeholder="Type notes/description..."/>
         </div>
-        <button type="submit" class="color-primary center form-wide">Submit</button>
+        <button type="submit" class="color-primary center grid-submit">Submit</button>
     </form>
 </template>
 
 
 <script>
+import SliderToggle from './SliderToggle.vue';  // Adjust path if necessary
+
 export default {
+    components: {
+        SliderToggle
+    },
     props: {
         initialData: {
             type: Object,
@@ -81,17 +70,18 @@ export default {
             return returnDate.toISOString().split('T')[0];
         },
         spendingsData() {
-            // Update to get the data
+            // Update to get the data (All we need is conterparty and type, maybe id to differentiate. Don't query all!)
             const data = [
-                { id: 1, direction: false, date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
-                { id: 2, direction: true, date: new Date('2023-12-24'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
-                { id: 3, direction: false, date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
-                { id: 4, direction: false, date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
-                { id: 69, direction: false, date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
-                { id: 5, direction: false, date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
-                { id: 6, direction: false, date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
-                { id: 7, direction: false, date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
-                { id: 689, direction: false, date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
+                { entryId: 1, direction: "expense", date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
+                { entryId: 2, direction: "income", date: new Date('2023-12-28'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
+                { entryId: 3, direction: "expense", date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
+                { entryId: 4, direction: "expense", date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
+                { entryId: 8, direction: "expense", date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
+                { entryId: 5, direction: "expense", date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
+                { entryId: 6, direction: "expense", date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
+                { entryId: 7, direction: "expense", date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
+                { entryId: 9, direction: "expense", date: new Date('2024-1-3'), counterparty: "K-Citymarket", type: "Ruokaostokset", amount: 4.84, notes: "Jotaki safkaa" },
+                { entryId: 1234, direction: "expense", date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
             ];
 
             // Helper function to count frequency of items
@@ -132,29 +122,52 @@ export default {
 <style>
 form {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-inline: 2px;
+    grid-template-columns: 202px 2fr;
+    grid-template-areas:
+        "direction direction"
+        "date counterparty"
+        "amount type"
+        "notes notes"
+        "submit submit";
     gap: var(--spacing-md) var(--spacing-md);
+    margin-inline: auto;
+    max-width: 60ch;
 }
-.form-wide {
-    grid-column: 1 / span 2;
+
+.grid-direction {
+    grid-area: direction;
 }
+.grid-date {
+    grid-area: date;
+}
+.grid-counterparty {
+    grid-area: counterparty;
+}
+.grid-amount {
+    grid-area: amount;
+}
+.grid-type {
+    grid-area: type;
+}
+.grid-notes {
+    grid-area: notes;
+}
+.grid-submit {
+    grid-area: submit;
+}
+
 @media (max-width: 666px) {
     form {
         grid-template-columns: 1fr !important;
+        grid-template-areas:
+        "direction"
+        "date"
+        "amount"
+        "counterparty"
+        "type"
+        "notes"
+        "submit";
     }
-    .form-wide {
-        grid-column: 1;
-    }
-}
-
-label {
-    font-weight: 600;
-    color: var(--color-text);
-}
-.label-normal-text {
-    color: var(--color-text-light);
-    font-weight: 400;
 }
 
 /* v-select */
@@ -164,13 +177,22 @@ label {
     border-style: solid;
     border-radius: var(--border-radius-small);
     border-color: var(--color-border);
+    transition: border-color 0.1s ease-out;
     color: var(--color-text-light);
+    height: 37px;
+    min-width: 275px;
+}
+.vs__dropdown-toggle:hover {
+    border-color: var(--color-border-hover);
 }
 .v-select .vs__placeholder {  /* Doesn't work */
     color: var(--color-text-lighter)
 }
 .vs__selected {
     color: var(--color-text-light);
+}
+.v-select input {
+    border: 0px transparent solid !important;
 }
 .vs__dropdown-menu {
     color: var(--color-text-light);
@@ -190,6 +212,12 @@ label {
 .vs__dropdown-option--highlight {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white-hover);
+}
+.vs__search {
+    color: var(--color-text-placeholder);
+}
+.vs__search:focus {
+    color: var(--color-text-placeholder);
 }
 
 </style>

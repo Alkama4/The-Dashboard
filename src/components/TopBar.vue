@@ -128,7 +128,7 @@
         aspect-ratio: 1;
     }
 
-    @media (max-width: 666px)  {
+    @media (max-width: 777px)  {
         .desktop-button {
             display: none;
         }
@@ -136,7 +136,7 @@
             display: inline-flex;
         }
     }
-    @media (min-width: 667px)  {
+    @media (min-width: 778px)  {
         .mobile-nav {
             display: none !important;
         }

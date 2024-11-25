@@ -111,14 +111,15 @@
                 // Initial entries to display, wipe when we get to that point
                 entries: [
                     { entryId: 1, direction: "expense", date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
-                    { entryId: 2, direction: "income", date: new Date('2023-12-24'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
+                    { entryId: 2, direction: "income", date: new Date('2023-12-28'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
                     { entryId: 3, direction: "expense", date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
                     { entryId: 4, direction: "expense", date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
-                    { entryId: 69, direction: "expense", date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
+                    { entryId: 8, direction: "expense", date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
                     { entryId: 5, direction: "expense", date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
                     { entryId: 6, direction: "expense", date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
                     { entryId: 7, direction: "expense", date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
-                    { entryId: 689, direction: "expense", date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
+                    { entryId: 9, direction: "expense", date: new Date('2024-1-3'), counterparty: "K-Citymarket", type: "Ruokaostokset", amount: 4.84, notes: "Jotaki safkaa" },
+                    { entryId: 1234, direction: "expense", date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
                 ],
                 sortColumn: 'date',     // Default to date 
                 sortDirection: 'desc',  // Default to descending
