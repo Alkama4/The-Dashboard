@@ -79,6 +79,7 @@ export default {
     align-items: center;
     justify-content: center;
     z-index: 100;
+    pointer-events: none;
 }
 
 .slider-text {
@@ -107,11 +108,17 @@ export default {
     position: absolute;
     color: white;
     transition: transform 0.25s ease-out,
-                background-color 0.25s ease-out;
+                background-color 0.1s ease-out;
+}
+.slider-indicator:hover {
+    background-color: var(--color-negative-hover);
 }
 
 .income-selected {
     transform: translateX(100%);
     background-color: var(--color-positive);
+}
+.income-selected:hover {
+    background-color: var(--color-positive-hover);
 }
 </style>

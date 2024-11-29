@@ -32,7 +32,7 @@
                             </div>
                             <div style="grid-area: c; max-width: 50ch;">
                                 <h4>Notes:</h4> 
-                                <span :style="data.notes ? '' : 'color: var(--color-text-hidden);'">{{ data.notes || '(No notes found)' }}</span>
+                                <span :style="data.notes ? '' : 'color: var(--color-text-hidden);'">{{ data.notes || "(This entry doesn't have notes)" }}</span>
                             </div>
                         </div>
                     </div>
@@ -103,6 +103,7 @@ export default {
     right: 0;
     bottom: 0;
     background: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    backdrop-filter: blur(8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,6 +127,7 @@ export default {
     position: relative;
     animation: fadeInUp 0.3s ease-out;
     max-height: 70vh;
+    width: fit-content
 }
 
 .inner-modal-content {

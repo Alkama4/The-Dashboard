@@ -150,7 +150,7 @@
         width: calc(100vw - var(--spacing-lg) * 2);
         height: calc(100vh - var(--spacing-lg) * 2);
         background-color: var(--color-background-mobile-nav);
-        backdrop-filter: blur(50px);
+        backdrop-filter: blur(64px);
         z-index: var(--z-mobile-nav);
         top: 0;
         right: 0;

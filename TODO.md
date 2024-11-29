@@ -2,7 +2,7 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- Pick your poison
+- Notificatino z-problem with mobile menu
 
 ### Features to add
 - When opening an entry:

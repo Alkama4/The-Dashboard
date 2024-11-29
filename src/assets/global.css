@@ -26,6 +26,7 @@
 
     /* Z-indexes */
     --z-mobile-nav: 400;
+    --z-notification: 350;
     --z-modal: 300;
     --z-top-bar: 200;
     --z-app: 100;
@@ -66,7 +67,9 @@
     --color-accent-active: #2cbbd1;
     
     --color-positive: green;
+    --color-positive-hover: rgb(10, 150, 10);
     --color-negative: red;
+    --color-negative-hover: rgb(255, 63, 63);
 
     /* Text */
     --color-text: #292929;
@@ -124,8 +127,10 @@
     --color-accent-hover: #c5fff7;
     --color-accent-active: #75ffed;
 
-    --color-positive: rgb(11, 190, 107);
+    --color-positive: rgb(20, 165, 97);
+    --color-positive-hover: rgb(11, 190, 107);
     --color-negative: rgb(185, 70, 70);
+    --color-negative-hover: rgb(211, 79, 79);
     
     /* Text */
     --color-text: #e9ebf0;
@@ -336,6 +341,56 @@ input[type="radio"] {
 ::placeholder {
     color: var(--color-text-placeholder);
     opacity: 1;
+}
+
+/* hammering v-select to match my styling */
+.vs__dropdown-toggle {
+    background-color: var(--color-background-input);
+    border-width: 1px;
+    border-style: solid;
+    border-radius: var(--border-radius-small);
+    border-color: var(--color-border);
+    transition: border-color 0.1s ease-out;
+    color: var(--color-text-light);
+    height: 37px;
+    min-width: 275px;
+}
+.vs__dropdown-toggle:hover {
+    border-color: var(--color-border-hover);
+}
+.v-select .vs__placeholder {  /* Doesn't work */
+    color: var(--color-text-lighter)
+}
+.vs__selected {
+    color: var(--color-text-light);
+}
+.v-select input {
+    border: 0px transparent solid !important;
+}
+.vs__dropdown-menu {
+    color: var(--color-text-light);
+    background-color: var(--color-background-input);
+    border-width: 1px;
+    border-style: solid;
+    border-bottom-left-radius: var(--border-radius-small);
+    border-bottom-right-radius: var(--border-radius-small);
+    border-color: var(--color-border);
+}
+.vs__actions {
+    padding-right: 10px;
+}
+.vs__clear, .vs__open-indicator{
+    fill: var(--color-text-lighter);
+}
+.vs__dropdown-option--highlight {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white-hover);
+}
+.vs__search {
+    color: var(--color-text-placeholder);
+}
+.vs__search:focus {
+    color: var(--color-text-placeholder);
 }
 
 /* - - - - QUICK AND DIRTY CLASSES - - - - */

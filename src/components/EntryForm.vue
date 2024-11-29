@@ -10,7 +10,7 @@
         </div>
         <div class="grid-counterparty">
             <label for="counterparty">Counterparty:</label><br>
-            <v-select v-model="formData.counterparty" label="counterparty" :options="spendingsData.counterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
+            <v-select v-model="formData.counterparty" label="counterparty" :options="activeCounterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
         </div>
         <div class="grid-amount">
             <label for="amount">Amount:</label><br>
@@ -18,7 +18,7 @@
         </div>
         <div class="grid-type">
             <label for="type">Type:</label><br>
-            <v-select v-model="formData.type" label="type" :options="spendingsData.typeOptions" placeholder="Select type..." taggable></v-select>
+            <v-select v-model="formData.type" label="type" :options="activeTypeOptions" placeholder="Select type..." taggable></v-select>
         </div>
         <div class="grid-notes">
             <label for="notes">Notes:</label><br>
@@ -60,6 +60,9 @@ export default {
                 return;
             }
 
+            // Display a notification
+            this.$root.notify("Entry created!", "success");
+
             this.$emit('submit', this.formData); // Send the populated formData to parent
         },
     },
@@ -81,38 +84,41 @@ export default {
                 { entryId: 6, direction: "expense", date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
                 { entryId: 7, direction: "expense", date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
                 { entryId: 9, direction: "expense", date: new Date('2024-1-3'), counterparty: "K-Citymarket", type: "Ruokaostokset", amount: 4.84, notes: "Jotaki safkaa" },
-                { entryId: 1234, direction: "expense", date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
             ];
 
-            // Helper function to count frequency of items
-            const countFrequency = (arr, key) => {
-                return arr.reduce((acc, item) => {
-                    const value = item[key];
-                    acc[value] = acc[value] ? acc[value] + 1 : 1;
+            const filterByDirection = (direction) => data.filter(item => item.direction === direction);
+
+            const generateOptions = (filteredData, key) => {
+                const frequencyMap = filteredData.reduce((acc, item) => {
+                    acc[item[key]] = (acc[item[key]] || 0) + 1;
                     return acc;
                 }, {});
+
+                return Object.entries(frequencyMap)
+                    .sort(([, a], [, b]) => b - a)
+                    .map(([key]) => key);
             };
 
-            // Count frequency of 'type' and 'counterparty'
-            const typeFrequency = countFrequency(data, 'type');
-            const counterpartyFrequency = countFrequency(data, 'counterparty');
-
-            // Function to sort by frequency
-            const sortByFrequency = (obj) => {
-                return Object.entries(obj)
-                    .sort(([, a], [, b]) => b - a)  // Sort by frequency, descending
-                    .map(([key]) => key);           // Get sorted keys
-            };
-
-            // Sort the 'type' and 'counterparty' options by frequency
-            const sortedTypes = sortByFrequency(typeFrequency);
-            const sortedCounterparties = sortByFrequency(counterpartyFrequency);
-
-            // Return the sorted options for the select
             return {
-                typeOptions: sortedTypes,
-                counterpartyOptions: sortedCounterparties
+                expense: {
+                    counterpartyOptions: generateOptions(filterByDirection("expense"), "counterparty"),
+                    typeOptions: generateOptions(filterByDirection("expense"), "type"),
+                },
+                income: {
+                    counterpartyOptions: generateOptions(filterByDirection("income"), "counterparty"),
+                    typeOptions: generateOptions(filterByDirection("income"), "type"),
+                }
             };
+        },
+        activeCounterpartyOptions() {
+            return this.formData.direction === 'expense'
+                ? this.spendingsData.expense.counterpartyOptions
+                : this.spendingsData.income.counterpartyOptions;
+        },
+        activeTypeOptions() {
+            return this.formData.direction === 'expense'
+                ? this.spendingsData.expense.typeOptions
+                : this.spendingsData.income.typeOptions;
         }
     }
 };
@@ -168,56 +174,6 @@ form {
         "notes"
         "submit";
     }
-}
-
-/* v-select */
-.vs__dropdown-toggle {
-    background-color: var(--color-background-input);
-    border-width: 1px;
-    border-style: solid;
-    border-radius: var(--border-radius-small);
-    border-color: var(--color-border);
-    transition: border-color 0.1s ease-out;
-    color: var(--color-text-light);
-    height: 37px;
-    min-width: 275px;
-}
-.vs__dropdown-toggle:hover {
-    border-color: var(--color-border-hover);
-}
-.v-select .vs__placeholder {  /* Doesn't work */
-    color: var(--color-text-lighter)
-}
-.vs__selected {
-    color: var(--color-text-light);
-}
-.v-select input {
-    border: 0px transparent solid !important;
-}
-.vs__dropdown-menu {
-    color: var(--color-text-light);
-    background-color: var(--color-background-input);
-    border-width: 1px;
-    border-style: solid;
-    border-bottom-left-radius: var(--border-radius-small);
-    border-bottom-right-radius: var(--border-radius-small);
-    border-color: var(--color-border);
-}
-.vs__actions {
-    padding-right: 10px;
-}
-.vs__clear, .vs__open-indicator{
-    fill: var(--color-text-lighter);
-}
-.vs__dropdown-option--highlight {
-    background-color: var(--color-primary-hover);
-    color: var(--color-text-white-hover);
-}
-.vs__search {
-    color: var(--color-text-placeholder);
-}
-.vs__search:focus {
-    color: var(--color-text-placeholder);
 }
 
 </style>
