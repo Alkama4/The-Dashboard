@@ -2,8 +2,8 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- load more
-- ordering
+- load more!
+- filtering
 
 ### Features to add
 - When opening an entry:
@@ -46,3 +46,4 @@ In here I will collect my notes about this website and list the stuff that need 
 - Notificatino z-problem with mobile menu
 - v-select causes scrolling on modals when opening 
 - Modal on mobile being fullscreen not intuitive, make it only match width and not height
+- Form layout not clear and breaks on mobile

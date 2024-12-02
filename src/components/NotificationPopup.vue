@@ -123,6 +123,7 @@ export default {
 
 .notification p {
     margin: 0;
+    text-align: left;
 }
 
 .closeIcon {

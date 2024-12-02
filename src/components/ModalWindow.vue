@@ -66,6 +66,7 @@
 <script>
 import IconCross from './icons/IconCross.vue';
 import EntryForm from './EntryForm.vue';
+import { notify } from '@/utils/notification';
 
 export default {
     name: "ModalWindow",
@@ -83,10 +84,13 @@ export default {
         },
         deleteEntry() {
             this.$emit("delete", this.data.id); // Emit delete event with the entry ID
+            notify("Entry deleted succesfully!", "success");
             this.$emit("close");                // And close the modal
         },
         handleEditSubmit(formData) {
-            console.log("Saving edited data:", formData);
+            console.log("Form data to send to DB:", formData);
+            notify("Entry edited succesfully!", "success");
+            this.$emit("close");
         },
         handleCopySubmit(formData) {
             console.log("Saving a duplicatea of something:", formData);

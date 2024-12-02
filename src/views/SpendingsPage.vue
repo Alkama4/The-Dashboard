@@ -73,9 +73,11 @@
             </thead>
             <tbody ref="placeForEntries">
                 <SpendingsEntry
-                    v-for="entry in entries"
+                    v-for="(entry, index) in entries"
                     :key="entry.entryId"
                     :data="entry"
+                    :is-expanded="expandedIndex === index"
+                    @toggle="toggleEntry(index)"
                 />
             </tbody>
         </table>
@@ -84,7 +86,8 @@
         <button @click="loadMultipleEntries(5)" class="center">Load more</button>
     </div>
 </template>
-  
+
+
 <script>
     import SpendingsEntry from '../components/SpendingsEntry.vue';
     import IconSortBoth from '../components/icons/IconSortBoth.vue';
@@ -116,6 +119,7 @@
                     amount: IconSortBoth,
                     notes: IconSortBoth,
                 },
+                expandedIndex: null, // Track which entry is expanded
             };
         },
         methods: {
@@ -127,7 +131,6 @@
                 return id;
             },
 
-            // Update this to fetch the data later
             loadEntry() {
                 const randomString = (length) => Math.random().toString(36).substring(2, 2 + length);
                 const newEntry = {
@@ -153,6 +156,11 @@
                     this.loadEntry();  // Generate one random entry at a time
                 }
                 this.sortEntries();
+            },
+
+            toggleEntry(index) {
+                // Toggle the expanded state of the clicked entry
+                this.expandedIndex = this.expandedIndex === index ? null : index;
             },
 
             sortEntries(column) {
@@ -237,6 +245,7 @@
         }
     };
 </script>
+
   
 <style scoped>
 table {

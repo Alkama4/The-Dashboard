@@ -88,10 +88,10 @@
         },
         props: {
             data: { type: Object, required: true },
+            isExpanded: { type: Boolean, default: false },
         },
         data() {
             return {
-                isExpanded: false,
                 showModal: false,
                 modalType: '',
                 modalData: this.data,
@@ -100,33 +100,33 @@
         },
         methods: {
             toggleEntry() {
-                this.isExpanded = !this.isExpanded;
+                this.$emit('toggle');
+            },
+            expandEntry() {
+                const expandedContentHeight = this.$refs['spendingsExpandedContent']?.getBoundingClientRect().height || 0;
 
-                if (this.isExpanded) {
-                    const expandedContentHeight = this.$refs['spendingsExpandedContent']?.getBoundingClientRect().height || 0;
+                const notesHeight = this.$refs['notesExpandedContent']?.getBoundingClientRect().height || 0;
+                const typeHeight = this.$refs['typeExpandedContent']?.getBoundingClientRect().height || 0;
+                const amountHeight = this.$refs['amountExpandedContent']?.getBoundingClientRect().height || 0;
 
-                    const notesHeight = this.$refs['notesExpandedContent']?.getBoundingClientRect().height || 0;
-                    const typeHeight = this.$refs['typeExpandedContent']?.getBoundingClientRect().height || 0;
-                    const amountHeight = this.$refs['amountExpandedContent']?.getBoundingClientRect().height || 0;
+                const maxHeight = Math.max(notesHeight, typeHeight, amountHeight);
 
-                    const maxHeight = Math.max(notesHeight, typeHeight, amountHeight);
+                this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
+                this.$refs['notesExpanded'].style.height = `${maxHeight}px`;
+                this.$refs['typeExpanded'].style.height = `${maxHeight}px`;
+                this.$refs['amountExpanded'].style.height = `${maxHeight}px`;
 
-                    this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
-                    this.$refs['notesExpanded'].style.height = `${maxHeight}px`;
-                    this.$refs['typeExpanded'].style.height = `${maxHeight}px`;
-                    this.$refs['amountExpanded'].style.height = `${maxHeight}px`;
-
-                    this.$refs['columnNotes'].classList.add("hide-mask");
-                    this.$refs['columnType'].classList.add("hide-mask");
-                } else {
-                    this.$refs['spendingsExpanded'].style.height = '0';
-                    this.$refs['notesExpanded'].style.height = '25px';
-                    this.$refs['typeExpanded'].style.height = '25px';
-                    this.$refs['amountExpanded'].style.height = '25px';
-
-                    this.$refs['columnNotes'].classList.remove("hide-mask");
-                    this.$refs['columnType'].classList.remove("hide-mask");
-                }
+                this.$refs['columnNotes'].classList.add("hide-mask");
+                this.$refs['columnType'].classList.add("hide-mask");
+            },
+            collapseEntry() {
+                this.$refs['spendingsExpanded'].style.height = '0';
+                this.$refs['notesExpanded'].style.height = '25px';
+                this.$refs['typeExpanded'].style.height = '25px';
+                this.$refs['amountExpanded'].style.height = '25px';
+    
+                this.$refs['columnNotes'].classList.remove("hide-mask");
+                this.$refs['columnType'].classList.remove("hide-mask");
             },
             showDetails() {
                 this.modalType = 'details';
@@ -156,6 +156,17 @@
                 }
             },
         },
+        watch: {
+            isExpanded(newVal) {
+                if (newVal) {
+                    // Expand the current entry
+                    this.expandEntry();
+                } else {
+                    // Collapse the current entry
+                    this.collapseEntry();
+                }
+            }
+        },
         computed: {
             amounts() {
                 const total = this.data.types.reduce((sum, type) => sum + type.amount, 0);
@@ -164,7 +175,7 @@
             types() {
                 let firstRow = "";
                 if (this.isExpanded) {
-                    firstRow = "Sum";
+                    firstRow = "Total sum:";
                 } else {
                     this.data.types.forEach((type, index) => {
                         if (index > 0) {
@@ -202,7 +213,6 @@
         }
     };
 </script>
-
 
 
 <style scoped>
