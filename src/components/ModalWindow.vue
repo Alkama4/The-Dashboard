@@ -4,7 +4,9 @@
             <div class="inner-modal-content">
                 <div class="modal-body">
                     <div class="modal-header">
-                        <h2 style="margin-top: 0;">{{ header }}</h2>
+                        <h2 style="margin-top: 0;" :class="this.type">
+                            <!-- Header is inserted with ::after as a style -->
+                        </h2>
                         <button class="modal-close button-simple" @click="closeModal">
                             <IconCross size="36" color="var(--color-text-light)" />
                         </button>
@@ -20,15 +22,15 @@
                                 <h4>Direction:</h4>
                                 <span>{{ data.direction }}</span>
                                 <h4>Date:</h4> 
-                                <span>{{ data.formattedDate }}</span>
+                                <span>{{ detailsDate }}</span>
                             </div>
                             <div style="grid-area: b; max-width: 25ch;">
                                 <h4>Counterparty:</h4> 
                                 <span>{{ data.counterparty }}</span>
-                                <h4>Type:</h4> 
-                                <span>{{ data.type }}</span>
-                                <h4>Amount:</h4> 
-                                <span>{{ data.amount ? `${data.amount.toFixed(2)} €` : '' }}</span>
+                                <h4>Type(s):</h4> 
+                                <span>{{ types }}</span>
+                                <h4>Total:</h4> 
+                                <span>{{ formatAmount(sum) }}</span>
                             </div>
                             <div style="grid-area: c; max-width: 50ch;">
                                 <h4>Notes:</h4> 
@@ -72,7 +74,6 @@ export default {
         EntryForm,
     },
     props: {
-        header: { type: String, required: true },
         type: { type: String, required: true }, // Defines the type of modal (details, edit, delete)
         data: { type: Object, required: true }, // Dynamic data for the modal
     },
@@ -90,8 +91,44 @@ export default {
         handleCopySubmit(formData) {
             console.log("Saving a duplicatea of something:", formData);
             // Muista vaihtaa id. Oikeestaan menee varmaa parhaiten ku ei vaan ilmota sitä ne se menee uudeks
+        },
+        formatAmount(amount) {
+            return amount ? `${amount.toLocaleString('fi-FI', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €` : '';
         }
     },
+    computed: {
+        detailsDate() {
+            // Get the formatted date
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            };
+            const formattedDate = this.data.date.toLocaleDateString('fi-FI', options);
+
+            // Get the week number
+            const getWeekNumber = (date) => {
+                const startDate = new Date(date.getFullYear(), 0, 1);
+                const days = Math.floor((date - startDate) / (24 * 60 * 60 * 1000));
+                return Math.ceil((days + 1) / 7);
+            };
+            const weekNumber = getWeekNumber(this.data.date);
+
+            // Return formatted date with the week number
+            return `${formattedDate}, viikko ${weekNumber}`;
+        },
+        sum() {
+            return this.data.types.reduce((sum, type) => sum + type.amount, 0);
+        },
+        types() {
+            let tulos = "";
+            this.data.types.forEach(type => {
+                tulos += `${type.type}: ${this.formatAmount(type.amount)} `;
+            });
+            return tulos;
+        }
+    }
 };
 </script>
 
@@ -143,6 +180,18 @@ export default {
 
 .modal-header h2 {
     margin: 0;
+}
+h2.details::after {
+    content: "Details of an entry";
+}
+h2.edit::after {
+    content: "Edit entry";
+}
+h2.duplicate::after {
+    content: "Make a copy of entry";
+}
+h2.delete::after {
+    content: "Delete entry";
 }
 
 .modal-close {

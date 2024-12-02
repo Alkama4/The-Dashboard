@@ -72,17 +72,10 @@
                 </tr>
             </thead>
             <tbody ref="placeForEntries">
-                <!-- Dynamically rendering SpendingsEntry components -->
                 <SpendingsEntry
                     v-for="entry in entries"
-                    :key="entry.id"
-                    :entryId="entry.entryId"
-                    :direction="entry.direction"
-                    :date="entry.date"
-                    :counterparty="entry.counterparty"
-                    :type="entry.type"
-                    :amount="entry.amount"
-                    :notes="entry.notes"
+                    :key="entry.entryId"
+                    :data="entry"
                 />
             </tbody>
         </table>
@@ -97,6 +90,7 @@
     import IconSortBoth from '../components/icons/IconSortBoth.vue';
     import IconSortDown from '../components/icons/IconSortDown.vue';
     import IconSortUp from '../components/icons/IconSortUp.vue';
+    import { getData } from '../utils/dataQuery';
     
     export default {
         name: 'SpendingsPage',
@@ -108,19 +102,7 @@
         },
         data() {
             return {
-                // Initial entries to display, wipe when we get to that point
-                entries: [
-                    { entryId: 1, direction: "expense", date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
-                    { entryId: 2, direction: "income", date: new Date('2023-12-28'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
-                    { entryId: 3, direction: "expense", date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
-                    { entryId: 4, direction: "expense", date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
-                    { entryId: 8, direction: "expense", date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
-                    { entryId: 5, direction: "expense", date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
-                    { entryId: 6, direction: "expense", date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
-                    { entryId: 7, direction: "expense", date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
-                    { entryId: 9, direction: "expense", date: new Date('2024-1-3'), counterparty: "K-Citymarket", type: "Ruokaostokset", amount: 4.84, notes: "Jotaki safkaa" },
-                    { entryId: 1234, direction: "expense", date: new Date('2024-2-3'), counterparty: "Seppälän valokuvaamo", type: "Yleinen eläminen", amount: 2345.67, notes: "Mahollisimman pitkä entry jotta voidaan testatat rajoja, sekä nähään miltä näyttää kun joku unohtuu kertomaan elämän tarinaansa." },
-                ],
+                entries: getData(),
                 sortColumn: 'date',     // Default to date 
                 sortDirection: 'desc',  // Default to descending
                 inactiveColor: 'var(--color-text-hidden)',
@@ -210,17 +192,31 @@
                             : valueB - valueA;
                     }
 
-                    // Handle numerical comparison (amount)
+                    // Handle sorting by 'amount' (where types are arrays of objects)
                     if (column === 'amount') {
                         // Map direction to numerical values for sorting
                         const getDirectionMultiplier = (direction) => direction === 'income' ? 1 : -1;
 
+                        // Assuming we need the first type's amount for sorting
+                        const amountA = a.types[0]?.amount || 0; // Fallback to 0 if no amount
+                        const amountB = b.types[0]?.amount || 0;
+
                         return this.sortDirection === 'asc'
-                            ? (a.amount * getDirectionMultiplier(a.direction)) - (b.amount * getDirectionMultiplier(b.direction))
-                            : (b.amount * getDirectionMultiplier(b.direction)) - (a.amount * getDirectionMultiplier(a.direction));
+                            ? (amountA * getDirectionMultiplier(a.direction)) - (amountB * getDirectionMultiplier(b.direction))
+                            : (amountB * getDirectionMultiplier(b.direction)) - (amountA * getDirectionMultiplier(a.direction));
                     }
 
-                    // Handle numerical comparison (e.g. amount)
+                    // Handle sorting by 'type' (the first type in the array for comparison)
+                    if (column === 'type') {
+                        const typeA = a.types[0]?.type || ''; // Get the first type
+                        const typeB = b.types[0]?.type || '';
+
+                        return this.sortDirection === 'asc'
+                            ? typeA.localeCompare(typeB)
+                            : typeB.localeCompare(typeA);
+                    }
+
+                    // Handle numerical comparison (e.g. amount in other columns)
                     if (typeof valueA === 'number' && typeof valueB === 'number') {
                         return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
                     }
@@ -234,7 +230,7 @@
 
                     return 0; // If types don't match or are uncomparable, leave unchanged
                 });
-            },
+            }
         },
         mounted() {
             this.sortEntries();

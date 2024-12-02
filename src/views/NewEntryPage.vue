@@ -17,6 +17,7 @@ export default {
     },
     methods: {
         handleFormSubmit(formData) {
+            alert("Works");
             console.log('Submitting new entry:', formData);
             // Add logic to save `formData` to the database
         }

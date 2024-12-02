@@ -6,52 +6,86 @@
         </div>
         <div class="grid-date">
             <label for="date">Date:</label><br>
-            <input v-model="formattedDate" id="date" type="date" required/>
+            <input v-model="formattedDate" id="date" type="date" required />
         </div>
         <div class="grid-counterparty">
             <label for="counterparty">Counterparty:</label><br>
-            <v-select v-model="formData.counterparty" label="counterparty" :options="activeCounterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
+            <v-select v-model="formData.counterparty" label="counterparty" :options="counterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
         </div>
-        <div class="grid-amount">
-            <label for="amount">Amount:</label><br>
-            <input v-model="formData.amount" id="amount" type="number" step="0.01" placeholder="Type value..." required/>
+
+        <label :for="'amount-' + index">Amount:</label>
+        <label :for="'type-' + index">Type:</label>
+        <div class="grid-types">
+            <div v-for="(entry, index) in formData.types" :key="index" class="entry-row">
+                <div class="grid-amount">
+                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder="Type value..." required />
+                </div>
+                <div class="grid-type">
+                    <v-select v-model="entry.type" :id="'type-' + index" label="type" :options="typeOptions" placeholder="Select type..." taggable></v-select>
+                </div>
+                <button v-if="formData.types.length > 1" @click="removeEntry(index)" class="remove-type-button button-simple">
+                    <IconCross size="30"/>
+                </button>
+            </div>
+            <button type="button" @click="addEntry" class="add-type-button">More types</button>
         </div>
-        <div class="grid-type">
-            <label for="type">Type:</label><br>
-            <v-select v-model="formData.type" label="type" :options="activeTypeOptions" placeholder="Select type..." taggable></v-select>
-        </div>
+
         <div class="grid-notes">
             <label for="notes">Notes:</label><br>
-            <textarea v-model="formData.notes" id="notes" placeholder="Type notes/description..."/>
+            <textarea v-model="formData.notes" id="notes" placeholder="Type notes/description..."></textarea>
         </div>
         <button type="submit" class="color-primary center grid-submit">Submit</button>
     </form>
 </template>
 
-
 <script>
-import SliderToggle from './SliderToggle.vue';  // Adjust path if necessary
+import { getOptions } from '@/utils/dataQuery';
+import IconCross from './icons/IconCross.vue';
+import SliderToggle from './SliderToggle.vue';
 
 export default {
     components: {
-        SliderToggle
+        SliderToggle,
+        IconCross,
     },
     props: {
         initialData: {
             type: Object,
-            default: () => ({ entryId: '', direction: 'expense', date: '', amount: '', type: '', counterparty: '', notes: '' })
+            default: () => ({
+                entryId: '',
+                direction: 'expense',
+                date: '',
+                counterparty: '',
+                notes: '',
+                types: [{ type: '', amount: '' }]
+            })
         }
     },
     emits: ['submit'],
     data() {
         return {
-            formData: { ...this.initialData }, // Automatically populate with initialData
+            formData: { 
+                ...this.initialData,
+            },
+            counterpartyOptions: [],
+            typeOptions: [],
         };
     },
     methods: {
+        addEntry() {
+            this.formData.types.push({ type: '', amount: '' });
+        },
+        removeEntry(index) {
+            if (this.formData.types.length > 1) {
+                this.formData.types.splice(index, 1);
+            } else {
+                alert('At least one entry is required!');
+            }
+        },
         handleSubmit() {
-            if (!this.formData.type) {
-                alert('Type is required!');
+            const invalidEntry = this.formData.types.some(entry => !entry.type || !entry.amount);
+            if (invalidEntry) {
+                alert('All entries must have a type and an amount!');
                 return;
             }
 
@@ -60,84 +94,62 @@ export default {
                 return;
             }
 
-            // Display a notification
-            this.$root.notify("Entry created!", "success");
-
-            this.$emit('submit', this.formData); // Send the populated formData to parent
+            this.$emit('submit', {
+                ...this.formData,
+                types: [...this.formData.types]
+            });
         },
+        filterOptionsByDirection() {
+            const options = getOptions();
+
+            // Filter counterparty options based on the direction
+            if (this.formData.direction === 'expense') {
+                this.counterpartyOptions = options.sortedCounterparties.filter(counterparty => counterparty !== 'Kela'); // Example: filter out income counterparties
+                this.typeOptions = options.sortedTypes.filter(type => type !== 'Asumistuki'); // Example: filter out income types
+            } else {
+                this.counterpartyOptions = options.sortedCounterparties.filter(counterparty => counterparty === 'Kela'); // Example: filter in income counterparties
+                this.typeOptions = options.sortedTypes.filter(type => type === 'Asumistuki'); // Example: filter in income types
+            }
+        }
     },
     computed: {
         formattedDate() {
-            // Check if formData.date is a valid date object
             const returnDate = this.formData.date ? this.formData.date : new Date();
             return returnDate.toISOString().split('T')[0];
-        },
-        spendingsData() {
-            // Update to get the data (All we need is conterparty and type, maybe id to differentiate. Don't query all!)
-            const data = [
-                { entryId: 1, direction: "expense", date: new Date('2023-12-24'), counterparty: "Cotton Club", type: "Opiskelija lounas", amount: 2.9, notes: "Hernekeittoa" },
-                { entryId: 2, direction: "income", date: new Date('2023-12-28'), counterparty: "Kela", type: "Asumistuki", amount: 99.99, notes: "" },
-                { entryId: 3, direction: "expense", date: new Date('2023-12-25'), counterparty: "K-Citymarket", type: "Yleinen eläminen", amount: 8.75, notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan" },
-                { entryId: 4, direction: "expense", date: new Date('2023-12-28'), counterparty: "Minimani", type: "Ruokaostokset", amount: 20.24, notes: "safkaa" },
-                { entryId: 8, direction: "expense", date: new Date('2023-12-26'), counterparty: "Supermarket", type: "Sekalainen", amount: 42, notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin." },
-                { entryId: 5, direction: "expense", date: new Date('2023-12-29'), counterparty: "Cotton Club", type: "Kulutustavara", amount: 12.46, notes: "Hyvää ruokaa" },
-                { entryId: 6, direction: "expense", date: new Date('2023-12-31'), counterparty: "S-Market", type: "Herkut", amount: 1.99, notes: "Mässy pussi" },
-                { entryId: 7, direction: "expense", date: new Date('2024-1-1'), counterparty: "Minimani", type: "Ruokaostokset", amount: 15.96, notes: "Ruokaa ja palaa" },
-                { entryId: 9, direction: "expense", date: new Date('2024-1-3'), counterparty: "K-Citymarket", type: "Ruokaostokset", amount: 4.84, notes: "Jotaki safkaa" },
-            ];
-
-            const filterByDirection = (direction) => data.filter(item => item.direction === direction);
-
-            const generateOptions = (filteredData, key) => {
-                const frequencyMap = filteredData.reduce((acc, item) => {
-                    acc[item[key]] = (acc[item[key]] || 0) + 1;
-                    return acc;
-                }, {});
-
-                return Object.entries(frequencyMap)
-                    .sort(([, a], [, b]) => b - a)
-                    .map(([key]) => key);
-            };
-
-            return {
-                expense: {
-                    counterpartyOptions: generateOptions(filterByDirection("expense"), "counterparty"),
-                    typeOptions: generateOptions(filterByDirection("expense"), "type"),
-                },
-                income: {
-                    counterpartyOptions: generateOptions(filterByDirection("income"), "counterparty"),
-                    typeOptions: generateOptions(filterByDirection("income"), "type"),
-                }
-            };
-        },
-        activeCounterpartyOptions() {
-            return this.formData.direction === 'expense'
-                ? this.spendingsData.expense.counterpartyOptions
-                : this.spendingsData.income.counterpartyOptions;
-        },
-        activeTypeOptions() {
-            return this.formData.direction === 'expense'
-                ? this.spendingsData.expense.typeOptions
-                : this.spendingsData.income.typeOptions;
         }
+    },
+    watch: {
+        'formData.direction': function() {
+            this.filterOptionsByDirection();
+        }
+    },
+    created() {
+        // Initially fetch the options based on the default direction (expense or income)
+        this.filterOptionsByDirection();
     }
 };
 </script>
 
 
+
 <style>
 form {
     display: grid;
-    grid-template-columns: 202px 2fr;
+    grid-template-columns: 200px 1fr;
     grid-template-areas:
-        "direction direction"
-        "date counterparty"
-        "amount type"
+        "direction date"
+        "counterparty counterparty"
+        "amount-label type-label"
+        "entries entries"
         "notes notes"
         "submit submit";
-    gap: var(--spacing-md) var(--spacing-md);
+    gap: 0 var(--spacing-md);
     margin-inline: auto;
     max-width: 60ch;
+}
+
+form > * {
+    margin-top: var(--spacing-md);
 }
 
 .grid-direction {
@@ -149,11 +161,31 @@ form {
 .grid-counterparty {
     grid-area: counterparty;
 }
-.grid-amount {
-    grid-area: amount;
+.grid-types {
+    grid-area: entries;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+    margin: 0;
+}
+.entry-row {
+    display: grid;
+    grid-template-columns: 200px 1fr auto;
+    align-items: center;
 }
 .grid-type {
-    grid-area: type;
+    margin-left: var(--spacing-md);
+}
+.remove-type-button {
+    color: white;
+    border: none;
+    padding: 0.5em;
+    cursor: pointer;
+    margin: 0;
+    margin-left: var(--spacing-sm);
+}
+.add-type-button {
+    margin: 0 var(--spacing-sm);
 }
 .grid-notes {
     grid-area: notes;
@@ -162,18 +194,45 @@ form {
     grid-area: submit;
 }
 
+
 @media (max-width: 666px) {
     form {
-        grid-template-columns: 1fr !important;
+        grid-template-columns: 1fr;
         grid-template-areas:
-        "direction"
-        "date"
-        "amount"
-        "counterparty"
-        "type"
-        "notes"
-        "submit";
+            "direction"
+            "date"
+            "counterparty"
+            "entries"
+            "notes"
+            "submit";
+        gap: var(--spacing-md); /* Added consistent spacing for mobile */
+    }
+
+    .entry-row {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto; /* Ensure proper stacking of fields */
+        grid-template-areas:
+            "amount remove"
+            "type remove";
+        gap: var(--spacing-sm); /* Proper spacing between rows */
+    }
+
+    .grid-amount {
+        grid-area: amount;
+    }
+
+    .grid-type {
+        grid-area: type;
+    }
+
+    .remove-type-button {
+        grid-area: remove;
+        justify-self: end; /* Align the remove button properly */
+        margin: 0; /* Remove extra margins for compact layout */
     }
 }
+
+
 
 </style>
