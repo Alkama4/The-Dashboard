@@ -1,5 +1,5 @@
 <template>
-    <tr class="spendings-summary" @click="toggleEntry">
+    <tr class="spendings-summary" @click="toggleEntry" ref="spendingsSummary">
 
         <td class="column-date">
             <span class="date-full">{{ formattedDate }}</span>
@@ -8,13 +8,13 @@
 
         <td class="column-counterparty column-fade-right">{{ counterparty }}</td>
         
-        <td class="column-type column-fade-right" ref="columnType">
+        <td class="column-type" ref="columnType">
             <div ref="typeExpanded" style="height: 25px;">
                 <div ref="typeExpandedContent">
                     <span v-for="(type, index) in types" :key="index"
                             :class="{
-                                'summary-row-type-and-amount': index === 0,
-                                'active': isExpanded
+                                'summary-row-type-and-amount column-fade-right': index === 0,
+                                'second-row-type-and-amount': index === 1
                             }">
                         {{ type }}
                     </span>
@@ -28,7 +28,7 @@
                     <span v-for="(amount, index) in amounts" :key="index" 
                             :class="{
                                 'summary-row-type-and-amount': index === 0,
-                                'active': isExpanded
+                                'second-row-type-and-amount': index === 1
                             }">
                         {{ formatAmount(amount) }}
                     </span>
@@ -109,7 +109,7 @@
                 const typeHeight = this.$refs['typeExpandedContent']?.getBoundingClientRect().height || 0;
                 const amountHeight = this.$refs['amountExpandedContent']?.getBoundingClientRect().height || 0;
 
-                const maxHeight = Math.max(notesHeight, typeHeight, amountHeight);
+                const maxHeight = Math.max(notesHeight, typeHeight, amountHeight) + 4;  // Spacing at the bottom when expanded
 
                 this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
                 this.$refs['notesExpanded'].style.height = `${maxHeight}px`;
@@ -117,7 +117,8 @@
                 this.$refs['amountExpanded'].style.height = `${maxHeight}px`;
 
                 this.$refs['columnNotes'].classList.add("hide-mask");
-                this.$refs['columnType'].classList.add("hide-mask");
+                // this.$refs['columnType'].classList.add("hide-mask");
+                this.$refs['spendingsSummary'].classList.add("active");
             },
             collapseEntry() {
                 this.$refs['spendingsExpanded'].style.height = '0';
@@ -126,7 +127,8 @@
                 this.$refs['amountExpanded'].style.height = '25px';
     
                 this.$refs['columnNotes'].classList.remove("hide-mask");
-                this.$refs['columnType'].classList.remove("hide-mask");
+                // this.$refs['columnType'].classList.remove("hide-mask");
+                this.$refs['spendingsSummary'].classList.remove("active");
             },
             showDetails() {
                 this.modalType = 'details';
@@ -221,13 +223,34 @@
     cursor: pointer;
     user-select: none;
     position: relative;
-    transition: background-color 0.1s;  /* For the hover effect */
-    transition: transform 0.1s ease-out;
-    border-top: 2px solid var(--color-button-clean-active);
+    transition: transform 0.1s ease-out, background-color 0.1s;
+    border-top: 2px solid var(--color-background-tr-hover);
 }
+.spendings-summary::after {
+    content: '';
+    position: absolute;
+    top: 1px;
+    left: 0;
+    right: 0;
+    bottom: 0px;
+    /* border-radius: var(--border-radius-small); */
+    background-color: transparent;
+    z-index: -1;
+    transition: background-color 0.1s ease-out,
+                bottom 0.2s ease-out;
+}
+.spendings-summary.active::after {
+    background-color: var(--color-background-tr-active);
+    /* bottom: var(--spacing-sm); */
+    bottom: -43px;
+}
+.spendings-summary:hover::after {
+    background-color: var(--color-background-tr-hover);
+}
+
 td {
     white-space: nowrap;
-    padding: 6px var(--spacing-sm);
+    padding: 8px var(--spacing-sm);
     vertical-align: top;
     color: var(--color-text-light);
 }
@@ -249,8 +272,8 @@ td {
 }
 .column-counterparty {
     text-align: start;
-    max-width: 175px;
-    min-width: 175px;
+    max-width: 150px;
+    min-width: 150px;
     overflow: hidden;
     color: var(--color-text);
 }    
@@ -260,12 +283,14 @@ td {
     min-width: 175px;
     width: fit-content;
     overflow: hidden;
+    padding-right: 0;
 }
 .column-amount {
     text-align: end;
     width: fit-content;
     font-weight: 500;
     overflow: hidden;
+    padding-left: 0;
 }
 .column-notes {
     overflow: hidden;
@@ -291,11 +316,11 @@ td {
 /* Special column properties */
 .column-fade-combined {
     mask-image: 
-        linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%),
-        linear-gradient(to bottom, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+        linear-gradient(to right, black 80%, rgba(255, 255, 255, 0) 100%),
+        linear-gradient(to bottom, black 75%, rgba(255, 255, 255, 0) 80%);
     mask-composite: intersect;
     mask-size: 100% 100%;
-    transition: mask-size 0.2s ease;
+    transition: mask-size 0.2s ease-out;
 }
 .column-fade-combined.hide-mask {
     mask-size: 125% 300%;
@@ -305,25 +330,35 @@ td {
     mask-image: 
         linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
     mask-size: 100%;
-    transition: mask-size 0.2s ease;
+    transition: mask-size 0.2s ease-out;
 }
-.column-fade-bottom.hide-mask {
+.column-fade-right.hide-mask {
     mask-size: 125%;
 }
 
 .summary-row-type-and-amount {
-    padding-bottom: var(--spacing-sm);
+    /* padding-bottom: var(--spacing-sm); */
     position: relative;
+    transition: color 0.2s ease-out;
 }
-.summary-row-type-and-amount.active {
+.second-row-type-and-amount {
+    padding-top: 4px;
+    border-top: 2px solid transparent;
+    margin-top: 4px;
+    transition: border 0.2s ease-out;
+}
+.active .summary-row-type-and-amount {
     font-weight: 600;
     color: var(--color-text);
 }
-.column-amount.expense .summary-row-type-and-amount.active {
+.active .column-amount.expense .summary-row-type-and-amount {
     color: var(--color-negative-hover);
 }
-.column-amount.income .summary-row-type-and-amount.active {
+.active .column-amount.income .summary-row-type-and-amount {
     color: var(--color-positive-hover);
+}
+.active .second-row-type-and-amount {
+    border-color: var(--color-border);
 }
 
 .column-amount.expense span {
@@ -356,6 +391,8 @@ td {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 2fr;
     gap: var(--spacing-md);
+    padding-inline: var(--spacing-md);
+    padding-bottom: var(--spacing-sm);
 }
 
 .control-buttons button {
@@ -364,7 +401,7 @@ td {
     white-space: nowrap;
     padding-inline: 0;
     margin: 0;
-    margin-bottom: var(--spacing-sm);
+    /* margin-bottom: var(--spacing-sm); */
     font-weight: 400;
 }
 

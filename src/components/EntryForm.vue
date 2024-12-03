@@ -13,12 +13,14 @@
             <v-select v-model="formData.counterparty" label="counterparty" :options="counterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
         </div>
 
-        <label :for="'amount-' + index">Amount:</label>
-        <label :for="'type-' + index">Type:</label>
+        <div class="grid-types-labels type-aligner">
+            <label :for="'amount-' + index">Amount:</label>
+            <label :for="'type-' + index">Type:</label>
+        </div>
         <div class="grid-types">
-            <div v-for="(entry, index) in formData.types" :key="index" class="entry-row">
+            <div v-for="(entry, index) in formData.types" :key="index" class="type-aligner" :class="{'remove-type-button-hidden': !this.formData.types[1]}">
                 <div class="grid-amount">
-                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder="Type value..." required />
+                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder=" e.g 2.95" required />
                 </div>
                 <div class="grid-type">
                     <v-select v-model="entry.type" :id="'type-' + index" label="type" :options="typeOptions" placeholder="Select type..." taggable></v-select>
@@ -131,7 +133,6 @@ export default {
 </script>
 
 
-
 <style>
 form {
     display: grid;
@@ -139,8 +140,8 @@ form {
     grid-template-areas:
         "direction date"
         "counterparty counterparty"
-        "amount-label type-label"
-        "entries entries"
+        "types-labels types-labels"
+        "types types"
         "notes notes"
         "submit submit";
     gap: 0 var(--spacing-md);
@@ -161,28 +162,34 @@ form > * {
 .grid-counterparty {
     grid-area: counterparty;
 }
+
 .grid-types {
-    grid-area: entries;
-    display: flex;
-    flex-direction: column;
+    grid-area: types;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: var(--spacing-md);
     margin: 0;
 }
-.entry-row {
-    display: grid;
+.grid-types-labels {
+    grid-area: types-labels;
+    gap: var(--spacing-md);
+}
+.type-aligner {
     grid-template-columns: 200px 1fr auto;
+    display: grid;
     align-items: center;
-}
-.grid-type {
-    margin-left: var(--spacing-md);
-}
+    gap: var(--spacing-md);
+;}
+
 .remove-type-button {
     color: white;
     border: none;
     padding: 0.5em;
     cursor: pointer;
     margin: 0;
-    margin-left: var(--spacing-sm);
+}
+.remove-type-button-hidden {
+    grid-template-columns: 200px 1fr;
 }
 .add-type-button {
     margin: 0 var(--spacing-sm);
@@ -202,37 +209,18 @@ form > * {
             "direction"
             "date"
             "counterparty"
-            "entries"
+            "types-labels"
+            "types"
             "notes"
             "submit";
-        gap: var(--spacing-md); /* Added consistent spacing for mobile */
     }
-
-    .entry-row {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        grid-template-rows: auto auto; /* Ensure proper stacking of fields */
-        grid-template-areas:
-            "amount remove"
-            "type remove";
-        gap: var(--spacing-sm); /* Proper spacing between rows */
+    .type-aligner {
+        grid-template-columns: 110px 1fr auto;
+        gap: var(--spacing-xs);
     }
-
-    .grid-amount {
-        grid-area: amount;
-    }
-
-    .grid-type {
-        grid-area: type;
-    }
-
-    .remove-type-button {
-        grid-area: remove;
-        justify-self: end; /* Align the remove button properly */
-        margin: 0; /* Remove extra margins for compact layout */
-    }
+    .remove-type-button-hidden {
+    grid-template-columns: 110x 1fr;
 }
-
-
+}
 
 </style>

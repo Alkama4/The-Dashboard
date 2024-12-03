@@ -70,6 +70,7 @@
                         </div>
                     </th>
                 </tr>
+                <!-- <tr><td><div class="th-spacer"></div></td></tr> -->
             </thead>
             <tbody ref="placeForEntries">
                 <SpendingsEntry
@@ -83,7 +84,7 @@
         </table>
     
         <!-- Button to load more entries -->
-        <button @click="loadMultipleEntries(5)" class="center">Load more</button>
+        <button class="center">Load more</button>
     </div>
 </template>
 
@@ -108,8 +109,8 @@
                 entries: getData(),
                 sortColumn: 'date',     // Default to date 
                 sortDirection: 'desc',  // Default to descending
-                inactiveColor: 'var(--color-text-hidden)',
-                inactiveHoverColor: 'var(--color-text-light)',
+                inactiveColor: 'var(--color-text-lighter)',
+                inactiveHoverColor: 'var(--color-text-bold)',
                 activeColor: 'var(--color-primary)',
                 activeHoverColor: 'var(--color-primary-hover)',
                 sortIcons: {
@@ -123,47 +124,15 @@
             };
         },
         methods: {
-            validateID(id) {
-                // Ensure the ID is unique
-                while (this.entries.some(entry => entry.id === id)) {
-                    id++;  // Increment the ID until it's unique
-                }
-                return id;
-            },
-
-            loadEntry() {
-                const randomString = (length) => Math.random().toString(36).substring(2, 2 + length);
-                const newEntry = {
-                    entryId: this.validateID(this.entries.length + 1), // Incremental ID that is validated
-                    direction: (Math.random() < 0.5 ? "expense" : "income"),
-                    date: new Date(
-                        2000 + Math.floor(Math.random() * 23), // Random year between 2000 and 2023
-                        Math.floor(Math.random() * 12),       // Random month
-                        Math.floor(Math.random() * 28) + 1    // Random day
-                    ),
-                    counterparty: randomString(6), // Random string of 6 characters
-                    type: randomString(5),         // Random string of 5 characters
-                    amount: Math.floor(Math.random() * 1000), // Random amount between 0 and 999
-                    notes: randomString(15),       // Random string of 15 characters
-                };
-
-                // Add the new entry to the existing list
-                this.entries.push(newEntry);
-            },
-
-            loadMultipleEntries(count) {
-                for (let i = 0; i < count; i++) {
-                    this.loadEntry();  // Generate one random entry at a time
-                }
-                this.sortEntries();
-            },
-
             toggleEntry(index) {
                 // Toggle the expanded state of the clicked entry
                 this.expandedIndex = this.expandedIndex === index ? null : index;
             },
 
             sortEntries(column) {
+                // Close entries when sorting
+                this.toggleEntry(-1);
+
                 // If no column is given, use the previous column and direction
                 if (!column) {
                     column = this.sortColumn;
@@ -254,12 +223,13 @@ table {
 }
 th {
     cursor: pointer;
-    padding: var(--spacing-xs) var(--spacing-sm);
+    padding: 6px var(--spacing-sm);
     text-align: start;
     color: var(--color-text);
     /* font-weight: 900; */
     user-select: none;
-    vertical-align: middle; /* Ensures proper alignment in table layout */
+    border: 0px;
+    /* background-color: var(--color-background-th-row); */
 }
 th .header-content {
     display: flex;
@@ -268,21 +238,42 @@ th .header-content {
     gap: 0.5rem; /* Adds spacing between text and icon */
 }
 th.column-date {
-    text-align: center;
+    justify-content: center;
+    display: flex;
 }
 th.column-amount {
     text-align: end;
 }
+
+.th-spacer {
+    height: var(--spacing-sm);
+}
+
+/* Round corners for th row */
+/* th:first-child {
+    border-top-left-radius: var(--border-radius-small); 
+    border-bottom-left-radius: var(--border-radius-small);
+}
+th:last-child {
+    border-bottom-right-radius: var(--border-radius-small); 
+    border-top-right-radius: var(--border-radius-small); 
+} */
+
 @media (max-width: 777px) {
     table th:nth-child(5) {    /* Notes */
         display: none;
     }
+    /* th:nth-child(4) {
+        border-bottom-right-radius: var(--border-radius-small); 
+        border-top-right-radius: var(--border-radius-small); 
+    } */
 }
 @media (max-width: 600px) {
     table th:nth-child(3) {     /* Type */
         display: none;
     }
 }
+
 
 </style>
   

@@ -13,4 +13,4 @@ createApp(App)
 
 
 // Notification when entering the pag
-notify("Please note that this is a dev site and any changes aren't saved.", "info", 10000);
+notify("This is a development site. Please note that any changes made here will not be saved.", "info", 10000);

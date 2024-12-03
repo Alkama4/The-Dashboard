@@ -93,7 +93,6 @@ export function getData() {
     ];
 }
 
-
 export function getOptions() {
     const data = getData();
 

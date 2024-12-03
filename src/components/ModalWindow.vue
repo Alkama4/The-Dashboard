@@ -1,7 +1,6 @@
 <template>
     <div class="modal-backdrop" @click.self="closeModal">
         <div class="modal-content">
-            <div class="inner-modal-content">
                 <div class="modal-body">
                     <div class="modal-header">
                         <h2 style="margin-top: 0;" :class="this.type">
@@ -17,23 +16,26 @@
                     <div v-if="type === 'details'">
                         <div class="details-modal-content">
                             <div style="grid-area: a; max-width: 25ch;">
-                                <h4>ID:</h4>
+                                <h4>ID</h4>
                                 <span>{{ data.entryId }}</span>
-                                <h4>Direction:</h4>
+                                <h4>Direction</h4>
                                 <span>{{ data.direction }}</span>
-                                <h4>Date:</h4> 
+                                <h4>Date</h4> 
                                 <span>{{ detailsDate }}</span>
                             </div>
                             <div style="grid-area: b; max-width: 25ch;">
-                                <h4>Counterparty:</h4> 
+                                <h4>Counterparty</h4> 
                                 <span>{{ data.counterparty }}</span>
-                                <h4>Type(s):</h4> 
-                                <span>{{ types }}</span>
-                                <h4>Total:</h4> 
-                                <span>{{ formatAmount(sum) }}</span>
+                                <h4>Amount breakdown</h4>
+                                <ul>
+                                    <li v-for="type in formattedTypes" :key="type.type">
+                                        {{ type.type }}: {{ type.amount }}
+                                    </li>
+                                </ul>
+                                <span>Total amount: <b> {{ totalSum }} </b> </span>
                             </div>
                             <div style="grid-area: c; max-width: 50ch;">
-                                <h4>Notes:</h4> 
+                                <h4>Notes</h4> 
                                 <span :style="data.notes ? '' : 'color: var(--color-text-hidden);'">{{ data.notes || "(This entry doesn't have notes)" }}</span>
                             </div>
                         </div>
@@ -58,7 +60,6 @@
                     <!-- Default Slot for Any Other Content -->
                     <slot></slot>
                 </div>
-            </div>
         </div>
     </div>
 </template>
@@ -122,15 +123,16 @@ export default {
             // Return formatted date with the week number
             return `${formattedDate}, viikko ${weekNumber}`;
         },
-        sum() {
-            return this.data.types.reduce((sum, type) => sum + type.amount, 0);
+        formattedTypes() {
+            // Map types with formatted amounts
+            const types = this.data.types.map(type => ({
+                type: type.type,
+                amount: this.formatAmount(type.amount),
+            }));
+            return types;
         },
-        types() {
-            let tulos = "";
-            this.data.types.forEach(type => {
-                tulos += `${type.type}: ${this.formatAmount(type.amount)} `;
-            });
-            return tulos;
+        totalSum() {
+            return this.formatAmount(this.data.types.reduce((sum, type) => sum + type.amount, 0));
         }
     }
 };
@@ -158,7 +160,7 @@ export default {
     justify-content: center; /* Center content vertically */
     align-items: center; /* Center content horizontally */
     cursor: auto;
-    background: var(--color-background-card);
+    background: var(--color-background-modal);
     border-radius: var(--border-radius-medium);
     width: var(--width-modal);
     min-width: fit-content;
@@ -169,10 +171,6 @@ export default {
     animation: fadeInUp 0.3s ease-out;
     max-height: 70vh;
     width: fit-content
-}
-
-.inner-modal-content {
-    height: fit-content;
 }
 
 .modal-header {
@@ -205,7 +203,6 @@ h2.delete::after {
     cursor: pointer;
 }
 
-
 .modal-body {
     overflow-y: auto;
     white-space: wrap;
@@ -224,14 +221,15 @@ h2.delete::after {
 }
 
 /* Compact mode */
-@media (max-width: 450px) {
+@media (max-width: 600px) {
     .modal-content {
         width: 100vw;
         max-height: 100vh;
-        height: calc(100vh - var(--spacing-lg) * 2);
+        height: fit-content;
         margin-inline: 0;
         display: flex; /* Ensure flex is applied */
         justify-content: center; /* Center vertically */
+        border-radius: 0;
     }
     .inner-modal-content {
         max-height: 100%;
@@ -257,6 +255,10 @@ h2.delete::after {
 .details-modal-content span {
     font-weight: 400;
     color: var(--color-text-light);
+}
+.details-modal-content ul {
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-sm) 0;
 }
 
 /* Delete modal */
