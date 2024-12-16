@@ -1,4 +1,4 @@
-<!-- src/components/icons/IconSortDown.vue -->
+<!-- src/components/icons/IconCheckbox.vue -->
  
 <template>
     <BaseIcon
@@ -8,7 +8,7 @@
         :transition="transition"
     >
         <!-- Unique SVG path for the Dark Mode icon goes here -->
-        <path d="M11 9h9v2h-9zm0 4h7v2h-7zm0-8h11v2H11zm0 12h5v2h-5zm-6 3h2V8h3L6 4 2 8h3z"></path>
+        <path d="M9.01 11h6v2h-6z M17 5H7a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2z"></path>
     </BaseIcon>
 </template>
 
@@ -16,7 +16,7 @@
 import BaseIcon from './BaseIcon.vue';
 
 export default {
-    name: "IconSortDown",
+    name: "IconCheckbox",
     components: { BaseIcon },
     props: {
         size: [String, Number],

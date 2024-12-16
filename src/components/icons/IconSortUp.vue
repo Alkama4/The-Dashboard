@@ -8,7 +8,7 @@
         :transition="transition"
     >
         <!-- Unique SVG path for the Dark Mode icon goes here -->
-        <path d="M11 9h9v2h-9zm0 4h7v2h-7zm0-8h11v2H11zm0 12h5v2h-5zm-6 3h2V8h3L6 4 2 8h3z"></path>
+        <path d="M 11 9 H 18 V 11 H 11 Z M 11 13 H 20 V 15 H 11 Z M 11 5 H 16 V 7 H 11 Z M 11 17 H 22 V 19 H 11 Z M 5 20 H 7 V 8 H 10 L 6 4 L 2 8 H 5 Z"></path>
     </BaseIcon>
 </template>
 

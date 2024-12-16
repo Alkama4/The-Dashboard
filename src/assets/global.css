@@ -28,6 +28,7 @@
     --z-mobile-nav: 400;
     --z-notification: 350;
     --z-modal: 300;
+    --z-filters: 250;
     --z-top-bar: 200;
     --z-app: 100;
     --z-spendings-entry-after: 90;
@@ -36,7 +37,7 @@
     /* Media break off points */
     /* 
         - 1500px: table-date-format
-        - 777px: table-notes, form, top bar
+        - 777px: table-notes, form, top bar, filter
         - 600px: table-type, modal full width
     */
 
@@ -83,17 +84,20 @@
 
     --color-border: hsla(0, 0%, 0%, 0.1);
     --color-border-hover: hsla(0, 0%, 0%, 0.2);
+    --color-border-light: hsla(0, 0%, 0%, 0.3);
 
     /* Backgrounds */
-    --color-background: #f5f5f5;
-    --color-background-top-bar: #f5f5f5;
+    --color-background: hsl(0, 0%, 96%);
+    --color-background-backdrop: rgba(0, 0, 0, 0.5);
+    --color-background-top-bar: hsl(0, 0%, 96%);
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
-    --color-background-modal: #f5f5f5;
-    --color-background-card: #ffffff;
-    --color-background-input: #ffffff;
-    --color-background-th-row: hsla(0, 0%, 0%, 0.125);
-    --color-background-tr-active: hsla(0, 0%, 0%, 0.05);
-    --color-background-tr-hover: hsla(0, 0%, 0%, 0.075);
+    --color-background-modal: hsl(0, 0%, 96%);
+    --color-background-card: hsl(0, 0%, 100%);
+    --color-background-input: hsl(0, 0%, 100%);
+    --color-background-input-light: hsl(0, 0%, 98%);
+    --color-background-input-strong: hsl(0, 0%, 100%);
+    --color-background-tr-active: hsl(0, 0%, 92%);
+    --color-background-tr-hover: hsl(0, 0%, 90%);
     
     /* Button colors */
     --color-button-general: hsl(0, 0%, 80%);
@@ -150,20 +154,22 @@
     --color-text-inverted: #292929;
     --color-text-inverted-hover: #000;
 
-    --color-border-light: hsla(0, 0%, 100%, 0.075);
     --color-border: hsla(0, 0%, 100%, 0.1);
     --color-border-hover: hsla(0, 0%, 100%, 0.2);
+    --color-border-light: hsla(0, 0%, 100%, 0.3);
     
     /* Backgrounds */
     --color-background: #111;
+    --color-background-backdrop: rgba(0, 0, 0, 0.5);
     --color-background-top-bar: #111;
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0.3);
     --color-background-modal: #111;
     --color-background-card: #1d1d1d;
     --color-background-input: #1f1f1f;
-    --color-background-th-row: #292929;
-    --color-background-tr-active: hsla(0, 0%, 100%, 0.04);
-    --color-background-tr-hover: hsla(0, 0%, 100%, 0.05);
+    --color-background-input-light: #1a1a1a;
+    --color-background-input-strong: #252525;
+    --color-background-tr-active: hsl(0, 0%, 11%);
+    --color-background-tr-hover: hsl(0, 0%, 13%);
 
     /* Button colors */
     --color-button-general: #282828;
@@ -192,6 +198,11 @@ html, body {
     font-family: 'Poppins';
     color: var(--color-text);
     background-color: var(--color-background) !important;
+    overflow-x: hidden;
+}
+
+html.no-scroll {
+    overflow: hidden;
 }
 
 body {
@@ -344,6 +355,9 @@ input, textarea{
 input:hover, textarea:hover {
     border-color: var(--color-border-hover);
 }
+input:focus {
+    outline: none;
+}
 
 textarea {
     resize: vertical;
@@ -411,9 +425,131 @@ input[type="radio"] {
     color: var(--color-text-placeholder);
 }
 
+/* no ui slider */
+.noUi-target {
+    border-radius: var(--border-radius-small) !important;
+    border: 1px solid var(--color-border) !important;
+    box-shadow: none !important;    
+    background: transparent !important;
+}
+.noUi-value {
+    font-size: var(--font-size-small) !important;
+}
+/* .noUi-base {
+    cursor: pointer !important;
+} */
+.noUi-touch-area, .noUi-handle  {
+    cursor: grab !important;
+}
+.noUi-touch-area:active, .noUi-handle:active {
+    cursor: grabbing !important;
+}
+.noUi-handle {
+    border: 1px solid var(--color-border) !important;
+    background-color: var(--color-background-input-strong) !important;
+    box-shadow: none !important;
+    transition: border-color 0.1s ease-out;
+}
+.noUi-handle::before {
+    background-color: var(--color-border-light) !important;
+}
+.noUi-handle::after {
+    background-color: var(--color-border-light) !important;
+}
+.noUi-handle:hover {
+    border: 1px solid var(--color-border-hover) !important;
+}
+.noUi-connect {
+    background-color: var(--color-primary) !important;
+    transition: background-color 0.1s ease-out;
+} .noUi-connect:hover {
+    background-color: var(--color-primary-hover) !important;
+} .noUi-connect:active {
+    background-color: var(--color-primary-active) !important;
+    cursor: ew-resize !important;
+}
+.noUi-connects {
+    background-color: var(--color-background-input-light) !important;
+    border-radius: var(--border-radius-small) !important;
+}
+.noUi-tooltip {
+    background-color: transparent !important;
+    color: var(--color-text-light) !important;
+    font-size: var(--font-size-small) !important;
+    border: none !important;
+    bottom: 100% !important;
+}
+.noUi-value {
+    color: var(--color-text-lighter) !important;
+}
+.noUi-marker {
+    background-color: var(--color-border-light) !important;
+}
+.noUi-marker-normal {
+    background-color: var(--color-border-hover) !important;
+}
+/* Blocks clicking when not disabled */
+.noUi-pips-horizontal {
+    pointer-events: none;
+}
+
 /* - - - - QUICK AND DIRTY CLASSES - - - - */
 .center {
     margin-inline: auto;
     display: block;
     position: static;
+}
+
+.backdrop {
+    position: fixed;
+    display: flex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--color-background-backdrop);
+    backdrop-filter: blur(8px);
+    cursor: pointer;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.spacer-line {
+    width: 100%;
+    height: 2px;
+    border-radius: 100px;
+    background-color: var(--color-border-hover);
+    margin: var(--spacing-md) 0;
+}
+
+
+/* - - - - ANIMATIONS - - - - */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInFromLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }

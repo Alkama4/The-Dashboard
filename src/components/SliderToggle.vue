@@ -2,12 +2,22 @@
     <div class="slider-toggle" @click="toggleSelection">
         <div class="slider">
             <div class="grid-overlay">
-                <span class="slider-text expense" :class="{ hidden: value === 'income' }">Expense</span>
-                <span class="slider-text income" :class="{ hidden: value === 'expense' }">Income</span>
+                <span
+                    class="slider-text option1"
+                    :class="{ hidden: value === options[1] }"
+                >
+                    {{ options[0] }}
+                </span>
+                <span
+                    class="slider-text option2"
+                    :class="{ hidden: value === options[0] }"
+                >
+                    {{ options[1] }}
+                </span>
             </div>
             <div
                 class="slider-indicator"
-                :class="{ 'income-selected': value === 'income' }"
+                :class="{ 'selected-second': value === options[1] }"
             ></div>
         </div>
     </div>
@@ -19,8 +29,13 @@ export default {
     props: {
         modelValue: {
             type: String,
-            default: 'expense',
-            validator: (val) => ['expense', 'income'].includes(val),
+            default: '',
+            validator: (val) => val === '' || Array.isArray(val) && val.length === 2,
+        },
+        options: {
+            type: Array,
+            required: true,
+            validator: (val) => Array.isArray(val) && val.length === 2,
         },
     },
     emits: ['update:modelValue'],
@@ -36,11 +51,12 @@ export default {
     },
     methods: {
         toggleSelection() {
-            this.value = this.value === 'expense' ? 'income' : 'expense';
+            this.value = this.value === this.options[0] ? this.options[1] : this.options[0];
         },
     },
 };
 </script>
+
 
 <style scoped>
 .slider-toggle {
@@ -114,11 +130,12 @@ export default {
     background-color: var(--color-negative-hover);
 }
 
-.income-selected {
+.selected-second {
     transform: translateX(100%);
-    background-color: var(--color-positive);
+    background-color: var(--color-positive); /* Adjust for the second option */
 }
-.income-selected:hover {
-    background-color: var(--color-positive-hover);
+.selected-second:hover {
+    background-color: var(--color-positive-hover); /* Adjust hover color */
 }
+
 </style>

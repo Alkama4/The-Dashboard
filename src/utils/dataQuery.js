@@ -3,7 +3,7 @@ export function getData() {
         {
             entryId: 1,
             direction: "expense",
-            date: new Date('2023-12-24'),
+            date: new Date('2023-08-24'),
             counterparty: "Cotton Club",
             types: [{ type: "Opiskelija lounas", amount: 2.9 }],
             notes: "Hernekeittoa"
@@ -85,9 +85,9 @@ export function getData() {
         {
             entryId: 10,
             direction: "expense",
-            date: new Date('2024-2-2'),
+            date: new Date('2024-12-24'),
             counterparty: "Parturi Hannele-Kallio",
-            types: [{ type: "Parturi", amount: 2345.67 }],
+            types: [{ type: "Parturi", amount: 900.67 }],
             notes: "Jotaki safkaa"
         },
     ];
@@ -121,4 +121,103 @@ export function getOptions() {
         .map(entry => entry[0]);  // Return only the type names
 
     return { sortedCounterparties, sortedTypes };
+}
+
+
+export function getFilters() {
+    const data = getData();
+
+    // Separate data by direction (expense vs income)
+    const groupedByDirection = data.reduce(
+        (acc, entry) => {
+            acc[entry.direction].push(entry);
+            return acc;
+        },
+        { expense: [], income: [] } // Initialize groups for both directions
+    );
+
+    // Helper function to count occurrences of each entry (counterparty or type)
+    const countOccurrences = (entries, keyExtractor) => {
+        return entries.reduce((acc, entry) => {
+            const keys = keyExtractor(entry);
+            keys.forEach(key => {
+                acc[key] = (acc[key] || 0) + 1;
+            });
+            return acc;
+        }, {});
+    };
+
+    // Helper function to calculate min and max for a key
+    const calculateMinMax = (entries, valueExtractor) => {
+        const values = entries.map(valueExtractor);
+        return {
+            min: Math.min(...values),
+            max: Math.max(...values)
+        };
+    };
+
+    // Process the entries for both expense and income directions
+    const processGroup = (entries, isExpense) => {
+        const counterpartyCount = countOccurrences(entries, (entry) => [entry.counterparty]);
+        const typeCount = countOccurrences(entries, (entry) => entry.types.map(type => type.type));
+
+        // Calculate total amount for each entry
+        const totalAmounts = entries.map(entry =>
+            entry.types.reduce((sum, type) => sum + type.amount, 0)
+        );
+
+        // Adjust amounts for expenses (negative) or income (positive)
+        const adjustedAmounts = totalAmounts.map(amount =>
+            isExpense ? -Math.abs(amount) : Math.abs(amount)
+        );
+
+        const { min: minAmount, max: maxAmount } = calculateMinMax(adjustedAmounts, amount => amount);
+        const { min: minDate, max: maxDate } = calculateMinMax(entries, entry => entry.date.getTime());
+
+        return {
+            counterparty: counterpartyCount,
+            type: typeCount,
+            minAmount,
+            maxAmount,
+            minDate: new Date(minDate),
+            maxDate: new Date(maxDate)
+        };
+    };
+
+    // Process the data for expense and income
+    const expenseData = processGroup(groupedByDirection.expense, true);
+    const incomeData = processGroup(groupedByDirection.income, false);
+
+    // Structuring the final result
+    return {
+        counterparty: {
+            expense: Object.entries(expenseData.counterparty)
+                .sort((a, b) => b[1] - a[1])
+                .map(entry => entry[0]),
+
+            income: Object.entries(incomeData.counterparty)
+                .sort((a, b) => b[1] - a[1])
+                .map(entry => entry[0])
+        },
+
+        type: {
+            expense: Object.entries(expenseData.type)
+                .sort((a, b) => b[1] - a[1])
+                .map(entry => entry[0]),
+
+            income: Object.entries(incomeData.type)
+                .sort((a, b) => b[1] - a[1])
+                .map(entry => entry[0])
+        },
+
+        amount: {
+            min: Math.min(expenseData.minAmount, incomeData.minAmount),
+            max: Math.max(expenseData.maxAmount, incomeData.maxAmount)
+        },
+
+        date: {
+            min: Math.min(expenseData.minDate, incomeData.minDate),
+            max: Math.max(expenseData.maxDate, incomeData.maxDate)
+        }
+    };
 }

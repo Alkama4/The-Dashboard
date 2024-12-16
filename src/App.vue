@@ -11,7 +11,6 @@
 <script>
 // Imports
 import { toggleDarkMode, initializeDarkMode } from './utils/darkMode';
-import { toggleSideBar , initializeSideBar} from './utils/sideBar';
 import TopBar from './components/TopBar.vue';
 import { notify } from './utils/notification';
 
@@ -26,10 +25,6 @@ export default {
             console.info("Dark mode toggled!");
             toggleDarkMode();
         },
-        toggleSideBar() {
-            console.info("Side bar toggled!");
-            toggleSideBar();
-        },
         notify(message, type, duration) {
             // console.info("Notification shown.");
             notify(message, type, duration);
@@ -37,7 +32,6 @@ export default {
     },
     mounted() {
         initializeDarkMode();
-        initializeSideBar();
         this.$root.notify = this.notify; // Expose the notify method on the root instance
     },
 }

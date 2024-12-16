@@ -171,23 +171,22 @@
         },
         computed: {
             amounts() {
-                const total = this.data.types.reduce((sum, type) => sum + type.amount, 0);
-                return [total, ...this.data.types.map(type => type.amount)];
+                const firstRow = this.data.types.reduce((sum, type) => sum + type.amount, 0);
+                if (this.data.types.length > 1) {
+                    return [firstRow, ...this.data.types.map(type => type.amount)];
+                } else {
+                    return [firstRow];
+                }
             },
             types() {
-                let firstRow = "";
-                if (this.isExpanded) {
-                    firstRow = "Total sum:";
+                if (this.data.types.length > 1) {
+                    const firstRow = this.isExpanded ? "Total sum:" : this.data.types.map(type => type.type).join(", ");
+                    const categories = this.data.types.map(type => type.type);
+                    return [firstRow, ...categories];
                 } else {
-                    this.data.types.forEach((type, index) => {
-                        if (index > 0) {
-                            firstRow += ", "
-                        }
-                        firstRow += type.type;
-                    })
+                    const firstRow = this.data.types[0].type;
+                    return [firstRow];
                 }
-                const categories = this.data.types.map(type => type.type);
-                return [firstRow, ...categories];
             },
             counterparty() {
                 return this.data.counterparty;
@@ -229,7 +228,7 @@
 .spendings-summary::after {
     content: '';
     position: absolute;
-    top: 1px;
+    top: -1px;
     left: 0;
     right: 0;
     bottom: 0px;
@@ -242,7 +241,7 @@
 .spendings-summary.active::after {
     background-color: var(--color-background-tr-active);
     /* bottom: var(--spacing-sm); */
-    bottom: -43px;
+    bottom: -43px;  /* To align with the control buttons bottom border */
 }
 .spendings-summary:hover::after {
     background-color: var(--color-background-tr-hover);
@@ -336,26 +335,11 @@ td {
     mask-size: 125%;
 }
 
-.summary-row-type-and-amount {
-    /* padding-bottom: var(--spacing-sm); */
-    position: relative;
-    transition: color 0.2s ease-out;
-}
 .second-row-type-and-amount {
     padding-top: 4px;
     border-top: 2px solid transparent;
     margin-top: 4px;
     transition: border 0.2s ease-out;
-}
-.active .summary-row-type-and-amount {
-    font-weight: 600;
-    color: var(--color-text);
-}
-.active .column-amount.expense .summary-row-type-and-amount {
-    color: var(--color-negative-hover);
-}
-.active .column-amount.income .summary-row-type-and-amount {
-    color: var(--color-positive-hover);
 }
 .active .second-row-type-and-amount {
     border-color: var(--color-border);

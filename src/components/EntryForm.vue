@@ -2,7 +2,10 @@
     <form @submit.prevent="handleSubmit">
         <div class="grid-direction">
             <label for="direction">Direction:</label><br>
-            <SliderToggle v-model="formData.direction" />
+            <slider-toggle 
+                v-model="formData.direction" 
+                :options="['expense', 'income']"
+            />
         </div>
         <div class="grid-date">
             <label for="date">Date:</label><br>
@@ -20,7 +23,7 @@
         <div class="grid-types">
             <div v-for="(entry, index) in formData.types" :key="index" class="type-aligner" :class="{'remove-type-button-hidden': !this.formData.types[1]}">
                 <div class="grid-amount">
-                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder=" e.g 2.95" required />
+                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder="Value..." required />
                 </div>
                 <div class="grid-type">
                     <v-select v-model="entry.type" :id="'type-' + index" label="type" :options="typeOptions" placeholder="Select type..." taggable></v-select>
@@ -136,7 +139,7 @@ export default {
 <style>
 form {
     display: grid;
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 204px 1fr;
     grid-template-areas:
         "direction date"
         "counterparty counterparty"
@@ -175,7 +178,7 @@ form > * {
     gap: var(--spacing-md);
 }
 .type-aligner {
-    grid-template-columns: 200px 1fr auto;
+    grid-template-columns: 204px 1fr auto;
     display: grid;
     align-items: center;
     gap: var(--spacing-md);
@@ -189,7 +192,7 @@ form > * {
     margin: 0;
 }
 .remove-type-button-hidden {
-    grid-template-columns: 200px 1fr;
+    grid-template-columns: 204px 1fr;
 }
 .add-type-button {
     margin: 0 var(--spacing-sm);

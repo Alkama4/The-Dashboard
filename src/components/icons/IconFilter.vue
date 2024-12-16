@@ -1,4 +1,4 @@
-<!-- src/components/icons/IconSortDown.vue -->
+<!-- src/components/icons/IconFilter.vue -->
  
 <template>
     <BaseIcon
@@ -8,7 +8,7 @@
         :transition="transition"
     >
         <!-- Unique SVG path for the Dark Mode icon goes here -->
-        <path d="M11 9h9v2h-9zm0 4h7v2h-7zm0-8h11v2H11zm0 12h5v2h-5zm-6 3h2V8h3L6 4 2 8h3z"></path>
+        <path d="M21 3H5a1 1 0 0 0-1 1v2.59c0 .523.213 1.037.583 1.407L10 13.414V21a1.001 1.001 0 0 0 1.447.895l4-2c.339-.17.553-.516.553-.895v-5.586l5.417-5.417c.37-.37.583-.884.583-1.407V4a1 1 0 0 0-1-1zm-6.707 9.293A.996.996 0 0 0 14 13v5.382l-2 1V13a.996.996 0 0 0-.293-.707L6 6.59V5h14.001l.002 1.583-5.71 5.71z"></path>
     </BaseIcon>
 </template>
 
@@ -16,7 +16,7 @@
 import BaseIcon from './BaseIcon.vue';
 
 export default {
-    name: "IconSortDown",
+    name: "IconFilter",
     components: { BaseIcon },
     props: {
         size: [String, Number],

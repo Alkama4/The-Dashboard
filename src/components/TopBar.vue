@@ -5,7 +5,8 @@
                 <router-link class="website-name" to="/" >The Dashboard</router-link>
             </div>
             <div class="top-bar-side">
-                <router-link class="nav-button desktop-button" to="/spendings">Spendings</router-link>
+                <router-link class="nav-button desktop-button" to="/spendings">Spendings data</router-link>
+                <!-- <router-link class="nav-button desktop-button" to="/spendings">Spendings analysis</router-link> -->
                 <router-link class="nav-button desktop-button" to="/newentry">New entry</router-link>
                 <router-link class="nav-button desktop-button" to="/about">About page</router-link>
                 <router-link class="nav-button desktop-button" to="/settings">Settings</router-link>
@@ -18,9 +19,10 @@
             </div>
         </div>
     </div>
-    <div @click="toggleMenu()" ref="mobileNav" class="mobile-nav">
+    <div @click="toggleMenu()" ref="mobileNav" class="mobile-nav backdrop">
         <router-link class="website-name" to="/" style="padding-bottom: var(--spacing-md);">The Dashboard</router-link>
-        <router-link class="nav-button" to="/spendings">Spendings</router-link>
+        <router-link class="nav-button" to="/spendings">Spendings data</router-link>
+        <!-- <router-link class="nav-button" to="/spendings">Spendings analysis</router-link> -->
         <router-link class="nav-button" to="/newentry">New entry</router-link>
         <router-link class="nav-button" to="/about">About page</router-link>
         <router-link class="nav-button" to="/settings">Settings</router-link>
@@ -145,18 +147,9 @@
 
     /* - - - - Mobile Navigation - - - - */
     .mobile-nav {
-        cursor: pointer;
-        position: fixed;
-        width: calc(100vw - var(--spacing-lg) * 2);
-        height: calc(100vh - var(--spacing-lg) * 2);
-        background-color: var(--color-background-mobile-nav);
-        backdrop-filter: blur(64px);
         z-index: var(--z-mobile-nav);
-        top: 0;
-        right: 0;
         padding: var(--spacing-lg);
 
-        display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-end;

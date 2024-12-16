@@ -1,5 +1,5 @@
 <template>
-    <div class="modal-backdrop" @click.self="closeModal">
+    <div class="modal-backdrop backdrop" @click.self="closeModal">
         <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-header">
@@ -134,23 +134,20 @@ export default {
         totalSum() {
             return this.formatAmount(this.data.types.reduce((sum, type) => sum + type.amount, 0));
         }
+    },
+    mounted() {
+        document.documentElement.classList.add('no-scroll');
+    },
+    beforeUnmount() {
+        document.documentElement.classList.remove('no-scroll');
     }
 };
 </script>
 
 <style scoped>
 .modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay */
-    backdrop-filter: blur(8px);
-    display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     z-index: var(--z-modal);
 }
 
@@ -166,7 +163,6 @@ export default {
     min-width: fit-content;
     margin-inline: 8vw;
     padding: var(--spacing-lg);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     position: relative;
     animation: fadeInUp 0.3s ease-out;
     max-height: 70vh;
@@ -206,18 +202,6 @@ h2.delete::after {
 .modal-body {
     overflow-y: auto;
     white-space: wrap;
-}
-
-/* Animations */
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 /* Compact mode */

@@ -10,7 +10,16 @@
         <p> Descriptive text about the spendings page that will be longer 
             and more detailed in the future possibly but that is uncertain 
             so don't quote me on that or anything else I have written in 
-            this or anywhere else on the website. One liners babyyyy...</p>
+            this or anywhere else on the website. One liners babyyyy...
+        </p>
+
+        <FilterSettings v-if="showFilters" @close="showFilters = false" fullscreen-mode="true"/>
+
+        <button class="color-primary filter-button" @click="this.showFilters = !this.showFilters;"> 
+            <IconFilter size="20px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
+            Filter
+        </button>
+
         <table>
             <thead>
                 <tr>
@@ -70,7 +79,6 @@
                         </div>
                     </th>
                 </tr>
-                <!-- <tr><td><div class="th-spacer"></div></td></tr> -->
             </thead>
             <tbody ref="placeForEntries">
                 <SpendingsEntry
@@ -90,23 +98,28 @@
 
 
 <script>
+    import IconFilter from '@/components/icons/IconFilter.vue';
     import SpendingsEntry from '../components/SpendingsEntry.vue';
     import IconSortBoth from '../components/icons/IconSortBoth.vue';
     import IconSortDown from '../components/icons/IconSortDown.vue';
     import IconSortUp from '../components/icons/IconSortUp.vue';
     import { getData } from '../utils/dataQuery';
+    import FilterSettings from '@/components/FilterSettings.vue';
     
     export default {
         name: 'SpendingsPage',
         components: {
             SpendingsEntry,
+            FilterSettings,
             IconSortBoth,
             IconSortDown,
             IconSortUp,
+            IconFilter,
         },
         data() {
             return {
                 entries: getData(),
+                showFilters: false,
                 sortColumn: 'date',     // Default to date 
                 sortDirection: 'desc',  // Default to descending
                 inactiveColor: 'var(--color-text-lighter)',
@@ -245,9 +258,12 @@ th.column-amount {
     text-align: end;
 }
 
-.th-spacer {
-    height: var(--spacing-sm);
+.filter-button {
+    margin-right: 0;
+    margin-left: auto;
 }
+
+
 
 /* Round corners for th row */
 /* th:first-child {
