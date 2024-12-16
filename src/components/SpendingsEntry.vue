@@ -8,15 +8,15 @@
 
         <td class="column-counterparty column-fade-right">{{ counterparty }}</td>
         
-        <td class="column-type" ref="columnType">
-            <div ref="typeExpanded" style="height: 25px;">
-                <div ref="typeExpandedContent">
-                    <span v-for="(type, index) in types" :key="index"
+        <td class="column-category" ref="columnCategory">
+            <div ref="categoryExpanded" style="height: 25px;">
+                <div ref="categoryxpandedContent">
+                    <span v-for="(category, index) in categories" :key="index"
                             :class="{
-                                'summary-row-type-and-amount column-fade-right': index === 0,
-                                'second-row-type-and-amount': index === 1
+                                'summary-row-category-and-amount column-fade-right': index === 0,
+                                'second-row-category-and-amount': index === 1
                             }">
-                        {{ type }}
+                        {{ category }}
                     </span>
                 </div>
             </div>
@@ -27,8 +27,8 @@
                 <div ref="amountExpandedContent">
                     <span v-for="(amount, index) in amounts" :key="index" 
                             :class="{
-                                'summary-row-type-and-amount': index === 0,
-                                'second-row-type-and-amount': index === 1
+                                'summary-row-category-and-amount': index === 0,
+                                'second-row-category-and-amount': index === 1
                             }">
                         {{ formatAmount(amount) }}
                     </span>
@@ -58,7 +58,7 @@
         
                     <ModalWindow
                         v-if="showModal"
-                        :type="modalType"
+                        :modalType="modalCategory"
                         :data="modalData"
                         :header="modalHeader"
                         @close="showModal = false"
@@ -87,13 +87,13 @@
             ModalWindow: defineAsyncComponent(() => import('./ModalWindow.vue')),
         },
         props: {
-            data: { type: Object, required: true },
-            isExpanded: { type: Boolean, default: false },
+            data: { category: Object, required: true },
+            isExpanded: { category: Boolean, default: false },
         },
         data() {
             return {
                 showModal: false,
-                modalType: '',
+                modalCategory: '',
                 modalData: this.data,
                 modalHeader: '',
             };
@@ -106,44 +106,44 @@
                 const expandedContentHeight = this.$refs['spendingsExpandedContent']?.getBoundingClientRect().height || 0;
 
                 const notesHeight = this.$refs['notesExpandedContent']?.getBoundingClientRect().height || 0;
-                const typeHeight = this.$refs['typeExpandedContent']?.getBoundingClientRect().height || 0;
+                const categoryHeight = this.$refs['categoryExpandedContent']?.getBoundingClientRect().height || 0;
                 const amountHeight = this.$refs['amountExpandedContent']?.getBoundingClientRect().height || 0;
 
-                const maxHeight = Math.max(notesHeight, typeHeight, amountHeight) + 4;  // Spacing at the bottom when expanded
+                const maxHeight = Math.max(notesHeight, categoryHeight, amountHeight) + 4;  // Spacing at the bottom when expanded
 
                 this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
                 this.$refs['notesExpanded'].style.height = `${maxHeight}px`;
-                this.$refs['typeExpanded'].style.height = `${maxHeight}px`;
+                this.$refs['categoryExpanded'].style.height = `${maxHeight}px`;
                 this.$refs['amountExpanded'].style.height = `${maxHeight}px`;
 
                 this.$refs['columnNotes'].classList.add("hide-mask");
-                // this.$refs['columnType'].classList.add("hide-mask");
+                // this.$refs['columnCategory'].classList.add("hide-mask");
                 this.$refs['spendingsSummary'].classList.add("active");
             },
             collapseEntry() {
                 this.$refs['spendingsExpanded'].style.height = '0';
                 this.$refs['notesExpanded'].style.height = '25px';
-                this.$refs['typeExpanded'].style.height = '25px';
+                this.$refs['categoryExpanded'].style.height = '25px';
                 this.$refs['amountExpanded'].style.height = '25px';
     
                 this.$refs['columnNotes'].classList.remove("hide-mask");
-                // this.$refs['columnType'].classList.remove("hide-mask");
+                // this.$refs['columnCategory'].classList.remove("hide-mask");
                 this.$refs['spendingsSummary'].classList.remove("active");
             },
             showDetails() {
-                this.modalType = 'details';
+                this.modalCategory = 'details';
                 this.showModal = true;
             },
             editEntry() {
-                this.modalType = 'edit';
+                this.modalCategory = 'edit';
                 this.showModal = true;
             },
             duplicateEntry() {
-                this.modalType = 'duplicate';
+                this.modalCategory = 'duplicate';
                 this.showModal = true;
             },
             deleteEntry() {
-                this.modalType = 'delete';
+                this.modalCategory = 'delete';
                 this.showModal = true;
             },
             formatAmount(amount) {
@@ -171,20 +171,20 @@
         },
         computed: {
             amounts() {
-                const firstRow = this.data.types.reduce((sum, type) => sum + type.amount, 0);
-                if (this.data.types.length > 1) {
-                    return [firstRow, ...this.data.types.map(type => type.amount)];
+                const firstRow = this.data.categories.reduce((sum, category) => sum + category.amount, 0);
+                if (this.data.categories.length > 1) {
+                    return [firstRow, ...this.data.categories.map(category => category.amount)];
                 } else {
                     return [firstRow];
                 }
             },
-            types() {
-                if (this.data.types.length > 1) {
-                    const firstRow = this.isExpanded ? "Total sum:" : this.data.types.map(type => type.type).join(", ");
-                    const categories = this.data.types.map(type => type.type);
+            categories() {
+                if (this.data.categories.length > 1) {
+                    const firstRow = this.isExpanded ? "Total sum:" : this.data.categories.map(category => category.category).join(", ");
+                    const categories = this.data.categories.map(category => category.category);
                     return [firstRow, ...categories];
                 } else {
-                    const firstRow = this.data.types[0].type;
+                    const firstRow = this.data.categories[0].category;
                     return [firstRow];
                 }
             },
@@ -276,7 +276,7 @@ td {
     overflow: hidden;
     color: var(--color-text);
 }    
-.column-type {
+.column-category {
     text-align: start;
     max-width: 175px;
     min-width: 175px;
@@ -295,9 +295,9 @@ td {
     overflow: hidden;
 } 
 
-.column-amount div, .column-type div {
+.column-amount div, .column-category div {
     transition: height 0.2s ease-out;
-} .column-amount div div, .column-type div div {
+} .column-amount div div, .column-category div div {
     display: grid;
     grid-template-columns: 1fr;
 }
@@ -335,13 +335,13 @@ td {
     mask-size: 125%;
 }
 
-.second-row-type-and-amount {
+.second-row-category-and-amount {
     padding-top: 4px;
     border-top: 2px solid transparent;
     margin-top: 4px;
     transition: border 0.2s ease-out;
 }
-.active .second-row-type-and-amount {
+.active .second-row-category-and-amount {
     border-color: var(--color-border);
 }
 

@@ -25,9 +25,9 @@ export default {
             console.info("Dark mode toggled!");
             toggleDarkMode();
         },
-        notify(message, type, duration) {
+        notify(message, messageType, duration) {
             // console.info("Notification shown.");
-            notify(message, type, duration);
+            notify(message, messageType, duration);
         },
     },
     mounted() {

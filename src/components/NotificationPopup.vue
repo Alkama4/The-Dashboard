@@ -1,8 +1,8 @@
 <template>
     <transition name="fade">
-        <div v-if="visible" :class="['notification', type]" @click="closeThis">
+        <div v-if="visible" :class="['notification', messageType]" @click="closeThis">
             <IconCross class="closeIcon" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/>
-            <h3> <!-- Header will be placed here based on type --> </h3>
+            <h3> <!-- Header will be placed here based on messageType --> </h3>
             <p>{{ message }}</p>
             <!-- Timer bar at the bottom -->
             <div class="timer-bar" :style="{ width: `${timerWidth}%` }"></div>
@@ -20,7 +20,7 @@ export default {
     emits: ['close'],
     props: {
         message: String,
-        type: { type: String, default: "info" },
+        messageType: { type: String, default: "info" },
         duration: { type: Number, default: 5000 },
     },
     data() {
@@ -132,7 +132,7 @@ export default {
     right: var(--spacing-md);
 }
 
-/* Notification types */
+/* Notification messageType */
 .notification.info {
     background-color: var(--color-primary);
 } .notification.info:hover {

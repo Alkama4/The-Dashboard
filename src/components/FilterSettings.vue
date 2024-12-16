@@ -6,10 +6,10 @@
             <h4 class="amount-and-date-headers">Amount</h4>
             <div class="slider-wrapper">
                 <div class="slider-min-wrapper">
-                    <input v-model.number="filterData.amount.lowerLimit" type="number" ref="amountMin">
+                    <input v-model.number="filterData.amount.lowerLimit" category="number" ref="amountMin">
                 </div>
                 <div class="slider-max-wrapper">
-                    <input v-model.number="filterData.amount.upperLimit" type="number" ref="amountMax">
+                    <input v-model.number="filterData.amount.upperLimit" category="number" ref="amountMax">
                 </div>
                 <div class="slider" ref="amountSlider"></div>
             </div>
@@ -17,10 +17,10 @@
             <h4 class="amount-and-date-headers">Date</h4>
             <div class="slider-wrapper">
                 <div class="slider-min-wrapper">
-                    <input type="date" ref="dateMin">
+                    <input category="date" ref="dateMin">
                 </div>
                 <div class="slider-max-wrapper">
-                    <input type="date" ref="dateMax">
+                    <input category="date" ref="dateMax">
                 </div>
                 <div class="slider" ref="dateSlider"></div>
             </div>
@@ -84,12 +84,12 @@
             <div class="drop-down drop-down-wrapper categories-header">
                 <h4 class="drop-down-header" @click="toggleDropdown('category')">
                     Categories
-                    <span @click.stop="filterData.type.mode = filterData.type.mode === 'include' ? 'exclude' : 'include'" 
+                    <span @click.stop="filterData.category.mode = filterData.category.mode === 'include' ? 'exclude' : 'include'" 
                         title="[Include only selected] / [Exclude selected]"
                         class="mode-flipper-in-header"
                         :class="{
-                            'exclude': filterData.type.mode === 'exclude',
-                            'include': filterData.type.mode === 'include'
+                            'exclude': filterData.category.mode === 'exclude',
+                            'include': filterData.category.mode === 'include'
                         }"
                     >
                         <span>
@@ -110,23 +110,23 @@
                     <div ref="drop-down-content-category">
                         <div class="expense-section">
                             <h5>Expense</h5>
-                            <div v-for="(type) in options.type.expense" :key="'type-expense-' + type" class="option" @click="toggleTypeSelection(type)">
+                            <div v-for="(category) in options.category.expense" :key="'category-expense-' + category" class="option" @click="toggleCategorySelection(category)">
                                 <!-- Conditionally render checked or minus icon -->
-                                <IconCheckboxChecked v-if="filterData.type.selected.includes(type) && filterData.type.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
-                                <IconCheckboxMinus v-if="filterData.type.selected.includes(type) && filterData.type.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!filterData.type.selected.includes(type)" color="var(--color-text-light)" />
-                                {{ type }}
+                                <IconCheckboxChecked v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
+                                <IconCheckboxMinus v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
+                                <IconCheckbox v-if="!filterData.category.selected.includes(category)" color="var(--color-text-light)" />
+                                {{ category }}
                             </div>
                         </div>
     
                         <div class="income-section">
                             <h5>Income</h5>
-                            <div v-for="(type) in options.type.income" :key="'type-income-' + type" class="option" @click="toggleTypeSelection(type)">
+                            <div v-for="(category) in options.category.income" :key="'category-income-' + category" class="option" @click="toggleCategorySelection(category)">
                                 <!-- Conditionally render checked or minus icon -->
-                                <IconCheckboxChecked v-if="filterData.type.selected.includes(type) && filterData.type.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
-                                <IconCheckboxMinus v-if="filterData.type.selected.includes(type) && filterData.type.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!filterData.type.selected.includes(type)" color="var(--color-text-light)" />
-                                {{ type }}
+                                <IconCheckboxChecked v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
+                                <IconCheckboxMinus v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
+                                <IconCheckbox v-if="!filterData.category.selected.includes(category)" color="var(--color-text-light)" />
+                                {{ category }}
                             </div>
                         </div>
                     </div>
@@ -156,7 +156,7 @@ export default {
         IconChevronDown,
     },
     props: {
-        fullscreenMode: {type: Boolean, default: false}
+        fullscreenMode: {category: Boolean, default: false}
     },
     data() {
         return {
@@ -173,9 +173,9 @@ export default {
                     mode: 'include',
                     selected: [],  // Track selected counterparties
                 },
-                type: {
+                category: {
                     mode: 'include',
-                    selected: [],  // Track selected types
+                    selected: [],  // Track selected categories
                 }
             },
             activeDropdown: ""
@@ -233,12 +233,12 @@ export default {
                 this.filterData.counterparty.selected.splice(index, 1);
             }
         },
-        toggleTypeSelection(type) {
-            const index = this.filterData.type.selected.indexOf(type);
+        toggleCategorySelection(category) {
+            const index = this.filterData.category.selected.indexOf(category);
             if (index === -1) {
-                this.filterData.type.selected.push(type);
+                this.filterData.category.selected.push(category);
             } else {
-                this.filterData.type.selected.splice(index, 1);
+                this.filterData.category.selected.splice(index, 1);
             }
         },
         applyFilters() {

@@ -45,13 +45,13 @@
                             />
                         </div>
                     </th>
-                    <th @click="sortEntries('type')" class="column-type">
+                    <th @click="sortEntries('category')" class="column-category">
                         <div class="header-content">
-                            Type
+                            Category
                             <component
-                                :is="sortIcons.type"
-                                :color="sortColumn === 'type' ? activeColor : inactiveColor"
-                                :colorHover="sortColumn === 'type' ? activeHoverColor : inactiveHoverColor"
+                                :is="sortIcons.category"
+                                :color="sortColumn === 'category' ? activeColor : inactiveColor"
+                                :colorHover="sortColumn === 'category' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
@@ -129,7 +129,7 @@
                 sortIcons: {
                     date: IconSortDown, // Default to date 
                     counterparty: IconSortBoth,
-                    type: IconSortBoth,
+                    category: IconSortBoth,
                     amount: IconSortBoth,
                     notes: IconSortBoth,
                 },
@@ -182,28 +182,28 @@
                             : valueB - valueA;
                     }
 
-                    // Handle sorting by 'amount' (where types are arrays of objects)
+                    // Handle sorting by 'amount' (where categories are arrays of objects)
                     if (column === 'amount') {
                         // Map direction to numerical values for sorting
                         const getDirectionMultiplier = (direction) => direction === 'income' ? 1 : -1;
 
-                        // Assuming we need the first type's amount for sorting
-                        const amountA = a.types[0]?.amount || 0; // Fallback to 0 if no amount
-                        const amountB = b.types[0]?.amount || 0;
+                        // Assuming we need the first category's amount for sorting
+                        const amountA = a.categories[0]?.amount || 0; // Fallback to 0 if no amount
+                        const amountB = b.categories[0]?.amount || 0;
 
                         return this.sortDirection === 'asc'
                             ? (amountA * getDirectionMultiplier(a.direction)) - (amountB * getDirectionMultiplier(b.direction))
                             : (amountB * getDirectionMultiplier(b.direction)) - (amountA * getDirectionMultiplier(a.direction));
                     }
 
-                    // Handle sorting by 'type' (the first type in the array for comparison)
-                    if (column === 'type') {
-                        const typeA = a.types[0]?.type || ''; // Get the first type
-                        const typeB = b.types[0]?.type || '';
+                    // Handle sorting by 'category' (the first category in the array for comparison)
+                    if (column === 'category') {
+                        const categoryA = a.categories[0]?.category || '';
+                        const categoryB = b.categories[0]?.category || '';
 
                         return this.sortDirection === 'asc'
-                            ? typeA.localeCompare(typeB)
-                            : typeB.localeCompare(typeA);
+                            ? categoryA.localeCompare(categoryB)
+                            : categoryB.localeCompare(categoryA);
                     }
 
                     // Handle numerical comparison (e.g. amount in other columns)
@@ -211,14 +211,14 @@
                         return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
                     }
 
-                    // Handle string comparison (counterparty, type, notes)
+                    // Handle string comparison (counterparty, category, notes)
                     if (typeof valueA === 'string' && typeof valueB === 'string') {
                         return this.sortDirection === 'asc'
                             ? valueA.localeCompare(valueB)
                             : valueB.localeCompare(valueA);
                     }
 
-                    return 0; // If types don't match or are uncomparable, leave unchanged
+                    return 0; // If categories don't match or are uncomparable, leave unchanged
                 });
             }
         },
@@ -285,7 +285,7 @@ th:last-child {
     } */
 }
 @media (max-width: 600px) {
-    table th:nth-child(3) {     /* Type */
+    table th:nth-child(3) {     /* categories */
         display: none;
     }
 }

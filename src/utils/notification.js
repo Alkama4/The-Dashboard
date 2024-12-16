@@ -3,7 +3,7 @@ import Notification from "../components/NotificationPopup.vue";
 
 let activeNotification = null; // Global reference to the active notification
 
-export function notify(message, type = "info", duration = 5000) {
+export function notify(message, messageType = "info", duration = 5000) {
     if (activeNotification) {
         // Remove the previous notification
         activeNotification.unmount();
@@ -16,7 +16,7 @@ export function notify(message, type = "info", duration = 5000) {
 
     const app = createApp(Notification, {
         message,
-        type,
+        messageType,
         duration,
         onClose: () => {
             app.unmount();

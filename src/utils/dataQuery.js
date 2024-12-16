@@ -5,7 +5,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2023-08-24'),
             counterparty: "Cotton Club",
-            types: [{ type: "Opiskelija lounas", amount: 2.9 }],
+            categories: [{ category: "Opiskelija lounas", amount: 2.9 }],
             notes: "Hernekeittoa"
         },
         {
@@ -13,9 +13,9 @@ export function getData() {
             direction: "income",
             date: new Date('2023-12-28'),
             counterparty: "Kela",
-            types: [
-                { type: "Asumistuki", amount: 99.99 },
-                { type: "Opintotuki", amount: 80 }
+            categories: [
+                { category: "Asumistuki", amount: 99.99 },
+                { category: "Opintotuki", amount: 80 }
             ],
             notes: ""
         },
@@ -24,7 +24,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2023-12-25'),
             counterparty: "K-Citymarket",
-            types: [{ type: "Yleinen eläminen", amount: 8.75 }],
+            categories: [{ category: "Yleinen eläminen", amount: 8.75 }],
             notes: "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan"
         },
         {
@@ -32,7 +32,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2023-12-28'),
             counterparty: "Minimani",
-            types: [{ type: "Ruokaostokset", amount: 20.24 }],
+            categories: [{ category: "Ruokaostokset", amount: 20.24 }],
             notes: "safkaa"
         },
         {
@@ -40,10 +40,10 @@ export function getData() {
             direction: "expense",
             date: new Date('2023-12-26'),
             counterparty: "Supermarket",
-            types: [
-                { type: "Sekalainen", amount: 25 },
-                { type: "Ruokaostokset", amount: 14.23 },
-                { type: "Herkut", amount: 6.39 }
+            categories: [
+                { category: "Sekalainen", amount: 25 },
+                { category: "Ruokaostokset", amount: 14.23 },
+                { category: "Herkut", amount: 6.39 }
             ],
             notes: "Vähään kaikkea kulutustavarasta ruoasta herkkuihin."
         },
@@ -52,7 +52,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2023-12-29'),
             counterparty: "Cotton Club",
-            types: [{ type: "Kulutustavara", amount: 12.46 }],
+            categories: [{ category: "Kulutustavara", amount: 12.46 }],
             notes: "Hyvää ruokaa"
         },
         {
@@ -60,9 +60,9 @@ export function getData() {
             direction: "expense",
             date: new Date('2023-12-31'),
             counterparty: "S-Market",
-            types: [
-                { type: "Herkut", amount: 1.99 },
-                { type: "Ruokaostokset", amount: 9.34 },
+            categories: [
+                { category: "Herkut", amount: 1.99 },
+                { category: "Ruokaostokset", amount: 9.34 },
             ],
             notes: "Mässy pussi"
         },
@@ -71,7 +71,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2024-1-1'),
             counterparty: "Minimani",
-            types: [{ type: "Ruokaostokset", amount: 15.96 }],
+            categories: [{ category: "Ruokaostokset", amount: 15.96 }],
             notes: "Ruokaa ja palaa"
         },
         {
@@ -79,7 +79,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2024-1-3'),
             counterparty: "K-Citymarket",
-            types: [{ type: "Ruokaostokset", amount: 4.84 }],
+            categories: [{ category: "Ruokaostokset", amount: 4.84 }],
             notes: "Jotaki safkaa"
         },
         {
@@ -87,7 +87,7 @@ export function getData() {
             direction: "expense",
             date: new Date('2024-12-24'),
             counterparty: "Parturi Hannele-Kallio",
-            types: [{ type: "Parturi", amount: 900.67 }],
+            categories: [{ category: "Parturi", amount: 900.67 }],
             notes: "Jotaki safkaa"
         },
     ];
@@ -102,10 +102,10 @@ export function getOptions() {
         return acc;
     }, {});
 
-    // Count the occurrences of each type
-    const typeCount = data.reduce((acc, entry) => {
-        entry.types.forEach(type => {
-            acc[type.type] = (acc[type.type] || 0) + 1;
+    // Count the occurrences of each category
+    const categoryCount = data.reduce((acc, entry) => {
+        entry.categories.forEach(category => {
+            acc[category.category] = (acc[category.category] || 0) + 1;
         });
         return acc;
     }, {});
@@ -115,12 +115,12 @@ export function getOptions() {
         .sort((a, b) => b[1] - a[1])  // Sort by count, descending
         .map(entry => entry[0]);  // Return only the counterparty names
 
-    // Sort the type entries by frequency
-    const sortedTypes = Object.entries(typeCount)
+    // Sort the category entries by frequency
+    const sortedCategories = Object.entries(categoryCount)
         .sort((a, b) => b[1] - a[1])  // Sort by count, descending
-        .map(entry => entry[0]);  // Return only the type names
+        .map(entry => entry[0]);  // Return only the category names
 
-    return { sortedCounterparties, sortedTypes };
+    return { sortedCounterparties, sortedCategories };
 }
 
 
@@ -136,7 +136,7 @@ export function getFilters() {
         { expense: [], income: [] } // Initialize groups for both directions
     );
 
-    // Helper function to count occurrences of each entry (counterparty or type)
+    // Helper function to count occurrences of each entry (counterparty or category)
     const countOccurrences = (entries, keyExtractor) => {
         return entries.reduce((acc, entry) => {
             const keys = keyExtractor(entry);
@@ -159,11 +159,11 @@ export function getFilters() {
     // Process the entries for both expense and income directions
     const processGroup = (entries, isExpense) => {
         const counterpartyCount = countOccurrences(entries, (entry) => [entry.counterparty]);
-        const typeCount = countOccurrences(entries, (entry) => entry.types.map(type => type.type));
+        const categoryCount = countOccurrences(entries, (entry) => entry.categories.map(category => category.category));
 
         // Calculate total amount for each entry
         const totalAmounts = entries.map(entry =>
-            entry.types.reduce((sum, type) => sum + type.amount, 0)
+            entry.categories.reduce((sum, category) => sum + category.amount, 0)
         );
 
         // Adjust amounts for expenses (negative) or income (positive)
@@ -176,7 +176,7 @@ export function getFilters() {
 
         return {
             counterparty: counterpartyCount,
-            type: typeCount,
+            category: categoryCount,
             minAmount,
             maxAmount,
             minDate: new Date(minDate),
@@ -200,12 +200,12 @@ export function getFilters() {
                 .map(entry => entry[0])
         },
 
-        type: {
-            expense: Object.entries(expenseData.type)
+        category: {
+            expense: Object.entries(expenseData.category)
                 .sort((a, b) => b[1] - a[1])
                 .map(entry => entry[0]),
 
-            income: Object.entries(incomeData.type)
+            income: Object.entries(incomeData.category)
                 .sort((a, b) => b[1] - a[1])
                 .map(entry => entry[0])
         },

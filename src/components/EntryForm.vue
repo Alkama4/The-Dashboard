@@ -16,28 +16,28 @@
             <v-select v-model="formData.counterparty" label="counterparty" :options="counterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
         </div>
 
-        <div class="grid-types-labels type-aligner">
+        <div class="grid-categories-labels category-aligner">
             <label :for="'amount-' + index">Amount:</label>
-            <label :for="'type-' + index">Type:</label>
+            <label :for="'category-' + index">Category:</label>
         </div>
-        <div class="grid-types">
-            <div v-for="(entry, index) in formData.types" :key="index" class="type-aligner" :class="{'remove-type-button-hidden': !this.formData.types[1]}">
+        <div class="grid-categories">
+            <div v-for="(entry, index) in formData.categories" :key="index" class="category-aligner" :class="{'remove-category-button-hidden': !this.formData.categories[1]}">
                 <div class="grid-amount">
                     <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder="Value..." required />
                 </div>
-                <div class="grid-type">
-                    <v-select v-model="entry.type" :id="'type-' + index" label="type" :options="typeOptions" placeholder="Select type..." taggable></v-select>
+                <div class="grid-category">
+                    <v-select v-model="entry.category" :id="'category-' + index" label="category" :options="categoryOptions" placeholder="Select category..." taggable></v-select>
                 </div>
-                <button v-if="formData.types.length > 1" @click="removeEntry(index)" class="remove-type-button button-simple">
+                <button v-if="formData.categories.length > 1" @click="removeEntry(index)" class="remove-category-button button-simple">
                     <IconCross size="30"/>
                 </button>
             </div>
-            <button type="button" @click="addEntry" class="add-type-button">More types</button>
+            <button type="button" @click="addEntry" class="add-category-button">More categories</button>
         </div>
 
         <div class="grid-notes">
             <label for="notes">Notes:</label><br>
-            <textarea v-model="formData.notes" id="notes" placeholder="Type notes/description..."></textarea>
+            <textarea v-model="formData.notes" id="notes" placeholder="Category notes/description..."></textarea>
         </div>
         <button type="submit" class="color-primary center grid-submit">Submit</button>
     </form>
@@ -55,14 +55,14 @@ export default {
     },
     props: {
         initialData: {
-            type: Object,
+            category: Object,
             default: () => ({
                 entryId: '',
                 direction: 'expense',
                 date: '',
                 counterparty: '',
                 notes: '',
-                types: [{ type: '', amount: '' }]
+                categories: [{ category: '', amount: '' }]
             })
         }
     },
@@ -73,24 +73,24 @@ export default {
                 ...this.initialData,
             },
             counterpartyOptions: [],
-            typeOptions: [],
+            categoryOptions: [],
         };
     },
     methods: {
         addEntry() {
-            this.formData.types.push({ type: '', amount: '' });
+            this.formData.categories.push({ category: '', amount: '' });
         },
         removeEntry(index) {
-            if (this.formData.types.length > 1) {
-                this.formData.types.splice(index, 1);
+            if (this.formData.categories.length > 1) {
+                this.formData.categories.splice(index, 1);
             } else {
                 alert('At least one entry is required!');
             }
         },
         handleSubmit() {
-            const invalidEntry = this.formData.types.some(entry => !entry.type || !entry.amount);
+            const invalidEntry = this.formData.categories.some(entry => !entry.category || !entry.amount);
             if (invalidEntry) {
-                alert('All entries must have a type and an amount!');
+                alert('All entries must have a category and an amount!');
                 return;
             }
 
@@ -101,7 +101,7 @@ export default {
 
             this.$emit('submit', {
                 ...this.formData,
-                types: [...this.formData.types]
+                categories: [...this.formData.categories]
             });
         },
         filterOptionsByDirection() {
@@ -110,10 +110,10 @@ export default {
             // Filter counterparty options based on the direction
             if (this.formData.direction === 'expense') {
                 this.counterpartyOptions = options.sortedCounterparties.filter(counterparty => counterparty !== 'Kela'); // Example: filter out income counterparties
-                this.typeOptions = options.sortedTypes.filter(type => type !== 'Asumistuki'); // Example: filter out income types
+                this.categoryOptions = options.sortedCategories.filter(category => category !== 'Asumistuki'); // Example: filter out income Categories
             } else {
                 this.counterpartyOptions = options.sortedCounterparties.filter(counterparty => counterparty === 'Kela'); // Example: filter in income counterparties
-                this.typeOptions = options.sortedTypes.filter(type => type === 'Asumistuki'); // Example: filter in income types
+                this.categoryOptions = options.sortedCategories.filter(category => category === 'Asumistuki'); // Example: filter in income Categories
             }
         }
     },
@@ -143,8 +143,8 @@ form {
     grid-template-areas:
         "direction date"
         "counterparty counterparty"
-        "types-labels types-labels"
-        "types types"
+        "categories-labels categories-labels"
+        "categories categories"
         "notes notes"
         "submit submit";
     gap: 0 var(--spacing-md);
@@ -166,35 +166,35 @@ form > * {
     grid-area: counterparty;
 }
 
-.grid-types {
-    grid-area: types;
+.grid-categories {
+    grid-area: categories;
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--spacing-md);
     margin: 0;
 }
-.grid-types-labels {
-    grid-area: types-labels;
+.grid-categories-labels {
+    grid-area: categories-labels;
     gap: var(--spacing-md);
 }
-.type-aligner {
+.category-aligner {
     grid-template-columns: 204px 1fr auto;
     display: grid;
     align-items: center;
     gap: var(--spacing-md);
 ;}
 
-.remove-type-button {
+.remove-category-button {
     color: white;
     border: none;
     padding: 0.5em;
     cursor: pointer;
     margin: 0;
 }
-.remove-type-button-hidden {
+.remove-category-button-hidden {
     grid-template-columns: 204px 1fr;
 }
-.add-type-button {
+.add-category-button {
     margin: 0 var(--spacing-sm);
 }
 .grid-notes {
@@ -212,16 +212,16 @@ form > * {
             "direction"
             "date"
             "counterparty"
-            "types-labels"
-            "types"
+            "categories-labels"
+            "categories"
             "notes"
             "submit";
     }
-    .type-aligner {
+    .category-aligner {
         grid-template-columns: 110px 1fr auto;
         gap: var(--spacing-xs);
     }
-    .remove-type-button-hidden {
+    .remove-category-button-hidden {
     grid-template-columns: 110x 1fr;
 }
 }

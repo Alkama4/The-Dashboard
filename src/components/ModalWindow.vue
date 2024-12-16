@@ -3,7 +3,7 @@
         <div class="modal-content">
                 <div class="modal-body">
                     <div class="modal-header">
-                        <h2 style="margin-top: 0;" :class="this.type">
+                        <h2 style="margin-top: 0;" :class="this.modalType">
                             <!-- Header is inserted with ::after as a style -->
                         </h2>
                         <button class="modal-close button-simple" @click="closeModal">
@@ -13,7 +13,7 @@
 
                     
                     <!-- Conditional Content -->
-                    <div v-if="type === 'details'">
+                    <div v-if="modalType === 'details'">
                         <div class="details-modal-content">
                             <div style="grid-area: a; max-width: 25ch;">
                                 <h4>ID</h4>
@@ -28,8 +28,8 @@
                                 <span>{{ data.counterparty }}</span>
                                 <h4>Amount breakdown</h4>
                                 <ul>
-                                    <li v-for="type in formattedTypes" :key="type.type">
-                                        {{ type.type }}: {{ type.amount }}
+                                    <li v-for="category in formattedCategories" :key="category.category">
+                                        {{ category.category }}: {{ category.amount }}
                                     </li>
                                 </ul>
                                 <span>Total amount: <b> {{ totalSum }} </b> </span>
@@ -41,15 +41,15 @@
                         </div>
                     </div>
     
-                    <div v-if="type === 'edit'" class="edit-modal">
+                    <div v-if="modalType === 'edit'" class="edit-modal">
                         <EntryForm @submit="handleEditSubmit" :initialData="data" style="margin-inline: 3px;"/>
                     </div>
                     
-                    <div v-if="type === 'duplicate'">
+                    <div v-if="modalType === 'duplicate'">
                         <p>Under construction... Check back later :)</p>
                     </div>
                     
-                    <div v-if="type === 'delete'">
+                    <div v-if="modalType === 'delete'">
                         <p style="margin-left: 0;"> Are you sure you want to delete this entry? <br>
                             <strong style="color: var(--color-negative)">This action cannot be undone.</strong> {{ id }}</p>
                         <div class="delete-buttons">
@@ -76,7 +76,7 @@ export default {
         EntryForm,
     },
     props: {
-        type: { type: String, required: true }, // Defines the type of modal (details, edit, delete)
+        modalType: { type: String, required: true }, // Defines the type of modal (details, edit, delete)
         data: { type: Object, required: true }, // Dynamic data for the modal
     },
     methods: {
@@ -123,16 +123,16 @@ export default {
             // Return formatted date with the week number
             return `${formattedDate}, viikko ${weekNumber}`;
         },
-        formattedTypes() {
+        formattedCategories() {
             // Map types with formatted amounts
-            const types = this.data.types.map(type => ({
-                type: type.type,
-                amount: this.formatAmount(type.amount),
+            const categories = this.data.categories.map(category => ({
+                category: category.category,
+                amount: this.formatAmount(category.amount),
             }));
-            return types;
+            return categories;
         },
         totalSum() {
-            return this.formatAmount(this.data.types.reduce((sum, type) => sum + type.amount, 0));
+            return this.formatAmount(this.data.categories.reduce((sum, category) => sum + category.amount, 0));
         }
     },
     mounted() {
