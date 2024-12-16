@@ -2,10 +2,10 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- CATEGORY NOT TYPE! Päivitä kaikkialle
+- Async kaikki muuta rework
 - filtering
     - Filter functionality.
-- Connect to DB
+- Notification remove the root thingy and just import it
 
 ### Features to add
 - When opening an entry:

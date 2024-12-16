@@ -100,6 +100,8 @@ v           )___))___))___)\        v
 </template>
 
 <script>
+	import api from '@/utils/dataQuery';
+
 	export default {
 		name: 'HomePage',
 		data() {
@@ -121,6 +123,21 @@ v           )___))___))___)\        v
 				}
 			},
 		},
+		async mounted() {
+			const response = await api.getTransactions();
+
+			// Check that response isn't null and that the values arent null
+			// to prevent crashing when we can't reach the api.
+			if (response && response.Values) {
+				// The whole thing
+				console.log("[HOME] All the values:", response.Values);
+
+				// Loop through
+				response.Values.forEach((value, index) => {
+					console.log(`[HOME] Value ${index}:`, value);
+				});
+			}
+		}
 	};
 </script>
 
