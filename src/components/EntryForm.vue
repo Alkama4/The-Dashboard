@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { getOptions } from '@/utils/dataQuery';
+import api from '@/utils/dataQuery';
 import IconCross from './icons/IconCross.vue';
 import SliderToggle from './SliderToggle.vue';
 
@@ -74,6 +74,7 @@ export default {
             },
             counterpartyOptions: [],
             categoryOptions: [],
+            allOptions: {}
         };
     },
     methods: {
@@ -105,21 +106,20 @@ export default {
             });
         },
         filterOptionsByDirection() {
-            const options = getOptions();
+                // Filter counterparty options based on the direction
+                if (this.formData.direction === 'expense') {
+                    this.counterpartyOptions = this.allOptions.counterparty.expense;
+                    this.categoryOptions = this.allOptions.category.expense;
+                } else {
+                    this.counterpartyOptions = this.allOptions.counterparty.income;
+                    this.categoryOptions = this.allOptions.category.income;
+                }
 
-            // Filter counterparty options based on the direction
-            if (this.formData.direction === 'expense') {
-                this.counterpartyOptions = options.sortedCounterparties.filter(counterparty => counterparty !== 'Kela'); // Example: filter out income counterparties
-                this.categoryOptions = options.sortedCategories.filter(category => category !== 'Asumistuki'); // Example: filter out income Categories
-            } else {
-                this.counterpartyOptions = options.sortedCounterparties.filter(counterparty => counterparty === 'Kela'); // Example: filter in income counterparties
-                this.categoryOptions = options.sortedCategories.filter(category => category === 'Asumistuki'); // Example: filter in income Categories
-            }
         }
     },
     computed: {
         formattedDate() {
-            const returnDate = this.formData.date ? this.formData.date : new Date();
+            const returnDate = this.formData.date ? new Date(this.formData.date) : new Date();
             return returnDate.toISOString().split('T')[0];
         }
     },
@@ -129,7 +129,24 @@ export default {
         }
     },
     created() {
-        // Initially fetch the options based on the default direction (expense or income)
+
+    },
+    async mounted() {
+        // Fetch the options
+        const optionsResponse = await api.getOptions();
+        if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
+            // Log the categories data
+            console.log("[Options] All:", optionsResponse);
+
+            // Log individual things
+            console.log("[Options] Counterparty:", optionsResponse.counterparty);
+            console.log("[Options] Category:", optionsResponse.category);
+
+            // Set all the options to be used in the sorting
+            this.allOptions = optionsResponse;
+        }
+
+        // filter the options by direction once they are fetched
         this.filterOptionsByDirection();
     }
 };

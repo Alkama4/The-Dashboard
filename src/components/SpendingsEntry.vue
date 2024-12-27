@@ -22,7 +22,7 @@
             </div>
         </td>
 
-        <td class="column-amount" :class="this.data.direction" ref="columnAmount">
+        <td class="column-amount" :class="this.transaction.direction" ref="columnAmount">
             <div ref="amountExpanded" style="height: 25px;">
                 <div ref="amountExpandedContent">
                     <span v-for="(amount, index) in amounts" :key="index" 
@@ -50,19 +50,19 @@
             <div class="spendings-expanded" ref="spendingsExpanded">
                 <div class="spendings-expanded-content" ref="spendingsExpandedContent">
                     <div class="control-buttons">
-                        <button class="button-delete color-warning" @click.stop="deleteEntry"><IconTrash size="18px" colorHover="white"/></button>
-                        <button disabled="true" class="button-duplicate" @click.stop="duplicateEntry"><IconCopy size="18px"/></button>
-                        <button class="button-edit" @click.stop="editEntry"><IconEdit size="18px"/></button>
+                        <button class="button-delete color-warning" @click.stop="deleteTransaction"><IconTrash size="18px" colorHover="white"/></button>
+                        <button disabled="true" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px"/></button>
+                        <button class="button-edit" @click.stop="editTransaction"><IconEdit size="18px"/></button>
                         <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px" color="#e9ebf0" colorHover="white"/>Details</button>
                     </div>
         
                     <ModalWindow
                         v-if="showModal"
                         :modalType="modalCategory"
-                        :data="modalData"
+                        :modalData="this.transaction"
                         :header="modalHeader"
                         @close="showModal = false"
-                        @delete="deleteEntry"
+                        @delete="deleteTransaction"
                     />
                 </div>
             </div>
@@ -87,14 +87,13 @@
             ModalWindow: defineAsyncComponent(() => import('./ModalWindow.vue')),
         },
         props: {
-            data: { category: Object, required: true },
+            transaction: { category: Object, required: true },
             isExpanded: { category: Boolean, default: false },
         },
         data() {
             return {
                 showModal: false,
                 modalCategory: '',
-                modalData: this.data,
                 modalHeader: '',
             };
         },
@@ -134,15 +133,15 @@
                 this.modalCategory = 'details';
                 this.showModal = true;
             },
-            editEntry() {
+            editTransaction() {
                 this.modalCategory = 'edit';
                 this.showModal = true;
             },
-            duplicateEntry() {
+            duplicateTransaction() {
                 this.modalCategory = 'duplicate';
                 this.showModal = true;
             },
-            deleteEntry() {
+            deleteTransaction() {
                 this.modalCategory = 'delete';
                 this.showModal = true;
             },
@@ -171,28 +170,28 @@
         },
         computed: {
             amounts() {
-                const firstRow = this.data.categories.reduce((sum, category) => sum + category.amount, 0);
-                if (this.data.categories.length > 1) {
-                    return [firstRow, ...this.data.categories.map(category => category.amount)];
+                const firstRow = this.transaction.categories.reduce((sum, category) => sum + category.amount, 0);
+                if (this.transaction.categories.length > 1) {
+                    return [firstRow, ...this.transaction.categories.map(category => category.amount)];
                 } else {
                     return [firstRow];
                 }
             },
             categories() {
-                if (this.data.categories.length > 1) {
-                    const firstRow = this.isExpanded ? "Total sum:" : this.data.categories.map(category => category.category).join(", ");
-                    const categories = this.data.categories.map(category => category.category);
+                if (this.transaction.categories.length > 1) {
+                    const firstRow = this.isExpanded ? "Total sum:" : this.transaction.categories.map(category => category.category).join(", ");
+                    const categories = this.transaction.categories.map(category => category.category);
                     return [firstRow, ...categories];
                 } else {
-                    const firstRow = this.data.categories[0].category;
+                    const firstRow = this.transaction.categories[0].category;
                     return [firstRow];
                 }
             },
             counterparty() {
-                return this.data.counterparty;
+                return this.transaction.counterparty;
             },
             notes() {
-                return this.data.notes;
+                return this.transaction.notes;
             },
             formattedDate() {
                 const options = { 
@@ -201,7 +200,8 @@
                     month: 'short', 
                     day: 'numeric' 
                 };
-                return this.data.date.toLocaleDateString('fi-FI', options);
+                const newDate = new Date(this.transaction.date);
+                return newDate.toLocaleDateString('fi-FI', options);
             },
             shortFormattedDate() {
                 const options = { 
@@ -209,7 +209,8 @@
                     month: '2-digit', 
                     day: '2-digit' 
                 };
-                return this.data.date.toLocaleDateString('fi-FI', options);
+                const newDate = new Date(this.transaction.date);
+                return newDate.toLocaleDateString('fi-FI', options);
             }
         }
     };

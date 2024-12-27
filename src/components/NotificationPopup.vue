@@ -78,11 +78,11 @@ export default {
             this.startTimer(); // Start a new timer
         },
         closeThis() {
-            this.stopTimer();  // Stop any running timers
+            this.stopTimer(); // Stop any running timers
 
             if (this.$el) {
                 this.visible = false;
-                this.$el.classList.add("ignoreCursor");
+                this.$el.classList?.add("ignoreCursor"); // Use optional chaining
                 setTimeout(() => this.$emit("close"), 150); // Matches fade-out duration
             }
         },

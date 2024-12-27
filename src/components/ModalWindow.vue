@@ -17,15 +17,15 @@
                         <div class="details-modal-content">
                             <div style="grid-area: a; max-width: 25ch;">
                                 <h4>ID</h4>
-                                <span>{{ data.entryId }}</span>
+                                <span>{{ modalData.transactionID }}</span>
                                 <h4>Direction</h4>
-                                <span>{{ data.direction }}</span>
+                                <span>{{ modalData.direction }}</span>
                                 <h4>Date</h4> 
                                 <span>{{ detailsDate }}</span>
                             </div>
                             <div style="grid-area: b; max-width: 25ch;">
                                 <h4>Counterparty</h4> 
-                                <span>{{ data.counterparty }}</span>
+                                <span>{{ modalData.counterparty }}</span>
                                 <h4>Amount breakdown</h4>
                                 <ul>
                                     <li v-for="category in formattedCategories" :key="category.category">
@@ -36,13 +36,13 @@
                             </div>
                             <div style="grid-area: c; max-width: 50ch;">
                                 <h4>Notes</h4> 
-                                <span :style="data.notes ? '' : 'color: var(--color-text-hidden);'">{{ data.notes || "(This entry doesn't have notes)" }}</span>
+                                <span :style="modalData.notes ? '' : 'color: var(--color-text-hidden);'">{{ modalData.notes || "(This entry doesn't have notes)" }}</span>
                             </div>
                         </div>
                     </div>
     
                     <div v-if="modalType === 'edit'" class="edit-modal">
-                        <EntryForm @submit="handleEditSubmit" :initialData="data" style="margin-inline: 3px;"/>
+                        <EntryForm @submit="handleEditSubmit" :initialData="modalData" style="margin-inline: 3px;"/>
                     </div>
                     
                     <div v-if="modalType === 'duplicate'">
@@ -77,15 +77,16 @@ export default {
     },
     props: {
         modalType: { type: String, required: true }, // Defines the type of modal (details, edit, delete)
-        data: { type: Object, required: true }, // Dynamic data for the modal
+        modalData: { type: Object, required: true }, // Dynamic data for the modal
     },
     methods: {
         closeModal() {
             this.$emit("close");
         },
         deleteEntry() {
-            this.$emit("delete", this.data.id); // Emit delete event with the entry ID
+            this.$emit("delete", this.modalData.id); // Emit delete event with the entry ID
             notify("Entry deleted succesfully!", "success");
+            notify("The logic has not yet been implemented!", "error");
             this.$emit("close");                // And close the modal
         },
         handleEditSubmit(formData) {
@@ -103,14 +104,17 @@ export default {
     },
     computed: {
         detailsDate() {
+            // Create a new Date instance
+            const date = new Date(this.modalData.date);
+
             // Get the formatted date
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+            const options = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
             };
-            const formattedDate = this.data.date.toLocaleDateString('fi-FI', options);
+            const formattedDate = date.toLocaleDateString('fi-FI', options);
 
             // Get the week number
             const getWeekNumber = (date) => {
@@ -118,21 +122,21 @@ export default {
                 const days = Math.floor((date - startDate) / (24 * 60 * 60 * 1000));
                 return Math.ceil((days + 1) / 7);
             };
-            const weekNumber = getWeekNumber(this.data.date);
+            const weekNumber = getWeekNumber(date);
 
             // Return formatted date with the week number
             return `${formattedDate}, viikko ${weekNumber}`;
         },
         formattedCategories() {
             // Map types with formatted amounts
-            const categories = this.data.categories.map(category => ({
+            const categories = this.modalData.categories.map(category => ({
                 category: category.category,
                 amount: this.formatAmount(category.amount),
             }));
             return categories;
         },
         totalSum() {
-            return this.formatAmount(this.data.categories.reduce((sum, category) => sum + category.amount, 0));
+            return this.formatAmount(this.modalData.categories.reduce((sum, category) => sum + category.amount, 0));
         }
     },
     mounted() {

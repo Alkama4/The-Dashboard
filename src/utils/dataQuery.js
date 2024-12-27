@@ -23,6 +23,12 @@ const api = {
     async getTransactions() {
         return this.getData('/get_transactions');
     },
+    async getOptions() {
+        return this.getData('/get_options');
+    },
+    async getFilters() {
+        return this.getData('/get_filters');
+    },
 
     // Data sent to the api
     async postData(endpoint, data) {
@@ -38,39 +44,6 @@ const api = {
 };
 
 export default api;
-
-
-
-// export function getOptions() {
-//     const data = getData();
-
-//     // Count the occurrences of each counterparty
-//     const counterpartyCount = data.reduce((acc, entry) => {
-//         acc[entry.counterparty] = (acc[entry.counterparty] || 0) + 1;
-//         return acc;
-//     }, {});
-
-//     // Count the occurrences of each category
-//     const categoryCount = data.reduce((acc, entry) => {
-//         entry.categories.forEach(category => {
-//             acc[category.category] = (acc[category.category] || 0) + 1;
-//         });
-//         return acc;
-//     }, {});
-
-//     // Sort the counterparty entries by frequency
-//     const sortedCounterparties = Object.entries(counterpartyCount)
-//         .sort((a, b) => b[1] - a[1])  // Sort by count, descending
-//         .map(entry => entry[0]);  // Return only the counterparty names
-
-//     // Sort the category entries by frequency
-//     const sortedCategories = Object.entries(categoryCount)
-//         .sort((a, b) => b[1] - a[1])  // Sort by count, descending
-//         .map(entry => entry[0]);  // Return only the category names
-
-//     return { sortedCounterparties, sortedCategories };
-// }
-
 
 // export function getFilters() {
 //     const data = getData();

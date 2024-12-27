@@ -516,6 +516,8 @@ input[type="radio"] {
 .spacer-line {
     width: 100%;
     height: 2px;
+    min-height: 2px;
+    max-height: 2px;
     border-radius: 100px;
     background-color: var(--color-border-hover);
     margin: var(--spacing-md) 0;

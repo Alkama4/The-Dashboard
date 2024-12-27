@@ -25,7 +25,7 @@
                 <div class="slider" ref="dateSlider"></div>
             </div>
 
-            <div class="spacer-line"></div>            
+            <div class="spacer-line"></div>
 
             <!-- Counterparties -->
             <div class="drop-down drop-down-wrapper">
@@ -57,7 +57,7 @@
                     <div ref="drop-down-content-counterparty">
                         <div class="expense-section">
                             <h5>Expense</h5>
-                            <div v-for="(counterparty) in options.counterparty.expense" :key="'counterparty-expense-' + counterparty" class="option" @click="toggleCounterpartySelection(counterparty)">
+                            <div v-for="(counterparty) in filterOptions.counterparty.expense" :key="'counterparty-expense-' + counterparty" class="option" @click="toggleCounterpartySelection(counterparty)">
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
@@ -68,7 +68,7 @@
 
                         <div class="income-section">
                             <h5>Income</h5>
-                            <div v-for="(counterparty) in options.counterparty.income" :key="'counterparty-income-' + counterparty" class="option" @click="toggleCounterpartySelection(counterparty)">
+                            <div v-for="(counterparty) in filterOptions.counterparty.income" :key="'counterparty-income-' + counterparty" class="option" @click="toggleCounterpartySelection(counterparty)">
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
@@ -110,7 +110,7 @@
                     <div ref="drop-down-content-category">
                         <div class="expense-section">
                             <h5>Expense</h5>
-                            <div v-for="(category) in options.category.expense" :key="'category-expense-' + category" class="option" @click="toggleCategorySelection(category)">
+                            <div v-for="(category) in filterOptions.category.expense" :key="'category-expense-' + category" class="option" @click="toggleCategorySelection(category)">
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
@@ -121,7 +121,7 @@
     
                         <div class="income-section">
                             <h5>Income</h5>
-                            <div v-for="(category) in options.category.income" :key="'category-income-' + category" class="option" @click="toggleCategorySelection(category)">
+                            <div v-for="(category) in filterOptions.category.income" :key="'category-income-' + category" class="option" @click="toggleCategorySelection(category)">
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import { getFilters } from '@/utils/dataQuery';
+import api from '@/utils/dataQuery';
 import IconCheckboxChecked from './icons/IconCheckboxChecked.vue';  
 import IconCheckboxMinus from './icons/IconCheckboxMinus.vue';      
 import IconCheckbox from './icons/IconCheckbox.vue';      
@@ -178,7 +178,23 @@ export default {
                     selected: [],  // Track selected categories
                 }
             },
-            activeDropdown: ""
+            activeDropdown: "",
+            filterOptions: { // Defaults to before loading the actual values
+                amount: {
+                    min: 0,
+                    max: 0,
+                },
+                date: {
+                    min: 0,
+                    max: 0,
+                },
+                counterparty: {
+                    values: [], // Not sure if values is correct
+                },
+                category: {
+                    values: [],
+                }
+            }
         }
     },
     methods: {
@@ -251,9 +267,6 @@ export default {
         }
     },
     computed: {
-        options() {
-            return getFilters();
-        },
         formatToDateMonth() {
             return {
                 from: function (formattedValue) {
@@ -301,8 +314,8 @@ export default {
         },
         dateSliderPipValues() {
             const values = [];
-            const start = new Date(this.options.date.min);
-            const end = new Date(this.options.date.max);
+            const start = new Date(this.filterOptions.date.min);
+            const end = new Date(this.filterOptions.date.max);
             // Get the offset so that the months are shown every three months and so that it hits 1.1.yyyy
             const monthStep = 3;
             let offsetToModThree = (monthStep - (start.getMonth() % monthStep)) % monthStep;
@@ -320,21 +333,36 @@ export default {
             return values;
         },
     },
-    mounted() {
+    async mounted() {
         // Disable scrolling when filters are open
         if (this.fullscreenMode) {
             document.documentElement.classList.add('no-scroll');
         }
 
+        const response = await api.getFilters();
+        if (response && response.counterparty && response.category && response.amount && response.date) {
+
+            // Log the categories data
+            console.log("[Filters] All:", response);
+            
+            // Log individual things
+            console.log("[Filters] Counterparty:", response.counterparty);
+            console.log("[Filters] Category:", response.category);
+            console.log("[Filters] Amount:", response.amount);
+            console.log("[Filters] Date:", response.date);
+
+            this.filterOptions = response;
+        }
+
         // Initialize Amount Slider
         noUiSlider.create(this.$refs.amountSlider, {
-            start: [this.options.amount.min, this.options.amount.max],
+            start: [this.filterOptions.amount.min, this.filterOptions.amount.max],
             connect: true,
             behaviour: 'drag',
             range: {
-                'min': this.options.amount.min,
+                'min': this.filterOptions.amount.min,
                 '50%': 0,
-                'max': this.options.amount.max
+                'max': this.filterOptions.amount.max
             },
             pips: {
                 mode: 'count',
@@ -359,13 +387,14 @@ export default {
 
 
         // Initialize Date Slider
+        console.log("TEST", this.filterOptions.date.min, this.filterOptions.date.max)
         noUiSlider.create(this.$refs.dateSlider, {
-            start: [this.options.date.min, this.options.date.max],
+            start: [this.filterOptions.date.min, this.filterOptions.date.max],
             connect: true,
             behaviour: 'drag',
             range: {
-                min: this.options.date.min,
-                max: this.options.date.max
+                min: this.filterOptions.date.min,
+                max: this.filterOptions.date.max
             },
             // Päivän kokonen step
             step: 1 * 24 * 60 * 60 * 1000,
@@ -377,6 +406,7 @@ export default {
                 stepped: true
             }
         });
+        console.log("TEST 2", this.filterOptions.date.min, this.filterOptions.date.max)
 
         // Update filterData when slider changes
         this.$refs.dateSlider.noUiSlider.on('update', (values) => {
