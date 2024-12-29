@@ -42,6 +42,7 @@ In here I will collect my notes about this website and list the stuff that need 
     - calculator / multiple in one entry
 - Wide mode where the columns can brethe properly without cropping width wise
 - Filters:
+    - When drags up click goes to blur do not close
     - Drop down drag click multiple?
     - Desktop mode/fullscreen mode = false
 - Movie and Film tracker db

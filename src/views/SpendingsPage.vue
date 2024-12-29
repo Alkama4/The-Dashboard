@@ -8,12 +8,19 @@
 
         <h1>Spendings page</h1>
         <p> Descriptive text about the spendings page that will be longer 
-            and more detailed in the future possibly but that is uncertain 
+            and more detailed in the future, possibly, but that is uncertain 
             so don't quote me on that or anything else I have written in 
             this or anywhere else on the website. One liners babyyyy...
         </p>
 
-        <FilterSettings v-if="showFilters" @close="showFilters = false" fullscreen-mode="true"/>
+        <FilterSettings 
+            v-if="showFilters" 
+            @close="showFilters = false" 
+            @apply="applyFilters"
+            fullscreen-mode="true"
+            :filterData="filterData"
+            :filterOptions="filterOptions"
+        />
 
         <button class="color-primary filter-button" @click="this.showFilters = !this.showFilters;"> 
             <IconFilter size="20px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
@@ -23,57 +30,57 @@
         <table>
             <thead>
                 <tr>
-                    <th  class="column-date">
+                    <th class="column-date" @click="sort('date')">
                         <div class="header-content">
                             Date
                             <component
-                                :is="sortIcons.date"
-                                :color="sortColumn === 'Date' ? activeColor : inactiveColor"
-                                :colorHover="sortColumn === 'Date' ? activeHoverColor : inactiveHoverColor"
+                                :is="getSortIcon('date')"
+                                :color="apiFilters.sort_by === 'date' ? activeColor : inactiveColor"
+                                :colorHover="apiFilters.sort_by === 'date' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
-                    <th class="column-counterparty">
+                    <th class="column-counterparty" @click="sort('counterparty')">
                         <div class="header-content">
                             Counterparty
                             <component
-                                :is="sortIcons.counterparty"
-                                :color="sortColumn === 'Counterparty' ? activeColor : inactiveColor"
-                                :colorHover="sortColumn === 'Counterparty' ? activeHoverColor : inactiveHoverColor"
+                                :is="getSortIcon('counterparty')"
+                                :color="apiFilters.sort_by === 'counterparty' ? activeColor : inactiveColor"
+                                :colorHover="apiFilters.sort_by === 'counterparty' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
-                    <th  class="column-category">
+                    <th class="column-category" @click="sort('category')">
                         <div class="header-content">
                             Category
                             <component
-                                :is="sortIcons.category"
-                                :color="sortColumn === 'Category' ? activeColor : inactiveColor"
-                                :colorHover="sortColumn === 'Category' ? activeHoverColor : inactiveHoverColor"
+                                :is="getSortIcon('category')"
+                                :color="apiFilters.sort_by === 'category' ? activeColor : inactiveColor"
+                                :colorHover="apiFilters.sort_by === 'category' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
-                    <th  class="column-amount">
+                    <th class="column-amount" @click="sort('amount')">
                         <div class="header-content">
                             Amount
                             <component
-                                :is="sortIcons.amount"
-                                :color="sortColumn === 'Amount' ? activeColor : inactiveColor"
-                                :colorHover="sortColumn === 'Amount' ? activeHoverColor : inactiveHoverColor"
+                                :is="getSortIcon('amount')"
+                                :color="apiFilters.sort_by === 'amount' ? activeColor : inactiveColor"
+                                :colorHover="apiFilters.sort_by === 'amount' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
-                    <th  class="column-notes">
+                    <th class="column-notes" @click="sort('notes')">
                         <div class="header-content">
                             Notes
                             <component
-                                :is="sortIcons.notes"
-                                :color="sortColumn === 'Notes' ? activeColor : inactiveColor"
-                                :colorHover="sortColumn === 'Notes' ? activeHoverColor : inactiveHoverColor"
+                                :is="getSortIcon('notes')"
+                                :color="apiFilters.sort_by === 'notes' ? activeColor : inactiveColor"
+                                :colorHover="apiFilters.sort_by === 'notes' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
@@ -92,7 +99,7 @@
         </table>
     
         <!-- Button to load more entries -->
-        <button class="center">Load more</button>
+        <button class="center" @click="loadMore">Load more</button>
     </div>
 </template>
 
@@ -122,119 +129,137 @@
                 // Need to set seperately, leave this empty []
                 transactions: [],
                 showFilters: false,
-                sortColumn: 'date',     // Default to date 
-                sortDirection: 'desc',  // Default to descending
                 inactiveColor: 'var(--color-text-lighter)',
                 inactiveHoverColor: 'var(--color-text-bold)',
                 activeColor: 'var(--color-primary)',
                 activeHoverColor: 'var(--color-primary-hover)',
-                sortIcons: {
-                    date: IconSortDown, // Default to date 
-                    counterparty: IconSortBoth,
-                    category: IconSortBoth,
-                    amount: IconSortBoth,
-                    notes: IconSortBoth,
-                },
                 expandedIndex: null, // Track which transaction is expanded
+                apiFilters: {
+                    sort_by: 'date',
+                    sort_order: 'desc',
+                    limit: 50,
+                    offset: 0,
+                    // Filter values
+                    start_date: 946684800000,
+                    end_date: 2208988800000,
+                    min_amount: -999999,
+                    max_amount: 999999,
+                    counterparties: [],
+                    counterparty_inclusion_mode: true,
+                    categories: [],
+                    category_inclusion_mode: true,
+                },
+                filterData: {
+                    amount: {
+                        lowerLimit: -999999,
+                        upperLimit: 999999,
+                    },
+                    date: {
+                        lowerLimit: 946684800000,
+                        upperLimit: 2208988800000,
+                    },
+                    counterparty: {
+                        mode: 'include',
+                        selected: [],  // Track selected counterparties
+                    },
+                    category: {
+                        mode: 'include',
+                        selected: [],  // Track selected categories
+                    }
+                },
+                filterOptions: {
+                    amount: {},
+                    date: {},
+                    counterparty: {},
+                    category: {}
+                }
             };
+        },
+        computed: {
+            getSortIcon() {
+                return (column) => {
+                    if (this.apiFilters.sort_by === column) {
+                        return this.apiFilters.sort_order === 'asc' ? IconSortUp : IconSortDown;
+                    }
+                    return IconSortBoth;
+                };
+            },
         },
         methods: {
             toggleEntry(index) {
                 // Toggle the expanded state of the clicked entry
                 this.expandedIndex = this.expandedIndex === index ? null : index;
             },
+            async fetchTransactions() {
+                const response = await api.getTransactions(this.apiFilters);
+                if (response && response.transactions) {
+                    this.transactions = [...this.transactions, ...response.transactions];
+                } else {
+                    notify("Failed to retrieve transactions.", "error");
+                    console.error("[SpendingsPage] response && response.Values failed");
+                }
+            },
+            sort(column) {
+                if (this.apiFilters.sort_by === column) {
+                    this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
+                } else {
+                    this.apiFilters.sort_by = column;
+                    this.apiFilters.sort_order = 'asc';
+                }
+                this.apiFilters.offset = 0;
+                this.transactions = [];
+                this.fetchTransactions();
+            },
+            loadMore() {
+                this.apiFilters.offset += this.apiFilters.limit;
+                this.fetchTransactions();
+            },
+            applyFilters(newFilterData) {
+                this.filterData = newFilterData;
+                this.apiFilters.offset = 0;
+                this.transactions = [];
 
-        //     sortEntries(column) {
-        //         // Close entries when sorting
-        //         this.toggleEntry(-1);
+                console.log("[SpendingsPage] filterdata before to api", this.filterData);
 
-        //         // If no column is given, use the previous column and direction
-        //         if (!column) {
-        //             column = this.sortColumn;
-        //         } else {
-        //             if (this.sortColumn === column) {
-        //                 // Toggle direction if the same column is clicked
-        //                 this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-        //             } else {
-        //                 // Change column and default to 'desc' when switching
-        //                 this.sortColumn = column;
-        //                 this.sortDirection = 'desc';
-        //             }
-        //         }
+                // Set the filters values to the API filters
+                // Sliders
+                this.apiFilters.start_date = this.filterData.date.lowerLimit;
+                this.apiFilters.end_date = this.filterData.date.upperLimit;
+                this.apiFilters.min_amount = this.filterData.amount.lowerLimit;
+                this.apiFilters.max_amount = this.filterData.amount.upperLimit;
+                // Checkboxes
+                this.apiFilters.counterparties = this.filterData.counterparty.selected;
+                this.apiFilters.counterparty_inclusion_mode = this.filterData.counterparty.mode === 'include';
+                this.apiFilters.categories = this.filterData.category.selected;
+                this.apiFilters.category_inclusion_mode = this.filterData.category.mode === 'include';
 
-        //         // Update icons
-        //         Object.keys(this.sortIcons).forEach((key) => {
-        //             if (key === column) {
-        //                 this.sortIcons[key] =
-        //                     this.sortDirection === 'asc' ? IconSortUp : IconSortDown;
-        //             } else {
-        //                 this.sortIcons[key] = IconSortBoth;
-        //             }
-        //         });
-
-        //         // Sort the entries based on the selected column and direction
-        //         this.entries.sort((a, b) => {
-        //             let valueA = a[column];
-        //             let valueB = b[column];
-
-        //             // Handle date comparison
-        //             if (valueA instanceof Date && valueB instanceof Date) {
-        //                 return this.sortDirection === 'asc'
-        //                     ? valueA - valueB
-        //                     : valueB - valueA;
-        //             }
-
-        //             // Handle sorting by 'amount' (where categories are arrays of objects)
-        //             if (column === 'amount') {
-        //                 // Map direction to numerical values for sorting
-        //                 const getDirectionMultiplier = (direction) => direction === 'income' ? 1 : -1;
-
-        //                 // Assuming we need the first category's amount for sorting
-        //                 const amountA = a.categories[0]?.amount || 0; // Fallback to 0 if no amount
-        //                 const amountB = b.categories[0]?.amount || 0;
-
-        //                 return this.sortDirection === 'asc'
-        //                     ? (amountA * getDirectionMultiplier(a.direction)) - (amountB * getDirectionMultiplier(b.direction))
-        //                     : (amountB * getDirectionMultiplier(b.direction)) - (amountA * getDirectionMultiplier(a.direction));
-        //             }
-
-        //             // Handle sorting by 'category' (the first category in the array for comparison)
-        //             if (column === 'category') {
-        //                 const categoryA = a.categories[0]?.category || '';
-        //                 const categoryB = b.categories[0]?.category || '';
-
-        //                 return this.sortDirection === 'asc'
-        //                     ? categoryA.localeCompare(categoryB)
-        //                     : categoryB.localeCompare(categoryA);
-        //             }
-
-        //             // Handle numerical comparison (e.g. amount in other columns)
-        //             if (typeof valueA === 'number' && typeof valueB === 'number') {
-        //                 return this.sortDirection === 'asc' ? valueA - valueB : valueB - valueA;
-        //             }
-
-        //             // Handle string comparison (counterparty, category, notes)
-        //             if (typeof valueA === 'string' && typeof valueB === 'string') {
-        //                 return this.sortDirection === 'asc'
-        //                     ? valueA.localeCompare(valueB)
-        //                     : valueB.localeCompare(valueA);
-        //             }
-
-        //             return 0; // If categories don't match or are uncomparable, leave unchanged
-        //         });
-        //     }
+                console.log("[SpendingsPage] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
+                
+                this.fetchTransactions();
+            },
         },
         async mounted() {
+            this.fetchTransactions();
 
-            const response = await api.getTransactions();
-			if (response && response.transactions) {
-				this.transactions = response.transactions;
-			} else {
-                notify("Failed to retrieve transactions.", "error");
-                console.error("[SpendingsPage] response && response.Values failed")
+            // Get filters and pass them to the FilterSettings component
+            const filterResponse = await api.getFilters();
+            if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
+
+                // Log the categories data
+                console.log("[Filters] All:", filterResponse);
+                
+                // Log individual things
+                console.log("[Filters] Counterparty:", filterResponse.counterparty);
+                console.log("[Filters] Category:", filterResponse.category);
+                console.log("[Filters] Amount:", filterResponse.amount);
+                console.log("[Filters] Date:", filterResponse.date);
+
+                this.filterOptions = filterResponse;
+            } else {
+                notify("Failed to retrieve filters.", "error");
+                console.error("[SpendingsPage] filters failed");
             }
-
-        }
+        },
     };
 </script>
 
@@ -302,4 +327,3 @@ th:last-child {
 
 
 </style>
-  

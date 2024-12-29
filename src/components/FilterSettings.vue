@@ -1,15 +1,20 @@
 <template>
-    <div class="filter-backdrop backdrop" :class="{'active': fullscreenMode}" @click.self="closeFilters()">
+    <div 
+        class="filter-backdrop backdrop" 
+        :class="{'active': fullscreenMode}" 
+        @mousedown.self="closeFiltersMouseDown()"
+        @mouseup.self="closeFiltersMouseUp()"
+    >
         <div class="filter-content" ref="filter-content">
             <h2>Filters</h2>
 
             <h4 class="amount-and-date-headers">Amount</h4>
             <div class="slider-wrapper">
                 <div class="slider-min-wrapper">
-                    <input v-model.number="filterData.amount.lowerLimit" category="number" ref="amountMin">
+                    <input v-model.number="localFilterData.amount.lowerLimit" type="number" ref="amountMin">
                 </div>
                 <div class="slider-max-wrapper">
-                    <input v-model.number="filterData.amount.upperLimit" category="number" ref="amountMax">
+                    <input v-model.number="localFilterData.amount.upperLimit" type="number" ref="amountMax">
                 </div>
                 <div class="slider" ref="amountSlider"></div>
             </div>
@@ -17,10 +22,10 @@
             <h4 class="amount-and-date-headers">Date</h4>
             <div class="slider-wrapper">
                 <div class="slider-min-wrapper">
-                    <input category="date" ref="dateMin">
+                    <input type="date" ref="dateMin">
                 </div>
                 <div class="slider-max-wrapper">
-                    <input category="date" ref="dateMax">
+                    <input type="date" ref="dateMax">
                 </div>
                 <div class="slider" ref="dateSlider"></div>
             </div>
@@ -31,12 +36,12 @@
             <div class="drop-down drop-down-wrapper">
                 <h4 class="drop-down-header" @click="toggleDropdown('counterparty')">
                     Counterparties
-                    <span @click.stop="filterData.counterparty.mode = filterData.counterparty.mode === 'include' ? 'exclude' : 'include'" 
+                    <span @click.stop="localFilterData.counterparty.mode = localFilterData.counterparty.mode === 'include' ? 'exclude' : 'include'" 
                         title="[Include only selected] / [Exclude selected]"
                         class="mode-flipper-in-header"
                         :class="{
-                            'exclude': filterData.counterparty.mode === 'exclude',
-                            'include': filterData.counterparty.mode === 'include'
+                            'exclude': localFilterData.counterparty.mode === 'exclude',
+                            'include': localFilterData.counterparty.mode === 'include'
                         }"
                     >
                         <span>
@@ -59,9 +64,9 @@
                             <h5>Expense</h5>
                             <div v-for="(counterparty) in filterOptions.counterparty.expense" :key="'counterparty-expense-' + counterparty" class="option" @click="toggleCounterpartySelection(counterparty)">
                                 <!-- Conditionally render checked or minus icon -->
-                                <IconCheckboxChecked v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
-                                <IconCheckboxMinus v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!filterData.counterparty.selected.includes(counterparty)" color="var(--color-text-light)" />
+                                <IconCheckboxChecked v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
+                                <IconCheckboxMinus v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
+                                <IconCheckbox v-if="!localFilterData.counterparty.selected.includes(counterparty)" color="var(--color-text-light)" />
                                 {{ counterparty }}
                             </div>
                         </div>
@@ -70,9 +75,9 @@
                             <h5>Income</h5>
                             <div v-for="(counterparty) in filterOptions.counterparty.income" :key="'counterparty-income-' + counterparty" class="option" @click="toggleCounterpartySelection(counterparty)">
                                 <!-- Conditionally render checked or minus icon -->
-                                <IconCheckboxChecked v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
-                                <IconCheckboxMinus v-if="filterData.counterparty.selected.includes(counterparty) && filterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!filterData.counterparty.selected.includes(counterparty)" color="var(--color-text-light)" />
+                                <IconCheckboxChecked v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
+                                <IconCheckboxMinus v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
+                                <IconCheckbox v-if="!localFilterData.counterparty.selected.includes(counterparty)" color="var(--color-text-light)" />
                                 {{ counterparty }}
                             </div>
                         </div>
@@ -84,12 +89,12 @@
             <div class="drop-down drop-down-wrapper categories-header">
                 <h4 class="drop-down-header" @click="toggleDropdown('category')">
                     Categories
-                    <span @click.stop="filterData.category.mode = filterData.category.mode === 'include' ? 'exclude' : 'include'" 
+                    <span @click.stop="localFilterData.category.mode = localFilterData.category.mode === 'include' ? 'exclude' : 'include'" 
                         title="[Include only selected] / [Exclude selected]"
                         class="mode-flipper-in-header"
                         :class="{
-                            'exclude': filterData.category.mode === 'exclude',
-                            'include': filterData.category.mode === 'include'
+                            'exclude': localFilterData.category.mode === 'exclude',
+                            'include': localFilterData.category.mode === 'include'
                         }"
                     >
                         <span>
@@ -112,9 +117,9 @@
                             <h5>Expense</h5>
                             <div v-for="(category) in filterOptions.category.expense" :key="'category-expense-' + category" class="option" @click="toggleCategorySelection(category)">
                                 <!-- Conditionally render checked or minus icon -->
-                                <IconCheckboxChecked v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
-                                <IconCheckboxMinus v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!filterData.category.selected.includes(category)" color="var(--color-text-light)" />
+                                <IconCheckboxChecked v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
+                                <IconCheckboxMinus v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
+                                <IconCheckbox v-if="!localFilterData.category.selected.includes(category)" color="var(--color-text-light)" />
                                 {{ category }}
                             </div>
                         </div>
@@ -123,9 +128,9 @@
                             <h5>Income</h5>
                             <div v-for="(category) in filterOptions.category.income" :key="'category-income-' + category" class="option" @click="toggleCategorySelection(category)">
                                 <!-- Conditionally render checked or minus icon -->
-                                <IconCheckboxChecked v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
-                                <IconCheckboxMinus v-if="filterData.category.selected.includes(category) && filterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!filterData.category.selected.includes(category)" color="var(--color-text-light)" />
+                                <IconCheckboxChecked v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
+                                <IconCheckboxMinus v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
+                                <IconCheckbox v-if="!localFilterData.category.selected.includes(category)" color="var(--color-text-light)" />
                                 {{ category }}
                             </div>
                         </div>
@@ -139,7 +144,6 @@
 </template>
 
 <script>
-import api from '@/utils/dataQuery';
 import IconCheckboxChecked from './icons/IconCheckboxChecked.vue';  
 import IconCheckboxMinus from './icons/IconCheckboxMinus.vue';      
 import IconCheckbox from './icons/IconCheckbox.vue';      
@@ -156,50 +160,32 @@ export default {
         IconChevronDown,
     },
     props: {
-        fullscreenMode: {category: Boolean, default: false}
+        fullscreenMode: {category: Boolean, default: false},
+        filterData: {category: Object, default: {}},
+        filterOptions: {category: Object, default: {}}
     },
     data() {
         return {
-            filterData: {
-                amount: {
-                    lowerLimit: 0,
-                    upperLimit: 0,
-                },
-                date: {
-                    lowerLimit: 0,
-                    upperLimit: 0,
-                },
-                counterparty: {
-                    mode: 'include',
-                    selected: [],  // Track selected counterparties
-                },
-                category: {
-                    mode: 'include',
-                    selected: [],  // Track selected categories
-                }
-            },
             activeDropdown: "",
-            filterOptions: { // Defaults to before loading the actual values
-                amount: {
-                    min: 0,
-                    max: 0,
-                },
-                date: {
-                    min: 0,
-                    max: 0,
-                },
-                counterparty: {
-                    values: [], // Not sure if values is correct
-                },
-                category: {
-                    values: [],
-                }
-            }
+            localFilterData: JSON.parse(JSON.stringify(this.filterData)), // Create a deep copy of filterData
+            closeFiltersMouseisDown: false,
         }
     },
     methods: {
         closeFilters() {
             this.$emit("close");
+        },
+        closeFiltersMouseDown() {
+            this.closeFiltersMouseisDown = true;
+            // console.info("Mouse down");
+        },
+        closeFiltersMouseUp() {
+            // console.info("testing", this.closeFiltersMouseisDown);
+            if (this.closeFiltersMouseisDown) {
+                // console.info("closing");
+                this.closeFilters();  // Only close the filters if the mouse was down
+                this.closeFiltersMouseisDown = false; // Reset the flag
+            }
         },
         filterDropDownHeight(selection) {
             const refName = `drop-down-content-${selection}`;
@@ -242,28 +228,37 @@ export default {
             }
         },
         toggleCounterpartySelection(counterparty) {
-            const index = this.filterData.counterparty.selected.indexOf(counterparty);
+            const index = this.localFilterData.counterparty.selected.indexOf(counterparty);
             if (index === -1) {
-                this.filterData.counterparty.selected.push(counterparty);
+                this.localFilterData.counterparty.selected.push(counterparty);
             } else {
-                this.filterData.counterparty.selected.splice(index, 1);
+                this.localFilterData.counterparty.selected.splice(index, 1);
             }
         },
         toggleCategorySelection(category) {
-            const index = this.filterData.category.selected.indexOf(category);
+            const index = this.localFilterData.category.selected.indexOf(category);
             if (index === -1) {
-                this.filterData.category.selected.push(category);
+                this.localFilterData.category.selected.push(category);
             } else {
-                this.filterData.category.selected.splice(index, 1);
+                this.localFilterData.category.selected.splice(index, 1);
             }
         },
         applyFilters() {
-            console.log(this.filterData);
+            this.$emit('apply', this.localFilterData);
+            console.log('[FilterSettings] Applied filters:', this.localFilterData);
         },
         getSliderValues() {
             const amountValues = this.$refs.amountSlider.noUiSlider.get();
             const dateValues = this.$refs.dateSlider.noUiSlider.get();
             console.log('Amount:', amountValues, 'Date:', dateValues);
+        }
+    },
+    watch: {
+        filterData: {
+            handler(newVal) {
+                this.localFilterData = JSON.parse(JSON.stringify(newVal)); // Update local copy when prop changes
+            },
+            deep: true
         }
     },
     computed: {
@@ -339,24 +334,9 @@ export default {
             document.documentElement.classList.add('no-scroll');
         }
 
-        const response = await api.getFilters();
-        if (response && response.counterparty && response.category && response.amount && response.date) {
-
-            // Log the categories data
-            console.log("[Filters] All:", response);
-            
-            // Log individual things
-            console.log("[Filters] Counterparty:", response.counterparty);
-            console.log("[Filters] Category:", response.category);
-            console.log("[Filters] Amount:", response.amount);
-            console.log("[Filters] Date:", response.date);
-
-            this.filterOptions = response;
-        }
-
         // Initialize Amount Slider
         noUiSlider.create(this.$refs.amountSlider, {
-            start: [this.filterOptions.amount.min, this.filterOptions.amount.max],
+            start: [this.localFilterData.amount.lowerLimit, this.localFilterData.amount.upperLimit],
             connect: true,
             behaviour: 'drag',
             range: {
@@ -372,24 +352,24 @@ export default {
             }
         });
 
-        // Update filterData when slider changes
+        // Update localFilterData when slider changes
         this.$refs.amountSlider.noUiSlider.on('update', (values) => {
-            this.filterData.amount.lowerLimit = parseFloat(values[0]);
-            this.filterData.amount.upperLimit = parseFloat(values[1]);
+            this.localFilterData.amount.lowerLimit = parseFloat(values[0]);
+            this.localFilterData.amount.upperLimit = parseFloat(values[1]);
         });
         // Update slider when changing min or max value
         this.$refs.amountMin.addEventListener('change', () => {
-            this.$refs.amountSlider.noUiSlider.set([this.filterData.amount.lowerLimit, this.filterData.amount.upperLimit]);
+            this.$refs.amountSlider.noUiSlider.set([this.localFilterData.amount.lowerLimit, this.localFilterData.amount.upperLimit]);
         });
         this.$refs.amountMax.addEventListener('change', () => {
-            this.$refs.amountSlider.noUiSlider.set([this.filterData.amount.lowerLimit, this.filterData.amount.upperLimit]);
+            this.$refs.amountSlider.noUiSlider.set([this.localFilterData.amount.lowerLimit, this.localFilterData.amount.upperLimit]);
         });
 
 
         // Initialize Date Slider
-        console.log("TEST", this.filterOptions.date.min, this.filterOptions.date.max)
+        // console.log("TEST", this.filterOptions.date.min, this.filterOptions.date.max)
         noUiSlider.create(this.$refs.dateSlider, {
-            start: [this.filterOptions.date.min, this.filterOptions.date.max],
+            start: [this.localFilterData.date.lowerLimit, this.localFilterData.date.upperLimit],
             connect: true,
             behaviour: 'drag',
             range: {
@@ -406,30 +386,30 @@ export default {
                 stepped: true
             }
         });
-        console.log("TEST 2", this.filterOptions.date.min, this.filterOptions.date.max)
+        // console.log("TEST 2", this.filterOptions.date.min, this.filterOptions.date.max)
 
-        // Update filterData when slider changes
+        // Update localFilterData when slider changes
         this.$refs.dateSlider.noUiSlider.on('update', (values) => {
-            // Update the filterData object
-            this.filterData.date.lowerLimit = parseFloat(values[0]);
-            this.filterData.date.upperLimit = parseFloat(values[1]);
+            // Update the localFilterData object
+            this.localFilterData.date.lowerLimit = parseFloat(values[0]);
+            this.localFilterData.date.upperLimit = parseFloat(values[1]);
 
             // Format the lower and upper date directly inline
-            const lowerDate = new Date(this.filterData.date.lowerLimit);
-            const upperDate = new Date(this.filterData.date.upperLimit);
+            const lowerDate = new Date(this.localFilterData.date.lowerLimit);
+            const upperDate = new Date(this.localFilterData.date.upperLimit);
 
             // Set the date values as YYYY-MM-DD format
             this.$refs.dateMin.value = `${lowerDate.getFullYear()}-${(lowerDate.getMonth() + 1).toString().padStart(2, '0')}-${lowerDate.getDate().toString().padStart(2, '0')}`;
             this.$refs.dateMax.value = `${upperDate.getFullYear()}-${(upperDate.getMonth() + 1).toString().padStart(2, '0')}-${upperDate.getDate().toString().padStart(2, '0')}`;
         });
-        // Update slider and filterData when changing min or max value
+        // Update slider and localFilterData when changing min or max value
         this.$refs.dateMin.addEventListener('change', () => {
-            this.filterData.date.lowerLimit = new Date(this.$refs.dateMin.value).getTime();
-            this.$refs.dateSlider.noUiSlider.set([this.filterData.date.lowerLimit, this.filterData.date.upperLimit]);
+            this.localFilterData.date.lowerLimit = new Date(this.$refs.dateMin.value).getTime();
+            this.$refs.dateSlider.noUiSlider.set([this.localFilterData.date.lowerLimit, this.localFilterData.date.upperLimit]);
         });
         this.$refs.dateMax.addEventListener('change', () => {
-            this.filterData.date.upperLimit = new Date(this.$refs.dateMax.value).getTime();
-            this.$refs.dateSlider.noUiSlider.set([this.filterData.date.lowerLimit, this.filterData.date.upperLimit]);
+            this.localFilterData.date.upperLimit = new Date(this.$refs.dateMax.value).getTime();
+            this.$refs.dateSlider.noUiSlider.set([this.localFilterData.date.lowerLimit, this.localFilterData.date.upperLimit]);
         });
 
     },
