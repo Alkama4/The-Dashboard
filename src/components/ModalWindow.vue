@@ -85,17 +85,19 @@ export default {
         },
         deleteEntry() {
             this.$emit("delete", this.modalData.id); // Emit delete event with the entry ID
-            notify("Entry deleted succesfully!", "success");
+            // notify("Entry deleted succesfully!", "success");
             notify("The logic has not yet been implemented!", "error");
             this.$emit("close");                // And close the modal
         },
         handleEditSubmit(formData) {
             console.log("Form data to send to DB:", formData);
-            notify("Entry edited succesfully!", "success");
+            // notify("Entry edited succesfully!", "success");
+            notify("The logic has not yet been implemented!", "error");
             this.$emit("close");
         },
         handleCopySubmit(formData) {
             console.log("Saving a duplicatea of something:", formData);
+            notify("The logic has not yet been implemented!", "error");
             // Muista vaihtaa id. Oikeestaan menee varmaa parhaiten ku ei vaan ilmota sitä ne se menee uudeks
         },
         formatAmount(amount) {

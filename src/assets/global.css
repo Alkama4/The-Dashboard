@@ -32,6 +32,7 @@
     --z-top-bar: 200;
     --z-app: 100;
     --z-spendings-entry-after: 90;
+    --z-hovering-button: 10;
     --z-background-colors: 0;
 
     /* Media break off points */
@@ -116,6 +117,9 @@
 
     /* Shadows */
     --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .dark-mode {
@@ -167,7 +171,7 @@
     --color-background-card: #1d1d1d;
     --color-background-input: #1f1f1f;
     --color-background-input-light: #1a1a1a;
-    --color-background-input-strong: #252525;
+    --color-background-input-strong: #292929;
     --color-background-tr-active: hsl(0, 0%, 11%);
     --color-background-tr-hover: hsl(0, 0%, 13%);
 
@@ -190,6 +194,7 @@
     --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.5);
     --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
     --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
 /* - - - - PAGE SETUP - - - - */
@@ -265,9 +270,9 @@ button {
     color: var(--color-text);
     background-color: var(--color-button-general);
 
-    transition: color 0.1s,
-                background-color 0.1s,
-                box-shadow 0.1s;
+    transition: color 0.1s ease-out,
+                background-color 0.1s ease-out,
+                box-shadow 0.1s ease-out;
 }
 button:hover {
     color: var(--color-text-bold);
@@ -334,7 +339,7 @@ label {
     padding-left: var(--spacing-sm);
 }
 
-input, textarea{
+input, textarea, select {
     cursor: text;
 
     background-color: var(--color-background-input);
@@ -352,10 +357,10 @@ input, textarea{
     border-radius: var(--border-radius-small);
     transition: border-color 0.1s ease-out;
 }
-input:hover, textarea:hover {
+input:hover, textarea:hover, select:hover {
     border-color: var(--color-border-hover);
 }
-input:focus {
+input:focus, textarea:focus, select:focus {
     outline: none;
 }
 
@@ -523,6 +528,18 @@ input[type="radio"] {
     margin: var(--spacing-md) 0;
 }
 
+.sticky-corner-button {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: var(--spacing-lg);
+    z-index: var(--z-hovering-button);
+    aspect-ratio: 1;
+    padding: var(--spacing-md);
+    border-radius: 50%;
+    box-shadow: var(--shadow-floating-button);
+}
+
 
 /* - - - - ANIMATIONS - - - - */
 @keyframes fadeInUp {
@@ -539,7 +556,7 @@ input[type="radio"] {
 @keyframes fadeInFromLeft {
     from {
         opacity: 0;
-        transform: translateX(-20px);
+        transform: translateX(-100px);
     }
     to {
         opacity: 1;

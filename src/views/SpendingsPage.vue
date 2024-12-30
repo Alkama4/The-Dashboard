@@ -22,10 +22,14 @@
             :filterOptions="filterOptions"
         />
 
-        <button class="color-primary filter-button" @click="this.showFilters = !this.showFilters;"> 
+        <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;" style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"> 
             <IconFilter size="20px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
-            Filter
         </button>
+        <router-link to="/newentry">
+            <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;"> 
+                <IconAdd size="20px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
+            </button>
+        </router-link>
 
         <table>
             <thead>
@@ -110,6 +114,7 @@
     import IconSortBoth from '../components/icons/IconSortBoth.vue';
     import IconSortDown from '../components/icons/IconSortDown.vue';
     import IconSortUp from '../components/icons/IconSortUp.vue';
+    import IconAdd from '@/components/icons/IconAdd.vue';
 	import api from '@/utils/dataQuery';
     import FilterSettings from '@/components/FilterSettings.vue';
     import { notify } from '@/utils/notification';
@@ -123,6 +128,7 @@
             IconSortDown,
             IconSortUp,
             IconFilter,
+            IconAdd,
         },
         data() {
             return {
@@ -204,7 +210,7 @@
                     this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
                 } else {
                     this.apiFilters.sort_by = column;
-                    this.apiFilters.sort_order = 'asc';
+                    this.apiFilters.sort_order = 'desc';
                 }
                 this.apiFilters.offset = 0;
                 this.transactions = [];
@@ -292,13 +298,6 @@ th.column-date {
 th.column-amount {
     text-align: end;
 }
-
-.filter-button {
-    margin-right: 0;
-    margin-left: auto;
-}
-
-
 
 /* Round corners for th row */
 /* th:first-child {
