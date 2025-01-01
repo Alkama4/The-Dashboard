@@ -138,7 +138,7 @@ export default {
 } .notification.info:hover {
     background-color: var(--color-primary-hover);
 } .notification.info h3::after {
-    content: "Notification";
+    content: "Info";
 }
 
 .notification.success {
@@ -147,6 +147,14 @@ export default {
     background-color: var(--color-positive-hover);
 } .notification.success h3::after {
     content: "Success";
+}
+
+.notification.warning {
+    background-color: #b98910;
+} .notification.warning:hover {
+    background-color: #c2982c;
+} .notification.warning h3::after {
+    content: "Warning";
 }
 
 .notification.error {

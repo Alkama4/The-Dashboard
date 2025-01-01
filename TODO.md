@@ -58,3 +58,6 @@ In here I will collect my notes about this website and list the stuff that need 
     - Disable when under 777px or just leave it?
 - Modal starts scrolling before hitting the screen limit horizontally and vertically.
 - Filterdropdowns not updating when resizing
+- Modal closing X scrolls along other content (also header?)
+- Move the logged in logic to App.vue so that the user doesn't even notice the querying.
+    - Maybe also move the logged in state to the menu? Maybe not.

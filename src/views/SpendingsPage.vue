@@ -23,11 +23,11 @@
         />
 
         <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;" style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"> 
-            <IconFilter size="20px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
+            <IconFilter size="28px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
         </button>
         <router-link to="/newentry">
             <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;"> 
-                <IconAdd size="20px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
+                <IconAdd size="28px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
             </button>
         </router-link>
 

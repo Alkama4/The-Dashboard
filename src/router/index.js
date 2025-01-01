@@ -4,6 +4,8 @@ import AboutPage from '../views/AboutPage.vue';
 import SettingsPage from '../views/SettingsPage.vue';
 import SpendingsPage from '../views/SpendingsPage.vue';
 import NewEntryPage from '@/views/NewEntryPage.vue';
+import LogInPage from '@/views/LogInPage.vue';
+import DebugPage from '@/views/DebugPage.vue';
 
 const routes = [
     {
@@ -35,6 +37,18 @@ const routes = [
         name: 'New Entry',
         component: NewEntryPage,
         meta: { title: 'New Entry' }
+    },
+    {
+        path: '/login',
+        name: 'Log in',
+        component: LogInPage,
+        meta: { title: 'Log In' }
+    },
+    {
+        path: '/debug',
+        name: 'Debug',
+        component: DebugPage,
+        meta: { title: 'Debug' }
     }
 ];
 

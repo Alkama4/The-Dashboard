@@ -1,65 +1,75 @@
 <template>
     <div class="modal-backdrop backdrop" @click.self="closeModal">
         <div class="modal-content">
-                <div class="modal-body">
-                    <div class="modal-header">
-                        <h2 style="margin-top: 0;" :class="this.modalType">
-                            <!-- Header is inserted with ::after as a style -->
-                        </h2>
-                        <button class="modal-close button-simple" @click="closeModal">
-                            <IconCross size="36" color="var(--color-text-light)" />
-                        </button>
-                    </div>
-
-                    
-                    <!-- Conditional Content -->
-                    <div v-if="modalType === 'details'">
-                        <div class="details-modal-content">
-                            <div style="grid-area: a; max-width: 25ch;">
-                                <h4>ID</h4>
-                                <span>{{ modalData.transactionID }}</span>
-                                <h4>Direction</h4>
-                                <span>{{ modalData.direction }}</span>
-                                <h4>Date</h4> 
-                                <span>{{ detailsDate }}</span>
-                            </div>
-                            <div style="grid-area: b; max-width: 25ch;">
-                                <h4>Counterparty</h4> 
-                                <span>{{ modalData.counterparty }}</span>
-                                <h4>Amount breakdown</h4>
-                                <ul>
-                                    <li v-for="category in formattedCategories" :key="category.category">
-                                        {{ category.category }}: {{ category.amount }}
-                                    </li>
-                                </ul>
-                                <span>Total amount: <b> {{ totalSum }} </b> </span>
-                            </div>
-                            <div style="grid-area: c; max-width: 50ch;">
-                                <h4>Notes</h4> 
-                                <span :style="modalData.notes ? '' : 'color: var(--color-text-hidden);'">{{ modalData.notes || "(This entry doesn't have notes)" }}</span>
-                            </div>
-                        </div>
-                    </div>
-    
-                    <div v-if="modalType === 'edit'" class="edit-modal">
-                        <EntryForm @submit="handleEditSubmit" :initialData="modalData" style="margin-inline: 3px;"/>
-                    </div>
-                    
-                    <div v-if="modalType === 'duplicate'">
-                        <p>Under construction... Check back later :)</p>
-                    </div>
-                    
-                    <div v-if="modalType === 'delete'">
-                        <p style="margin-left: 0;"> Are you sure you want to delete this entry? <br>
-                            <strong style="color: var(--color-negative)">This action cannot be undone.</strong> {{ id }}</p>
-                        <div class="delete-buttons">
-                            <button class="" @click="closeModal">Cancel</button>
-                            <button class="color-warning color-primary" @click="deleteEntry">Delete</button>
-                        </div>
-                    </div>
-                    <!-- Default Slot for Any Other Content -->
-                    <slot></slot>
+            <div class="modal-body">
+                <div class="modal-header">
+                    <h2 style="margin-top: 0;" :class="this.modalType">
+                        <!-- Header is inserted with ::after as a style -->
+                    </h2>
+                    <button class="modal-close button-simple" @click="closeModal">
+                        <IconCross size="36" color="var(--color-text-light)" />
+                    </button>
                 </div>
+
+                
+                <!-- Conditional Content -->
+                <div v-if="modalType === 'details'">
+                    <div class="details-modal-content">
+                        <div style="grid-area: a; max-width: 25ch;">
+                            <h4>ID</h4>
+                            <span>{{ modalData.transactionID }}</span>
+                            <h4>Direction</h4>
+                            <span>{{ modalData.direction }}</span>
+                            <h4>Date</h4> 
+                            <span>{{ detailsDate }}</span>
+                        </div>
+                        <div style="grid-area: b; max-width: 25ch;">
+                            <h4>Counterparty</h4> 
+                            <span>{{ modalData.counterparty }}</span>
+                            <h4>Amount breakdown</h4>
+                            <ul>
+                                <li v-for="category in formattedCategories" :key="category.category">
+                                    {{ category.category }}: {{ category.amount }}
+                                </li>
+                            </ul>
+                            <span>Total amount: <b> {{ totalSum }} </b> </span>
+                        </div>
+                        <div style="grid-area: c; max-width: 50ch;">
+                            <h4>Notes</h4> 
+                            <span :style="modalData.notes ? '' : 'color: var(--color-text-hidden);'">{{ modalData.notes || "(This entry doesn't have notes)" }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div v-if="modalType === 'edit'" class="edit-modal">
+                    <EntryForm @submit="handleEditSubmit" :initialData="modalData" style="margin-inline: 3px;"/>
+                </div>
+                
+                <div v-if="modalType === 'duplicate'">
+                    <p>Under construction... Check back later :)</p>
+                </div>
+                
+                <div v-if="modalType === 'delete'">
+                    <p style="margin-left: 0;"> Are you sure you want to delete this entry? <br>
+                        <strong style="color: var(--color-negative)">This action cannot be undone.</strong> {{ id }}</p>
+                    <div class="two-buttons">
+                        <button class="color-warning color-primary" @click="deleteEntry">Delete</button>
+                        <button class="" @click="closeModal">Cancel</button>
+                    </div>
+                </div>
+
+                <div v-if="modalType === 'logout'">
+                    <p style="margin-left: 0;"> Are you sure you want to log out?
+                    </p>
+                    <div class="two-buttons">
+                        <button class="color-primary" @click="sendLogout">Logout</button>
+                        <button class="" @click="closeModal">Cancel</button>
+                    </div>
+                </div>
+
+                <!-- Default Slot for Any Other Content -->
+                <slot></slot>
+            </div>
         </div>
     </div>
 </template>
@@ -77,7 +87,7 @@ export default {
     },
     props: {
         modalType: { type: String, required: true }, // Defines the type of modal (details, edit, delete)
-        modalData: { type: Object, required: true }, // Dynamic data for the modal
+        modalData: { type: Object, required: false }, // Dynamic data for the modal
     },
     methods: {
         closeModal() {
@@ -102,6 +112,10 @@ export default {
         },
         formatAmount(amount) {
             return amount ? `${amount.toLocaleString('fi-FI', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €` : '';
+        },
+        sendLogout() {
+            this.$emit("logout");
+            this.$emit("close");
         }
     },
     computed: {
@@ -197,6 +211,9 @@ h2.duplicate::after {
 h2.delete::after {
     content: "Delete entry";
 }
+h2.logout::after {
+    content: "Log out";
+}
 
 .modal-close {
     position: static; /* Remove absolute positioning */
@@ -252,7 +269,7 @@ h2.delete::after {
 }
 
 /* Delete modal */
-.delete-buttons {
+.two-buttons {
     display: flex;
     flex-direction: row;
 }
