@@ -24,8 +24,8 @@ In here I will collect my notes about this website and list the stuff that need 
     - Custom submit text eg. "Create a dubplicate", "Confirm edits"
 - popup notification
 - Home on splash screen
-    - Sää
-    - Cotton
+    - Sää?
+    - Cotton?
     - päivän ajasta riippuva tervehys
     - Linkit nätisti
     - Muuta?
@@ -47,8 +47,13 @@ In here I will collect my notes about this website and list the stuff that need 
     - Desktop mode/fullscreen mode = false
 - Movie and Film tracker db
 - haitari mini toggleen yhen sijaan
+- Selector kuinka monta ladataan kerralla
+- Revamp the details modal
+    - Long and number date, week
+    - table like category spread out.
 
 ### Known issues
+- DB and api timezone set correctly
 - Browser warning ref something something...
 - Notificatino z-problem with mobile menu
 - v-select causes scrolling on modals when opening 
@@ -61,3 +66,6 @@ In here I will collect my notes about this website and list the stuff that need 
 - Modal closing X scrolls along other content (also header?)
 - Move the logged in logic to App.vue so that the user doesn't even notice the querying.
     - Maybe also move the logged in state to the menu? Maybe not.
+- When loading transactions have the:
+    - columns not change width
+    - items not disappear or have a place holder (animated?)

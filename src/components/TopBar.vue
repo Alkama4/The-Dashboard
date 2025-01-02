@@ -2,14 +2,17 @@
     <div id="top-bar">
         <div id="top-bar-content">
             <div class="top-bar-side">
-                <router-link class="website-name" to="/" >The Dashboard</router-link>
+                <router-link class="website-name" to="/">The Dashboard</router-link>
             </div>
             <div class="top-bar-side">
-                <router-link class="nav-button desktop-button" to="/spendings">Spendings data</router-link>
-                <!-- <router-link class="nav-button desktop-button" to="/spendings">Spendings analysis</router-link> -->
-                <router-link class="nav-button desktop-button" to="/newentry">New entry</router-link>
-                <router-link class="nav-button desktop-button" to="/about">About page</router-link>
-                <router-link class="nav-button desktop-button" to="/settings">Settings</router-link>
+                <router-link 
+                    v-for="link in links" 
+                    :key="link.to" 
+                    class="nav-button desktop-button" 
+                    :to="link.to"
+                >
+                    {{ link.display }}
+                </router-link>
                 <button @click="$emit('toggle-dark-mode')" class="nav-button desktop-button square-button">
                     <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
                 </button>
@@ -21,11 +24,14 @@
     </div>
     <div @click="toggleMenu()" ref="mobileNav" class="mobile-nav backdrop">
         <router-link class="website-name" to="/" style="padding-bottom: var(--spacing-md);">The Dashboard</router-link>
-        <router-link class="nav-button" to="/spendings">Spendings data</router-link>
-        <!-- <router-link class="nav-button" to="/spendings">Spendings analysis</router-link> -->
-        <router-link class="nav-button" to="/newentry">New entry</router-link>
-        <router-link class="nav-button" to="/about">About page</router-link>
-        <router-link class="nav-button" to="/settings">Settings</router-link>
+        <router-link 
+            v-for="link in links" 
+            :key="link.to" 
+            class="nav-button" 
+            :to="link.to"
+        >
+            {{ link.display }}
+        </router-link>
         <button @click="$emit('toggle-dark-mode'); toggleMenu()" class="nav-button square-button">
             <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
         </button>
@@ -33,22 +39,33 @@
 </template>
 
 <script>
-    import IconDarkMode from './icons/IconDarkMode.vue';
-    import IconMenu from './icons/IconMenu.vue';
+import IconDarkMode from './icons/IconDarkMode.vue';
+import IconMenu from './icons/IconMenu.vue';
 
-    export default {
-        name: 'top-bar',
-        components: {
-            IconDarkMode,
-            IconMenu
-        },
-        methods: {
-            toggleMenu() {
-               console.log("Menu toggled");
-               this.$refs['mobileNav'].classList.toggle("expanded");
-            }
+export default {
+    name: 'top-bar',
+    components: {
+        IconDarkMode,
+        IconMenu
+    },
+    data() {
+        return {
+            links: [
+                { display: 'Spendings', to: '/spendings' },
+                { display: 'Analytics', to: '/analytics' },
+                { display: 'New entry', to: '/newentry' },
+                // { display: 'About page', to: '/about' },
+                { display: 'Settings', to: '/settings' },
+            ]
+        };
+    },
+    methods: {
+        toggleMenu() {
+            // console.log("Menu toggled");
+            this.$refs['mobileNav'].classList.toggle("expanded");
         }
     }
+};
 </script>
 
 <style scoped>
@@ -130,17 +147,15 @@
         aspect-ratio: 1;
     }
 
-    @media (max-width: 777px)  {
+    @media (max-width: 745px)  {
         .desktop-button {
             display: none;
         }
         .mobile-button {
             display: inline-flex;
         }
-    }
-    @media (min-width: 778px)  {
         .mobile-nav {
-            display: none !important;
+            display: flex !important;
         }
     }
 
@@ -153,6 +168,7 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: flex-end;
+        display: none;
 
         opacity: 0;
         visibility: hidden;

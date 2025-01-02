@@ -138,11 +138,11 @@ export default {
         const optionsResponse = await api.getOptions();
         if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
             // Log the categories data
-            console.log("[Options] All:", optionsResponse);
+            // console.log("[Options] All:", optionsResponse);
 
             // Log individual things
-            console.log("[Options] Counterparty:", optionsResponse.counterparty);
-            console.log("[Options] Category:", optionsResponse.category);
+            // console.log("[Options] Counterparty:", optionsResponse.counterparty);
+            // console.log("[Options] Category:", optionsResponse.category);
 
             // Set all the options to be used in the sorting
             this.allOptions = optionsResponse;

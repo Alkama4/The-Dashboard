@@ -6,13 +6,14 @@ import SpendingsPage from '../views/SpendingsPage.vue';
 import NewEntryPage from '@/views/NewEntryPage.vue';
 import LogInPage from '@/views/LogInPage.vue';
 import DebugPage from '@/views/DebugPage.vue';
+import AnalyticsPage from '@/views/AnalyticsPage.vue';
 
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        component: HomePage,
-        meta: { title: 'Home' }
+        path: '/',              // URL path
+        name: 'Home',           // Route name
+        component: HomePage,    // Component
+        meta: { title: 'Home' } // The updating title part after "-" in the browser tab
     },
     {
         path: '/about',
@@ -49,6 +50,12 @@ const routes = [
         name: 'Debug',
         component: DebugPage,
         meta: { title: 'Debug' }
+    },
+    {
+        path: '/analytics',
+        name: 'Analytics',
+        component: AnalyticsPage,
+        meta: { title: 'Analytics' }
     }
 ];
 

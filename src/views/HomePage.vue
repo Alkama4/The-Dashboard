@@ -1,13 +1,26 @@
 <template>
 	<div>
-		<h1>Home page</h1>
-		<q>{{ greeting }}</q><br>
-		<em style="color: var(--color-text-light);">&mdash; Sun Tzu</em>
-		<!-- <p>Some long ass text so that this looks reasonalble and actually I should have just copied a basic copy pasta or lorem ipsum text here but now that I'm writing I guess I'll just keep on writing until I get bored or this starts looking good.</p>
-		<p>I guess we got to the point that the paragraph looked decent enough. Here a second shorter one just to pad this out just a little bit more.</p> -->
+		<h1>{{ greeting[0] }}</h1>
+		<span class="header-sub-text">{{ greeting[1] }}</span><br>
 
-		<!-- <h2>Ascii art</h2> -->
+		<h2>Quick Tiles</h2>
+		<div class="tile-container">
+			<a href="https://pibox.lan:9443" class="no-decoration">
+				<button class="tile-button">
+					<img src="../assets/thumbnails/portainer.svg" alt="Service logo">
+					<span>Portainer</span>
+				</button>
+			</a>
+			<a href="http://pibox.lan:82/admin/" class="no-decoration">
+				<button class="tile-button">
+					<img src="../assets/thumbnails/pihole.png" alt="Service logo">
+					<span>Pihole</span>
+				</button>
+			</a>
+		</div>
 
+		<h2>Ascii Art</h2>
+		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
 		<div class="wrapper">
 			<pre>
 .              +   .                .   . .     .  .
@@ -111,13 +124,13 @@ v           )___))___))___)\        v
 			getGreeting() {
 				const hour = new Date().getHours();
 				if (hour < 5) {
-					return "Why are you even awake anymore? The night owls have gone to bed too!";
+					return ["Night!", "Up a little early, aren't we? The world is still asleep!"];
 				} else if (hour < 12) {
-					return "Rise and shine, baby! The world is waiting for you to conquer it!";
+					return ["Good morning!", "It's a beautiful morning! Time to rise and shine!"];
 				} else if (hour < 18) {
-					return "Keep on grinding, champ! You're crushing it this afternoon!";
+					return ["Good afternoon!", "Keep on grinding, champ! You're crushing it!"];
 				} else {
-					return "It's chill o'clock! Time to unwind and recharge for tomorrow!";
+					return ["Good evening!", "It's chill o'clock! Time to unwind and recharge for tomorrow!"];
 				}
 			},
 		},
@@ -125,9 +138,12 @@ v           )___))___))___)\        v
 </script>
 
 <style scoped>
-	q {
-		width: 40ch;
+	h1 {
+		margin-bottom: var(--spacing-sm);
+	}
+	.header-sub-text {
 		display: inline-block;
+		color: var(--color-text-light);
 	}
 	pre {
 		margin-bottom: 0;
@@ -135,13 +151,39 @@ v           )___))___))___)\        v
 	}
 	@media (max-width: 600px) {
 		pre {
-			font-size: 10px;
+			font-size: 8px;
 		}
 	}
 	.spacer {
 		border-top: 2px solid var(--color-border);
 		margin: 10px;
 	}
+	
+	.tile-container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.tile-button {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		aspect-ratio: 1;
+		width: 150px;
+		border-radius: var(--border-radius-medium);
+	}
+	.tile-button img {
+		position: absolute;
+		top: var(--spacing-md);
+		width: 80px;
+		aspect-ratio: 1;
+	}
+	.tile-button span {
+		position: absolute;
+		bottom: var(--spacing-md);
+	}
+
 	.wrapper {
 		width: fit-content;
 		margin-inline: auto;

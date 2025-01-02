@@ -52,7 +52,11 @@
                         </span>
                         <div class="flipper"></div>
                     </span>
-                    <IconChevronDown class="drop-down-indicator" color="var(--color-text-light)"/>
+                    <IconChevronDown 
+                        color="var(--color-text-light)"
+                        class="drop-down-indicator" 
+                        :class="{'active': activeDropdown === 'counterparty'}"
+                    />
                 </h4>
 
                 <div class="drop-down-content"
@@ -105,7 +109,11 @@
                         </span>
                         <div class="flipper"></div>
                     </span>
-                    <IconChevronDown class="drop-down-indicator" color="var(--color-text-light)"/>
+                    <IconChevronDown 
+                        color="var(--color-text-light)"
+                        class="drop-down-indicator" 
+                        :class="{'active': activeDropdown === 'category'}"
+                    />
                 </h4>
 
                 <div class="drop-down-content"
@@ -543,7 +551,7 @@ h2 {
     color: var(--color-text-lighter);
     transition: transform 0.2s ease-out;
 }
-.active .drop-down-indicator {
+.drop-down-indicator.active {
     transform: rotate(180deg);
 }
 

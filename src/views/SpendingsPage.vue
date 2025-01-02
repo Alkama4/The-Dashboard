@@ -104,7 +104,14 @@
         </table>
     
         <!-- Button to load more entries -->
-        <button class="center" @click="loadMore">Load more</button>
+        <button 
+            class="center" 
+            @click="loadMore"
+            :disabled="!loadMoreButtonActive"
+            v-if="loadMoreButtonVisible"
+        >
+            Load more
+        </button>
     </div>
 </template>
 
@@ -144,7 +151,7 @@
                 apiFilters: {
                     sort_by: 'date',
                     sort_order: 'desc',
-                    limit: 50,
+                    limit: 25,   // How many are loaded at a time
                     offset: 0,
                     // Filter values
                     start_date: 946684800000,
@@ -179,7 +186,9 @@
                     date: {},
                     counterparty: {},
                     category: {}
-                }
+                },
+                loadMoreButtonActive: false,
+                loadMoreButtonVisible: false,
             };
         },
         computed: {
@@ -201,6 +210,9 @@
                 const response = await api.getTransactions(this.apiFilters);
                 if (response && response.transactions) {
                     this.transactions = [...this.transactions, ...response.transactions];
+                    this.loadMoreButtonActive = true;
+                    this.loadMoreButtonVisible = response.hasMore;
+                    // console.log(this.loadMoreButtonActive, this.loadMoreButtonVisible)
                 } else {
                     notify("Failed to retrieve transactions.", "error");
                     console.error("[SpendingsPage] response && response.Values failed");
@@ -220,6 +232,7 @@
             },
             loadMore() {
                 this.apiFilters.offset += this.apiFilters.limit;
+                this.loadMoreButtonActive = false;
                 this.fetchTransactions();
             },
             applyFilters(newFilterData) {
@@ -261,13 +274,13 @@
             if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
 
                 // Log the categories data
-                console.log("[Filters] All:", filterResponse);
+                // console.log("[Filters] All:", filterResponse);
                 
                 // Log individual things
-                console.log("[Filters] Counterparty:", filterResponse.counterparty);
-                console.log("[Filters] Category:", filterResponse.category);
-                console.log("[Filters] Amount:", filterResponse.amount);
-                console.log("[Filters] Date:", filterResponse.date);
+                // console.log("[Filters] Counterparty:", filterResponse.counterparty);
+                // console.log("[Filters] Category:", filterResponse.category);
+                // console.log("[Filters] Amount:", filterResponse.amount);
+                // console.log("[Filters] Date:", filterResponse.date);
 
                 this.filterOptions = filterResponse;
             } else {
@@ -303,6 +316,13 @@ th .header-content {
 th.column-date {
     justify-content: center;
     display: flex;
+}
+th.column-counterparty {
+    width: 150px;
+}
+th.column-category {
+    padding-right: 0;
+    width: 175px;
 }
 th.column-amount {
     text-align: end;

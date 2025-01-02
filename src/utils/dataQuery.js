@@ -24,19 +24,19 @@ const api = {
     },
     async getTransactions(params = {}) {
         params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
-        console.info('Fetching transactions with params:', params);
+        // console.info('Fetching transactions with params:', params);
         return this.getData('/get_transactions', params);
     },
     async getOptions() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
-        console.log('Fetching options with params:', params);
+        // console.log('Fetching options with params:', params);
         return this.getData('/get_options', params);
     },
     async getFilters() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
-        console.log('Fetching filters with params:', params);
+        // console.log('Fetching filters with params:', params);
         return this.getData('/get_filters', params);
     },
 
@@ -171,6 +171,10 @@ const api = {
                 console.error("[deleteTransaction] deleteTransactionSuccess == false");
                 return false;
             }
+        } else {
+            notify("Failed to delete transaction.", "error");
+            console.error("[deleteTransaction] response failed");
+            return null;
         }
     },
 };

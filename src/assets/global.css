@@ -38,7 +38,8 @@
     /* Media break off points */
     /* 
         - 1500px: table-date-format
-        - 777px: table-notes, form, top bar, filter
+        - 777px: table-notes, form, filter
+        - 745px: top bar
         - 600px: table-type, modal full width
     */
 
@@ -89,7 +90,7 @@
 
     /* Backgrounds */
     --color-background: hsl(0, 0%, 96%);
-    --color-background-backdrop: rgba(0, 0, 0, 0.5);
+    --color-background-backdrop: rgba(255, 255, 255, 0.3);
     --color-background-top-bar: hsl(0, 0%, 96%);
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
     --color-background-modal: hsl(0, 0%, 96%);
@@ -362,6 +363,7 @@ input:hover, textarea:hover, select:hover {
 }
 input:focus, textarea:focus, select:focus {
     outline: none;
+    border-color: var(--color-border-light);
 }
 
 textarea {
@@ -393,6 +395,9 @@ input[type="radio"] {
 }
 .vs__dropdown-toggle:hover {
     border-color: var(--color-border-hover);
+}
+.vs--open .vs__dropdown-toggle {
+    border-color: var(--color-border-light);
 }
 .v-select .vs__placeholder {  /* Doesn't work */
     color: var(--color-text-lighter)
@@ -538,6 +543,10 @@ input[type="radio"] {
     padding: 12px;
     border-radius: 50%;
     box-shadow: var(--shadow-floating-button);
+}
+
+.no-decoration {
+    text-decoration: none;
 }
 
 
