@@ -100,6 +100,8 @@ export default {
                 return;
             }
 
+            this.formData.date = new Date(this.formattedDate).toISOString().split('T')[0];
+
             this.$emit('submit', {
                 ...this.formData,
                 categories: [...this.formData.categories]

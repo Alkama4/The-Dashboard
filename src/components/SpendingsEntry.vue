@@ -62,7 +62,7 @@
                         :modalData="this.transaction"
                         :header="modalHeader"
                         @close="showModal = false"
-                        @delete="deleteTransaction"
+                        @refreshTable="refreshTable"
                     />
                 </div>
             </div>
@@ -156,6 +156,9 @@
                     return amount;                    
                 }
             },
+            refreshTable() {
+                this.$emit('refreshTable');
+            }
         },
         watch: {
             isExpanded(newVal) {

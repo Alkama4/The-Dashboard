@@ -98,6 +98,7 @@
                     :transaction="transaction"
                     :is-expanded="expandedIndex === index"
                     @toggle="toggleEntry(index)"
+                    @refreshTable="refreshTable"
                 />
             </tbody>
         </table>
@@ -206,6 +207,7 @@
                 }
             },
             sort(column) {
+                this.expandedIndex = null;
                 if (this.apiFilters.sort_by === column) {
                     this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
                 } else {
@@ -221,6 +223,7 @@
                 this.fetchTransactions();
             },
             applyFilters(newFilterData) {
+                this.expandedIndex = null;
                 this.filterData = newFilterData;
                 this.apiFilters.offset = 0;
                 this.transactions = [];
@@ -243,6 +246,12 @@
                 
                 this.fetchTransactions();
             },
+            refreshTable() {
+                this.expandedIndex = null;
+                this.apiFilters.offset = 0;
+                this.transactions = [];
+                this.fetchTransactions();
+            }
         },
         async mounted() {
             this.fetchTransactions();
@@ -262,8 +271,8 @@
 
                 this.filterOptions = filterResponse;
             } else {
-                notify("Failed to retrieve filters.", "error");
-                console.error("[SpendingsPage] filters failed");
+                // notify("Failed to retrieve filters.", "error");
+                console.error("[SpendingsPage] filters failed", filterResponse);
             }
         },
     };

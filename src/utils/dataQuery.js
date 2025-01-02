@@ -41,91 +41,137 @@ const api = {
     },
 
     // POST request to the API
-    async postData(endpoint, data) {
+    async postData(endpoint, data, config = {}) {
         try {
-            const response = await apiClient.post(endpoint, data);
+            const response = await apiClient.post(endpoint, data, config);
             return response.data;
         } catch (error) {
             console.error('Error posting data:', error);
             notify('Error posting data: ' + error.message, 'error', 5000);
+            return null;
         }
     },
     async logIn(params = {}) {
-        // Set the previous session key if it exists
         params.previousSessionKey = localStorage.getItem('sessionKey');
-        // console.info('Logging in with params:', params);
-        
-        const response = await apiClient.post('/login', null, { params });
-        if (response && response.data) {
-            if (response.data.loginStatus == "success") {
+        const response = await this.postData('/login', null, { params });
+        if (response) {
+            if (response.loginStatus === "success") {
                 notify("Logged in successfully!", "success");
-                console.log("[dataQuery] login success");
-                localStorage.setItem('sessionKey', response.data.sessionKey);
+                console.log("[logIn] login success");
+                localStorage.setItem('sessionKey', response.sessionKey);
                 return true;
-            } else if (response.data.loginStatus == "warning") {
-                notify(response.data.statusMessage, "warning");
+            } else if (response.loginStatus === "warning") {
+                notify(response.statusMessage, "warning");
                 return true;
-            } else if (response.data.loginStatus == "error") {
-                notify("Failed to log in: " + response.data.statusMessage, "error");
+            } else if (response.loginStatus === "error") {
+                notify("Failed to log in: " + response.statusMessage, "error");
                 return false;
             } else {
                 notify("Failed to log in.", "error");
-                console.error("[dataQuery] unknown response.loginStatus");
+                console.error("[logIn] unknown response.loginStatus");
                 return false;
             }
         } else {
             notify("Failed to log in.", "error");
-            console.error("[dataQuery] response && response.loginStatus failed");
+            console.error("[logIn] response failed");
             return false;
         }
-        // console.log("[dataQuery] login response: ", response.data);
-        // Show what is in the local storage
-        // console.log("[dataQuery] localStorage session key: ", localStorage.getItem('sessionKey'));
-        
-        // return response.data;
     },
     async getLoginStatus() {
-        let params = {};
-        params.sessionKey = localStorage.getItem('sessionKey');
-        console.log("[dataQuery] getting login status");
-    
-        if (params.sessionKey != null) {  // Check if sessionKey is not null
-            const response = await apiClient.post('/get_login_status', null, { params });
-            if (response && response.data) {
-                if (response.data.loggedIn === true) {  // Use strict equality for comparison
-                    console.log("[dataQuery] logged in as", response.data.username);
-                    return { loggedIn: true, username: response.data.username };
+        const sessionKey = localStorage.getItem('sessionKey');
+        if (sessionKey) {
+            const response = await this.postData('/get_login_status', null, { params: { sessionKey } });
+            if (response) {
+                if (response.loggedIn) {
+                    console.log("[getLoginStatus] logged in as", response.username);
+                    return { loggedIn: true, username: response.username };
                 } else {
-                    console.log("[dataQuery] not logged in");
+                    console.log("[getLoginStatus] not logged in");
                     return { loggedIn: false };
                 }
             }
         } else {
-            console.log("[dataQuery] no session key");
-            return { loggedIn: false };
+            console.log("[getLoginStatus] no session key");
         }
-    },    
+        return { loggedIn: false };
+    },
     async logOut() {
-        console.log("[dataQuery] logging out");
-        let params = {};
-        params.sessionKey = localStorage.getItem('sessionKey');
-        const response = await apiClient.post('/logout', null, { params });
-        if (response && response.data) {
-            if (response.data.logOutSuccess == true) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/logout', null, { params: { sessionKey } });
+        if (response) {
+            if (response.logOutSuccess) {
                 notify("Logged out successfully!", "info");
-                console.log("[dataQuery] logout success");
+                console.log("[logOut] logout success");
                 localStorage.removeItem('sessionKey');
                 return true;
             } else {
                 notify("Failed to log out.", "error");
-                console.error("[dataQuery] logOutSuccess == false");
+                console.error("[logOut] logOutSuccess == false");
                 return false;
             }
         } else {
             notify("Failed to log out.", "error");
-            console.error("[dataQuery] response && response.data failed");
+            console.error("[logOut] response failed");
+            return null;
         }
-        return null;
+    },
+    async newTransaction(transactionData) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        transactionData.session_key = sessionKey;
+        // console.log('[newTransaction] Creating new transaction with data:', transactionData);
+        const response = await this.postData('/new_transaction', transactionData, null);
+        if (response) {
+            if (response.newTransactionSuccess) {
+                notify("New transaction created!", "success");
+                console.log("[newTransaction] new transaction success");
+                return true;
+            } else {
+                notify("Failed to create new transaction.", "error");
+                console.error("[newTransaction] newTransactionSuccess == false");
+                return false;
+            }
+        } else {
+            notify("Failed to create new transaction.", "error");
+            console.error("[newTransaction] response failed");
+            return null;
+        }
+    },
+    async editTransaction(transactionData) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        transactionData.session_key = sessionKey;
+        // console.log('[editTransaction] Editing transaction with data:', transactionData);
+        const response = await this.postData('/edit_transaction', transactionData, null);
+        if (response) {
+            if (response.editTransactionSuccess) {
+                notify("Transaction edited successfully!", "success");
+                console.log("[editTransaction] edit success");
+                return true;
+            } else {
+                notify("Failed to edit transaction.", "error");
+                console.error("[editTransaction] editTransactionSuccess == false");
+                return false;
+            }
+        } else {
+            notify("Failed to edit transaction.", "error");
+            console.error("[editTransaction] response failed");
+            return null;
+        }
+    },
+    async deleteTransaction(transactionId) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        console.log('[deleteTransaction] Deleting transaction with ID:', transactionId);
+        const response = await this.postData('/delete_transaction', { session_key: sessionKey, transactionID: transactionId }, null);
+        if (response) {
+            if (response.deleteTransactionSuccess) {
+                notify("Transaction deleted successfully!", "success");
+                console.log("[deleteTransaction] delete success");
+                return true;
+            } else {
+                notify("Failed to delete transaction.", "error");
+                console.error("[deleteTransaction] deleteTransactionSuccess == false");
+                return false;
+            }
+        }
     },
 };
 

@@ -340,9 +340,9 @@ export default {
             connect: true,
             behaviour: 'drag',
             range: {
-                'min': this.filterOptions.amount.min,
+                'min': this.filterOptions.amount.min ? this.filterOptions.amount.min : 0 ,
                 '50%': 0,
-                'max': this.filterOptions.amount.max
+                'max': this.filterOptions.amount.max ? this.filterOptions.amount.max : 0 ,
             },
             pips: {
                 mode: 'count',
@@ -373,8 +373,8 @@ export default {
             connect: true,
             behaviour: 'drag',
             range: {
-                min: this.filterOptions.date.min,
-                max: this.filterOptions.date.max
+                min: this.filterOptions.date.min ? this.filterOptions.date.min : new Date().getTime(),
+                max: this.filterOptions.date.max ? this.filterOptions.date.max : new Date().getTime(),
             },
             // Päivän kokonen step
             step: 1 * 24 * 60 * 60 * 1000,

@@ -78,6 +78,7 @@
 import IconCross from './icons/IconCross.vue';
 import EntryForm from './EntryForm.vue';
 import { notify } from '@/utils/notification';
+import api from '@/utils/dataQuery';
 
 export default {
     name: "ModalWindow",
@@ -93,17 +94,21 @@ export default {
         closeModal() {
             this.$emit("close");
         },
-        deleteEntry() {
-            this.$emit("delete", this.modalData.id); // Emit delete event with the entry ID
-            // notify("Entry deleted succesfully!", "success");
-            notify("The logic has not yet been implemented!", "error");
-            this.$emit("close");                // And close the modal
+        async deleteEntry() {
+            console.log("[ModalWindow] Deleting entry with ID:", this.modalData.transactionID);
+            const succcess = await api.deleteTransaction(this.modalData.transactionID);
+            if (succcess === true) {
+                this.$emit("refreshTable");
+                this.$emit("close");
+            }
         },
-        handleEditSubmit(formData) {
-            console.log("Form data to send to DB:", formData);
-            // notify("Entry edited succesfully!", "success");
-            notify("The logic has not yet been implemented!", "error");
-            this.$emit("close");
+        async handleEditSubmit(formData) {
+            // console.log("[ModalWindow] Editing entry with ID:", formData.id);
+            const succcess = await api.editTransaction(formData);
+            if (succcess === true) {
+                this.$emit("refreshTable");
+                this.$emit("close");
+            }
         },
         handleCopySubmit(formData) {
             console.log("Saving a duplicatea of something:", formData);
@@ -185,7 +190,7 @@ export default {
     padding: var(--spacing-lg);
     position: relative;
     animation: fadeInUp 0.3s ease-out;
-    max-height: 70vh;
+    max-height: calc(100vh - 2 * var(--spacing-lg) - var(--spacing-lg));
     width: fit-content
 }
 

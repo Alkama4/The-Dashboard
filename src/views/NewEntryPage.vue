@@ -9,6 +9,7 @@
   
 <script>
 import EntryForm from '@/components/EntryForm.vue';
+import api from '@/utils/dataQuery';
 
 export default {
     name: 'SettingsPage',
@@ -17,9 +18,8 @@ export default {
     },
     methods: {
         handleFormSubmit(formData) {
-            alert("Works");
-            console.log('Submitting new entry:', formData);
-            // Add logic to save `formData` to the database
+            const response = api.newTransaction(formData);
+            console.log("[NewEntry] Response from API:", response);
         }
     }
 };
