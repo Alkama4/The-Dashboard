@@ -51,6 +51,7 @@ In here I will collect my notes about this website and list the stuff that need 
 - Revamp the details modal
     - Long and number date, week
     - table like category spread out.
+- Kun input aktiivinen harkitte sen ihmeen ympärillä jutun takas käyttöön ottoa. Toi et borderista tulee vaan vahvempi näyttää vähän hoopolta.
 
 ### Known issues
 - DB and api timezone set correctly

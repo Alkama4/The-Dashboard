@@ -132,22 +132,28 @@
     color-scheme: dark;
 
     /* General colors */
-    --color-primary: #155fb4;
-    --color-primary-hover: #2479db;
-    --color-primary-active: #186ccc;
+    --color-primary: #004fa9;
+    --color-primary-hover: #0e5eb8;
+    --color-primary-active: #1d6eca;
 
-    --color-secondary: #eb882c;
-    --color-secondary-hover: #ffa754;
-    --color-secondary-active: #f59943;
+    --color-secondary: #e01854;
+    --color-secondary-hover: #eb386e;
+    --color-secondary-active: #f85384;
 
-    --color-accent: #00ffdd;
-    --color-accent-hover: #c5fff7;
-    --color-accent-active: #75ffed;
+    --color-tertiary: #FFB74D;  /* Soft orange */
+    --color-quaternary: #4CAF50; /* Vibrant green */
+    --color-quinary: #2196F3;    /* Bright blue */
+    --color-senary: #9C27B0;     /* Bold purple */
+    --color-septenary: #FF5722;  /* Rich red-orange */
+    --color-octonary: #00BCD4;   /* Refreshing cyan */
+    --color-nonary: #8BC34A;     /* Fresh lime green */
+    --color-denary: #FFC107;     /* Warm yellow */
+    --color-undecenary: #3F51B5; /* Strong indigo */
 
-    --color-positive: rgb(20, 165, 97);
-    --color-positive-hover: rgb(11, 190, 107);
-    --color-negative: rgb(185, 70, 70);
-    --color-negative-hover: rgb(211, 79, 79);
+    --color-positive: #14a561;
+    --color-positive-hover: #0bbe6b;
+    --color-negative: #b94646;
+    --color-negative-hover: #d34f4f;
     
     /* Text */
     --color-text: #e9ebf0;
@@ -503,6 +509,49 @@ input[type="radio"] {
     pointer-events: none;
 }
 
+/* - - - - CHART TOOLTIP - - - - */
+
+.chart-tooltip {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: -4px;
+    margin-top: -3px;
+}
+.chart-tooltip table {
+    border-collapse: collapse;
+}
+.chart-tooltip .header {
+    color: var(--color-text);
+    font-size: 16px; 
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+.chart-tooltip .color-blob {
+    width: 11px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background-color: white;    /* Default to white */
+}
+.chart-tooltip .series-name {
+    font-weight: 500;
+    color: var(--color-text-light);
+    padding-left: 0.5rem;
+}
+.chart-tooltip .value {
+    font-weight: 500;
+    color: var(--color-text);
+    text-align: end;
+}
+
+.chart-tooltip .disabled .series-name, .chart-tooltip .disabled .value {
+    color: var(--color-text-hidden)
+}
+.chart-tooltip .disabled .color-blob {
+    background-color: var(--color-text-hidden) !important;
+}
+
+
+
 /* - - - - QUICK AND DIRTY CLASSES - - - - */
 .center {
     margin-inline: auto;
@@ -543,6 +592,13 @@ input[type="radio"] {
     padding: 12px;
     border-radius: 50%;
     box-shadow: var(--shadow-floating-button);
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin-inline: auto;
 }
 
 .no-decoration {

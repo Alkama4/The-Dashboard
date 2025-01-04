@@ -128,13 +128,13 @@ export default {
         font-weight: 800;
         font-size: var(--font-size-logo);
         text-decoration: none;
-        color: var(--color-primary);
+        color: var(--color-text);
         padding: var(--spacing-sm);
         padding-left: 0;
         transition: color 0.2s ease;
     }
     .website-name:hover {
-        color: var(--color-primary-hover);
+        color: var(--color-text-bold);
     }
 
     .mobile-button {

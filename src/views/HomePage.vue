@@ -3,24 +3,27 @@
 		<h1>{{ greeting[0] }}</h1>
 		<span class="header-sub-text">{{ greeting[1] }}</span><br>
 
-		<h2>Quick Tiles</h2>
-		<div class="tile-container">
-			<a href="https://pibox.lan:9443" class="no-decoration">
-				<button class="tile-button">
-					<img src="../assets/thumbnails/portainer.svg" alt="Service logo">
-					<span>Portainer</span>
-				</button>
-			</a>
-			<a href="http://pibox.lan:82/admin/" class="no-decoration">
-				<button class="tile-button">
-					<img src="../assets/thumbnails/pihole.png" alt="Service logo">
-					<span>Pihole</span>
-				</button>
-			</a>
+		<div class="flex-column">
+			<h2>Quick Tiles</h2>
+			<div class="tile-container">
+				<a href="https://pibox.lan:9443" class="no-decoration">
+					<button class="tile-button">
+						<img src="../assets/thumbnails/portainer.svg" alt="Service logo">
+						<span>Portainer</span>
+					</button>
+				</a>
+				<a href="http://pibox.lan:82/admin/" class="no-decoration">
+					<button class="tile-button">
+						<img src="../assets/thumbnails/pihole.png" alt="Service logo">
+						<span>Pihole</span>
+					</button>
+				</a>
+			</div>
 		</div>
 
 		<h2>Ascii Art</h2>
 		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
+			
 		<div class="wrapper">
 			<pre>
 .              +   .                .   . .     .  .

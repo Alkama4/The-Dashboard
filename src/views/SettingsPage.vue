@@ -1,13 +1,17 @@
 <template>
     <div>
         <h1>Settings page</h1>
-        <p> Settings go here once I figure out what settings I would even need in addition to the night mode.
+        <p>Your settings are stored locally on your device. Please note that while your settings are saved locally, all of your data is stored centrally behind your accounnt so that it can be accessed from any device and stays synced.</p>
+        <!-- <p> Settings go here once I figure out what settings I would even need in addition to the night mode.
             Maybe a login, but that would make the most sense as a separate page. Perhaps stuff related to
             the login like import and export data, change pass, database credentials, delete table and so on.
-        </p>
+        </p> -->
 
         <h2>User settings</h2>
 
+        <div v-if="isLoggedIn === 'unknown'">
+            Checking login status...
+        </div>
         <div v-if="isLoggedIn === 'no'">
             You are not logged in at the moment. You can continue browsing the page with the example data, but you won't be able to make any changes to the data.
             <br><br>
@@ -15,7 +19,6 @@
                 <button class="">Log in</button>
             </router-link>
         </div>
-        
         <div v-if="isLoggedIn === 'yes'">
             You are currently logged in as <strong>{{ username }}</strong>.
             <br><br>
@@ -27,10 +30,14 @@
                 modalType="logout"
             />
         </div>
-        
-        <div v-if="isLoggedIn === 'unknown'">
-            Checking login status...
+
+        <h2>Chart settings</h2>
+
+        <div class="chart-settings">
+            <label for="">Initial value</label>
+            <input type="number" v-model="chart1StartingPosition" placeholder="Initial value" step="0.01" @change="saveSettings">
         </div>
+
     </div>
 </template>
 
@@ -47,6 +54,7 @@ export default {
             isLoggedIn: "unknown",
             username: '',
             showModal: false,
+            chart1StartingPosition: 0,
         };
     },
     methods: {
@@ -67,9 +75,20 @@ export default {
         showLogOutModal() {
             this.showModal = true;
         },
+        saveSettings() {
+            localStorage.setItem('chart1StartingPosition', this.chart1StartingPosition);
+            console.log('Settings saved');
+        },
+        loadSettings() {
+            const chart1StartingPosition = localStorage.getItem('chart1StartingPosition');
+            if (chart1StartingPosition) {
+                this.chart1StartingPosition = chart1StartingPosition;
+            }
+        }
     },
     mounted() {
         this.callApiToGetLoginStatus();
+        this.loadSettings();
     }
 };
 </script>
@@ -79,4 +98,11 @@ export default {
         text-decoration: none;
         width: fit-content;
     }
-</style>
+    .chart-settings {
+        display: flex;
+        flex-direction: column;
+    }
+    .chart-settings input[type="number"] {
+        max-width: 200px;
+    }
+    </style>

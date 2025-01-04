@@ -14,14 +14,18 @@ const apiClient = axios.create({
 const api = {
     // GET request to the API
     async getData(endpoint, params = {}) {
+        const startTime = performance.now();  // Start the timer
         try {
             const response = await apiClient.get(endpoint, { params });
+            const endTime = performance.now();  // End the timer
+            const duration = endTime - startTime;  // Calculate the duration
+            console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
             return response.data;
         } catch (error) {
             console.error('Error fetching data:', error);
             notify('Error fetching data: ' + error.message, 'error', 5000);
         }
-    },
+    },    
     async getTransactions(params = {}) {
         params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
         // console.info('Fetching transactions with params:', params);
@@ -42,15 +46,19 @@ const api = {
 
     // POST request to the API
     async postData(endpoint, data, config = {}) {
+        const startTime = performance.now();  // Start the timer
         try {
             const response = await apiClient.post(endpoint, data, config);
+            const endTime = performance.now();  // End the timer
+            const duration = endTime - startTime;  // Calculate the duration
+            console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
             return response.data;
         } catch (error) {
             console.error('Error posting data:', error);
             notify('Error posting data: ' + error.message, 'error', 5000);
             return null;
         }
-    },
+    },    
     async logIn(params = {}) {
         params.previousSessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/login', null, { params });
@@ -100,7 +108,7 @@ const api = {
         const response = await this.postData('/logout', null, { params: { sessionKey } });
         if (response) {
             if (response.logOutSuccess) {
-                notify("Logged out successfully!", "info");
+                notify("You have been logged out.", "info");
                 console.log("[logOut] logout success");
                 localStorage.removeItem('sessionKey');
                 return true;
@@ -177,6 +185,37 @@ const api = {
             return null;
         }
     },
+    async getChartBalanceOverTime() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const initialBalance = localStorage.getItem('chart1StartingPosition');
+        const response = await this.postData('/get_chart/balance_over_time', { session_key: sessionKey, initial_balance: initialBalance }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getChartBalanceOverTime] response failed:", response);
+            return null;
+        }
+    },
+    async getChartSumByMonth() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/get_chart/sum_by_month', { session_key: sessionKey }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getChartSumByMonth] response failed:", response);
+            return null;
+        }
+    },
+    async getChartExpenseCategoriesMonthly() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/get_chart/expense_categories_monthly', { session_key: sessionKey }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getChartExpenseCategoriesMonthly] response failed:", response);
+            return null;
+        }
+    }
 };
 
 export default api;

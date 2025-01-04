@@ -62,8 +62,8 @@
                     <p style="margin-left: 0;"> Are you sure you want to log out?
                     </p>
                     <div class="two-buttons">
-                        <button class="color-primary" @click="sendLogout">Logout</button>
                         <button class="" @click="closeModal">Cancel</button>
+                        <button class="color-primary" @click="sendLogout">Log out</button>
                     </div>
                 </div>
 
