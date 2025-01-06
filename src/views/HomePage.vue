@@ -4,17 +4,17 @@
 		<span class="header-sub-text">{{ greeting[1] }}</span><br>
 
 		<div class="flex-column">
-			<h2>Quick Tiles</h2>
+			<h2>Other services</h2>
 			<div class="tile-container">
 				<a href="https://pibox.lan:9443" class="no-decoration">
 					<button class="tile-button">
-						<img src="../assets/thumbnails/portainer.svg" alt="Service logo">
+						<img src="../assets/thumbnails/portainer.svg" alt="">
 						<span>Portainer</span>
 					</button>
 				</a>
 				<a href="http://pibox.lan:82/admin/" class="no-decoration">
 					<button class="tile-button">
-						<img src="../assets/thumbnails/pihole.png" alt="Service logo">
+						<img src="../assets/thumbnails/pihole.png" alt="">
 						<span>Pihole</span>
 					</button>
 				</a>

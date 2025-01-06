@@ -215,6 +215,26 @@ const api = {
             console.error("[getChartExpenseCategoriesMonthly] response failed:", response);
             return null;
         }
+    },
+    async getGeneralStats() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/analytics/get_general_stats', { session_key: sessionKey }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getGeneralStats] response failed:", response);
+            return null;
+        }
+    },
+    async getStatsForTimespan(timespan) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/analytics/get_stats_for_timespan', { session_key: sessionKey, timespan: timespan }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getStatsForTimespan] response failed:", response);
+            return null;
+        }
     }
 };
 

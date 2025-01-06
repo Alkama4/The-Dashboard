@@ -362,14 +362,15 @@ input, textarea, select {
     border-style: solid;
     border-color: var(--color-border);
     border-radius: var(--border-radius-small);
+    outline-width: 0;
     transition: border-color 0.1s ease-out;
 }
 input:hover, textarea:hover, select:hover {
     border-color: var(--color-border-hover);
 }
 input:focus, textarea:focus, select:focus {
-    outline: none;
-    border-color: var(--color-border-light);
+    outline: solid var(--color-primary-hover) 2px;
+    /* border-color: var(--color-border-light); */
 }
 
 textarea {
@@ -402,8 +403,10 @@ input[type="radio"] {
 .vs__dropdown-toggle:hover {
     border-color: var(--color-border-hover);
 }
-.vs--open .vs__dropdown-toggle {
-    border-color: var(--color-border-light);
+.vs--open .vs__dropdown-toggle { /* Vastaa inputtia */
+    /* border-color: var(--color-border-light); */
+    outline: solid var(--color-primary-hover) 2px;
+
 }
 .v-select .vs__placeholder {  /* Doesn't work */
     color: var(--color-text-lighter)
@@ -582,6 +585,16 @@ input[type="radio"] {
     margin: var(--spacing-md) 0;
 }
 
+.card-spacer {
+    width: 85%;
+    height: 8px;
+    border-radius: 100px;
+    background-color: var(--color-background);
+    margin: var(--spacing-md) 0;
+    margin-inline: auto;
+    box-shadow: inset var(--shadow-card);
+}
+
 .sticky-corner-button {
     position: fixed;
     bottom: 0;
@@ -603,6 +616,28 @@ input[type="radio"] {
 
 .no-decoration {
     text-decoration: none;
+}
+
+.negative {
+    color: var(--color-negative) !important;
+}
+.positive {
+    color: var(--color-positive) !important;
+}
+
+.card {
+    background-color: var(--color-background-card);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-card);
+    padding: var(--spacing-md);
+    margin: var(--spacing-md);
+}
+
+.card h2 {
+    margin-top: -2px;
+    margin-bottom: var(--spacing-sm);
+    margin-left: 5px;
+    margin-right: 0;
 }
 
 
