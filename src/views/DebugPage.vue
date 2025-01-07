@@ -7,26 +7,119 @@
 		<button @click="notificationSuccess">Success</button>
 		<button @click="notificationError">Error</button>
 		<button @click="notificationWarning">Warning</button>
+
+		<h2>Ascii Art</h2>
+		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
+			
+		<div class="card">
+			<pre>
+.              +   .                .   . .     .  .
+                   .                    .       .     *
+  .       *                        . . . .  .   .  + .
+            "You Are Here"            .   .  +  . . .
+.                 |             .  .   .    .    . .
+                  |           .     .     . +.    +  .
+                 \|/            .       .   . .
+        . .       V          .    * . . .  .  +   .
+           +      .           .   .      +
+                            .       . +  .+. .
+  .                      .     . + .  . .     .      .
+           .      .    .     . .   . . .        ! /
+      *             .    . .  +    .  .       - O -
+          .     .    .  +   . .  *  .       . / |
+               . + .  .  .  .. +  .
+.      .  .  .  *   .  *  . +..  .            *
+ .      .   . .   .   .   . .  +   .    .            +
+			</pre>
+			<h3>"You are here"</h3>
+		</div>
+
+		<div class="card">
+			<pre>
+              |    |    |      v
+          v  )_)  )_)  )_)
+v           )___))___))___)\        v
+      v    )____)____)_____)\\
+         _____|____|____|____\\\__
+---------\                   /---------
+  ^^^^^ ^^^^^^^^^^^^^^^^^^^^^
+    ^^^^      ^^^^     ^^^    ^^
+         ^^^^      ^^^
+			</pre>
+			<h3>Sail boat</h3>
+		</div>
+
+		<div class="card">
+			<pre>
+   .-.                                                   \ /
+  ( (                                |                  - * -
+   '-`                              -+-                  / \
+            \            o          _|_          \
+            ))          }^{        /___\         ))
+          .-#-----.     /|\     .---'-'---.    .-#-----.
+     ___ /_________\   //|\\   /___________\  /_________\  
+    /___\ |[] _ []|    //|\\    | A /^\ A |    |[] _ []| _.O,_
+....|"#"|.|  |*|  |...///|\\\...|   |"|   |....|  |*|  |..(^).ldb
+			</pre>
+			<h3>Christmas town</h3>
+		</div>
+
+		<div class="card">
+			<pre>
+                                           /
+                        _,.------....___,.' ',.-.
+                     ,-'          _,.--"        |
+                   ,'         _.-'              .
+                  /   ,     ,'                   `
+                 .   /     /                     ``.
+                 |  |     .                       \.\
+       ____      |___._.  |       __               \ `.
+     .'    `---""       ``"-.--"'`  \               .  \
+    .  ,            __               `              |   .
+    `,'         ,-"'  .               \             |    L
+   ,'          '    _.'                -._          /    |
+  ,`-.    ,".   `--'                      >.      ,'     |
+ . .'\'   `-'       __    ,  ,-.         /  `.__.-      ,'
+ ||:, .           ,'  ;  /  / \ `        `.    .      .'/
+ j|:D  \          `--'  ' ,'_  . .         `.__, \   , /
+/ L:_  |                 .  "' :_;                `.'.'
+.    ""'                  """""'                    V
+ `.                                 .    `.   _,..  `
+   `,_   .    .                _,-'/    .. `,'   __  `
+    ) \`._        ___....----"'  ,'   .'  \ |   '  \  .
+   /   `. "`-.--"'         _,' ,'     `---' |    `./  |
+  .   _  `""'--.._____..--"   ,             '         |
+  | ." `. `-.                /-.           /          ,
+  | `._.'    `,_            ;  /         ,'          .
+ .'          /| `-.        . ,'         ,           ,
+ '-.__ __ _,','    '`-..___;-...__   ,.'\ ____.___.'
+ `"^--'..'   '-`-^-'"--    `-^-'`.''"""""`.,^.`.--' mh
+			</pre>
+			<h3>Bulbasaur</h3>
+		</div>
+
+		<p>All art is from <a href="https://www.asciiart.eu">asciiart.eu</a>.</p>
     </div>
 </template>
 
 <script>
 import api from '@/utils/dataQuery';
+import { notify } from '@/utils/notification';
 
 export default {
     name: 'DebugPage',
     methods: {
         notificationInfo() {
-            this.$root.notify("This is a generic info notification that I can place tips or tricks into.", "info");
+            notify("This is a generic info notification that I can place tips or tricks into.", "info");
         },
         notificationSuccess() {
-            this.$root.notify("The action has been completed successfully!", "success");
+            notify("The action has been completed successfully!", "success");
         },
         notificationError() {
-            this.$root.notify("An error occurred... I guess?", "error");
+            notify("An error occurred... I guess?", "error");
         },
 		notificationWarning() {
-            this.$root.notify("Somethings not right...", "warning");
+            notify("Somethings not right...", "warning");
         }
     },
     async mounted() {

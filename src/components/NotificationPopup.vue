@@ -150,9 +150,9 @@ export default {
 }
 
 .notification.warning {
-    background-color: #b98910;
+    background-color: var(--color-warning);
 } .notification.warning:hover {
-    background-color: #c2982c;
+    background-color: var(--color-warning-hover);
 } .notification.warning h3::after {
     content: "Warning";
 }

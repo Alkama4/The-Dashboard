@@ -13,7 +13,7 @@
         </div>
         <div class="grid-counterparty">
             <label for="counterparty">Counterparty:</label><br>
-            <v-select v-model="formData.counterparty" label="counterparty" :options="counterpartyOptions" placeholder="Select counterparty..." taggable></v-select>
+            <v-select v-model="formData.counterparty" label="counterparty" :options="counterpartyOptions" placeholder="Select or type..." taggable></v-select>
         </div>
 
         <div class="grid-categories-labels category-aligner">
@@ -23,21 +23,21 @@
         <div class="grid-categories">
             <div v-for="(entry, index) in formData.categories" :key="index" class="category-aligner" :class="{'remove-category-button-hidden': !this.formData.categories[1]}">
                 <div class="grid-amount">
-                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder="Value..." required />
+                    <input v-model="entry.amount" :id="'amount-' + index" type="number" step="0.01" placeholder="Number..." required />
                 </div>
                 <div class="grid-category">
-                    <v-select v-model="entry.category" :id="'category-' + index" label="category" :options="categoryOptions" placeholder="Select category..." taggable></v-select>
+                    <v-select v-model="entry.category" :id="'category-' + index" label="category" :options="categoryOptions" placeholder="Select or type..." taggable></v-select>
                 </div>
                 <button v-if="formData.categories.length > 1" @click="removeEntry(index)" class="remove-category-button button-simple">
                     <IconCross size="30"/>
                 </button>
             </div>
-            <button type="button" @click="addEntry" class="add-category-button">More categories</button>
+            <button type="button" @click="addEntry" class="add-category-button">Add a category</button>
         </div>
 
         <div class="grid-notes">
             <label for="notes">Notes:</label><br>
-            <textarea v-model="formData.notes" id="notes" placeholder="Category notes/description..."></textarea>
+            <textarea v-model="formData.notes" id="notes" placeholder="Add any additional notes or details about this transaction (optional)"></textarea>
         </div>
         <button type="submit" class="color-primary center grid-submit">Submit</button>
     </form>
@@ -183,6 +183,7 @@ form > * {
 }
 .grid-counterparty {
     grid-area: counterparty;
+    padding-right: 2px;     /* To fix the vue-selects width */
 }
 
 .grid-categories {
@@ -201,6 +202,7 @@ form > * {
     display: grid;
     align-items: center;
     gap: var(--spacing-md);
+    padding-right: 2px;     /* To fix the vue-selects width */
 ;}
 
 .remove-category-button {

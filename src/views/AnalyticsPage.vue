@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Analytics Page</h1>
-        <p>Welcome to the analytics page! Here is some blaa blaa jäkä jäkä juu. Vaiha tää johonki kuhan kerkiät.</p>
+        <p>Welcome to the analytics page! First underneath you can find statistics about the transactions. Under that there are charts that you can use to look through the past months and years of data and get a general understanding of trends.</p>
         <!-- 
         These could have different timespans (day, week, month, year, all, custom):
             - transactions logged                               all
@@ -23,19 +23,20 @@
 
         Which of these would be useful and with what timefrmaes and comparisons?
         -->
+
         <div class="card">
-            <h2>General statistics</h2>
+            <h2>Overall Statistics</h2>
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Transactions logged</div>
+                    <div class="label">Total Transactions Logged</div>
                     <div class="data">{{ toFiNumber(pageValues.generalStats.transactionsLogged) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Logs/day (average)</div>
+                    <div class="label">Average Logs per Day</div>
                     <div class="data">{{ toFiNumber(pageValues.generalStats.avgLogsPerDay) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Days logged</div>
+                    <div class="label">Total Days Logged</div>
                     <div class="data">{{ toFiNumber(pageValues.generalStats.daysLogged) || '-' }}</div>
                 </div>
             </div>
@@ -44,29 +45,29 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Logged expenses</div>
+                    <div class="label">Total Logged Expenses</div>
                     <div class="data negative">{{ toEur(pageValues.generalStats.totalExpenses) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Logged income</div>
+                    <div class="label">Total Logged Income</div>
                     <div class="data positive">{{ toEur(pageValues.generalStats.totalIncomes) || '-' }}</div>
                 </div>
             </div>
         </div>
 
         <div class="card">
-            <h2>Last month</h2>
+            <h2>Last Month</h2>
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Daily avg. spendings</div>
+                    <div class="label">Daily Average Spending</div>
                     <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageDay) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Weekly avg. spendings</div>
+                    <div class="label">Weekly Average Spending</div>
                     <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageWeek) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Spendings this month</div>
+                    <div class="label">Spending This Month</div>
                     <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageMonth) || '-' }}</div>
                 </div>
             </div>
@@ -75,11 +76,11 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Expense vs income ratio</div>
+                    <div class="label">Expense-to-Income Ratio</div>
                     <div class="data">{{ toFiNumber(pageValues.lastMonth.incomeExpenseRatio) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Net total</div>
+                    <div class="label">Net Total</div>
                     <div 
                         class="data" 
                         :class="pageValues.lastMonth.netTotal > 0 ? 'positive' : 'negative'" 
@@ -93,7 +94,7 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Top 5 most common categories</div>
+                    <div class="label">Top Categories by Frequency</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastMonth.topMostCommonCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -106,7 +107,7 @@
                     </table>
                 </div>
                 <div class="cell">
-                    <div class="label">Top 5 categories by expense</div>
+                    <div class="label">Top Categories by Expense</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastMonth.topMostExpensiveCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -125,15 +126,15 @@
             <h2>Last Year</h2>
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Daily avg. spendings</div>
+                    <div class="label">Daily Average Spending</div>
                     <div class="data">{{ toEur(pageValues.lastYear.spendingsAverageDay) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Weekly avg. spendings</div>
+                    <div class="label">Weekly Average Spending</div>
                     <div class="data">{{ toEur(pageValues.lastYear.spendingsAverageWeek) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Monthly avg. spendings</div>
+                    <div class="label">Monthly Average Spending</div>
                     <div class="data">{{ toEur(pageValues.lastYear.spendingsAverageMonth) || '-' }}</div>
                 </div>
             </div>
@@ -142,11 +143,11 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Expense vs income ratio</div>
+                    <div class="label">Expense-to-Income Ratio</div>
                     <div class="data">{{ toFiNumber(pageValues.lastYear.incomeExpenseRatio) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Net total</div>
+                    <div class="label">Net Total</div>
                     <div 
                         class="data" 
                         :class="pageValues.lastYear.netTotal > 0 ? 'positive' : 'negative'" 
@@ -159,7 +160,7 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Top 5 most common categories</div>
+                    <div class="label">Top Categories by Frequency</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastYear.topMostCommonCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -172,7 +173,7 @@
                     </table>
                 </div>
                 <div class="cell">
-                    <div class="label">Top 5 categories by expense</div>
+                    <div class="label">Top Categories by Expense</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastYear.topMostExpensiveCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -188,6 +189,10 @@
         </div>
 
         <!-- <h2>All time?</h2> -->
+
+        <h1>Charts</h1>
+        <p> If you wish to look more closely at the data or look further back these charts might be juts what you are looking for. With these you can sdfj sldkfj lsdkjf mn foenf wlf dkjf0. Sdfhjsd jasd fsj fasdjnfkjadsnf sdf ksdjf dhfiauf!</p>
+
 
         <div 
             ref="chartContainer1" 
@@ -235,7 +240,7 @@ export default {
                 generalStats: {},
                 lastMonth: {},
                 lastYear: {}
-            }
+            },
         };
     },
     methods: {
@@ -256,22 +261,12 @@ export default {
                 return value.toLocaleString('fi-FI', {maximumFractionDigits: 3}) + " kpl"
             else 
                 return null;
-        }
-    },
-    async mounted() {
-
-        // Charts initilisation
-        const chart1 = init(this.$refs.chartContainer1);
-        const chart2 = init(this.$refs.chartContainer2);
-        const chart3 = init(this.$refs.chartContainer3);
-
-        // Helper function to fetch CSS color variables
-        const getColor = (colorName) => {
+        },
+        // Initially const
+        getCssVar(colorName) {
             return getComputedStyle(document.documentElement).getPropertyValue(`--${colorName}`).trim();
-        };
-
-        // Helper function to format numbers and dates
-        const toFiCurrency = (value, format = 'full') => {
+        },
+        toFiCurrency(value, format = 'full') {
             const options = {
                 full: {
                     style: 'currency',
@@ -282,9 +277,8 @@ export default {
                 },
             };
             return value.toLocaleString('fi-FI', options[format]);
-        };
-
-        const toFiDate = (value, formatType = 'date') => {
+        },
+        toFiDate(value, formatType = 'date') {
             const date = new Date(value);
             const options = {
                 full: {
@@ -304,9 +298,8 @@ export default {
                 },
             };
             return date.toLocaleDateString('fi-FI', options[formatType]);
-        };
-
-        const generateTooltip = (params, dateType) => {
+        },
+        generateTooltip(params, dateType) {
             let rows = '';
             for (let i = 0; i < params.length; i++) {
                 rows += `
@@ -315,17 +308,24 @@ export default {
                             <div class="color-blob" style="background-color: ${params[i].color};"></div>
                             <div class="series-name">${params[i].seriesName}</div>
                         </td>
-                        <td class="value">${toFiCurrency(params[i].data)}</td>
+                        <td class="value">${this.toFiCurrency(params[i].data)}</td>
                     </tr>
                 `;
             }
             return `
                 <div class="chart-tooltip">
-                    <div class="header">${toFiDate(params[0].axisValue, dateType)}</div>
+                    <div class="header">${this.toFiDate(params[0].axisValue, dateType)}</div>
                     <table>${rows}</table>
                 </div>
             `;
-        };
+        }
+    },
+    async mounted() {
+
+        // Charts initilisation
+        const chart1 = init(this.$refs.chartContainer1);
+        const chart2 = init(this.$refs.chartContainer2);
+        const chart3 = init(this.$refs.chartContainer3);
 
         const fetchAndSetupCharts = [
             
@@ -353,33 +353,29 @@ export default {
                     const response = await api.getChartBalanceOverTime();
                     const dates = response.balanceOverTime.map(item => item.date);
                     const runningSums = response.balanceOverTime.map(item => item.runningBalance);
-
                     chart1.setOption({
                         textStyle: {
                             fontFamily: 'Poppins',
-                            color: getColor('color-text-lighter'),
+                            color: this.getCssVar('color-text-lighter'),
                         },
                         title: {
                             text: 'Balance over time',
                             textStyle: {
-                                color: getColor('color-text'),
+                                color: this.getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
-                        color: [getColor('color-primary')],
+                        color: [this.getCssVar('color-primary')],
                         tooltip: { 
                             trigger: 'axis',
-                            backgroundColor: getColor('color-background-card'),
-                            borderColor: getColor('color-border'),
-                            textStyle: {
-                                color: getColor('color-text'),
-                            },
-                            formatter: params => generateTooltip(params, 'full')
+                            backgroundColor: this.getCssVar('color-background-card'),
+                            borderColor: this.getCssVar('color-border'),
+                            formatter: params => this.generateTooltip(params, 'full')
                         },
                         grid: {
                             left: 56,
                             right: 8,
-                            top: 64,
+                            top: 88,
                             bottom: 80,
                         },
                         xAxis: {
@@ -387,7 +383,7 @@ export default {
                             data: dates,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => toFiDate(value, 'date'),
+                                formatter: value => this.toFiDate(value, 'date'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -398,7 +394,7 @@ export default {
                             name: 'Amount (€)',  // Y-akselin nimi
                             //interval: 500,    // Kuinka tiheesti näytetään sivu labelit
                             axisLabel: {        // Y-akselin arvojen muotoilu
-                                formatter: value => toFiCurrency(value, 'axis')
+                                formatter: value => this.toFiCurrency(value, 'axis')
                             }
                         },
                         series: [
@@ -410,6 +406,32 @@ export default {
                             },
                         ],
                     });
+
+                    // Add a listener which resizes the chart when window size changes
+                    window.addEventListener("resize", () => {
+                        chart1.resize();
+                    });
+
+                    // Listen for custom dark mode change event
+                    window.addEventListener("darkModeChange", () => {
+                        chart1.setOption({
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                            },
+                            title: {
+                                textStyle: {
+                                    color: this.getCssVar('color-text'),
+                                }
+                            },
+                            color: [this.getCssVar('color-primary')],
+                            tooltip: { 
+                                backgroundColor: this.getCssVar('color-background-card'),
+                                borderColor: this.getCssVar('color-border'),
+                            },
+                        });
+                    });
+
+                    // display the chart
                     this.isLoaded.chart1 = true;
                 } catch (error) {
                     notify('Failed to display Chart', "error");
@@ -429,28 +451,25 @@ export default {
                     chart2.setOption({
                         textStyle: {
                             fontFamily: 'Poppins',
-                            color: getColor('color-text-lighter'),
+                            color: this.getCssVar('color-text-lighter'),
                         },
                         title: {
                             text: 'Sum by month',
                             textStyle: {
-                                color: getColor('color-text'),
+                                color: this.getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
-                        color: [getColor("color-positive"), getColor("color-negative"), getColor("color-text")],
+                        color: [this.getCssVar("color-positive"), this.getCssVar("color-negative"), this.getCssVar("color-text")],
                         tooltip: { 
                             trigger: 'axis',
-                            backgroundColor: getColor('color-background-card'),
-                            borderColor: getColor('color-border'),
-                            textStyle: {
-                                color: getColor('color-text'),
-                            },
-                            formatter: params => generateTooltip(params, 'month'),
+                            backgroundColor: this.getCssVar('color-background-card'),
+                            borderColor: this.getCssVar('color-border'),
+                            formatter: params => this.generateTooltip(params, 'month'),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
-                                    color: getColor('color-border'),
+                                    color: this.getCssVar('color-border'),
                                     opacity: 1,
                                 },
                             }
@@ -458,7 +477,7 @@ export default {
                         grid: {
                             left: 56,
                             right: 8,
-                            top: 64,
+                            top: 88,
                             bottom: 80,
                         },
                         xAxis: {
@@ -466,7 +485,7 @@ export default {
                             data: months,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => toFiDate(value, 'month'),
+                                formatter: value => this.toFiDate(value, 'month'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -476,7 +495,7 @@ export default {
                             type: 'value',  
                             name: 'Amount (€)',
                             axisLabel: {        
-                                formatter: value => toFiCurrency(value, 'axis')
+                                formatter: value => this.toFiCurrency(value, 'axis')
                             }
                         },
                         series: [
@@ -501,8 +520,38 @@ export default {
                                 smooth: true,
                             },
                         ],
-
                     });
+                    
+                    // Add a listener which resizes the chart when window size changes
+                    window.addEventListener("resize", () => {
+                        chart2.resize();
+                    });
+
+                    // Listen for custom dark mode change event
+                    window.addEventListener("darkModeChange", () => {
+                        chart2.setOption({
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                            },
+                            title: {
+                                textStyle: {
+                                    color: this.getCssVar('color-text'),
+                                }
+                            },
+                            color: [this.getCssVar("color-positive"), this.getCssVar("color-negative"), this.getCssVar("color-text")],
+                            tooltip: { 
+                                backgroundColor: this.getCssVar('color-background-card'),
+                                borderColor: this.getCssVar('color-border'),
+                                axisPointer: {
+                                    shadowStyle: {
+                                        color: this.getCssVar('color-border'),
+                                    },
+                                }
+                            },
+                        });
+                    });
+
+                    // display the chart
                     this.isLoaded.chart2 = true;
                 } catch (error) {
                     notify('Failed to display Chart', "error");
@@ -531,55 +580,52 @@ export default {
                     chart3.setOption({
                         textStyle: {
                             fontFamily: 'Poppins',
-                            color: getColor('color-text-lighter'),
+                            color: this.getCssVar('color-text-lighter'),
                         },
                         title: {
                             text: 'Expense categories by month',
                             textStyle: {
-                                color: getColor('color-text'),
+                                color: this.getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
                         color: [
-                            getColor("color-primary"), 
-                            getColor("color-secondary"), 
-                            getColor("color-tertiary"),
-                            getColor("color-quaternary"),
-                            getColor("color-quinary"),
-                            getColor("color-senary"),
-                            getColor("color-septenary"),
-                            getColor("color-octonary"),
-                            getColor("color-nonary"),
-                            getColor("color-denary"),
-                            getColor("color-undecenary"),
+                            this.getCssVar("color-primary"), 
+                            this.getCssVar("color-secondary"), 
+                            this.getCssVar("color-tertiary"),
+                            this.getCssVar("color-quaternary"),
+                            this.getCssVar("color-quinary"),
+                            this.getCssVar("color-senary"),
+                            this.getCssVar("color-septenary"),
+                            this.getCssVar("color-octonary"),
+                            this.getCssVar("color-nonary"),
+                            this.getCssVar("color-denary"),
+                            this.getCssVar("color-undecenary"),
                         ],
                         legend: {
                             type: 'scroll',
                             show: true,
                             bottom: 0,
                             textStyle: {
-                                color: getColor('color-text'),
+                                color: this.getCssVar('color-text'),
                                 fontWeight: 500,
                             },
-                            inactiveColor: getColor('color-text-hidden'),
-                            pageIconColor: getColor('color-text'),
-                            pageIconInactiveColor: getColor('color-text-hidden'),
+                            inactiveColor: this.getCssVar('color-text-hidden'),
+                            pageIconColor: this.getCssVar('color-text'),
+                            pageIconInactiveColor: this.getCssVar('color-text-hidden'),
                             pageTextStyle: {
-                                color: getColor('color-text'),
+                                color: this.getCssVar('color-text'),
                             },
                         },
                         tooltip: {
                             trigger: 'axis',
-                            backgroundColor: getColor('color-background-card'),
-                            borderColor: getColor('color-border'),
-                            textStyle: {
-                                color: getColor('color-text'),
-                            },
-                            formatter: params => generateTooltip(params, 'month'),
+                            backgroundColor: this.getCssVar('color-background-card'),
+                            borderColor: this.getCssVar('color-border'),
+                            formatter: params => this.generateTooltip(params, 'month'),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
-                                    color: getColor('color-border'),
+                                    color: this.getCssVar('color-border'),
                                     opacity: 1,
                                 },
                             }
@@ -587,7 +633,7 @@ export default {
                         grid: {
                             left: 56,
                             right: 8,
-                            top: 64,
+                            top: 88,
                             bottom: 80,
                         },
                         xAxis: {
@@ -595,7 +641,7 @@ export default {
                             data: dates,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => toFiDate(value, 'month'),
+                                formatter: value => this.toFiDate(value, 'month'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -605,12 +651,68 @@ export default {
                             type: 'value',      
                             name: 'Amount (€)',
                             axisLabel: {        
-                                formatter: value => toFiCurrency(value, 'axis')
+                                formatter: value => this.toFiCurrency(value, 'axis')
                             }
                         },
                         series: seriesData,
                     });
+
+                    // Add a listener which resizes the chart when window size changes
+                    window.addEventListener("resize", () => {
+                        chart3.resize();
+                    });
+
+                    
+                    // Listen for custom dark mode change event
+                    window.addEventListener("darkModeChange", () => {
+                        chart3.setOption({
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                            },
+                            title: {
+                                textStyle: {
+                                    color: this.getCssVar('color-text'),
+                                }
+                            },
+                            color: [
+                                this.getCssVar("color-primary"), 
+                                this.getCssVar("color-secondary"), 
+                                this.getCssVar("color-tertiary"),
+                                this.getCssVar("color-quaternary"),
+                                this.getCssVar("color-quinary"),
+                                this.getCssVar("color-senary"),
+                                this.getCssVar("color-septenary"),
+                                this.getCssVar("color-octonary"),
+                                this.getCssVar("color-nonary"),
+                                this.getCssVar("color-denary"),
+                                this.getCssVar("color-undecenary"),
+                            ],
+                            legend: {
+                                textStyle: {
+                                    color: this.getCssVar('color-text'),
+                                },
+                                inactiveColor: this.getCssVar('color-text-hidden'),
+                                pageIconColor: this.getCssVar('color-text'),
+                                pageIconInactiveColor: this.getCssVar('color-text-hidden'),
+                                pageTextStyle: {
+                                    color: this.getCssVar('color-text'),
+                                },
+                            },
+                            tooltip: {
+                                backgroundColor: this.getCssVar('color-background-card'),
+                                borderColor: this.getCssVar('color-border'),
+                                axisPointer: {
+                                    shadowStyle: {
+                                        color: this.getCssVar('color-border'),
+                                    },
+                                }
+                            },
+                        });
+                    });
+
+                    // display the chart
                     this.isLoaded.chart3 = true;
+                    chart3
                 } catch (error) {
                     notify('Failed to display Chart', "error");
                     console.error("[Chart 3] Error fetching data:", error);
@@ -626,10 +728,9 @@ export default {
 
 <style scoped>
 .chartContainer {
-    /* width: 100%; */
-    height: calc(100vw * 0.4 + 150px);
+    width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
+    height: calc(100vw * 0.5 + 168px);
     max-height: 550px;
-    margin-bottom: var(--spacing-lg);
     /* background-color: red; */
 }
 .loaded {

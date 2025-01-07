@@ -10,9 +10,8 @@
 
 <script>
 // Imports
-import { toggleDarkMode, initializeDarkMode } from './utils/darkMode';
+import { initializeDarkMode } from './utils/darkMode';
 import TopBar from './components/TopBar.vue';
-import { notify } from './utils/notification';
 
 // Exports
 export default {
@@ -20,19 +19,8 @@ export default {
     components: {
         TopBar,
     },
-    methods: {
-        toggleDarkMode() {
-            console.info("Dark mode toggled!");
-            toggleDarkMode();
-        },
-        notify(message, messageType, duration) {
-            // console.info("Notification shown.");
-            notify(message, messageType, duration);
-        },
-    },
     mounted() {
         initializeDarkMode();
-        this.$root.notify = this.notify; // Expose the notify method on the root instance
     },
 }
 </script>

@@ -13,7 +13,7 @@
                 >
                     {{ link.display }}
                 </router-link>
-                <button @click="$emit('toggle-dark-mode')" class="nav-button desktop-button square-button">
+                <button @click="localToggleDarkMode()" class="nav-button desktop-button square-button">
                     <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
                 </button>
                 <button @click="toggleMenu()" class="nav-button mobile-button square-button">
@@ -32,7 +32,7 @@
         >
             {{ link.display }}
         </router-link>
-        <button @click="$emit('toggle-dark-mode'); toggleMenu()" class="nav-button square-button">
+        <button @click="localToggleDarkMode(); toggleMenu()" class="nav-button square-button">
             <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
         </button>
     </div>
@@ -41,6 +41,7 @@
 <script>
 import IconDarkMode from './icons/IconDarkMode.vue';
 import IconMenu from './icons/IconMenu.vue';
+import { toggleDarkMode } from '@/utils/darkMode';
 
 export default {
     name: 'top-bar',
@@ -63,6 +64,9 @@ export default {
         toggleMenu() {
             // console.log("Menu toggled");
             this.$refs['mobileNav'].classList.toggle("expanded");
+        },
+        localToggleDarkMode() {
+            toggleDarkMode();
         }
     }
 };
@@ -164,6 +168,7 @@ export default {
     .mobile-nav {
         z-index: var(--z-mobile-nav);
         padding: var(--spacing-lg);
+        background-color: var(--color-background-backdrop-mobile-menu);
 
         flex-direction: column;
         justify-content: flex-start;

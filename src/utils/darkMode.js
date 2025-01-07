@@ -4,21 +4,23 @@
 export function toggleDarkMode() {
     const darkModeEnabled = document.documentElement.classList.toggle("dark-mode");
     localStorage.setItem("darkMode", darkModeEnabled);
+
+    // Dispatch a custom event
+    const event = new CustomEvent("darkModeChange", { detail: { darkModeEnabled } });
+    window.dispatchEvent(event);
 }
 
 // Check local storage or system preference on initialization
 export function initializeDarkMode() {
-    // First, check for the user preference in localStorage
-    const darkModeEnabled = localStorage.getItem("darkMode") === "true";
-    
-    if (darkModeEnabled) {
+    // First, check localstorage
+    if (localStorage.getItem("darkMode") === "true") {
         document.documentElement.classList.add("dark-mode");
-    } else if (darkModeEnabled === null) {
-        // If no user preference is set, check the system preference
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        if (prefersDark) {
+        localStorage.setItem("darkMode", true);
+    } else {
+        // If localstorage isnt set to dark, check the system preference
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
             document.documentElement.classList.add("dark-mode");
+            localStorage.setItem("darkMode", true);
         }
     }
-
 }
