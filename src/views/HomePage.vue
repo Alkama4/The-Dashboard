@@ -192,7 +192,7 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 			for (const drive of Object.entries(response)) {
 				this.serverStats.storage.push(drive[1]);
 			}
-			console.log(this.serverStats.storage);
+			// console.log(this.serverStats.storage);
 		}
 	};
 </script>

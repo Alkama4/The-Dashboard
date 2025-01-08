@@ -222,7 +222,7 @@ import { SVGRenderer } from 'echarts/renderers'
 // import { CanvasRenderer } from 'echarts/renderers'
 // My utils
 import api from '@/utils/dataQuery';
-import { notify } from '@/utils/notification';
+// import { notify } from '@/utils/notification';
 
 // Register only the required components
 use([TooltipComponent, GridComponent, LineChart, BarChart, SVGRenderer, TitleComponent, LegendComponent]);
@@ -332,19 +332,23 @@ export default {
             // General stats
             (async () => {
                 const generalStatsResponse = await api.getGeneralStats();
-                this.pageValues.generalStats = {...generalStatsResponse.generalStats};
+                if (generalStatsResponse && generalStatsResponse.generalStats)
+                    this.pageValues.generalStats = {...generalStatsResponse.generalStats};
             })(),
 
             // Last month stats
             (async () => {
                 const lastMonthResponse = await api.getStatsForTimespan("month")
-                this.pageValues.lastMonth = {...lastMonthResponse.stats}
+                if (lastMonthResponse && lastMonthResponse.stats)
+                    this.pageValues.lastMonth = {...lastMonthResponse.stats}
+
             })(),
 
             // Last year stats
             (async () => {
                 const lastYearResponse = await api.getStatsForTimespan("year")
-                this.pageValues.lastYear = {...lastYearResponse.stats}
+                if (lastYearResponse && lastYearResponse.stats)
+                    this.pageValues.lastYear = {...lastYearResponse.stats}
             })(),
 
             // Chart 1
@@ -434,7 +438,7 @@ export default {
                     // display the chart
                     this.isLoaded.chart1 = true;
                 } catch (error) {
-                    notify('Failed to display Chart', "error");
+                    // notify('Failed to display Chart', "error");
                     console.error("[Chart 1] Error fetching data:", error);
                 }
             })(),
@@ -554,7 +558,7 @@ export default {
                     // display the chart
                     this.isLoaded.chart2 = true;
                 } catch (error) {
-                    notify('Failed to display Chart', "error");
+                    // notify('Failed to display Chart', "error");
                     console.error("[Chart 2] Error fetching data:", error);
                 }
             })(),
@@ -714,7 +718,7 @@ export default {
                     this.isLoaded.chart3 = true;
                     chart3
                 } catch (error) {
-                    notify('Failed to display Chart', "error");
+                    // notify('Failed to display Chart', "error");
                     console.error("[Chart 3] Error fetching data:", error);
                 }
             })(),

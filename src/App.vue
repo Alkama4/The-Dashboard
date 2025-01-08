@@ -12,6 +12,7 @@
 // Imports
 import { initializeDarkMode } from './utils/darkMode';
 import TopBar from './components/TopBar.vue';
+import api from './utils/dataQuery';
 
 // Exports
 export default {
@@ -19,8 +20,9 @@ export default {
     components: {
         TopBar,
     },
-    mounted() {
+    async mounted() {
         initializeDarkMode();
+        api.getLoginStatus();
     },
 }
 </script>

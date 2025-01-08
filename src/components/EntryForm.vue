@@ -109,12 +109,16 @@ export default {
         },
         filterOptionsByDirection() {
                 // Filter counterparty options based on the direction
-                if (this.formData.direction === 'expense') {
-                    this.counterpartyOptions = this.allOptions.counterparty.expense;
-                    this.categoryOptions = this.allOptions.category.expense;
-                } else {
-                    this.counterpartyOptions = this.allOptions.counterparty.income;
-                    this.categoryOptions = this.allOptions.category.income;
+                try {
+                    if (this.formData.direction === 'expense') {
+                        this.counterpartyOptions = this.allOptions.counterparty.expense;
+                        this.categoryOptions = this.allOptions.category.expense;
+                    } else {
+                        this.counterpartyOptions = this.allOptions.counterparty.income;
+                        this.categoryOptions = this.allOptions.category.income;
+                    }
+                } catch {
+                    // If the response was null catch that and don't sort anything since there is nothing to sort
                 }
 
         }

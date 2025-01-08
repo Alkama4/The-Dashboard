@@ -1,15 +1,48 @@
 import axios from 'axios';
 import qs from 'qs';
 import { notify } from './notification';
+import router from '@/router';
 
 const apiClient = axios.create({
     baseURL: 'http://192.168.0.2:801', // Your FastAPI base URL
-    timeout: 30000,
+    timeout: 5000,
     headers: {
         'Content-Type': 'application/json',
     },
     paramsSerializer: params => qs.stringify(params, { arrayFormat: 'comma' }),
 });
+
+async function handleError(error, endpoint) {
+    if (error.response) {
+        // HTTP response received but with an error status code
+        const statusCode = error.response.status;
+        const detail = error.response.data.detail;
+        console.error(`[Error] HTTP ${statusCode} | ${detail} | "${endpoint}"`);
+        
+        // Handle specific status codes
+        if (statusCode === 403 && detail === "Invalid or expired session key.") {
+            // Since the sessionKey is invalid log out locally and prompt for log in.
+            api.localLogOut();
+        } else if (statusCode === 403) {
+            notify("Unexpected error occurred. Please try again.", "error");
+        } else if (statusCode === 404) {
+            notify("Resource not found: Please verify the endpoint.", "error");
+        } else if (statusCode === 500) {
+            notify("Internal server error. Please try again later.", "error");
+        } else {
+            notify(`Unexpected error (${statusCode}): ${error.response.data.message || "No message provided."}`, "error");
+        }
+    } else if (error.request) {
+        // No response received from the server
+        console.error(`[Error] No response from server: ${error.request}`);
+        notify("Network error: Please check your connection.", "error");
+    } else {
+        // Other errors (e.g., request setup)
+        console.error(`[Error] Error setting up request: ${error.message}`);
+        notify("Unexpected error occurred. Please try again.", "error");
+    }
+    return null;
+}
 
 const api = {
     // - - - - - - GET request to the API - - - - - - 
@@ -22,10 +55,9 @@ const api = {
             console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
             return response.data;
         } catch (error) {
-            console.error('Error fetching data:', error);
-            notify('Error fetching data: ' + error.message, 'error', 5000);
+            return await handleError(error, endpoint);
         }
-    },    
+    },
     async getTransactions(params = {}) {
         params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
         // console.info('Fetching transactions with params:', params);
@@ -55,11 +87,9 @@ const api = {
             console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
             return response.data;
         } catch (error) {
-            console.error('Error posting data:', error);
-            notify('Error posting data: ' + error.message, 'error', 5000);
-            return null;
+            return await handleError(error, endpoint);
         }
-    },    
+    },
     async logIn(params = {}) {
         params.previousSessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/login', null, { params });
@@ -67,7 +97,9 @@ const api = {
             if (response.loginStatus === "success") {
                 notify("Logged in successfully!", "success");
                 console.log("[logIn] login success");
-                localStorage.setItem('sessionKey', response.sessionKey);
+                localStorage.setItem("sessionKey", response.sessionKey);
+                localStorage.setItem("username", response.username);
+                localStorage.setItem("isLoggedIn", true);
                 return true;
             } else if (response.loginStatus === "warning") {
                 notify(response.statusMessage, "warning");
@@ -91,16 +123,14 @@ const api = {
         if (sessionKey) {
             const response = await this.postData('/get_login_status', null, { params: { sessionKey } });
             if (response) {
-                if (response.loggedIn) {
-                    console.log("[getLoginStatus] logged in as", response.username);
-                    return { loggedIn: true, username: response.username };
-                } else {
-                    console.log("[getLoginStatus] not logged in");
-                    return { loggedIn: false };
-                }
+                console.log("[getLoginStatus] log in attempt response", response);
+                localStorage.setItem("isLoggedIn", response.loggedIn);
+                localStorage.setItem("username", response.loggedIn ? response.username : null)
+                const event = new CustomEvent("logInStatusUpdated", {});
+                window.dispatchEvent(event);
             }
         } else {
-            console.log("[getLoginStatus] no session key");
+            console.log("[getLoginStatus] Did not try: no session key");
         }
         return { loggedIn: false };
     },
@@ -111,7 +141,7 @@ const api = {
             if (response.logOutSuccess) {
                 notify("You have been logged out.", "info");
                 console.log("[logOut] logout success");
-                localStorage.removeItem('sessionKey');
+                this.localLogOut();
                 return true;
             } else {
                 notify("Failed to log out.", "error");
@@ -122,6 +152,15 @@ const api = {
             notify("Failed to log out.", "error");
             console.error("[logOut] response failed");
             return null;
+        }
+    },
+    localLogOut() {
+        if (router.currentRoute.value.path !== "/login") {
+            localStorage.removeItem("sessionKey");
+            localStorage.setItem("isLoggedIn", false);
+            localStorage.removeItem("username");
+            notify("Your session has expired, and you have been logged out. Please log in again.");
+            router.push("/login");
         }
     },
     async newTransaction(transactionData) {

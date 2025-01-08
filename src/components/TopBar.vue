@@ -56,7 +56,7 @@ export default {
                 { display: 'Analytics', to: '/analytics' },
                 { display: 'New entry', to: '/newentry' },
                 // { display: 'About page', to: '/about' },
-                { display: 'Settings', to: '/settings' },
+                { display: 'Account', to: '/settings' },
             ]
         };
     },

@@ -125,7 +125,7 @@
     import IconAdd from '@/components/icons/IconAdd.vue';
 	import api from '@/utils/dataQuery';
     import FilterSettings from '@/components/FilterSettings.vue';
-    import { notify } from '@/utils/notification';
+    // import { notify } from '@/utils/notification';
     
     export default {
         name: 'SpendingsPage',
@@ -214,7 +214,7 @@
                     this.loadMoreButtonVisible = response.hasMore;
                     // console.log(this.loadMoreButtonActive, this.loadMoreButtonVisible)
                 } else {
-                    notify("Failed to retrieve transactions.", "error");
+                    // notify("Failed to retrieve transactions.", "error");
                     console.error("[SpendingsPage] response && response.Values failed");
                 }
             },

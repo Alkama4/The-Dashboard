@@ -18,6 +18,7 @@
 
 <script>
 import api from '@/utils/dataQuery';
+import router from '@/router';
 // import { notify } from '@/utils/notification';
 
 export default {
@@ -36,8 +37,14 @@ export default {
                 password: this.password
             });
             if (responseSuccess) {
-                this.$router.push('/settings');
+                router.back();
             }
+        }
+    },
+    mounted() {
+        if (localStorage.getItem("isLoggedIn") == "true") {
+            console.log("You are already logged in.");
+            router.back();
         }
     }
 };
