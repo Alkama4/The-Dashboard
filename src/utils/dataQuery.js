@@ -12,7 +12,7 @@ const apiClient = axios.create({
 });
 
 const api = {
-    // GET request to the API
+    // - - - - - - GET request to the API - - - - - - 
     async getData(endpoint, params = {}) {
         const startTime = performance.now();  // Start the timer
         try {
@@ -44,7 +44,8 @@ const api = {
         return this.getData('/get_filters', params);
     },
 
-    // POST request to the API
+
+    // - - - - - - POST request to the API - - - - - - 
     async postData(endpoint, data, config = {}) {
         const startTime = performance.now();  // Start the timer
         try {
@@ -235,7 +236,16 @@ const api = {
             console.error("[getStatsForTimespan] response failed:", response);
             return null;
         }
-    }
+    },
+    async getServerDrivesInfo() {
+        const response = await this.postData('/get_server_drives_info', null, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getServerDrivesInfo] response failed:", response);
+            return null;
+        }
+    },
 };
 
 export default api;

@@ -104,6 +104,7 @@
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
     --color-background-modal: hsl(0, 0%, 96%);
     --color-background-card: hsl(0, 0%, 100%);
+    --color-background-card-section: rgb(255, 0, 217);
     --color-background-input: hsl(0, 0%, 100%);
     --color-background-input-light: hsl(0, 0%, 98%);
     --color-background-input-strong: hsl(0, 0%, 100%);
@@ -188,6 +189,7 @@
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0.3);
     --color-background-modal: #111;
     --color-background-card: #1d1d1d;
+    --color-background-card-section: #151515;
     --color-background-input: #1f1f1f;
     --color-background-input-light: #1a1a1a;
     --color-background-input-strong: #292929;
@@ -641,9 +643,10 @@ input[type="radio"] {
 .flex-row {
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-md);
     flex-wrap: wrap;
+    gap: var(--spacing-md);
+    align-items: center;
+    justify-content: center;
 }
 
 .no-decoration {

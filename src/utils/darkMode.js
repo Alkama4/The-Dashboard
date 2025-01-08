@@ -12,15 +12,44 @@ export function toggleDarkMode() {
 
 // Check local storage or system preference on initialization
 export function initializeDarkMode() {
-    // First, check localstorage
+    // First, check local storage
     if (localStorage.getItem("darkMode") === "true") {
         document.documentElement.classList.add("dark-mode");
-        localStorage.setItem("darkMode", true);
+    } else if (localStorage.getItem("darkMode") === "false") {
+        document.documentElement.classList.remove("dark-mode");
     } else {
-        // If localstorage isnt set to dark, check the system preference
+        // If local storage is not set, use system preferences
         if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-            document.documentElement.classList.add("dark-mode");
-            localStorage.setItem("darkMode", true);
+            setDarkModeTo("on");
+        } else {
+            setDarkModeTo("off");
         }
+    }
+
+    // Listen to changes in system preferences
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
+        if (event.matches) {
+            setDarkModeTo("on");
+        } else {
+            setDarkModeTo("off");
+        }
+    });
+}
+
+function setDarkModeTo(mode) {
+    if (mode === "on") {
+        document.documentElement.classList.add("dark-mode");
+        localStorage.setItem("darkMode", true);
+
+        // Dispatch a custom event
+        const event = new CustomEvent("darkModeChange", { detail: { darkModeEnabled: true } });
+        window.dispatchEvent(event);
+    } else {
+        document.documentElement.classList.remove("dark-mode");
+        localStorage.setItem("darkMode", false);
+
+        // Dispatch a custom event
+        const event = new CustomEvent("darkModeChange", { detail: { darkModeEnabled: false } });
+        window.dispatchEvent(event);
     }
 }
