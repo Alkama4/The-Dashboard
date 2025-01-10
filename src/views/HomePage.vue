@@ -1,8 +1,15 @@
 <template>
 	<div>
-		<div class="greeting">
-			<h1>{{ greeting[0] }}</h1>
-			<span class="header-sub-text">{{ greeting[1] }}</span><br>
+		<div class="greeting-area">
+			<div class="background"></div>
+
+			<div class="text-area">
+				<h1>{{ greeting[0] }}</h1>
+				<span class="header-sub-text">{{ greeting[1] }}</span><br>
+			</div>
+			<div class="action-area">
+				<button class="color-primary">Start logging</button>
+			</div>
 		</div>
 
 		<!-- Make the layout better in mobile -->
@@ -189,8 +196,10 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 		},
 		async mounted() {
 			const response = await api.getServerDrivesInfo();
-			for (const drive of Object.entries(response)) {
-				this.serverStats.storage.push(drive[1]);
+			if (response) {
+				for (const drive of Object.entries(response)) {
+					this.serverStats.storage.push(drive[1]);
+				}
 			}
 			// console.log(this.serverStats.storage);
 		}
@@ -198,17 +207,37 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 </script>
 
 <style scoped>
-	.greeting {
-		margin: 256px 0;
+	.greeting-area {
+		height: 60vh;
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		align-items: center;
+		/* background-color: red; */
 	}
-	.greeting h1 {
-		margin-bottom: 0;
+	.greeting-area .background {
+		position: absolute;
+		background: linear-gradient( var(--color-primary), var(--color-background));
+		top: 60px;
+		left: 0;
+		right: 0;
+		height: 60vh;
+		z-index: -10;
+	}
+	.greeting-area h1 {
+		margin: 0;
 		/* Row gap? to large */
+		line-height: 48px;
 		font-size: 48px;
 	}
-	.greeting .header-sub-text {
+	.greeting-area .header-sub-text {
 		display: inline-block;
 		color: var(--color-text-light);
+		margin-top: var(--spacing-md);
+	}
+	.greeting-area .text-area {
+		display: flex;
+		flex-direction: column;
 	}
 
 	/* - - - - Other services - - - - */

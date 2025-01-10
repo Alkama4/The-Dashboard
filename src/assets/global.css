@@ -25,7 +25,9 @@
     --width-modal: 400px;
 
     /* Z-indexes */
-    --z-mobile-nav: 10000001; /* Apache echart tooltip is at 10 000 000*/
+    --z-index-chart-fullscreen: 10000002;
+    --z-mobile-nav: 10000001;
+    /* Apache echart tooltip is at 10 000 000 */
     --z-notification: 350;
     --z-modal: 300;
     --z-filters: 250;
@@ -212,9 +214,12 @@
     --color-button-delete-active: rgb(145, 13, 13);
 
     /* Shadows */
-    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.5);
-    --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.5);
-    --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.8);
+    /* --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.5); */
+    --shadow-card: none;
+    /* --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    --shadow-button-hover: none;
+    /* --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.5); */
+    --shadow-button-active: none;
     --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -255,6 +260,10 @@ body {
 footer {
     color: var(--color-text-hidden);
     margin-top: auto;
+}
+
+::selection {
+    background-color: var(--color-primary);
 }
 
 /* - - - - GENERIC ELEMENTS - - - - */
@@ -309,6 +318,9 @@ button:hover {
     background-color: var(--color-button-general-hover);
     box-shadow: var(--shadow-button-hover);
 }
+button:hover svg {
+    fill: var(--color-text-bold)
+}
 button:active {
     background-color: var(--color-button-general-active);
     box-shadow: var(--shadow-button-active);
@@ -319,6 +331,8 @@ button:disabled {
     opacity: 0.6;
 } button:disabled:hover {
     box-shadow: 0 0 0 transparent;
+} button:disabled:hover svg {
+    fill: var(--color-text);
 }
 
 /* Button primary */
@@ -329,6 +343,9 @@ button.color-primary {
 button.color-primary:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white-hover);
+}
+button.color-primary:hover svg {
+    fill: var(--color-text-white-hover);
 }
 button.color-primary:active {
     background-color: var(--color-primary-active);
@@ -349,6 +366,9 @@ button.color-secondary:active {
 button.color-warning:hover {
     background-color: var(--color-button-delete-hover);
     color: var(--color-text-white-hover);
+}
+button.color-warning:hover svg {
+    fill: var(--color-text-white-hover);
 }
 button.color-warning:active {
     background-color: var(--color-button-delete-active);
@@ -373,9 +393,10 @@ input, textarea, select {
     cursor: text;
 
     background-color: var(--color-background-input);
-    padding: 5px;
-    width: calc(100% - 14px);       /* 2 x 6px ja 2 lisää koska v-select?? */
-    max-width: calc(100% - 14px);   /* 2 x 6px ja 2 lisää koska v-select?? */
+    padding: 0px 8px;
+    height: 35px;
+    width: calc(100% - 19px);       /* 2 x 6px ja 2 lisää koska v-select?? */
+    max-width: calc(100% - 19px);   /* 2 x 6px ja 2 lisää koska v-select?? */
 
     color: var(--color-text-light);
     font-size: var(--font-size-base);
@@ -401,9 +422,12 @@ input:focus, textarea:focus, select:focus {
 }
 
 textarea {
+    padding-top: 5px;
     resize: vertical;
     height: 100px;
     font-family: 'Poppins';
+    margin: 0;
+    min-height: 3.5rem;
 }
 
 input[type="radio"] {
@@ -424,8 +448,9 @@ input[type="radio"] {
     border-color: var(--color-border);
     transition: border-color 0.1s ease-out;
     color: var(--color-text-light);
-    height: 37px;
+    height: calc(35px + 2px);
     min-width: 222px;
+    padding: 0;
 }
 .vs__dropdown-toggle:hover {
     border-color: var(--color-border-hover);
@@ -441,9 +466,15 @@ input[type="radio"] {
 .vs__selected {
     color: var(--color-text-light);
     white-space: nowrap;
+    margin-top: 0;
+    height: 100% !important;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 .v-select input {
     border: 0px transparent solid !important;
+    padding-left: 8;
 }
 .vs__dropdown-menu {
     color: var(--color-text-light);
@@ -466,9 +497,13 @@ input[type="radio"] {
 }
 .vs__search {
     color: var(--color-text-placeholder);
+    margin: 0 !important;
 }
 .vs__search:focus {
     color: var(--color-text-placeholder);
+}
+.vs__selected-options {
+    padding: 0;
 }
 
 /* no ui slider */

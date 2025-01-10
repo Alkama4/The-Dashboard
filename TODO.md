@@ -50,9 +50,12 @@ In here I will collect my notes about this website and list the stuff that need 
 - Notification remove the root thingy and just import it
     - Also vue select?
 - Light mode colors and hovers suck. Try turning going darker when hovering in light and opposite in dark.
+- When in mobile nav page scrolling isn't disabled
 
 ### Feature or a bug?
+- Total log amount is transaction items and not transactions
 - The amount drop down shows without the types when media under 777px wide.
     - Disable when under 777px or just leave it?
 - v-select causes scrolling on modals when opening
     - (Propably no can do?)
+- Some cases of improper "post" usage that should be "get"

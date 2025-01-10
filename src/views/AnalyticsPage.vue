@@ -202,8 +202,8 @@
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart1')"
             >
-                <IconExpand v-if="fullscreenChart !== 'chart1'" color="var(--color-text-light)"/>
-                <IconCollapse v-if="fullscreenChart === 'chart1'" color="var(--color-text-light)"/>
+                <IconExpand v-if="fullscreenChart !== 'chart1'"/>
+                <IconCollapse v-if="fullscreenChart === 'chart1'"/>
             </button>  
         </div>
 
@@ -216,8 +216,8 @@
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart2')"
             >
-                <IconExpand v-if="fullscreenChart !== 'chart2'" color="var(--color-text-light)"/>
-                <IconCollapse v-if="fullscreenChart === 'chart2'" color="var(--color-text-light)"/>
+                <IconExpand v-if="fullscreenChart !== 'chart2'"/>
+                <IconCollapse v-if="fullscreenChart === 'chart2'"/>
             </button>  
         </div>
 
@@ -230,8 +230,8 @@
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart3')"
             >
-                <IconExpand v-if="fullscreenChart !== 'chart3'" color="var(--color-text-light)"/>
-                <IconCollapse v-if="fullscreenChart === 'chart3'" color="var(--color-text-light)"/>
+                <IconExpand v-if="fullscreenChart !== 'chart3'"/>
+                <IconCollapse v-if="fullscreenChart === 'chart3'"/>
             </button>  
         </div>
     </div>
@@ -804,16 +804,17 @@ export default {
     position: fixed !important;
     margin: 0;
     border-radius: 0;
-    top: 60px;
+    top: 0px;
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: 5;
+    z-index: var(--z-index-chart-fullscreen);
 }
 .chartContainer .fs-button {
     position: absolute;
     right: var(--spacing-sm);
     z-index: 1; /* Otherwise under chart */
+    color: var(--color-text-light);
 }
 .loaded {
     animation: fadeIn 0.4s ease-out;

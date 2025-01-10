@@ -35,7 +35,7 @@
             <div class="categories-last-row category-aligner">
                 <div>
                     <!-- <label>Subtotal</label> -->
-                    <div class="subtotal-value">{{ subtotal }}</div>
+                    <div class="subtotal-value"><span>Total:</span> <div>{{ subtotal }}</div></div>
                 </div>
                 <div>
                     <!-- <label></label> -->
@@ -255,15 +255,25 @@ form > * {
 
 
 .subtotal-value {
-    background-color: var(--color-background-input);
-    border: 1px solid var(--color-border);
+    background-color: var(--color-background-card);
+    /* border: 1px solid var(--color-border); */
     border-radius: var(--border-radius-small);
     height: 34.2px;
     align-items: center;
-    justify-content: start;
+    justify-content: space-between;
     display: flex;
+    padding-inline: 8px;
+    width: calc(100% - 8px * 2 - 2px);
+    font-weight: 500;
+    overflow: hidden;
+}
+.subtotal-value span {
+    color: var(--color-text-light);
+    padding-right: 8px;
+}
+.subtotal-value div {
     padding-left: 8px;
-    width: calc(100% - 8px - 2px)
+    font-weight: 600;
 }
 
 .submit-button {
@@ -287,8 +297,14 @@ form > * {
         gap: var(--spacing-xs);
     }
     .remove-category-button-hidden {
-    grid-template-columns: 110x 1fr;
-}
+        grid-template-columns: 110x 1fr;
+    }
+    .subtotal-value {
+        justify-content: end;
+    }
+    .subtotal-value span {
+        display: none;
+    }
 }
 
 </style>

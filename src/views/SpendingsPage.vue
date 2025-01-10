@@ -35,56 +35,46 @@
             <thead>
                 <tr>
                     <th class="column-date" @click="sort('date')">
-                        <div class="header-content">
+                        <div class="header-content" :class="apiFilters.sort_by === 'date' ? 'active' : 'inactive'">
                             Date
                             <component
                                 :is="getSortIcon('date')"
-                                :color="apiFilters.sort_by === 'date' ? activeColor : inactiveColor"
-                                :colorHover="apiFilters.sort_by === 'date' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
                     <th class="column-counterparty" @click="sort('counterparty')">
-                        <div class="header-content">
+                        <div class="header-content" :class="apiFilters.sort_by === 'counterparty' ? 'active' : 'inactive'">
                             Counterparty
                             <component
                                 :is="getSortIcon('counterparty')"
-                                :color="apiFilters.sort_by === 'counterparty' ? activeColor : inactiveColor"
-                                :colorHover="apiFilters.sort_by === 'counterparty' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
                     <th class="column-category" @click="sort('category')">
-                        <div class="header-content">
+                        <div class="header-content" :class="apiFilters.sort_by === 'category' ? 'active' : 'inactive'">
                             Category
                             <component
                                 :is="getSortIcon('category')"
-                                :color="apiFilters.sort_by === 'category' ? activeColor : inactiveColor"
-                                :colorHover="apiFilters.sort_by === 'category' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
                     <th class="column-amount" @click="sort('amount')">
-                        <div class="header-content">
+                        <div class="header-content" :class="apiFilters.sort_by === 'amount' ? 'active' : 'inactive'">
                             Amount
                             <component
                                 :is="getSortIcon('amount')"
-                                :color="apiFilters.sort_by === 'amount' ? activeColor : inactiveColor"
-                                :colorHover="apiFilters.sort_by === 'amount' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
                     </th>
                     <th class="column-notes" @click="sort('notes')">
-                        <div class="header-content">
+                        <div class="header-content" :class="apiFilters.sort_by === 'notes' ? 'active' : 'inactive'">
                             Notes
                             <component
                                 :is="getSortIcon('notes')"
-                                :color="apiFilters.sort_by === 'notes' ? activeColor : inactiveColor"
-                                :colorHover="apiFilters.sort_by === 'notes' ? activeHoverColor : inactiveHoverColor"
                                 size="20px"
                             />
                         </div>
@@ -313,6 +303,20 @@ th .header-content {
     justify-content: left; /* Optional: Center horizontally */
     gap: 0.5rem; /* Adds spacing between text and icon */
 }
+th .header-content svg {
+    fill: var(--color-text-lighter)
+} th .header-content:hover svg {
+    fill: var(--color-text)
+} th .header-content:active svg {
+    fill: var(--color-text-bold)
+} th .header-content.active svg {
+    fill: var(--color-primary)
+} th .header-content.active:hover svg {
+    fill: var(--color-primary-hover)
+} th .header-content.active:active svg {
+    fill: var(--color-primary-active)
+}
+
 th.column-date {
     justify-content: center;
     display: flex;
