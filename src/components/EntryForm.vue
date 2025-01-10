@@ -1,24 +1,24 @@
 <template>
     <form @submit.prevent="handleSubmit">
         <div class="grid-direction">
-            <label for="direction">Direction:</label><br>
+            <label for="direction">Direction</label><br>
             <slider-toggle 
                 v-model="formData.direction" 
                 :options="['expense', 'income']"
             />
         </div>
         <div class="grid-date">
-            <label for="date">Date:</label><br>
+            <label for="date">Date</label><br>
             <input v-model="formattedDate" id="date" type="date" required />
         </div>
         <div class="grid-counterparty">
-            <label for="counterparty">Counterparty:</label><br>
+            <label for="counterparty">Counterparty</label><br>
             <v-select v-model="formData.counterparty" label="counterparty" :options="counterpartyOptions" placeholder="Select or type..." taggable></v-select>
         </div>
 
         <div class="grid-categories-labels category-aligner">
-            <label :for="'amount-' + index">Amount:</label>
-            <label :for="'category-' + index">Category:</label>
+            <label :for="'amount-' + index">Amount</label>
+            <label :for="'category-' + index">Category</label>
         </div>
         <div class="grid-categories">
             <div v-for="(entry, index) in formData.categories" :key="index" class="category-aligner" :class="{'remove-category-button-hidden': !this.formData.categories[1]}">
@@ -32,14 +32,23 @@
                     <IconCross size="30"/>
                 </button>
             </div>
-            <button type="button" @click="addEntry" class="add-category-button">Add a category</button>
+            <div class="categories-last-row category-aligner">
+                <div>
+                    <!-- <label>Subtotal</label> -->
+                    <div class="subtotal-value">{{ subtotal }}</div>
+                </div>
+                <div>
+                    <!-- <label></label> -->
+                    <button type="button" @click="addEntry" class="add-category-button">Add a category</button>
+                </div>
+            </div>
         </div>
 
         <div class="grid-notes">
-            <label for="notes">Notes:</label><br>
+            <label for="notes">Notes</label><br>
             <textarea v-model="formData.notes" id="notes" placeholder="Add any additional notes or details about this transaction (optional)"></textarea>
         </div>
-        <button type="submit" class="color-primary center grid-submit">Submit</button>
+        <button type="submit" class="color-primary center grid-submit submit-button">Submit</button>
     </form>
 </template>
 
@@ -127,6 +136,16 @@ export default {
         formattedDate() {
             const returnDate = this.formData.date ? new Date(this.formData.date) : new Date();
             return returnDate.toISOString().split('T')[0];
+        },
+        subtotal() {
+            let sum = 0;
+
+            for (let i = 0; i < this.formData.categories.length; i++) {
+                const amount = parseFloat(this.formData.categories[i].amount) || 0; // Ensure amount is a valid number or default to 0
+                sum += amount;
+            }
+
+            return sum.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
         }
     },
     watch: {
@@ -187,7 +206,6 @@ form > * {
 }
 .grid-counterparty {
     grid-area: counterparty;
-    padding-right: 2px;     /* To fix the vue-selects width */
 }
 
 .grid-categories {
@@ -206,8 +224,10 @@ form > * {
     display: grid;
     align-items: center;
     gap: var(--spacing-md);
-    padding-right: 2px;     /* To fix the vue-selects width */
-;}
+}
+.categories-last-row {  /* Make it just two columns on the last row */
+    grid-template-columns: 204px auto;
+}
 
 .remove-category-button {
     color: white;
@@ -220,8 +240,12 @@ form > * {
     grid-template-columns: 204px 1fr;
 }
 .add-category-button {
-    margin: 0 var(--spacing-sm);
+    margin: 0;
+    width: 100%;
+    margin-inline: auto;
+    height: 35.666px;
 }
+
 .grid-notes {
     grid-area: notes;
 }
@@ -229,6 +253,22 @@ form > * {
     grid-area: submit;
 }
 
+
+.subtotal-value {
+    background-color: var(--color-background-input);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-small);
+    height: 34.2px;
+    align-items: center;
+    justify-content: start;
+    display: flex;
+    padding-left: 8px;
+    width: calc(100% - 8px - 2px)
+}
+
+.submit-button {
+    margin-top: var(--spacing-md);
+}
 
 @media (max-width: 666px) {
     form {

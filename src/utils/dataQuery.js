@@ -159,7 +159,7 @@ const api = {
             localStorage.removeItem("sessionKey");
             localStorage.setItem("isLoggedIn", false);
             localStorage.removeItem("username");
-            notify("Your session has expired, and you have been logged out. Please log in again.");
+            notify("Your session has expired, and you have been logged out. Please log in again.", "info", 15000);
             router.push("/login");
         }
     },

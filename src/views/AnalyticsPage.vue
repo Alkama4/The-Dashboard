@@ -94,7 +94,7 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Top Categories by Frequency</div>
+                    <div class="label">Top Expense Categories by Frequency</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastMonth.topMostCommonCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -107,7 +107,7 @@
                     </table>
                 </div>
                 <div class="cell">
-                    <div class="label">Top Categories by Expense</div>
+                    <div class="label">Top Expense Categories by Amount</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastMonth.topMostExpensiveCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -160,7 +160,7 @@
 
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Top Categories by Frequency</div>
+                    <div class="label">Top Expense Categories by Frequency</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastYear.topMostCommonCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -173,7 +173,7 @@
                     </table>
                 </div>
                 <div class="cell">
-                    <div class="label">Top Categories by Expense</div>
+                    <div class="label">Top Expense Categories by Amount</div>
                     <table>
                         <tr v-for="(item, index) in pageValues.lastYear.topMostExpensiveCategories" :key="index">
                             <td>{{ index + 1 }}.</td>
@@ -193,22 +193,47 @@
         <h1>Charts</h1>
         <p> If you wish to look more closely at the data or look further back these charts might be juts what you are looking for. With these you can sdfj sldkfj lsdkjf mn foenf wlf dkjf0. Sdfhjsd jasd fsj fasdjnfkjadsnf sdf ksdjf dhfiauf!</p>
 
-
         <div 
             ref="chartContainer1" 
             class="chartContainer card chart1"
-            :class="{ loaded: isLoaded.chart1 }"
-        ></div>
+            :class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
+        >
+            <button 
+                class="button-simple fs-button" 
+                @click="toggleFullscreenChart('chart1')"
+            >
+                <IconExpand v-if="fullscreenChart !== 'chart1'" color="var(--color-text-light)"/>
+                <IconCollapse v-if="fullscreenChart === 'chart1'" color="var(--color-text-light)"/>
+            </button>  
+        </div>
+
         <div 
             ref="chartContainer2" 
             class="chartContainer card chart2"
-            :class="{ loaded: isLoaded.chart2 }"
-        ></div>
+            :class="{ loaded: isLoaded.chart2, fullscreen: fullscreenChart === 'chart2' }"
+        >
+            <button 
+                class="button-simple fs-button" 
+                @click="toggleFullscreenChart('chart2')"
+            >
+                <IconExpand v-if="fullscreenChart !== 'chart2'" color="var(--color-text-light)"/>
+                <IconCollapse v-if="fullscreenChart === 'chart2'" color="var(--color-text-light)"/>
+            </button>  
+        </div>
+
         <div 
             ref="chartContainer3" 
             class="chartContainer card chart3"
-            :class="{ loaded: isLoaded.chart3 }"
-        ></div>
+            :class="{ loaded: isLoaded.chart3, fullscreen: fullscreenChart === 'chart3' }"
+        >
+            <button 
+                class="button-simple fs-button" 
+                @click="toggleFullscreenChart('chart3')"
+            >
+                <IconExpand v-if="fullscreenChart !== 'chart3'" color="var(--color-text-light)"/>
+                <IconCollapse v-if="fullscreenChart === 'chart3'" color="var(--color-text-light)"/>
+            </button>  
+        </div>
     </div>
 </template>
 
@@ -222,6 +247,8 @@ import { SVGRenderer } from 'echarts/renderers'
 // import { CanvasRenderer } from 'echarts/renderers'
 // My utils
 import api from '@/utils/dataQuery';
+import IconExpand from '@/components/icons/IconExpand.vue';
+import IconCollapse from '@/components/icons/IconCollapse.vue';
 // import { notify } from '@/utils/notification';
 
 // Register only the required components
@@ -229,6 +256,10 @@ use([TooltipComponent, GridComponent, LineChart, BarChart, SVGRenderer, TitleCom
 
 export default {
     name: 'AnalyticsPage',
+    components: {
+        IconExpand,
+        IconCollapse,
+    },
     data() {
         return {
             isLoaded: {
@@ -236,6 +267,7 @@ export default {
                 chart2: false,
                 chart3: false,
             },
+            fullscreenChart: "",
             pageValues: {
                 generalStats: {},
                 lastMonth: {},
@@ -244,6 +276,31 @@ export default {
         };
     },
     methods: {
+        toggleFullscreenChart(chartId) {
+            if (this.fullscreenChart !== chartId) {
+                this.fullscreenChart = chartId; // Set to the provided chartId
+                document.documentElement.classList.add('no-scroll');
+            } else {
+                this.fullscreenChart = ''; // Clear the fullscreen chart
+                document.documentElement.classList.remove('no-scroll');
+            }
+        },
+        setupResizeObserver(containerRef, chart) {
+            const container = this.$refs[containerRef];
+            if (!container) return;
+
+            const resizeObserver = new ResizeObserver(() => {
+                chart.resize();
+            });
+
+            resizeObserver.observe(container);
+
+            // Store the observer for cleanup
+            if (!this.resizeObservers) {
+                this.resizeObservers = [];
+            }
+            this.resizeObservers.push(resizeObserver);
+        },
         toEur(value) {
             if (value)
                 return value.toLocaleString('fi-FI', {style: 'currency', currency: 'EUR'});
@@ -322,11 +379,12 @@ export default {
     },
     async mounted() {
 
-        // Charts initilisation
+        // Initialize charts
         const chart1 = init(this.$refs.chartContainer1);
         const chart2 = init(this.$refs.chartContainer2);
         const chart3 = init(this.$refs.chartContainer3);
 
+        // Async setup for each chart
         const fetchAndSetupCharts = [
             
             // General stats
@@ -411,10 +469,8 @@ export default {
                         ],
                     });
 
-                    // Add a listener which resizes the chart when window size changes
-                    window.addEventListener("resize", () => {
-                        chart1.resize();
-                    });
+                    // Add a listener to resize the chart when needed
+                    this.setupResizeObserver("chartContainer1", chart1);
 
                     // Listen for custom dark mode change event
                     window.addEventListener("darkModeChange", () => {
@@ -526,10 +582,8 @@ export default {
                         ],
                     });
                     
-                    // Add a listener which resizes the chart when window size changes
-                    window.addEventListener("resize", () => {
-                        chart2.resize();
-                    });
+                    // Add a listener to resize the chart when needed
+                    this.setupResizeObserver("chartContainer2", chart2);
 
                     // Listen for custom dark mode change event
                     window.addEventListener("darkModeChange", () => {
@@ -661,12 +715,9 @@ export default {
                         series: seriesData,
                     });
 
-                    // Add a listener which resizes the chart when window size changes
-                    window.addEventListener("resize", () => {
-                        chart3.resize();
-                    });
+                    // Add a listener to resize the chart when needed
+                    this.setupResizeObserver("chartContainer3", chart3);
 
-                    
                     // Listen for custom dark mode change event
                     window.addEventListener("darkModeChange", () => {
                         chart3.setOption({
@@ -725,6 +776,15 @@ export default {
         ];
 
         await Promise.all(fetchAndSetupCharts);
+    },
+    beforeUnmount() {
+        // Get rid of the class in case the user changes page with the chart active
+        document.documentElement.classList.remove('no-scroll');
+
+        // Disconnect all observers
+        if (this.resizeObservers) {
+            this.resizeObservers.forEach(observer => observer.disconnect());
+        }
     }
 };
 </script>
@@ -735,7 +795,25 @@ export default {
     width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
     height: calc(100vw * 0.5 + 168px);
     max-height: 550px;
-    /* background-color: red; */
+    position: relative;
+}
+.chartContainer.fullscreen {
+    max-height: none;
+    height: auto;
+    width: auto;
+    position: fixed !important;
+    margin: 0;
+    border-radius: 0;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 5;
+}
+.chartContainer .fs-button {
+    position: absolute;
+    right: var(--spacing-sm);
+    z-index: 1; /* Otherwise under chart */
 }
 .loaded {
     animation: fadeIn 0.4s ease-out;
