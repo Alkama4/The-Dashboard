@@ -4,7 +4,7 @@ import { notify } from './notification';
 import router from '@/router';
 
 const apiClient = axios.create({
-    baseURL: 'http://192.168.0.2:801', // Your FastAPI base URL
+    baseURL: 'http://192.168.0.2:800', // Your FastAPI base URL
     timeout: 5000,
     headers: {
         'Content-Type': 'application/json',

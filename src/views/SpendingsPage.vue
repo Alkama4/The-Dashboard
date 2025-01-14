@@ -199,15 +199,36 @@
             async fetchTransactions() {
                 const response = await api.getTransactions(this.apiFilters);
                 if (response && response.transactions) {
-                    this.transactions = [...this.transactions, ...response.transactions];
+                    // Detect if the user managed to send an another request before we got an answer from the first
+                    // If they did just replace with the new data
+                    if (response.offset == 0) {
+                        this.transactions = [...response.transactions];
+                    } else {    // If not add to it
+                        this.transactions = [...this.transactions, ...response.transactions];
+                    }
+                    
+                    // Make the loading button active since we got an answer
                     this.loadMoreButtonActive = true;
+
+                    // If there are more entries show load more button
                     this.loadMoreButtonVisible = response.hasMore;
-                    // console.log(this.loadMoreButtonActive, this.loadMoreButtonVisible)
+
+
                 } else {
                     // notify("Failed to retrieve transactions.", "error");
                     console.error("[SpendingsPage] response && response.Values failed");
                 }
             },
+            async fetchFilters() {
+                // Get filters and pass them to the FilterSettings component
+                const filterResponse = await api.getFilters();
+                if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
+                    this.filterOptions = filterResponse;
+                } else {
+                    // notify("Failed to retrieve filters.", "error");
+                    console.error("[SpendingsPage] filters failed", filterResponse);
+                }
+            },  
             sort(column) {
                 this.expandedIndex = null;
                 if (this.apiFilters.sort_by === column) {
@@ -254,29 +275,11 @@
                 this.apiFilters.offset = 0;
                 this.transactions = [];
                 this.fetchTransactions();
+                this.fetchFilters();
             }
         },
         async mounted() {
-            this.fetchTransactions();
-
-            // Get filters and pass them to the FilterSettings component
-            const filterResponse = await api.getFilters();
-            if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
-
-                // Log the categories data
-                // console.log("[Filters] All:", filterResponse);
-                
-                // Log individual things
-                // console.log("[Filters] Counterparty:", filterResponse.counterparty);
-                // console.log("[Filters] Category:", filterResponse.category);
-                // console.log("[Filters] Amount:", filterResponse.amount);
-                // console.log("[Filters] Date:", filterResponse.date);
-
-                this.filterOptions = filterResponse;
-            } else {
-                // notify("Failed to retrieve filters.", "error");
-                console.error("[SpendingsPage] filters failed", filterResponse);
-            }
+            this.refreshTable();
         },
     };
 </script>

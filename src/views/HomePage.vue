@@ -7,9 +7,9 @@
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span><br>
 			</div>
-			<div class="action-area">
+			<!-- <div class="action-area">
 				<button class="color-primary">Start logging</button>
-			</div>
+			</div> -->
 		</div>
 
 		<!-- Make the layout better in mobile -->
@@ -22,7 +22,7 @@
 						<span>Portainer</span>
 					</button>
 				</a>
-				<a href="http://pibox.lan:82/admin/" class="no-decoration">
+				<a href="http://pibox.lan:81/admin/" class="no-decoration">
 					<button class="tile-button">
 						<img src="../assets/thumbnails/pihole.png" alt="">
 						<span>Pihole</span>

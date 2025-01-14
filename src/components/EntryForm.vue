@@ -9,7 +9,7 @@
         </div>
         <div class="grid-date">
             <label for="date">Date</label><br>
-            <input v-model="formattedDate" id="date" type="date" required />
+            <input v-model="formData.date" id="date" type="date" required />
         </div>
         <div class="grid-counterparty">
             <label for="counterparty">Counterparty</label><br>
@@ -56,6 +56,7 @@
 import api from '@/utils/dataQuery';
 import IconCross from './icons/IconCross.vue';
 import SliderToggle from './SliderToggle.vue';
+import { notify } from '@/utils/notification';
 
 export default {
     components: {
@@ -78,9 +79,7 @@ export default {
     emits: ['submit'],
     data() {
         return {
-            formData: { 
-                ...this.initialData,
-            },
+            formData: JSON.parse(JSON.stringify(this.initialData)),
             counterpartyOptions: [],
             categoryOptions: [],
             allOptions: {}
@@ -100,16 +99,14 @@ export default {
         handleSubmit() {
             const invalidEntry = this.formData.categories.some(entry => !entry.category || !entry.amount);
             if (invalidEntry) {
-                alert('All entries must have a category and an amount!');
+                notify('All entries must have a category and an amount!!')
                 return;
             }
 
             if (!this.formData.counterparty) {
-                alert('Counterparty is required!');
+                notify('Counterparty is required!')
                 return;
             }
-
-            this.formData.date = new Date(this.formattedDate).toISOString().split('T')[0];
 
             this.$emit('submit', {
                 ...this.formData,
@@ -117,26 +114,21 @@ export default {
             });
         },
         filterOptionsByDirection() {
-                // Filter counterparty options based on the direction
-                try {
-                    if (this.formData.direction === 'expense') {
-                        this.counterpartyOptions = this.allOptions.counterparty.expense;
-                        this.categoryOptions = this.allOptions.category.expense;
-                    } else {
-                        this.counterpartyOptions = this.allOptions.counterparty.income;
-                        this.categoryOptions = this.allOptions.category.income;
-                    }
-                } catch {
-                    // If the response was null catch that and don't sort anything since there is nothing to sort
+            // Filter counterparty options based on the direction
+            try {
+                if (this.formData.direction === 'expense') {
+                    this.counterpartyOptions = this.allOptions.counterparty.expense;
+                    this.categoryOptions = this.allOptions.category.expense;
+                } else {
+                    this.counterpartyOptions = this.allOptions.counterparty.income;
+                    this.categoryOptions = this.allOptions.category.income;
                 }
-
+            } catch {
+                // If the response was null catch that and don't sort anything since there is nothing to sort
+            }
         }
     },
     computed: {
-        formattedDate() {
-            const returnDate = this.formData.date ? new Date(this.formData.date) : new Date();
-            return returnDate.toISOString().split('T')[0];
-        },
         subtotal() {
             let sum = 0;
 
@@ -153,25 +145,18 @@ export default {
             this.filterOptionsByDirection();
         }
     },
-    created() {
-
-    },
     async mounted() {
+        // Fix date handling
+        const formattedDate = this.formData.date ? new Date(this.formData.date) : new Date();
+        this.formData.date = formattedDate.toISOString().split('T')[0]; // Correctly format the date
+
         // Fetch the options
         const optionsResponse = await api.getOptions();
         if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
-            // Log the categories data
-            // console.log("[Options] All:", optionsResponse);
-
-            // Log individual things
-            // console.log("[Options] Counterparty:", optionsResponse.counterparty);
-            // console.log("[Options] Category:", optionsResponse.category);
-
-            // Set all the options to be used in the sorting
             this.allOptions = optionsResponse;
         }
 
-        // filter the options by direction once they are fetched
+        // Filter the options by direction once they are fetched
         this.filterOptionsByDirection();
     }
 };

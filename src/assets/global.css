@@ -106,7 +106,7 @@
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
     --color-background-modal: hsl(0, 0%, 96%);
     --color-background-card: hsl(0, 0%, 100%);
-    --color-background-card-section: rgb(255, 0, 217);
+    --color-background-card-section: hsl(0, 0%, 90%);
     --color-background-input: hsl(0, 0%, 100%);
     --color-background-input-light: hsl(0, 0%, 98%);
     --color-background-input-strong: hsl(0, 0%, 100%);

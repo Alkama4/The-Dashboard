@@ -2,6 +2,8 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
+- After recompiling doesn't get account data but thinks I'm logged in. Although it cant show a name??
+- Clear out expired sessions when logging in.
 
 ### Features to add
 - Navigation
@@ -51,6 +53,7 @@ In here I will collect my notes about this website and list the stuff that need 
     - Also vue select?
 - Light mode colors and hovers suck. Try turning going darker when hovering in light and opposite in dark.
 - When in mobile nav page scrolling isn't disabled
+- Doesn't use the internal fastapi address but the external 192.168.0.2:800 which is not optimal
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions
