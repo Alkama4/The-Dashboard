@@ -37,33 +37,31 @@
 		<!-- HEader mis alignment -->
 		<!-- Card to wide in mobile. Add a mobile layout. -->
 		<div class="flex-column">
-			<h2>Backups (Placeholder data)</h2>
+			<h2>Backups</h2>
 			<div class="flex-row">
 				<div v-for="(backup, index) in backups" :key="index" class="backup-card card">
 					<div class="name">
 						<IconBackup size="25px" color-hover="var(--color-text)"/>
-						<div>{{ backup.name }}</div>
-						<!-- <div class="status-indicator" :class="backup.state"></div> -->
-						<!-- <div class="schedule">{{ backup.backupSchelude }}</div> -->
+						<div>{{ backup.backup_name }}</div>
 					</div>
 					<div class="fromTo">
 						<div>
-							<div class="device">{{ backup.source }}</div>
-							<div class="path">{{ backup.sourcePath }}</div>
+							<div class="device">{{ backup.source_location }}</div>
+							<div class="path">{{ backup.source_path }}</div>
 						</div>
 						<IconChevronDown size="32px" class="arrow"/>
 						<div>
-							<div class="device">{{ backup.destination }}</div>
-							<div class="path">{{ backup.destinationPath }}</div>
+							<div class="device">{{ backup.destination_location }}</div>
+							<div class="path">{{ backup.destination_path }}</div>
 						</div>
 					</div>
 					<div class="text">
 						<div class="label">Since last run</div>
-						<div class="value" :class="backup.state">{{ backup.lastRunTimeSince }}</div>
+						<div class="value" :class="calculateState(backup.last_success_hours)">{{ backup.last_success_time_since }}</div>
 						<div class="label">Next run in</div>
-						<div class="value">{{ backup.nextRunTimeUntil }}</div>
+						<div class="value">{{ backup.next_scheduled_time_until }}</div>
 						<div class="label">Schedule</div>
-						<div class="value">{{ backup.backupSchelude }}</div>
+						<div class="value">{{ backup.schedule }}</div>
 					</div>
 				</div>
 			</div>
@@ -123,52 +121,7 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 		data() {
 			return {
 				greeting: this.getGreeting(),
-				backups: [
-					{
-						name: "Oneplus camera",
-						source: "Oneplus",
-						sourcePath: "/DCIM/camera",
-						destination: "Pinas",
-						destinationPath: "/media/muistot/op11/",
-						lastRunTimeSince: "11h 23min",
-						nextRunTimeUntil: "4h 28min",
-						backupSchelude: "Every day, 23.00",
-						state: "warning",
-					},
-					{
-						name: "Black-Box Backup",
-						source: "Pinas",
-						sourcePath: "/mnt/drive/pinas",
-						destination: "Black-Box",
-						destinationPath: "D:/pinas-backup.zip",
-						lastRunTimeSince: "49 min",
-						nextRunTimeUntil: "5h 28min",
-						backupSchelude: "Every day, 00.00",
-						state: "good",
-					},
-					{
-						name: "Oneplus 11 Backup",
-						source: "Pinas",
-						sourcePath: "/mnt/drive/pinas",
-						destination: "Oneplus 11",
-						destinationPath: "/.pinas-backup/",
-						lastRunTimeSince: "35h 23 min",
-						nextRunTimeUntil: "5h 28min",
-						backupSchelude: "Every day, 00.00",
-						state: "bad",
-					},
-					{
-						name: "Järvenpää backup",
-						source: "Pinas",
-						sourcePath: "/mnt/drive/pinas",
-						destination: "Järvenpää",
-						destinationPath: "/Pinas backup",
-						lastRunTimeSince: "2kk 14pv",
-						nextRunTimeUntil: "-",
-						backupSchelude: "No schedule",
-						state: "good",
-					}
-				],
+				backups: [],
 				serverStats: {
 					storage: []
 				}
@@ -192,12 +145,27 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 				if (bytes === 0) return '0 Bytes';
 				const i = Math.floor(Math.log10(bytes) / 3);
 				return (bytes / Math.pow(1000, i)).toFixed(decimal) + ' ' + sizes[i];
+			},
+			calculateState(timeSinceInHours) {
+				if (timeSinceInHours < 24)
+					return "good";
+				else if (timeSinceInHours < 48)
+					return "warning";
+				else
+					return "bad"
 			}
 		},
 		async mounted() {
-			const response = await api.getServerDrivesInfo();
-			if (response) {
-				for (const drive of Object.entries(response)) {
+			const backupResponse = await api.getBackups();
+			if (backupResponse) {
+				this.backups = [...backupResponse.backups];
+			}
+			// console.log(this.backups);
+			
+			// Server drives
+			const drivesResponse = await api.getServerDrivesInfo();
+			if (drivesResponse) {
+				for (const drive of Object.entries(drivesResponse)) {
 					this.serverStats.storage.push(drive[1]);
 				}
 			}
@@ -217,7 +185,8 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 	}
 	.greeting-area .background {
 		position: absolute;
-		background: linear-gradient( var(--color-primary), var(--color-background));
+		/* background: linear-gradient(var(--color-background), var(--color-primary), var(--color-background)); */
+		/* background-color: var(--color-background-card); */
 		top: 60px;
 		left: 0;
 		right: 0;

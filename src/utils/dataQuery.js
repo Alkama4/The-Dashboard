@@ -75,6 +75,9 @@ const api = {
         // console.log('Fetching filters with params:', params);
         return this.getData('/get_filters', params);
     },
+    async getBackups() {
+        return this.getData('/get_backups');
+    },
 
 
     // - - - - - - POST request to the API - - - - - - 
