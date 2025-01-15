@@ -194,44 +194,56 @@
         <p> If you wish to look more closely at the data or look further back these charts might be juts what you are looking for. With these you can sdfj sldkfj lsdkjf mn foenf wlf dkjf0. Sdfhjsd jasd fsj fasdjnfkjadsnf sdf ksdjf dhfiauf!</p>
 
         <div 
-            ref="chartContainer1" 
-            class="chartContainer card chart1"
+            class="card chartCard"
             :class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
         >
+            <div 
+                ref="chartContainer1" 
+                class="chart"
+            >
+            </div>
             <button 
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart1')"
             >
-                <IconExpand v-if="fullscreenChart !== 'chart1'"/>
                 <IconCollapse v-if="fullscreenChart === 'chart1'"/>
+                <IconExpand v-else/>
             </button>  
         </div>
 
         <div 
-            ref="chartContainer2" 
-            class="chartContainer card chart2"
+            class="card chartCard"
             :class="{ loaded: isLoaded.chart2, fullscreen: fullscreenChart === 'chart2' }"
         >
+            <div 
+                ref="chartContainer2" 
+                class="chart"
+            >
+            </div>
             <button 
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart2')"
             >
-                <IconExpand v-if="fullscreenChart !== 'chart2'"/>
                 <IconCollapse v-if="fullscreenChart === 'chart2'"/>
+                <IconExpand v-else/>
             </button>  
         </div>
 
         <div 
-            ref="chartContainer3" 
-            class="chartContainer card chart3"
+            class="card chartCard"
             :class="{ loaded: isLoaded.chart3, fullscreen: fullscreenChart === 'chart3' }"
         >
+            <div 
+                ref="chartContainer3" 
+                class="chart"
+            >
+            </div>
             <button 
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart3')"
             >
-                <IconExpand v-if="fullscreenChart !== 'chart3'"/>
                 <IconCollapse v-if="fullscreenChart === 'chart3'"/>
+                <IconExpand v-else/>
             </button>  
         </div>
     </div>
@@ -791,13 +803,13 @@ export default {
 
 
 <style scoped>
-.chartContainer {
-    width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
-    height: calc(100vw * 0.5 + 168px);
-    max-height: 550px;
+.chartCard {
     position: relative;
+    max-height: 550px;
+    height: calc(100vw * 0.5 + 168px);
+    width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
 }
-.chartContainer.fullscreen {
+.chartCard.fullscreen {
     max-height: none;
     height: auto;
     width: auto;
@@ -808,14 +820,23 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    z-index: var(--z-index-chart-fullscreen);
+    z-index: var(--z-index-fullscreen);
 }
-.chartContainer .fs-button {
+.chart {
+    /* height: calc(100vw * 0.5 + 168px); */
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+.fs-button {
     position: absolute;
     right: var(--spacing-sm);
+    top: var(--spacing-sm);
     z-index: 1; /* Otherwise under chart */
     color: var(--color-text-light);
 }
+
+
 .loaded {
     animation: fadeIn 0.4s ease-out;
 }

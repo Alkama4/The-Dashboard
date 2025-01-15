@@ -25,7 +25,7 @@
     --width-modal: 400px;
 
     /* Z-indexes */
-    --z-index-chart-fullscreen: 10000002;
+    --z-index-fullscreen: 10000002;
     --z-mobile-nav: 10000001;
     /* Apache echart tooltip is at 10 000 000 */
     --z-notification: 350;
