@@ -93,6 +93,7 @@
     --color-text-placeholder: #aaa;
     --color-text-inverted: #e9ebf0;
     --color-text-inverted-hover: #ffffff;
+    --color-text-selection: var(--color-text-white-hover);
 
     --color-border: hsla(0, 0%, 0%, 0.1);
     --color-border-hover: hsla(0, 0%, 0%, 0.2);
@@ -178,6 +179,7 @@
     --color-text-placeholder: #666;
     --color-text-inverted: #292929;
     --color-text-inverted-hover: #000;
+    --color-text-selection: auto;
 
     --color-border: hsla(0, 0%, 100%, 0.1);
     --color-border-hover: hsla(0, 0%, 100%, 0.2);
@@ -264,13 +266,15 @@ footer {
 
 ::selection {
     background-color: var(--color-primary);
+    color: var(--color-text-selection);
 }
 
 /* - - - - GENERIC ELEMENTS - - - - */
 p {
     text-align: justify;
-    margin-inline: auto;
-    width: fit-content;
+    /* margin-inline: auto; */
+    width: 100%;
+    /* width: fit-content; */
     /* max-width: 60ch; */
 }
 

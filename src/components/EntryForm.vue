@@ -79,6 +79,7 @@ export default {
     emits: ['submit'],
     data() {
         return {
+            // Stringify and parse so that the data isn't linked causing problems
             formData: JSON.parse(JSON.stringify(this.initialData)),
             counterpartyOptions: [],
             categoryOptions: [],

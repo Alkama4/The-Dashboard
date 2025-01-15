@@ -1,25 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
-import AboutPage from '../views/AboutPage.vue';
 import SettingsPage from '../views/SettingsPage.vue';
 import SpendingsPage from '../views/SpendingsPage.vue';
 import NewEntryPage from '@/views/NewEntryPage.vue';
 import LogInPage from '@/views/LogInPage.vue';
 import DebugPage from '@/views/DebugPage.vue';
 import AnalyticsPage from '@/views/AnalyticsPage.vue';
+import FourOFourPage from '@/views/404Page.vue'
 
 const routes = [
     {
         path: '/',              // URL path
-        name: 'Home',           // Route name
+        name: 'Home',           // Route name, propably just for me?
         component: HomePage,    // Component
         meta: { title: 'Home' } // The updating title part after "-" in the browser tab
-    },
-    {
-        path: '/about',
-        name: 'About',
-        component: AboutPage,
-        meta: { title: 'About' }
     },
     {
         path: '/settings',
@@ -56,6 +50,12 @@ const routes = [
         name: 'Analytics',
         component: AnalyticsPage,
         meta: { title: 'Analytics' }
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: '404',
+        component: FourOFourPage,
+        meta: { title: '404' }
     }
 ];
 

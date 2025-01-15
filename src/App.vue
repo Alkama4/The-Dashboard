@@ -3,7 +3,7 @@
     <main>
         <RouterView/>
     </main>
-    <footer>
+    <footer class="center">
         <p>&copy; 2024 Aleksi Malkki</p>
     </footer>
 </template>

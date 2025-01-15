@@ -71,7 +71,7 @@ export default {
     },
     mounted() {
         const loggedIn = localStorage.getItem("isLoggedIn");
-        if (loggedIn == "false") {
+        if (loggedIn != "true") {
             router.push("/login");
         }
         this.loadSettings();

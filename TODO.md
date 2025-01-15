@@ -54,6 +54,7 @@ In here I will collect my notes about this website and list the stuff that need 
 - Light mode colors and hovers suck. Try turning going darker when hovering in light and opposite in dark.
 - When in mobile nav page scrolling isn't disabled
 - Doesn't use the internal fastapi address but the external 192.168.0.2:800 which is not optimal
+- Values aren't cached and are instead queried all the time. For example the options should at the very least be stored?
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions

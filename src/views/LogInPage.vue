@@ -11,7 +11,7 @@
                 <label for="password">Password:</label>
                 <input type="password" v-model="password" required />
             </div>
-            <button class="color-primary center" type="submit">Log in</button>
+            <button class="color-primary center login-submit" type="submit">Log in</button>
         </form>
     </div>
 </template>
@@ -55,5 +55,8 @@ export default {
         display: flex;
         flex-direction: column;
         max-width: 350px;
+    }
+    .login-submit {
+        margin-top: var(--spacing-md)
     }
 </style>
