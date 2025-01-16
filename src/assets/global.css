@@ -21,7 +21,7 @@
     /* Widths and heights*/
     --width-top-bar: 1200px;
     --height-top-bar: 60px;
-    --width-max-page: 900px;
+    /* --width-max-page: 900px; */
     --width-modal: 400px;
 
     /* Z-indexes */
@@ -253,7 +253,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 90vw;
-    max-width: var(--width-max-page);
+    /* max-width: var(--width-max-page); */
     margin-inline: 5vw;
     margin-top: var(--height-top-bar);
     z-index: var(--z-app);
@@ -714,6 +714,22 @@ input[type="radio"] {
     margin-right: 0;
 }
 
+
+/* - - - - CONTENT WIDTH LIMITORS - - - - */
+.content-width-small {
+    margin-inline: auto;
+    max-width: 60ch;
+}
+
+.content-width-medium {
+    margin-inline: auto;
+    max-width: 100ch;
+}
+
+.content-width-large {
+    margin-inline: auto;
+    max-width: 140ch;
+}
 
 
 /* - - - - ANIMATIONS - - - - */

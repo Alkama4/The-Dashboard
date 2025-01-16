@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content-width-medium">
         <h1>Account</h1>
         <p>Your settings are stored locally on your device. Please note that while your settings are saved locally, all of your data is stored centrally behind your account so that it can be accessed from any device and stays synced.</p>
 

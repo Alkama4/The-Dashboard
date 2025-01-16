@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="greeting-area">
+		<div class="greeting-area content-width-medium">
 			<div class="background"></div>
 
 			<div class="text-area">
@@ -12,7 +12,6 @@
 			</div> -->
 		</div>
 
-		<!-- Make the layout better in mobile -->
 		<div class="flex-column">
 			<h2>Other services</h2>
 			<div class="tile-container">
@@ -36,7 +35,9 @@
 		<!-- Might want to implement the following logic for security reasons: If login username == aleksi -->
 		<!-- HEader mis alignment -->
 		<!-- Card to wide in mobile. Add a mobile layout. -->
-		<div class="flex-column">
+		<!-- Make the layout better in mobile -->
+
+		<div class="flex-column content-width-large">
 			<h2>Backups</h2>
 			<div class="flex-row">
 				<div v-for="(backup, index) in backups" :key="index" class="backup-card card">

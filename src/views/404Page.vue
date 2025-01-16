@@ -1,5 +1,5 @@
 <template>
-    <div class="four-o-four-holder">
+    <div class="four-o-four-holder content-width-small">
         <h1 class="humogous">404</h1>
         <h1>Page not found</h1>
         <p>The page you are looking for doesn't seem to exist.</p>

@@ -1,5 +1,5 @@
 <template>
-    <div class="login-page">
+    <div class="login-page content-width-small">
         <h1>Login</h1>
         <p>Log in in order to access the data that is linked to your account. You can browse the website without logging in, but you are limited the example data.</p>
         <form @submit.prevent="handleLogin">

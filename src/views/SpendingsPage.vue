@@ -1,19 +1,17 @@
 <template>
     <div id="spendings-page">
-        <!-- Holder for temp icons so that vue doesn't complain -->
-        <div style="display: none;">
-            <IconSortDown/>
-            <IconSortUp/>
+
+        <div class="content-width-medium">
+            <h1>Spendings page</h1>
+            <p> Descriptive text about the spendings page that will be longer 
+                and more detailed in the future, possibly, but that is uncertain 
+                so don't quote me on that or anything else I have written in 
+                this or anywhere else on the website. One liners babyyyy...
+            </p>
         </div>
-
-        <h1>Spendings page</h1>
-        <p> Descriptive text about the spendings page that will be longer 
-            and more detailed in the future, possibly, but that is uncertain 
-            so don't quote me on that or anything else I have written in 
-            this or anywhere else on the website. One liners babyyyy...
-        </p>
-
-        <FilterSettings 
+            
+        <!-- Fullscreen filter menu hidden by default -->
+        <FilterSettings 222
             v-if="showFilters" 
             @close="showFilters = false" 
             @apply="applyFilters"
@@ -22,66 +20,35 @@
             :filterOptions="filterOptions"
         />
 
+        <!-- Buttons in the bottom right corner -->
         <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;" style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"> 
-            <IconFilter size="28px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
+            <IconFilter size="28px"/> 
         </button>
         <router-link to="/newentry">
-            <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;"> 
-                <IconAdd size="28px" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/> 
+            <button class="color-primary sticky-corner-button"> 
+                <IconAdd size="28px"/> 
             </button>
         </router-link>
 
-        <table>
-            <thead>
-                <tr>
-                    <th class="column-date" @click="sort('date')">
-                        <div class="header-content" :class="apiFilters.sort_by === 'date' ? 'active' : 'inactive'">
-                            Date
-                            <component
-                                :is="getSortIcon('date')"
-                                size="20px"
-                            />
-                        </div>
-                    </th>
-                    <th class="column-counterparty" @click="sort('counterparty')">
-                        <div class="header-content" :class="apiFilters.sort_by === 'counterparty' ? 'active' : 'inactive'">
-                            Counterparty
-                            <component
-                                :is="getSortIcon('counterparty')"
-                                size="20px"
-                            />
-                        </div>
-                    </th>
-                    <th class="column-category" @click="sort('category')">
-                        <div class="header-content" :class="apiFilters.sort_by === 'category' ? 'active' : 'inactive'">
-                            Category
-                            <component
-                                :is="getSortIcon('category')"
-                                size="20px"
-                            />
-                        </div>
-                    </th>
-                    <th class="column-amount" @click="sort('amount')">
-                        <div class="header-content" :class="apiFilters.sort_by === 'amount' ? 'active' : 'inactive'">
-                            Amount
-                            <component
-                                :is="getSortIcon('amount')"
-                                size="20px"
-                            />
-                        </div>
-                    </th>
-                    <th class="column-notes" @click="sort('notes')">
-                        <div class="header-content" :class="apiFilters.sort_by === 'notes' ? 'active' : 'inactive'">
-                            Notes
-                            <component
-                                :is="getSortIcon('notes')"
-                                size="20px"
-                            />
-                        </div>
-                    </th>
-                </tr>
-            </thead>
-            <tbody ref="placeForEntries">
+        <!-- The transactions table -->
+        <div class="transactions-holder content-width-large">
+            <div class="transaction-headers transaction-row">
+                <div 
+                    v-for="column in columns" 
+                    :key="column.key" 
+                    :class="[column.class, { active: apiFilters.sort_by === column.key, inactive: apiFilters.sort_by !== column.key }]" 
+                    :style="{ cursor: waitingForResponse ? 'wait' : 'pointer' }"
+                    @click="sortBy(column.key)"
+                >
+                    {{ column.label }}
+                    <component
+                        :is="getSortIcon(column.key)"
+                        size="20px"
+                    />
+                </div>
+            </div>
+
+            <div ref="placeForEntries">
                 <SpendingsEntry
                     v-for="(transaction, index) in transactions"
                     :key="transaction.transactionID"
@@ -90,14 +57,15 @@
                     @toggle="toggleEntry(index)"
                     @refreshTable="refreshTable"
                 />
-            </tbody>
-        </table>
+            </div>
+        </div>
     
         <!-- Button to load more entries -->
         <button 
             class="center" 
             @click="loadMore"
-            :disabled="!loadMoreButtonActive"
+            :disabled="waitingForResponse"
+            :style="{ cursor: waitingForResponse ? 'wait' : 'default' }"
             v-if="loadMoreButtonVisible"
         >
             Load more
@@ -131,6 +99,13 @@
         data() {
             return {
                 // Need to set seperately, leave this empty []
+                columns: [
+                    { key: 'date', label: 'Date', class: 'column-date' },
+                    { key: 'counterparty', label: 'Counterparty', class: 'column-counterparty' },
+                    { key: 'category', label: 'Category', class: 'column-category' },
+                    { key: 'amount', label: 'Amount', class: 'column-amount' },
+                    { key: 'notes', label: 'Notes', class: 'column-notes' },
+                ],
                 transactions: [],
                 showFilters: false,
                 inactiveColor: 'var(--color-text-lighter)',
@@ -177,7 +152,7 @@
                     counterparty: {},
                     category: {}
                 },
-                loadMoreButtonActive: false,
+                waitingForResponse: false,
                 loadMoreButtonVisible: false,
             };
         },
@@ -193,10 +168,14 @@
         },
         methods: {
             toggleEntry(index) {
-                // Toggle the expanded state of the clicked entry
+                // Select or switch to a different transaction to be highlighted
                 this.expandedIndex = this.expandedIndex === index ? null : index;
             },
             async fetchTransactions() {
+                // Disable buttons
+                this.waitingForResponse = true;
+
+                // Make the query
                 const response = await api.getTransactions(this.apiFilters);
                 if (response && response.transactions) {
                     // Detect if the user managed to send an another request before we got an answer from the first
@@ -208,14 +187,13 @@
                     }
                     
                     // Make the loading button active since we got an answer
-                    this.loadMoreButtonActive = true;
+                    this.waitingForResponse = false;
 
                     // If there are more entries show load more button
                     this.loadMoreButtonVisible = response.hasMore;
 
-
                 } else {
-                    // notify("Failed to retrieve transactions.", "error");
+                    //i notify("Failed to retrieve transactions.", "error");
                     console.error("[SpendingsPage] response && response.Values failed");
                 }
             },
@@ -229,22 +207,25 @@
                     console.error("[SpendingsPage] filters failed", filterResponse);
                 }
             },  
-            sort(column) {
-                this.expandedIndex = null;
-                if (this.apiFilters.sort_by === column) {
-                    this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
-                } else {
-                    this.apiFilters.sort_by = column;
-                    this.apiFilters.sort_order = 'desc';
+            sortBy(column) {
+                if (!this.waitingForResponse) {
+                    this.expandedIndex = null;
+                    if (this.apiFilters.sort_by === column) {
+                        this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        this.apiFilters.sort_by = column;
+                        this.apiFilters.sort_order = 'desc';
+                    }
+                    this.apiFilters.offset = 0;
+                    this.transactions = [];
+                    this.fetchTransactions();
                 }
-                this.apiFilters.offset = 0;
-                this.transactions = [];
-                this.fetchTransactions();
             },
             loadMore() {
-                this.apiFilters.offset += this.apiFilters.limit;
-                this.loadMoreButtonActive = false;
-                this.fetchTransactions();
+                if (!this.waitingForResponse) {
+                    this.apiFilters.offset += this.apiFilters.limit;
+                    this.fetchTransactions();
+                }
             },
             applyFilters(newFilterData) {
                 this.expandedIndex = null;
@@ -285,80 +266,103 @@
 </script>
 
   
-<style scoped>
-table {
-    margin-inline: auto;
-    border-collapse: collapse;
+<style>
+/* .transactions-holder { */
+    /* Replaced the "table" element */
+/* } */
+
+.transaction-row {
+    /* display: flex;
+    flex-direction: row; */
+    display: flex;
 }
-th {
-    cursor: pointer;
-    padding: 6px var(--spacing-sm);
+.transaction-row > div {
+    height: 25px;
+    transition: height 0.2s ease-out,
+                mask-size 0.2s ease-out;
+}
+
+/* - - - - Different columns - - - - - */
+.transaction-row .column-date {
+    /* width: 150px; */
+    max-width: 80px;
+    min-width: 80px;
+    flex: 1;
+    justify-content: end;
+    text-align: end;
+}
+.transaction-row .column-counterparty {
+    /* width: 250px; */
+    min-width: 145px;   /* Min width so that the header doesn't get squished */
+    flex: 3;
+    overflow: hidden;
     text-align: start;
     color: var(--color-text);
-    /* font-weight: 900; */
+}
+.transaction-row .column-category {
+    /* width: 275px; */
+    min-width: 115px;   /* Min width so that the header doesn't get squished */
+    flex: 3;
+    overflow: hidden;
+    text-align: start;
+    padding-right: 0;
+}
+.transaction-row .column-amount {
+    /* width: 150px; */
+    min-width: 100px;   /* Min width so that the header doesn't get squished */
+    max-width: 100px;
+    flex: 1;
+    overflow: hidden;
+    text-align: end;
+    justify-content: end;
+    font-weight: 500;
+    padding-left: 0;
+}
+.transaction-row .column-notes {
+    /* width: 200px; */
+    flex: 7;
+    overflow: hidden;
+}
+
+@media (max-width: 777px) {
+    .transaction-row .column-notes {
+        display: none;
+    }
+}
+@media (max-width: 555px) {
+    .transaction-row .column-category {
+        display: none;
+    }
+}
+
+
+.transaction-headers {
+    /* padding: 6px var(--spacing-sm); */
+    color: var(--color-text);
     user-select: none;
-    border: 0px;
+    font-weight: 700;
     /* background-color: var(--color-background-th-row); */
 }
-th .header-content {
+.transaction-headers > div {
+    cursor: pointer;
     display: flex;
     align-items: center; /* Aligns items vertically */
     justify-content: left; /* Optional: Center horizontally */
     gap: 0.5rem; /* Adds spacing between text and icon */
+    padding: 8px var(--spacing-sm);
 }
-th .header-content svg {
+.transaction-headers > div svg {
     fill: var(--color-text-lighter)
-} th .header-content:hover svg {
+} .transaction-headers > div:hover svg {
     fill: var(--color-text)
-} th .header-content:active svg {
+} .transaction-headers > div:active svg {
     fill: var(--color-text-bold)
-} th .header-content.active svg {
+} .transaction-headers > div.active svg {
     fill: var(--color-primary)
-} th .header-content.active:hover svg {
+} .transaction-headers > div.active:hover svg {
     fill: var(--color-primary-hover)
-} th .header-content.active:active svg {
+} .transaction-headers > div.active:active svg {
     fill: var(--color-primary-active)
 }
-
-th.column-date {
-    justify-content: center;
-    display: flex;
-}
-th.column-counterparty {
-    width: 150px;
-}
-th.column-category {
-    padding-right: 0;
-    width: 175px;
-}
-th.column-amount {
-    text-align: end;
-}
-
-/* Round corners for th row */
-/* th:first-child {
-    border-top-left-radius: var(--border-radius-small); 
-    border-bottom-left-radius: var(--border-radius-small);
-}
-th:last-child {
-    border-bottom-right-radius: var(--border-radius-small); 
-    border-top-right-radius: var(--border-radius-small); 
-} */
-
-@media (max-width: 777px) {
-    table th:nth-child(5) {    /* Notes */
-        display: none;
-    }
-    /* th:nth-child(4) {
-        border-bottom-right-radius: var(--border-radius-small); 
-        border-top-right-radius: var(--border-radius-small); 
-    } */
-}
-@media (max-width: 600px) {
-    table th:nth-child(3) {     /* categories */
-        display: none;
-    }
-}
-
 
 </style>

@@ -1,73 +1,65 @@
 <template>
-    <tr class="spendings-summary" @click="toggleEntry" ref="spendingsSummary">
+    <div class="transaction-row" @click="toggleEntry" ref="transaction">
 
-        <td class="column-date">
-            <span class="date-full">{{ formattedDate }}</span>
-            <span class="date-short">{{ shortFormattedDate }}</span>
-        </td>
+        <div class="transaction-cell column-date">
+            <!-- <span class="date-full">{{ formattedDate }}</span> -->
+            <!-- <span class="date-short">{{ shortFormattedDate }}</span> -->
+            {{ shortFormattedDate }}
+        </div>
 
-        <td class="column-counterparty column-fade-right">{{ counterparty }}</td>
+        <div class="transaction-cell column-counterparty column-fade-right">{{ counterparty }}</div>
         
-        <td class="column-category" ref="columnCategory">
-            <div ref="categoryExpanded" style="height: 25px;">
-                <div ref="categoryxpandedContent">
-                    <span v-for="(category, index) in categories" :key="index"
-                            :class="{
-                                'summary-row-category-and-amount column-fade-right': index === 0,
-                                'second-row-category-and-amount': index === 1
-                            }">
-                        {{ category }}
-                    </span>
-                </div>
+        <div class="transaction-cell column-category" ref="columnCategoryCell">
+            <div ref="columnCategoryContent">
+                <span v-for="(category, index) in categories" :key="index"
+                        :class="{
+                            'summary-row-category-and-amount column-fade-right': index === 0,
+                            'second-row-category-and-amount': index === 1
+                        }">
+                    {{ category }}
+                </span>
             </div>
-        </td>
+        </div>
 
-        <td class="column-amount" :class="this.transaction.direction" ref="columnAmount">
-            <div ref="amountExpanded" style="height: 25px;">
-                <div ref="amountExpandedContent">
-                    <span v-for="(amount, index) in amounts" :key="index" 
-                            :class="{
-                                'summary-row-category-and-amount': index === 0,
-                                'second-row-category-and-amount': index === 1
-                            }">
-                        {{ formatAmount(amount) }}
-                    </span>
-                </div>
+        <div class="transaction-cell column-amount" :class="this.transaction.direction" ref="columnAmountCell">
+            <div ref="columnAmountContent">
+                <span v-for="(amount, index) in amounts" :key="index" 
+                        :class="{
+                            'summary-row-category-and-amount': index === 0,
+                            'second-row-category-and-amount': index === 1
+                        }">
+                    {{ formatAmount(amount) }}
+                </span>
             </div>
-        </td>
+        </div>
 
-        <td class="column-notes column-fade-combined" ref="columnNotes">
-            <div ref="notesExpanded" style="height: 25px;">
-                <div ref="notesExpandedContent">
-                    {{ notes }}
-                </div>
+        <div class="transaction-cell column-notes column-fade-combined" ref="columnNotesCell">
+            <div ref="columnNotesContent">
+                {{ notes }}
             </div>
-        </td>
+        </div>
 
-    </tr>
-    <tr> 
-        <td colspan="5" style="padding: 0;">
-            <div class="spendings-expanded" ref="spendingsExpanded">
-                <div class="spendings-expanded-content" ref="spendingsExpandedContent">
-                    <div class="control-buttons">
-                        <button class="button-delete color-warning" @click.stop="deleteTransaction"><IconTrash size="18px" colorHover="white"/></button>
-                        <button disabled="true" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px"/></button>
-                        <button class="button-edit" @click.stop="editTransaction"><IconEdit size="18px"/></button>
-                        <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px" color="#e9ebf0" colorHover="white"/>Details</button>
-                    </div>
-        
-                    <ModalWindow
-                        v-if="showModal"
-                        :modalType="modalCategory"
-                        :modalData="this.transaction"
-                        :header="modalHeader"
-                        @close="showModal = false"
-                        @refreshTable="refreshTable"
-                    />
-                </div>
+    </div>
+    
+    <div class="transaction-buttons-cell" ref="transactionButtonsCell">
+        <div class="transaction-buttons-content" ref="transactionButtonsContent">
+            <div class="control-buttons">
+                <button class="button-delete color-warning" @click.stop="deleteTransaction"><IconTrash size="18px" colorHover="white"/></button>
+                <button disabled="true" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px"/></button>
+                <button class="button-edit" @click.stop="editTransaction"><IconEdit size="18px"/></button>
+                <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px" color="#e9ebf0" colorHover="white"/>Details</button>
             </div>
-        </td>
-    </tr>
+
+            <ModalWindow
+                v-if="showModal"
+                :modalType="modalCategory"
+                :modalData="this.transaction"
+                :header="modalHeader"
+                @close="showModal = false"
+                @refreshTable="refreshTable"
+            />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -102,32 +94,42 @@
                 this.$emit('toggle');
             },
             expandEntry() {
-                const expandedContentHeight = this.$refs['spendingsExpandedContent']?.getBoundingClientRect().height || 0;
+                const expandedContentHeight = this.$refs['transactionButtonsContent']?.getBoundingClientRect().height || 0;
 
-                const notesHeight = this.$refs['notesExpandedContent']?.getBoundingClientRect().height || 0;
-                const categoryHeight = this.$refs['categoryExpandedContent']?.getBoundingClientRect().height || 0;
-                const amountHeight = this.$refs['amountExpandedContent']?.getBoundingClientRect().height || 0;
+                const notesHeight = this.$refs['columnNotesContent']?.getBoundingClientRect().height || 0;
+                const categoryHeight = this.$refs['columnCategoryContent']?.getBoundingClientRect().height || 0;
+                const amountHeight = this.$refs['columnAmountContent']?.getBoundingClientRect().height || 0;
 
                 const maxHeight = Math.max(notesHeight, categoryHeight, amountHeight) + 4;  // Spacing at the bottom when expanded
 
-                this.$refs['spendingsExpanded'].style.height = `${expandedContentHeight}px`;
-                this.$refs['notesExpanded'].style.height = `${maxHeight}px`;
-                this.$refs['categoryExpanded'].style.height = `${maxHeight}px`;
-                this.$refs['amountExpanded'].style.height = `${maxHeight}px`;
+                // Set the transactions buttons container so that the buttons are visible
+                this.$refs['transactionButtonsCell'].style.height = `${expandedContentHeight}px`;
 
-                this.$refs['columnNotes'].classList.add("hide-mask");
-                // this.$refs['columnCategory'].classList.add("hide-mask");
-                this.$refs['spendingsSummary'].classList.add("active");
+                // Set each of the cells to the maximum height between them
+                this.$refs['columnNotesCell'].style.height = `${maxHeight}px`;
+                this.$refs['columnCategoryCell'].style.height = `${maxHeight}px`;
+                this.$refs['columnAmountCell'].style.height = `${maxHeight}px`;
+
+                // Hide the overflow mask on notes since we expand it
+                this.$refs['columnNotesCell'].classList.add("hide-overflow-mask");
+
+                // Add the global class to the transaction for other effects
+                this.$refs['transaction'].classList.add("active");
             },
             collapseEntry() {
-                this.$refs['spendingsExpanded'].style.height = '0';
-                this.$refs['notesExpanded'].style.height = '25px';
-                this.$refs['categoryExpanded'].style.height = '25px';
-                this.$refs['amountExpanded'].style.height = '25px';
+                // Set the transactions buttons container so that the buttons are hidden
+                this.$refs['transactionButtonsCell'].style.height = '0';
+                
+                // Set each of the cells height back to the predefined height of a cell
+                this.$refs['columnNotesCell'].style.height = '25px';
+                this.$refs['columnCategoryCell'].style.height = '25px';
+                this.$refs['columnAmountCell'].style.height = '25px';
     
-                this.$refs['columnNotes'].classList.remove("hide-mask");
-                // this.$refs['columnCategory'].classList.remove("hide-mask");
-                this.$refs['spendingsSummary'].classList.remove("active");
+                // Show the overflow mask on notes since we collapse it
+                this.$refs['columnNotesCell'].classList.remove("hide-overflow-mask");
+                
+                // Remove the global class from the transaction for other effects
+                this.$refs['transaction'].classList.remove("active");
             },
             showDetails() {
                 this.modalCategory = 'details';
@@ -222,14 +224,14 @@
 
 <style scoped>
 /* Styles for the whole thing */
-.spendings-summary {
+.transaction-row {
     cursor: pointer;
     user-select: none;
     position: relative;
     transition: transform 0.1s ease-out, background-color 0.1s;
     border-top: 2px solid var(--color-background-tr-hover);
 }
-.spendings-summary::after {
+.transaction-row::after {
     content: '';
     position: absolute;
     top: -1px;
@@ -242,79 +244,33 @@
     transition: background-color 0.1s ease-out,
                 bottom 0.2s ease-out;
 }
-.spendings-summary.active::after {
+.transaction-row.active::after {
     background-color: var(--color-background-tr-active);
     /* bottom: var(--spacing-sm); */
     bottom: -43px;  /* To align with the control buttons bottom border */
 }
-.spendings-summary:hover::after {
+.transaction-row:hover::after {
     background-color: var(--color-background-tr-hover);
 }
 
-td {
+.transaction-cell  {
     white-space: nowrap;
     padding: 8px var(--spacing-sm);
     vertical-align: top;
     color: var(--color-text-light);
 }
 
-/* Individual columns in summary*/
-.column-date {
-    text-align: center;
-    width: fit-content;
-} .date-full {
-    display: inline-block;
-} .date-short {
-    display: none;
-}@media (max-width: 1500px) {
-    .date-full {
-        display: none;
-    } .date-short {
-        display: inline-block;
-    }
-}
-.column-counterparty {
-    text-align: start;
-    max-width: 150px;
-    min-width: 150px;
-    overflow: hidden;
-    color: var(--color-text);
-}    
-.column-category {
-    text-align: start;
-    max-width: 175px;
-    min-width: 175px;
-    width: fit-content;
-    overflow: hidden;
-    padding-right: 0;
-}
-.column-amount {
-    text-align: end;
-    width: fit-content;
-    font-weight: 500;
-    overflow: hidden;
-    padding-left: 0;
-}
-.column-notes {
-    overflow: hidden;
-} 
-
 .column-amount div, .column-category div {
-    transition: height 0.2s ease-out;
-} .column-amount div div, .column-category div div {
     display: grid;
     grid-template-columns: 1fr;
 }
 
 .column-notes div {
-    transition: height 0.2s ease-out;
-} .column-notes div div {
     white-space: normal;
     word-break: break-word;
     hyphens: auto; /* Automatically inserts hyphens when breaking words */
     text-align: justify;
 }
-
 
 /* Special column properties */
 .column-fade-combined {
@@ -323,9 +279,8 @@ td {
         linear-gradient(to bottom, black 75%, rgba(255, 255, 255, 0) 80%);
     mask-composite: intersect;
     mask-size: 100% 100%;
-    transition: mask-size 0.2s ease-out;
 }
-.column-fade-combined.hide-mask {
+.transaction-row.active .column-fade-combined {
     mask-size: 125% 300%;
 }
 
@@ -333,12 +288,17 @@ td {
     mask-image: 
         linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
     mask-size: 100%;
-    transition: mask-size 0.2s ease-out;
 }
-.column-fade-right.hide-mask {
+/* Not needed since we aren't expanding the are of the columns with this */
+/* .transaction-row.active .column-fade-right {
     mask-size: 125%;
-}
+} */
 
+
+.summary-row-category-and-amount {
+    /* This limits the width of the span so that it doesn't overflow and the fade works as intended */
+    overflow: hidden;
+}
 .second-row-category-and-amount {
     padding-top: 4px;
     border-top: 2px solid transparent;
@@ -362,13 +322,13 @@ td {
 }
 
 /* The expanded stuff or the extra stuff like buttons*/
-.spendings-expanded {
+.transaction-buttons-cell {
     position: relative; /* In order to have the possibility of content stuck to the bottom */
     overflow: hidden;
     transition: height 0.2s ease-out;
     height: 0; /* Initial collapsed state */
 }
-.spendings-expanded-content {
+.transaction-buttons-content {
     position: absolute;
     bottom: 0;
     width: 100%;
@@ -394,12 +354,12 @@ td {
 }
 
 @media (max-width: 777px) {
-    .spendings-summary td:nth-child(5) {
+    .transaction-row td:nth-child(5) {
         display: none;
     }
 }
 @media (max-width: 600px) {
-    .spendings-summary td:nth-child(3) {
+    .transaction-row td:nth-child(3) {
         display: none;
     }
 }

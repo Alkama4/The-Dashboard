@@ -1,7 +1,9 @@
 <template>
     <div>
-        <h1>Analytics Page</h1>
-        <p>Welcome to the analytics page! First underneath you can find statistics about the transactions. Under that there are charts that you can use to look through the past months and years of data and get a general understanding of trends.</p>
+        <div class="content-width-medium">
+            <h1>Analytics Page</h1>
+            <p>Welcome to the analytics page! First underneath you can find statistics about the transactions. Under that there are charts that you can use to look through the past months and years of data and get a general understanding of trends.</p>
+        </div>
         <!-- 
         These could have different timespans (day, week, month, year, all, custom):
             - transactions logged                               all
@@ -24,7 +26,7 @@
         Which of these would be useful and with what timefrmaes and comparisons?
         -->
 
-        <div class="card">
+        <div class="card content-width-medium">
             <h2>Overall Statistics</h2>
             <div class="info-grid">
                 <div class="cell">
@@ -55,7 +57,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card content-width-medium">
             <h2>Last Month</h2>
             <div class="info-grid">
                 <div class="cell">
@@ -122,7 +124,7 @@
             </div>
         </div>
 
-        <div class="card">
+        <div class="card content-width-medium">
             <h2>Last Year</h2>
             <div class="info-grid">
                 <div class="cell">
@@ -190,11 +192,13 @@
 
         <!-- <h2>All time?</h2> -->
 
-        <h1>Charts</h1>
-        <p> If you wish to look more closely at the data or look further back these charts might be juts what you are looking for. With these you can sdfj sldkfj lsdkjf mn foenf wlf dkjf0. Sdfhjsd jasd fsj fasdjnfkjadsnf sdf ksdjf dhfiauf!</p>
+        <div class="content-width-medium">
+            <h1>Charts</h1>
+            <p> If you wish to look more closely at the data or look further back these charts might be juts what you are looking for. With these you can sdfj sldkfj lsdkjf mn foenf wlf dkjf0. Sdfhjsd jasd fsj fasdjnfkjadsnf sdf ksdjf dhfiauf!</p>
+        </div>
 
         <div 
-            class="card chartCard"
+            class="card chartCard content-width-large"
             :class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
         >
             <div 
@@ -212,7 +216,7 @@
         </div>
 
         <div 
-            class="card chartCard"
+            class="card chartCard content-width-large"
             :class="{ loaded: isLoaded.chart2, fullscreen: fullscreenChart === 'chart2' }"
         >
             <div 
@@ -230,7 +234,7 @@
         </div>
 
         <div 
-            class="card chartCard"
+            class="card chartCard content-width-large"
             :class="{ loaded: isLoaded.chart3, fullscreen: fullscreenChart === 'chart3' }"
         >
             <div 

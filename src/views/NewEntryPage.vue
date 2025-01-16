@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="content-width-small">
         <h1>New Entry</h1>
         <p>With the form below you can create a new entry that will be saved to the database.</p>
         <EntryForm @submit="handleFormSubmit" form-type="new"/>
