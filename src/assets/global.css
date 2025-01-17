@@ -706,7 +706,6 @@ input[type="radio"] {
     padding: var(--spacing-md);
     margin: calc(var(--spacing-md) + var(--spacing-xs)) 0;
 }
-
 .card h2 {
     margin-top: -2px;
     margin-bottom: var(--spacing-sm);

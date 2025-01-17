@@ -2,8 +2,7 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- After recompiling doesn't get account data but thinks I'm logged in. Although it cant show a name??
-- Clear out expired sessions when logging in.
+- Filters button broken. Something about a string and invalid chars
 
 ### Features to add
 - Navigation

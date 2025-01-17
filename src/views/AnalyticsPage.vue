@@ -815,6 +815,7 @@ export default {
 }
 .chartCard.fullscreen {
     max-height: none;
+    max-width: none;
     height: auto;
     width: auto;
     position: fixed !important;

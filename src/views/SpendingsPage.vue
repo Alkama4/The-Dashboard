@@ -47,7 +47,6 @@
                     />
                 </div>
             </div>
-
             <div ref="placeForEntries">
                 <SpendingsEntry
                     v-for="(transaction, index) in transactions"
@@ -57,6 +56,15 @@
                     @toggle="toggleEntry(index)"
                     @refreshTable="refreshTable"
                 />
+                <div v-if="waitingForResponse">
+                    <div class="transaction-row" v-for="i in 10" :key="i">
+                        <div class="loading-placeholder transaction-cell column-date"></div>
+                        <div class="loading-placeholder transaction-cell column-counterparty"></div>
+                        <div class="loading-placeholder transaction-cell column-category"></div>
+                        <div class="loading-placeholder transaction-cell column-amount"></div>
+                        <div class="loading-placeholder transaction-cell column-notes"></div>
+                    </div>
+                </div>
             </div>
         </div>
     
@@ -364,5 +372,27 @@
 } .transaction-headers > div.active:active svg {
     fill: var(--color-primary-active)
 }
+
+.loading-placeholder {
+    background: linear-gradient(
+        90deg,
+        var(--color-background-tr-active) 20%,
+        var(--color-background-tr-hover) 50%,
+        var(--color-background-tr-active) 80%
+    );
+    background-size: 200% 100%;
+    animation: highlight-wave 2s infinite linear;
+    border-radius: var(--border-radius-small);
+    margin: calc(var(--spacing-sm) + 1px);  /* 2px for border */
+}
+@keyframes highlight-wave {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
 
 </style>
