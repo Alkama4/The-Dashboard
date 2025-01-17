@@ -14,11 +14,14 @@
             />
         </div>
 
-        <h2>Chart settings</h2>
-
-        <div class="chart-settings">
-            <label for="">Initial value</label>
-            <input type="number" v-model="chart1StartingPosition" placeholder="Initial value" step="0.01" @change="saveSettings">
+        <div class="content-width-small">
+            <h2>Settings</h2>
+            <div class="chart-settings ">
+                <div class="setting-name">"Balance Over Time" chart's initial value</div>
+                <input type="number" v-model="chart1StartingPosition" placeholder="0" step="0.01" @change="saveSettings">
+                <div class="setting-name">Amount of transactions loaded at once</div>
+                <input type="number" v-model="transactionsLoadedAtOnce" placeholder="25" step="1" min="5" max="100" @change="saveSettings">
+            </div>
         </div>
 
     </div>
@@ -28,6 +31,7 @@
 import api from '@/utils/dataQuery';
 import ModalWindow from '@/components/ModalWindow.vue';
 import router from '@/router';
+import { notify } from '@/utils/notification';
 
 export default {
     components: {
@@ -39,6 +43,7 @@ export default {
             username: '',
             showModal: false,
             chart1StartingPosition: 0,
+            transactionsLoadedAtOnce: 25,
         };
     },
     methods: {
@@ -55,18 +60,44 @@ export default {
             this.showModal = true;
         },
         saveSettings() {
-            localStorage.setItem('chart1StartingPosition', this.chart1StartingPosition);
+            if (Number.isFinite(this.chart1StartingPosition)) {
+                localStorage.setItem('chart1StartingPosition', this.chart1StartingPosition);
+            } else {
+                notify("Setting not saved! Please enter a valid number.", "warning")
+            }
+            
+            // Check if the value is a valid number before proceeding
+            if (!Number.isFinite(this.transactionsLoadedAtOnce)) {
+                notify("Setting not saved! Please enter a valid number.", "warning");
+            } else {
+                // Cap the value between 5 and 100
+                if (this.transactionsLoadedAtOnce < 5) {
+                    this.transactionsLoadedAtOnce = 5;
+                } else if (this.transactionsLoadedAtOnce > 100) {
+                    this.transactionsLoadedAtOnce = 100;
+                }
+
+                // Save the valid value to localStorage
+                localStorage.setItem('transactionsLoadedAtOnce', this.transactionsLoadedAtOnce);
+            }
+            
             console.log('Settings saved');
         },
         loadSettings() {
             const chart1StartingPosition = localStorage.getItem('chart1StartingPosition');
             if (chart1StartingPosition) {
-                this.chart1StartingPosition = chart1StartingPosition;
+                this.chart1StartingPosition = Number(chart1StartingPosition);
+            }
+
+            const transactionsLoadedAtOnce = localStorage.getItem('transactionsLoadedAtOnce');
+            if (transactionsLoadedAtOnce) {
+                this.transactionsLoadedAtOnce = Number(transactionsLoadedAtOnce);
             }
 
             const username = localStorage.getItem("username");
-            if (username)
+            if (username) {
                 this.username = username;
+            }
         }
     },
     mounted() {
@@ -93,11 +124,20 @@ export default {
 }
 
 .chart-settings {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: space-between;
+    row-gap: var(--spacing-md);
+}
+.chart-settings .setting-name {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    color: var(--color-text-lighter);
+    font-weight: 500;
 }
 .chart-settings input[type="number"] {
-    max-width: 200px;
+    max-width: 150px;
 }
+
 
 </style>

@@ -56,8 +56,8 @@
                     @toggle="toggleEntry(index)"
                     @refreshTable="refreshTable"
                 />
-                <div v-if="waitingForResponse">
-                    <div class="transaction-row" v-for="i in 10" :key="i">
+                <div v-if="waitingForResponse && apiFilters.offset === 0">
+                    <div class="transaction-row" v-for="i in Number(this.apiFilters.limit)" :key="i">
                         <div class="loading-placeholder transaction-cell column-date"></div>
                         <div class="loading-placeholder transaction-cell column-counterparty"></div>
                         <div class="loading-placeholder transaction-cell column-category"></div>
@@ -124,7 +124,7 @@
                 apiFilters: {
                     sort_by: 'date',
                     sort_order: 'desc',
-                    limit: 25,   // How many are loaded at a time
+                    limit: 25,   // How many are loaded at a time, set by localstorage so this is just a backup
                     offset: 0,
                     // Filter values
                     start_date: 946684800000,
@@ -268,6 +268,8 @@
             }
         },
         async mounted() {
+            const loadingLimit = localStorage.getItem("transactionsLoadedAtOnce");
+            this.apiFilters.limit = Number(loadingLimit);
             this.refreshTable();
         },
     };
