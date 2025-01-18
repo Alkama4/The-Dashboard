@@ -2,7 +2,7 @@
     <div>
         <div class="content-width-medium">
             <h1>Analytics Page</h1>
-            <p>Welcome to the analytics page! First underneath you can find statistics about the transactions. Under that there are charts that you can use to look through the past months and years of data and get a general understanding of trends.</p>
+            <p>Welcome to the analytics page! At the top, you'll find an overview of key statistics, including the total number of transactions logged and other general metrics. Below that, you'll find charts designed to help you explore your data. These charts provide a detailed look at spending trends, allowing you to analyze both monthly and yearly patterns for a deeper understanding of your financial activity.</p>
         </div>
         <!-- 
         These could have different timespans (day, week, month, year, all, custom):
@@ -165,7 +165,9 @@
 
         <div class="content-width-medium">
             <h1>Charts</h1>
-            <p> If you wish to look more closely at the data or look further back these charts might be juts what you are looking for. With these you can sdfj sldkfj lsdkjf mn foenf wlf dkjf0. Sdfhjsd jasd fsj fasdjnfkjadsnf sdf ksdjf dhfiauf!</p>
+            <p> If you want to take a more comprehensive look at your spending habits over time, the charts below can provide valuable insights. These charts are not limited to showing data from just the past month or even the past year. Instead, they present a complete view of all available spending data, organized month by month. </p>
+                
+            <p>This allows you to observe trends, identify patterns, and track changes in your financial behavior across an extended timeline. Whether you're analyzing seasonal variations or monitoring long-term progress, these charts are a helpful tool for gaining a deeper understanding of your financial activity.</p>
         </div>
 
         <div 
@@ -449,48 +451,16 @@ export default {
                 const lastMonthResponse = await api.getStatsForTimespan("month")
                 if (lastMonthResponse && lastMonthResponse.stats) {
                     this.pageValues.lastMonth = {...lastMonthResponse.stats}
-    
-                    // Map data to piechart friendly form
-                    // const pieData1 = lastMonthResponse.stats.topMostCommonCategories.map(item => ({
-                    //     name: item.category,
-                    //     value: item.count
-                    // }));
+
                     const pieData1 = lastMonthResponse.stats.topMostExpensiveCategories.map(item => ({
                         name: item.category,
                         value: item.totalAmount
                     }));
     
-                    // pie1.setOption({
-                    //     textStyle: this.commonChartValues.textStyle,
-                    //     legend: this.commonChartValues.legend,
-                    //     color: this.commonChartValues.color,
-                    //     tooltip: { 
-                    //         trigger: 'item',
-                    //         backgroundColor: this.getCssVar('color-background-card'),
-                    //         borderColor: this.getCssVar('color-border'),
-                    //         formatter: params => this.generateTooltipPie(params, 'count')
-                    //     },
-                    //     grid: {
-                    //         left: 0,
-                    //         right: 0,
-                    //         top: 0,
-                    //         bottom: 0,
-                    //     },
-                    //     series: [
-                    //         {
-                    //             name: 'Category',
-                    //             type: 'pie',
-                    //             label: {
-                    //                 color: this.getCssVar('color-text')
-                    //             },
-                    //             data: pieData1,
-                    //         }
-                    //     ]
-                    // });
                     pie1.setOption({
                         textStyle: this.commonChartValues.textStyle,
                         title: {
-                            text: 'Last years categories total sum',
+                            text: 'Spendings This Month by Category',
                             textStyle: {
                                 color: this.getCssVar('color-text-lighter'),
                                 fontSize: 16,
@@ -506,15 +476,9 @@ export default {
                             borderColor: this.getCssVar('color-border'),
                             formatter: params => this.generateTooltipPie(params, 'eur')
                         },
-                        grid: {
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                        },
                         series: [
                             {
-                                name: 'Category',
+                                name: 'Monthly Average Spending',
                                 type: 'pie',
                                 label: {
                                     color: this.getCssVar('color-text')
@@ -583,47 +547,15 @@ export default {
                 if (lastYearResponse && lastYearResponse.stats) {
                     this.pageValues.lastYear = {...lastYearResponse.stats}
 
-                    // Map data to piechart friendly form
-                    // const pieData3 = lastYearResponse.stats.topMostCommonCategories.map(item => ({
-                    //     name: item.category,
-                    //     value: item.count
-                    // }));
                     const pieData2 = lastYearResponse.stats.topMostExpensiveCategories.map(item => ({
                         name: item.category,
                         value: item.totalAmount
                     }));
-    
-                    // pie3.setOption({
-                    //     textStyle: this.commonChartValues.textStyle,
-                    //     legend: this.commonChartValues.legend,
-                    //     color: this.commonChartValues.color,
-                    //     tooltip: { 
-                    //         trigger: 'item',
-                    //         backgroundColor: this.getCssVar('color-background-card'),
-                    //         borderColor: this.getCssVar('color-border'),
-                    //         formatter: params => this.generateTooltipPie(params, 'count')
-                    //     },
-                    //     grid: {
-                    //         left: 0,
-                    //         right: 0,
-                    //         top: 0,
-                    //         bottom: 0,
-                    //     },
-                    //     series: [
-                    //         {
-                    //             name: 'Category',
-                    //             type: 'pie',
-                    //             label: {
-                    //                 color: this.getCssVar('color-text')
-                    //             },
-                    //             data: pieData3,
-                    //         }
-                    //     ]
-                    // });
+
                     pie2.setOption({
                         textStyle: this.commonChartValues.textStyle,
                         title: {
-                            text: 'Last years categories total sum',
+                            text: 'Monthly Average Spendings by Category',
                             textStyle: {
                                 color: this.getCssVar('color-text-lighter'),
                                 fontSize: 16,
@@ -639,15 +571,9 @@ export default {
                             borderColor: this.getCssVar('color-border'),
                             formatter: params => this.generateTooltipPie(params, 'eur')
                         },
-                        grid: {
-                            left: 0,
-                            right: 0,
-                            top: 0,
-                            bottom: 0,
-                        },
                         series: [
                             {
-                                name: 'Category',
+                                name: 'Monthly Average Spending',
                                 type: 'pie',
                                 label: {
                                     color: this.getCssVar('color-text')
@@ -1060,8 +986,7 @@ export default {
 <style scoped>
 .pieChartHolder {
     position: relative;
-    height: calc(100vw * 0.5 + 168px);
-    max-height: 750px;
+    height: 450px;
     width: 100%;
     background-color: var(--color-background-card);
 }
@@ -1072,7 +997,7 @@ export default {
 
 .chartCard {
     position: relative;
-    max-height: 550px;
+    max-height: 650px;
     height: calc(100vw * 0.5 + 168px);
     width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
 }

@@ -3,8 +3,6 @@ In here I will collect my notes about this website and list the stuff that need 
 
 ### Next time
 - Filters button broken. Something about a string and invalid chars
-- spendings -> transactions?
-    - Actually it was a pretty good name. Spendings has transactions listed. A single transaction has transaction items.
 
 ### Features to add
 - Navigation
@@ -38,6 +36,7 @@ In here I will collect my notes about this website and list the stuff that need 
         - Dispaly status in menu?
     - remake layout
 - Simple modal confirms shouldn't connect to display edge if mobile
+- A list of the total amounts in the old style nex to the new pie chart?
 - Movie and Film tracker db
 
 ### Known issues

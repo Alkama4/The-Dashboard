@@ -3,11 +3,9 @@
 
         <div class="content-width-medium">
             <h1>Spendings page</h1>
-            <p> Descriptive text about the spendings page that will be longer 
-                and more detailed in the future, possibly, but that is uncertain 
-                so don't quote me on that or anything else I have written in 
-                this or anywhere else on the website. One liners babyyyy...
-            </p>
+            <p> Welcome to the transactions page! Here, you'll find a comprehensive table listing all your logged transactions. This page not only provides a clear overview of your spending activity but also serves as a powerful tool for managing your financial records. You can easily add new transactions, edit existing ones, duplicate entries for efficiency, or remove items no longer needed. </p>
+                
+            <!-- <p>To streamline your search, the page also includes robust filtering options, allowing you to quickly locate specific transactions based on your criteria. Whether you're organizing your finances or diving into details, this page is designed to make managing your transactions simple and efficient.</p> -->
         </div>
             
         <!-- Fullscreen filter menu hidden by default -->
@@ -58,7 +56,7 @@
                     @refreshTable="refreshTable"
                 />
                 <div v-if="waitingForResponse && apiFilters.offset === 0">
-                    <div class="transaction-row" v-for="i in Number(this.apiFilters.limit)" :key="i">
+                    <div class="transaction-row" v-for="i in Math.min(Number(this.apiFilters.limit), 15)" :key="i">
                         <div class="loading-placeholder transaction-cell column-date"></div>
                         <div class="loading-placeholder transaction-cell column-counterparty"></div>
                         <div class="loading-placeholder transaction-cell column-category"></div>

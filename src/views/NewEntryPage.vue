@@ -1,7 +1,7 @@
 <template>
     <div class="content-width-small">
         <h1>New Entry</h1>
-        <p>With the form below you can create a new entry that will be saved to the database.</p>
+        <p>Welcome to the new entry page! Use this form to quickly add a new transaction to your records. Simply fill out the required details, and your entry will be saved, helping you keep your finances up to date with ease.</p>
         <EntryForm @submit="handleFormSubmit" form-type="new"/>
     </div>
 </template>
