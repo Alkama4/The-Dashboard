@@ -348,8 +348,8 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 	.capacityIndicator {
 		width: 100%;
 		height: 32px;
-		background-color: var(--color-background-input);
-		border: 1px solid var(--color-border);
+		background-color: var(--color-background-card-section);
+		/* border: 1px solid var(--color-border); */
 		border-radius: var(--border-radius-small);
 		position: relative;
 	}

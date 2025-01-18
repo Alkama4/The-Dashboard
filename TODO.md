@@ -3,6 +3,8 @@ In here I will collect my notes about this website and list the stuff that need 
 
 ### Next time
 - Filters button broken. Something about a string and invalid chars
+- spendings -> transactions?
+    - Actually it was a pretty good name. Spendings has transactions listed. A single transaction has transaction items.
 
 ### Features to add
 - Navigation

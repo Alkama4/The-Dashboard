@@ -67,15 +67,16 @@
     --color-secondary-hover: #eb386e;
     --color-secondary-active: #f85384;
 
-    --color-tertiary: #FFB74D;  /* Soft orange */
-    --color-quaternary: #4CAF50; /* Vibrant green */
-    --color-quinary: #2196F3;    /* Bright blue */
-    --color-senary: #9C27B0;     /* Bold purple */
-    --color-septenary: #FF5722;  /* Rich red-orange */
-    --color-octonary: #00BCD4;   /* Refreshing cyan */
-    --color-nonary: #8BC34A;     /* Fresh lime green */
-    --color-denary: #FFC107;     /* Warm yellow */
-    --color-undecenary: #3F51B5; /* Strong indigo */
+    --color-tertiary: #fad73e;
+    --color-quaternary: #1db14e;
+    --color-quinary: #2196F3;
+    --color-jokumikalie: #7e3fb9; 
+    --color-senary: #153963;
+    --color-septenary: #b3083b;
+    --color-octonary: rgb(240, 205, 6);
+    --color-nonary: #0c9b3c;
+    --color-denary: #0068bd;
+    --color-undecenary: #54198b;
 
     --color-positive: #11c772;
     --color-positive-hover: #29d685;
@@ -115,7 +116,7 @@
     --color-background-tr-hover: hsl(0, 0%, 85%);
     
     /* Button colors */
-    --color-button-general: hsl(0, 0%, 90%);
+    --color-button-general: hsl(0, 0%, 100%);
     --color-button-general-hover: hsl(0, 0%, 94%);
     --color-button-general-active: hsl(0, 0%, 92%);
 
@@ -153,15 +154,16 @@
     --color-secondary-hover: #eb386e;
     --color-secondary-active: #f85384;
 
-    --color-tertiary: #FFB74D;  /* Soft orange */
-    --color-quaternary: #4CAF50; /* Vibrant green */
-    --color-quinary: #2196F3;    /* Bright blue */
-    --color-senary: #9C27B0;     /* Bold purple */
-    --color-septenary: #FF5722;  /* Rich red-orange */
-    --color-octonary: #00BCD4;   /* Refreshing cyan */
-    --color-nonary: #8BC34A;     /* Fresh lime green */
-    --color-denary: #FFC107;     /* Warm yellow */
-    --color-undecenary: #3F51B5; /* Strong indigo */
+    --color-tertiary: #4bc04f;  
+    --color-quaternary: #ece038; 
+    --color-quinary: #17c3cf;    
+    --color-jokumikalie: #7e3fb9; 
+    --color-senary: #1d3279;     
+    --color-septenary: #b61967;  
+    --color-octonary: #28964d;   
+    --color-nonary: #b5c523;     
+    --color-denary: #3cb4ae;     
+    --color-undecenary: #5d3285; 
 
     --color-positive: #14a561;
     --color-positive-hover: #0bbe6b;
@@ -594,6 +596,7 @@ input[type="radio"] {
     font-size: 16px; 
     font-weight: 700;
     margin-bottom: 4px;
+    text-align: start;
 }
 .chart-tooltip .color-blob {
     width: 11px;

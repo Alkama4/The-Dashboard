@@ -8,6 +8,21 @@
 		<button @click="notificationError">Error</button>
 		<button @click="notificationWarning">Warning</button>
 
+        <div class="color-palette">
+            <div style="background-color: var(--color-primary);"></div>
+            <div style="background-color: var(--color-secondary);"></div>
+            <div style="background-color: var(--color-tertiary);"></div>
+            <div style="background-color: var(--color-quaternary);"></div>
+            <div style="background-color: var(--color-quinary);"></div>
+            <div style="background-color: var(--color-jokumikalie);"></div>
+            <div style="background-color: var(--color-senary);"></div>
+            <div style="background-color: var(--color-septenary);"></div>
+            <div style="background-color: var(--color-octonary);"></div>
+            <div style="background-color: var(--color-nonary);"></div>
+            <div style="background-color: var(--color-denary);"></div>
+            <div style="background-color: var(--color-undecenary);"></div>
+        </div>
+
 		<h2>Ascii Art</h2>
 		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
 			
@@ -163,5 +178,17 @@ export default {
 <style scoped>
 .debug-page {
     padding: 20px;
+}
+.color-palette {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    /* gap: 4px; */
+    width: 100%;
+    margin-top: 10px;
+    margin: var(--spacing-lg) 0;
+}
+
+.color-palette div {
+    height: 200px;
 }
 </style>

@@ -43,6 +43,7 @@
                     {{ column.label }}
                     <component
                         :is="getSortIcon(column.key)"
+                        :style="{ fill: waitingForResponse ? 'var(--color-text-hidden)' : '' }"
                         size="20px"
                     />
                 </div>
@@ -124,7 +125,7 @@
                 apiFilters: {
                     sort_by: 'date',
                     sort_order: 'desc',
-                    limit: 25,   // How many are loaded at a time, set by localstorage so this is just a backup
+                    limit: 25,   // Fall back value if not set in localstorage
                     offset: 0,
                     // Filter values
                     start_date: 946684800000,
@@ -269,7 +270,9 @@
         },
         async mounted() {
             const loadingLimit = localStorage.getItem("transactionsLoadedAtOnce");
-            this.apiFilters.limit = Number(loadingLimit);
+            if (loadingLimit) {
+                this.apiFilters.limit = Number(loadingLimit);
+            }
             this.refreshTable();
         },
     };
@@ -315,7 +318,7 @@
     flex: 3;
     overflow: hidden;
     text-align: start;
-    padding-right: 0;
+    /* padding-right: 0; */
 }
 .transaction-row .column-amount {
     /* width: 150px; */
@@ -326,7 +329,7 @@
     text-align: end;
     justify-content: end;
     font-weight: 500;
-    padding-left: 0;
+    /* padding-left: 0; */
 }
 .transaction-row .column-notes {
     /* width: 200px; */

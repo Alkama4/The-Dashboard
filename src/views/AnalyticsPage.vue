@@ -94,33 +94,18 @@
 
             <div class="card-spacer"></div>
 
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Top Expense Categories by Frequency</div>
-                    <table>
-                        <tr v-for="(item, index) in pageValues.lastMonth.topMostCommonCategories" :key="index">
-                            <td>{{ index + 1 }}.</td>
-                            <td>{{ item.category || '-' }}</td>
-                            <td>{{ toFiCount(item.count) || '-' }}</td>
-                        </tr>
-                        <div v-if="!pageValues.lastMonth.topMostCommonCategories" class="data">
-                            -
-                        </div>
-                    </table>
-                </div>
-                <div class="cell">
-                    <div class="label">Top Expense Categories by Amount</div>
-                    <table>
-                        <tr v-for="(item, index) in pageValues.lastMonth.topMostExpensiveCategories" :key="index">
-                            <td>{{ index + 1 }}.</td>
-                            <td>{{ item.category || '-' }}</td>
-                            <td>{{ toEur(item.totalAmount) || '-' }}</td>
-                        </tr>
-                        <div v-if="!pageValues.lastMonth.topMostExpensiveCategories" class="data">
-                            -
-                        </div>
-                    </table>
-                </div>
+            <div 
+                class="pieChartHolder"
+                :class="{ loaded: isLoaded.pie1, fullscreen: fullscreenChart === 'pie1' }"
+            >
+                <div class="chart" ref="pieChartContainer1"></div>
+                <button 
+                    class="button-simple fs-button" 
+                    @click="toggleFullscreenChart('pie1')"
+                >
+                    <IconCollapse v-if="fullscreenChart === 'pie1'"/>
+                    <IconExpand v-else/>
+                </button>
             </div>
         </div>
 
@@ -155,38 +140,24 @@
                         :class="pageValues.lastYear.netTotal > 0 ? 'positive' : 'negative'" 
                     >
                         {{ toEur(pageValues.lastYear.netTotal) || '-' }}
-                    </div>                </div>
+                    </div>                
+                </div>
             </div>
 
             <div class="card-spacer"></div>
 
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Top Expense Categories by Frequency</div>
-                    <table>
-                        <tr v-for="(item, index) in pageValues.lastYear.topMostCommonCategories" :key="index">
-                            <td>{{ index + 1 }}.</td>
-                            <td>{{ item.category || '-' }}</td>
-                            <td>{{ toFiCount(item.count) || '-' }}</td>
-                        </tr>
-                        <div v-if="!pageValues.lastYear.topMostCommonCategories" class="data">
-                            -
-                        </div>
-                    </table>
-                </div>
-                <div class="cell">
-                    <div class="label">Top Expense Categories by Amount</div>
-                    <table>
-                        <tr v-for="(item, index) in pageValues.lastYear.topMostExpensiveCategories" :key="index">
-                            <td>{{ index + 1 }}.</td>
-                            <td>{{ item.category || '-' }}</td>
-                            <td>{{ toEur(item.totalAmount) || '-' }}</td>
-                        </tr>
-                        <div v-if="!pageValues.lastYear.topMostExpensiveCategories" class="data">
-                            -
-                        </div>
-                    </table>
-                </div>
+            <div 
+                class="pieChartHolder"
+                :class="{ loaded: isLoaded.pie2, fullscreen: fullscreenChart === 'pie2' }"
+            >
+                <div class="chart" ref="pieChartContainer2"></div>
+                <button 
+                    class="button-simple fs-button" 
+                    @click="toggleFullscreenChart('pie2')"
+                >
+                    <IconCollapse v-if="fullscreenChart === 'pie2'"/>
+                    <IconExpand v-else/>
+                </button>
             </div>
         </div>
 
@@ -201,11 +172,7 @@
             class="card chartCard content-width-large"
             :class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
         >
-            <div 
-                ref="chartContainer1" 
-                class="chart"
-            >
-            </div>
+            <div class="chart" ref="chartContainer1"></div>
             <button 
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart1')"
@@ -219,11 +186,7 @@
             class="card chartCard content-width-large"
             :class="{ loaded: isLoaded.chart2, fullscreen: fullscreenChart === 'chart2' }"
         >
-            <div 
-                ref="chartContainer2" 
-                class="chart"
-            >
-            </div>
+            <div class="chart" ref="chartContainer2"></div>
             <button 
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart2')"
@@ -237,11 +200,7 @@
             class="card chartCard content-width-large"
             :class="{ loaded: isLoaded.chart3, fullscreen: fullscreenChart === 'chart3' }"
         >
-            <div 
-                ref="chartContainer3" 
-                class="chart"
-            >
-            </div>
+            <div class="chart" ref="chartContainer3"></div>
             <button 
                 class="button-simple fs-button" 
                 @click="toggleFullscreenChart('chart3')"
@@ -257,7 +216,7 @@
 <script>
 // ECharts imports
 import { use, init } from 'echarts/core'
-import { LineChart, BarChart } from 'echarts/charts'
+import { LineChart, BarChart, PieChart } from 'echarts/charts'
 import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
 import { SVGRenderer } from 'echarts/renderers'
 // import { CanvasRenderer } from 'echarts/renderers'
@@ -268,7 +227,7 @@ import IconCollapse from '@/components/icons/IconCollapse.vue';
 // import { notify } from '@/utils/notification';
 
 // Register only the required components
-use([TooltipComponent, GridComponent, LineChart, BarChart, SVGRenderer, TitleComponent, LegendComponent]);
+use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, SVGRenderer, TitleComponent, LegendComponent]);
 
 export default {
     name: 'AnalyticsPage',
@@ -391,6 +350,79 @@ export default {
                     <table>${rows}</table>
                 </div>
             `;
+        },
+        generateTooltipPie(params, countOrEur) {
+            // console.log(params);
+            return `
+                <div class="chart-tooltip">
+                    <div class="header">${params.seriesName}</div>
+                    <table>
+                        <tr class="${params.data === 0 ? 'disabled' : ''}">
+                            <td style="display: flex; align-items: center; padding-right: 1rem;">
+                                <div class="color-blob" style="background-color: ${params.color};"></div>
+                                <div class="series-name">${params.name}</div>
+                            </td>
+                            <td class="value">${countOrEur == 'eur' ? this.toFiCurrency(params.value) : params.value + ' kpl'}</td>
+                        </tr>
+                    </table>
+                </div>
+            `;
+        }
+    },
+    computed: {
+        commonChartValues() {
+            return {
+                color: [
+                    this.getCssVar("color-primary"), 
+                    this.getCssVar("color-secondary"), 
+                    this.getCssVar("color-tertiary"),
+                    this.getCssVar("color-quaternary"),
+                    this.getCssVar("color-quinary"),
+                    this.getCssVar("color-jokumikalie"),
+                    this.getCssVar("color-senary"),
+                    this.getCssVar("color-septenary"),
+                    this.getCssVar("color-octonary"),
+                    this.getCssVar("color-nonary"),
+                    this.getCssVar("color-denary"),
+                    this.getCssVar("color-undecenary"),
+                ],
+                legend: {
+                    type: 'scroll',
+                    show: true,
+                    bottom: 0,
+                    textStyle: {
+                        color: this.getCssVar('color-text'),
+                        fontWeight: 500,
+                    },
+                    inactiveColor: this.getCssVar('color-text-hidden'),
+                    pageIconColor: this.getCssVar('color-text'),
+                    pageIconInactiveColor: this.getCssVar('color-text-hidden'),
+                    pageTextStyle: {
+                        color: this.getCssVar('color-text'),
+                    },
+                },
+                textStyle: {
+                    fontFamily: 'Poppins',
+                    color: this.getCssVar('color-text-lighter'),
+                },
+            }
+        },
+        chartLegend() {
+            return {
+                type: 'scroll',
+                show: true,
+                bottom: 0,
+                textStyle: {
+                    color: this.getCssVar('color-text'),
+                    fontWeight: 500,
+                },
+                inactiveColor: this.getCssVar('color-text-hidden'),
+                pageIconColor: this.getCssVar('color-text'),
+                pageIconInactiveColor: this.getCssVar('color-text-hidden'),
+                pageTextStyle: {
+                    color: this.getCssVar('color-text'),
+                },
+            }
         }
     },
     async mounted() {
@@ -399,6 +431,8 @@ export default {
         const chart1 = init(this.$refs.chartContainer1);
         const chart2 = init(this.$refs.chartContainer2);
         const chart3 = init(this.$refs.chartContainer3);
+        const pie1 = init(this.$refs.pieChartContainer1);
+        const pie2 = init(this.$refs.pieChartContainer2);
 
         // Async setup for each chart
         const fetchAndSetupCharts = [
@@ -413,16 +447,267 @@ export default {
             // Last month stats
             (async () => {
                 const lastMonthResponse = await api.getStatsForTimespan("month")
-                if (lastMonthResponse && lastMonthResponse.stats)
+                if (lastMonthResponse && lastMonthResponse.stats) {
                     this.pageValues.lastMonth = {...lastMonthResponse.stats}
+    
+                    // Map data to piechart friendly form
+                    // const pieData1 = lastMonthResponse.stats.topMostCommonCategories.map(item => ({
+                    //     name: item.category,
+                    //     value: item.count
+                    // }));
+                    const pieData1 = lastMonthResponse.stats.topMostExpensiveCategories.map(item => ({
+                        name: item.category,
+                        value: item.totalAmount
+                    }));
+    
+                    // pie1.setOption({
+                    //     textStyle: this.commonChartValues.textStyle,
+                    //     legend: this.commonChartValues.legend,
+                    //     color: this.commonChartValues.color,
+                    //     tooltip: { 
+                    //         trigger: 'item',
+                    //         backgroundColor: this.getCssVar('color-background-card'),
+                    //         borderColor: this.getCssVar('color-border'),
+                    //         formatter: params => this.generateTooltipPie(params, 'count')
+                    //     },
+                    //     grid: {
+                    //         left: 0,
+                    //         right: 0,
+                    //         top: 0,
+                    //         bottom: 0,
+                    //     },
+                    //     series: [
+                    //         {
+                    //             name: 'Category',
+                    //             type: 'pie',
+                    //             label: {
+                    //                 color: this.getCssVar('color-text')
+                    //             },
+                    //             data: pieData1,
+                    //         }
+                    //     ]
+                    // });
+                    pie1.setOption({
+                        textStyle: this.commonChartValues.textStyle,
+                        title: {
+                            text: 'Last years categories total sum',
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                                fontSize: 16,
+                                fontWeight: 500,
+                            },
+                            x: 'center',
+                        },
+                        legend: this.commonChartValues.legend,
+                        color: this.commonChartValues.color,
+                        tooltip: { 
+                            trigger: 'item',
+                            backgroundColor: this.getCssVar('color-background-card'),
+                            borderColor: this.getCssVar('color-border'),
+                            formatter: params => this.generateTooltipPie(params, 'eur')
+                        },
+                        grid: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                        },
+                        series: [
+                            {
+                                name: 'Category',
+                                type: 'pie',
+                                label: {
+                                    color: this.getCssVar('color-text')
+                                },
+                                data: pieData1,
+                            }
+                        ]
+                    })
 
+                    // Add a listener to resize the chart when needed
+                    this.setupResizeObserver("pieChartContainer1", pie1);
+
+                    // Listen for custom dark mode change event
+                    window.addEventListener("darkModeChange", () => {
+                        pie1.setOption({
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                            },
+                            legend: {
+                                textStyle: {
+                                    color: this.getCssVar('color-text'),
+                                },
+                                inactiveColor: this.getCssVar('color-text-hidden'),
+                                pageIconColor: this.getCssVar('color-text'),
+                                pageIconInactiveColor: this.getCssVar('color-text-hidden'),
+                                pageTextStyle: {
+                                    color: this.getCssVar('color-text'),
+                                },
+                            },
+                            color: [
+                                this.getCssVar("color-primary"), 
+                                this.getCssVar("color-secondary"), 
+                                this.getCssVar("color-tertiary"),
+                                this.getCssVar("color-quaternary"),
+                                this.getCssVar("color-quinary"),
+                                this.getCssVar("color-jokumikalie"),
+                                this.getCssVar("color-senary"),
+                                this.getCssVar("color-septenary"),
+                                this.getCssVar("color-octonary"),
+                                this.getCssVar("color-nonary"),
+                                this.getCssVar("color-denary"),
+                                this.getCssVar("color-undecenary"),
+                            ],
+                            tooltip: { 
+                                backgroundColor: this.getCssVar('color-background-card'),
+                                borderColor: this.getCssVar('color-border'),
+                            },
+                            series: [
+                                {
+                                    label: {
+                                        color: this.getCssVar('color-text')
+                                    },
+                                }
+                            ],
+                        });
+                    });
+
+                    // display the chart
+                    this.isLoaded.pie1 = true;
+                }
             })(),
 
             // Last year stats
             (async () => {
                 const lastYearResponse = await api.getStatsForTimespan("year")
-                if (lastYearResponse && lastYearResponse.stats)
+                if (lastYearResponse && lastYearResponse.stats) {
                     this.pageValues.lastYear = {...lastYearResponse.stats}
+
+                    // Map data to piechart friendly form
+                    // const pieData3 = lastYearResponse.stats.topMostCommonCategories.map(item => ({
+                    //     name: item.category,
+                    //     value: item.count
+                    // }));
+                    const pieData2 = lastYearResponse.stats.topMostExpensiveCategories.map(item => ({
+                        name: item.category,
+                        value: item.totalAmount
+                    }));
+    
+                    // pie3.setOption({
+                    //     textStyle: this.commonChartValues.textStyle,
+                    //     legend: this.commonChartValues.legend,
+                    //     color: this.commonChartValues.color,
+                    //     tooltip: { 
+                    //         trigger: 'item',
+                    //         backgroundColor: this.getCssVar('color-background-card'),
+                    //         borderColor: this.getCssVar('color-border'),
+                    //         formatter: params => this.generateTooltipPie(params, 'count')
+                    //     },
+                    //     grid: {
+                    //         left: 0,
+                    //         right: 0,
+                    //         top: 0,
+                    //         bottom: 0,
+                    //     },
+                    //     series: [
+                    //         {
+                    //             name: 'Category',
+                    //             type: 'pie',
+                    //             label: {
+                    //                 color: this.getCssVar('color-text')
+                    //             },
+                    //             data: pieData3,
+                    //         }
+                    //     ]
+                    // });
+                    pie2.setOption({
+                        textStyle: this.commonChartValues.textStyle,
+                        title: {
+                            text: 'Last years categories total sum',
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                                fontSize: 16,
+                                fontWeight: 500,
+                            },
+                            x: 'center',
+                        },
+                        legend: this.commonChartValues.legend,
+                        color: this.commonChartValues.color,
+                        tooltip: { 
+                            trigger: 'item',
+                            backgroundColor: this.getCssVar('color-background-card'),
+                            borderColor: this.getCssVar('color-border'),
+                            formatter: params => this.generateTooltipPie(params, 'eur')
+                        },
+                        grid: {
+                            left: 0,
+                            right: 0,
+                            top: 0,
+                            bottom: 0,
+                        },
+                        series: [
+                            {
+                                name: 'Category',
+                                type: 'pie',
+                                label: {
+                                    color: this.getCssVar('color-text')
+                                },
+                                data: pieData2,
+                            }
+                        ]
+                    })
+
+                    // Add a listener to resize the chart when needed
+                    this.setupResizeObserver("pieChartContainer2", pie2);
+
+                    // Listen for custom dark mode change event
+                    window.addEventListener("darkModeChange", () => {
+                        pie2.setOption({
+                            textStyle: {
+                                color: this.getCssVar('color-text-lighter'),
+                            },
+                            legend: {
+                                textStyle: {
+                                    color: this.getCssVar('color-text'),
+                                },
+                                inactiveColor: this.getCssVar('color-text-hidden'),
+                                pageIconColor: this.getCssVar('color-text'),
+                                pageIconInactiveColor: this.getCssVar('color-text-hidden'),
+                                pageTextStyle: {
+                                    color: this.getCssVar('color-text'),
+                                },
+                            },
+                            color: [
+                                this.getCssVar("color-primary"), 
+                                this.getCssVar("color-secondary"), 
+                                this.getCssVar("color-tertiary"),
+                                this.getCssVar("color-quaternary"),
+                                this.getCssVar("color-quinary"),
+                                this.getCssVar("color-jokumikalie"),
+                                this.getCssVar("color-senary"),
+                                this.getCssVar("color-septenary"),
+                                this.getCssVar("color-octonary"),
+                                this.getCssVar("color-nonary"),
+                                this.getCssVar("color-denary"),
+                                this.getCssVar("color-undecenary"),
+                            ],
+                            tooltip: { 
+                                backgroundColor: this.getCssVar('color-background-card'),
+                                borderColor: this.getCssVar('color-border'),
+                            },
+                            series: [
+                                {
+                                    label: {
+                                        color: this.getCssVar('color-text')
+                                    },
+                                }
+                            ],
+                        });
+                    });
+
+                    // display the chart
+                    this.isLoaded.pie2 = true;
+                }
             })(),
 
             // Chart 1
@@ -432,10 +717,7 @@ export default {
                     const dates = response.balanceOverTime.map(item => item.date);
                     const runningSums = response.balanceOverTime.map(item => item.runningBalance);
                     chart1.setOption({
-                        textStyle: {
-                            fontFamily: 'Poppins',
-                            color: this.getCssVar('color-text-lighter'),
-                        },
+                        textStyle: this.commonChartValues.textStyle,
                         title: {
                             text: 'Balance over time',
                             textStyle: {
@@ -525,10 +807,7 @@ export default {
                     const netTotals = response.monthlySums.map(item => item.net_total);
 
                     chart2.setOption({
-                        textStyle: {
-                            fontFamily: 'Poppins',
-                            color: this.getCssVar('color-text-lighter'),
-                        },
+                        textStyle: this.commonChartValues.textStyle,
                         title: {
                             text: 'Sum by month',
                             textStyle: {
@@ -652,10 +931,7 @@ export default {
                     }));
 
                     chart3.setOption({
-                        textStyle: {
-                            fontFamily: 'Poppins',
-                            color: this.getCssVar('color-text-lighter'),
-                        },
+                        textStyle: this.commonChartValues.textStyle,
                         title: {
                             text: 'Expense categories by month',
                             textStyle: {
@@ -663,34 +939,8 @@ export default {
                                 fontSize: 24,
                             }
                         },
-                        color: [
-                            this.getCssVar("color-primary"), 
-                            this.getCssVar("color-secondary"), 
-                            this.getCssVar("color-tertiary"),
-                            this.getCssVar("color-quaternary"),
-                            this.getCssVar("color-quinary"),
-                            this.getCssVar("color-senary"),
-                            this.getCssVar("color-septenary"),
-                            this.getCssVar("color-octonary"),
-                            this.getCssVar("color-nonary"),
-                            this.getCssVar("color-denary"),
-                            this.getCssVar("color-undecenary"),
-                        ],
-                        legend: {
-                            type: 'scroll',
-                            show: true,
-                            bottom: 0,
-                            textStyle: {
-                                color: this.getCssVar('color-text'),
-                                fontWeight: 500,
-                            },
-                            inactiveColor: this.getCssVar('color-text-hidden'),
-                            pageIconColor: this.getCssVar('color-text'),
-                            pageIconInactiveColor: this.getCssVar('color-text-hidden'),
-                            pageTextStyle: {
-                                color: this.getCssVar('color-text'),
-                            },
-                        },
+                        legend: this.commonChartValues.legend,
+                        color: this.commonChartValues.color,
                         tooltip: {
                             trigger: 'axis',
                             backgroundColor: this.getCssVar('color-background-card'),
@@ -751,6 +1001,7 @@ export default {
                                 this.getCssVar("color-tertiary"),
                                 this.getCssVar("color-quaternary"),
                                 this.getCssVar("color-quinary"),
+                                this.getCssVar("color-jokumikalie"),
                                 this.getCssVar("color-senary"),
                                 this.getCssVar("color-septenary"),
                                 this.getCssVar("color-octonary"),
@@ -807,13 +1058,25 @@ export default {
 
 
 <style scoped>
+.pieChartHolder {
+    position: relative;
+    height: calc(100vw * 0.5 + 168px);
+    max-height: 750px;
+    width: 100%;
+    background-color: var(--color-background-card);
+}
+.pieChartHolder.fullscreen {
+    padding: var(--spacing-md);
+}
+
+
 .chartCard {
     position: relative;
     max-height: 550px;
     height: calc(100vw * 0.5 + 168px);
     width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
 }
-.chartCard.fullscreen {
+.fullscreen {
     max-height: none;
     max-width: none;
     height: auto;
@@ -835,12 +1098,11 @@ export default {
 }
 .fs-button {
     position: absolute;
-    right: var(--spacing-sm);
-    top: var(--spacing-sm);
+    right: var(--spacing-md);
+    top: var(--spacing-md);
     z-index: 1; /* Otherwise under chart */
     color: var(--color-text-light);
 }
-
 
 .loaded {
     animation: fadeIn 0.4s ease-out;
@@ -860,6 +1122,9 @@ export default {
     flex-direction: column;
     justify-content: center;
     margin: var(--spacing-md) 0px;
+}
+.info-grid .cell.no-margin-bottom {
+    margin-bottom: 0;
 }
 .info-grid .cell .label {
     color: var(--color-text-lighter);
