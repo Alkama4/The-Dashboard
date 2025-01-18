@@ -2,20 +2,17 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- Filters button broken. Something about a string and invalid chars
+- Bugs...
 
 ### Features to add
 - Navigation
-    - link highlight when page open
+    - link highlight when page open to show where we are.
+        - Don't know. Kind of like it as is but it wouldn't hurt.
 - Finish the modal windows:
     - Edit and duplicate
     - Custom submit text in form: eg. "Create a dubplicate", "Confirm edits"
 - Home on splash screen
-    - Sää?
-    - Cotton?
-    - Muuta?
-    - Joku pähee animaatio/kuvake yms
-        - Esim joku chartti tms
+    - Joku hieno animaatio hehku kuvake yms. Nyt vaan teksti ja ontto sivu
 - Form QOL
     - autofill buttons or drop down or what ever...
 - Wide mode where the columns can brethe properly without cropping width wise (spotify like)
@@ -24,7 +21,6 @@ In here I will collect my notes about this website and list the stuff that need 
     - when screen wide enough display the filters always
     - Headers, spacing, drop down for sliders as a solution? Don't like it...
 - haitari mini toggleen yhen sijaan jotta sais animoitua
-- Selector kuinka monta ladataan kerralla (25/50/100)
 - Revamp the details modal
     - Long and number date, week
     - table like category spread out.
@@ -40,13 +36,11 @@ In here I will collect my notes about this website and list the stuff that need 
 - Movie and Film tracker db
 
 ### Known issues
+- Settings account specific but browser specific.
+    - Move to mysql.
 - Browser warning ref something something...
 - Filterdropdowns not updating when resizing vertically
-    - eventlistener to update value
-- When loading transactions have the:
-    - columns not change width
-    - items not disappear or have a place holder (animated?)
-    - Fade in when loaded?
+    - window.eventlistener to update value
 - Go through evertyhing to check the they have a click color in addition to hover.
 - Modals header and close X shouldn't scroll with content
 - Notification remove the root thingy and just import it
@@ -55,11 +49,16 @@ In here I will collect my notes about this website and list the stuff that need 
 - When in mobile nav page scrolling isn't disabled
 - Doesn't use the internal fastapi address but the external 192.168.0.2:800 which is not optimal
 - Values aren't cached and are instead queried all the time. For example the options should at the very least be stored?
+    - Good placeholders have kind of fixed this, but still worth considerng.
+    - Down side of doing this it that its not clear when data is up to date. Now its always.
+- Filter date slider labels only every 3 months so with transactions on a short timespan it looks odd/broken.
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions
 - The amount drop down shows without the types when media under 777px wide.
+    - Or in other words the values are seperated without any labels of what the values mean.
     - Disable when under 777px or just leave it?
 - v-select causes scrolling on modals when opening
     - (Propably no can do?)
 - Some cases of improper "post" usage that should be "get"
+    - Propably should go through api and unify it with some optimisation at the same time.

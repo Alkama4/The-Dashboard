@@ -1,5 +1,5 @@
 <template>
-    <TopBar @toggle-dark-mode="toggleDarkMode"/>
+    <TopBar/>
     <main>
         <RouterView/>
     </main>

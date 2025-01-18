@@ -17,8 +17,8 @@
         </div>
 
         <div class="grid-categories-labels category-aligner">
-            <label :for="'amount-' + index">Amount</label>
-            <label :for="'category-' + index">Category</label>
+            <label :for="'amount'">Amount</label>
+            <label :for="'category'">Category</label>
         </div>
         <div class="grid-categories">
             <div v-for="(entry, index) in formData.categories" :key="index" class="category-aligner" :class="{'remove-category-button-hidden': !this.formData.categories[1]}">
@@ -46,7 +46,7 @@
 
         <div class="grid-notes">
             <label for="notes">Notes</label><br>
-            <textarea v-model="formData.notes" id="notes" placeholder="Add any additional notes or details about this transaction (optional)"></textarea>
+            <textarea v-model="formData.notes" id="notes" placeholder="Optional notes or details about this transaction"></textarea>
         </div>
         <button type="submit" class="color-primary center grid-submit submit-button">Submit</button>
     </form>

@@ -9,7 +9,7 @@
         </div>
             
         <!-- Fullscreen filter menu hidden by default -->
-        <FilterSettings 222
+        <FilterSettings
             v-if="showFilters" 
             @close="showFilters = false" 
             @apply="applyFilters"

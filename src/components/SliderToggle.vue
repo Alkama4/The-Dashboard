@@ -30,7 +30,7 @@ export default {
         modelValue: {
             type: String,
             default: '',
-            validator: (val) => val === '' || Array.isArray(val) && val.length === 2,
+            // validator: (val) => val === '' || Array.isArray(val) && val.length === 2,
         },
         options: {
             type: Array,

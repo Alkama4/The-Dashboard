@@ -45,7 +45,7 @@
         <div class="transaction-buttons-content" ref="transactionButtonsContent">
             <div class="control-buttons">
                 <button class="button-delete color-warning" @click.stop="deleteTransaction"><IconTrash size="18px" colorHover="white"/></button>
-                <button disabled="true" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px"/></button>
+                <button disabled="true" title="Coming soon!" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px" /></button>
                 <button class="button-edit" @click.stop="editTransaction"><IconEdit size="18px"/></button>
                 <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px" color="#e9ebf0" colorHover="white"/>Details</button>
             </div>
@@ -78,6 +78,7 @@
             IconTrash,
             ModalWindow: defineAsyncComponent(() => import('./ModalWindow.vue')),
         },
+        emits: ['toggle', 'refreshTable'],
         props: {
             transaction: { category: Object, required: true },
             isExpanded: { category: Boolean, default: false },

@@ -51,7 +51,9 @@
                 
                 <div v-if="modalType === 'delete'">
                     <p style="margin-left: 0;"> Are you sure you want to delete this entry? <br>
-                        <strong style="color: var(--color-negative)">This action cannot be undone.</strong> {{ id }}</p>
+                        <strong style="color: var(--color-negative)">This action cannot be undone.</strong> 
+                        <!-- {{ modalData.transactionID }} -->
+                    </p>
                     <div class="two-buttons">
                         <button class="color-warning color-primary" @click="deleteEntry">Delete</button>
                         <button class="" @click="closeModal">Cancel</button>
