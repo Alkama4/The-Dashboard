@@ -1,0 +1,70 @@
+<template>
+    <span class="tooltip-container">
+        <IconInfo size="20px" class="info-icon" @mouseover="showTooltip" @mouseleave="hideTooltip"/>
+        <div v-if="isTooltipVisible" class="tooltip">
+            {{ this.text }}
+        </div>
+
+    </span>
+</template>
+
+<script>
+import IconInfo from './icons/IconInfo.vue';
+
+export default {
+    data() {
+        return {
+            isTooltipVisible: false
+        };
+    },
+    components: {
+        IconInfo,
+    },  
+    props: {
+        text: String,
+    },
+    methods: {
+        showTooltip() {
+            this.isTooltipVisible = true;
+        },
+        hideTooltip() {
+            this.isTooltipVisible = false;
+        }
+    }
+};
+</script>
+
+<style scoped>
+.tooltip-container {
+    position: relative;
+}
+
+.info-icon {
+    cursor: pointer;
+    display: inline;
+    vertical-align: middle; /* Extra precaution if other alignment is applied */
+}
+
+.tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: calc(var(--spacing-sm) * -1);
+    width: max-content;
+    max-width: 40ch;
+    padding: 8px;
+    background: var(--color-background-card);
+    /* border: 1px solid var(--color-border); */
+    border-radius: var(--border-radius-small);
+    margin-bottom: var(--spacing-xs);
+    display: flex;
+    flex-direction: row;
+    
+    color: var(--color-text-light);
+    /* white-space: nowrap; */
+    font-weight: 500;
+    font-size: 14px;
+    box-shadow: var(--shadow-card);
+
+    animation: fadeIn 0.2s ease-out;
+}
+</style>

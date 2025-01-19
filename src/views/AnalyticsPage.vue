@@ -473,7 +473,7 @@ export default {
                         tooltip: { 
                             trigger: 'item',
                             backgroundColor: this.getCssVar('color-background-card'),
-                            borderColor: this.getCssVar('color-border'),
+                            borderWidth: 0,
                             formatter: params => this.generateTooltipPie(params, 'eur')
                         },
                         series: [
@@ -568,7 +568,7 @@ export default {
                         tooltip: { 
                             trigger: 'item',
                             backgroundColor: this.getCssVar('color-background-card'),
-                            borderColor: this.getCssVar('color-border'),
+                            borderWidth: 0,
                             formatter: params => this.generateTooltipPie(params, 'eur')
                         },
                         series: [
@@ -655,7 +655,7 @@ export default {
                         tooltip: { 
                             trigger: 'axis',
                             backgroundColor: this.getCssVar('color-background-card'),
-                            borderColor: this.getCssVar('color-border'),
+                            borderWidth: 0,
                             formatter: params => this.generateTooltip(params, 'full')
                         },
                         grid: {
@@ -745,7 +745,7 @@ export default {
                         tooltip: { 
                             trigger: 'axis',
                             backgroundColor: this.getCssVar('color-background-card'),
-                            borderColor: this.getCssVar('color-border'),
+                            borderWidth: 0,
                             formatter: params => this.generateTooltip(params, 'month'),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
@@ -870,7 +870,7 @@ export default {
                         tooltip: {
                             trigger: 'axis',
                             backgroundColor: this.getCssVar('color-background-card'),
-                            borderColor: this.getCssVar('color-border'),
+                            borderWidth: 0,
                             formatter: params => this.generateTooltip(params, 'month'),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here

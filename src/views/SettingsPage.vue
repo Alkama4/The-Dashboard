@@ -16,11 +16,35 @@
 
         <div class="content-width-small">
             <h2>Settings</h2>
-            <div class="chart-settings ">
-                <div class="setting-name">"Balance Over Time" chart's initial value</div>
-                <input type="number" v-model="chart1StartingPosition" placeholder="0" step="0.01" @change="saveSettings">
-                <div class="setting-name">Amount of transactions loaded at once</div>
-                <input type="number" v-model="transactionsLoadedAtOnce" placeholder="25" step="1" min="5" max="100" @change="saveSettings">
+            <div class="chart-settings">
+                <div class="setting-name">
+                    "Balance Over Time" chart's initial value 
+                </div>
+                <div class="setting-value">
+                    <input 
+                        type="number" 
+                        v-model="chart1StartingPosition" 
+                        placeholder="0" 
+                        step="0.01" 
+                        @change="saveSettings"
+                    >
+                </div>
+                
+                <div class="setting-name">
+                    Amount of transactions loaded at once
+                    <InfoTooltip text="Must be between 5 and 100"/>
+                </div>
+                <div class="setting-value">
+                    <input 
+                        type="number" 
+                        v-model="transactionsLoadedAtOnce" 
+                        placeholder="25" 
+                        step="1" 
+                        min="5" 
+                        max="100" 
+                        @change="saveSettings"
+                    >
+                </div>
             </div>
         </div>
 
@@ -32,10 +56,12 @@ import api from '@/utils/dataQuery';
 import ModalWindow from '@/components/ModalWindow.vue';
 import router from '@/router';
 import { notify } from '@/utils/notification';
+import InfoTooltip from '@/components/InfoTooltip.vue';
 
 export default {
     components: {
         ModalWindow,
+        InfoTooltip,
     },
     data() {
         return {
@@ -130,10 +156,17 @@ export default {
     row-gap: var(--spacing-md);
 }
 .chart-settings .setting-name {
-    display: flex;
+    display: block;
     align-items: center;
     color: var(--color-text-lighter);
     font-weight: 500;
+    text-align: justify;
+    margin-right: var(--spacing-md);
+}
+.chart-settings .setting-value {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .chart-settings input[type="number"] {
     max-width: 150px;

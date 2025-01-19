@@ -403,6 +403,7 @@ input, textarea, select {
     height: 35px;
     width: calc(100% - 19px);       /* 2 x 6px ja 2 lisää koska v-select?? */
     max-width: calc(100% - 19px);   /* 2 x 6px ja 2 lisää koska v-select?? */
+    min-width: 82px;
 
     color: var(--color-text-light);
     font-size: var(--font-size-base);
@@ -720,7 +721,7 @@ input[type="radio"] {
 /* - - - - CONTENT WIDTH LIMITORS - - - - */
 .content-width-small {
     margin-inline: auto;
-    max-width: 60ch;
+    max-width: 80ch;
 }
 
 .content-width-medium {
