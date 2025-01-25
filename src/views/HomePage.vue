@@ -5,11 +5,16 @@
 
 			<div class="text-area">
 				<h1>{{ greeting[0] }}</h1>
-				<span class="header-sub-text">{{ greeting[1] }}</span><br>
+				<span class="header-sub-text">{{ greeting[1] }}</span>
+				<router-link class="no-decoration" to="/newEntry" style="padding-bottom: var(--spacing-md);">
+					<button class="color-primary">Start logging</button>
+				</router-link>
 			</div>
-			<!-- <div class="action-area">
-				<button class="color-primary">Start logging</button>
-			</div> -->
+			<div class="action-area">
+				<div class="color-blob one"></div>
+				<div class="color-blob two"></div>
+				<div class="color-blob three"></div>
+			</div>
 		</div>
 
 		<div class="flex-column">
@@ -30,39 +35,49 @@
 			</div>
 		</div>
 
-		<div class="new-thing"></div>
- 
 		<!-- Might want to implement the following logic for security reasons: If login username == aleksi -->
-		<!-- HEader mis alignment -->
-		<!-- Card to wide in mobile. Add a mobile layout. -->
-		<!-- Make the layout better in mobile -->
 
-		<div class="flex-column content-width-large">
+		<div class="flex-column content-width-medium">
 			<h2>Backups</h2>
-			<div class="flex-row">
-				<div v-for="(backup, index) in backups" :key="index" class="backup-card card">
-					<div class="name">
-						<IconBackup size="25px" color-hover="var(--color-text)"/>
-						<div>{{ backup.backup_name }}</div>
+			<div class="backups">
+				<div v-for="(backupCategory, categoryName) in backups" :key="categoryName" class="card backup-card">
+					<div class="flex header">
+						<span>{{ categoryName }}</span>
 					</div>
-					<div class="fromTo">
-						<div>
-							<div class="device">{{ backup.source_location }}</div>
-							<div class="path">{{ backup.source_path }}</div>
+					<div v-for="(backup, index) in backupCategory" :key="index" class="backup-row">
+						<div class="flex">
+							<IconBackup v-if="backup.backup_direction == 'up'" size="25px"/>
+							<IconBackupDown v-else size="25px"/>
+							<span class="name">
+								{{ backup.backup_name }}
+							</span>
 						</div>
-						<IconChevronDown size="32px" class="arrow"/>
-						<div>
-							<div class="device">{{ backup.destination_location }}</div>
-							<div class="path">{{ backup.destination_path }}</div>
+						<div class="content">
+							<div class="flex">
+								<div class="label-text">
+									<div>Last run</div>
+									<div>Next in</div>
+									<div>Schedule</div>
+								</div>
+								<div>
+									<div :class="backup.status">{{ backup.last_success_time_since }}</div>
+									<div>{{ backup.time_until_next }}</div>
+									<div>{{ backup.schedule }}</div>
+								</div>
+							</div>
+							<div class="path-column">
+								<div class="label-text">
+									<div>Device</div>
+									<div>Source</div>
+									<div>Destination</div>
+								</div>
+								<div>
+									<div>{{ backup.peer_device }}</div>
+									<div class="path" title="Copy to clipboard" @click="copyToClipboard(backup.source_path, 'Path')">{{ backup.source_path }}</div>
+									<div class="path" title="Copy to clipboard" @click="copyToClipboard(backup.destination_path, 'Path')">{{ backup.destination_path }}</div>
+								</div>
+							</div>
 						</div>
-					</div>
-					<div class="text">
-						<div class="label">Since last run</div>
-						<div class="value" :class="calculateState(backup.last_success_hours)">{{ backup.last_success_time_since }}</div>
-						<div class="label">Next run in</div>
-						<div class="value">{{ backup.next_scheduled_time_until }}</div>
-						<div class="label">Schedule</div>
-						<div class="value">{{ backup.schedule }}</div>
 					</div>
 				</div>
 			</div>
@@ -109,15 +124,20 @@
 <script>
 import api from '@/utils/dataQuery';
 import IconHDD from '@/components/icons/IconHDD.vue';
-import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+// import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconBackup from '@/components/icons/IconBackup.vue';
+import IconBackupDown from '@/components/icons/IconBackupDown.vue';
+import { notify } from '@/utils/notification';
+// import InfoTooltip from '@/components/InfoTooltip.vue';
 
 	export default {
 		name: 'HomePage',
 		components: {
 			IconHDD,
-			IconChevronDown,
+			// IconChevronDown,
 			IconBackup,
+			IconBackupDown
+			// InfoTooltip,
 		},
 		data() {
 			return {
@@ -147,19 +167,41 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 				const i = Math.floor(Math.log10(bytes) / 3);
 				return (bytes / Math.pow(1000, i)).toFixed(decimal) + ' ' + sizes[i];
 			},
-			calculateState(timeSinceInHours) {
-				if (timeSinceInHours < 24)
-					return "good";
-				else if (timeSinceInHours < 48)
-					return "warning";
-				else
-					return "bad"
+			copyToClipboard(textToCopy, what) {
+				try {
+					if (navigator.clipboard && navigator.clipboard.writeText) {
+						navigator.clipboard.writeText(textToCopy)
+							.then(() => notify(`${what} copied!`, "info", 2000))
+							.catch(err => {
+								notify("Cannot copy text to clipboard.", "error");
+								console.error("[copyToClipboard]", err);
+							});
+					} else {
+						const textarea = document.createElement("textarea");
+						textarea.value = textToCopy;
+						textarea.style.position = "fixed"; // Avoid scrolling to the bottom
+						document.body.appendChild(textarea);
+						textarea.focus();
+						textarea.select();
+						try {
+							document.execCommand("copy");
+							notify(`${what} copied!`, "info", 2000);
+						} catch (err) {
+							notify("Cannot copy text to clipboard.", "error");
+							console.error("[copyToClipboard fallback]", err);
+						}
+						document.body.removeChild(textarea);
+					}
+				} catch (error) {
+					notify("Cannot copy text to clipboard.", "error");
+					console.error("[copyToClipboard]", error);
+				}
 			}
 		},
 		async mounted() {
 			const backupResponse = await api.getBackups();
 			if (backupResponse) {
-				this.backups = [...backupResponse.backups];
+				this.backups = backupResponse.backups;
 			}
 			// console.log(this.backups);
 			
@@ -176,203 +218,276 @@ import IconBackup from '@/components/icons/IconBackup.vue';
 </script>
 
 <style scoped>
-	.greeting-area {
-		height: 60vh;
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		align-items: center;
-		/* background-color: red; */
-	}
-	.greeting-area .background {
-		position: absolute;
-		/* background: linear-gradient(var(--color-background), var(--color-primary), var(--color-background)); */
-		/* background-color: var(--color-background-card); */
-		top: 60px;
-		left: 0;
-		right: 0;
-		height: 60vh;
-		z-index: -10;
-	}
-	.greeting-area h1 {
-		margin: 0;
-		/* Row gap? to large */
-		line-height: 48px;
-		font-size: 48px;
-	}
-	.greeting-area .header-sub-text {
-		display: inline-block;
-		color: var(--color-text-light);
-		margin-top: var(--spacing-md);
-	}
-	.greeting-area .text-area {
-		display: flex;
-		flex-direction: column;
-	}
+.greeting-area {
+	height: 60vh;
+	display: flex;
+	position: relative;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	/* background-color: red; */
+}
+.greeting-area .background {
+	position: absolute;
+	/* background: linear-gradient(var(--color-background), var(--color-primary), var(--color-background)); */
+	/* background-color: var(--color-background-card); */
+	top: 60px;
+	left: 0;
+	right: 0;
+	height: 60vh;
+	z-index: -10;
+}
+.greeting-area h1 {
+	margin: 0;
+	/* Row gap? to large */
+	line-height: 48px;
+	font-size: 48px;
+}
+.greeting-area .header-sub-text {
+	display: inline-block;
+	color: var(--color-text-light);
+	margin-top: var(--spacing-md);
+}
+.greeting-area button {
+	margin-top: var(--spacing-md);
+	margin-inline: 0;
+}
 
-	/* - - - - Other services - - - - */
-	.tile-container {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
-	.tile-button {
-		position: relative;
-		display: flex;
-		flex-direction: column;
-		aspect-ratio: 1;
-		width: 150px;
-		border-radius: var(--border-radius-medium);
-	}
-	.tile-button img {
-		position: absolute;
-		top: var(--spacing-md);
-		width: 80px;
-		aspect-ratio: 1;
-	}
-	.tile-button span {
-		position: absolute;
-		bottom: var(--spacing-md);
-	}
+/* Color blobs */
+.greeting-area .color-blob {
+    border-radius: 50%;
+    position: absolute;
+    animation: moveBlobs 5s infinite cubic-bezier(0.5, 0, 0.5, 1);
+    filter: blur(50px);
+	--x-offset: calc(-250px + 50%);
+	--y-offset: calc(-150px + 60vh * 0.5)
+}
 
-	/* - - - - Backup cards - - - - */
+.dark-mode .greeting-area .color-blob.one {
+    background-color: var(--color-primary);
+    height: 300px;
+    width: 300px;
+    right: calc(var(--x-offset) - 0px);
+    top: calc(var(--y-offset) - 50px);
+    z-index: -101;
+    animation-delay: 0s;
+}
+.dark-mode .greeting-area .color-blob.two {
+    background-color: var(--color-secondary);
+    height: 225px;
+    width: 225px;
+    right: calc(var(--x-offset) - 80px);
+    top: calc(var(--y-offset) + 100px);
+    z-index: -100;
+    animation-delay: 0.75s;
+}
+.dark-mode .greeting-area .color-blob.three {
+    background-color: var(--color-tertiary);
+    height: 150px;
+    width: 150px;
+    right: calc(var(--x-offset) - 200px);
+    top: calc(var(--y-offset) + 60px);
+    z-index: -99;
+    animation-delay: 1s;
+}
+
+@keyframes moveBlobs {
+    0% {
+        transform: translate(0, 0);
+    }
+	50% {
+        transform: translate(0px, 50px);
+	}
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* - - - - Other services - - - - */
+.tile-container {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+.tile-button {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	aspect-ratio: 1;
+	width: 150px;
+	border-radius: var(--border-radius-medium);
+}
+.tile-button img {
+	position: absolute;
+	top: var(--spacing-md);
+	width: 80px;
+	aspect-ratio: 1;
+}
+.tile-button span {
+	position: absolute;
+	bottom: var(--spacing-md);
+}
+
+/* - - - - Backup cards - - - - */
+.backups {
+    width: 100%;
+    gap: 20px; /* Replace the margin of the default card with this to prevent extra spaces */
+	display: flex;
+	flex-direction: column;
+}
+
+.backup-card {
+    width: 100%;
+    box-sizing: border-box; /* Ensures padding does not affect the width */
+	padding-bottom: 0; /* Get rid of the extra padding at the bottom since the lastbackup has the padding already*/
+	margin: 0;
+}
+
+.backup-card .header {
+	font-weight: 700;
+	font-size: 18px;
+	margin-bottom: var(--spacing-md);
+	gap: var(--spacing-sm);
+	align-items: center;
+}
+
+.backup-row {
+	border-top: 2px solid var(--color-border);
+	width: 100%;
+	padding: var(--spacing-md) 0;
+	display: flex;
+	flex-direction: column;
+	gap: var(--spacing-sm);
+	align-items: start;
+	font-weight: 500;
+}
+
+.backup-row .name {
+	color: var(--color-text);
+	font-weight: 800;
+	padding-left: var(--spacing-sm);
+}
+
+.backup-row .content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--spacing-lg);
+	row-gap: var(--spacing-sm);
+    width: 100%;
+}
+
+.backup-row .schedule {
+	color: var(--color-text-light);
+	font-weight: 400;
+}
+.backup-row .label-text {
+	color: var(--color-text-light);
+	/* padding-right: var(--spacing-md); */
+	width: 120px;
+	min-width: 120px;
+	font-weight: 400;
+	white-space: nowrap;
+}
+.backup-row .path-column {
+	display: flex;
+	flex-direction: row;
+	align-items: start;
+	overflow: hidden;
+	mask-image: 
+        linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+    mask-size: 100%;
+}
+.backup-row .path {
+	white-space: nowrap;
+	cursor: pointer;
+}
+@media(max-width: 575px) {
+	.backup-row .content {
+		grid-template-columns: auto;
+	}
+}
+
+
+.bad {
+	color: var(--color-negative);
+}
+.warning {
+	color: var(--color-warning);
+}
+.good {
+	color: var(--color-positive);
+}
+
+/* @media (max-width: 500px) {
 	.backup-card {
-		margin: 0;
-		width: 400px;
-	}
-	.backup-card .name {
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-		gap: var(--spacing-sm);
-		font-size: 18px;
-		font-weight: 700;
-	}
-	.backup-card .fromTo {
-		display: grid;
-		grid-template-columns: 1fr auto 1fr;
-		align-items: center;
-		margin: 16px 0;
-		gap: var(--spacing-xs);
+		width: 300px;
 	}
 	.backup-card .fromTo .arrow {
-		transform: rotate(-90deg);
+		transform: rotate(0);
+		margin-inline: auto;
 	}
-	.backup-card .fromTo > div {
-		height: 80px;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		text-align: center;
-		background-color: var(--color-background-card-section);
-		padding: var(--spacing-sm);
-		border-radius: var(--border-radius-small);
+	.backup-card .fromTo {
+		grid-template-columns: auto;
 	}
-	.backup-card .fromTo .path {
-		color: var(--color-text-lighter);
-		font-weight: 300;
-		font-size: 14px;
-	}
-	.backup-card .fromTo .device {
-		font-weight: 600;
-	}
-	.backup-card .text {
-		display: grid;
-		grid-template-columns: auto auto;
-	}
-	.backup-card .text .label {
-		color: var(--color-text-light);
-		padding-right: var(--spacing-md)
-	}
-	.backup-card .text .value {
-		font-weight: 500;
-	}
+} */
 
-	/* .value {
-		height: 1rem;
-		width: 1rem;
-		border-radius: 50%;
-	} */
-	.value.bad {
-		color: var(--color-negative);
-	}
-	.value.warning {
-		color: var(--color-warning);
-	}
-	.value.good {
-		color: var(--color-positive);
-	}
+/* - - - - Server drives - - - - */
+.drive-card {
+	width: 250px;
+	margin: 0;
+	animation: fadeIn 0.5s ease-out;
+}
+.drive-card .name {
+	font-weight: 700;
+	font-size: 18px;
+	display: flex;
+	flex-direction: row;
+	gap: var(--spacing-sm);
+	margin-bottom: var(--spacing-sm);
+}
+.drive-card .text {
+	margin: 12px 0;
+	display: grid;
+	grid-template-columns: auto auto;
+}
+.drive-card .text .label {
+	color: var(--color-text-light);
+	margin-right: var(--spacing-md);
+}
+.drive-card .text .value {
+	font-weight: 500;
+	text-align: end;
+}
 
-	@media (max-width: 500px) {
-		.backup-card {
-			width: 300px;
-		}
-		.backup-card .fromTo .arrow {
-			transform: rotate(0);
-			margin-inline: auto;
-		}
-		.backup-card .fromTo {
-			grid-template-columns: auto;
-		}
-	}
-
-	/* - - - - Server drives - - - - */
-	.drive-card {
-		width: 250px;
-		margin: 0;
-		animation: fadeIn 0.5s ease-out;
-	}
-	.drive-card .name {
-		font-weight: 700;
-		font-size: 18px;
-		display: flex;
-		flex-direction: row;
-		gap: var(--spacing-sm);
-		margin-bottom: var(--spacing-sm);
-	}
-	.drive-card .text {
-		margin: 12px 0;
-		display: grid;
-		grid-template-columns: auto auto;
-	}
-	.drive-card .text .label {
-		color: var(--color-text-light);
-		margin-right: var(--spacing-md);
-	}
-	.drive-card .text .value {
-		font-weight: 500;
-		text-align: end;
-	}
-
-	.capacityIndicator {
-		width: 100%;
-		height: 32px;
-		background-color: var(--color-background-card-section);
-		/* border: 1px solid var(--color-border); */
-		border-radius: var(--border-radius-small);
-		position: relative;
-	}
-	.capacityIndicator .bar {
-		height: 100%;
-		border-radius: var(--border-radius-small);
-	}
-	.capacityIndicator .bar.positiveBackground {
-		background-color: var(--color-positive);
-	}
-	.capacityIndicator .bar.negativeBackground {
-		background-color: var(--color-negative);
-	}
-	.capacityIndicator .text {
-		display: flex;
-		position: absolute;
-		justify-content: center;
-		flex-direction: column;
-		top: 0;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		padding-left: 12px;
-		font-weight: 500;
-	}
+.capacityIndicator {
+	width: 100%;
+	height: 32px;
+	background-color: var(--color-background-card-section);
+	/* border: 1px solid var(--color-border); */
+	border-radius: var(--border-radius-small);
+	position: relative;
+}
+.capacityIndicator .bar {
+	height: 100%;
+	border-radius: var(--border-radius-small);
+}
+.capacityIndicator .bar.positiveBackground {
+	background-color: var(--color-positive);
+}
+.capacityIndicator .bar.negativeBackground {
+	background-color: var(--color-negative);
+}
+.capacityIndicator .text {
+	display: flex;
+	position: absolute;
+	justify-content: center;
+	flex-direction: column;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding-left: 12px;
+	font-weight: 500;
+}
 </style>

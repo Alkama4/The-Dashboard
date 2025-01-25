@@ -68,6 +68,8 @@
     --color-secondary-active: #f85384;
 
     --color-tertiary: #fad73e;
+    --color-tertiary-active: #ffeb90;
+    
     --color-quaternary: #1db14e;
     --color-quinary: #2196F3;
     --color-jokumikalie: #7e3fb9; 
@@ -155,6 +157,8 @@
     --color-secondary-active: #f85384;
 
     --color-tertiary: #4bc04f;  
+    --color-tertiary-active: #7bdb7e; 
+
     --color-quaternary: #ece038; 
     --color-quinary: #17c3cf;    
     --color-jokumikalie: #7e3fb9; 
@@ -677,6 +681,10 @@ input[type="radio"] {
     box-shadow: var(--shadow-floating-button);
 }
 
+.flex {
+    display: flex;
+    flex-direction: row;
+}
 .flex-column {
     display: flex;
     flex-direction: column;
