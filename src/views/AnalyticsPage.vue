@@ -1023,10 +1023,18 @@ export default {
 }
 .fs-button {
     position: absolute;
-    right: var(--spacing-md);
-    top: var(--spacing-md);
+    padding: var(--spacing-md);
+    right: 0;
+    top: 0;
     z-index: 1; /* Otherwise under chart */
     color: var(--color-text-light);
+    
+    background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
+    border-radius: 0;
+    padding-left: 32px !important;
+}
+.pieChartHolder .fs-button {
+    padding: 0;
 }
 
 .loaded {

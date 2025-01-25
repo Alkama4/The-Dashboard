@@ -3,6 +3,8 @@ In here I will collect my notes about this website and list the stuff that need 
 
 ### Next time
 - Bugs...
+- Add services like smb and wireguard status?
+- Remake the backups to a row layout
 
 ### Features to add
 - Navigation

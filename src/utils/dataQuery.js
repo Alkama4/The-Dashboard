@@ -144,7 +144,7 @@ const api = {
             if (response.logOutSuccess) {
                 notify("You have been logged out.", "info");
                 console.log("[logOut] logout success");
-                this.localLogOut();
+                this.localLogOut(true);
                 return true;
             } else {
                 notify("Failed to log out.", "error");
@@ -157,12 +157,14 @@ const api = {
             return null;
         }
     },
-    localLogOut() {
+    localLogOut(manualLogOut = false) {
         if (router.currentRoute.value.path !== "/login") {
             localStorage.removeItem("sessionKey");
             localStorage.setItem("isLoggedIn", false);
             localStorage.removeItem("username");
-            notify("Your session has expired, and you have been logged out. Please log in again.", "info", 15000);
+            if (manualLogOut != true) {
+                notify("Your session has expired, and you have been logged out. Please log in again.", "info", 15000);
+            }
             router.push("/login");
         }
     },

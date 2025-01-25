@@ -160,7 +160,7 @@ export default {
     align-items: center;
     color: var(--color-text-lighter);
     font-weight: 500;
-    text-align: justify;
+    text-align: start;
     margin-right: var(--spacing-md);
 }
 .chart-settings .setting-value {
