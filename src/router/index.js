@@ -1,12 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '../views/HomePage.vue';
-import SettingsPage from '../views/SettingsPage.vue';
+import AccountPage from '../views/AccountPage.vue';
 import SpendingsPage from '../views/SpendingsPage.vue';
 import NewEntryPage from '@/views/NewEntryPage.vue';
 import LogInPage from '@/views/LogInPage.vue';
 import DebugPage from '@/views/DebugPage.vue';
 import AnalyticsPage from '@/views/AnalyticsPage.vue';
 import FourOFourPage from '@/views/404Page.vue'
+import WatchList from '@/views/watchList.vue';
 
 const routes = [
     {
@@ -16,10 +17,10 @@ const routes = [
         meta: { title: 'Home' } // The updating title part after "-" in the browser tab
     },
     {
-        path: '/settings',
-        name: 'Settings',
-        component: SettingsPage,
-        meta: { title: 'Settings' }
+        path: '/account',
+        name: 'Account',
+        component: AccountPage,
+        meta: { title: 'Account' }
     },
     {
         path: '/spendings',
@@ -50,6 +51,12 @@ const routes = [
         name: 'Analytics',
         component: AnalyticsPage,
         meta: { title: 'Analytics' }
+    },
+    {
+        path: '/watchList',
+        name: 'Watch list',
+        component: WatchList,
+        meta: { title: 'Watch list' }
     },
     {
         path: '/:catchAll(.*)',

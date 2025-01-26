@@ -152,13 +152,13 @@ import { notify } from '@/utils/notification';
 			getGreeting() {
 				const hour = new Date().getHours();
 				if (hour < 5) {
-					return ["Good night!", "Up a little early, aren't we? The world is still asleep!"];
+					return ["Good night.", "It's late, get some rest and recharge for tomorrow."];
 				} else if (hour < 12) {
-					return ["Good morning!", "It's a beautiful morning! Time to rise and shine!"];
+					return ["Good morning.", "A fresh start to the day. Let’s make the most of it."];
 				} else if (hour < 18) {
-					return ["Good afternoon!", "Keep on grinding, champ! You're crushing it!"];
+					return ["Good afternoon.", "The day is moving along. Hope it's going well for you."];
 				} else {
-					return ["Good evening!", "It's chill o'clock! Time to unwind and recharge for tomorrow!"];
+					return ["Good evening.", "The day’s winding down. Time to relax and prepare for tomorrow."];
 				}
 			},
 			formatBytes(bytes, decimal = 2) {
@@ -260,11 +260,12 @@ import { notify } from '@/utils/notification';
     animation: moveBlobs 5s infinite cubic-bezier(0.5, 0, 0.5, 1);
     filter: blur(50px);
 	--x-offset: calc(-250px + 50%);
-	--y-offset: calc(-150px + 60vh * 0.5)
+	--y-offset: calc(-200px + 60vh * 0.5)
 }
 
-.dark-mode .greeting-area .color-blob.one {
-    background-color: var(--color-primary);
+.greeting-area .color-blob.one {
+    background-color: var(--color-primary-active);
+	opacity: 0.5;
     height: 300px;
     width: 300px;
     right: calc(var(--x-offset) - 0px);
@@ -272,8 +273,12 @@ import { notify } from '@/utils/notification';
     z-index: -101;
     animation-delay: 0s;
 }
-.dark-mode .greeting-area .color-blob.two {
-    background-color: var(--color-secondary);
+.dark-mode .greeting-area .color-blob.one {
+	opacity: 1;
+    background-color: var(--color-primary);
+}
+.greeting-area .color-blob.two {
+    background-color: var(--color-secondary-active);
     height: 225px;
     width: 225px;
     right: calc(var(--x-offset) - 80px);
@@ -281,14 +286,20 @@ import { notify } from '@/utils/notification';
     z-index: -100;
     animation-delay: 0.75s;
 }
-.dark-mode .greeting-area .color-blob.three {
-    background-color: var(--color-tertiary);
+.dark-mode .greeting-area .color-blob.two {
+    background-color: var(--color-secondary);
+}
+.greeting-area .color-blob.three {
+    background-color: var(--color-tertiary-active);
     height: 150px;
     width: 150px;
     right: calc(var(--x-offset) - 200px);
     top: calc(var(--y-offset) + 60px);
     z-index: -99;
     animation-delay: 1s;
+}
+.dark-mode .greeting-area .color-blob.three {
+    background-color: var(--color-tertiary);
 }
 
 @keyframes moveBlobs {
@@ -310,6 +321,9 @@ import { notify } from '@/utils/notification';
 	flex-wrap: wrap;
 	justify-content: center;
 }
+.tile-container a {
+	margin: var(--spacing-sm);
+}
 .tile-button {
 	position: relative;
 	display: flex;
@@ -317,6 +331,7 @@ import { notify } from '@/utils/notification';
 	aspect-ratio: 1;
 	width: 150px;
 	border-radius: var(--border-radius-medium);
+	margin: 0;
 }
 .tile-button img {
 	position: absolute;
@@ -384,8 +399,8 @@ import { notify } from '@/utils/notification';
 .backup-row .label-text {
 	color: var(--color-text-light);
 	/* padding-right: var(--spacing-md); */
-	width: 120px;
-	min-width: 120px;
+	width: 100px;
+	min-width: 100px;
 	font-weight: 400;
 	white-space: nowrap;
 }

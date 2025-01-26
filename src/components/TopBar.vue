@@ -54,9 +54,9 @@ export default {
             links: [
                 { display: 'Spendings', to: '/spendings' },
                 { display: 'Analytics', to: '/analytics' },
-                { display: 'New entry', to: '/newentry' },
-                // { display: 'About page', to: '/about' },
-                { display: 'Account', to: '/settings' },
+                { display: 'Watch list', to: '/watchList' },
+                // { display: 'New entry', to: '/newentry' },
+                { display: 'Account', to: '/account' },
             ]
         };
     },

@@ -23,9 +23,9 @@
             <div style="background-color: var(--color-undecenary);"></div>
         </div>
 
+        <!-- 			
 		<h2>Ascii Art</h2>
 		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
-			
 		<div class="card">
 			<pre>
 .              +   .                .   . .     .  .
@@ -113,7 +113,7 @@ v           )___))___))___)\        v
 			<h3>Bulbasaur</h3>
 		</div>
 
-		<p>All art is from <a href="https://www.asciiart.eu">asciiart.eu</a>.</p>
+		<p>All art is from <a href="https://www.asciiart.eu">asciiart.eu</a>.</p> -->
     </div>
 </template>
 

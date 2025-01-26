@@ -266,8 +266,11 @@ body {
 }
 
 footer {
-    color: var(--color-text-hidden);
     margin-top: auto;
+}
+footer a {
+    color: var(--color-text-hidden);
+    text-decoration: none;
 }
 
 ::selection {

@@ -4,7 +4,9 @@
         <RouterView/>
     </main>
     <footer class="center">
-        <p>&copy; 2024 Aleksi Malkki</p>
+        <router-link to="/debug"><p>
+            &copy; 2024 Aleksi Malkki
+        </p></router-link>
     </footer>
 </template>
 
