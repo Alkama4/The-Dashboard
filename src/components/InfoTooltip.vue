@@ -48,12 +48,12 @@ export default {
 .tooltip {
     position: absolute;
     bottom: 100%;
-    left: calc(var(--spacing-sm) * -1);
+    right: calc(var(--spacing-sm) * -1);
     width: max-content;
-    max-width: 40ch;
+    max-width: 25ch;
     padding: 8px;
     background: var(--color-background-card);
-    /* border: 1px solid var(--color-border); */
+    border: 1px solid var(--color-border);
     border-radius: var(--border-radius-small);
     margin-bottom: var(--spacing-xs);
     display: flex;
@@ -64,6 +64,7 @@ export default {
     font-weight: 500;
     font-size: 14px;
     box-shadow: var(--shadow-card);
+    text-align: left;
 
     animation: fadeIn 0.2s ease-out;
 }

@@ -3,7 +3,7 @@
         <h1>Account</h1>
         <p>Your settings are stored locally on your device. Please note that while your settings are saved locally, all of your data is stored centrally behind your account so that it can be accessed from any device and stays synced.</p>
 
-        <div class="flex-column loggedInAs card content-width-small">
+        <div class="flex-column loggedInAs card content-width-extra-small">
             <h2>Current account</h2>
             <div>You are currently logged in as <span class="username">{{ username }}</span></div>
             <button class="" @click="showLogOutModal">Log out</button>
@@ -144,12 +144,14 @@ export default {
     width: 100%;
     box-sizing: border-box; /* Tää on ihan paras! Ignoraa paddingin kun asetetaan width */
 }
-.loggedInAs div {
+.loggedInAs > div {
     font-size: 16px;
-
 }
 .loggedInAs .username {
     font-weight: 700;
+}
+.loggedInAs h2, .loggedInAs button {
+    margin: 0;
 }
 
 .chart-settings {

@@ -598,6 +598,10 @@ input[type="radio"] {
 }
 .chart-tooltip table {
     border-collapse: collapse;
+    padding: 0;
+}
+.chart-tooltip table td {
+    padding-inline: 0;
 }
 .chart-tooltip .header {
     color: var(--color-text);
@@ -617,19 +621,29 @@ input[type="radio"] {
     color: var(--color-text-light);
     padding-left: 0.5rem;
 }
+.chart-tooltip .label > div {
+    display: flex; 
+    align-items: center; 
+    padding-right: 1rem;
+}
 .chart-tooltip .value {
     font-weight: 500;
     color: var(--color-text);
     text-align: end;
 }
 
-.chart-tooltip .disabled .series-name, .chart-tooltip .disabled .value {
+.chart-tooltip tr.disabled .series-name, .chart-tooltip .disabled .value {
     color: var(--color-text-hidden)
 }
-.chart-tooltip .disabled .color-blob {
+.chart-tooltip tr.disabled .color-blob {
     background-color: var(--color-text-hidden) !important;
 }
-
+.chart-tooltip .sum-row td > div {
+    border-top: 2px solid var(--color-border);
+    padding-top: 6px;
+    margin-top: 6px;
+    /* width: 100%; */
+}
 
 
 /* - - - - QUICK AND DIRTY CLASSES - - - - */
@@ -730,6 +744,11 @@ input[type="radio"] {
 
 
 /* - - - - CONTENT WIDTH LIMITORS - - - - */
+.content-width-extra-small {
+    margin-inline: auto;
+    max-width: 60ch;
+}
+
 .content-width-small {
     margin-inline: auto;
     max-width: 80ch;

@@ -152,13 +152,13 @@ import { notify } from '@/utils/notification';
 			getGreeting() {
 				const hour = new Date().getHours();
 				if (hour < 5) {
-					return ["Good night.", "It's late, get some rest and recharge for tomorrow."];
+					return ["Good night!", "It's late, get some rest and recharge for tomorrow."];
 				} else if (hour < 12) {
-					return ["Good morning.", "A fresh start to the day. Let’s make the most of it."];
+					return ["Good morning!", "A fresh start to the day. Let's make the most of it."];
 				} else if (hour < 18) {
-					return ["Good afternoon.", "The day is moving along. Hope it's going well for you."];
+					return ["Good afternoon!", "The day is moving along. Hope it's going well for you."];
 				} else {
-					return ["Good evening.", "The day’s winding down. Time to relax and prepare for tomorrow."];
+					return ["Good evening!", "The day's winding down. Time to relax and prepare for tomorrow."];
 				}
 			},
 			formatBytes(bytes, decimal = 2) {

@@ -37,6 +37,11 @@ In here I will collect my notes about this website and list the stuff that need 
         - this way it's automatically stored in the db
 
 ### Known issues
+- InfoTooltips positioning is stupid and doesn't detect window borders
+    - Make it position itself smartly
+- pie chart fullscren button not aligned properly in either fullscreen or normal view
+- Tooltips on chart and component not visible enough without border, but with border inconsistant
+    - Just add the border, you cant mouse over them so its fine
 - Settings apge not accessicble without account but settings are in localstorage.
     - Move to mysql.
 - Filterdropdowns not updating when resizing vertically
@@ -56,6 +61,9 @@ In here I will collect my notes about this website and list the stuff that need 
 - Turn link buttons so that the buttons act as the link and don't wrap
     - @click="genericLinkFunctionThatICanImport"
     - One for router and one for a
+- Cannot set 0 as a value
+    - If I remove check in js and send the 0 as a value mysql throws an error and deletes the transaction items.
+    - Be carefule when working with this
 
 
 ### Feature or a bug?

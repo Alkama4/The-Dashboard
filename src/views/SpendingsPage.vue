@@ -316,7 +316,7 @@
     flex: 3;
     overflow: hidden;
     text-align: start;
-    /* padding-right: 0; */
+    padding-right: 0;
 }
 .transaction-row .column-amount {
     /* width: 150px; */
@@ -327,7 +327,7 @@
     text-align: end;
     justify-content: end;
     font-weight: 500;
-    /* padding-left: 0; */
+    padding-left: 0;
 }
 .transaction-row .column-notes {
     /* width: 200px; */

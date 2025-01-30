@@ -253,7 +253,17 @@ const api = {
     },
     async getChartExpenseCategoriesMonthly() {
         const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/get_chart/expense_categories_monthly', { session_key: sessionKey }, null);
+        const response = await this.postData('/get_chart/categories_monthly', { session_key: sessionKey, direction: "expense" }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[getChartExpenseCategoriesMonthly] response failed:", response);
+            return null;
+        }
+    },
+    async getChartIncomeCategoriesMonthly() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/get_chart/categories_monthly', { session_key: sessionKey, direction: "income" }, null);
         if (response) {
             return response;
         } else {
