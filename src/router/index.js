@@ -7,7 +7,9 @@ import LogInPage from '@/views/LogInPage.vue';
 import DebugPage from '@/views/DebugPage.vue';
 import AnalyticsPage from '@/views/AnalyticsPage.vue';
 import FourOFourPage from '@/views/404Page.vue'
-import WatchList from '@/views/watchList.vue';
+import WatchList from '@/views/WatchList.vue';
+import AddTitle from '@/views/AddTitle.vue';
+import TitleDetails from '@/views/TitleDetails.vue';
 
 const routes = [
     {
@@ -29,7 +31,7 @@ const routes = [
         meta: { title: 'Spendings' }
     },
     {
-        path: '/newentry',
+        path: '/spendings/newEntry',
         name: 'New Entry',
         component: NewEntryPage,
         meta: { title: 'New Entry' }
@@ -57,6 +59,18 @@ const routes = [
         name: 'Watch list',
         component: WatchList,
         meta: { title: 'Watch list' }
+    },
+    {
+        path: '/watchList/addTitle',
+        name: 'Add Title',
+        component: AddTitle,
+        meta: { title: 'Add Title' }
+    },
+    {
+        path: '/watchList/titleDetails/:title',
+        name: 'Title Details',
+        component: TitleDetails,
+        meta: { title: 'Title Details' }
     },
     {
         path: '/:catchAll(.*)',

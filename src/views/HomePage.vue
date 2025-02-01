@@ -6,7 +6,7 @@
 			<div class="text-area">
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span>
-				<router-link class="no-decoration" to="/newEntry" style="padding-bottom: var(--spacing-md);">
+				<router-link class="no-decoration" to="/spendings/newEntry" style="padding-bottom: var(--spacing-md);">
 					<button class="color-primary">Start logging</button>
 				</router-link>
 			</div>
@@ -386,7 +386,7 @@ import { notify } from '@/utils/notification';
 
 .backup-row .content {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 220px 1fr;
     column-gap: var(--spacing-lg);
 	row-gap: var(--spacing-sm);
     width: 100%;

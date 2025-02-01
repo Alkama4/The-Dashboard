@@ -22,7 +22,7 @@
         <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;" style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"> 
             <IconFilter size="28px"/> 
         </button>
-        <router-link to="/newentry">
+        <router-link to="/spendings/newEntry">
             <button class="color-primary sticky-corner-button"> 
                 <IconAdd size="28px"/> 
             </button>
