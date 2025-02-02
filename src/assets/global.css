@@ -387,6 +387,17 @@ button.color-warning:active {
     background-color: var(--color-button-delete-active);
 }
 
+button.color-hidden-primary:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-text-white-hover);
+}
+button.color-hidden-primary:hover svg {
+    fill: var(--color-text-white-hover);
+}
+button.color-hidden-primary:active {
+    background-color: var(--color-primary-active);
+}
+
 /* Button simple */
 button.button-simple {
     box-shadow: 0 0 0 transparent;

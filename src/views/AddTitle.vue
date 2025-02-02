@@ -1,26 +1,127 @@
 <template>
     <div class="content-width-small">
         <h1>Add title</h1>
-        <p>Add the imdb code or whatever we are going to use to add titles to the db with the form below.</p>
+        <p>Use the search box below to search for movies or TV-show to add to your watch list.</p>
 
-        <form @submit.prevent="handleTitleAdd" class="titleForm">
+        <form @submit.prevent="searchForTitles" class="title-form">
             <div>
-                <label>A value that we want</label>
+                <label>Title category</label>
+                <SliderToggle 
+                v-model="titleCategory"
+                :options="['Movie', 'TV']" 
+                :colors="{
+                    color1: 'var(--color-primary)',
+                    color1Hover: 'var(--color-primary-hover)',
+                    color2: 'var(--color-secondary)',
+                    color2Hover: 'var(--color-secondary-hover)',
+                }"
+            />
+            </div>
+            <div>
+                <label>Title name</label>
                 <input type="text" v-model="titleName">
             </div>
-            <button class="color-primary">Add title</button>
+            <div class="flex-row">
+                <button class="color-primary" :disabled="waitingForResult" :class="{ loading: waitingForResult}">Search</button>
+            </div>
         </form>
+
+        <div class="results">
+            <h2>Seach results</h2>
+            <div v-if="searchResults == null" class="card resultPlaceHolder">
+                The results will appear here
+            </div>
+            <div v-for="title in searchResults" :key="title.id" class="card result">
+                <img :src="'https://image.tmdb.org/t/p/w200' + title.poster_path" alt=" " />
+                <div class="title-texts">
+                    <div class="make-space-on-mobile">
+                        <h3>
+                            <span v-if="title.title">{{ title.title }}</span>
+                            <span v-if="title.original_title != title.title" class="original-name"> ({{ title.original_title }})</span>
+                            <span v-if="title.name">{{ title.name }}</span>
+                            <span v-if="title.original_name != title.name" class="original-name"> ({{ title.original_name }})</span>
+                        </h3>
+                        <div class="flex details">
+                            <div class="flex score" :title="(title.vote_count + ' votes')">
+                                <IconIMDB/>
+                                <span>{{ title.vote_average }}</span>
+                            </div>
+                            <span class="divider">•</span>
+
+                            <span v-if="title.release_date">{{ movieDate(title.release_date) }}</span>
+                            <span v-else>{{ movieDate(title.first_air_date) }}</span>
+                        </div>
+                        <div class="flex genres">
+                            <div v-for="genre in title.genres" :key="genre" class="genre">
+                                {{ genre }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="overview">{{ title.overview }}</div>
+                    <div class="add-or-remove flex">
+                        <button v-if="title.added == true" class="color-hidden-primary">
+                            <IconAdd size="16px"/>Add to list
+                        </button>
+                        <button v-else class="color-warning">
+                            <IconTrash size="16px"/>Remove
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
   
 <script>
-// import api from '@/utils/dataQuery';
+import IconAdd from '@/components/icons/IconAdd.vue';
+import IconIMDB from '@/components/icons/IconIMDB.vue';
+import IconTrash from '@/components/icons/IconTrash.vue';
+import SliderToggle from '@/components/SliderToggle.vue';
+import api from '@/utils/dataQuery';
+// import { notify } from '@/utils/notification';
 
 export default {
+    components: {
+        SliderToggle,
+        IconIMDB,
+        IconAdd,
+        IconTrash,
+    },
+    data() {
+        return {
+            titleCategory: "Movie",
+            titleName: "",
+            searchResults: null,
+            waitingForResult: false,
+        }
+    },
     methods: {
-        handleTitleAdd() {
-            console.log(this.titleName);
+        async searchForTitles() {
+            // if (this.titleName !== "") {
+                this.waitingForResult = true;
+                const response = await api.searchForTitle(this.titleCategory, this.titleName);
+                if (response) {
+                    this.searchResults = response.results;
+                    console.log("[searchForTitles] Api response: ", response);
+                }
+                this.waitingForResult = false;
+            // } else {
+            //     notify("The title name can not be empty.")
+            // }
+        },
+        movieDate(date) {
+            const newDate = new Date(date);
+            if (newDate == "Invalid Date") {
+                return "No date"
+            } else {
+                return new Date(newDate).toLocaleDateString('fi-FI', { 
+                    // weekday: 'short',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+            }
         }
     }
 };
@@ -28,19 +129,178 @@ export default {
 
   
 <style scoped>
-    .titleForm {
+    .title-form {
         display: grid;
-        grid-template-columns: 1fr auto;
+        grid-template-columns: 180px auto auto;
         justify-content: center;
         align-items: end;
     }
-    /* Align them with margin manually since why bother doing anything else */
-    .titleForm input {
-        margin-top: 0;
-        margin-bottom: 1.5px;
+    .title-form input, .title-form button {
+        margin: 0;
     }
-    .titleForm button {
-        margin-bottom: 0;
+
+    .resultPlaceHolder {
+        text-align: center;
+        height: 100px;
+        color: var(--color-text-light);
+        font-weight: 500;
+        font-size: var(--font-size-medium);
+        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
+
+    .make-space-on-mobile {
+        overflow: hidden;
+    }
+
+    .result {
+        position: relative;
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: var(--spacing-md);
+        padding: 0;
+        padding-right: var(--spacing-md);
+        height: fit-content;
+    }
+
+    .result img {
+        width: 200px;
+        aspect-ratio: 500/741;
+        background-color: var(--color-background-card-section);
+        border-radius: var(--border-radius-medium);
+    }    
+    .result .title-texts {
+        display: flex;
+        flex-direction: column;
+        gap: var(--spacing-xs);
+        padding-top: var(--spacing-md);
+        height: 100%;
+        max-height: 296.4px;
+        box-sizing: border-box;
+    }
+    
+    .result h3 {
+        margin: 0;
+        max-width: calc(100% - 175px);
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .result .original-name {
+        color: var(--color-text-lighter);
+    }
+    
+    .result .genres {
+        gap: var(--spacing-xs);
+        flex-wrap: wrap;
+        overflow: hidden;
+    }
+    .result .genre {
+        padding: var(--spacing-xs);
+        background-color: var(--color-background-card-section);
+        border-radius: var(--border-radius-small);
+        font-size: var(--font-size-small);
+        font-weight: 500;
+        white-space: nowrap;
+    }
+    
+    .result .details {
+        gap: var(--spacing-sm);
+    }
+    .result .details .score {
+        gap: var(--spacing-xs);
+    }
+
+    .result .overview {
+        color: var(--color-text-light);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: justify;
+        min-height: 75px;
+        /* Woodoo magic */
+        display: -webkit-box; /* Creates a flexbox-like box for multiline text */
+        -webkit-line-clamp: 5; /* Limits the text to 3 lines (you can adjust this number) */
+        -webkit-box-orient: vertical; /* Makes the box oriented vertically for multiline text */
+    }
+
+    .result .add-or-remove {
+        position: absolute;
+        top: var(--spacing-sm);
+        right: var(--spacing-sm);
+    }
+    .result .add-or-remove button {
+        margin: 0;
+        width: 175px;
+    }
+
+    @media (max-width: 425px) {
+        .result .details {
+            flex-direction: column-reverse;
+            gap: 0;
+        }
+        .result .details .divider {
+            display: none;
+        }
+    }
+
+    @media (max-width: 500px) {
+        .result {
+            grid-template-columns: 1fr;
+            padding-right: 0;
+        }
+
+        .result .title-texts {
+            padding: 0;
+        }
+
+        .result img {
+            position: absolute;
+            top: var(--spacing-sm);
+            left: var(--spacing-sm);
+            width: 100px;
+        }
+        .result .make-space-on-mobile {
+            padding-left: calc(100px + var(--spacing-sm));
+            height: 148.2px;
+            min-height: 148.2px;
+            padding-top: calc(var(--spacing-sm) * 1.5);
+        }
+
+        .result .title-texts {
+            max-height: 352px;
+            padding-inline: var(--spacing-sm);
+        }
+
+
+    }
+
+    @media (max-width: 600px) {
+        .title-form {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 750px) {
+        .result h3 {
+            max-width: none;
+        }
+        .result .add-or-remove {
+            position: static;
+            padding: 10px 0;
+            margin-top: auto;
+        }
+        .result .add-or-remove button {
+            width: 100%;
+        }
+    }
+
+    .loading {
+        cursor: wait;
+    }
+
 </style>
   

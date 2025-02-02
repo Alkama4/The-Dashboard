@@ -28,7 +28,7 @@
                 class="slide"
                 @click="openDetailsPageFor(movie.name)"
             >
-                <img :src="movie.thumbnail" class="thumbnail">
+                <img :src="movie.thumbnail" class="thumbnail" alt=" ">
                 <div class="gradient"></div>
                 <div class="details">
                     <span class="movie-name">{{ movie.name }}</span>
@@ -264,7 +264,7 @@ export default {
 
 .slide .movie-name {
     text-align: right;
-    color: var(--color-text);
+    color: var(--color-text-white);
     font-weight: 700;
     font-size: var(--font-size-large);
 }

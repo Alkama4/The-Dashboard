@@ -78,6 +78,12 @@ const api = {
     async getBackups() {
         return this.getData('/get_backups');
     },
+    async searchForTitle(titleCategory, titleName) {
+        let params = {};
+        params.title_name =  titleName;
+        params.title_category = titleCategory;
+        return this.getData('/watch_list/search', params);
+    },
 
 
     // - - - - - - POST request to the API - - - - - - 

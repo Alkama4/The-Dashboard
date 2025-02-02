@@ -18,6 +18,9 @@
             <div
                 class="slider-indicator"
                 :class="{ 'selected-second': value === options[1] }"
+                :style="indicatorStyle"
+                @mouseenter="isHovered = true"
+                @mouseleave="isHovered = false"
             ></div>
         </div>
     </div>
@@ -25,28 +28,49 @@
 
 <script>
 export default {
-    name: 'SliderToggle',
+    name: "SliderToggle",
+    data() {
+        return {
+            isHovered: false,
+        };
+    },
     props: {
         modelValue: {
             type: String,
-            default: '',
-            // validator: (val) => val === '' || Array.isArray(val) && val.length === 2,
+            default: "",
         },
         options: {
             type: Array,
             required: true,
             validator: (val) => Array.isArray(val) && val.length === 2,
         },
+        colors: {
+            type: Object,
+            default: () => ({
+                color1: "var(--color-negative)",
+                color1Hover: "var(--color-negative-hover)",
+                color2: "var(--color-positive)",
+                color2Hover: "var(--color-positive-hover)",
+            }),
+        },
     },
-    emits: ['update:modelValue'],
+    emits: ["update:modelValue"],
     computed: {
         value: {
             get() {
                 return this.modelValue;
             },
             set(newValue) {
-                this.$emit('update:modelValue', newValue);
+                this.$emit("update:modelValue", newValue);
             },
+        },
+        indicatorStyle() {
+            const isOption1 = this.value === this.options[0];
+            return {
+                backgroundColor: this.isHovered
+                    ? (isOption1 ? this.colors.color1Hover : this.colors.color2Hover)
+                    : (isOption1 ? this.colors.color1 : this.colors.color2),
+            };
         },
     },
     methods: {
@@ -102,8 +126,7 @@ export default {
     color: var(--color-text-white-hover);
     font-weight: 600;
     text-transform: capitalize;
-    transition: color 0.25s ease-out,
-                font-weight 0.25s ease-out;
+    transition: color 0.25s ease-out, font-weight 0.25s ease-out;
     pointer-events: none;
     user-select: none;
     text-align: center;
@@ -116,26 +139,16 @@ export default {
 .slider-indicator {
     width: 50%;
     height: 100%;
-    background-color: var(--color-negative);
     border-radius: var(--border-radius-small);
     display: flex;
     align-items: center;
     justify-content: center;
     position: absolute;
     color: white;
-    transition: transform 0.25s ease-out,
-                background-color 0.1s ease-out;
-}
-.slider-indicator:hover {
-    background-color: var(--color-negative-hover);
+    transition: transform 0.25s ease-out, background-color 0.1s ease-out;
 }
 
 .selected-second {
     transform: translateX(100%);
-    background-color: var(--color-positive); /* Adjust for the second option */
 }
-.selected-second:hover {
-    background-color: var(--color-positive-hover); /* Adjust hover color */
-}
-
 </style>
