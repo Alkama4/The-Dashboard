@@ -2,210 +2,144 @@
 <div>
     <div class="content-width-small">
         <h1>Watch list</h1>
-        <p>Template placeholder text that will be replaced at some point and so on. Try not to read or even notice this text if possible. This doesn't make any sense since I will probably remove this whole portion in the final form.</p>
+        <p>Template placeholder text that will be replaced at some point and so on...</p>
     </div>
 
     <router-link to="/watchList/addTitle">
-        <button class="color-primary sticky-corner-button"> 
-            <IconAdd size="28px"/> 
+        <button class="color-primary sticky-corner-button">
+            <IconAdd size="28px"/>
         </button>
     </router-link>
 
-    <div v-for="(movieList, index) in movieLists" :key="index" class="content-width-medium">
-        <h2>{{ movieList.listName }}</h2>
-        
-        <!-- loop="true"  -->
-        <swiper-container 
+    <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-medium">
+        <h2>{{ titleList.listName }}</h2>
+
+        <!-- Show swiper-container only when titles are available and loading is complete -->
+        <Swiper 
             space-between="10" 
-            keyboard="true" 
             slidesPerView="auto" 
             class="slide-container"
-            slidesOffsetBefore="32"
+            :slidesOffsetBefore=32
         >
             <swiper-slide 
-                v-for="movie in movieList.movies" 
-                :key="movie.id" 
+                v-for="title in titleList.titles" 
+                :key="title.id" 
                 class="slide"
-                @click="openDetailsPageFor(movie.name)"
+                @click="openDetailsPageFor(title.id)"
             >
-                <img :src="movie.thumbnail" class="thumbnail" alt=" ">
+                <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_url" alt="" class="thumbnail"/>
                 <div class="gradient"></div>
                 <div class="details">
-                    <span class="movie-name">{{ movie.name }}</span>
-                    
-                    <div class="progress-details" :class="{'completed': movie.progress == 1}">
-                        <!-- If the movie has been watched -->
-                        <span v-if="movie.progress == 1">
+                    <span class="title-name">{{ title.name }}</span>
+                    <div class="progress-details" :class="{'watched': title.watch_count > 0}">
+                        <span v-if="title.watch_count > 0">
                             Watched
                         </span>
-                        <!-- Else show the type specific values -->
                         <span v-else>
-                            <template v-if="movie.type === 'tv'">
-                                Episode {{ movie.currentEpisode }}/{{ movie.lastEpisodeOfSeason }}, Season {{ movie.currentSeason }}
+                            <template v-if="title.type === 'tv'">
+                                Episode {{ title.current_episode }}/{{ title.current_season_episode_count }}, Season {{ title.current_season }}
                             </template>
                             <template v-else>
-                                {{ movie.remaining }}
-                                <span v-if="movie.progress > 0.01 && movie.progress < 0.95">Remaining</span> 
+                                {{ title.movie_runtime }} min
                             </template>
                         </span>
                     </div>
-                    
-                    <div class="movie-rating"><IconIMDB/>{{ movie.rating }}</div>
+                    <div class="title-rating"><IconIMDB/>{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
                 </div>
-                <div class="progress-bar" :style="{ width: movie.progress * 100 + '%', '--progress-width': movie.progress * 100 + '%' }"></div>
-
             </swiper-slide>
-        </swiper-container>
+
+            <swiper-slide 
+                class="card full-width-swiper-slide loading-placeholder" 
+                v-if="titleList.titles.length == 0 && titleList.loading"
+            >
+            </swiper-slide>
+
+            <swiper-slide 
+                class="card full-width-swiper-slide" 
+                v-if="titleList.titles.length == 0 && !titleList.loading"
+            >
+                Looks like there's nothing here. Try adding titles to your watchlist.
+            </swiper-slide>
+        </Swiper>
+
+        <!-- Empty State when no titles are available after loading -->
     </div>
 </div>
 </template>
-  
+
 <script>
+import { Swiper, SwiperSlide } from 'swiper/vue'; // Import Swiper and SwiperSlide for Vue 3
+import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import IconAdd from '@/components/icons/IconAdd.vue';
 import IconIMDB from '@/components/icons/IconIMDB.vue';
-import { register } from 'swiper/element/bundle';
 import router from '@/router';
-register();
-
-// Improper import. Check how it should actually be imported. Work just fine though, but it throws a warning. Could fix the space after bug...
+import api from '@/utils/dataQuery.js';
 
 export default {
     name: 'HomePage',
     components: {
         IconIMDB,
         IconAdd,
-    },  
+        Swiper,      // Register Swiper component
+        SwiperSlide  // Register SwiperSlide component
+    },
     data() {
         return {
-            movieLists: [
+            titleLists: [
                 {
-                    listName: "Recommended Movies",
-                    movies: [
-                        { 
-                            id: 1, 
-                            type: "movie",
-                            name: "Megamind", 
-                            progress: 1, 
-                            remaining: "1h 59min",
-                            rating: 4.9,
-                            thumbnail: "http://pibox.lan:800/getImage/",
-                        },
-                        { 
-                            id: 2, 
-                            type: "movie",
-                            name: "John Wick 3", 
-                            remaining: "2h 12min",
-                            progress: 0.63, 
-                            rating: 7.7,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 3, 
-                            type: "movie",
-                            name: "Avatar - The Way of Water", 
-                            progress: 0.75, 
-                            remaining: "3h 36min",
-                            rating: 8.9,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 3, 
-                            type: "movie",
-                            name: "Avatar - The Way of Water", 
-                            progress: 0.75, 
-                            remaining: "3h 36min",
-                            rating: 8.9,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 3, 
-                            type: "movie",
-                            name: "Avatar - The Way of Water", 
-                            progress: 0.75, 
-                            remaining: "3h 36min",
-                            rating: 8.9,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 3, 
-                            type: "movie",
-                            name: "Avatar - The Way of Water", 
-                            progress: 0.75, 
-                            remaining: "3h 36min",
-                            rating: 8.9,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 4, 
-                            type: "movie",
-                            name: "Johnny English", 
-                            progress: 0, 
-                            remaining: "2h 23min",
-                            rating: 8.4,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        }
-                    ]
+                    listName: "Unwatched Movies",
+                    titles: [],
+                    loading: true,  // Add loading state for each list
                 },
                 {
-                    listName: "Recommended TV Series",
-                    movies: [
-                        { 
-                            id: 5, 
-                            type: "tv",
-                            name: "One Punch Man", 
-                            currentSeason: 4,
-                            currentEpisode: 12,
-                            lastEpisodeOfSeason: 12,
-                            progress: 1,
-                            rating: 8.2,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 6, 
-                            type: "tv",
-                            name: "Mob Psycho 100", 
-                            currentSeason: 2,
-                            currentEpisode: 6,
-                            lastEpisodeOfSeason: 12,
-                            progress: 0.5,
-                            rating: 6.8,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 7, 
-                            type: "tv",
-                            name: "Avatar The Last Airbender", 
-                            currentSeason: 3,
-                            currentEpisode: 10,
-                            lastEpisodeOfSeason: 12,
-                            progress: 0.83,
-                            rating: 6.4,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        },
-                        { 
-                            id: 8, 
-                            type: "tv",
-                            name: "Severance", 
-                            currentSeason: 1,
-                            currentEpisode: 5,
-                            lastEpisodeOfSeason: 10,
-                            progress: 0.50,
-                            rating: 7.5,
-                            thumbnail: "http://pibox.lan:800/getImage/"
-                        }
-                    ]
+                    listName: "Unwatched TV-series",
+                    titles: [],
+                    loading: true,  // Add loading state for each list
+                },
+                {
+                    listName: "Rewatch These Popular Titles",
+                    titles: [],
+                    loading: true,  // Add loading state for each list
                 }
             ]
         };
     },
     methods: {
-        openDetailsPageFor(movieName) {
-            console.log(movieName);
-            router.push(`/watchList/titleDetails/${movieName}`);
+        openDetailsPageFor(titleID) {
+            console.log(titleID);
+            router.push(`/watchList/title/${titleID}`);
+        },
+
+        // Simplified method to fetch and set title lists
+        async fetchTitleList(listName, titleType = null, isPopular = false) {
+            const titleList = this.titleLists.find(list => list.listName === listName);
+            try {
+                titleList.loading = true;  // Set loading state to true initially
+                
+                // Fetch titles based on the provided criteria
+                const titleData = await api.getTitleCards(titleType, isPopular);
+                
+                // Update titles if available
+                if (titleData && titleData.titles) {
+                    titleList.titles = titleData.titles;
+                }
+            } catch (error) {
+                console.error(`Error fetching data for ${listName}:`, error);
+            } finally {
+                titleList.loading = false;  // Set loading to false when data is fetched
+            }
         }
+    },
+    async mounted() {
+        // Use the fetchTitleList method to load data for each category
+        await this.fetchTitleList("Unwatched Movies", "Movie", false);  // Fetch unwatched movies
+        await this.fetchTitleList("Unwatched TV-series", "TV", false);  // Fetch unwatched TV-series
+        await this.fetchTitleList("Rewatch These Popular Titles", null, true);  // Fetch rewatchable popular titles
     }
 };
 </script>
+
+
 
 
 <style scoped>
@@ -218,8 +152,8 @@ export default {
 .slide {
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
-    height: 330px;
-    width: 220px;
+    height: 300px;
+    width: 200px;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -262,18 +196,18 @@ export default {
     font-size: var(--font-size-small);
 }
 
-.slide .movie-name {
+.slide .title-name {
     text-align: right;
     color: var(--color-text-white);
     font-weight: 700;
     font-size: var(--font-size-large);
 }
 
-.slide .completed {
+.slide .watched {
     color: var(--color-positive);
 }
 
-.slide .movie-rating {
+.slide .title-rating {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -281,21 +215,41 @@ export default {
     gap: var(--spacing-xs);
 }
 
-.slide .progress-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: var(--spacing-xs);
-    background-color: var(--color-primary);
-    animation: progressAnimation 1s ease;
+.full-width-swiper-slide {
+    height: 300px;
+    width: calc(100% - var(--spacing-hg));
+    margin: 0;
+    box-sizing: border-box;
+    padding-inline: calc(22% - var(--spacing-lg));
+    
+
+    color: var(--color-text-light);
+    text-align: center;
+    font-weight: 500;
+    font-size: var(--font-size-medium);
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
-@keyframes progressAnimation {
-    from {
-        width: 0%;
+.loading-placeholder {
+    background: linear-gradient(
+        90deg,
+        var(--color-background-tr-active) 20%,
+        var(--color-background-tr-hover) 50%,
+        var(--color-background-tr-active) 80%
+    );
+    background-size: 200% 100%;
+    animation: highlight-wave 2s infinite linear;
+}
+@keyframes highlight-wave {
+    0% {
+        background-position: 200% 0;
     }
-    to {
-        width: var(--progress-width); /* Variable set dynamically from movie progress */
+    100% {
+        background-position: -200% 0;
     }
 }
 </style>

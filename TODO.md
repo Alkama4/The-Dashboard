@@ -7,6 +7,8 @@ In here I will collect my notes about this website and list the stuff that need 
 - Backups kind of dull
     - Give it some life and readability
 
+- Think of a better way to implement the modal. Way too manual and inconvenient. Should work more like the native popup where it stops progress and returns a value.
+
 ### Features to add
 - Navigation
     - link highlight when page open to show where we are.
@@ -64,6 +66,7 @@ In here I will collect my notes about this website and list the stuff that need 
 - Cannot set 0 as a value
     - If I remove check in js and send the 0 as a value mysql throws an error and deletes the transaction items.
     - Be carefule when working with this
+- User episodes in mysql might not get deleted when on title deletion
 
 
 ### Feature or a bug?

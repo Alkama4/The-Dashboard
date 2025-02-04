@@ -61,11 +61,22 @@
                 </div>
 
                 <div v-if="modalType === 'logout'">
-                    <p style="margin-left: 0;"> Are you sure you want to log out?
+                    <p style="margin-left: 0;"> 
+                        Are you sure you want to log out?
                     </p>
                     <div class="two-buttons">
-                        <button class="" @click="closeModal">Cancel</button>
                         <button class="color-primary" @click="sendLogout">Log out</button>
+                        <button class="" @click="closeModal">Cancel</button>
+                    </div>
+                </div>
+
+                <div v-if="modalType === 'removeTitle'">
+                    <p style="margin-left: 0;"> 
+                        Are you sure you want to remove the title. <br> All of your data on the title will be lost permanently.
+                    </p>
+                    <div class="two-buttons">
+                        <button class="color-primary color-warning" @click="sendRemoveTitle">Remove</button>
+                        <button class="" @click="closeModal">Cancel</button>
                     </div>
                 </div>
 
@@ -122,6 +133,10 @@ export default {
         },
         sendLogout() {
             this.$emit("logout");
+            this.$emit("close");
+        },
+        sendRemoveTitle() {
+            this.$emit("removeTitle");
             this.$emit("close");
         }
     },
@@ -220,6 +235,9 @@ h2.delete::after {
 }
 h2.logout::after {
     content: "Log out";
+}
+h2.removeTitle::after {
+    content: "Remove Title";
 }
 
 .modal-close {

@@ -5,7 +5,8 @@ import router from '@/router';
 
 const apiClient = axios.create({
     baseURL: 'http://192.168.0.2:800', // Your FastAPI base URL
-    timeout: 5000,
+    // Times out anyway at 5000 when it doesn't hear from the api
+    timeout: 0,
     headers: {
         'Content-Type': 'application/json',
     },
@@ -30,7 +31,7 @@ async function handleError(error, endpoint) {
         } else if (statusCode === 500) {
             notify("Internal server error. Please try again later.", "error");
         } else {
-            notify(`Unexpected error (${statusCode}): ${error.response.data.message || "No message provided."}`, "error");
+            notify(`Unexpected error (${statusCode}): ${error.response.data.message || "Unknown error."}`, "error");
         }
     } else if (error.request) {
         // No response received from the server
@@ -59,19 +60,19 @@ const api = {
         }
     },
     async getTransactions(params = {}) {
-        params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
+        params.session_key = localStorage.getItem('sessionKey');
         // console.info('Fetching transactions with params:', params);
         return this.getData('/get_transactions', params);
     },
     async getOptions() {
         let params = {};
-        params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
+        params.session_key = localStorage.getItem('sessionKey');
         // console.log('Fetching options with params:', params);
         return this.getData('/get_options', params);
     },
     async getFilters() {
         let params = {};
-        params.session_key = localStorage.getItem('sessionKey');    // Get the session key from local storage
+        params.session_key = localStorage.getItem('sessionKey');
         // console.log('Fetching filters with params:', params);
         return this.getData('/get_filters', params);
     },
@@ -80,9 +81,18 @@ const api = {
     },
     async searchForTitle(titleCategory, titleName) {
         let params = {};
-        params.title_name =  titleName;
+        params.session_key = localStorage.getItem('sessionKey');
+        params.title_name = titleName;
         params.title_category = titleCategory;
         return this.getData('/watch_list/search', params);
+    },
+    async getTitleCards(titleCategory, watched) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        if (titleCategory)
+            params.title_category = titleCategory;
+        params.watched = watched;
+        return this.getData('/watch_list/get_title_cards', params);
     },
 
 
@@ -303,6 +313,33 @@ const api = {
             return response;
         } else {
             console.error("[getServerDrivesInfo] response failed:", response);
+            return null;
+        }
+    },
+    async addTitleToUserList(tmdb_id, type) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/watch_list/add_user_title', { 
+            session_key: sessionKey, 
+            title_tmdb_id: tmdb_id, 
+            title_type: type
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[addTitleToUserList] response failed:", response);
+            return null;
+        }
+    },
+    async removeTitleFromUserList(tmdb_id) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/watch_list/remove_user_title', { 
+            session_key: sessionKey, 
+            title_tmdb_id: tmdb_id, 
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[addTitleToUserList] response failed:", response);
             return null;
         }
     },

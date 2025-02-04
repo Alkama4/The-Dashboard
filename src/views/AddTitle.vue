@@ -22,7 +22,13 @@
                 <input type="text" v-model="titleName">
             </div>
             <div class="flex-row">
-                <button class="color-primary" :disabled="waitingForResult" :class="{ loading: waitingForResult}">Search</button>
+                <button 
+                    class="color-primary" 
+                    :disabled="waitingForResult.includes('search')" 
+                    :class="{ loading: waitingForResult.includes('search')}"
+                >
+                    Search
+                </button>
             </div>
         </form>
 
@@ -32,19 +38,30 @@
                 The results will appear here
             </div>
             <div v-for="title in searchResults" :key="title.id" class="card result">
-                <img :src="'https://image.tmdb.org/t/p/w200' + title.poster_path" alt=" " />
+                <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_path" alt=" " />
                 <div class="title-texts">
                     <div class="make-space-on-mobile">
                         <h3>
-                            <span v-if="title.title">{{ title.title }}</span>
-                            <span v-if="title.original_title != title.title" class="original-name"> ({{ title.original_title }})</span>
-                            <span v-if="title.name">{{ title.name }}</span>
-                            <span v-if="title.original_name != title.name" class="original-name"> ({{ title.original_name }})</span>
+                            <!-- For Movies -->
+                            <span v-if="title.title" :title="title.title" class="name">
+                                {{ title.title }}
+                            </span>
+                            <span v-if="title.original_title != title.title" class="original-name" :title="title.original_title">
+                                ({{ title.original_title }})
+                            </span>
+
+                            <!-- For shows -->
+                            <span v-if="title.name" :title="title.name" class="name">
+                                {{ title.name }}
+                            </span>
+                            <span v-if="title.original_name != title.name" class="original-name" :title="title.original_name">
+                                ({{ title.original_name }})
+                            </span>
                         </h3>
                         <div class="flex details">
                             <div class="flex score" :title="(title.vote_count + ' votes')">
                                 <IconIMDB/>
-                                <span>{{ title.vote_average }}</span>
+                                <span>{{ title.vote_average.toFixed(1) }}</span>
                             </div>
                             <span class="divider">•</span>
 
@@ -59,16 +76,34 @@
                     </div>
                     <div class="overview">{{ title.overview }}</div>
                     <div class="add-or-remove flex">
-                        <button v-if="title.added == true" class="color-hidden-primary">
-                            <IconAdd size="16px"/>Add to list
-                        </button>
-                        <button v-else class="color-warning">
+                        <button 
+                            v-if="title.in_watch_list" 
+                            class="color-warning" 
+                            @click="handleTitleStoring('remove', title.id)"
+                            :disabled="waitingForResult.includes(title.id)" 
+                            :class="{ loading: waitingForResult.includes(title.id)}"
+                        >
                             <IconTrash size="16px"/>Remove
+                        </button>
+                        <button 
+                            v-else class="color-hidden-primary" 
+                            @click="handleTitleStoring('add', title.id, title.title ? 'movie' : 'tv')"
+                            :disabled="waitingForResult.includes(title.id)" 
+                            :class="{ loading: waitingForResult.includes(title.id)}"
+                        >
+                            <IconAdd size="16px"/>Add to list
                         </button>
                     </div>
                 </div>
             </div>
         </div>
+
+        <ModalWindow 
+            v-if="showConfirmationModal" 
+            @close="showConfirmationModal = false" 
+            @removeTitle="callApiToRemoveTitle"    
+            modalType="removeTitle"
+        />
     </div>
 </template>
 
@@ -77,9 +112,10 @@
 import IconAdd from '@/components/icons/IconAdd.vue';
 import IconIMDB from '@/components/icons/IconIMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
+import ModalWindow from '@/components/ModalWindow.vue';
 import SliderToggle from '@/components/SliderToggle.vue';
 import api from '@/utils/dataQuery';
-// import { notify } from '@/utils/notification';
+import { notify } from '@/utils/notification';
 
 export default {
     components: {
@@ -87,28 +123,44 @@ export default {
         IconIMDB,
         IconAdd,
         IconTrash,
+        ModalWindow,
     },
     data() {
         return {
             titleCategory: "Movie",
             titleName: "",
             searchResults: null,
-            waitingForResult: false,
+            waitingForResult: [],
+            showConfirmationModal: false,
+
+            // This is clunky and the modal should be redone to allow better handling.
+            titleToBeRemoved: ""
         }
     },
     methods: {
         async searchForTitles() {
-            // if (this.titleName !== "") {
-                this.waitingForResult = true;
+            if (this.titleName !== "") {
+                this.waitingForResult.push("search");
                 const response = await api.searchForTitle(this.titleCategory, this.titleName);
                 if (response) {
                     this.searchResults = response.results;
                     console.log("[searchForTitles] Api response: ", response);
                 }
-                this.waitingForResult = false;
+                this.removeItemFromWaitingArray("search");
             // } else {
             //     notify("The title name can not be empty.")
             // }
+            } else {
+                notify("Showing example values since the name field is empty.")
+
+                this.waitingForResult.push("search");
+                const response = await api.searchForTitle(this.titleCategory, this.titleName);
+                if (response) {
+                    this.searchResults = response.results;
+                    console.log("[searchForTitles] Api response: ", response);
+                }
+                this.removeItemFromWaitingArray("search");
+            }
         },
         movieDate(date) {
             const newDate = new Date(date);
@@ -122,6 +174,58 @@ export default {
                     year: 'numeric'
                 });
             }
+        },
+        async handleTitleStoring(addOrRemove, titleTmdbId, type) {
+            console.log(addOrRemove, titleTmdbId);
+            
+            // Disable click
+            this.waitingForResult.push(titleTmdbId);
+
+            if (addOrRemove == "add") {
+                const response = await api.addTitleToUserList(titleTmdbId, type);
+                if (response && response.success) {
+                    // Change the data on site for the title
+                    this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = true;
+                }
+                
+                // Allow click
+                this.removeItemFromWaitingArray(titleTmdbId);
+            } else if (addOrRemove == "remove") {
+                // This is clunky and the modal should be redone to allow better handling.
+                this.titleToBeRemoved = titleTmdbId;
+                
+                this.showConfirmationModal = true;
+                // const response = await api.removeTitleFromUserList(titleTmdbId);
+                // if (response && response.success) {
+                //     // Change the data on site for the title
+                //     this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = false;
+                // }
+            } else {
+                notify("Faild to interact with title.", "error");
+                
+                // Allow click
+                this.removeItemFromWaitingArray(titleTmdbId);
+            }
+
+            // ENABLE THIS AFTER MODAL HAS BEEN FIXED
+            // // Allow click
+            // this.removeItemFromWaitingArray(titleTmdbId);
+
+        },
+        async callApiToRemoveTitle() {
+            const titleTmdbId = this.titleToBeRemoved;
+            // Remove the title. This is clunky and the modal should be redone to allow better handling.
+            const response = await api.removeTitleFromUserList(titleTmdbId);
+            if (response && response.success) {
+                // Change the data on site for the title
+                this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = false;
+            }
+            
+            // Allow click
+            this.removeItemFromWaitingArray(titleTmdbId);
+        },
+        removeItemFromWaitingArray(item) {
+            this.waitingForResult = this.waitingForResult.filter(i => i !== item);
         }
     }
 };
@@ -189,6 +293,11 @@ export default {
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        /* Adjust the dots color with this */
+        color: var(--color-text-lighter);
+    }
+    .result .name {
+        color: var(--color-text);
     }
     .result .original-name {
         color: var(--color-text-lighter);
@@ -198,6 +307,7 @@ export default {
         gap: var(--spacing-xs);
         flex-wrap: wrap;
         overflow: hidden;
+        height: 32px;
     }
     .result .genre {
         padding: var(--spacing-xs);
@@ -223,7 +333,7 @@ export default {
         min-height: 75px;
         /* Woodoo magic */
         display: -webkit-box; /* Creates a flexbox-like box for multiline text */
-        -webkit-line-clamp: 5; /* Limits the text to 3 lines (you can adjust this number) */
+        -webkit-line-clamp: 7; /* Limits the text to 3 lines (you can adjust this number) */
         -webkit-box-orient: vertical; /* Makes the box oriented vertically for multiline text */
     }
 
@@ -247,7 +357,7 @@ export default {
         }
     }
 
-    @media (max-width: 500px) {
+    @media (max-width: 550px) {
         .result {
             grid-template-columns: 1fr;
             padding-right: 0;
@@ -275,6 +385,9 @@ export default {
             padding-inline: var(--spacing-sm);
         }
 
+        .result .genres {
+            height: auto;
+        }
 
     }
 
@@ -295,6 +408,10 @@ export default {
         }
         .result .add-or-remove button {
             width: 100%;
+        }
+
+        .result .overview {
+            -webkit-line-clamp: 5;
         }
     }
 
