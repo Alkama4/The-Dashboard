@@ -86,7 +86,7 @@
                             <IconTrash size="16px"/>Remove
                         </button>
                         <button 
-                            v-else class="color-hidden-primary" 
+                            v-else class="color-primary" 
                             @click="handleTitleStoring('add', title.id, title.title ? 'movie' : 'tv')"
                             :disabled="waitingForResult.includes(title.id)" 
                             :class="{ loading: waitingForResult.includes(title.id)}"
@@ -147,20 +147,20 @@ export default {
                     console.log("[searchForTitles] Api response: ", response);
                 }
                 this.removeItemFromWaitingArray("search");
-            // } else {
-            //     notify("The title name can not be empty.")
-            // }
             } else {
-                notify("Showing example values since the name field is empty.")
-
-                this.waitingForResult.push("search");
-                const response = await api.searchForTitle(this.titleCategory, this.titleName);
-                if (response) {
-                    this.searchResults = response.results;
-                    console.log("[searchForTitles] Api response: ", response);
-                }
-                this.removeItemFromWaitingArray("search");
+                notify("The title name can not be empty.")
             }
+            // } else {
+            //     notify("Showing example values since the name field is empty.")
+
+            //     this.waitingForResult.push("search");
+            //     const response = await api.searchForTitle(this.titleCategory, this.titleName);
+            //     if (response) {
+            //         this.searchResults = response.results;
+            //         console.log("[searchForTitles] Api response: ", response);
+            //     }
+            //     this.removeItemFromWaitingArray("search");
+            // }
         },
         movieDate(date) {
             const newDate = new Date(date);

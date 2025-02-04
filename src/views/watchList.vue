@@ -20,6 +20,7 @@
             slidesPerView="auto" 
             class="slide-container"
             :slidesOffsetBefore=32
+            :slidesOffsetAfter=32
         >
             <swiper-slide 
                 v-for="title in titleList.titles" 
@@ -31,20 +32,24 @@
                 <div class="gradient"></div>
                 <div class="details">
                     <span class="title-name">{{ title.name }}</span>
-                    <div class="progress-details" :class="{'watched': title.watch_count > 0}">
-                        <span v-if="title.watch_count > 0">
-                            Watched
-                        </span>
-                        <span v-else>
-                            <template v-if="title.type === 'tv'">
-                                Episode {{ title.current_episode }}/{{ title.current_season_episode_count }}, Season {{ title.current_season }}
-                            </template>
-                            <template v-else>
-                                {{ title.movie_runtime }} min
-                            </template>
-                        </span>
-                    </div>
                     <div class="title-rating"><IconIMDB/>{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
+                    <div class="progress-details">
+                        <template v-if="title.type === 'tv'">
+                            Episode {{ title.current_episode }}/{{ title.current_season_episode_count }}, Season {{ title.current_season }}
+                        </template>
+                        <template v-else>
+                            {{ formatRuntime(title.movie_runtime) }}
+                        </template>
+                    </div>
+                    <div class="watched">
+                        <template v-if="title.watch_count == 1">
+                            Watched 
+                        </template>
+                        <template v-if="title.watch_count >= 2">
+                            Watched {{ title.watch_count }} times
+                        </template>
+                    </div>
+
                 </div>
             </swiper-slide>
 
@@ -109,7 +114,11 @@ export default {
             console.log(titleID);
             router.push(`/watchList/title/${titleID}`);
         },
-
+        formatRuntime(runtime) {
+            const hours = Math.floor(runtime / 60);
+            const minutes = runtime % 60;
+            return `${hours}hr ${minutes}min`;
+        },
         // Simplified method to fetch and set title lists
         async fetchTitleList(listName, titleType = null, isPopular = false) {
             const titleList = this.titleLists.find(list => list.listName === listName);

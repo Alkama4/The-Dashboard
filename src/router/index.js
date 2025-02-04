@@ -67,7 +67,7 @@ const routes = [
         meta: { title: 'Add Title' }
     },
     {
-        path: '/watchList/title/:title',
+        path: '/watchList/title/:titleID',
         name: 'Title Details',
         component: TitleDetails,
         meta: { title: 'Title Details' }

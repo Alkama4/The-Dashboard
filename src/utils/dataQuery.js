@@ -94,6 +94,12 @@ const api = {
         params.watched = watched;
         return this.getData('/watch_list/get_title_cards', params);
     },
+    async getTitleInfo(titleID) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.title_id = titleID;
+        return this.getData('/watch_list/get_title_info', params);
+    },
 
 
     // - - - - - - POST request to the API - - - - - - 
