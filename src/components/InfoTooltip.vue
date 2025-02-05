@@ -1,7 +1,7 @@
 <template>
     <span class="tooltip-container">
         <IconInfo size="20px" class="info-icon" @mouseover="showTooltip" @mouseleave="hideTooltip"/>
-        <div v-if="isTooltipVisible" class="tooltip">
+        <div v-if="isTooltipVisible" class="tooltip" :class="position">
             {{ this.text }}
         </div>
 
@@ -22,6 +22,10 @@ export default {
     },  
     props: {
         text: String,
+        position: {
+            type: String,
+            default: "left"
+        },
     },
     methods: {
         showTooltip() {
@@ -48,7 +52,6 @@ export default {
 .tooltip {
     position: absolute;
     bottom: 100%;
-    right: calc(var(--spacing-sm) * -1);
     width: max-content;
     max-width: 25ch;
     padding: 8px;
@@ -67,5 +70,11 @@ export default {
     text-align: left;
 
     animation: fadeIn 0.2s ease-out;
+}
+.tooltip.right {
+    left: calc(var(--spacing-sm) * -1);
+}
+.tooltip.left {
+    right: calc(var(--spacing-sm) * -1);
 }
 </style>

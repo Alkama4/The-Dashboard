@@ -1,89 +1,92 @@
 <template>
-<div>
-    <div class="content-width-small">
-        <h1>Watch list</h1>
-        <p>Template placeholder text that will be replaced at some point and so on...</p>
-    </div>
+    <div>
+        <div class="content-width-small">
+            <h1>Watch list</h1>
+            <p>Template placeholder text that will be replaced at some point and so on...</p>
+        </div>
 
-    <router-link to="/watchList/addTitle">
-        <button class="color-primary sticky-corner-button">
-            <IconAdd size="28px"/>
-        </button>
-    </router-link>
+        <router-link to="/watchList/addTitle">
+            <button class="color-primary sticky-corner-button">
+                <IconAdd size="28px"/>
+            </button>
+        </router-link>
 
-    <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-medium">
-        <h2>{{ titleList.listName }}</h2>
+        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-medium">
+            <h2>{{ titleList.listName }}</h2>
 
-        <!-- Show swiper-container only when titles are available and loading is complete -->
-        <Swiper 
-            space-between="10" 
-            slidesPerView="auto" 
-            class="slide-container"
-            :slidesOffsetBefore=32
-            :slidesOffsetAfter=32
-        >
-            <swiper-slide 
-                v-for="title in titleList.titles" 
-                :key="title.id" 
-                class="slide"
-                @click="openDetailsPageFor(title.id)"
+            <!-- Show swiper-container only when titles are available and loading is complete -->
+            <Swiper 
+                space-between="10" 
+                slidesPerView="auto" 
+                class="slide-container"
+                :slidesOffsetBefore=32
+                :slidesOffsetAfter=32
             >
-                <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_url" alt="" class="thumbnail"/>
-                <div class="gradient"></div>
-                <div class="details">
-                    <span class="title-name">{{ title.name }}</span>
-                    <div class="title-rating"><IconIMDB/>{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
-                    <div class="progress-details">
-                        <template v-if="title.type === 'tv'">
-                            Episode {{ title.current_episode }}/{{ title.current_season_episode_count }}, Season {{ title.current_season }}
-                        </template>
-                        <template v-else>
-                            {{ formatRuntime(title.movie_runtime) }}
-                        </template>
+                <swiper-slide 
+                    v-for="title in titleList.titles" 
+                    :key="title.id" 
+                    class="slide"
+                    @click="openDetailsPageFor(title.id)"
+                >
+                    <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_url" alt="" class="thumbnail"/>
+                    <div class="gradient"></div>
+                    <div class="details">
+                        <span class="title-name">{{ title.name }}</span>
+                        <div class="title-rating">{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
+                        <div class="progress-details">
+                            <template v-if="title.type === 'tv'">
+                                Episode {{ title.current_episode }}/{{ title.current_season_episode_count }}, Season {{ title.current_season }}
+                            </template>
+                            <template v-else>
+                                {{ formatRuntime(title.movie_runtime) }}
+                            </template>
+                        </div>
+                        <div class="watched">
+                            <template v-if="title.watch_count == 1">
+                                Watched 
+                            </template>
+                            <template v-if="title.watch_count >= 2">
+                                Watched {{ title.watch_count }} times
+                            </template>
+                        </div>
+
                     </div>
-                    <div class="watched">
-                        <template v-if="title.watch_count == 1">
-                            Watched 
-                        </template>
-                        <template v-if="title.watch_count >= 2">
-                            Watched {{ title.watch_count }} times
-                        </template>
-                    </div>
+                </swiper-slide>
 
-                </div>
-            </swiper-slide>
+                <swiper-slide 
+                    class="card full-width-swiper-slide loading-placeholder" 
+                    v-if="titleList.titles.length == 0 && titleList.loading"
+                >
+                </swiper-slide>
 
-            <swiper-slide 
-                class="card full-width-swiper-slide loading-placeholder" 
-                v-if="titleList.titles.length == 0 && titleList.loading"
-            >
-            </swiper-slide>
+                <swiper-slide 
+                    class="card full-width-swiper-slide" 
+                    v-if="titleList.titles.length == 0 && !titleList.loading"
+                >
+                    Looks like there's nothing here. Try adding titles to your watchlist.
+                </swiper-slide>
+            </Swiper>
 
-            <swiper-slide 
-                class="card full-width-swiper-slide" 
-                v-if="titleList.titles.length == 0 && !titleList.loading"
-            >
-                Looks like there's nothing here. Try adding titles to your watchlist.
-            </swiper-slide>
-        </Swiper>
+        </div>
 
-        <!-- Empty State when no titles are available after loading -->
+        <div class="content-width-small">
+            <h2>Titles listed</h2>
+            <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
+        </div>
+        
     </div>
-</div>
 </template>
 
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue'; // Import Swiper and SwiperSlide for Vue 3
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
 import IconAdd from '@/components/icons/IconAdd.vue';
-import IconIMDB from '@/components/icons/IconIMDB.vue';
 import router from '@/router';
 import api from '@/utils/dataQuery.js';
 
 export default {
     name: 'HomePage',
     components: {
-        IconIMDB,
         IconAdd,
         Swiper,      // Register Swiper component
         SwiperSlide  // Register SwiperSlide component
@@ -147,8 +150,6 @@ export default {
     }
 };
 </script>
-
-
 
 
 <style scoped>

@@ -1,7 +1,7 @@
 <template>
     <div class="content-width-small">
         <h1>Add title</h1>
-        <p>Use the search box below to search for movies or TV-show to add to your watch list.</p>
+        <p>Use the search box below to search for movies or TV-show to add to your watch list. Please note that if no one has added the title to their watch list before the process takes a while since the server queries for all the data for it. Especially on TV-series, since the amount of data is so much greater. </p>
 
         <form @submit.prevent="searchForTitles" class="title-form">
             <div>
@@ -60,7 +60,7 @@
                         </h3>
                         <div class="flex details">
                             <div class="flex score" :title="(title.vote_count + ' votes')">
-                                <IconIMDB/>
+                                <IconTMDB/>
                                 <span>{{ title.vote_average.toFixed(1) }}</span>
                             </div>
                             <span class="divider">•</span>
@@ -110,7 +110,7 @@
   
 <script>
 import IconAdd from '@/components/icons/IconAdd.vue';
-import IconIMDB from '@/components/icons/IconIMDB.vue';
+import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
 import ModalWindow from '@/components/ModalWindow.vue';
 import SliderToggle from '@/components/SliderToggle.vue';
@@ -120,7 +120,7 @@ import { notify } from '@/utils/notification';
 export default {
     components: {
         SliderToggle,
-        IconIMDB,
+        IconTMDB,
         IconAdd,
         IconTrash,
         ModalWindow,

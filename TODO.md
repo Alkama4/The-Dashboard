@@ -37,6 +37,8 @@ In here I will collect my notes about this website and list the stuff that need 
     - getting data and storing it myself
         - Make api handle all the querying of data
         - this way it's automatically stored in the db
+    - Age rating
+        - Exists for tv, but not for movies!?
 
 ### Known issues
 - InfoTooltips positioning is stupid and doesn't detect window borders
