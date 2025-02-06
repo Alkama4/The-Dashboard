@@ -309,8 +309,7 @@ button {
 
     border-width: 0;
     border-radius: var(--border-radius-small);
-    margin: var(--spacing-xs);
-    margin-inline: var(--spacing-sm);
+    margin: var(--spacing-md) 0;
     padding: var(--spacing-sm);
     padding-inline: var(--spacing-lg);
     
@@ -753,6 +752,25 @@ input[type="radio"] {
     margin-right: 0;
 }
 
+.combined-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 0;
+}
+.combined-buttons .left-button {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    padding-inline: 0;
+    margin: 0;
+    width: 100%;
+}
+.combined-buttons .right-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding-inline: 0;
+    margin: 0;
+    width: 100%;
+}
 
 /* - - - - CONTENT WIDTH LIMITORS - - - - */
 .content-width-extra-small {

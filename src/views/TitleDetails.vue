@@ -24,30 +24,58 @@
             
             <div style="position: relative;">
                 <div class="mark-watched">
-                    <button class="color-primary simple" v-if="titleInfo.user_title_watch_count == 0" @click="handleWatchClick(true)">Mark watched</button>
-                    <div v-else class="not-simple">
-                        <button class="add-button color-primary" @click="handleWatchClick(true)">Add watch</button>
-                        <button class="remove-button color-warning" @click="handleWatchClick(false)">Remove</button>
+                    <button 
+                        class="color-primary" 
+                        v-if="titleInfo.user_watch_count == 0"
+                        @click="handleTitleWatchClick('title', 'watched')"
+                        :disabled="waitingForResult.includes('titleWatched')"
+                        :class="{loading: waitingForResult.includes('titleWatched')}"
+                    >
+                        Mark watched
+                    </button>
+                    <div v-else class="combined-buttons">
+                        <button 
+                            class="left-button color-primary" 
+                            @click="handleTitleWatchClick('title', 'watched')" 
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            title="Add a single watch to the watch count"
+                        >
+                            Add a watch
+                        </button>
+                        <button 
+                            class="right-button color-warning" 
+                            @click="handleTitleWatchClick('title', 'unwatched')" 
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            title="Remove a watch from the watch count"
+                        >
+                            Remove a watch
+                        </button>
                     </div>
                 </div>
                 <h2>Details</h2>
                 <div class="details">
                     <div>Watched status</div>
                     <div class="value">
-                        <template v-if="titleInfo.user_title_watch_count === 0">
-                            Unwatched
-                        </template>
-                        <template v-else-if="titleInfo.user_title_watch_count === 1">
+
+                        <template v-if="titleInfo.user_watch_count == 1">
                             Watched
                         </template>
+                        <template v-else-if="titleInfo.user_watch_count > 1">
+                            Watched {{ titleInfo.user_watch_count }} times
+                        </template>
                         <template v-else>
-                            Watched {{ titleInfo.user_title_watch_count }} times
+                            Unwatched
                         </template>
                     </div>
                     <div>TMDB average score</div>
                     <div class="value"><IconTMDB style="margin-right: 4px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
                     <div>Release date</div>
                     <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
+                </div>
+                <h3>Metadata</h3>
+                <div class="details">
                     <div>Title type</div>
                     <div class="value">{{ titleInfo.type }}</div>
                     <div>IMDB id</div>
@@ -59,34 +87,37 @@
                 </div>
             </div>
 
+            <button 
+                @click="handleTitleUpdate"
+                :disabled="waitingForResult.includes('titleUpdate')"
+                :class="{loading: waitingForResult.includes('titleUpdate')}"
+                class="update-title-button"
+                title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information."
+            >
+                Update title details
+            </button>
+
     
             <h2>Overview</h2>
             <p>{{ titleInfo.overview }}</p>
             
-            <h2>Notes <InfoTooltip :text="`Last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
-            <div>
-                <!-- <div>
-                    <label for="">Times watched</label>
-                    <div class="times-watched">
-                        <button>+</button>
-                        <span>{{ titleInfo.user_title_watch_count }}</span>
-                        <button>-</button>
-                    </div>
-                </div> -->
-                <div>
-                    <!-- <label for="">Notes</label> -->
-                    <textarea v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
-                </div>
-                <div class="flex-row">
-                    <button class="">Save notes</button>
-                </div>
-            </div>
+            <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
+            <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
+            <button 
+                @click="handleNotesSave"
+                :disabled="waitingForResult.includes('saveNotes')"
+                :class="{loading: waitingForResult.includes('saveNotes')}"
+                class="save-notes-button" 
+            >
+                Save notes
+            </button>
         </div>
 
         <div v-for="season in titleInfo.seasons" 
             :key="season.season_id" 
             class="card season content-width-large" 
-            :class="{'active': expandedSeason == season.season_id}">
+            :class="{'active': expandedSeason == season.season_id}"
+        >
 
             <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
                 <img class="season-poster" :src="'https://image.tmdb.org/t/p/w200' + season.poster_url" alt=" " />
@@ -97,6 +128,35 @@
                         {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
                     </div>
                     <p :title="season.overview">{{ season.overview }}</p>
+                    <button 
+                        class="modify-watched color-primary"
+                        v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
+                        @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
+                        :disabled="waitingForResult.includes('titleWatched')"
+                        :class="{loading: waitingForResult.includes('titleWatched')}"
+                    >
+                        Mark Watched
+                    </button>
+                    <div v-else class="modify-watched combined-buttons">
+                        <button 
+                            class="left-button color-primary" 
+                            @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)" 
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            title="Add a single watch to the watch count"
+                        >
+                            <IconAdd/>Watch
+                        </button>
+                        <button 
+                            class="right-button color-warning" 
+                            @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)" 
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            title="Remove a watch from the watch count"
+                        >
+                            <IconRemove/>Remove
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -111,7 +171,35 @@
                                 {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
                             </div>
                             <p :title="episode.overview">{{ episode.overview }}</p>
-                            <button class="watched"><IconAdd/>Watced</button>
+                            <button 
+                                class="modify-watched color-primary"
+                                v-if="episode.watch_count == 0"
+                                @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
+                                :disabled="waitingForResult.includes('titleWatched')"
+                                :class="{loading: waitingForResult.includes('titleWatched')}"
+                            >
+                                Mark Watched
+                            </button>
+                            <div v-else class="modify-watched combined-buttons">
+                                <button 
+                                    class="left-button color-primary" 
+                                    @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)" 
+                                    :disabled="waitingForResult.includes('titleWatched')"
+                                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                                    title="Add a single watch to the watch count"
+                                >
+                                    <IconAdd/>Watch
+                                </button>
+                                <button 
+                                    class="right-button color-warning" 
+                                    @click="handleTitleWatchClick('episode', 'unwatched', episode.episode_id)" 
+                                    :disabled="waitingForResult.includes('titleWatched')"
+                                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                                    title="Remove a watch from the watch count"
+                                >
+                                    <IconRemove/>Remove
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -130,6 +218,7 @@ import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconAdd from '@/components/icons/IconAdd.vue';
+import IconRemove from '@/components/icons/IconRemove.vue';
 
 export default {
     data() {
@@ -137,12 +226,14 @@ export default {
             titleID: this.$route.params.titleID,
             titleInfo: null,
             expandedSeason: null,
+            waitingForResult: [],
         };
     },
     components: {
         InfoTooltip,
         IconTMDB,
         IconAdd,
+        IconRemove
     },
     methods: {
         formatRuntime(runtime) {
@@ -160,34 +251,75 @@ export default {
                 element.style.height = "0px"; // Collapse
             }
         },
-        handleWatchClick(modeIsAdd) {
-            // make this go through a MODAL
-            // make this go through a MODAL
-
-            // If we get a confirmation just add +1 to -> user_title_watch_count
-            // Don't refresh, make the api just simple {"success": True} or throw an error
-            if (modeIsAdd) {
-                notify("You just tried to add a watch, but the feature hasn't been implemented yet.")
+        // make this go through a MODAL?
+        async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
+            this.waitingForResult.push("titleWatched");
+                
+            // A funny little if else where it gets whether we are getting tv, movie, season or episode
+            let type = "";
+            if (titleOrSeasonOrEpisode == "title") {
+                type = this.titleInfo.type;
             } else {
-                notify("You just tried to remove a watch, but the feature hasn't been implemented yet.")
+                type = titleOrSeasonOrEpisode;
             }
+
+            // Select the correct id eg. title_id, season_id etc.
+            let selectedTypesID = 0;
+            if (customID)  {
+                selectedTypesID = customID;
+            } else {
+                selectedTypesID = this.titleInfo.title_id
+            }
+
+            const response = await api.modifyTitleWatchCount(type, selectedTypesID, watchedOrUnwatched)
+            if (response) {
+                console.log(response)
+
+                // OVERKILL BUT WORKS FOR NOW. LATER MAKE IT EDIT IT LOCALLY INSTEAD
+                this.queryTitleData();
+            }
+            this.removeItemFromWaitingArray("titleWatched");
         },
-        handleNotesSave() {
-            notify("Not yet implemented.")
+        async handleNotesSave() {
+            this.waitingForResult.push("saveNotes");
+
+            const response = await api.saveTitleNotes(this.titleInfo.title_id, this.titleInfo.user_title_notes)
+            if (response) {
+                console.log(response);
+                notify(response.message, "success");
+            }
+            
+            this.removeItemFromWaitingArray("saveNotes");
+        },
+        async handleTitleUpdate() {
+            this.waitingForResult.push("titleUpdate");
+            const response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type)
+            if (response) {
+                // console.log(response);
+                notify("Title information updated successfully!", "success")
+                this.queryTitleData();
+            }
+            this.removeItemFromWaitingArray("titleUpdate");
+        },
+        removeItemFromWaitingArray(item) {
+            this.waitingForResult = this.waitingForResult.filter(i => i !== item);
+        },
+        async queryTitleData() {
+            // Query the details from api for the title here:
+            const response = await api.getTitleInfo(this.titleID);
+            if (response && response.title_info) {
+                if (response.title_info.length !== 0) {
+                    this.titleInfo = response.title_info;
+                    console.log("Stored values: ", this.titleInfo)
+                } else {
+                    notify("The title doesn't exist!", "error");
+                    router.push("/watchlist");
+                }
+            }
         }
     },
     async mounted() {
-        // Query the details from api for the title here:
-        const response = await api.getTitleInfo(this.titleID);
-        if (response && response.title_info) {
-            if (response.title_info.length !== 0) {
-                this.titleInfo = response.title_info;
-                console.log("Stored values: ", this.titleInfo)
-            } else {
-                notify("The title doesn't exist!", "error");
-                router.push("/watchlist");
-            }
-        }
+        this.queryTitleData();
     }
 };
 </script>
@@ -199,7 +331,7 @@ export default {
     --max-image-height: 810px;
     --text-offset: 60px;
     --text-original: calc(var(--max-image-height) - var(--text-offset));
-    --cutoff-thing: calc((100vw - min(var(--text-original) + var(--text-offset), 100vw) / (9/16)) / 2);
+    --cutoff-thing: calc((100vw - min(var(--text-original) + var(--text-offset), 100vw) / (9/16)) / 2 );
     --cutoff-thing-other: calc(100vw - var(--cutoff-thing));
 
     margin-top: calc( min( 100vw * (9/16) - var(--text-offset), var(--text-original)));
@@ -224,7 +356,7 @@ export default {
     left: 0;
     top: 60px;
     mask-image: linear-gradient(to top, transparent 0%, white 50%), 
-                linear-gradient(to right, transparent var(--cutoff-thing), white var(--cutoff-thing), 
+                linear-gradient(to right, transparent calc(var(--cutoff-thing) + 0.2px), white var(--cutoff-thing), 
                                         white var(--cutoff-thing-other), transparent var(--cutoff-thing-other));
     mask-composite: subtract;
     object-fit: cover; /* Ensure it scales properly without distortion */
@@ -269,23 +401,9 @@ export default {
     top: 0;
     right: 0;
 }
-.mark-watched .simple {
-    margin: 0;
-    width: 100%;
-}
-.mark-watched .not-simple {
-    display: grid;
-    grid-template-columns: auto auto;
-    width: 100%;
-}
-.mark-watched .not-simple .add-button {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    margin: 0;
-}
-.mark-watched .not-simple .remove-button {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+.mark-watched button {
+    padding-inline: var(--spacing-lg);
+    white-space: nowrap;
     margin: 0;
 }
 
@@ -298,11 +416,14 @@ export default {
 }
 
 /* - - - - - VALUES AND DETAILS - - - - -  */
-.title-info h2 {
+.title-info h2{
     margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+.title-info h3 {
+    margin-top: var(--spacing-sm);
     margin-bottom: 0;
 }
-
 .title-info .details {
     color: var(--color-text-light);
     display: grid;
@@ -340,6 +461,14 @@ export default {
     /* padding: var(--spacing-xs) var(--spacing-md); */
 }
 
+.title-info .notes-text-area {
+    margin-top: var(--spacing-sm);
+}
+
+.title-info .update-title-button {
+    margin: var(--spacing-md) 0;
+}
+
 @media (min-width: 600px) {
     .title-info {
         --text-offset: 150px;
@@ -358,6 +487,7 @@ export default {
 
 /* - - - - - SEASON - - - - -  */
 .season {
+    position: relative;
     padding-bottom: 0;
 }
 /* Could have a transition here but honestly can't see it so not worth it */
@@ -411,6 +541,14 @@ export default {
     margin-bottom: var(--spacing-md);
 }
 
+.season .modify-watched {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    margin: 0;
+    width: 300px;
+}
+
 /* - - - - - EPISODE - - - - -  */
 .episode {
     position: relative;
@@ -432,7 +570,7 @@ export default {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    max-width: calc(100% - 150px);
+    max-width: calc(100% - 300px);
 }
 .episode .still {
     width: 300px;
@@ -457,12 +595,12 @@ export default {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.episode .watched {
+.episode .modify-watched {
     position: absolute;
     top: var(--spacing-sm);
     right: var(--spacing-sm);
     margin: 0;
-    width: 150px;
+    width: 300px;
 }
 @media (max-width: 850px) {
     .episode .watched {
@@ -472,6 +610,12 @@ export default {
         max-width: none;
     }
 
+}
+
+
+
+.loading {
+    cursor: wait;
 }
 
 </style>

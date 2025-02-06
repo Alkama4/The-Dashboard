@@ -28,6 +28,8 @@ async function handleError(error, endpoint) {
             notify("Unexpected error occurred. Please try again.", "error");
         } else if (statusCode === 404) {
             notify("Resource not found: Please verify the endpoint.", "error");
+        } else if (statusCode === 405) {
+            notify("This feature requires an account. Please login.", "error");
         } else if (statusCode === 500) {
             notify("Internal server error. Please try again later.", "error");
         } else {
@@ -86,11 +88,13 @@ const api = {
         params.title_category = titleCategory;
         return this.getData('/watch_list/search', params);
     },
-    async getTitleCards(titleCategory, watched) {
+    async getTitleCards(titleCategory, watched, titleCount) {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
         if (titleCategory)
-            params.title_category = titleCategory;
+            params.title_type = titleCategory;
+        if (titleCount)
+            params.title_count = titleCount;
         params.watched = watched;
         return this.getData('/watch_list/get_title_cards', params);
     },
@@ -201,12 +205,12 @@ const api = {
                 console.log("[newTransaction] new transaction success");
                 return true;
             } else {
-                notify("Failed to create new transaction.", "error");
+                // notify("Failed to create new transaction.", "error");
                 console.error("[newTransaction] newTransactionSuccess == false");
                 return false;
             }
         } else {
-            notify("Failed to create new transaction.", "error");
+            // notify("Failed to create new transaction.", "error");
             console.error("[newTransaction] response failed");
             return null;
         }
@@ -222,12 +226,12 @@ const api = {
                 console.log("[editTransaction] edit success");
                 return true;
             } else {
-                notify("Failed to edit transaction.", "error");
+                // notify("Failed to edit transaction.", "error");
                 console.error("[editTransaction] editTransactionSuccess == false");
                 return false;
             }
         } else {
-            notify("Failed to edit transaction.", "error");
+            // notify("Failed to edit transaction.", "error");
             console.error("[editTransaction] response failed");
             return null;
         }
@@ -242,12 +246,12 @@ const api = {
                 console.log("[deleteTransaction] delete success");
                 return true;
             } else {
-                notify("Failed to delete transaction.", "error");
+                // notify("Failed to delete transaction.", "error");
                 console.error("[deleteTransaction] deleteTransactionSuccess == false");
                 return false;
             }
         } else {
-            notify("Failed to delete transaction.", "error");
+            // notify("Failed to delete transaction.", "error");
             console.error("[deleteTransaction] response failed");
             return null;
         }
@@ -345,7 +349,48 @@ const api = {
         if (response) {
             return response;
         } else {
-            console.error("[addTitleToUserList] response failed:", response);
+            console.error("[removeTitleFromUserList] response failed:", response);
+            return null;
+        }
+    },
+    async updateTitleInfo(tmdb_id, type) {
+        const response = await this.postData('/watch_list/update_title_info', { 
+            title_tmdb_id: tmdb_id, 
+            title_type: type, 
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateTitleInfo] response failed:", response);
+            return null;
+        }
+    },
+    async saveTitleNotes(title_id, notes) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/watch_list/save_user_title_notes', { 
+            session_key: sessionKey,
+            title_id: title_id,
+            notes: notes,
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[saveTitleNotes] response failed:", response);
+            return null;
+        }
+    },
+    async modifyTitleWatchCount(type, chosenTypesID, newState) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/watch_list/modify_title_watch_count', { 
+            session_key: sessionKey,
+            type: type,
+            chosen_types_id: chosenTypesID,
+            new_state: newState,
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[modifyTitleWatchCount] response failed:", response);
             return null;
         }
     },

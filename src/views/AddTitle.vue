@@ -61,7 +61,7 @@
                         <div class="flex details">
                             <div class="flex score" :title="(title.vote_count + ' votes')">
                                 <IconTMDB/>
-                                <span>{{ title.vote_average.toFixed(1) }}</span>
+                                <span>{{ title.vote_average ? title.vote_average.toFixed(1) : 0 }}</span>
                             </div>
                             <span class="divider">•</span>
 

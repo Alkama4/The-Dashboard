@@ -35,7 +35,7 @@
                         <div class="title-rating">{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
                         <div class="progress-details">
                             <template v-if="title.type === 'tv'">
-                                Episode {{ title.current_episode }}/{{ title.current_season_episode_count }}, Season {{ title.current_season }}
+                                {{ title.season_count }} seasons, {{ title.episode_count }} episodes
                             </template>
                             <template v-else>
                                 {{ formatRuntime(title.movie_runtime) }}
@@ -49,7 +49,6 @@
                                 Watched {{ title.watch_count }} times
                             </template>
                         </div>
-
                     </div>
                 </swiper-slide>
 
@@ -95,17 +94,17 @@ export default {
         return {
             titleLists: [
                 {
-                    listName: "Unwatched Movies",
+                    listName: "Movies to watch",
                     titles: [],
                     loading: true,  // Add loading state for each list
                 },
                 {
-                    listName: "Unwatched TV-series",
+                    listName: "TV-series to watch",
                     titles: [],
                     loading: true,  // Add loading state for each list
                 },
                 {
-                    listName: "Rewatch These Popular Titles",
+                    listName: "Rewatch these popular titles",
                     titles: [],
                     loading: true,  // Add loading state for each list
                 }
@@ -123,13 +122,14 @@ export default {
             return `${hours}hr ${minutes}min`;
         },
         // Simplified method to fetch and set title lists
-        async fetchTitleList(listName, titleType = null, isPopular = false) {
+        async fetchTitleList(listName, titleType = null, watched = null, count = null) {
             const titleList = this.titleLists.find(list => list.listName === listName);
             try {
                 titleList.loading = true;  // Set loading state to true initially
                 
                 // Fetch titles based on the provided criteria
-                const titleData = await api.getTitleCards(titleType, isPopular);
+                const titleData = await api.getTitleCards(titleType, watched, count);
+                console.debug(titleData);
                 
                 // Update titles if available
                 if (titleData && titleData.titles) {
@@ -144,9 +144,9 @@ export default {
     },
     async mounted() {
         // Use the fetchTitleList method to load data for each category
-        await this.fetchTitleList("Unwatched Movies", "Movie", false);  // Fetch unwatched movies
-        await this.fetchTitleList("Unwatched TV-series", "TV", false);  // Fetch unwatched TV-series
-        await this.fetchTitleList("Rewatch These Popular Titles", null, true);  // Fetch rewatchable popular titles
+        await this.fetchTitleList("Movies to watch", "Movie", false);  // Fetch Movies to watch
+        await this.fetchTitleList("TV-series to watch", "TV", false);  // Fetch TV-series to watch
+        await this.fetchTitleList("Rewatch these popular titles", null, true);  // Fetch rewatchable popular titles
     }
 };
 </script>
@@ -154,13 +154,12 @@ export default {
 
 <style scoped>
 .slide-container {
-    mask-image: 
-        linear-gradient(to right, transparent 0%, white var(--spacing-lg), white calc(100% - var(--spacing-lg)), transparent 100%);
-    mask-size: 100%;
+    mask-image: linear-gradient(to right, transparent 0%, white var(--spacing-lg), white calc(100% - var(--spacing-lg)), transparent 100%);
 }
 
 .slide {
     background-color: var(--color-background-card);
+    /* background-color: transparent; */
     border-radius: var(--border-radius-medium);
     height: 300px;
     width: 200px;
@@ -179,7 +178,7 @@ export default {
     height: 100%;
     background-size: cover;
     background-position: center;
-    z-index: -10;
+    z-index: 1;
 }
 
 .slide .gradient {
@@ -189,8 +188,8 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(-10deg, black, transparent 60%);
-    z-index: -5;
+    background: linear-gradient(0deg, hsla(0, 0%, 0%, 0.75) 0%, hsla(0, 0%, 0%, 0.5) 20%, transparent 40%);
+    z-index: 2;
 }
 
 .slide .details {
@@ -204,6 +203,7 @@ export default {
     font-weight: 500;
     color: var(--color-text-light);
     font-size: var(--font-size-small);
+    z-index: 3;
 }
 
 .slide .title-name {

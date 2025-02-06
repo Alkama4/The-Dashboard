@@ -68,7 +68,8 @@ In here I will collect my notes about this website and list the stuff that need 
 - Cannot set 0 as a value
     - If I remove check in js and send the 0 as a value mysql throws an error and deletes the transaction items.
     - Be carefule when working with this
-- User episodes in mysql might not get deleted when on title deletion
+- User episodes in mysql might not get deleted on title deletion
+- The api calls aren't cancelled when changing page. Research if they can be cancelled on unmount
 
 
 ### Feature or a bug?

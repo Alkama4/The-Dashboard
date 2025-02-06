@@ -41,12 +41,14 @@ export default {
 <style scoped>
 .tooltip-container {
     position: relative;
+    /* Cant add align or justify, since it's not flex or grid */
 }
 
 .info-icon {
     cursor: pointer;
     display: inline;
     vertical-align: middle; /* Extra precaution if other alignment is applied */
+    margin-bottom: var(--spacing-xs);     /* Cant add align or justify to parent, since parent isn't flex or grid */
 }
 
 .tooltip {
