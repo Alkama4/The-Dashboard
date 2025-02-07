@@ -1,90 +1,136 @@
 <template>
-    <div class="title-info" v-if="titleInfo">
-        <img class="original-image" :src="'https://image.tmdb.org/t/p/original' + titleInfo.backdrop_url" alt=" " />
-        <img class="wide-image" :src="'https://image.tmdb.org/t/p/original' + titleInfo.backdrop_url" alt=" " />
+    <div v-if="titleInfo">
+        <transition name="fade">
+            <img 
+                v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
+                class="background backdrop-image" 
+                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber}.jpg`" 
+                alt=" "
+            />
+        </transition>
 
-        <div class="content-width-medium">
-            <div class="name-and-tagline">
-                <h1 class="title-name">
-                    <span :title="titleInfo.name">
-                        {{ titleInfo.name }} 
-                    </span>
-                    <span :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name" class="original-title">
-                        ({{ titleInfo.original_name }})
-                    </span>
-                </h1>
+        <div class="backdrop-dimension"></div>
+        <div class="backdrop-container backdrop-dimension" @keydown="backdropKeypress">
+            <div class="content-inside">
+                <transition name="fade">
+                    <img 
+                        v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
+                        class="main backdrop-image" 
+                        :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber}.jpg`" 
+                        alt=" "
+                    />
+                </transition>
 
-                <q class="tagline" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
+                <div class="button-holder" v-if="titleInfo.backdrop_image_count > 1">
+                    <button class="left" @click="subtractFromBackDropNumber"><IconChevronDown size="50"/></button>
+                    <button class="right" @click="addToBackDropNumber"><IconChevronDown size="50"/></button>
+                </div>
+
+                <div class="name-and-tagline">
+                    <h1 class="title-name">
+                        <span :title="titleInfo.name">
+                            {{ titleInfo.name }} 
+                        </span>
+                        <span :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name" class="original-title">
+                            ({{ titleInfo.original_name }})
+                        </span>
+                    </h1>
+                    <!-- <img :src="`http://pibox.lan:800/image/${titleInfo.title_id}/logo/1`" alt=" "> -->
+                    <q class="tagline" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
+                </div>
+
+                <div class="indicator-dots" v-if="titleInfo.backdrop_image_count > 1">
+                    <div 
+                        v-for="index in titleInfo.backdrop_image_count" 
+                        :key="index" 
+                        class="dot" 
+                        :class="{active: index == backdropNumber}"
+                        @click="backdropNumber = index"
+                    ></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-width-medium title-info">
+
+            <div class="mark-watched combined-buttons">
+                <button 
+                    v-if="titleInfo.user_watch_count <= 0"
+                    class="color-primary left-button" 
+                    @click="handleTitleWatchClick('title', 'watched')"
+                    :disabled="waitingForResult.includes('titleWatched')"
+                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                >
+                    Mark title as watched
+                </button>
+                <button 
+                    v-else
+                    class="color-warning left-button" 
+                    @click="handleTitleWatchClick('title', 'unwatched')" 
+                    :disabled="waitingForResult.includes('titleWatched')"
+                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                >
+                    Reset title watch status 
+                </button>
+
+                <!-- NEED TO MAKE IT SO THAT I CAN SHOW THIS PAGE WIHOUT USER_ID -->
+                <button 
+                    v-if="titleInfo.user_watch_count <= -1"
+                    class="color-primary right-button" 
+                    @click="handleWatchListModification('add')"
+                    :disabled="waitingForResult.includes('titleWatched')"
+                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                >
+                    <IconListAdd/>
+                </button>
+                <button 
+                    v-else
+                    class="color-warning right-button" 
+                    @click="handleWatchListModification('remove')" 
+                    :disabled="waitingForResult.includes('titleWatched')"
+                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                >
+                    <IconListRemove/>
+                </button>
             </div>
 
             <h2>Genres</h2>
             <div class="genres flex">
                 <div class="genre" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
             </div>
-            
-            <div style="position: relative;">
-                <div class="mark-watched">
-                    <button 
-                        class="color-primary" 
-                        v-if="titleInfo.user_watch_count == 0"
-                        @click="handleTitleWatchClick('title', 'watched')"
-                        :disabled="waitingForResult.includes('titleWatched')"
-                        :class="{loading: waitingForResult.includes('titleWatched')}"
-                    >
-                        Mark watched
-                    </button>
-                    <div v-else class="combined-buttons">
-                        <button 
-                            class="left-button color-primary" 
-                            @click="handleTitleWatchClick('title', 'watched')" 
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
-                            title="Add a single watch to the watch count"
-                        >
-                            Add a watch
-                        </button>
-                        <button 
-                            class="right-button color-warning" 
-                            @click="handleTitleWatchClick('title', 'unwatched')" 
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
-                            title="Remove a watch from the watch count"
-                        >
-                            Remove a watch
-                        </button>
-                    </div>
-                </div>
-                <h2>Details</h2>
-                <div class="details">
-                    <div>Watched status</div>
-                    <div class="value">
 
-                        <template v-if="titleInfo.user_watch_count == 1">
-                            Watched
-                        </template>
-                        <template v-else-if="titleInfo.user_watch_count > 1">
-                            Watched {{ titleInfo.user_watch_count }} times
-                        </template>
-                        <template v-else>
-                            Unwatched
-                        </template>
-                    </div>
-                    <div>TMDB average score</div>
-                    <div class="value"><IconTMDB style="margin-right: 4px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
-                    <div>Release date</div>
-                    <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
+            <h2>Overview</h2>
+            <p>{{ titleInfo.overview }}</p>
+
+            <h2>Details</h2>
+            <div class="details">
+                <div>Watched status</div>
+                <div class="value">
+                    <template v-if="titleInfo.user_watch_count == 1">
+                        Watched
+                    </template>
+                    <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_watch_count == 0">
+                        {{ getWatchedStats() }}
+                    </template>
+                    <template v-else>
+                        Unwatched
+                    </template>
                 </div>
-                <h3>Metadata</h3>
-                <div class="details">
-                    <div>Title type</div>
-                    <div class="value">{{ titleInfo.type }}</div>
-                    <div>IMDB id</div>
-                    <div><a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`">{{ titleInfo.imdb_id }}</a></div>
-                    <div>TMDB id</div>
-                    <div><a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`">{{ titleInfo.tmdb_id }}</a></div>
-                    <div>Title Last Updated <InfoTooltip text="When a title is added to the watch list for the first time, its details are cached on the server. The data is only updated when manually refreshed using the refresh button." position="right"/></div>
-                    <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
-                </div>
+                <div>TMDB average score</div>
+                <div class="value"><IconTMDB style="margin-right: 4px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
+                <div>Release date</div>
+                <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
+            </div>
+            <h3>Metadata</h3>
+            <div class="details">
+                <div>Title type</div>
+                <div class="value">{{ titleInfo.type }}</div>
+                <div>IMDB id</div>
+                <div><a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`">{{ titleInfo.imdb_id }}</a></div>
+                <div>TMDB id</div>
+                <div><a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`">{{ titleInfo.tmdb_id }}</a></div>
+                <div>Title Last Updated <InfoTooltip text="When a title is added to the watch list for the first time, its details are cached on the server. The data is only updated when manually refreshed using the refresh button." position="right"/></div>
+                <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
             </div>
 
             <button 
@@ -96,115 +142,108 @@
             >
                 Update title details
             </button>
-
-    
-            <h2>Overview</h2>
-            <p>{{ titleInfo.overview }}</p>
             
-            <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
-            <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
-            <button 
-                @click="handleNotesSave"
-                :disabled="waitingForResult.includes('saveNotes')"
-                :class="{loading: waitingForResult.includes('saveNotes')}"
-                class="save-notes-button" 
-            >
-                Save notes
-            </button>
+            <div v-if="titleInfo.user_watch_count >= 0">
+                <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
+                <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
+                <button 
+                    @click="handleNotesSave"
+                    :disabled="waitingForResult.includes('saveNotes')"
+                    :class="{loading: waitingForResult.includes('saveNotes')}"
+                    class="save-notes-button" 
+                >
+                    Save notes
+                </button>
+            </div>
         </div>
 
-        <div v-for="season in titleInfo.seasons" 
-            :key="season.season_id" 
-            class="card season content-width-large" 
-            :class="{'active': expandedSeason == season.season_id}"
-        >
+        <div class="conte-width-large" v-if="titleInfo.seasons">
+            <h2>Seasons</h2>
 
-            <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
-                <img class="season-poster" :src="'https://image.tmdb.org/t/p/w200' + season.poster_url" alt=" " />
-                <div class="text">
-                    <h2>{{ season.season_name }}</h2>
-                    <div class="details">
-                        {{ season.episode_count }} episodes • {{ season.vote_average }} <br>
-                        {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
-                    </div>
-                    <p :title="season.overview">{{ season.overview }}</p>
-                    <button 
-                        class="modify-watched color-primary"
-                        v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                        @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
-                        :disabled="waitingForResult.includes('titleWatched')"
-                        :class="{loading: waitingForResult.includes('titleWatched')}"
-                    >
-                        Mark Watched
-                    </button>
-                    <div v-else class="modify-watched combined-buttons">
+
+            <div v-for="season in titleInfo.seasons" 
+                :key="season.season_id" 
+                class="card season" 
+                :class="{'active': expandedSeason == season.season_id}"
+            >
+
+                <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
+                    <img class="season-poster" :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" alt=" " />
+                    <div class="text">
+                        <h2>{{ season.season_name }}</h2>
+                        <div class="details">
+                            {{ season.episode_count }} episodes • {{ season.vote_average }} <br>
+                            {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                        </div>
+                        <p :title="season.overview">{{ season.overview }}</p>
                         <button 
-                            class="left-button color-primary" 
-                            @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)" 
+                            class="modify-watched color-primary"
+                            v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
+                            @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
                             :disabled="waitingForResult.includes('titleWatched')"
                             :class="{loading: waitingForResult.includes('titleWatched')}"
-                            title="Add a single watch to the watch count"
                         >
-                            <IconAdd/>Watch
+                            Mark season watched
                         </button>
-                        <button 
-                            class="right-button color-warning" 
-                            @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)" 
+                        <button
+                            class="modify-watched color-warning"
+                            v-else
+                            @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)"
                             :disabled="waitingForResult.includes('titleWatched')"
                             :class="{loading: waitingForResult.includes('titleWatched')}"
-                            title="Remove a watch from the watch count"
                         >
-                            <IconRemove/>Remove
+                            Mark season unwatched
                         </button>
                     </div>
                 </div>
-            </div>
 
-            <div class="episodes" :ref="`ref${season.season_id}`">
-                <div class="episodes-padding">
-                    <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode">
-                        <img class="still" :src="'https://image.tmdb.org/t/p/w300' + episode.still_url" alt=" " >
-                        <div class="text">
-                            <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
-                            <div class="details" :title="`${episode.vote_count} votes`">
-                                {{ formatRuntime(episode.runtime) }} • {{ episode.vote_average }} <br>
-                                {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
-                            </div>
-                            <p :title="episode.overview">{{ episode.overview }}</p>
-                            <button 
-                                class="modify-watched color-primary"
-                                v-if="episode.watch_count == 0"
-                                @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
-                                :disabled="waitingForResult.includes('titleWatched')"
-                                :class="{loading: waitingForResult.includes('titleWatched')}"
+                <div class="episodes" :ref="`ref${season.season_id}`">
+                    <div class="episodes-padding">
+                        <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode">
+                            <div 
+                                v-if="failedToLoadImages.includes(episode.episode_id)"
+                                class="still failed-to-load"
                             >
-                                Mark Watched
-                            </button>
-                            <div v-else class="modify-watched combined-buttons">
+                                <IconFileImage size="40px"/>
+                                <span>404</span>
+                            </div>
+                            <img 
+                                v-else
+                                class="still" 
+                                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
+                                alt=" "
+                                @error="failedToLoadImages.push(episode.episode_id)"
+                            >
+                            <div class="text">
+                                <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
+                                <div class="details" :title="`${episode.vote_count} votes`">
+                                    {{ formatRuntime(episode.runtime) }} • {{ episode.vote_average }} <br>
+                                    {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                                </div>
+                                <p :title="episode.overview">{{ episode.overview }}</p>
                                 <button 
-                                    class="left-button color-primary" 
-                                    @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)" 
+                                    v-if="episode.watch_count == 0"
+                                    class="modify-watched color-primary"
+                                    @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
                                     :disabled="waitingForResult.includes('titleWatched')"
                                     :class="{loading: waitingForResult.includes('titleWatched')}"
-                                    title="Add a single watch to the watch count"
                                 >
-                                    <IconAdd/>Watch
+                                    Watched
                                 </button>
                                 <button 
-                                    class="right-button color-warning" 
-                                    @click="handleTitleWatchClick('episode', 'unwatched', episode.episode_id)" 
+                                    v-else
+                                    class="modify-watched color-warning"
+                                    @click="handleTitleWatchClick('episode', 'unwatched', episode.episode_id)"
                                     :disabled="waitingForResult.includes('titleWatched')"
                                     :class="{loading: waitingForResult.includes('titleWatched')}"
-                                    title="Remove a watch from the watch count"
                                 >
-                                    <IconRemove/>Remove
+                                    unwatched
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
         
     </div>
@@ -217,8 +256,10 @@ import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
-import IconAdd from '@/components/icons/IconAdd.vue';
-import IconRemove from '@/components/icons/IconRemove.vue';
+import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+import IconListRemove from '@/components/icons/IconListRemove.vue';
+import IconListAdd from '@/components/icons/IconListAdd.vue';
+import IconFileImage from '@/components/icons/IconFileImage.vue';
 
 export default {
     data() {
@@ -227,13 +268,18 @@ export default {
             titleInfo: null,
             expandedSeason: null,
             waitingForResult: [],
+            backdropShow: false,
+            backdropNumber: 1,
+            failedToLoadImages: [],
         };
     },
     components: {
         InfoTooltip,
         IconTMDB,
-        IconAdd,
-        IconRemove
+        IconChevronDown,
+        IconListRemove,
+        IconListAdd,
+        IconFileImage,
     },
     methods: {
         formatRuntime(runtime) {
@@ -273,10 +319,30 @@ export default {
 
             const response = await api.modifyTitleWatchCount(type, selectedTypesID, watchedOrUnwatched)
             if (response) {
-                console.log(response)
+                console.debug(response)
+                // Update titles state on page
+                this.titleInfo.user_watch_count = response.updated_data.watch_count;
+                // Update each episodes state on page by mathcing the episode_id
+                if (response.updated_data.episodes) {
+                    console.debug(response.updated_data.episodes)
+                    console.debug(this.titleInfo.seasons)
+                    
+                    // Loop through each episode in response.updated_data.episodes
+                    response.updated_data.episodes.forEach(updatedEpisode => {
+                    // Find the matching episode in titleInfo using the episode_id
+                    const matchingEpisode = this.titleInfo.seasons
+                        .flatMap(season => season.episodes)
+                        .find(episode => episode.episode_id === updatedEpisode.episode_id);
+                    
+                    if (matchingEpisode) {
+                        // If a matching episode is found, you can perform some action with it
+                        // console.debug(`Matching episode found: ${matchingEpisode.episode_name}`);
+                        // Example: Updating watch count or any other action
+                        matchingEpisode.watch_count = updatedEpisode.watch_count;
+                    }
+                    });
+                }
 
-                // OVERKILL BUT WORKS FOR NOW. LATER MAKE IT EDIT IT LOCALLY INSTEAD
-                this.queryTitleData();
             }
             this.removeItemFromWaitingArray("titleWatched");
         },
@@ -296,10 +362,26 @@ export default {
             const response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type)
             if (response) {
                 // console.log(response);
-                notify("Title information updated successfully!", "success")
+                notify("Title information updated successfully! If there were missing images the server is still querying them in the background.", "success")
                 this.queryTitleData();
             }
             this.removeItemFromWaitingArray("titleUpdate");
+        },
+        async handleWatchListModification(action) {
+            this.waitingForResult.push("titleWatched");
+            if (action == "remove") {
+                const response = await api.removeTitleFromUserList(this.titleInfo.tmdb_id);
+                if (response) {
+                    console.debug("Title removed successfully", "success")
+                }
+            } else if (action == "add") {
+                const response = await api.addTitleToUserList(this.titleInfo.tmdb_id, this.titleInfo.type);
+                if (response) {
+                    console.debug("Title added successfully!", "success")
+                }
+            }            
+            this.queryTitleData()
+            this.removeItemFromWaitingArray("titleWatched");
         },
         removeItemFromWaitingArray(item) {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
@@ -310,81 +392,250 @@ export default {
             if (response && response.title_info) {
                 if (response.title_info.length !== 0) {
                     this.titleInfo = response.title_info;
-                    console.log("Stored values: ", this.titleInfo)
+                    console.log("[queryTitleData] Values set to this.titleInfo: ", this.titleInfo)
                 } else {
                     notify("The title doesn't exist!", "error");
                     router.push("/watchlist");
                 }
             }
+        },
+        backdropKeypress(event) {
+            if (event.key === 'ArrowLeft')  {
+                this.subtractFromBackDropNumber();
+            } else if (event.key === 'ArrowRight') {
+                this.addToBackDropNumber();
+            }
+        },
+        addToBackDropNumber() {
+            this.backdropNumber = (this.backdropNumber + 1 > this.titleInfo.backdrop_image_count) ? 1 : this.backdropNumber + 1;
+        },
+        subtractFromBackDropNumber() {
+            this.backdropNumber = (this.backdropNumber - 1 < 1) ? this.titleInfo.backdrop_image_count : this.backdropNumber - 1;
+        },
+        getWatchedStats() {
+            const totalEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
+            const watchedEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
+            const percentage = totalEpisodes ? ((watchedEpisodes / totalEpisodes) * 100).toFixed(1) + "%" : "0%";
+            return `${watchedEpisodes} / ${totalEpisodes} episodes (${percentage})`;
         }
     },
     async mounted() {
-        this.queryTitleData();
+        await this.queryTitleData();
+        this.backdropShow = true;
+    },
+    watch: {
+        backdropNumber() {
+            this.backdropShow = false;
+            setTimeout(() => (this.backdropShow = true), 300); // Short delay before reloading
+        }
     }
 };
 </script>
 
   
 <style scoped>
-
-.title-info {
-    --max-image-height: 810px;
-    --text-offset: 60px;
-    --text-original: calc(var(--max-image-height) - var(--text-offset));
-    --cutoff-thing: calc((100vw - min(var(--text-original) + var(--text-offset), 100vw) / (9/16)) / 2 );
-    --cutoff-thing-other: calc(100vw - var(--cutoff-thing));
-
-    margin-top: calc( min( 100vw * (9/16) - var(--text-offset), var(--text-original)));
+/* - - - - - TRANSITIONS - - - - -  */
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 0.3s ease-in-out;
+}
+.fade-enter, .fade-leave-to {
+    opacity: 0;
+    transform: translate(0);
 }
 
-.title-info .original-image {
-    z-index: -10;
+
+
+/* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
+.backdrop-container {
     position: absolute;
-    max-height: calc(var(--text-original) + var(--text-offset));
-    width: auto; /* Prevent stretching */
-    left: 50%; /* Center horizontally */
     top: 60px;
-    transform: translateX(-50%); /* Ensure perfect centering */
-    mask-image: linear-gradient(to top, transparent 0%, white 50%);
-    object-fit: contain; /* Ensure it scales properly without distortion */
+    left: 50%;
+    transform: translateX(-50%);
 }
-.title-info .wide-image {
-    z-index: -11;
-    position: absolute;
+.backdrop-dimension {
     width: 100vw;
-    max-height: calc(var(--text-original) + var(--text-offset));
-    left: 0;
-    top: 60px;
-    mask-image: linear-gradient(to top, transparent 0%, white 50%), 
-                linear-gradient(to right, transparent calc(var(--cutoff-thing) + 0.2px), white var(--cutoff-thing), 
-                                        white var(--cutoff-thing-other), transparent var(--cutoff-thing-other));
-    mask-composite: subtract;
-    object-fit: cover; /* Ensure it scales properly without distortion */
-    filter: blur(1vw) brightness(0.5);
+    max-width: min(100vw, 1200px);
+    aspect-ratio: 16 / 9;
+    /* max-height: 50vh; */
+    margin-inline: auto;
 }
-/* Hide the extra image when not visible. True limit is 1440px, but 1400 used to avoid bugs */
-@media (max-width: 1400px) {
-    .title-info .wide-image {
+
+/* BACKDROPS */
+img.backdrop-image.main { 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    mask-image: linear-gradient(to top, transparent 0%, white 50%);
+    z-index: -10;
+}
+img.backdrop-image.background { 
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    object-fit: cover; 
+    
+    width: 100vw;
+    max-height: calc(1200px / 16 * 9);
+
+    filter: blur(20px) opacity(0.5);
+    z-index: -20;
+    --space-left: calc((100vw - 1200px) / 2);
+    mask-image: 
+        linear-gradient(to top, transparent 0%, white 50%),
+        linear-gradient(to left, 
+            white var(--space-left), 
+            transparent var(--space-left), 
+            transparent calc(100vw - var(--space-left)), 
+            white calc(100vw - var(--space-left))
+        );
+    mask-composite: intersect;
+}
+
+@media (max-width: 1200px) {
+    img.background { 
         display: none;
     }
 }
 
+/* INSIDE CONTENT */
+.backdrop-container .content-inside {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.backdrop-container .button-holder {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 90%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 5;
+}
+.backdrop-container .button-holder button {
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border-radius: 50%;
+    position: relative; 
+}
+.backdrop-container .button-holder button::after {
+    content: "";
+    background-color: rgba(0, 0, 0, 0.25);
+    filter: blur(20px);
+    width: 80px;
+    aspect-ratio: 1;
+    position: absolute;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: -5;
+}
+.backdrop-container button.left svg {
+    transform: rotate(90deg);
+    transition: transform 0.1s cubic-bezier(.3,.63,.4,1);
+}.backdrop-container button.left:hover svg {
+    transform: rotate(90deg) scale(1.5);
+}
+.backdrop-container button.right svg {
+    transform: rotate(-90deg);
+    transition: transform 0.1s cubic-bezier(.3,.63,.4,1);
+}.backdrop-container button.right:hover svg {
+    transform: rotate(-90deg) scale(1.5);
+}
+@media (max-width: 666px) {
+    .backdrop-container .button-holder button svg {
+        fill: transparent;
+    }
+    .backdrop-container .button-holder button {
+        /* background-color: red; */
+        border-radius: 0;
+        height: 100%;
+        width: 30%;
+    }
+    .backdrop-container .button-holder  {
+        height: 100%;
+        width: 100%;
+        top: 0;
+    }
+    .backdrop-container .button-holder button::after {
+        background-color: transparent;
+    }
+    .backdrop-container .button-holder button:hover::after {
+        background-color: transparent;
+    }
+}
+
+.backdrop-container .indicator-dots {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+}
+.indicator-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: var(--color-text-hidden);
+    transition: background-color 0.2s ease-out,
+                width 0.2s ease-out;
+    cursor: pointer;
+}
+.indicator-dots .dot.active {
+    background-color: var(--color-text-light);
+    width: 20px;
+}
+.indicator-dots .dot:hover {
+    background-color: var(--color-text);
+}
+
+.backdrop-container .name-and-tagline {
+    position: absolute;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: left;
+    width: 90%;
+}
+
 /* Maybe try and pop the orignial to next row when it would overflow or wrap */
-.title-info .title-name {
+.name-and-tagline .title-name {
     margin-bottom: 0;
 }
-.title-info .title-name .original-title {
+.name-and-tagline .title-name .original-title {
     color: var(--color-text-lighter)
 }
-.title-info .tagline {
+.name-and-tagline .tagline {
     color: var(--color-text-light);
+}
+
+@media (min-width: 900px) {
+    .name-and-tagline .title-name {
+        font-size: 48px;
+    }
+}
+
+
+/* - - - - - VALUES AND DETAILS - - - - -  */
+.title-info {
+    position: relative;
 }
 
 .title-info .genres {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
     overflow: hidden;
-    height: 32px;
+    /* height: 32px; */
     /* margin: var(--spacing-md) 0; */
 }
 .title-info .genre {
@@ -407,15 +658,18 @@ export default {
     margin: 0;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 666px) {
     .mark-watched {
         position: relative;
         width: 100%;
         margin: var(--spacing-lg) 0;
     }
+    .mark-watched button {
+        width: 100%;
+        margin: var(--spacing-lg) 0;
+    }
 }
 
-/* - - - - - VALUES AND DETAILS - - - - -  */
 .title-info h2{
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
@@ -469,20 +723,7 @@ export default {
     margin: var(--spacing-md) 0;
 }
 
-@media (min-width: 600px) {
-    .title-info {
-        --text-offset: 150px;
-    }
-}
 
-@media (min-width: 900px) {
-    .title-info {
-        --text-offset: 225px;
-    }
-    .title-info .title-name {
-        font-size: 48px;
-    }
-}
 
 
 /* - - - - - SEASON - - - - -  */
@@ -546,7 +787,7 @@ export default {
     top: var(--spacing-sm);
     right: var(--spacing-sm);
     margin: 0;
-    width: 300px;
+    width: auto;
 }
 
 /* - - - - - EPISODE - - - - -  */
@@ -580,6 +821,15 @@ export default {
     aspect-ratio: 16/9;
     background-color: var(--color-background-card);
 }
+.episode .still.failed-to-load {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-hidden);
+    font-weight: 700;
+    font-size: 32px;
+}
 .episode .text {
     /* padding-top: var(--spacing-sm); */
     width: 100%;
@@ -600,7 +850,7 @@ export default {
     top: var(--spacing-sm);
     right: var(--spacing-sm);
     margin: 0;
-    width: 300px;
+    width: auto;
 }
 @media (max-width: 850px) {
     .episode .watched {

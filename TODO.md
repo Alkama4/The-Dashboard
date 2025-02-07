@@ -3,11 +3,10 @@ In here I will collect my notes about this website and list the stuff that need 
 
 ### Next time
 - Go through the list...
-- Add services like smb and wireguard status?
 - Backups kind of dull
     - Give it some life and readability
-
 - Think of a better way to implement the modal. Way too manual and inconvenient. Should work more like the native popup where it stops progress and returns a value.
+- The title details and metadata side by side when there's space
 
 ### Features to add
 - Navigation

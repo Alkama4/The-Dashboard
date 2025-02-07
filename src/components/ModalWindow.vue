@@ -72,7 +72,7 @@
 
                 <div v-if="modalType === 'removeTitle'">
                     <p style="margin-left: 0;"> 
-                        Are you sure you want to remove the title. <br> All of your data on the title will be lost permanently.
+                        Are you sure you want to remove the title. Your notes and title watched status will be lost.
                     </p>
                     <div class="two-buttons">
                         <button class="color-primary color-warning" @click="sendRemoveTitle">Remove</button>

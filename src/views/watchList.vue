@@ -28,7 +28,7 @@
                     class="slide"
                     @click="openDetailsPageFor(title.id)"
                 >
-                    <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_url" alt="" class="thumbnail"/>
+                    <img :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" alt="" class="thumbnail"/>
                     <div class="gradient"></div>
                     <div class="details">
                         <span class="title-name">{{ title.name }}</span>
@@ -113,7 +113,7 @@ export default {
     },
     methods: {
         openDetailsPageFor(titleID) {
-            console.log(titleID);
+            // console.debug(titleID);
             router.push(`/watchList/title/${titleID}`);
         },
         formatRuntime(runtime) {
