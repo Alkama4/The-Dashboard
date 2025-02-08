@@ -1,10 +1,10 @@
 <template>
-    <div v-if="titleInfo">
+    <div v-if="titleInfo" class="title-info">
         <transition name="fade">
             <img 
                 v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
                 class="background backdrop-image" 
-                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber}.jpg`" 
+                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber + 1}.jpg`" 
                 alt=" "
             />
         </transition>
@@ -16,7 +16,7 @@
                     <img 
                         v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
                         class="main backdrop-image" 
-                        :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber}.jpg`" 
+                        :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber + 1}.jpg`" 
                         alt=" "
                     />
                 </transition>
@@ -38,20 +38,13 @@
                     <!-- <img :src="`http://pibox.lan:800/image/${titleInfo.title_id}/logo/1`" alt=" "> -->
                     <q class="tagline" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
                 </div>
-
-                <div class="indicator-dots" v-if="titleInfo.backdrop_image_count > 1">
-                    <div 
-                        v-for="index in titleInfo.backdrop_image_count" 
-                        :key="index" 
-                        class="dot" 
-                        :class="{active: index == backdropNumber}"
-                        @click="backdropNumber = index"
-                    ></div>
+                <div class="indicator">
+                    <IndicatorDots v-model="backdropNumber" :dotCount="titleInfo.backdrop_image_count" />
                 </div>
             </div>
         </div>
 
-        <div class="content-width-medium title-info">
+        <div class="content-width-medium title-details">
 
             <div class="mark-watched combined-buttons">
                 <button 
@@ -157,7 +150,7 @@
             </div>
         </div>
 
-        <div class="conte-width-large" v-if="titleInfo.seasons">
+        <div class="content-width-large" v-if="titleInfo.seasons">
             <h2>Seasons</h2>
 
 
@@ -170,6 +163,7 @@
                 <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
                     <img class="season-poster" :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" alt=" " />
                     <div class="text">
+                        <!-- IF SEASON_NUMBER IN SEASON_NAME SHOW JUST NAME, ELSE NUMBER. NAME -->
                         <h2>{{ season.season_name }}</h2>
                         <div class="details">
                             {{ season.episode_count }} episodes • {{ season.vote_average }} <br>
@@ -260,6 +254,7 @@ import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconFileImage from '@/components/icons/IconFileImage.vue';
+import IndicatorDots from '@/components/IndicatorDots.vue';
 
 export default {
     data() {
@@ -269,12 +264,13 @@ export default {
             expandedSeason: null,
             waitingForResult: [],
             backdropShow: false,
-            backdropNumber: 1,
+            backdropNumber: 0,
             failedToLoadImages: [],
         };
     },
     components: {
         InfoTooltip,
+        IndicatorDots,
         IconTMDB,
         IconChevronDown,
         IconListRemove,
@@ -362,7 +358,7 @@ export default {
             const response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type)
             if (response) {
                 // console.log(response);
-                notify("Title information updated successfully! If there were missing images the server is still querying them in the background.", "success")
+                notify(`${this.titleInfo.name} info updated! Missing images are still being queried.`, "success")
                 this.queryTitleData();
             }
             this.removeItemFromWaitingArray("titleUpdate");
@@ -407,11 +403,13 @@ export default {
             }
         },
         addToBackDropNumber() {
-            this.backdropNumber = (this.backdropNumber + 1 > this.titleInfo.backdrop_image_count) ? 1 : this.backdropNumber + 1;
+            this.backdropNumber = (this.backdropNumber + 1 >= this.titleInfo.backdrop_image_count) ? 0 : this.backdropNumber + 1;
         },
+
         subtractFromBackDropNumber() {
-            this.backdropNumber = (this.backdropNumber - 1 < 1) ? this.titleInfo.backdrop_image_count : this.backdropNumber - 1;
+            this.backdropNumber = (this.backdropNumber - 1 < 0) ? this.titleInfo.backdrop_image_count - 1 : this.backdropNumber - 1;
         },
+
         getWatchedStats() {
             const totalEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
             const watchedEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
@@ -434,6 +432,17 @@ export default {
 
   
 <style scoped>
+.title-info {
+    --z-backdrop-dimension: -10;
+    --z-backdrop-image-bg: 1;
+    --z-backdrop-container: 2;
+    --z-backdrop-image-main: 3;
+    --z-backdrop-content-inside: 4;
+    --z-backdrop-arrow-buttons: 5;
+    --z-backdrop-indicator: 6;
+}
+
+
 /* - - - - - TRANSITIONS - - - - -  */
 .fade-enter-active, .fade-leave-active {
     transition: opacity 0.3s ease-in-out;
@@ -446,18 +455,20 @@ export default {
 
 
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
-.backdrop-container {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-}
 .backdrop-dimension {
     width: 100vw;
     max-width: min(100vw, 1200px);
     aspect-ratio: 16 / 9;
     /* max-height: 50vh; */
     margin-inline: auto;
+    z-index: var(--z-backdrop-dimension);
+}
+.backdrop-container {
+    position: absolute;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-backdrop-container);
 }
 
 /* BACKDROPS */
@@ -468,7 +479,7 @@ img.backdrop-image.main {
     height: 100%;
     width: 100%;
     mask-image: linear-gradient(to top, transparent 0%, white 50%);
-    z-index: -10;
+    z-index: var(--z-backdrop-image-main);
 }
 img.backdrop-image.background { 
     position: absolute;
@@ -479,9 +490,9 @@ img.backdrop-image.background {
     
     width: 100vw;
     max-height: calc(1200px / 16 * 9);
+    z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
-    z-index: -20;
     --space-left: calc((100vw - 1200px) / 2);
     mask-image: 
         linear-gradient(to top, transparent 0%, white 50%),
@@ -505,6 +516,15 @@ img.backdrop-image.background {
     position: relative;
     width: 100%;
     height: 100%;
+    z-index: var(--z-backdrop-content-inside);
+}
+
+.content-inside .indicator {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: var(--z-backdrop-indicator);
 }
 
 .backdrop-container .button-holder {
@@ -516,7 +536,7 @@ img.backdrop-image.background {
     top: 50%;
     left: 50%;
     transform: translate(-50%);
-    z-index: 5;
+    z-index: var(--z-backdrop-arrow-buttons);
 }
 .backdrop-container .button-holder button {
     margin: 0;
@@ -524,6 +544,7 @@ img.backdrop-image.background {
     background-color: transparent;
     border-radius: 50%;
     position: relative; 
+    z-index: var(--z-backdrop-arrow-buttons);
 }
 .backdrop-container .button-holder button::after {
     content: "";
@@ -540,13 +561,13 @@ img.backdrop-image.background {
 }
 .backdrop-container button.left svg {
     transform: rotate(90deg);
-    transition: transform 0.1s cubic-bezier(.3,.63,.4,1);
+    transition: transform 0.1s var(--cubic-1);
 }.backdrop-container button.left:hover svg {
     transform: rotate(90deg) scale(1.5);
 }
 .backdrop-container button.right svg {
     transform: rotate(-90deg);
-    transition: transform 0.1s cubic-bezier(.3,.63,.4,1);
+    transition: transform 0.1s var(--cubic-1);
 }.backdrop-container button.right:hover svg {
     transform: rotate(-90deg) scale(1.5);
 }
@@ -573,39 +594,15 @@ img.backdrop-image.background {
     }
 }
 
-.backdrop-container .indicator-dots {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-sm);
-}
-.indicator-dots .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-    background-color: var(--color-text-hidden);
-    transition: background-color 0.2s ease-out,
-                width 0.2s ease-out;
-    cursor: pointer;
-}
-.indicator-dots .dot.active {
-    background-color: var(--color-text-light);
-    width: 20px;
-}
-.indicator-dots .dot:hover {
-    background-color: var(--color-text);
-}
 
 .backdrop-container .name-and-tagline {
     position: absolute;
-    bottom: var(--spacing-lg);
+    bottom: var(--spacing-md);
     left: 50%;
     transform: translateX(-50%);
     align-items: left;
     width: 90%;
+    z-index: var(--z-backdrop-indicator);
 }
 
 /* Maybe try and pop the orignial to next row when it would overflow or wrap */
@@ -627,18 +624,18 @@ img.backdrop-image.background {
 
 
 /* - - - - - VALUES AND DETAILS - - - - -  */
-.title-info {
+.title-details {
     position: relative;
 }
 
-.title-info .genres {
+.title-details .genres {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
     overflow: hidden;
     /* height: 32px; */
     /* margin: var(--spacing-md) 0; */
 }
-.title-info .genre {
+.title-details .genre {
     padding: var(--spacing-xs);
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-small);
@@ -649,8 +646,9 @@ img.backdrop-image.background {
 
 .mark-watched {
     position: absolute;
-    top: 0;
+    top: var(--spacing-sm);
     right: 0;
+    margin: 0;
 }
 .mark-watched button {
     padding-inline: var(--spacing-lg);
@@ -662,64 +660,64 @@ img.backdrop-image.background {
     .mark-watched {
         position: relative;
         width: 100%;
-        margin: var(--spacing-lg) 0;
+        margin: var(--spacing-md) 0;
     }
     .mark-watched button {
         width: 100%;
-        margin: var(--spacing-lg) 0;
+        margin: 0;
     }
 }
 
-.title-info h2{
+.title-details h2{
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
 }
-.title-info h3 {
+.title-details h3 {
     margin-top: var(--spacing-sm);
     margin-bottom: 0;
 }
-.title-info .details {
+.title-details .details {
     color: var(--color-text-light);
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: var(--spacing-md);
 }
-.title-info .details .value {
+.title-details .details .value {
     color: var(--color-text);
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.title-info ul {
+.title-details ul {
     list-style: disc;
     margin: var(--spacing-sm);
     padding-left: var(--spacing-md);
 }
-.title-info a {
+.title-details a {
     color: var(--color-text);
     text-decoration: none;
 }
-.title-info a:hover {
+.title-details a:hover {
     text-decoration: underline;
 }
 
-.title-info .times-watched {
+.title-details .times-watched {
     display: flex;
     align-items: center;
     gap: var(--spacing-md);
     width: fit-content;
 }
-.title-info .times-watched button {
+.title-details .times-watched button {
     margin: 0;
     /* padding: var(--spacing-xs) var(--spacing-md); */
 }
 
-.title-info .notes-text-area {
+.title-details .notes-text-area {
     margin-top: var(--spacing-sm);
 }
 
-.title-info .update-title-button {
+.title-details .update-title-button {
     margin: var(--spacing-md) 0;
 }
 
@@ -756,6 +754,7 @@ img.backdrop-image.background {
     margin-bottom: 0;
     margin-top: 10px;
     display: -webkit-box;
+    line-clamp: 4;
     -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -768,8 +767,8 @@ img.backdrop-image.background {
     box-sizing: border-box;
     height: 0px;
     overflow: hidden;
-    transition: height 0.3s cubic-bezier(.3,.63,.4,1),
-                margin-top 0.3s cubic-bezier(.3,.63,.4,1);
+    transition: height 0.3s var(--cubic-1),
+                margin-top 0.3s var(--cubic-1);
     margin-top: var(--spacing-md);
 }
 .season .episodes-padding {
@@ -808,6 +807,7 @@ img.backdrop-image.background {
 .episode h3 {
     margin: 0;
     display: -webkit-box;
+    line-clamp: 1;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -841,6 +841,7 @@ img.backdrop-image.background {
     margin-bottom: 0;
     margin-top: 4px;
     display: -webkit-box;
+    line-clamp: 3;
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;

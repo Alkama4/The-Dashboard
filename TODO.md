@@ -7,6 +7,7 @@ In here I will collect my notes about this website and list the stuff that need 
     - Give it some life and readability
 - Think of a better way to implement the modal. Way too manual and inconvenient. Should work more like the native popup where it stops progress and returns a value.
 - The title details and metadata side by side when there's space
+- PROPABLY SHOULD STILL USE THE MAX AMOUNT OF QUERIES AT ONCE SINCE ITS QUITE STUPID TO SEND TENS OF NOT HUNDREADS OF QUERIES AT ONCE AND WAIT FOR THEM ALL!
 
 ### Features to add
 - Navigation
@@ -38,6 +39,9 @@ In here I will collect my notes about this website and list the stuff that need 
         - this way it's automatically stored in the db
     - Age rating
         - Exists for tv, but not for movies!?
+- Sources?
+    - TMDB
+    - Boxicon
 
 ### Known issues
 - InfoTooltips positioning is stupid and doesn't detect window borders

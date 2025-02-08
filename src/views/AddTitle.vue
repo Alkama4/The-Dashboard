@@ -279,6 +279,7 @@ export default {
         margin: 0;
         max-width: calc(100% - 175px);
         display: -webkit-box;
+        line-clamp: 1;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         overflow: hidden;
@@ -322,6 +323,7 @@ export default {
         min-height: 75px;
         /* Woodoo magic */
         display: -webkit-box; /* Creates a flexbox-like box for multiline text */
+        line-clamp: 7;
         -webkit-line-clamp: 7; /* Limits the text to 3 lines (you can adjust this number) */
         -webkit-box-orient: vertical; /* Makes the box oriented vertically for multiline text */
     }
@@ -401,6 +403,7 @@ export default {
 
         .result .overview {
             -webkit-line-clamp: 5;
+            line-clamp: 5;
         }
     }
 

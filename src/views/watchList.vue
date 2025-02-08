@@ -11,31 +11,34 @@
             </button>
         </router-link>
 
-        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-medium">
+        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large">
             <h2>{{ titleList.listName }}</h2>
+            <!-- <p>{{ titleList.text }}</p> -->
 
             <!-- Show swiper-container only when titles are available and loading is complete -->
             <Swiper 
-                space-between="10" 
+                space-between="4" 
                 slidesPerView="auto" 
                 class="slide-container"
                 :slidesOffsetBefore=32
                 :slidesOffsetAfter=32
+                :modules="modules"
+                @slide-change="updateSwiper()"
             >
                 <swiper-slide 
                     v-for="title in titleList.titles" 
                     :key="title.id" 
-                    class="slide"
                     @click="openDetailsPageFor(title.id)"
                 >
                     <img :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" alt="" class="thumbnail"/>
                     <div class="gradient"></div>
                     <div class="details">
                         <span class="title-name">{{ title.name }}</span>
-                        <div class="title-rating">{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
+                        <div class="title-rating"><IconTMDB/>{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
                         <div class="progress-details">
                             <template v-if="title.type === 'tv'">
-                                {{ title.season_count }} seasons, {{ title.episode_count }} episodes
+                                <span class="season-after">{{ title.season_count }}</span>
+                                <span class="episode-after">{{ title.episode_count }}</span>
                             </template>
                             <template v-else>
                                 {{ formatRuntime(title.movie_runtime) }}
@@ -64,6 +67,9 @@
                 >
                     Looks like there's nothing here. Try adding titles to your watchlist.
                 </swiper-slide>
+                <div class="slides-indicator-holder">
+                    <IndicatorDots :dotCount="titleList.titles.length" v-model="titleList.activeSlide"/>
+                </div>
             </Swiper>
 
         </div>
@@ -79,36 +85,47 @@
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue'; // Import Swiper and SwiperSlide for Vue 3
 import 'swiper/swiper-bundle.css'; // Import Swiper styles
+// import 'swiper/css/pagination';
+// import 'swiper/css/navigation';
+// import { Pagination, Navigation } from 'swiper/modules';
 import IconAdd from '@/components/icons/IconAdd.vue';
 import router from '@/router';
 import api from '@/utils/dataQuery.js';
+import IndicatorDots from '@/components/IndicatorDots.vue';
+import IconTMDB from '@/components/icons/IconTMDB.vue';
 
 export default {
     name: 'HomePage',
     components: {
-        IconAdd,
         Swiper,      // Register Swiper component
-        SwiperSlide  // Register SwiperSlide component
+        SwiperSlide,  // Register SwiperSlide component
+        IndicatorDots,
+        IconAdd,
+        IconTMDB,
     },
     data() {
         return {
+            // modules: [Pagination, Navigation],
             titleLists: [
                 {
                     listName: "Movies to watch",
                     titles: [],
                     loading: true,  // Add loading state for each list
+                    activeSlide: 0,
                 },
                 {
                     listName: "TV-series to watch",
                     titles: [],
                     loading: true,  // Add loading state for each list
+                    activeSlide: 0,
                 },
                 {
                     listName: "Rewatch these popular titles",
                     titles: [],
                     loading: true,  // Add loading state for each list
-                }
-            ]
+                    activeSlide: 0,
+                },
+            ],
         };
     },
     methods: {
@@ -140,6 +157,9 @@ export default {
             } finally {
                 titleList.loading = false;  // Set loading to false when data is fetched
             }
+        },
+        updateSwiper() {
+
         }
     },
     async mounted() {
@@ -157,7 +177,7 @@ export default {
     mask-image: linear-gradient(to right, transparent 0%, white var(--spacing-lg), white calc(100% - var(--spacing-lg)), transparent 100%);
 }
 
-.slide {
+.swiper-slide {
     background-color: var(--color-background-card);
     /* background-color: transparent; */
     border-radius: var(--border-radius-medium);
@@ -167,9 +187,11 @@ export default {
     overflow: hidden;
     cursor: pointer;
     user-select: none;
+    transform: scale(0.95);
+    transition: transform 0.15s var(--cubic-1);
 }
 
-.slide .thumbnail {
+.swiper-slide .thumbnail {
     background-color: var(--color-background-card-section);
     position: absolute;
     top: 0;
@@ -181,23 +203,26 @@ export default {
     z-index: 1;
 }
 
-.slide .gradient {
+.swiper-slide .gradient {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(0deg, hsla(0, 0%, 0%, 0.75) 0%, hsla(0, 0%, 0%, 0.5) 20%, transparent 40%);
+    background: linear-gradient(0deg, hsla(0, 0%, 0%, 0.8) 0%, hsla(0, 0%, 0%, 0.6) 30%, transparent 60%);
     z-index: 2;
+    transition: opacity 0.2s var(--cubic-1);
 }
 
-.slide .details {
+.swiper-slide .details {
     position: absolute;
     bottom: var(--spacing-sm);
     right: var(--spacing-sm);
     padding: var(--spacing-xs);
     border-radius: var(--border-radius-small);
+    transition: opacity 0.2s var(--cubic-1),
+                transform 0.2s var(--cubic-1);
     
     text-align: end;
     font-weight: 500;
@@ -206,23 +231,52 @@ export default {
     z-index: 3;
 }
 
-.slide .title-name {
+.swiper-slide .gradient {
+    opacity: 0;
+}
+.swiper-slide .details {
+    opacity: 0;
+    transform: translateX(10%);
+}
+
+.slides-indicator-holder {
+    margin-top: var(--spacing-md);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.swiper-slide .title-name {
     text-align: right;
     color: var(--color-text-white);
     font-weight: 700;
     font-size: var(--font-size-large);
+
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.slide .watched {
-    color: var(--color-positive);
-}
-
-.slide .title-rating {
+.swiper-slide .title-rating {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: end;
     gap: var(--spacing-xs);
+}
+
+
+.swiper-slide .watched {
+    color: var(--color-positive);
+}
+
+.season-after::after {
+    content: " seasons, ";
+}
+.episode-after::after {
+    content: " episodes";
 }
 
 .full-width-swiper-slide {
@@ -231,7 +285,6 @@ export default {
     margin: 0;
     box-sizing: border-box;
     padding-inline: calc(22% - var(--spacing-lg));
-    
 
     color: var(--color-text-light);
     text-align: center;
@@ -242,6 +295,8 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    transform: none !important;
 }
 
 .loading-placeholder {
@@ -254,6 +309,43 @@ export default {
     background-size: 200% 100%;
     animation: highlight-wave 2s infinite linear;
 }
+
+@media (max-width: 600px) {
+    .swiper-slide.swiper-slide-active .details, .swiper-slide.swiper-slide-active .gradient {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+    .swiper-slide {
+        width: 150px;
+        height: 225px;
+    }
+    .season-after::after {
+        content: "S, ";
+    }
+    .episode-after::after {
+        content: "E";
+    }
+}
+@media (max-width: 350px) {
+    .swiper-slide {
+        width: calc(100% - var(--spacing-hg));
+        height: auto;
+        aspect-ratio: 2/3;
+    }
+}
+@media (min-width: 600px) {
+    .swiper-slide:hover .details, .swiper-slide:hover .gradient {
+        opacity: 1;
+        transform: translateX(0%);
+    }
+    .slides-indicator-holder {
+        display: none;
+    }
+    .swiper-slide:hover {
+        transform: scale(1);
+    }
+}
+
 @keyframes highlight-wave {
     0% {
         background-position: 200% 0;

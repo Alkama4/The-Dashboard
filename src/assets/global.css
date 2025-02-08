@@ -24,6 +24,9 @@
     /* --width-max-page: 900px; */
     --width-modal: 400px;
 
+
+    --cubic-1: cubic-bezier(.3,.63,.4,1);
+
     /* Z-indexes */
     --z-index-fullscreen: 10000002;
     --z-mobile-nav: 10000001;
@@ -292,7 +295,8 @@ h1, h2, h3, h4 {
 }
 
 h2 {
-    margin-top: var(--spacing-hg);
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 img {
@@ -771,6 +775,16 @@ input[type="radio"] {
     margin: 0;
     width: 100%;
 }
+
+/* 
+LINE CLAMP SETUP
+
+display: -webkit-box;
+line-clamp: 1;
+-webkit-line-clamp: 1;
+-webkit-box-orient: vertical;
+overflow: hidden;
+         */
 
 /* - - - - CONTENT WIDTH LIMITORS - - - - */
 .content-width-extra-small {
