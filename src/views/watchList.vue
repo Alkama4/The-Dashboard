@@ -2,7 +2,7 @@
     <div>
         <div class="content-width-small">
             <h1>Watch list</h1>
-            <p>Template placeholder text that will be replaced at some point and so on...</p>
+            <p>Here you can find and track movies and TV-series from your watch list. If your watch list is empty you can search for titles to add with the button on the bottom right corner of the screen. </p>
         </div>
 
         <router-link to="/watchList/addTitle">
@@ -11,67 +11,70 @@
             </button>
         </router-link>
 
-        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large">
+        
+        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large title-list">
             <h2>{{ titleList.listName }}</h2>
-            <!-- <p>{{ titleList.text }}</p> -->
-
+            <p class="text-light title-list-text">{{ titleList.text }}</p>
+            
             <!-- Show swiper-container only when titles are available and loading is complete -->
-            <Swiper 
-                space-between="4" 
-                slidesPerView="auto" 
-                class="slide-container"
-                :slidesOffsetBefore=32
-                :slidesOffsetAfter=32
-                :modules="modules"
-                @slide-change="updateSwiper()"
-            >
-                <swiper-slide 
-                    v-for="title in titleList.titles" 
-                    :key="title.id" 
-                    @click="openDetailsPageFor(title.id)"
+            <div class="cards-thing-wrapper">
+                <Swiper 
+                    space-between="4" 
+                    slidesPerView="auto" 
+                    class="slide-container"
+                    :slidesOffsetBefore=32
+                    :slidesOffsetAfter=32
+                    :modules="modules"
                 >
-                    <img :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" alt="" class="thumbnail"/>
-                    <div class="gradient"></div>
-                    <div class="details">
-                        <span class="title-name">{{ title.name }}</span>
-                        <div class="title-rating"><IconTMDB/>{{ title.vote_average }} • {{ new Date(title.release_date).getFullYear() }}</div>
-                        <div class="progress-details">
-                            <template v-if="title.type === 'tv'">
-                                <span class="season-after">{{ title.season_count }}</span>
-                                <span class="episode-after">{{ title.episode_count }}</span>
-                            </template>
-                            <template v-else>
-                                {{ formatRuntime(title.movie_runtime) }}
-                            </template>
+                    <swiper-slide 
+                        v-for="title in titleList.titles" 
+                        :key="title.id" 
+                        @click="openDetailsPageFor(title.id)"
+                    >
+                        <img :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" alt="" class="thumbnail"/>
+                        <div class="gradient"></div>
+                        <div class="details">
+                            <span class="title-name">{{ title.name }}</span>
+                            <div class="title-rating"><IconTMDB/>{{ title.vote_average }} &bullet; {{ new Date(title.release_date).getFullYear() }}</div>
+                            <div class="progress-details">
+                                <template v-if="title.type === 'tv'">
+                                    <span class="season-after">{{ title.season_count }}</span>
+                                    <span class="episode-after">{{ title.episode_count }}</span>
+                                </template>
+                                <template v-else>
+                                    {{ formatRuntime(title.movie_runtime) }}
+                                </template>
+                            </div>
+                            <div class="watched">
+                                <template v-if="title.watch_count == 1">
+                                    Watched 
+                                </template>
+                                <template v-if="title.watch_count >= 2">
+                                    Watched {{ title.watch_count }} times
+                                </template>
+                            </div>
                         </div>
-                        <div class="watched">
-                            <template v-if="title.watch_count == 1">
-                                Watched 
-                            </template>
-                            <template v-if="title.watch_count >= 2">
-                                Watched {{ title.watch_count }} times
-                            </template>
-                        </div>
+                    </swiper-slide>
+
+                    <swiper-slide 
+                        class="card full-width-swiper-slide loading-placeholder" 
+                        v-if="titleList.titles.length == 0 && titleList.loading"
+                    >
+                    </swiper-slide>
+
+                    <swiper-slide 
+                        class="card full-width-swiper-slide" 
+                        v-if="titleList.titles.length == 0 && !titleList.loading"
+                    >
+                        Looks like there's nothing here. Try adding titles to your watchlist.
+                    </swiper-slide>
+                    <div class="slides-indicator-holder">
+                        <!-- Minus one since we only use in mobile layout which never reaches the last one -->
+                        <IndicatorDots :dotCount="titleList.titles.length - 1" v-model="titleList.activeSlide"/>
                     </div>
-                </swiper-slide>
+                </Swiper>
 
-                <swiper-slide 
-                    class="card full-width-swiper-slide loading-placeholder" 
-                    v-if="titleList.titles.length == 0 && titleList.loading"
-                >
-                </swiper-slide>
-
-                <swiper-slide 
-                    class="card full-width-swiper-slide" 
-                    v-if="titleList.titles.length == 0 && !titleList.loading"
-                >
-                    Looks like there's nothing here. Try adding titles to your watchlist.
-                </swiper-slide>
-                <div class="slides-indicator-holder">
-                    <IndicatorDots :dotCount="titleList.titles.length" v-model="titleList.activeSlide"/>
-                </div>
-            </Swiper>
-
+             </div>
         </div>
 
         <div class="content-width-small">
@@ -139,8 +142,8 @@ export default {
             return `${hours}hr ${minutes}min`;
         },
         // Simplified method to fetch and set title lists
-        async fetchTitleList(listName, titleType = null, watched = null, count = null) {
-            const titleList = this.titleLists.find(list => list.listName === listName);
+        async fetchTitleList({ name, titleType = null, watched = null, count = null, text = "" } = {}) {
+            const titleList = this.titleLists.find(list => list.listName === name);
             try {
                 titleList.loading = true;  // Set loading state to true initially
                 
@@ -152,21 +155,33 @@ export default {
                 if (titleData && titleData.titles) {
                     titleList.titles = titleData.titles;
                 }
+                titleList.text = text;  // Optionally set a description or text
             } catch (error) {
-                console.error(`Error fetching data for ${listName}:`, error);
+                console.error(`Error fetching data for ${name}:`, error);
             } finally {
                 titleList.loading = false;  // Set loading to false when data is fetched
             }
-        },
-        updateSwiper() {
-
         }
     },
     async mounted() {
         // Use the fetchTitleList method to load data for each category
-        await this.fetchTitleList("Movies to watch", "Movie", false);  // Fetch Movies to watch
-        await this.fetchTitleList("TV-series to watch", "TV", false);  // Fetch TV-series to watch
-        await this.fetchTitleList("Rewatch these popular titles", null, true);  // Fetch rewatchable popular titles
+        await this.fetchTitleList({
+            name: "Movies to watch", 
+            titleType: "Movie", 
+            watched: false,
+            text: "Movies that are on your watch list and that you have yet not watched."
+        });
+        await this.fetchTitleList({ 
+            name: "TV-series to watch", 
+            titleType: "TV", 
+            watched: false,
+            text: "TV-series that you are either in prcess of watching or haven't yet started to."
+        });
+        await this.fetchTitleList({ 
+            name: "Rewatch these popular titles", 
+            watched: true,
+            text: "The most popular titles that you already have watched."
+        }); 
     }
 };
 </script>
@@ -177,9 +192,15 @@ export default {
     mask-image: linear-gradient(to right, transparent 0%, white var(--spacing-lg), white calc(100% - var(--spacing-lg)), transparent 100%);
 }
 
+.title-list h2 {
+    margin-bottom: var(--spacing-xs);
+}
+.title-list .title-list-text {
+    margin-top: var(--spacing-xs);
+}
+
 .swiper-slide {
     background-color: var(--color-background-card);
-    /* background-color: transparent; */
     border-radius: var(--border-radius-medium);
     height: 300px;
     width: 200px;
@@ -281,7 +302,7 @@ export default {
 
 .full-width-swiper-slide {
     height: 300px;
-    width: calc(100% - var(--spacing-hg));
+    width: calc(100% - var(--spacing-hg)) !important;
     margin: 0;
     box-sizing: border-box;
     padding-inline: calc(22% - var(--spacing-lg));
@@ -310,14 +331,18 @@ export default {
     animation: highlight-wave 2s infinite linear;
 }
 
+
+
 @media (max-width: 600px) {
-    .swiper-slide.swiper-slide-active .details, .swiper-slide.swiper-slide-active .gradient {
+    .swiper-slide .details,
+    .swiper-slide .gradient {
         opacity: 1;
         transform: translateX(0%);
     }
     .swiper-slide {
-        width: 150px;
-        height: 225px;
+        width: calc((100% - var(--spacing-hg)) / 2);
+        height: auto;
+        aspect-ratio: 2/3;
     }
     .season-after::after {
         content: "S, ";
@@ -325,15 +350,24 @@ export default {
     .episode-after::after {
         content: "E";
     }
-}
-@media (max-width: 350px) {
-    .swiper-slide {
-        width: calc(100% - var(--spacing-hg));
-        height: auto;
-        aspect-ratio: 2/3;
+
+    .cards-thing-wrapper {
+        position: relative;
+        height: calc(100vw / 594 * 423.5)
+    }
+    .cards-thing-wrapper .swiper {
+        /* background-color: red; */
+        position: absolute;
+        top: 0;
+        left: -5vw;
+        width: 100vw;
+    }
+    .full-width-swiper-slide {
+        height: calc(100vw / 594 * 423.5);
+        aspect-ratio: none;
     }
 }
-@media (min-width: 600px) {
+@media (min-width: 601px) {
     .swiper-slide:hover .details, .swiper-slide:hover .gradient {
         opacity: 1;
         transform: translateX(0%);
@@ -345,6 +379,8 @@ export default {
         transform: scale(1);
     }
 }
+
+
 
 @keyframes highlight-wave {
     0% {

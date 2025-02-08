@@ -23,6 +23,8 @@
             <div style="background-color: var(--color-undecenary);"></div>
         </div>
 
+        <FadeDebug/>
+
         <!-- 			
 		<h2>Ascii Art</h2>
 		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
@@ -118,11 +120,15 @@ v           )___))___))___)\        v
 </template>
 
 <script>
+import FadeDebug from '@/components/FadeDebug.vue';
 import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
 
 export default {
     name: 'DebugPage',
+    components: {
+        FadeDebug,
+    },
     methods: {
         notificationInfo() {
             notify("This is a generic info notification that I can place tips or tricks into.", "info");

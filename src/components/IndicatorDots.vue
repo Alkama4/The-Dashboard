@@ -4,7 +4,7 @@
             v-for="index in [...Array(dotCount).keys()]" 
             :key="index" 
             class="dot" 
-            :class="{ active: index === modelValue }"
+            :class="{ active: index === (dotIndex ?? swiperDotIndex) }"
             @click="moveSwiperTo(index)"
         ></div>
     </div>
@@ -17,10 +17,11 @@ export default {
     data() {
         return {
             swiper: null,
-        } 
+            swiperDotIndex: 0,
+        };
     },
     props: {
-        modelValue: {  // This enables v-model
+        dotIndex: {
             type: Number,
             required: true
         },
@@ -30,31 +31,32 @@ export default {
         }
     },
     methods: {
-        moveSwiperTo(index)  {
-            // For v-model
-            this.$emit("update:modelValue", index);
+        moveSwiperTo(index) {
+            // Emit the new dot index to the parent
+            this.$emit("dotSelected", index);
 
-            // For swiper controls
+            // Use swiper controls to move to the specific slide
             if (this.swiper) {
                 this.swiper.slideTo(index);
-                console.debug("Sliding swiper to", index, "- Swiper was set to", this.swiper.activeIndex);
             }
         },
     },
     mounted() {
         const swiper = useSwiper();
         if (swiper) {
-            this.swiper = swiper
+            this.swiper = swiper;
         }
     },
     watch: {
-        'swiper.activeIndex'(newIndex, oldIndex) {
-            console.debug('Active index changed from', oldIndex, 'to', newIndex);
-            this.$emit("update:modelValue", newIndex);
+        // Watch for changes to the swiper's activeIndex
+        'swiper.activeIndex'(newIndex) {
+            // Since the dotIndex is v-bind we can't modify it from the inside so we have to use an internal value
+            this.swiperDotIndex = newIndex;
         }
-    }
+    },
 };
 </script>
+
 
 <style scoped>
 .indicator-dots {

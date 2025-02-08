@@ -63,7 +63,7 @@
                                 <IconTMDB/>
                                 <span>{{ title.vote_average ? title.vote_average.toFixed(1) : 0 }}</span>
                             </div>
-                            <span class="divider">•</span>
+                            <span class="divider">&bullet;</span>
 
                             <span v-if="title.release_date">{{ movieDate(title.release_date) }}</span>
                             <span v-else>{{ movieDate(title.first_air_date) }}</span>

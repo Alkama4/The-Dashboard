@@ -1,5 +1,5 @@
 <template>
-    <transition name="fade">
+    <transition name="notification">
         <div v-if="visible" :class="['notification', messageType]" @click="closeThis">
             <IconCross class="closeIcon" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/>
             <h3> <!-- Header will be placed here based on messageType --> </h3>
@@ -166,20 +166,20 @@ export default {
 }
 
 /* Transitions */
-.fade-enter-active {
+.notification-enter-active {
     transition: opacity 0.2s ease-out,
                 transform 0.2s ease-out;
 }
-.fade-enter-from {
+.notification-enter-from {
     opacity: 0;
     transform: translateX(50px);
 }
 
-.fade-leave-active {
+.notification-leave-active {
     transition: opacity 0.15s ease-in,
                 transform 0.15s ease-in;
 }
-.fade-leave-to {
+.notification-leave-to {
     transform: translateX(10px);
     opacity: 0;
 }

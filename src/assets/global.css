@@ -735,6 +735,13 @@ input[type="radio"] {
     text-decoration: none;
 }
 
+.no-pointer-events {
+    pointer-events: none;
+}
+.all-pointer-events {
+    pointer-events: all;
+}
+
 .negative {
     color: var(--color-negative) !important;
 }
@@ -774,6 +781,13 @@ input[type="radio"] {
     padding-inline: 0;
     margin: 0;
     width: 100%;
+}
+
+.text-light {
+    color: var(--color-text-light);
+}
+.text-lighter {
+    color: var(--color-text-lighter);
 }
 
 /* 

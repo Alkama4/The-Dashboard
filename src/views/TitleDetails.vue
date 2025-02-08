@@ -1,45 +1,67 @@
 <template>
     <div v-if="titleInfo" class="title-info">
-        <transition name="fade">
+        <!-- <transition name="backdrop">
             <img 
                 v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
-                class="background backdrop-image" 
+                class="background backdrop-image-container" 
                 :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber + 1}.jpg`" 
                 alt=" "
             />
-        </transition>
+        </transition> -->
+        <div class="background backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
+            <div v-for="image in imageSlideshowData.individualData" :key="image.number">
+                <img
+                    v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
+                    @load="image.isLoaded = true" 
+                    :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
+                    :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                />
+            </div>
+        </div>
 
         <div class="backdrop-dimension"></div>
         <div class="backdrop-container backdrop-dimension" @keydown="backdropKeypress">
             <div class="content-inside">
-                <transition name="fade">
-                    <img 
-                        v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
-                        class="main backdrop-image" 
+                    <!-- <img 
+                        v-if="backdropShow && 
+                        class="main backdrop-image-container" 
                         :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber + 1}.jpg`" 
                         alt=" "
-                    />
-                </transition>
+                    /> -->
+                    <div class="main backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
+                        <div v-for="image in imageSlideshowData.individualData" :key="image.number">
+                            <img
+                                v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
+                                @load="image.isLoaded = true" 
+                                :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
+                                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                            />
+                        </div>
+                    </div>
 
-                <div class="button-holder" v-if="titleInfo.backdrop_image_count > 1">
-                    <button class="left" @click="subtractFromBackDropNumber"><IconChevronDown size="50"/></button>
-                    <button class="right" @click="addToBackDropNumber"><IconChevronDown size="50"/></button>
+                <div class="button-holder no-pointer-events" v-if="titleInfo.backdrop_image_count > 1">
+                    <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)"><IconChevronDown size="50"/></button>
+                    <button class="right all-pointer-events" @click="addOrSubtractSlideshowIndex(1)"><IconChevronDown size="50"/></button>
                 </div>
 
-                <div class="name-and-tagline">
+                <div class="name-and-tagline no-pointer-events">
                     <h1 class="title-name">
-                        <span :title="titleInfo.name">
+                        <span class="all-pointer-events" :title="titleInfo.name">
                             {{ titleInfo.name }} 
                         </span>
-                        <span :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name" class="original-title">
+                        <span class="all-pointer-events original-title" :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name">
                             ({{ titleInfo.original_name }})
                         </span>
                     </h1>
                     <!-- <img :src="`http://pibox.lan:800/image/${titleInfo.title_id}/logo/1`" alt=" "> -->
-                    <q class="tagline" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
+                    <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
                 </div>
                 <div class="indicator">
-                    <IndicatorDots v-model="backdropNumber" :dotCount="titleInfo.backdrop_image_count" />
+                    <IndicatorDots 
+                        :dotIndex="imageSlideshowData.chosenOne" 
+                        :dotCount="titleInfo.backdrop_image_count"
+                        @dotSelected="updateSlideshowImageTo"
+                    />
                 </div>
             </div>
         </div>
@@ -66,7 +88,6 @@
                     Reset title watch status 
                 </button>
 
-                <!-- NEED TO MAKE IT SO THAT I CAN SHOW THIS PAGE WIHOUT USER_ID -->
                 <button 
                     v-if="titleInfo.user_watch_count <= -1"
                     class="color-primary right-button" 
@@ -150,47 +171,46 @@
             </div>
         </div>
 
+        <!-- SEASONS -->
         <div class="content-width-large" v-if="titleInfo.seasons">
             <h2>Seasons</h2>
-
 
             <div v-for="season in titleInfo.seasons" 
                 :key="season.season_id" 
                 class="card season" 
                 :class="{'active': expandedSeason == season.season_id}"
             >
-
                 <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
-                    <img class="season-poster" :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" alt=" " />
+                    <img class="poster" :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" alt=" " />
                     <div class="text">
-                        <!-- IF SEASON_NUMBER IN SEASON_NAME SHOW JUST NAME, ELSE NUMBER. NAME -->
                         <h2>{{ season.season_name }}</h2>
                         <div class="details">
-                            {{ season.episode_count }} episodes • {{ season.vote_average }} <br>
+                            {{ season.episode_count }} episodes &bullet; {{ season.vote_average }} <br>
                             {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
                         </div>
                         <p :title="season.overview">{{ season.overview }}</p>
-                        <button 
-                            class="modify-watched color-primary"
-                            v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                            @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
-                        >
-                            Mark season watched
-                        </button>
-                        <button
-                            class="modify-watched color-warning"
-                            v-else
-                            @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)"
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
-                        >
-                            Mark season unwatched
-                        </button>
                     </div>
+                    <button 
+                        class="modify-watched color-primary"
+                        v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
+                        @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
+                        :disabled="waitingForResult.includes('titleWatched')"
+                        :class="{loading: waitingForResult.includes('titleWatched')}"
+                    >
+                        Mark season watched
+                    </button>
+                    <button
+                        class="modify-watched color-warning"
+                        v-else
+                        @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)"
+                        :disabled="waitingForResult.includes('titleWatched')"
+                        :class="{loading: waitingForResult.includes('titleWatched')}"
+                    >
+                        Mark season unwatched
+                    </button>
                 </div>
-
+                
+                <!-- EPISODES -->
                 <div class="episodes" :ref="`ref${season.season_id}`">
                     <div class="episodes-padding">
                         <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode">
@@ -211,7 +231,7 @@
                             <div class="text">
                                 <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
                                 <div class="details" :title="`${episode.vote_count} votes`">
-                                    {{ formatRuntime(episode.runtime) }} • {{ episode.vote_average }} <br>
+                                    {{ formatRuntime(episode.runtime) }} &bullet; {{ episode.vote_average }} <br>
                                     {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
                                 </div>
                                 <p :title="episode.overview">{{ episode.overview }}</p>
@@ -231,7 +251,7 @@
                                     :disabled="waitingForResult.includes('titleWatched')"
                                     :class="{loading: waitingForResult.includes('titleWatched')}"
                                 >
-                                    unwatched
+                                    Unwatch
                                 </button>
                             </div>
                         </div>
@@ -263,9 +283,13 @@ export default {
             titleInfo: null,
             expandedSeason: null,
             waitingForResult: [],
-            backdropShow: false,
-            backdropNumber: 0,
             failedToLoadImages: [],
+            imageSlideshowData: {
+                showOnDom: 0,
+                chosenOne: 0,
+                keepOnDom: [],
+                individualData: []
+            },
         };
     },
     components: {
@@ -331,9 +355,7 @@ export default {
                         .find(episode => episode.episode_id === updatedEpisode.episode_id);
                     
                     if (matchingEpisode) {
-                        // If a matching episode is found, you can perform some action with it
-                        // console.debug(`Matching episode found: ${matchingEpisode.episode_name}`);
-                        // Example: Updating watch count or any other action
+                        // If a matching episode is found update value
                         matchingEpisode.watch_count = updatedEpisode.watch_count;
                     }
                     });
@@ -402,24 +424,48 @@ export default {
                 this.addToBackDropNumber();
             }
         },
-        addToBackDropNumber() {
-            this.backdropNumber = (this.backdropNumber + 1 >= this.titleInfo.backdrop_image_count) ? 0 : this.backdropNumber + 1;
-        },
-
-        subtractFromBackDropNumber() {
-            this.backdropNumber = (this.backdropNumber - 1 < 0) ? this.titleInfo.backdrop_image_count - 1 : this.backdropNumber - 1;
-        },
-
         getWatchedStats() {
             const totalEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
             const watchedEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
             const percentage = totalEpisodes ? ((watchedEpisodes / totalEpisodes) * 100).toFixed(1) + "%" : "0%";
             return `${watchedEpisodes} / ${totalEpisodes} episodes (${percentage})`;
-        }
+        },
+        updateSlideshowImageTo(newImageIndex) {
+            // Push the current image to fade-out images before updating
+            this.imageSlideshowData.keepOnDom.push(this.imageSlideshowData.chosenOne);
+
+            // Update `showOnDom` and ensure it loops correctly
+            this.imageSlideshowData.showOnDom = newImageIndex;
+
+            // Small timeout to let the DOM update (prevents flickering)
+            setTimeout(() => {
+                this.imageSlideshowData.chosenOne = this.imageSlideshowData.showOnDom;
+            }, 20);
+
+            // Remove the oldest fade-out image after the transition completes
+            setTimeout(() => {
+                this.imageSlideshowData.keepOnDom.shift();
+            }, 500);
+        },
+        addOrSubtractSlideshowIndex(amount) {
+            let newNumber = this.imageSlideshowData.chosenOne + amount;
+
+            // Ensure looping through images
+            if (newNumber >= this.titleInfo.backdrop_image_count) newNumber = 0;
+            if (newNumber < 0) newNumber = this.titleInfo.backdrop_image_count - 1;
+
+            // Call updateImage with the new number
+            this.updateSlideshowImageTo(newNumber);
+        },
     },
     async mounted() {
         await this.queryTitleData();
-        this.backdropShow = true;
+
+        // Generate individual data for each backdrop image dynamically
+        this.imageSlideshowData.individualData = Array.from({ length: this.titleInfo.backdrop_image_count }, (_, i) => ({
+            number: i,
+            isLoaded: false
+        }));
     },
     watch: {
         backdropNumber() {
@@ -442,18 +488,6 @@ export default {
     --z-backdrop-indicator: 6;
 }
 
-
-/* - - - - - TRANSITIONS - - - - -  */
-.fade-enter-active, .fade-leave-active {
-    transition: opacity 0.3s ease-in-out;
-}
-.fade-enter, .fade-leave-to {
-    opacity: 0;
-    transform: translate(0);
-}
-
-
-
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
 .backdrop-dimension {
     width: 100vw;
@@ -472,7 +506,21 @@ export default {
 }
 
 /* BACKDROPS */
-img.backdrop-image.main { 
+.backdrop-image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    object-fit: cover;
+}
+.backdrop-image-container img.visible {
+    opacity: 1;
+}
+
+.backdrop-image-container.main { 
     position: absolute;
     top: 0;
     bottom: 0;
@@ -481,7 +529,7 @@ img.backdrop-image.main {
     mask-image: linear-gradient(to top, transparent 0%, white 50%);
     z-index: var(--z-backdrop-image-main);
 }
-img.backdrop-image.background { 
+.backdrop-image-container.background { 
     position: absolute;
     top: 60px;
     left: 50%;
@@ -489,7 +537,7 @@ img.backdrop-image.background {
     object-fit: cover; 
     
     width: 100vw;
-    max-height: calc(1200px / 16 * 9);
+    height: calc(1200px / 16 * 9);
     z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
@@ -735,20 +783,24 @@ img.backdrop-image.background {
 }
 
 .season .about {
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-md);
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 
+    "img text"
+    "button button";
+    column-gap: var(--spacing-md);
     cursor: pointer;
 }
 .season h2 {
     margin: 0;
 }
-.season-poster {
+.season .about .poster {
     height: 200px;
     width: 133.33px;
     min-width: 133.33px;
     background-color: var(--color-background-card-section);
     border-radius: var(--border-radius-medium);
+    grid-area: img;
 }
 .season .about p {
     margin-bottom: 0;
@@ -759,9 +811,31 @@ img.backdrop-image.background {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.season .details {
+.season .about .details {
     color: var(--color-text-light);
 }
+
+.season .about .text {
+    grid-area: text;
+}
+
+.season .about .modify-watched {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    margin: 0;
+    width: auto;
+}
+
+@media (max-width: 750px) {
+    .season .about .modify-watched {
+        margin-top: var(--spacing-md);
+        position: static;
+        grid-area: button;
+        width: 100%;
+    }
+}
+
 
 .season .episodes {
     box-sizing: border-box;
@@ -781,13 +855,7 @@ img.backdrop-image.background {
     margin-bottom: var(--spacing-md);
 }
 
-.season .modify-watched {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
-    margin: 0;
-    width: auto;
-}
+
 
 /* - - - - - EPISODE - - - - -  */
 .episode {
@@ -811,7 +879,7 @@ img.backdrop-image.background {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    max-width: calc(100% - 300px);
+    max-width: calc(100% - 160px);
 }
 .episode .still {
     width: 300px;
@@ -848,19 +916,28 @@ img.backdrop-image.background {
 }
 .episode .modify-watched {
     position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
+    top: var(--spacing-md);
+    right: var(--spacing-md);
     margin: 0;
     width: auto;
 }
 @media (max-width: 850px) {
-    .episode .watched {
-        display: none;
+    .episode .modify-watched {
+        margin-top: var(--spacing-sm);
+        position: static;
+        width: 100%;
     }
     .episode h3 {
         max-width: none;
     }
-
+    .episode {
+        flex-direction: column;
+    }
+    .episode .still {
+        width: 100%;
+        min-width: none;
+        max-height: 220px;
+    }
 }
 
 
