@@ -1,5 +1,5 @@
 <template>
-    <div class="slider-toggle" @click="toggleSelection">
+    <div class="slider-toggle" @click="toggleSelection" @keypress="toggleSelection" tabindex="0">
         <div class="slider">
             <div class="grid-overlay">
                 <span

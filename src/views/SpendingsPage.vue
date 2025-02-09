@@ -384,11 +384,11 @@
         var(--color-background-tr-active) 80%
     );
     background-size: 200% 100%;
-    animation: highlight-wave 2s infinite linear;
+    animation: loading-wave 2s infinite linear;
     border-radius: var(--border-radius-small);
     margin: calc(var(--spacing-sm) + 1px);  /* 2px for border */
 }
-@keyframes highlight-wave {
+@keyframes loading-wave {
     0% {
         background-position: 200% 0;
     }

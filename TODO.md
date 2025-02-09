@@ -2,12 +2,13 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- Go through the list...
 - Backups kind of dull
     - Give it some life and readability
 - Think of a better way to implement the modal. Way too manual and inconvenient. Should work more like the native popup where it stops progress and returns a value.
 - The title details and metadata side by side when there's space
 - PROPABLY SHOULD STILL USE THE MAX AMOUNT OF QUERIES AT ONCE SINCE ITS QUITE STUPID TO SEND TENS OF NOT HUNDREADS OF QUERIES AT ONCE AND WAIT FOR THEM ALL!
+- Cards should always display if watched neatly in a corner or in other ways.
+- swiper height changes on load. Because of dots?
 
 ### Features to add
 - Navigation
@@ -42,6 +43,8 @@ In here I will collect my notes about this website and list the stuff that need 
 - Sources?
     - TMDB
     - Boxicon
+- Tab navigation now that you know how easy it is. Fix button links by making global.css button-link style.
+- Season and episode images larger. More bold. Small images never look as good.
 
 ### Known issues
 - InfoTooltips positioning is stupid and doesn't detect window borders

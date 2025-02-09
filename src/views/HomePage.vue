@@ -22,13 +22,19 @@
 			<div class="tile-container">
 				<a href="https://pibox.lan:9443" class="no-decoration">
 					<button class="tile-button">
-						<img src="../assets/thumbnails/portainer.svg" alt="">
+						<img 
+							src="../assets/thumbnails/portainer.svg" 
+							@load="(event) => event.target.classList.add('loaded')"
+						>
 						<span>Portainer</span>
 					</button>
 				</a>
 				<a href="http://pibox.lan:81/admin/" class="no-decoration">
 					<button class="tile-button">
-						<img src="../assets/thumbnails/pihole.png" alt="">
+						<img 
+							src="../assets/thumbnails/pihole.png"
+							@load="(event) => event.target.classList.add('loaded')"
+						>
 						<span>Pihole</span>
 					</button>
 				</a>

@@ -1,13 +1,5 @@
 <template>
     <div v-if="titleInfo" class="title-info">
-        <!-- <transition name="backdrop">
-            <img 
-                v-if="backdropShow && titleInfo.backdrop_image_count >= 1"
-                class="background backdrop-image-container" 
-                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber + 1}.jpg`" 
-                alt=" "
-            />
-        </transition> -->
         <div class="background backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
             <div v-for="image in imageSlideshowData.individualData" :key="image.number">
                 <img
@@ -20,24 +12,18 @@
         </div>
 
         <div class="backdrop-dimension"></div>
-        <div class="backdrop-container backdrop-dimension" @keydown="backdropKeypress">
+        <div class="backdrop-container backdrop-dimension" @keydown="backdropKeypress" tabindex="0">
             <div class="content-inside">
-                    <!-- <img 
-                        v-if="backdropShow && 
-                        class="main backdrop-image-container" 
-                        :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${backdropNumber + 1}.jpg`" 
-                        alt=" "
-                    /> -->
-                    <div class="main backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
-                        <div v-for="image in imageSlideshowData.individualData" :key="image.number">
-                            <img
-                                v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
-                                @load="image.isLoaded = true" 
-                                :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
-                            />
-                        </div>
+                <div class="main backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
+                    <div v-for="image in imageSlideshowData.individualData" :key="image.number">
+                        <img
+                            v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
+                            @load="image.isLoaded = true" 
+                            :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
+                            :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                        />
                     </div>
+                </div>
 
                 <div class="button-holder no-pointer-events" v-if="titleInfo.backdrop_image_count > 1">
                     <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)"><IconChevronDown size="50"/></button>
@@ -181,7 +167,11 @@
                 :class="{'active': expandedSeason == season.season_id}"
             >
                 <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
-                    <img class="poster" :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" alt=" " />
+                    <img 
+                        class="poster" 
+                        :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
+                        @load="(event) => event.target.classList.add('loaded')"
+                    />
                     <div class="text">
                         <h2>{{ season.season_name }}</h2>
                         <div class="details">
@@ -212,7 +202,7 @@
                 
                 <!-- EPISODES -->
                 <div class="episodes" :ref="`ref${season.season_id}`">
-                    <div class="episodes-padding">
+                    <div class="episodes-padding" v-if="this.openedSeasons.includes(`ref${season.season_id}`)">
                         <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode">
                             <div 
                                 v-if="failedToLoadImages.includes(episode.episode_id)"
@@ -225,8 +215,8 @@
                                 v-else
                                 class="still" 
                                 :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
-                                alt=" "
                                 @error="failedToLoadImages.push(episode.episode_id)"
+                                @load="(event) => event.target.classList.add('loaded')"
                             >
                             <div class="text">
                                 <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
@@ -290,6 +280,7 @@ export default {
                 keepOnDom: [],
                 individualData: []
             },
+            openedSeasons: [],
         };
     },
     components: {
@@ -308,14 +299,23 @@ export default {
             return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
         },
         toggleHeight(refKey) {
-            const element = this.$refs[refKey]?.[0]; // Get the first element
-            if (!element) return;
-
-            if (!element.style.height || element.style.height === "0px") {
-                element.style.height = element.scrollHeight + "px"; // Expand
-            } else {
-                element.style.height = "0px"; // Collapse
+            // Mark the season as opened to load to dom with v-if to start loading images
+            if (!this.openedSeasons.includes(refKey)) {
+                this.openedSeasons.push(refKey)
             }
+            
+            // Set a minimal timeout so that the dom change registers before the height is calculated
+            setTimeout(() => {
+                // Change the actual height
+                const element = this.$refs[refKey]?.[0]; // Get the first element
+                if (!element) return;
+
+                if (!element.style.height || element.style.height === "0px") {
+                    element.style.height = element.scrollHeight + "px"; // Expand
+                } else {
+                    element.style.height = "0px"; // Collapse
+                }
+            }, 1)
         },
         // make this go through a MODAL?
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
@@ -418,10 +418,13 @@ export default {
             }
         },
         backdropKeypress(event) {
-            if (event.key === 'ArrowLeft')  {
-                this.subtractFromBackDropNumber();
-            } else if (event.key === 'ArrowRight') {
-                this.addToBackDropNumber();
+            if (['ArrowLeft', 'a', 'w'].includes(event.key)) {
+                this.addOrSubtractSlideshowIndex(-1);
+            } else if (['ArrowRight', 'd', 's', 'Enter'].includes(event.key)) {
+                this.addOrSubtractSlideshowIndex(1);
+            } else if (['1', '2', '3', '4', '5'].includes(event.key)) {
+                if (Number(event.key) <= this.titleInfo.backdrop_image_count)
+                    this.updateSlideshowImageTo(Number(event.key) - 1);
             }
         },
         getWatchedStats() {
@@ -537,24 +540,24 @@ export default {
     object-fit: cover; 
     
     width: 100vw;
-    height: calc(1200px / 16 * 9);
+    height: 675px;/* (1200px / 16 * 9) */
     z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
-    --space-left: calc((100vw - 1200px) / 2);
+    --space-left: calc((100vw - 1200px) * 0.5);
     mask-image: 
-        linear-gradient(to top, transparent 0%, white 50%),
-        linear-gradient(to left, 
+    linear-gradient(to top, transparent 0%, white 50%),
+        linear-gradient(to right, 
             white var(--space-left), 
             transparent var(--space-left), 
-            transparent calc(100vw - var(--space-left)), 
+            transparent calc(100vw - var(--space-left) - 0.5px), 
             white calc(100vw - var(--space-left))
         );
     mask-composite: intersect;
 }
 
 @media (max-width: 1200px) {
-    img.background { 
+    .backdrop-image-container.background { 
         display: none;
     }
 }
@@ -587,12 +590,17 @@ export default {
     z-index: var(--z-backdrop-arrow-buttons);
 }
 .backdrop-container .button-holder button {
+    color: var(--color-text-white);
     margin: 0;
     padding: 0;
     background-color: transparent;
     border-radius: 50%;
     position: relative; 
     z-index: var(--z-backdrop-arrow-buttons);
+    box-shadow: none;
+}
+.backdrop-container .button-holder button svg {
+    fill: var(--color-text-white);
 }
 .backdrop-container .button-holder button::after {
     content: "";
@@ -609,13 +617,13 @@ export default {
 }
 .backdrop-container button.left svg {
     transform: rotate(90deg);
-    transition: transform 0.1s var(--cubic-1);
+    transition: transform 0.2s var(--cubic-bounce-soft-out);
 }.backdrop-container button.left:hover svg {
     transform: rotate(90deg) scale(1.5);
 }
 .backdrop-container button.right svg {
     transform: rotate(-90deg);
-    transition: transform 0.1s var(--cubic-1);
+    transition: transform 0.2s var(--cubic-bounce-soft-out);
 }.backdrop-container button.right:hover svg {
     transform: rotate(-90deg) scale(1.5);
 }
@@ -650,7 +658,7 @@ export default {
     transform: translateX(-50%);
     align-items: left;
     width: 90%;
-    z-index: var(--z-backdrop-indicator);
+    z-index: var(--z-backdrop-content-inside);
 }
 
 /* Maybe try and pop the orignial to next row when it would overflow or wrap */
@@ -841,8 +849,8 @@ export default {
     box-sizing: border-box;
     height: 0px;
     overflow: hidden;
-    transition: height 0.3s var(--cubic-1),
-                margin-top 0.3s var(--cubic-1);
+    transition: height 0.5s var(--cubic-ease-slow-in-slow-out),
+                margin-top 0.5s var(--cubic-ease-slow-in-slow-out);
     margin-top: var(--spacing-md);
 }
 .season .episodes-padding {

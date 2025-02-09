@@ -26,7 +26,8 @@
                 <span v-for="(amount, index) in amounts" :key="index" 
                         :class="{
                             'summary-row-category-and-amount': index === 0,
-                            'second-row-category-and-amount': index === 1
+                            'second-row-category-and-amount': index === 1,
+                            'discount': amount < 0
                         }">
                     {{ formatAmount(amount) }}
                 </span>
@@ -44,10 +45,10 @@
     <div class="transaction-buttons-cell" ref="transactionButtonsCell">
         <div class="transaction-buttons-content" ref="transactionButtonsContent">
             <div class="control-buttons">
-                <button class="button-delete color-warning" @click.stop="deleteTransaction"><IconTrash size="18px" colorHover="white"/></button>
-                <button disabled="true" title="Coming soon!" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px" /></button>
+                <button class="button-delete color-warning" @click.stop="deleteTransaction"><IconTrash size="18px"/></button>
+                <button disabled="true" title="Coming soon!" class="button-duplicate" @click.stop="duplicateTransaction"><IconCopy size="18px"/></button>
                 <button class="button-edit" @click.stop="editTransaction"><IconEdit size="18px"/></button>
-                <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px" color="#e9ebf0" colorHover="white"/>Details</button>
+                <button class="button-details color-primary" @click.stop="showDetails"><IconDetails size="18px"/>Details</button>
             </div>
 
             <ModalWindow
@@ -150,7 +151,8 @@
             },
             formatAmount(amount) {
                 try {
-                    const numericAmount = Number(amount);
+                    let numericAmount = Number(amount);
+                    numericAmount = numericAmount < 0 ?  numericAmount * -1 : numericAmount;
                     return Number.isFinite(numericAmount)
                         ? `${numericAmount.toLocaleString('fi-FI', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`
                         : '';
@@ -319,6 +321,12 @@
 .column-amount.income span {
     color: var(--color-positive);
 } .column-amount.income span::before {
+    content: "+";
+}
+
+.column-amount.expense span.discount {
+    color: var(--color-positive) !important;
+} .column-amount.expense span.discount::before {
     content: "+";
 }
 

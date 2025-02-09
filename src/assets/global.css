@@ -24,8 +24,15 @@
     /* --width-max-page: 900px; */
     --width-modal: 400px;
 
-
+    /* Cubic beziers */
     --cubic-1: cubic-bezier(.3,.63,.4,1);
+    --cubic-whip-ease-out: cubic-bezier(.42,-0.53,.3,1.06);
+    --cubic-whip: cubic-bezier(.51,-0.71,.83,.62);
+    --cubic-swing-out: cubic-bezier(.6,-0.64,.5,1);
+    --cubic-bounce-soft-out: cubic-bezier(.22,.74,.42,1.02);
+    --cubic-hover-and-snap: cubic-bezier(.21,1.34,.8,.76);
+    --cubic-ease-slow-in-normal-out: cubic-bezier(.82,0,.5,1);
+    --cubic-ease-slow-in-slow-out: cubic-bezier(.75,0,.25,1);
 
     /* Z-indexes */
     --z-index-fullscreen: 10000002;
@@ -281,6 +288,15 @@ footer a {
     color: var(--color-text-selection);
 }
 
+/* Disable chrome click blue color */
+* {
+    -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+    outline: 2px solid var(--color-text);
+}
+
 /* - - - - GENERIC ELEMENTS - - - - */
 p {
     text-align: justify;
@@ -300,7 +316,11 @@ h2 {
 }
 
 img {
-    max-width: 100%;
+    opacity: 0;
+    transition: opacity .3s var(--cubic-ease-slow-in-slow-out);
+}
+img.loaded {
+    opacity: 1;
 }
 
 /* Default button */
@@ -444,7 +464,7 @@ input:hover, textarea:hover, select:hover {
 input:focus, textarea:focus, select:focus {
     /* outline: solid var(--color-primary-hover) 2px; */
     border-color: var(--color-border-hover);
-    outline: none;
+    outline: none !important;
     /* border-color: var(--color-border-light); */
     /* box-shadow: 0 0 8px var(--color-primary); */
 }

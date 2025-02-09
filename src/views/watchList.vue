@@ -31,7 +31,11 @@
                         :key="title.id" 
                         @click="openDetailsPageFor(title.id)"
                     >
-                        <img :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" alt="" class="thumbnail"/>
+                        <img 
+                            :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" 
+                            class="thumbnail"
+                            @load="(event) => event.target.classList.add('loaded')" 
+                        />
                         <div class="gradient"></div>
                         <div class="details">
                             <span class="title-name">{{ title.name }}</span>
