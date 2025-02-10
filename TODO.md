@@ -10,6 +10,8 @@ In here I will collect my notes about this website and list the stuff that need 
 - Cards should always display if watched neatly in a corner or in other ways.
 - swiper height changes on load. Because of dots?
 
+- FIX THE USER DATA TABLES SO THAT THE LAST UPDATED COLUMN OR WHATEVER UPDATES ONLY WHEN WATCH_COUNT CHANGES! And add to episode details.
+
 ### Features to add
 - Navigation
     - link highlight when page open to show where we are.

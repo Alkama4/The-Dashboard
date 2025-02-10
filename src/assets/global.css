@@ -810,6 +810,25 @@ input[type="radio"] {
     color: var(--color-text-lighter);
 }
 
+.loading-placeholder {
+    background: linear-gradient(
+        90deg,
+        var(--color-background-tr-active) 20%,
+        var(--color-background-tr-hover) 50%,
+        var(--color-background-tr-active) 80%
+    );
+    background-size: 200% 100%;
+    animation: highlight-wave 2s infinite linear;
+}
+@keyframes highlight-wave {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
 /* 
 LINE CLAMP SETUP
 

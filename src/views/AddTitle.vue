@@ -34,11 +34,13 @@
 
         <div class="results">
             <h2>Seach results</h2>
-            <div v-if="searchResults == null" class="card resultPlaceHolder">
+            <div v-if="searchResults == null && waitingForResult.includes('search')" class="card result-placeHolder loading-placeholder">
+            </div>
+            <div v-else-if="searchResults == null" class="card result-placeHolder">
                 The results will appear here
             </div>
             <div v-for="title in searchResults" :key="title.id" class="card result">
-                <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_path" alt=" " />
+                <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_path" alt=" " @load="(event) => event.target.classList.add('loaded')" />
                 <div class="title-texts">
                     <div class="make-space-on-mobile">
                         <h3>
@@ -141,6 +143,7 @@ export default {
         async searchForTitles() {
             if (this.titleName !== "") {
                 this.waitingForResult.push("search");
+                this.searchResults = null;
                 const response = await api.searchForTitle(this.titleCategory, this.titleName);
                 if (response) {
                     this.searchResults = response.results;
@@ -232,9 +235,9 @@ export default {
         margin: 0;
     }
 
-    .resultPlaceHolder {
+    .result-placeHolder {
         text-align: center;
-        height: 100px;
+        height: 250px;
         color: var(--color-text-light);
         font-weight: 500;
         font-size: var(--font-size-medium);
@@ -320,7 +323,7 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: justify;
-        min-height: 75px;
+        /* min-height: 75px; */
         /* Woodoo magic */
         display: -webkit-box; /* Creates a flexbox-like box for multiline text */
         line-clamp: 7;

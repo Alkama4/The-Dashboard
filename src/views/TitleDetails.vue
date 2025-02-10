@@ -98,10 +98,17 @@
             <div class="genres flex">
                 <div class="genre" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
             </div>
-
+            
+            
             <h2>Overview</h2>
             <p>{{ titleInfo.overview }}</p>
-
+            
+            <IconHeart 
+                size="40px" 
+                @click="handleFavouriteToggle" 
+                class="favourite" 
+                :class="{'is-favourite': titleInfo.favourite, loading: waitingForResult.includes('favourite')}"
+            />
             <h2>Details</h2>
             <div class="details">
                 <div>Watched status</div>
@@ -142,6 +149,7 @@
             >
                 Update title details
             </button>
+
             
             <div v-if="titleInfo.user_watch_count >= 0">
                 <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
@@ -265,6 +273,7 @@ import IconListRemove from '@/components/icons/IconListRemove.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
+import IconHeart from '@/components/icons/IconHeart.vue';
 
 export default {
     data() {
@@ -291,6 +300,7 @@ export default {
         IconListRemove,
         IconListAdd,
         IconFileImage,
+        IconHeart,
     },
     methods: {
         formatRuntime(runtime) {
@@ -384,6 +394,15 @@ export default {
                 this.queryTitleData();
             }
             this.removeItemFromWaitingArray("titleUpdate");
+        },
+        async handleFavouriteToggle() {
+            this.waitingForResult.push("favourite");
+            const response = await api.toggleTitleFavourite(this.titleInfo.title_id)
+            if (response) {
+                console.log(response);
+                this.titleInfo.favourite = !this.titleInfo.favourite;
+            }
+            this.removeItemFromWaitingArray("favourite");
         },
         async handleWatchListModification(action) {
             this.waitingForResult.push("titleWatched");
@@ -777,6 +796,17 @@ export default {
     margin: var(--spacing-md) 0;
 }
 
+.favourite {
+    cursor: pointer;
+    transition: transform 0.3s var(--cubic-bounce-soft-out);
+}
+.favourite:hover {
+    transform: scale(1.25);
+}
+
+.favourite.is-favourite {
+    color: var(--color-secondary);
+}
 
 
 

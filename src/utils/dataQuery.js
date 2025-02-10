@@ -88,14 +88,16 @@ const api = {
         params.title_category = titleCategory;
         return this.getData('/watch_list/search', params);
     },
-    async getTitleCards(titleCategory, watched, titleCount) {
+    async getTitleCards(sortBy, titleType, watched, favourite, released, started) {
         let params = {};
+        params.title_count = 12;
         params.session_key = localStorage.getItem('sessionKey');
-        if (titleCategory)
-            params.title_type = titleCategory;
-        if (titleCount)
-            params.title_count = titleCount;
-        params.watched = watched;
+        if (sortBy != null) params.sort_by = sortBy;
+        if (titleType != null) params.title_type = titleType;
+        if (watched != null) params.watched = watched;
+        if (favourite != null) params.favourite = favourite;
+        if (released != null) params.released = released;
+        if (started != null) params.started = started;
         return this.getData('/watch_list/get_title_cards', params);
     },
     async getTitleInfo(titleID) {
@@ -376,6 +378,19 @@ const api = {
             return response;
         } else {
             console.error("[saveTitleNotes] response failed:", response);
+            return null;
+        }
+    },
+    async toggleTitleFavourite(title_id) {
+        const sessionKey = localStorage.getItem('sessionKey');
+        const response = await this.postData('/watch_list/toggle_title_favourite', { 
+            session_key: sessionKey,
+            title_id: title_id,
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[toggleTitleFavourite] response failed:", response);
             return null;
         }
     },

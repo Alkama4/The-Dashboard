@@ -49,15 +49,12 @@
                                     {{ formatRuntime(title.movie_runtime) }}
                                 </template>
                             </div>
-                            <div class="watched">
-                                <template v-if="title.watch_count == 1">
-                                    Watched 
-                                </template>
-                                <template v-if="title.watch_count >= 2">
-                                    Watched {{ title.watch_count }} times
-                                </template>
-                            </div>
                         </div>
+                        <div class="watched" v-if="title.watch_count >= 1">
+                            <!-- <IconCheck size="22px"/> -->
+                            Watched
+                        </div>
+                        <div class="favourite-icon" v-if="title.is_favourite"><IconHeart/></div>
                     </swiper-slide>
 
                     <swiper-slide 
@@ -88,107 +85,165 @@
         
     </div>
 </template>
-
 <script>
-import { Swiper, SwiperSlide } from 'swiper/vue'; // Import Swiper and SwiperSlide for Vue 3
-import 'swiper/swiper-bundle.css'; // Import Swiper styles
-// import 'swiper/css/pagination';
-// import 'swiper/css/navigation';
-// import { Pagination, Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/swiper-bundle.css';
 import IconAdd from '@/components/icons/IconAdd.vue';
 import router from '@/router';
 import api from '@/utils/dataQuery.js';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
+import IconHeart from '@/components/icons/IconHeart.vue';
+// import IconCheck from '@/components/icons/IconCheck.vue';
 
 export default {
     name: 'HomePage',
     components: {
-        Swiper,      // Register Swiper component
-        SwiperSlide,  // Register SwiperSlide component
+        Swiper,
+        SwiperSlide,
         IndicatorDots,
         IconAdd,
         IconTMDB,
+        IconHeart,
+        // IconCheck,
     },
     data() {
         return {
-            // modules: [Pagination, Navigation],
             titleLists: [
+                // {
+                //     listName: "TESTING",
+                //     watched: true,
+                //     text: "testing",
+                //     titles: [],
+                //     loading: true,
+                //     activeSlide: 0,
+                //     fetchDetails: {
+                //         started: true,
+                //     }
+                // },
+                {
+                    listName: "In progress",
+                    watched: true,
+                    text: "TV-series that you have started but have not finished yet.",
+                    titles: [],
+                    loading: true,
+                    activeSlide: 0,
+                    fetchDetails: {
+                        sortBy: "last_watched",
+                        titleType: "tv",
+                        started: true,
+                        watched: false,
+                        released: true,
+                    }
+                },
                 {
                     listName: "Movies to watch",
+                    text: "Movies that are on your watch list and that you have yet not watched.",
                     titles: [],
-                    loading: true,  // Add loading state for each list
+                    loading: true,
                     activeSlide: 0,
+                    fetchDetails: {
+                        sortBy: "release_date",
+                        titleType: "movie",
+                        watched: false,
+                        released: true,
+                    }
                 },
                 {
                     listName: "TV-series to watch",
+                    text: "TV-series that you are have on you watch list but haven't started to watch yet.",
                     titles: [],
-                    loading: true,  // Add loading state for each list
+                    loading: true,
                     activeSlide: 0,
+                    fetchDetails: {
+                        sortBy: "release_date",
+                        titleType: "tv",
+                        started: false,
+                        watched: false,
+                        released: true,
+                    }
                 },
                 {
-                    listName: "Rewatch these popular titles",
+                    listName: "Upcoming titles",
+                    watched: true,
+                    text: "Titles to be released.",
                     titles: [],
-                    loading: true,  // Add loading state for each list
+                    loading: true,
                     activeSlide: 0,
+                    fetchDetails: {
+                        sortBy: "release_date",
+                        released: false,
+                    }
+                },
+                {
+                    listName: "Your favourites",
+                    watched: true,
+                    text: "Your favourite movies and TV-series.",
+                    titles: [],
+                    loading: true,
+                    activeSlide: 0,
+                    fetchDetails: {
+                        favourite: true,
+                    }
+                },
+                {
+                    listName: "Recently watched",
+                    watched: true,
+                    text: "The titles that you have watched and interacted with recently.",
+                    titles: [],
+                    loading: true,
+                    activeSlide: 0,
+                    fetchDetails: {
+                        sortBy: "last_watched",
+                        watched: true,
+                    }
                 },
             ],
         };
     },
     methods: {
         openDetailsPageFor(titleID) {
-            // console.debug(titleID);
             router.push(`/watchList/title/${titleID}`);
         },
         formatRuntime(runtime) {
             const hours = Math.floor(runtime / 60);
             const minutes = runtime % 60;
-            return `${hours}hr ${minutes}min`;
+            return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
         },
-        // Simplified method to fetch and set title lists
-        async fetchTitleList({ name, titleType = null, watched = null, count = null, text = "" } = {}) {
-            const titleList = this.titleLists.find(list => list.listName === name);
+        async fetchTitleLists() {
             try {
-                titleList.loading = true;  // Set loading state to true initially
-                
-                // Fetch titles based on the provided criteria
-                const titleData = await api.getTitleCards(titleType, watched, count);
-                console.debug(titleData);
-                
-                // Update titles if available
-                if (titleData && titleData.titles) {
-                    titleList.titles = titleData.titles;
-                }
-                titleList.text = text;  // Optionally set a description or text
+                await Promise.all(this.titleLists.map(async (list) => {
+                    list.loading = true;
+                    try {
+                        const titleData = await api.getTitleCards(
+                            list.fetchDetails.sortBy,
+                            list.fetchDetails.titleType,
+                            list.fetchDetails.watched,
+                            list.fetchDetails.favourite,
+                            list.fetchDetails.released,
+                            list.fetchDetails.started,
+                        );
+                        if (titleData && titleData.titles) {
+                            list.titles = titleData.titles;
+                            console.log(list.titles);
+                        }
+                    } catch (error) {
+                        console.error(`Error fetching data for ${list.listName}:`, error);
+                    } finally {
+                        list.loading = false;
+                    }
+                }));
             } catch (error) {
-                console.error(`Error fetching data for ${name}:`, error);
-            } finally {
-                titleList.loading = false;  // Set loading to false when data is fetched
+                console.error("Error fetching title lists:", error);
             }
         }
     },
     async mounted() {
-        // Use the fetchTitleList method to load data for each category
-        await this.fetchTitleList({
-            name: "Movies to watch", 
-            titleType: "Movie", 
-            watched: false,
-            text: "Movies that are on your watch list and that you have yet not watched."
-        });
-        await this.fetchTitleList({ 
-            name: "TV-series to watch", 
-            titleType: "TV", 
-            watched: false,
-            text: "TV-series that you are either in prcess of watching or haven't yet started to."
-        });
-        await this.fetchTitleList({ 
-            name: "Rewatch these popular titles", 
-            watched: true,
-            text: "The most popular titles that you already have watched."
-        }); 
+        await this.fetchTitleLists();
     }
 };
 </script>
+
 
 
 <style scoped>
@@ -292,10 +347,54 @@ export default {
     gap: var(--spacing-xs);
 }
 
+.swiper-slide .favourite-icon {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    z-index: 10;
+    color: var(--color-secondary);
+}
+.swiper-slide .favourite-icon::after {
+    content: "";
+    height: 40px;
+    width: 40px;
+    background-color: rgba(0, 0, 0, 0.7);
+    position: absolute;
+    filter: blur(10px);
+    top: 0;
+    z-index: -1;
+    border-radius: 50%;
+}
+.swiper-slide .favourite-icon::after {
+    transform: translate(20%, -20%);
+    right: 0;
+}
 
 .swiper-slide .watched {
-    color: var(--color-positive);
+    position: absolute;
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    z-index: 10;
+
+    display: flex;
+    flex-direction: row;
+    border-radius: var(--border-radius-small);
+    padding: 1px;
+    padding-bottom: 2px;
+    padding-inline: 8px;
+
+    color: black;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    background-color: var(--color-positive);
+    /* mix-blend-mode: screen; */
 }
+/* .swiper-slide .watched::after {
+    transform: translate(-20%, -20%);
+    left: 0;
+} */
+
+
 
 .season-after::after {
     content: " seasons, ";
@@ -320,22 +419,10 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
+    
+    cursor: default;
     transform: none !important;
 }
-
-.loading-placeholder {
-    background: linear-gradient(
-        90deg,
-        var(--color-background-tr-active) 20%,
-        var(--color-background-tr-hover) 50%,
-        var(--color-background-tr-active) 80%
-    );
-    background-size: 200% 100%;
-    animation: highlight-wave 2s infinite linear;
-}
-
-
 
 @media (max-width: 600px) {
     .swiper-slide .details,
@@ -381,17 +468,6 @@ export default {
     }
     .swiper-slide:hover {
         transform: scale(1);
-    }
-}
-
-
-
-@keyframes highlight-wave {
-    0% {
-        background-position: 200% 0;
-    }
-    100% {
-        background-position: -200% 0;
     }
 }
 </style>
