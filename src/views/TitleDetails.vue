@@ -56,7 +56,7 @@
 
             <div class="mark-watched combined-buttons">
                 <button 
-                    v-if="titleInfo.user_watch_count <= 0"
+                    v-if="titleInfo.user_title_watch_count <= 0"
                     class="color-primary left-button" 
                     @click="handleTitleWatchClick('title', 'watched')"
                     :disabled="waitingForResult.includes('titleWatched')"
@@ -75,7 +75,7 @@
                 </button>
 
                 <button 
-                    v-if="titleInfo.user_watch_count <= -1"
+                    v-if="titleInfo.user_title_watch_count <= -1"
                     class="color-primary right-button" 
                     @click="handleWatchListModification('add')"
                     :disabled="waitingForResult.includes('titleWatched')"
@@ -92,6 +92,12 @@
                 >
                     <IconListRemove/>
                 </button>
+                <IconHeart 
+                    size="40px" 
+                    @click="handleFavouriteToggle" 
+                    class="favourite" 
+                    :class="{'is-favourite': titleInfo.user_title_favourite, loading: waitingForResult.includes('favourite')}"
+                />
             </div>
 
             <h2>Genres</h2>
@@ -99,24 +105,27 @@
                 <div class="genre" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
             </div>
             
-            
             <h2>Overview</h2>
             <p>{{ titleInfo.overview }}</p>
             
-            <IconHeart 
-                size="40px" 
-                @click="handleFavouriteToggle" 
-                class="favourite" 
-                :class="{'is-favourite': titleInfo.favourite, loading: waitingForResult.includes('favourite')}"
-            />
+            <div class="flex-row">
+                <iframe
+                    v-if="titleInfo.trailer_key != null"
+                    :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    referrerpolicy="strict-origin-when-cross-origin" 
+                    allowfullscreen
+                ></iframe>
+            </div>
             <h2>Details</h2>
             <div class="details">
                 <div>Watched status</div>
                 <div class="value">
-                    <template v-if="titleInfo.user_watch_count == 1">
+                    <template v-if="titleInfo.user_title_watch_count >= 1">
                         Watched
                     </template>
-                    <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_watch_count == 0">
+                    <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_title_watch_count == 0">
                         {{ getWatchedStats() }}
                     </template>
                     <template v-else>
@@ -125,6 +134,15 @@
                 </div>
                 <div>TMDB average score</div>
                 <div class="value"><IconTMDB style="margin-right: 4px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
+                <div>Age rating <InfoTooltip text="By default age ratings are Finnish, but if the Finnish one wasn't found the US one will be used as a backup. The US ratings are marked with (US)." position="right"/></div>
+                <div class="value" 
+                    :title="titleInfo.age_rating === 'G' ? 'General Audience (S)' : 
+                            titleInfo.age_rating === 'PG' ? 'Parental Guidance Suggested (K-7)' : 
+                            titleInfo.age_rating === 'PG-13' ? 'Parents Strongly Cautioned, Suitable for 13+ (K-12)' : 
+                            titleInfo.age_rating === 'R' ? 'Restricted, for Adults Only (K-18)' : 
+                            titleInfo.age_rating === 'NC-17' ? 'No One 17 and Under Admitted (K-18)' : ''">
+                    {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
+                </div>
                 <div>Release date</div>
                 <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
             </div>
@@ -132,6 +150,8 @@
             <div class="details">
                 <div>Title type</div>
                 <div class="value">{{ titleInfo.type }}</div>
+                <div>Original language</div>
+                <div class="value">{{ titleInfo.original_language }}</div>
                 <div>IMDB id</div>
                 <div><a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`">{{ titleInfo.imdb_id }}</a></div>
                 <div>TMDB id</div>
@@ -149,9 +169,8 @@
             >
                 Update title details
             </button>
-
             
-            <div v-if="titleInfo.user_watch_count >= 0">
+            <div v-if="titleInfo.user_title_watch_count >= 0">
                 <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
                 <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
@@ -351,7 +370,7 @@ export default {
             if (response) {
                 console.debug(response)
                 // Update titles state on page
-                this.titleInfo.user_watch_count = response.updated_data.watch_count;
+                this.titleInfo.user_title_watch_count = response.updated_data.watch_count;
                 // Update each episodes state on page by mathcing the episode_id
                 if (response.updated_data.episodes) {
                     console.debug(response.updated_data.episodes)
@@ -390,7 +409,7 @@ export default {
             const response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type)
             if (response) {
                 // console.log(response);
-                notify(`${this.titleInfo.name} info updated! Missing images are still being queried.`, "success")
+                notify(`"${this.titleInfo.name}" info updated! Missing images are still being queried.`, "success")
                 this.queryTitleData();
             }
             this.removeItemFromWaitingArray("titleUpdate");
@@ -400,7 +419,7 @@ export default {
             const response = await api.toggleTitleFavourite(this.titleInfo.title_id)
             if (response) {
                 console.log(response);
-                this.titleInfo.favourite = !this.titleInfo.favourite;
+                this.titleInfo.user_title_favourite = !this.titleInfo.user_title_favourite;
             }
             this.removeItemFromWaitingArray("favourite");
         },
@@ -799,15 +818,23 @@ export default {
 .favourite {
     cursor: pointer;
     transition: transform 0.3s var(--cubic-bounce-soft-out);
+    color: var(--color-text-light);
+    margin-inline: var(--spacing-md);
 }
 .favourite:hover {
-    transform: scale(1.25);
+    color: var(--color-text);
+    transform: scale(1.2);
 }
 
 .favourite.is-favourite {
     color: var(--color-secondary);
 }
 
+iframe {
+    aspect-ratio: 16/9;
+    width: 100%;
+    max-width: 720px;
+}
 
 
 /* - - - - - SEASON - - - - -  */

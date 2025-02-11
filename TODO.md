@@ -5,12 +5,15 @@ In here I will collect my notes about this website and list the stuff that need 
 - Backups kind of dull
     - Give it some life and readability
 - Think of a better way to implement the modal. Way too manual and inconvenient. Should work more like the native popup where it stops progress and returns a value.
-- The title details and metadata side by side when there's space
-- PROPABLY SHOULD STILL USE THE MAX AMOUNT OF QUERIES AT ONCE SINCE ITS QUITE STUPID TO SEND TENS OF NOT HUNDREADS OF QUERIES AT ONCE AND WAIT FOR THEM ALL!
-- Cards should always display if watched neatly in a corner or in other ways.
-- swiper height changes on load. Because of dots?
 
+- The title details and metadata side by side when there's space along with the trailer.
+- Move the title out of the backdrop on mobile and make dots more prominant by moving a bit up like sm amount.
+- PROPABLY SHOULD STILL USE THE MAX AMOUNT OF QUERIES AT ONCE SINCE ITS QUITE STUPID TO SEND TENS OF NOT HUNDREADS OF QUERIES AT ONCE AND WAIT FOR THEM ALL!
 - FIX THE USER DATA TABLES SO THAT THE LAST UPDATED COLUMN OR WHATEVER UPDATES ONLY WHEN WATCH_COUNT CHANGES! And add to episode details.
+- Replace images button.
+- Buttons and controls layout workout
+- Add favourite and watched in watch list?
+- TMDB icon to season and episode rating
 
 ### Features to add
 - Navigation
@@ -47,6 +50,11 @@ In here I will collect my notes about this website and list the stuff that need 
     - Boxicon
 - Tab navigation now that you know how easy it is. Fix button links by making global.css button-link style.
 - Season and episode images larger. More bold. Small images never look as good.
+- Title info rating map 
+- Add title
+    - Link to tmdb page for deeper checking to ensure its the correct one. 
+    - Maybe have it be a link icon or text link because of:
+    - after adding make the header link to local title page.
 
 ### Known issues
 - InfoTooltips positioning is stupid and doesn't detect window borders
