@@ -267,6 +267,8 @@ export default {
     overflow: hidden;
     cursor: pointer;
     user-select: none;
+    box-shadow: var(--shadow-card);
+    /* box-shadow: 0 0 5px black; */
     transform: scale(0.95);
     transition: transform 0.15s var(--cubic-1);
 }
@@ -306,7 +308,7 @@ export default {
     
     text-align: end;
     font-weight: 500;
-    color: var(--color-text-light);
+    color: var(--color-text-white-light);
     font-size: var(--font-size-small);
     z-index: 3;
 }

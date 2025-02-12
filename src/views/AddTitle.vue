@@ -43,22 +43,28 @@
                 <img :src="'https://image.tmdb.org/t/p/w300' + title.poster_path" alt=" " @load="(event) => event.target.classList.add('loaded')" />
                 <div class="title-texts">
                     <div class="make-space-on-mobile">
-                        <h3>
-                            <!-- For Movies -->
-                            <span v-if="title.title" :title="title.title" class="name">
-                                {{ title.title }}
-                            </span>
-                            <span v-if="title.original_title != title.title" class="original-name" :title="title.original_title">
-                                ({{ title.original_title }})
-                            </span>
+                        <h3 class="icon-align">
+                            <!-- Title Link -->
+                            <a class="no-decoration" :href="titleLink(title)" style="color: var(--color-text)">
+                                <span v-if="title.title" :title="title.title" class="name">
+                                    {{ title.title }}
+                                </span>
+                                <span v-if="title.original_title && title.original_title !== title.title" class="original-name" :title="title.original_title">
+                                    ({{ title.original_title }})
+                                </span>
 
-                            <!-- For shows -->
-                            <span v-if="title.name" :title="title.name" class="name">
-                                {{ title.name }}
-                            </span>
-                            <span v-if="title.original_name != title.name" class="original-name" :title="title.original_name">
-                                ({{ title.original_name }})
-                            </span>
+                                <span v-if="title.name" :title="title.name" class="name">
+                                    {{ title.name }}
+                                </span>
+                                <span v-if="title.original_name && title.original_name !== title.name" class="original-name" :title="title.original_name">
+                                    ({{ title.original_name }})
+                                </span>
+                            </a>
+
+                            <!-- External TMDB Link Icon (only if title_id exists) -->
+                            <a v-if="title.title_id" class="no-decoration icon-align external-link-icon" :href="tmdbLink(title)" target="_blank" rel="noopener noreferrer">
+                                <IconLinkExternal size="18px"/>
+                            </a>
                         </h3>
                         <div class="flex details">
                             <div class="flex score" :title="(title.vote_count + ' votes')">
@@ -112,6 +118,7 @@
   
 <script>
 import IconAdd from '@/components/icons/IconAdd.vue';
+import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
 import ModalWindow from '@/components/ModalWindow.vue';
@@ -122,14 +129,16 @@ import { notify } from '@/utils/notification';
 export default {
     components: {
         SliderToggle,
+        ModalWindow,
         IconTMDB,
         IconAdd,
         IconTrash,
-        ModalWindow,
+        IconLinkExternal,
     },
     data() {
         return {
             titleCategory: "Movie",
+            resultTitleCategory: null,
             titleName: "",
             searchResults: null,
             waitingForResult: [],
@@ -143,6 +152,7 @@ export default {
         async searchForTitles() {
             if (this.titleName !== "") {
                 this.waitingForResult.push("search");
+                this.resultTitleCategory = this.titleCategory.toLowerCase();
                 this.searchResults = null;
                 const response = await api.searchForTitle(this.titleCategory, this.titleName);
                 if (response) {
@@ -218,8 +228,17 @@ export default {
         },
         removeItemFromWaitingArray(item) {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
+        },
+        titleLink(title) {
+            if (title.title_id) {
+                return `/watchList/title/${title.title_id}`;
+            }
+            return `https://www.themoviedb.org/${this.resultTitleCategory}/${title.id}`;
+        },
+        tmdbLink(title) {
+            return `https://www.themoviedb.org/${this.resultTitleCategory}/${title.id}`;
         }
-    }
+    },
 };
 </script>
 
@@ -277,6 +296,15 @@ export default {
         max-height: 296.4px;
         box-sizing: border-box;
     }
+
+    .result .external-link-icon {
+        color: var(--color-text-light);
+        margin-left: var(--spacing-sm);
+        transition: color 0.1s ease-out;
+    } 
+    .result .external-link-icon:hover {
+        color: var(--color-text);
+    }
     
     .result h3 {
         margin: 0;
@@ -288,6 +316,9 @@ export default {
         overflow: hidden;
         /* Adjust the dots color with this */
         color: var(--color-text-lighter);
+    }
+    .result a:hover {
+        text-decoration: underline;
     }
     .result .name {
         color: var(--color-text);

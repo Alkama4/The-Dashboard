@@ -58,7 +58,7 @@
                 <!-- Favourite buttons -->
                 <!-- class="icon-button favourite"  -->
                 <button 
-                    v-if="titleInfo.user_title_favourite == false"
+                    v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
                     class="color-primary left-button" 
                     @click="handleFavouriteToggle"
                     :disabled="waitingForResult.includes('favourite')"
@@ -73,7 +73,7 @@
                     :disabled="waitingForResult.includes('favourite')"
                     :class="{loading: waitingForResult.includes('favourite')}"
                 >
-                    <IconHeart/>
+                    <IconHeart style="color: var(--color-secondary);"/>
                 </button>
 
                 <!-- Watched buttons -->
@@ -132,7 +132,10 @@
                         <IconRefresh
                             size="28px"
                             @click="handleTitleUpdate"
-                            :class="{loading: waitingForResult.includes('titleUpdate')}"
+                            :class="{
+                                'loading': waitingForResult.includes('titleUpdate'),
+                                'spin-refresh-icon': waitingForResult.includes('titleUpdate')
+                            }"
                             class="icon-button"
                         />
                     </h2>
@@ -461,6 +464,9 @@ export default {
             if (response) {
                 console.log(response);
                 this.titleInfo.user_title_favourite = !this.titleInfo.user_title_favourite;
+                if (this.titleInfo.user_title_watch_count <= -1) {
+                    this.titleInfo.user_title_watch_count = 0;
+                }
             }
             this.removeItemFromWaitingArray("favourite");
         },
@@ -809,18 +815,15 @@ export default {
     grid-template-columns: auto 1fr;
     gap: var(--spacing-lg);
 }
-
 .trailer-container {
     margin-left: auto;
 }
-
 iframe {
     aspect-ratio: 16/9;
     width: 480px;
     max-width: 100%;
     margin-inline: auto;
 }
-
 @media(max-width: 900px) {
     .trailer-details-flex {
         grid-template-columns: none;
@@ -835,6 +838,20 @@ iframe {
         margin-left: initial;
     }
 }
+
+.title-details .spin-refresh-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
 
 .title-details h2{
     margin-top: var(--spacing-lg);

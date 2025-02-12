@@ -55,6 +55,11 @@ In here I will collect my notes about this website and list the stuff that need 
     - Link to tmdb page for deeper checking to ensure its the correct one. 
     - Maybe have it be a link icon or text link because of:
     - after adding make the header link to local title page.
+- BLOB cache?
+    - What if I need updated info?
+    - Only case would be if there are new titles. 
+    - How long expiry?
+        - Month? Day? Max count? 50?
 
 ### Known issues
 - InfoTooltips positioning is stupid and doesn't detect window borders

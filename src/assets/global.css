@@ -58,6 +58,7 @@
     /* Always one color */
     --color-text-white: #e9ebf0;
     --color-text-white-hover: white;
+    --color-text-white-light: #aaa;
     --color-text-black: #292929;
     --color-text-black-hover: black;
 
@@ -98,8 +99,8 @@
     --color-warning-hover: #d1c648;
 
     /* Text */
-    --color-text: #292929;
-    --color-text-bold: #000000;
+    --color-text: var(--color-text-black);
+    --color-text-bold: var(--color-text-black-hover);
     --color-text-light: #666666;
     --color-text-lighter: #969696;
     --color-text-hidden: #c4c4c4;
@@ -113,13 +114,13 @@
     --color-border-light: hsla(0, 0%, 0%, 0.35);
 
     /* Backgrounds */
-    --color-background: hsl(0, 0%, 96%);
+    --color-background: hsl(0, 0%, 93.5%);
     --color-background-backdrop: rgba(0, 0, 0, 0.3);
     --color-background-backdrop-mobile-menu: rgba(255, 255, 255, 0.3);
-    --color-background-top-bar: hsl(0, 0%, 96%);
+    --color-background-top-bar: var(--color-background);
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
     --color-background-modal: hsl(0, 0%, 96%);
-    --color-background-card: hsl(0, 0%, 100%);
+    --color-background-card: hsl(0, 0%, 96%);
     --color-background-card-section: hsl(0, 0%, 90%);
     --color-background-input: hsl(0, 0%, 100%);
     --color-background-input-light: hsl(0, 0%, 98%);
@@ -129,8 +130,8 @@
     
     /* Button colors */
     --color-button-general: hsl(0, 0%, 100%);
-    --color-button-general-hover: hsl(0, 0%, 94%);
-    --color-button-general-active: hsl(0, 0%, 92%);
+    --color-button-general-hover: hsl(0, 0%, 100%);
+    --color-button-general-active: hsl(0, 0%, 100%);
 
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
@@ -187,9 +188,9 @@
     --color-warning-hover: #d1c648;
         
     /* Text */
-    --color-text: #e9ebf0;
-    --color-text-bold: #fff;
-    --color-text-light: #aaa;
+    --color-text: var(--color-text-white);
+    --color-text-bold: var(--color-text-white-hover);
+    --color-text-light: var(--color-text-white-light);
     --color-text-lighter: #888;
     --color-text-hidden: #555;
     --color-text-placeholder: #666;
@@ -385,6 +386,7 @@ button.color-primary:hover svg {
 }
 button.color-primary:active {
     background-color: var(--color-primary-active);
+    color: var(--color-text-white-hover);
 }
 
 /* Button secondary */
@@ -408,6 +410,7 @@ button.color-warning:hover svg {
 }
 button.color-warning:active {
     background-color: var(--color-button-delete-active);
+    color: var(--color-text-white-hover);
 }
 
 button.color-hidden-primary:hover {
@@ -419,6 +422,7 @@ button.color-hidden-primary:hover svg {
 }
 button.color-hidden-primary:active {
     background-color: var(--color-primary-active);
+    color: var(--color-text-white-hover);
 }
 
 /* Button simple */
@@ -817,7 +821,7 @@ input[type="radio"] {
 }
 
 .icon-align {
-    display: flex;
+    display: inline-flex !important;
     flex-direction: row;
     align-items: center;
     /* gap: var(--spacing-xs); */
@@ -834,7 +838,7 @@ input[type="radio"] {
 }
 .icon-button:hover {
     color: var(--color-text);
-    transform: scale(1.15);
+    /* transform: scale(1.15); */
 }
 
 .loading {
