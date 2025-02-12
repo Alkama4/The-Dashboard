@@ -1,8 +1,6 @@
 <template>
 	<div>
 		<div class="greeting-area content-width-medium">
-			<div class="background"></div>
-
 			<div class="text-area">
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span>
@@ -233,28 +231,27 @@ import { notify } from '@/utils/notification';
 	align-items: center;
 	/* background-color: red; */
 }
-.greeting-area .background {
-	position: absolute;
-	/* background: linear-gradient(var(--color-background), var(--color-primary), var(--color-background)); */
-	/* background-color: var(--color-background-card); */
-	top: 60px;
-	left: 0;
-	right: 0;
-	height: 60vh;
-	z-index: -10;
+
+.greeting-area .text-area {
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-top: 15vh;
 }
-.greeting-area h1 {
+
+.greeting-area .text-area h1 {
 	margin: 0;
 	/* Row gap? to large */
 	line-height: 48px;
 	font-size: 48px;
 }
-.greeting-area .header-sub-text {
+.greeting-area .text-area .header-sub-text {
 	display: inline-block;
 	color: var(--color-text-light);
 	margin-top: var(--spacing-md);
 }
-.greeting-area button {
+.greeting-area .text-area button {
 	margin-top: var(--spacing-md);
 	margin-inline: 0;
 }

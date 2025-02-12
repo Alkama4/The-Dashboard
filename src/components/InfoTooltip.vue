@@ -1,10 +1,14 @@
 <template>
     <span class="tooltip-container">
         <IconInfo size="20px" class="info-icon" @mouseover="showTooltip" @mouseleave="hideTooltip"/>
-        <div v-if="isTooltipVisible" class="tooltip" :class="position">
-            {{ this.text }}
-        </div>
-
+        <!-- v-html to make pagebreaks work -->
+        <div 
+            v-if="isTooltipVisible" 
+            class="tooltip" 
+            :class="position" 
+            v-html="this.text"
+            :style="{'max-width': maxWidth}"
+        ></div>
     </span>
 </template>
 
@@ -26,6 +30,10 @@ export default {
             type: String,
             default: "left"
         },
+        maxWidth: {
+            type: String,
+            default: "25ch",
+        }
     },
     methods: {
         showTooltip() {
@@ -55,7 +63,7 @@ export default {
     position: absolute;
     bottom: 100%;
     width: max-content;
-    max-width: 25ch;
+    /* max-width: 25ch; */
     padding: 8px;
     background: var(--color-background-card);
     border: 1px solid var(--color-border);

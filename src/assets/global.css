@@ -802,12 +802,44 @@ input[type="radio"] {
     margin: 0;
     width: 100%;
 }
+.combined-buttons .middle-button {
+    border-radius: 0;
+    padding-inline: 0;
+    margin: 0;
+    width: 100%;
+}
 
 .text-light {
     color: var(--color-text-light);
 }
 .text-lighter {
     color: var(--color-text-lighter);
+}
+
+.icon-align {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* gap: var(--spacing-xs); */
+}
+
+.icon-button {
+    /* The default setup is higher priority so we have to use important on some */
+    cursor: pointer !important;
+    color: var(--color-text-light);
+    transform: scale(1);
+    margin-inline: var(--spacing-sm);
+    transition: transform 0.1s var(--cubic-bounce-soft-out),
+                color 0.1s var(--cubic-bounce-soft-out) !important;
+}
+.icon-button:hover {
+    color: var(--color-text);
+    transform: scale(1.15);
+}
+
+.loading {
+    /* pointer-events: none !important; */
+    cursor: wait !important;
 }
 
 .loading-placeholder {

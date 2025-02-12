@@ -55,9 +55,31 @@
         <div class="content-width-medium title-details">
 
             <div class="mark-watched combined-buttons">
+                <!-- Favourite buttons -->
+                <!-- class="icon-button favourite"  -->
+                <button 
+                    v-if="titleInfo.user_title_favourite == false"
+                    class="color-primary left-button" 
+                    @click="handleFavouriteToggle"
+                    :disabled="waitingForResult.includes('favourite')"
+                    :class="{loading: waitingForResult.includes('favourite')}"
+                >
+                    <IconHeart/>
+                </button>
+                <button 
+                    v-else
+                    class="color-warning left-button" 
+                    @click="handleFavouriteToggle" 
+                    :disabled="waitingForResult.includes('favourite')"
+                    :class="{loading: waitingForResult.includes('favourite')}"
+                >
+                    <IconHeart/>
+                </button>
+
+                <!-- Watched buttons -->
                 <button 
                     v-if="titleInfo.user_title_watch_count <= 0"
-                    class="color-primary left-button" 
+                    class="color-primary middle-button" 
                     @click="handleTitleWatchClick('title', 'watched')"
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -66,7 +88,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning left-button" 
+                    class="color-warning middle-button" 
                     @click="handleTitleWatchClick('title', 'unwatched')" 
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -74,6 +96,7 @@
                     Reset title watch status 
                 </button>
 
+                <!-- Watch list buttons -->
                 <button 
                     v-if="titleInfo.user_title_watch_count <= -1"
                     class="color-primary right-button" 
@@ -92,12 +115,6 @@
                 >
                     <IconListRemove/>
                 </button>
-                <IconHeart 
-                    size="40px" 
-                    @click="handleFavouriteToggle" 
-                    class="favourite" 
-                    :class="{'is-favourite': titleInfo.user_title_favourite, loading: waitingForResult.includes('favourite')}"
-                />
             </div>
 
             <h2>Genres</h2>
@@ -107,69 +124,88 @@
             
             <h2>Overview</h2>
             <p>{{ titleInfo.overview }}</p>
-            
-            <div class="flex-row">
-                <iframe
-                    v-if="titleInfo.trailer_key != null"
-                    :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    referrerpolicy="strict-origin-when-cross-origin" 
-                    allowfullscreen
-                ></iframe>
-            </div>
-            <h2>Details</h2>
-            <div class="details">
-                <div>Watched status</div>
-                <div class="value">
-                    <template v-if="titleInfo.user_title_watch_count >= 1">
-                        Watched
-                    </template>
-                    <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_title_watch_count == 0">
-                        {{ getWatchedStats() }}
-                    </template>
-                    <template v-else>
-                        Unwatched
-                    </template>
-                </div>
-                <div>TMDB average score</div>
-                <div class="value"><IconTMDB style="margin-right: 4px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
-                <div>Age rating <InfoTooltip text="By default age ratings are Finnish, but if the Finnish one wasn't found the US one will be used as a backup. The US ratings are marked with (US)." position="right"/></div>
-                <div class="value" 
-                    :title="titleInfo.age_rating === 'G' ? 'General Audience (S)' : 
-                            titleInfo.age_rating === 'PG' ? 'Parental Guidance Suggested (K-7)' : 
-                            titleInfo.age_rating === 'PG-13' ? 'Parents Strongly Cautioned, Suitable for 13+ (K-12)' : 
-                            titleInfo.age_rating === 'R' ? 'Restricted, for Adults Only (K-18)' : 
-                            titleInfo.age_rating === 'NC-17' ? 'No One 17 and Under Admitted (K-18)' : ''">
-                    {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
-                </div>
-                <div>Release date</div>
-                <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
-            </div>
-            <h3>Metadata</h3>
-            <div class="details">
-                <div>Title type</div>
-                <div class="value">{{ titleInfo.type }}</div>
-                <div>Original language</div>
-                <div class="value">{{ titleInfo.original_language }}</div>
-                <div>IMDB id</div>
-                <div><a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`">{{ titleInfo.imdb_id }}</a></div>
-                <div>TMDB id</div>
-                <div><a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`">{{ titleInfo.tmdb_id }}</a></div>
-                <div>Title Last Updated <InfoTooltip text="When a title is added to the watch list for the first time, its details are cached on the server. The data is only updated when manually refreshed using the refresh button." position="right"/></div>
-                <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
-            </div>
 
-            <button 
-                @click="handleTitleUpdate"
-                :disabled="waitingForResult.includes('titleUpdate')"
-                :class="{loading: waitingForResult.includes('titleUpdate')}"
-                class="update-title-button"
-                title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information."
-            >
-                Update title details
-            </button>
-            
+            <div class="trailer-details-flex">
+                <div class="details-container">
+                    <h2 class="icon-align" title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information.">
+                        Details 
+                        <IconRefresh
+                            size="28px"
+                            @click="handleTitleUpdate"
+                            :class="{loading: waitingForResult.includes('titleUpdate')}"
+                            class="icon-button"
+                        />
+                    </h2>
+                    <div class="details-grid">
+                        <div>Watched status</div>
+                        <div class="value">
+                            <template v-if="titleInfo.user_title_watch_count >= 1">Watched</template>
+                            <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_title_watch_count == 0">{{ getWatchedStats() }}</template>
+                            <template v-else>Unwatched</template>
+                        </div>
+
+                        <div>TMDB average score</div>
+                        <div class="value"><IconTMDB style="margin-left: -3px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
+
+                        <div>
+                            Age rating 
+                            <InfoTooltip 
+                                text="
+                                    By default age ratings are Finnish and US ratings are used as a backup:<br>
+                                    &bullet; G (S) General Audience<br>
+                                    &bullet; PG (K-7) Parental Guidance Suggested<br>
+                                    &bullet; PG-13 (K-12) Parents Strongly Cautioned, Suitable for 13+<br>
+                                    &bullet; R (K-18) Restricted, for Adults Only<br>
+                                    &bullet; NC-17 (K-18) No One 17 and Under Admitted"
+                                position="right"
+                                max-width="60vw"
+                            >
+                            </InfoTooltip>
+                        </div>
+                        <div class="value" 
+                            :title="titleInfo.age_rating === 'G' ? 'General Audience (S)' : 
+                                    titleInfo.age_rating === 'PG' ? 'Parental Guidance Suggested (K-7)' : 
+                                    titleInfo.age_rating === 'PG-13' ? 'Parents Strongly Cautioned, Suitable for 13+ (K-12)' : 
+                                    titleInfo.age_rating === 'R' ? 'Restricted, for Adults Only (K-18)' : 
+                                    titleInfo.age_rating === 'NC-17' ? 'No One 17 and Under Admitted (K-18)' : ''">
+                            {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
+                        </div>
+
+                        <div>Release date</div>
+                        <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
+                    </div>
+                    <h3>Metadata</h3>
+                    <div class="details-grid">
+                        <div>Title type</div>
+                        <div class="value">{{ titleInfo.type }}</div>
+
+                        <div>Original language</div>
+                        <div class="value">{{ titleInfo.original_language }}</div>
+
+                        <div>TMDB id</div>
+                        <div class="value">{{ titleInfo.tmdb_id }}<a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
+                        
+                        <div>IMDB id</div>
+                        <div class="value">{{ titleInfo.imdb_id }}<a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
+
+                        <div>Title Last Updated <InfoTooltip text="When a title is added to the watch list for the first time, its details are cached on the server. The data is only updated when manually refreshed using the refresh button." position="right"/></div>
+                        <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
+                    </div>
+                </div>
+
+                <div v-if="titleInfo.trailer_key != null" class="trailer-container">
+                    <h2>Trailer</h2>
+                    <div class="iframe-container">
+                        <iframe
+                            :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`" 
+                            frameborder="0" 
+                            referrerpolicy="no-referrer" 
+                            allowfullscreen
+                        ></iframe>
+                    </div>
+                </div>
+            </div>
+                
             <div v-if="titleInfo.user_title_watch_count >= 0">
                 <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
                 <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
@@ -182,6 +218,7 @@
                     Save notes
                 </button>
             </div>
+
         </div>
 
         <!-- SEASONS -->
@@ -293,6 +330,8 @@ import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
+import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
+import IconRefresh from '@/components/icons/IconRefresh.vue';
 
 export default {
     data() {
@@ -320,6 +359,8 @@ export default {
         IconListAdd,
         IconFileImage,
         IconHeart,
+        IconLinkExternal,
+        IconRefresh,
     },
     methods: {
         formatRuntime(runtime) {
@@ -610,7 +651,7 @@ export default {
 
 .content-inside .indicator {
     position: absolute;
-    bottom: 0;
+    bottom: var(--spacing-sm);
     left: 50%;
     transform: translateX(-50%);
     z-index: var(--z-backdrop-indicator);
@@ -718,6 +759,7 @@ export default {
 
 
 /* - - - - - VALUES AND DETAILS - - - - -  */
+
 .title-details {
     position: relative;
 }
@@ -762,6 +804,38 @@ export default {
     }
 }
 
+.trailer-details-flex {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-lg);
+}
+
+.trailer-container {
+    margin-left: auto;
+}
+
+iframe {
+    aspect-ratio: 16/9;
+    width: 480px;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
+@media(max-width: 900px) {
+    .trailer-details-flex {
+        grid-template-columns: none;
+    }
+    .iframe-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+    }
+    .trailer-container {
+        margin-left: initial;
+    }
+}
+
 .title-details h2{
     margin-top: var(--spacing-lg);
     margin-bottom: var(--spacing-sm);
@@ -770,17 +844,18 @@ export default {
     margin-top: var(--spacing-sm);
     margin-bottom: 0;
 }
-.title-details .details {
+.title-details .details-grid {
     color: var(--color-text-light);
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: var(--spacing-md);
 }
-.title-details .details .value {
+.title-details .details-grid .value {
     color: var(--color-text);
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: var(--spacing-xs);
 }
 
 .title-details ul {
@@ -815,26 +890,11 @@ export default {
     margin: var(--spacing-md) 0;
 }
 
-.favourite {
-    cursor: pointer;
-    transition: transform 0.3s var(--cubic-bounce-soft-out);
-    color: var(--color-text-light);
-    margin-inline: var(--spacing-md);
-}
-.favourite:hover {
-    color: var(--color-text);
-    transform: scale(1.2);
-}
-
 .favourite.is-favourite {
     color: var(--color-secondary);
 }
 
-iframe {
-    aspect-ratio: 16/9;
-    width: 100%;
-    max-width: 720px;
-}
+
 
 
 /* - - - - - SEASON - - - - -  */
@@ -1005,11 +1065,10 @@ iframe {
     }
 }
 
-
-
-.loading {
+/* .loading {
     cursor: wait;
-}
+    pointer-events: none;
+} */
 
 </style>
   

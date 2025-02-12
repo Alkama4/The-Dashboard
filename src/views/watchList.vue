@@ -187,9 +187,9 @@ export default {
                     }
                 },
                 {
-                    listName: "Recently watched",
+                    listName: "Recently updated",
                     watched: true,
-                    text: "The titles that you have watched and interacted with recently.",
+                    text: "The titles that you have e.g. watched or edited notes on recently.",
                     titles: [],
                     loading: true,
                     activeSlide: 0,
