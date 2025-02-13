@@ -246,7 +246,8 @@ import {
     generateTooltipMultiValue, 
     generateTooltipSingleValue, 
     initializeAndSetupChart,
-    toggleFullscreenChart
+    toggleFullscreenChart,
+    commonChartValues
 } from '@/utils/chartTools'
 
 // import { notify } from '@/utils/notification';
@@ -263,12 +264,7 @@ export default {
     },
     data() {
         return {
-            isLoaded: {
-                chart1: false,
-                chart2: false,
-                chart3: false,
-                chart4: false,
-            },
+            isLoaded: {},
             fullscreenChart: "",
             pageValues: {
                 generalStats: {},
@@ -290,43 +286,6 @@ export default {
         },
         toggleFullscreenChart(chartId) {
             toggleFullscreenChart(this, chartId);
-        },
-        commonChartValues() {
-            return {
-                color: [
-                    getCssVar("color-primary"), 
-                    getCssVar("color-secondary"), 
-                    getCssVar("color-tertiary"),
-                    getCssVar("color-quaternary"),
-                    getCssVar("color-quinary"),
-                    getCssVar("color-jokumikalie"),
-                    getCssVar("color-senary"),
-                    getCssVar("color-septenary"),
-                    getCssVar("color-octonary"),
-                    getCssVar("color-nonary"),
-                    getCssVar("color-denary"),
-                    getCssVar("color-undecenary"),
-                ],
-                legend: {
-                    type: 'scroll',
-                    show: true,
-                    bottom: 0,
-                    textStyle: {
-                        color: getCssVar('color-text'),
-                        fontWeight: 500,
-                    },
-                    inactiveColor: getCssVar('color-text-hidden'),
-                    pageIconColor: getCssVar('color-text'),
-                    pageIconInactiveColor: getCssVar('color-text-hidden'),
-                    pageTextStyle: {
-                        color: getCssVar('color-text'),
-                    },
-                },
-                textStyle: {
-                    fontFamily: 'Poppins',
-                    color: getCssVar('color-text-lighter'),
-                },
-            }
         }
     },
     async mounted() {
@@ -353,7 +312,7 @@ export default {
 
 
                     const pie1Options = () => ({
-                        textStyle: this.commonChartValues().textStyle,
+                        textStyle: commonChartValues().textStyle,
                         title: {
                             text: 'Spendings This Month by Category',
                             textStyle: {
@@ -363,8 +322,8 @@ export default {
                             },
                             x: 'center',
                         },
-                        legend: this.commonChartValues().legend,
-                        color: this.commonChartValues().color,
+                        legend: commonChartValues().legend,
+                        color: commonChartValues().color,
                         tooltip: { 
                             trigger: 'item',
                             backgroundColor: getCssVar('color-background-card'),
@@ -401,7 +360,7 @@ export default {
                     }));
 
                     const pie2Options = () => ({
-                        textStyle: this.commonChartValues().textStyle,
+                        textStyle: commonChartValues().textStyle,
                         title: {
                             text: 'Monthly Average Spendings by Category',
                             textStyle: {
@@ -411,8 +370,8 @@ export default {
                             },
                             x: 'center',
                         },
-                        legend: this.commonChartValues().legend,
-                        color: this.commonChartValues().color,
+                        legend: commonChartValues().legend,
+                        color: commonChartValues().color,
                         tooltip: { 
                             trigger: 'item',
                             backgroundColor: getCssVar('color-background-card'),
@@ -445,7 +404,7 @@ export default {
                     const runningSums = response.balanceOverTime.map(item => item.runningBalance);
                     
                     const chart1Options = () => ({
-                        textStyle: this.commonChartValues().textStyle,
+                        textStyle: commonChartValues().textStyle,
                         title: {
                             text: 'Balance over time',
                             textStyle: {
@@ -459,7 +418,7 @@ export default {
                             backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
                             borderColor: getCssVar("color-border"),
-                            formatter: params => generateTooltipMultiValue(params, 'full')
+                            formatter: params => generateTooltipMultiValue(params, 'full', convert.toEur)
                         },
                         grid: {
                             left: 80,
@@ -514,7 +473,7 @@ export default {
                     const netTotals = response.monthlySums.map(item => item.net_total);
 
                     const chart2Options = () => ({
-                        textStyle: this.commonChartValues().textStyle,
+                        textStyle: commonChartValues().textStyle,
                         title: {
                             text: 'Sum by month',
                             textStyle: {
@@ -528,7 +487,7 @@ export default {
                             backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
                             borderColor: getCssVar("color-border"),
-                            formatter: params => generateTooltipMultiValue(params, 'month', true),
+                            formatter: params => generateTooltipMultiValue(params, 'month', convert.toEur, true),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
@@ -612,7 +571,7 @@ export default {
                     }));
 
                     const chart3Options = () => ({
-                        textStyle: this.commonChartValues().textStyle,
+                        textStyle: commonChartValues().textStyle,
                         title: {
                             text: 'Expense categories by month',
                             textStyle: {
@@ -620,14 +579,14 @@ export default {
                                 fontSize: 24,
                             }
                         },
-                        legend: this.commonChartValues().legend,
-                        color: this.commonChartValues().color,
+                        legend: commonChartValues().legend,
+                        color: commonChartValues().color,
                         tooltip: {
                             trigger: 'axis',
                             backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
                             borderColor: getCssVar("color-border"),
-                            formatter: params => generateTooltipMultiValue(params, 'month', true),
+                            formatter: params => generateTooltipMultiValue(params, 'month', convert.toEur, true),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
@@ -690,7 +649,7 @@ export default {
                     }));
 
                     const chart4Options = () => ({
-                        textStyle: this.commonChartValues().textStyle,
+                        textStyle: commonChartValues().textStyle,
                         title: {
                             text: 'Income categories by month',
                             textStyle: {
@@ -698,14 +657,14 @@ export default {
                                 fontSize: 24,
                             }
                         },
-                        legend: this.commonChartValues().legend,
-                        color: this.commonChartValues().color,
+                        legend: commonChartValues().legend,
+                        color: commonChartValues().color,
                         tooltip: {
                             trigger: 'axis',
                             backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
                             borderColor: getCssVar("color-border"),
-                            formatter: params => generateTooltipMultiValue(params, 'month', true),
+                            formatter: params => generateTooltipMultiValue(params, 'month', convert.toEur, true),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
@@ -809,12 +768,6 @@ export default {
     left: 0;
     right: 0;
     z-index: var(--z-index-fullscreen);
-}
-.chart {
-    /* height: calc(100vw * 0.5 + 168px); */
-    height: 100%;
-    width: 100%;
-    position: relative;
 }
 .fs-button {
     position: absolute;

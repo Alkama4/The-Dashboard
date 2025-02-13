@@ -106,6 +106,11 @@ const api = {
         params.title_id = titleID;
         return this.getData('/watch_list/get_title_info', params);
     },
+    async getServerResourceLogs(timeframe) {
+        let params = {};
+        params.timeframe = timeframe;
+        return this.getData('/get_server_resource_logs', params);
+    },
 
 
     // - - - - - - POST request to the API - - - - - - 

@@ -14,6 +14,9 @@ In here I will collect my notes about this website and list the stuff that need 
 - Buttons and controls layout workout
 - Add favourite and watched in watch list?
 - TMDB icon to season and episode rating
+- Home screen combine the backups, charts and drives to a nice big thing
+    - Convert some of the chart to driving gauges with single value or other charts. 
+    - Also could combine some of them?
 
 ### Features to add
 - Navigation
@@ -91,7 +94,7 @@ In here I will collect my notes about this website and list the stuff that need 
     - Be carefule when working with this
 - User episodes in mysql might not get deleted on title deletion
 - The api calls aren't cancelled when changing page. Research if they can be cancelled on unmount
-
+- Home screen charts don't react to esc
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions

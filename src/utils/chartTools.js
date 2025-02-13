@@ -50,7 +50,7 @@ function setupResizeObserver(thisComponent, containerRef, chart) {
     thisComponent.resizeObservers.push(resizeObserver);
 }
 
-export function generateTooltipMultiValue(params, formatType, showSumRow) {
+export function generateTooltipMultiValue(params, yAxisFormatToDateType, xAxisFormatter, showSumRow) {
     let rows = '';
     let sum = 0;
     for (let i = 0; i < params.length; i++) {
@@ -66,7 +66,7 @@ export function generateTooltipMultiValue(params, formatType, showSumRow) {
                         <div class="series-name">${params[i].seriesName}</div>
                     </div>
                 </td>
-                <td class="value">${convert.toEur(params[i].data)}</td>
+                <td class="value">${xAxisFormatter(params[i].data)}</td>
             </tr>
         `;
         sum += parseFloat(params[i].data);
@@ -82,7 +82,7 @@ export function generateTooltipMultiValue(params, formatType, showSumRow) {
                 </td>
                 <td class="value">
                     <div>
-                        ${convert.toEur(sum)}
+                        ${xAxisFormatter(sum)}
                     </div>
                 </td>
             </tr>
@@ -90,7 +90,7 @@ export function generateTooltipMultiValue(params, formatType, showSumRow) {
     }
     return `
         <div class="chart-tooltip">
-            <div class="header">${convert.toFiDate(params[0].axisValue, formatType)}</div>
+            <div class="header">${convert.toFiDate(params[0].axisValue, yAxisFormatToDateType)}</div>
             <table>${rows}</table>
         </div>
     `;
@@ -121,5 +121,43 @@ export function toggleFullscreenChart(thisComponent, chartId = "") {
     } else {
         thisComponent.fullscreenChart = ''; // Clear the fullscreen chart
         document.documentElement.classList.remove('no-scroll');
+    }
+}
+
+export function commonChartValues() {
+    return {
+        color: [
+            getCssVar("color-primary"), 
+            getCssVar("color-secondary"), 
+            getCssVar("color-tertiary"),
+            getCssVar("color-quaternary"),
+            getCssVar("color-quinary"),
+            getCssVar("color-jokumikalie"),
+            getCssVar("color-senary"),
+            getCssVar("color-septenary"),
+            getCssVar("color-octonary"),
+            getCssVar("color-nonary"),
+            getCssVar("color-denary"),
+            getCssVar("color-undecenary"),
+        ],
+        legend: {
+            type: 'scroll',
+            show: true,
+            bottom: 0,
+            textStyle: {
+                color: getCssVar('color-text'),
+                fontWeight: 500,
+            },
+            inactiveColor: getCssVar('color-text-hidden'),
+            pageIconColor: getCssVar('color-text'),
+            pageIconInactiveColor: getCssVar('color-text-hidden'),
+            pageTextStyle: {
+                color: getCssVar('color-text'),
+            },
+        },
+        textStyle: {
+            fontFamily: 'Poppins',
+            color: getCssVar('color-text-lighter'),
+        },
     }
 }

@@ -846,6 +846,28 @@ input[type="radio"] {
     cursor: wait !important;
 }
 
+.chart {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.fullscreen {
+    max-height: none !important;
+    max-width: none !important;
+    height: auto !important;
+    width: auto !important;
+    aspect-ratio: initial !important;
+    position: fixed !important;
+    margin: 0;
+    border-radius: 0;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-fullscreen);
+}
+
 .loading-placeholder {
     background: linear-gradient(
         90deg,

@@ -87,6 +87,117 @@
 			</div>
 		</div>
 
+		<div class="content-width-large">
+			<h2>Server resource usages</h2>
+			<div class="card server-resources content-width-large">
+				<!-- Chart 1 - CPU temp -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
+				>
+					<div class="chart" ref="chartContainer1"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart1')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart1'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 2 - RAM useage -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart2' }"
+				>
+					<div class="chart" ref="chartContainer2"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart2')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart2'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 3 - RAM useage -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart3' }"
+				>
+					<div class="chart" ref="chartContainer3"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart3')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart3'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 4 - RAM useage -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart4' }"
+				>
+					<div class="chart" ref="chartContainer4"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart4')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart4'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 5 - RAM useage -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart5' }"
+				>
+					<div class="chart" ref="chartContainer5"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart5')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart5'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 6 - RAM useage -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart6' }"
+				>
+					<div class="chart" ref="chartContainer6"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart6')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart6'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 7 - RAM useage -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart7' }"
+				>
+					<div class="chart" ref="chartContainer7"></div>
+					<button 
+						class="button-simple fs-button" 
+						@click="toggleFullscreenChart('chart7')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart7'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+			</div>
+		</div>
+
 		<div class="flex-column">
 			<h2>Server Drives</h2>
 			<div class="flex-row">
@@ -126,102 +237,565 @@
 </template>
 
 <script>
-import api from '@/utils/dataQuery';
+// Icons
 import IconHDD from '@/components/icons/IconHDD.vue';
-// import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconBackup from '@/components/icons/IconBackup.vue';
 import IconBackupDown from '@/components/icons/IconBackupDown.vue';
-import { notify } from '@/utils/notification';
-// import InfoTooltip from '@/components/InfoTooltip.vue';
+import IconExpand from '@/components/icons/IconExpand.vue';
+import IconCollapse from '@/components/icons/IconCollapse.vue';
 
-	export default {
-		name: 'HomePage',
-		components: {
-			IconHDD,
-			// IconChevronDown,
-			IconBackup,
-			IconBackupDown
-			// InfoTooltip,
+// Other
+import api from '@/utils/dataQuery';
+import { convert, getCssVar } from '@/utils/mytools'
+import { notify } from '@/utils/notification';
+import { 
+    generateTooltipMultiValue, 
+    // generateTooltipSingleValue, 
+    initializeAndSetupChart,
+    toggleFullscreenChart,
+	commonChartValues,
+} from '@/utils/chartTools'
+
+// ECharts imports
+import { use } from 'echarts/core'
+import { LineChart } from 'echarts/charts'
+import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
+import { CanvasRenderer } from 'echarts/renderers'
+// import { SVGRenderer } from 'echarts/renderers'
+
+use([TooltipComponent, GridComponent, LineChart, CanvasRenderer, TitleComponent, LegendComponent]);
+
+export default {
+	name: 'HomePage',
+	components: {
+		IconHDD,
+		IconBackup,
+		IconBackupDown,
+		IconExpand,
+		IconCollapse,
+	},
+	data() {
+		return {
+			greeting: this.getGreeting(),
+			backups: [],
+            isLoaded: {},
+            fullscreenChart: "",
+			serverStats: {
+				storage: []
+			}
+		};
+	},
+	methods: {
+		getGreeting() {
+			const hour = new Date().getHours();
+			if (hour < 5) {
+				return ["Good night!", "It's late, get some rest and recharge for tomorrow."];
+			} else if (hour < 12) {
+				return ["Good morning!", "A fresh start to the day. Let's make the most of it."];
+			} else if (hour < 18) {
+				return ["Good afternoon!", "The day is moving along. Hope it's going well for you."];
+			} else {
+				return ["Good evening!", "The day's winding down. Time to relax and prepare for tomorrow."];
+			}
 		},
-		data() {
-			return {
-				greeting: this.getGreeting(),
-				backups: [],
-				serverStats: {
-					storage: []
-				}
-			};
+		formatBytes(value) {
+			return convert.toBytes(value)
 		},
-		methods: {
-			getGreeting() {
-				const hour = new Date().getHours();
-				if (hour < 5) {
-					return ["Good night!", "It's late, get some rest and recharge for tomorrow."];
-				} else if (hour < 12) {
-					return ["Good morning!", "A fresh start to the day. Let's make the most of it."];
-				} else if (hour < 18) {
-					return ["Good afternoon!", "The day is moving along. Hope it's going well for you."];
-				} else {
-					return ["Good evening!", "The day's winding down. Time to relax and prepare for tomorrow."];
-				}
-			},
-			formatBytes(bytes, decimal = 2) {
-				const sizes = ['t', 'Kt', 'Mt', 'Gt', 'Tt'];
-				if (bytes === 0) return '0 Bytes';
-				const i = Math.floor(Math.log10(bytes) / 3);
-				return (bytes / Math.pow(1000, i)).toFixed(decimal) + ' ' + sizes[i];
-			},
-			copyToClipboard(textToCopy, what) {
-				try {
-					if (navigator.clipboard && navigator.clipboard.writeText) {
-						navigator.clipboard.writeText(textToCopy)
-							.then(() => notify(`${what} copied!`, "info", 2000))
-							.catch(err => {
-								notify("Cannot copy text to clipboard.", "error");
-								console.error("[copyToClipboard]", err);
-							});
-					} else {
-						const textarea = document.createElement("textarea");
-						textarea.value = textToCopy;
-						textarea.style.position = "fixed"; // Avoid scrolling to the bottom
-						document.body.appendChild(textarea);
-						textarea.focus();
-						textarea.select();
-						try {
-							document.execCommand("copy");
-							notify(`${what} copied!`, "info", 2000);
-						} catch (err) {
+		toggleFullscreenChart(chartId) {
+            toggleFullscreenChart(this, chartId);
+        },
+		copyToClipboard(textToCopy, what) {
+			try {
+				if (navigator.clipboard && navigator.clipboard.writeText) {
+					navigator.clipboard.writeText(textToCopy)
+						.then(() => notify(`${what} copied!`, "info", 2000))
+						.catch(err => {
 							notify("Cannot copy text to clipboard.", "error");
-							console.error("[copyToClipboard fallback]", err);
-						}
-						document.body.removeChild(textarea);
+							console.error("[copyToClipboard]", err);
+						});
+				} else {
+					const textarea = document.createElement("textarea");
+					textarea.value = textToCopy;
+					textarea.style.position = "fixed"; // Avoid scrolling to the bottom
+					document.body.appendChild(textarea);
+					textarea.focus();
+					textarea.select();
+					try {
+						document.execCommand("copy");
+						notify(`${what} copied!`, "info", 2000);
+					} catch (err) {
+						notify("Cannot copy text to clipboard.", "error");
+						console.error("[copyToClipboard fallback]", err);
 					}
-				} catch (error) {
-					notify("Cannot copy text to clipboard.", "error");
-					console.error("[copyToClipboard]", error);
+					document.body.removeChild(textarea);
 				}
+			} catch (error) {
+				notify("Cannot copy text to clipboard.", "error");
+				console.error("[copyToClipboard]", error);
 			}
-		},
-		async mounted() {
-			const backupResponse = await api.getBackups();
-			if (backupResponse) {
-				this.backups = backupResponse.backups;
-			}
-			// console.log(this.backups);
-			
-			// Server drives
-			const drivesResponse = await api.getServerDrivesInfo();
-			if (drivesResponse) {
-				for (const drive of Object.entries(drivesResponse)) {
-					this.serverStats.storage.push(drive[1]);
-				}
-			}
-			// console.log(this.serverStats.storage);
 		}
-	};
+	},
+	async mounted() {
+		const backupResponse = await api.getBackups();
+		if (backupResponse) {
+			this.backups = backupResponse.backups;
+		}
+		// console.log(this.backups);
+		
+		// Server drives
+		const drivesResponse = await api.getServerDrivesInfo();
+		if (drivesResponse) {
+			for (const drive of Object.entries(drivesResponse)) {
+				this.serverStats.storage.push(drive[1]);
+			}
+		}
+		// console.log(this.serverStats.storage);
+
+		const resourceLogsResponse = await api.getServerResourceLogs("24h");
+		if (resourceLogsResponse) {
+			console.log(resourceLogsResponse && resourceLogsResponse.data)
+			const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
+			const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
+			const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
+			const chart3YaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
+			const chart4YaxisValues = resourceLogsResponse.data.map(log => log.disk_usage);
+			const chart5YaxisValues = resourceLogsResponse.data.map(log => log.system_load);
+			const chart6YaxisValues = resourceLogsResponse.data.map((log, index, array) => {
+				if (index === 0) return 0;	// The first one can't have a differnce
+				const difference = log.network_sent_bytes - array[index - 1].network_sent_bytes;	// Calculate
+				return difference >= 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
+			});
+			const chart7YaxisValues = resourceLogsResponse.data.map((log, index, array) => {
+				if (index === 0) return 0;	// The first one can't have a differnce
+				const difference = log.network_recv_bytes - array[index - 1].network_recv_bytes;	// Calculate
+				return difference >= 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
+			});
+
+			// Chart 1 - CPU temperature
+			const chart1Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'CPU temperature',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-secondary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toCelcius, false)
+				},
+				grid: {
+					left: 40,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					}
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Temp (°C)',  // Y-akselin nimi
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiNumber(value)
+					}
+				},
+				series: [
+					{
+						name: 'Temperature',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						data: chart1YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart1", "chartContainer1", chart1Options);
+
+			// Chart 2 - RAM useage
+			const chart2Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'RAM useage',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-tertiary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
+				},
+				grid: {
+					left: 40,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Useage (%)',  // Y-akselin nimi
+					max: 100,
+					min: 0,
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiNumber(value)
+					}
+				},
+				series: [
+					{
+						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chart2YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart2", "chartContainer2", chart2Options);
+
+			// Chart 3 - CPU useage
+			const chart3Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'CPU useage',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-primary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
+				},
+				grid: {
+					left: 40,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Useage (%)',  // Y-akselin nimi
+					max: 100,
+					min: 0,
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiNumber(value)
+					}
+				},
+				series: [
+					{
+						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chart3YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart3", "chartContainer3", chart3Options);
+
+			// Chart 4 - Disk useage
+			const chart4Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Disk useage',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-quaternary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
+				},
+				grid: {
+					left: 40,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Useage (%)',  // Y-akselin nimi
+					max: 100,
+					min: 0,
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiNumber(value)
+					}
+				},
+				series: [
+					{
+						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chart4YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart4", "chartContainer4", chart4Options);
+
+			// Chart 5 - System load
+			const chart5Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'System load',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-quinary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
+				},
+				grid: {
+					left: 40,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Useage (%)',  // Y-akselin nimi
+					max: 100,
+					min: 0,
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiNumber(value)
+					}
+				},
+				series: [
+					{
+						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chart5YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart5", "chartContainer5", chart5Options);
+
+			// Chart 6 - Network upload
+			const chart6Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Network upload',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-jokumikalie')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toBytes, false)
+				},
+				grid: {
+					left: 48,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Data (t)',  // Y-akselin nimi
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toBytes(value)
+					}
+				},
+				series: [
+					{
+						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chart6YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart6", "chartContainer6", chart6Options);
+
+			// Chart 7 - Network download
+			const chart7Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Network download',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-senary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toBytes, false)
+				},
+				grid: {
+					left: 48,
+					right: 8,
+					top: 80,
+					bottom: 48,
+				},
+				xAxis: {
+					type: 'category',
+					data: resourceLogsTimeStamps,
+					axisLabel: {
+						rotate: 45,
+						formatter: value => convert.toFiDate(value, 'time'),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Data (t)',  // Y-akselin nimi
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toBytes(value)
+					}
+				},
+				series: [
+					{
+						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chart7YaxisValues,
+						smooth: true,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart7", "chartContainer7", chart7Options);
+		}
+	}
+};
 </script>
 
 <style scoped>
+
+.server-resources {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.chartContainer {
+	position: relative;
+	padding: var(--spacing-sm);
+	width: 50%;
+	box-sizing: border-box;
+	height: 300px;
+	background-color: var(--color-background-card);
+}
+.chartContainer.fullscreen {
+	padding: var(--spacing-md);
+}
+@media (max-width: 900px) {
+	.chartContainer {
+		width: 100%;
+	}
+}
+
+.fs-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1; /* Otherwise under chart */
+    color: var(--color-text-light);
+    background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
+    border-radius: 0;
+    padding: var(--spacing-md);
+    padding-left: 32px !important;
+}
+
 .greeting-area {
 	height: 60vh;
 	display: flex;
