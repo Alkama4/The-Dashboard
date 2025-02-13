@@ -23,28 +23,35 @@ export default {
     props: {
         dotIndex: {
             type: Number,
-            required: true
+            required: false
         },
         dotCount: {
             type: Number,
             required: true
+        },
+        swiperMode: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {
         moveSwiperTo(index) {
-            // Emit the new dot index to the parent
-            this.$emit("dotSelected", index);
-
             // Use swiper controls to move to the specific slide
-            if (this.swiper) {
+            if (this.swiperMode && this.swiper) {
                 this.swiper.slideTo(index);
+            } else {
+                // Emit the new dot index to the parent
+                this.$emit("dotSelected", index);
             }
+
         },
     },
     mounted() {
-        const swiper = useSwiper();
-        if (swiper) {
-            this.swiper = swiper;
+        if (this.swiperMode) {
+            const swiper = useSwiper();
+            if (swiper) {
+                this.swiper = swiper;
+            }
         }
     },
     watch: {

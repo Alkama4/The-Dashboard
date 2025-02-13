@@ -97,7 +97,7 @@
 				>
 					<div class="chart" ref="chartContainer1"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart1')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart1'"/>
@@ -105,14 +105,14 @@
 					</button>  
 				</div>
 
-				<!-- Chart 2 - RAM useage -->
+				<!-- Chart 2 - RAM Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart2' }"
 				>
 					<div class="chart" ref="chartContainer2"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart2')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart2'"/>
@@ -120,14 +120,14 @@
 					</button>  
 				</div>
 
-				<!-- Chart 3 - RAM useage -->
+				<!-- Chart 3 - RAM Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart3' }"
 				>
 					<div class="chart" ref="chartContainer3"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart3')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart3'"/>
@@ -135,14 +135,14 @@
 					</button>  
 				</div>
 
-				<!-- Chart 4 - RAM useage -->
+				<!-- Chart 4 - RAM Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart4' }"
 				>
 					<div class="chart" ref="chartContainer4"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart4')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart4'"/>
@@ -150,14 +150,14 @@
 					</button>  
 				</div>
 
-				<!-- Chart 5 - RAM useage -->
+				<!-- Chart 5 - RAM Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart5' }"
 				>
 					<div class="chart" ref="chartContainer5"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart5')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart5'"/>
@@ -165,14 +165,14 @@
 					</button>  
 				</div>
 
-				<!-- Chart 6 - RAM useage -->
+				<!-- Chart 6 - RAM Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart6' }"
 				>
 					<div class="chart" ref="chartContainer6"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart6')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart6'"/>
@@ -180,14 +180,14 @@
 					</button>  
 				</div>
 
-				<!-- Chart 7 - RAM useage -->
+				<!-- Chart 7 - RAM Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart7' }"
 				>
 					<div class="chart" ref="chartContainer7"></div>
 					<button 
-						class="button-simple fs-button" 
+						class="button-simple fullscreen-button" 
 						@click="toggleFullscreenChart('chart7')"
 					>
 						<IconCollapse v-if="fullscreenChart === 'chart7'"/>
@@ -250,10 +250,10 @@ import { convert, getCssVar } from '@/utils/mytools'
 import { notify } from '@/utils/notification';
 import { 
     generateTooltipMultiValue, 
-    // generateTooltipSingleValue, 
     initializeAndSetupChart,
     toggleFullscreenChart,
 	commonChartValues,
+	setupFullscreenEscExit,
 } from '@/utils/chartTools'
 
 // ECharts imports
@@ -417,6 +417,20 @@ export default {
 					{
 						name: 'Temperature',    // Tooltipissa näkyvä nimi
 						type: 'line',
+						areaStyle: {
+							color: {
+								type: 'linear',
+								x: 0,
+								y: 0,
+								x2: 0,
+								y2: 1,
+								colorStops: [{
+									offset: 0, color: getCssVar("color-secondary")
+								}, {
+									offset: 1, color: 'transparent'
+								}]
+							}
+						},
 						data: chart1YaxisValues,
 						smooth: true,
 					},
@@ -424,11 +438,11 @@ export default {
 			});
 			initializeAndSetupChart(this, "chart1", "chartContainer1", chart1Options);
 
-			// Chart 2 - RAM useage
+			// Chart 2 - RAM Usage
 			const chart2Options = () => ({
 				textStyle: commonChartValues().textStyle,
 				title: {
-					text: 'RAM useage',
+					text: 'RAM Usage',
 					textStyle: {
 						color: getCssVar('color-text'),
 						fontSize: 24,
@@ -461,7 +475,7 @@ export default {
 				},
 				yAxis: { 
 					type: 'value',      
-					name: 'Useage (%)',  // Y-akselin nimi
+					name: 'Usage (%)',  // Y-akselin nimi
 					max: 100,
 					min: 0,
 					axisLabel: {        // Y-akselin arvojen muotoilu
@@ -470,7 +484,7 @@ export default {
 				},
 				series: [
 					{
-						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						name: 'RAM Usage',    // Tooltipissa näkyvä nimi
 						type: 'line',
 						areaStyle: {},
 						data: chart2YaxisValues,
@@ -480,11 +494,11 @@ export default {
 			});
 			initializeAndSetupChart(this, "chart2", "chartContainer2", chart2Options);
 
-			// Chart 3 - CPU useage
+			// Chart 3 - CPU Usage
 			const chart3Options = () => ({
 				textStyle: commonChartValues().textStyle,
 				title: {
-					text: 'CPU useage',
+					text: 'CPU Usage',
 					textStyle: {
 						color: getCssVar('color-text'),
 						fontSize: 24,
@@ -517,7 +531,7 @@ export default {
 				},
 				yAxis: { 
 					type: 'value',      
-					name: 'Useage (%)',  // Y-akselin nimi
+					name: 'Usage (%)',  // Y-akselin nimi
 					max: 100,
 					min: 0,
 					axisLabel: {        // Y-akselin arvojen muotoilu
@@ -526,7 +540,7 @@ export default {
 				},
 				series: [
 					{
-						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						name: 'CPU Usage',    // Tooltipissa näkyvä nimi
 						type: 'line',
 						areaStyle: {},
 						data: chart3YaxisValues,
@@ -536,11 +550,11 @@ export default {
 			});
 			initializeAndSetupChart(this, "chart3", "chartContainer3", chart3Options);
 
-			// Chart 4 - Disk useage
+			// Chart 4 - Disk Usage
 			const chart4Options = () => ({
 				textStyle: commonChartValues().textStyle,
 				title: {
-					text: 'Disk useage',
+					text: 'Disk Usage',
 					textStyle: {
 						color: getCssVar('color-text'),
 						fontSize: 24,
@@ -573,7 +587,7 @@ export default {
 				},
 				yAxis: { 
 					type: 'value',      
-					name: 'Useage (%)',  // Y-akselin nimi
+					name: 'Usage (%)',  // Y-akselin nimi
 					max: 100,
 					min: 0,
 					axisLabel: {        // Y-akselin arvojen muotoilu
@@ -582,7 +596,7 @@ export default {
 				},
 				series: [
 					{
-						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						name: 'Disk Usage',    // Tooltipissa näkyvä nimi
 						type: 'line',
 						areaStyle: {},
 						data: chart4YaxisValues,
@@ -629,7 +643,7 @@ export default {
 				},
 				yAxis: { 
 					type: 'value',      
-					name: 'Useage (%)',  // Y-akselin nimi
+					name: 'Usage (%)',  // Y-akselin nimi
 					max: 100,
 					min: 0,
 					axisLabel: {        // Y-akselin arvojen muotoilu
@@ -638,7 +652,7 @@ export default {
 				},
 				series: [
 					{
-						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						name: 'System load',    // Tooltipissa näkyvä nimi
 						type: 'line',
 						areaStyle: {},
 						data: chart5YaxisValues,
@@ -755,6 +769,9 @@ export default {
 				],
 			});
 			initializeAndSetupChart(this, "chart7", "chartContainer7", chart7Options);
+
+			// After charts are set setup the esc listener
+			setupFullscreenEscExit(this)
 		}
 	}
 };
@@ -784,7 +801,7 @@ export default {
 	}
 }
 
-.fs-button {
+.fullscreen-button {
     position: absolute;
     right: 0;
     top: 0;
@@ -792,8 +809,11 @@ export default {
     color: var(--color-text-light);
     background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
     border-radius: 0;
+    padding: var(--spacing-sm);
+	margin: 0;
+}
+.fullscreen .fullscreen-button {
     padding: var(--spacing-md);
-    padding-left: 32px !important;
 }
 
 .greeting-area {

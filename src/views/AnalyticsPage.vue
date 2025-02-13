@@ -247,7 +247,8 @@ import {
     generateTooltipSingleValue, 
     initializeAndSetupChart,
     toggleFullscreenChart,
-    commonChartValues
+    commonChartValues,
+    setupFullscreenEscExit
 } from '@/utils/chartTools'
 
 // import { notify } from '@/utils/notification';
@@ -424,7 +425,7 @@ export default {
                             left: 80,
                             right: 8,
                             top: 88,
-                            bottom: 80,
+                            bottom: 42,
                         },
                         xAxis: {
                             type: 'category',
@@ -500,7 +501,7 @@ export default {
                             left: 80,
                             right: 8,
                             top: 88,
-                            bottom: 80,
+                            bottom: 56,
                         },
                         xAxis: {
                             type: 'category',
@@ -712,14 +713,7 @@ export default {
         // Finally run the setups
         await Promise.all(fetchAndSetupCharts);
 
-        // Define the event listener function
-        const exitFullscreenListener = (event) => {
-            if (event.key === 'Escape') {
-                this.toggleFullscreenChart()
-            }
-        };
-        document.addEventListener('keydown', exitFullscreenListener);   // Setup the listener
-        this.exitFullscreenListener = exitFullscreenListener;           // Store the listener function in a property or variable if needed later
+        setupFullscreenEscExit(this);
     },
     beforeUnmount() {
         // Get rid of the class in case the user changes page with the chart active
@@ -770,14 +764,16 @@ export default {
     z-index: var(--z-index-fullscreen);
 }
 .fs-button {
+    border-radius: 0;
+    border-top-right-radius: var(--border-radius-medium);
     position: absolute;
     right: 0;
     top: 0;
     z-index: 1; /* Otherwise under chart */
     color: var(--color-text-light);
     background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
-    border-radius: 0;
     padding: var(--spacing-md);
+    margin: 0;
     padding-left: 32px !important;
 }
 .pieChartHolder .fs-button {

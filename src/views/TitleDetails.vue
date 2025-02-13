@@ -200,9 +200,8 @@
                     <h2>Trailer</h2>
                     <div class="iframe-container">
                         <iframe
-                            :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`" 
-                            frameborder="0" 
-                            referrerpolicy="no-referrer" 
+                            :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`"
+                            frameborder="0"
                             allowfullscreen
                         ></iframe>
                     </div>
@@ -242,8 +241,13 @@
                     <div class="text">
                         <h2>{{ season.season_name }}</h2>
                         <div class="details">
-                            {{ season.episode_count }} episodes &bullet; {{ season.vote_average }} <br>
-                            {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                            <div class="icon-align">
+                                <span>{{ season.episode_count }} episodes &bullet;</span>
+                                <span class="icon-align"><IconTMDB/> {{ season.vote_average }} </span>
+                            </div>
+                            <div>
+                                {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                            </div>
                         </div>
                         <p :title="season.overview">{{ season.overview }}</p>
                     </div>
@@ -288,8 +292,13 @@
                             <div class="text">
                                 <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
                                 <div class="details" :title="`${episode.vote_count} votes`">
-                                    {{ formatRuntime(episode.runtime) }} &bullet; {{ episode.vote_average }} <br>
-                                    {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                                    <span class="icon-align">
+                                        <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
+                                        <span class="icon-align"><IconTMDB/>{{ episode.vote_average }}</span>
+                                    </span>
+                                    <div>
+                                        {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                                    </div>
                                 </div>
                                 <p :title="episode.overview">{{ episode.overview }}</p>
                                 <button 
@@ -322,16 +331,19 @@
 
   
 <script>
+// Basic
 import api from '@/utils/dataQuery';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
+import IndicatorDots from '@/components/IndicatorDots.vue';
+
+// Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconFileImage from '@/components/icons/IconFileImage.vue';
-import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';

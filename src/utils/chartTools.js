@@ -1,7 +1,7 @@
 import { convert, getCssVar } from '@/utils/mytools'
 import { init } from 'echarts/core'
 
-        
+// All in one solution for setting up charts. 
 export async function initializeAndSetupChart(thisComponent, name, chartContainerName, getChartOptions) {
     if (typeof getChartOptions !== 'function') {
         console.error("[initializeAndSetupChart] Invalid 'getChartOptions': Expected a function");
@@ -115,14 +115,37 @@ export function generateTooltipSingleValue(params, countOrEur) {
 }
 
 export function toggleFullscreenChart(thisComponent, chartId = "") {
+    const isTouchDevice = 'ontouchstart' in document.documentElement;
+
     if (thisComponent.fullscreenChart !== chartId && chartId !== "") {
-        thisComponent.fullscreenChart = chartId; // Set to the provided chartId
+        thisComponent.fullscreenChart = chartId;
         document.documentElement.classList.add('no-scroll');
+
+        if (isTouchDevice) {
+            document.documentElement.requestFullscreen?.().then(() => {
+                document.addEventListener('fullscreenchange', handleFullscreenExit);
+            });
+        }
     } else {
-        thisComponent.fullscreenChart = ''; // Clear the fullscreen chart
+        exitFullscreen(thisComponent);
+    }
+
+    function handleFullscreenExit() {
+        if (!document.fullscreenElement) {
+            exitFullscreen(thisComponent);
+            document.removeEventListener('fullscreenchange', handleFullscreenExit);
+        }
+    }
+
+    function exitFullscreen(thisComponent) {
+        thisComponent.fullscreenChart = '';
         document.documentElement.classList.remove('no-scroll');
+        if (document.fullscreenElement) {
+            document.exitFullscreen?.();
+        }
     }
 }
+
 
 export function commonChartValues() {
     return {
@@ -160,4 +183,15 @@ export function commonChartValues() {
             color: getCssVar('color-text-lighter'),
         },
     }
+}
+
+export function setupFullscreenEscExit(thisElement) {
+    // Define the event listener function
+    const exitFullscreenListener = (event) => {
+        if (event.key === 'Escape') {
+            thisElement.toggleFullscreenChart()
+        }
+    };
+    document.addEventListener('keydown', exitFullscreenListener);   // Setup the listener
+    thisElement.exitFullscreenListener = exitFullscreenListener;    // Store the listener function in a property or variable if needed later
 }

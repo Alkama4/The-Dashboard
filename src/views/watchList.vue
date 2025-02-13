@@ -24,7 +24,6 @@
                     class="slide-container"
                     :slidesOffsetBefore=32
                     :slidesOffsetAfter=32
-                    :modules="modules"
                 >
                     <swiper-slide 
                         v-for="title in titleList.titles" 
@@ -71,7 +70,10 @@
                     </swiper-slide>
                     <div class="slides-indicator-holder">
                         <!-- Minus one since we only use in mobile layout which never reaches the last one -->
-                        <IndicatorDots :dotCount="titleList.titles.length - 1" v-model="titleList.activeSlide"/>
+                        <IndicatorDots 
+                            :dotCount="titleList.titles.length - 1" v-model="titleList.activeSlide"
+                            :swiperMode="true"    
+                        />
                     </div>
                 </Swiper>
 
@@ -225,7 +227,7 @@ export default {
                         );
                         if (titleData && titleData.titles) {
                             list.titles = titleData.titles;
-                            console.log(list.titles);
+                            console.info(list.listName, "titles and their info:", list.titles);
                         }
                     } catch (error) {
                         console.error(`Error fetching data for ${list.listName}:`, error);

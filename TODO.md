@@ -2,21 +2,26 @@
 In here I will collect my notes about this website and list the stuff that need to be done or fixed.
 
 ### Next time
-- Backups kind of dull
-    - Give it some life and readability
-- Think of a better way to implement the modal. Way too manual and inconvenient. Should work more like the native popup where it stops progress and returns a value.
+- Modal remake
+    - Think of a better way to implement the modal. 
+    - Way too manual and inconvenient. 
+    - Should work more like the native popup where it stops progress and returns a value.
 
-- The title details and metadata side by side when there's space along with the trailer.
-- Move the title out of the backdrop on mobile and make dots more prominant by moving a bit up like sm amount.
 - PROPABLY SHOULD STILL USE THE MAX AMOUNT OF QUERIES AT ONCE SINCE ITS QUITE STUPID TO SEND TENS OF NOT HUNDREADS OF QUERIES AT ONCE AND WAIT FOR THEM ALL!
-- FIX THE USER DATA TABLES SO THAT THE LAST UPDATED COLUMN OR WHATEVER UPDATES ONLY WHEN WATCH_COUNT CHANGES! And add to episode details.
-- Replace images button.
-- Buttons and controls layout workout
-- Add favourite and watched in watch list?
+
+- Title details
+    - Move the title out of the backdrop on mobile and make dots more prominant by moving a bit up like sm amount.
+    - Possibility to replace the images.
+        - Started already on fastapi
+
 - TMDB icon to season and episode rating
+
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
+    - Backups kind of dull, give it some life and readability
+
+- Charts shold propably be a component
 
 ### Features to add
 - Navigation
@@ -54,15 +59,14 @@ In here I will collect my notes about this website and list the stuff that need 
 - Tab navigation now that you know how easy it is. Fix button links by making global.css button-link style.
 - Season and episode images larger. More bold. Small images never look as good.
 - Title info rating map 
-- Add title
-    - Link to tmdb page for deeper checking to ensure its the correct one. 
-    - Maybe have it be a link icon or text link because of:
-    - after adding make the header link to local title page.
 - BLOB cache?
     - What if I need updated info?
     - Only case would be if there are new titles. 
     - How long expiry?
         - Month? Day? Max count? 50?
+- If input method touch fullscreen button should enable f11 mode fullscreen also. 
+    - And make the fullscreen functionality work on homepage to.
+- Chart setup and values all handled in the .js file. No thisComponent etc. Just give it the stuff and it will handle it.
 
 ### Known issues
 - InfoTooltips positioning is stupid and doesn't detect window borders
