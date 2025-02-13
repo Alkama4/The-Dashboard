@@ -231,7 +231,7 @@
 
 <script>
 // ECharts imports
-import { use, init } from 'echarts/core'
+import { use } from 'echarts/core'
 import { LineChart, BarChart, PieChart } from 'echarts/charts'
 import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
 // import { SVGRenderer } from 'echarts/renderers'
@@ -241,6 +241,14 @@ import api from '@/utils/dataQuery';
 import IconExpand from '@/components/icons/IconExpand.vue';
 import IconCollapse from '@/components/icons/IconCollapse.vue';
 import InfoTooltip from '@/components/InfoTooltip.vue';
+import { convert, getCssVar } from '@/utils/mytools'
+import { 
+    generateTooltipMultiValue, 
+    generateTooltipSingleValue, 
+    initializeAndSetupChart,
+    toggleFullscreenChart
+} from '@/utils/chartTools'
+
 // import { notify } from '@/utils/notification';
 
 // Register only the required components
@@ -270,181 +278,55 @@ export default {
         };
     },
     methods: {
-        toFiNumber(value, maxFractionDigits = 3) {
-            if (value == null) return null; // Handle null/undefined values
-            return value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits });
+        // For formatting on dom or template or whatever it is
+        toFiNumber(value) {
+            return convert.toFiNumber(value)
+        },
+        toFiDate(value) {
+            return convert.toFiDate(value)
         },
         toEur(value) {
-            if (value == null) return null; // Handle null/undefined values
-            return value.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
+            return convert.toEur(value)
         },
-        toFiDate(value, formatType = 'date') {
-            if (value == null) return null; // Handle null/undefined values
-            const date = new Date(value);
-            const dateOptions = {
-                full: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
-                date: { day: 'numeric', month: 'short', year: '2-digit' },
-                month: { month: 'short', year: '2-digit' },
-            };
-            return date.toLocaleDateString('fi-FI', dateOptions[formatType]);
-        },
-        getCssVar(colorName) {
-            return getComputedStyle(document.documentElement).getPropertyValue(`--${colorName}`).trim();
-        },
-        generateTooltip(params, formatType, showSumRow) {
-            let rows = '';
-            let sum = 0;
-            for (let i = 0; i < params.length; i++) {
-                // Speacial case if the data already includes a sum value, but we would like to use the custom one for continuity
-                if (showSumRow === true && params[i].seriesName === 'Sum') {
-                    continue;   // In case there is one we just skip it
-                }
-                rows += `
-                    <tr class="${params[i].data === 0 ? 'disabled' : ''}">
-                        <td class="label">
-                            <div>
-                                <div class="color-blob" style="background-color: ${params[i].color};"></div>
-                                <div class="series-name">${params[i].seriesName}</div>
-                            </div>
-                        </td>
-                        <td class="value">${this.toEur(params[i].data)}</td>
-                    </tr>
-                `;
-                sum += parseFloat(params[i].data);
-            }
-            if (showSumRow === true) {
-                rows += `
-                    <tr class="sum-row">
-                        <td class="label">
-                            <div>
-                                <div class="color-blob" style="background-color: ${this.getCssVar("color-text")};"></div>
-                                <div class="series-name">Total</div>
-                            </div>
-                        </td>
-                        <td class="value">
-                            <div>
-                                ${this.toEur(sum)}
-                            </div>
-                        </td>
-                    </tr>
-                `;
-            }
-            return `
-                <div class="chart-tooltip">
-                    <div class="header">${this.toFiDate(params[0].axisValue, formatType)}</div>
-                    <table>${rows}</table>
-                </div>
-            `;
-        },
-        generateTooltipSingleValue(params, countOrEur) {
-            // console.log(params);
-            return `
-                <div class="chart-tooltip">
-                    <div class="header">${params.seriesName}</div>
-                    <table>
-                        <tr class="${params.data === 0 ? 'disabled' : ''}">
-                            <td style="display: flex; align-items: center; padding-right: 1rem;">
-                                <div class="color-blob" style="background-color: ${params.color};"></div>
-                                <div class="series-name">${params.name}</div>
-                            </td>
-                            <td class="value">${countOrEur == 'eur' ? this.toEur(params.value) : params.value + ' kpl'}</td>
-                        </tr>
-                    </table>
-                </div>
-            `;
+        toggleFullscreenChart(chartId) {
+            toggleFullscreenChart(this, chartId);
         },
         commonChartValues() {
             return {
                 color: [
-                    this.getCssVar("color-primary"), 
-                    this.getCssVar("color-secondary"), 
-                    this.getCssVar("color-tertiary"),
-                    this.getCssVar("color-quaternary"),
-                    this.getCssVar("color-quinary"),
-                    this.getCssVar("color-jokumikalie"),
-                    this.getCssVar("color-senary"),
-                    this.getCssVar("color-septenary"),
-                    this.getCssVar("color-octonary"),
-                    this.getCssVar("color-nonary"),
-                    this.getCssVar("color-denary"),
-                    this.getCssVar("color-undecenary"),
+                    getCssVar("color-primary"), 
+                    getCssVar("color-secondary"), 
+                    getCssVar("color-tertiary"),
+                    getCssVar("color-quaternary"),
+                    getCssVar("color-quinary"),
+                    getCssVar("color-jokumikalie"),
+                    getCssVar("color-senary"),
+                    getCssVar("color-septenary"),
+                    getCssVar("color-octonary"),
+                    getCssVar("color-nonary"),
+                    getCssVar("color-denary"),
+                    getCssVar("color-undecenary"),
                 ],
                 legend: {
                     type: 'scroll',
                     show: true,
                     bottom: 0,
                     textStyle: {
-                        color: this.getCssVar('color-text'),
+                        color: getCssVar('color-text'),
                         fontWeight: 500,
                     },
-                    inactiveColor: this.getCssVar('color-text-hidden'),
-                    pageIconColor: this.getCssVar('color-text'),
-                    pageIconInactiveColor: this.getCssVar('color-text-hidden'),
+                    inactiveColor: getCssVar('color-text-hidden'),
+                    pageIconColor: getCssVar('color-text'),
+                    pageIconInactiveColor: getCssVar('color-text-hidden'),
                     pageTextStyle: {
-                        color: this.getCssVar('color-text'),
+                        color: getCssVar('color-text'),
                     },
                 },
                 textStyle: {
                     fontFamily: 'Poppins',
-                    color: this.getCssVar('color-text-lighter'),
+                    color: getCssVar('color-text-lighter'),
                 },
             }
-        },
-        toggleFullscreenChart(chartId = "") {
-            if (this.fullscreenChart !== chartId && chartId !== "") {
-                this.fullscreenChart = chartId; // Set to the provided chartId
-                document.documentElement.classList.add('no-scroll');
-            } else {
-                this.fullscreenChart = ''; // Clear the fullscreen chart
-                document.documentElement.classList.remove('no-scroll');
-            }
-        },
-        setupResizeObserver(containerRef, chart) {
-            const container = this.$refs[containerRef];
-            if (!container) return;
-
-            const resizeObserver = new ResizeObserver(() => {
-                chart.resize();
-            });
-
-            resizeObserver.observe(container);
-
-            // Store the observer for cleanup
-            if (!this.resizeObservers) {
-                this.resizeObservers = [];
-            }
-            this.resizeObservers.push(resizeObserver);
-        },
-        async initializeAndSetupChart(name, chartContainerName, getChartOptions) {
-            if (typeof getChartOptions !== 'function') {
-                console.error("[initializeAndSetupChart] Invalid 'getChartOptions': Expected a function");
-                return;
-            }
-            if (!chartContainerName || !this.$refs[chartContainerName]) {
-                console.error(`[initializeAndSetupChart] Invalid 'chartContainerName': ${chartContainerName}`);
-                return;
-            }
-            if (!name) {
-                console.error("[initializeAndSetupChart] Invalid 'name': Expected a non-empty string");
-                return;
-            }
-
-            // Init the charts container and avoid storing the chart instance in data
-            const chart = init(this.$refs[chartContainerName]);
-
-            // Initialize the chart with the dynamic options
-            chart.setOption(getChartOptions());
-
-            // Add a listener to resize the chart when needed
-            this.setupResizeObserver(chartContainerName, chart);
-
-            // Listen for custom dark mode change event and recalculate options
-            window.addEventListener("darkModeChange", () => {
-                chart.setOption(getChartOptions());
-            });
-
-            // Display the chart
-            this.isLoaded[name] = true;
         }
     },
     async mounted() {
@@ -475,7 +357,7 @@ export default {
                         title: {
                             text: 'Spendings This Month by Category',
                             textStyle: {
-                                color: this.getCssVar('color-text-lighter'),
+                                color: getCssVar('color-text-lighter'),
                                 fontSize: 16,
                                 fontWeight: 500,
                             },
@@ -485,17 +367,17 @@ export default {
                         color: this.commonChartValues().color,
                         tooltip: { 
                             trigger: 'item',
-                            backgroundColor: this.getCssVar('color-background-card'),
+                            backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
-                            borderColor: this.getCssVar("color-border"),
-                            formatter: params => this.generateTooltipSingleValue(params, 'eur'),
+                            borderColor: getCssVar("color-border"),
+                            formatter: params => generateTooltipSingleValue(params, 'eur'),
                         },
                         series: [
                             {
                                 name: 'Monthly Average Spending',
                                 type: 'pie',
                                 label: {
-                                    color: this.getCssVar('color-text'),
+                                    color: getCssVar('color-text'),
                                 },
                                 data: pieData1,
                             },
@@ -503,7 +385,7 @@ export default {
                     });
 
                     // Run the setup function
-                    this.initializeAndSetupChart("pie1", "pieChartContainer1", pie1Options);
+                    initializeAndSetupChart(this, "pie1", "pieChartContainer1", pie1Options);
                 }
             })(),
 
@@ -523,7 +405,7 @@ export default {
                         title: {
                             text: 'Monthly Average Spendings by Category',
                             textStyle: {
-                                color: this.getCssVar('color-text-lighter'),
+                                color: getCssVar('color-text-lighter'),
                                 fontSize: 16,
                                 fontWeight: 500,
                             },
@@ -533,17 +415,17 @@ export default {
                         color: this.commonChartValues().color,
                         tooltip: { 
                             trigger: 'item',
-                            backgroundColor: this.getCssVar('color-background-card'),
+                            backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
-                            borderColor: this.getCssVar("color-border"),
-                            formatter: params => this.generateTooltipSingleValue(params, 'eur')
+                            borderColor: getCssVar("color-border"),
+                            formatter: params => generateTooltipSingleValue(params, 'eur')
                         },
                         series: [
                             {
                                 name: 'Monthly Average Spending',
                                 type: 'pie',
                                 label: {
-                                    color: this.getCssVar('color-text')
+                                    color: getCssVar('color-text')
                                 },
                                 data: pieData2,
                             }
@@ -551,7 +433,7 @@ export default {
                     })
 
                     // Run the setup function
-                    this.initializeAndSetupChart("pie2", "pieChartContainer2", pie2Options);
+                    initializeAndSetupChart(this, "pie2", "pieChartContainer2", pie2Options);
                 }
             })(),
 
@@ -567,17 +449,17 @@ export default {
                         title: {
                             text: 'Balance over time',
                             textStyle: {
-                                color: this.getCssVar('color-text'),
+                                color: getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
-                        color: [this.getCssVar('color-primary')],
+                        color: [getCssVar('color-primary')],
                         tooltip: { 
                             trigger: 'axis',
-                            backgroundColor: this.getCssVar('color-background-card'),
+                            backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
-                            borderColor: this.getCssVar("color-border"),
-                            formatter: params => this.generateTooltip(params, 'full')
+                            borderColor: getCssVar("color-border"),
+                            formatter: params => generateTooltipMultiValue(params, 'full')
                         },
                         grid: {
                             left: 80,
@@ -590,7 +472,7 @@ export default {
                             data: dates,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => this.toFiDate(value, 'date'),
+                                formatter: value => convert.toFiDate(value, 'date'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -615,7 +497,7 @@ export default {
                     });
 
                     // Run the setup function
-                    this.initializeAndSetupChart("chart1", "chartContainer1", chart1Options);
+                    initializeAndSetupChart(this, "chart1", "chartContainer1", chart1Options);
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 1] Error fetching data:", error);
@@ -636,21 +518,21 @@ export default {
                         title: {
                             text: 'Sum by month',
                             textStyle: {
-                                color: this.getCssVar('color-text'),
+                                color: getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
-                        color: [this.getCssVar("color-positive"), this.getCssVar("color-negative"), this.getCssVar("color-text")],
+                        color: [getCssVar("color-positive"), getCssVar("color-negative"), getCssVar("color-text")],
                         tooltip: { 
                             trigger: 'axis',
-                            backgroundColor: this.getCssVar('color-background-card'),
+                            backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
-                            borderColor: this.getCssVar("color-border"),
-                            formatter: params => this.generateTooltip(params, 'month', true),
+                            borderColor: getCssVar("color-border"),
+                            formatter: params => generateTooltipMultiValue(params, 'month', true),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
-                                    color: this.getCssVar('color-border'),
+                                    color: getCssVar('color-border'),
                                     opacity: 1,
                                 },
                             }
@@ -666,7 +548,7 @@ export default {
                             data: months,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => this.toFiDate(value, 'month'),
+                                formatter: value => convert.toFiDate(value, 'month'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -704,7 +586,7 @@ export default {
                     });
                     
                     // Run the setup function
-                    this.initializeAndSetupChart("chart2", "chartContainer2", chart2Options);
+                    initializeAndSetupChart(this, "chart2", "chartContainer2", chart2Options);
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 2] Error fetching data:", error);
@@ -734,7 +616,7 @@ export default {
                         title: {
                             text: 'Expense categories by month',
                             textStyle: {
-                                color: this.getCssVar('color-text'),
+                                color: getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
@@ -742,14 +624,14 @@ export default {
                         color: this.commonChartValues().color,
                         tooltip: {
                             trigger: 'axis',
-                            backgroundColor: this.getCssVar('color-background-card'),
+                            backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
-                            borderColor: this.getCssVar("color-border"),
-                            formatter: params => this.generateTooltip(params, 'month', true),
+                            borderColor: getCssVar("color-border"),
+                            formatter: params => generateTooltipMultiValue(params, 'month', true),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
-                                    color: this.getCssVar('color-border'),
+                                    color: getCssVar('color-border'),
                                     opacity: 1,
                                 },
                             }
@@ -765,7 +647,7 @@ export default {
                             data: dates,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => this.toFiDate(value, 'month'),
+                                formatter: value => convert.toFiDate(value, 'month'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -782,7 +664,7 @@ export default {
                     });
 
                     // Run the setup function
-                    this.initializeAndSetupChart("chart3", "chartContainer3", chart3Options);
+                    initializeAndSetupChart(this, "chart3", "chartContainer3", chart3Options);
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 3] Error fetching data:", error);
@@ -812,7 +694,7 @@ export default {
                         title: {
                             text: 'Income categories by month',
                             textStyle: {
-                                color: this.getCssVar('color-text'),
+                                color: getCssVar('color-text'),
                                 fontSize: 24,
                             }
                         },
@@ -820,14 +702,14 @@ export default {
                         color: this.commonChartValues().color,
                         tooltip: {
                             trigger: 'axis',
-                            backgroundColor: this.getCssVar('color-background-card'),
+                            backgroundColor: getCssVar('color-background-card'),
                             borderWidth: 1,
-                            borderColor: this.getCssVar("color-border"),
-                            formatter: params => this.generateTooltip(params, 'month', true),
+                            borderColor: getCssVar("color-border"),
+                            formatter: params => generateTooltipMultiValue(params, 'month', true),
                             axisPointer: {
                                 type: 'shadow',  // Ensure axisPointer is also here
                                 shadowStyle: {
-                                    color: this.getCssVar('color-border'),
+                                    color: getCssVar('color-border'),
                                     opacity: 1,
                                 },
                             }
@@ -843,7 +725,7 @@ export default {
                             data: dates,
                             axisLabel: {
                                 rotate: 45,
-                                formatter: value => this.toFiDate(value, 'month'),
+                                formatter: value => convert.toFiDate(value, 'month'),
                             },
                             axisTick: {
                                 alignWithLabel: true
@@ -860,7 +742,7 @@ export default {
                     });
 
                     // Run the setup function
-                    this.initializeAndSetupChart("chart4", "chartContainer4", chart4Options);
+                    initializeAndSetupChart(this, "chart4", "chartContainer4", chart4Options);
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 4] Error fetching data:", error);
