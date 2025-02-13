@@ -48,7 +48,7 @@ async function handleError(error, endpoint) {
 }
 
 const api = {
-    // - - - - - - GET request to the API - - - - - - 
+    // - - - - - - - - - - - - - POST AND GET METHODS - - - - - - - - - - - - - 
     async getData(endpoint, params = {}) {
         const startTime = performance.now();  // Start the timer
         try {
@@ -61,59 +61,7 @@ const api = {
             return await handleError(error, endpoint);
         }
     },
-    async getTransactions(params = {}) {
-        params.session_key = localStorage.getItem('sessionKey');
-        // console.info('Fetching transactions with params:', params);
-        return this.getData('/get_transactions', params);
-    },
-    async getOptions() {
-        let params = {};
-        params.session_key = localStorage.getItem('sessionKey');
-        // console.log('Fetching options with params:', params);
-        return this.getData('/get_options', params);
-    },
-    async getFilters() {
-        let params = {};
-        params.session_key = localStorage.getItem('sessionKey');
-        // console.log('Fetching filters with params:', params);
-        return this.getData('/get_filters', params);
-    },
-    async getBackups() {
-        return this.getData('/get_backups');
-    },
-    async searchForTitle(titleCategory, titleName) {
-        let params = {};
-        params.session_key = localStorage.getItem('sessionKey');
-        params.title_name = titleName;
-        params.title_category = titleCategory;
-        return this.getData('/watch_list/search', params);
-    },
-    async getTitleCards(sortBy, titleType, watched, favourite, released, started) {
-        let params = {};
-        params.title_count = 12;
-        params.session_key = localStorage.getItem('sessionKey');
-        if (sortBy != null) params.sort_by = sortBy;
-        if (titleType != null) params.title_type = titleType;
-        if (watched != null) params.watched = watched;
-        if (favourite != null) params.favourite = favourite;
-        if (released != null) params.released = released;
-        if (started != null) params.started = started;
-        return this.getData('/watch_list/get_title_cards', params);
-    },
-    async getTitleInfo(titleID) {
-        let params = {};
-        params.session_key = localStorage.getItem('sessionKey');
-        params.title_id = titleID;
-        return this.getData('/watch_list/get_title_info', params);
-    },
-    async getServerResourceLogs(timeframe) {
-        let params = {};
-        params.timeframe = timeframe;
-        return this.getData('/get_server_resource_logs', params);
-    },
 
-
-    // - - - - - - POST request to the API - - - - - - 
     async postData(endpoint, data, config = {}) {
         const startTime = performance.now();  // Start the timer
         try {
@@ -126,6 +74,9 @@ const api = {
             return await handleError(error, endpoint);
         }
     },
+
+
+    // - - - - - - - - - - - - - GENERAL LOGINS ETC. - - - - - - - - - - - - - 
     async logIn(params = {}) {
         params.previousSessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/login', null, { params });
@@ -154,10 +105,13 @@ const api = {
             return false;
         }
     },
+
     async getLoginStatus() {
         const sessionKey = localStorage.getItem('sessionKey');
         if (sessionKey) {
-            const response = await this.postData('/get_login_status', null, { params: { sessionKey } });
+            let params = {};
+            params.session_key = sessionKey;
+            const response = await this.getData('/account/get_login_status', params);
             if (response) {
                 console.log("[getLoginStatus] log in attempt response", response);
                 localStorage.setItem("isLoggedIn", response.loggedIn);
@@ -168,11 +122,11 @@ const api = {
         } else {
             console.log("[getLoginStatus] Did not try: no session key");
         }
-        return { loggedIn: false };
     },
+
     async logOut() {
         const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/logout', null, { params: { sessionKey } });
+        const response = await this.postData('/account/logout', null, { params: { sessionKey } });
         if (response) {
             if (response.logOutSuccess) {
                 notify("You have been logged out.", "info");
@@ -191,7 +145,7 @@ const api = {
         }
     },
     localLogOut(manualLogOut = false) {
-        if (router.currentRoute.value.path !== "/login") {
+        if (router.currentRoute.value.path !== "/account/login") {
             localStorage.removeItem("sessionKey");
             localStorage.setItem("isLoggedIn", false);
             localStorage.removeItem("username");
@@ -201,11 +155,14 @@ const api = {
             router.push("/login");
         }
     },
+
+    
+    // - - - - - - - - - - - - - TRANSACTIONS - - - - - - - - - - - - - 
     async newTransaction(transactionData) {
         const sessionKey = localStorage.getItem('sessionKey');
         transactionData.session_key = sessionKey;
         // console.log('[newTransaction] Creating new transaction with data:', transactionData);
-        const response = await this.postData('/new_transaction', transactionData, null);
+        const response = await this.postData('/transactions/new_transaction', transactionData, null);
         if (response) {
             if (response.newTransactionSuccess) {
                 notify("New transaction created!", "success");
@@ -222,11 +179,12 @@ const api = {
             return null;
         }
     },
+
     async editTransaction(transactionData) {
         const sessionKey = localStorage.getItem('sessionKey');
         transactionData.session_key = sessionKey;
         // console.log('[editTransaction] Editing transaction with data:', transactionData);
-        const response = await this.postData('/edit_transaction', transactionData, null);
+        const response = await this.postData('/transactions/edit_transaction', transactionData, null);
         if (response) {
             if (response.editTransactionSuccess) {
                 notify("Transaction edited successfully!", "success");
@@ -243,10 +201,12 @@ const api = {
             return null;
         }
     },
+
+    // This should be DELETE but thats a later me problem 
     async deleteTransaction(transactionId) {
         const sessionKey = localStorage.getItem('sessionKey');
         console.log('[deleteTransaction] Deleting transaction with ID:', transactionId);
-        const response = await this.postData('/delete_transaction', { session_key: sessionKey, transactionID: transactionId }, null);
+        const response = await this.postData('/transactions/delete_transaction', { session_key: sessionKey, transactionID: transactionId }, null);
         if (response) {
             if (response.deleteTransactionSuccess) {
                 notify("Transaction deleted successfully!", "success");
@@ -263,10 +223,34 @@ const api = {
             return null;
         }
     },
+
+    async getTransactions(params = {}) {
+        params.session_key = localStorage.getItem('sessionKey');
+        // console.info('Fetching transactions with params:', params);
+        return this.getData('/transactions/get_transactions', params);
+    },
+
+    async getOptions() {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        // console.log('Fetching options with params:', params);
+        return this.getData('/transactions/get_options', params);
+    },
+
+    async getFilters() {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        // console.log('Fetching filters with params:', params);
+        return this.getData('/transactions/get_filters', params);
+    },
+
+
+    // - - - - - - - - - - - - - CHARTS AND ANALYTICS - - - - - - - - - - - - - 
     async getChartBalanceOverTime() {
-        const sessionKey = localStorage.getItem('sessionKey');
-        const initialBalance = localStorage.getItem('chart1StartingPosition');
-        const response = await this.postData('/get_chart/balance_over_time', { session_key: sessionKey, initial_balance: initialBalance }, null);
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.initial_balance = localStorage.getItem('chart1StartingPosition');
+        const response = await this.getData('/get_chart/balance_over_time', params);
         if (response) {
             return response;
         } else {
@@ -274,9 +258,11 @@ const api = {
             return null;
         }
     },
+
     async getChartSumByMonth() {
-        const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/get_chart/sum_by_month', { session_key: sessionKey }, null);
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        const response = await this.getData('/get_chart/sum_by_month', params);
         if (response) {
             return response;
         } else {
@@ -284,9 +270,12 @@ const api = {
             return null;
         }
     },
+
     async getChartExpenseCategoriesMonthly() {
-        const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/get_chart/categories_monthly', { session_key: sessionKey, direction: "expense" }, null);
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.direction = "expense";
+        const response = await this.getData('/get_chart/categories_monthly', params);
         if (response) {
             return response;
         } else {
@@ -294,9 +283,12 @@ const api = {
             return null;
         }
     },
+
     async getChartIncomeCategoriesMonthly() {
-        const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/get_chart/categories_monthly', { session_key: sessionKey, direction: "income" }, null);
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.direction = "income";
+        const response = await this.getData('/get_chart/categories_monthly', params);
         if (response) {
             return response;
         } else {
@@ -304,9 +296,11 @@ const api = {
             return null;
         }
     },
+
     async getGeneralStats() {
-        const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/analytics/get_general_stats', { session_key: sessionKey }, null);
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        const response = await this.getData('/analytics/get_general_stats', params);
         if (response) {
             return response;
         } else {
@@ -314,9 +308,12 @@ const api = {
             return null;
         }
     },
+    
     async getStatsForTimespan(timespan) {
-        const sessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/analytics/get_stats_for_timespan', { session_key: sessionKey, timespan: timespan }, null);
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.timespan = timespan;
+        const response = await this.getData('/analytics/get_stats_for_timespan', params);
         if (response) {
             return response;
         } else {
@@ -324,8 +321,11 @@ const api = {
             return null;
         }
     },
+
+
+    // - - - - - - - - - - - - - BACKUPS AND SERVER INFO - - - - - - - - - - - - - 
     async getServerDrivesInfo() {
-        const response = await this.postData('/get_server_drives_info', null, null);
+        const response = await this.getData('/get_server_drives_info', null, null);
         if (response) {
             return response;
         } else {
@@ -333,6 +333,32 @@ const api = {
             return null;
         }
     },
+
+    async getBackups() {
+        return this.getData('/get_backups');
+    },
+
+    async getServerResourceLogs(timeframe) {
+        let params = {};
+        params.timeframe = timeframe;
+        return this.getData('/get_server_resource_logs', params);
+    },
+
+    async getFastapiRequestLogData(timeframe) {
+        let params = {};
+        params.timeframe = timeframe;
+        return this.getData('/get_fastapi_request_log_data', params);
+    },
+
+    // - - - - - - - - - - - - - TV AND MOVIE WATCH LIST - - - - - - - - - - - - - 
+    async searchForTitle(titleCategory, titleName) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.title_name = titleName;
+        params.title_category = titleCategory;
+        return this.getData('/watch_list/search', params);
+    },
+
     async addTitleToUserList(tmdb_id, type) {
         const sessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/watch_list/add_user_title', { 
@@ -347,6 +373,20 @@ const api = {
             return null;
         }
     },
+
+    async updateTitleInfo(tmdb_id, type) {
+        const response = await this.postData('/watch_list/update_title_info', { 
+            title_tmdb_id: tmdb_id, 
+            title_type: type, 
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateTitleInfo] response failed:", response);
+            return null;
+        }
+    },
+
     async removeTitleFromUserList(tmdb_id) {
         const sessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/watch_list/remove_user_title', { 
@@ -360,18 +400,7 @@ const api = {
             return null;
         }
     },
-    async updateTitleInfo(tmdb_id, type) {
-        const response = await this.postData('/watch_list/update_title_info', { 
-            title_tmdb_id: tmdb_id, 
-            title_type: type, 
-        }, null);
-        if (response) {
-            return response;
-        } else {
-            console.error("[updateTitleInfo] response failed:", response);
-            return null;
-        }
-    },
+
     async saveTitleNotes(title_id, notes) {
         const sessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/watch_list/save_user_title_notes', { 
@@ -386,6 +415,7 @@ const api = {
             return null;
         }
     },
+
     async toggleTitleFavourite(title_id) {
         const sessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/watch_list/toggle_title_favourite', { 
@@ -399,6 +429,7 @@ const api = {
             return null;
         }
     },
+
     async modifyTitleWatchCount(type, chosenTypesID, newState) {
         const sessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/watch_list/modify_title_watch_count', { 
@@ -413,6 +444,26 @@ const api = {
             console.error("[modifyTitleWatchCount] response failed:", response);
             return null;
         }
+    },
+
+    async getTitleCards(sortBy, titleType, watched, favourite, released, started) {
+        let params = {};
+        params.title_count = 12;
+        params.session_key = localStorage.getItem('sessionKey');
+        if (sortBy != null) params.sort_by = sortBy;
+        if (titleType != null) params.title_type = titleType;
+        if (watched != null) params.watched = watched;
+        if (favourite != null) params.favourite = favourite;
+        if (released != null) params.released = released;
+        if (started != null) params.started = started;
+        return this.getData('/watch_list/get_title_cards', params);
+    },
+
+    async getTitleInfo(titleID) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.title_id = titleID;
+        return this.getData('/watch_list/get_title_info', params);
     },
 };
 
