@@ -4,6 +4,11 @@ export const convert = {
         return value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits });
     },
 
+    toFiCount(value, maxFractionDigits = 0) {
+        if (value == null) return null; // Handle null/undefined values
+        return `${value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits })} kpl`;
+    },
+
     toCelcius(value, maxFractionDigits = 2) {
         if (value == null) return null; // Handle null/undefined values
         return `${value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits })} °C`;
@@ -21,6 +26,7 @@ export const convert = {
 
     toFiDate(value, formatType = 'date') {
         if (value == null) return null; // Handle null/undefined values
+        if (formatType == 'none') return value;
         const date = new Date(value);
         let result = "";
 
@@ -42,16 +48,12 @@ export const convert = {
 
     toBytes(bytes, decimal = 2) {
         const sizes = ['t', 'Kt', 'Mt', 'Gt', 'Tt'];
-        if (bytes === 0) return '0 t'; // No change here as '0' is a special case.
-        const i = Math.floor(Math.log10(bytes) / 3);
-        
-        // Avoid showing 0 when possible by adjusting the decimal places
+        if (bytes === 0) return '0 t';
+        const i = Math.floor(Math.log10(Math.abs(bytes)) / 3);
         const value = (bytes / Math.pow(1000, i)).toFixed(decimal);
-        
-        // If the value is an integer (e.g. "1" instead of "1.00"), remove the decimals
         return (parseFloat(value) === parseInt(value) ? parseInt(value) : value) + ' ' + sizes[i];
     }
-    
+
 };
 
 export function getCssVar(colorName) {

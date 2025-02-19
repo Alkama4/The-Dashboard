@@ -311,7 +311,6 @@ export default {
                         value: item.totalAmount,
                     }));
 
-
                     const pie1Options = () => ({
                         textStyle: commonChartValues().textStyle,
                         title: {

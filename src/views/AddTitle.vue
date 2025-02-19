@@ -178,7 +178,7 @@ export default {
             }
         },
         async handleTitleStoring(addOrRemove, titleTmdbId, type) {
-            console.log(addOrRemove, titleTmdbId);
+            console.log("[handleTitleStoring]", addOrRemove, titleTmdbId);
             
             // Disable click
             this.waitingForResult.push(titleTmdbId);
@@ -186,8 +186,14 @@ export default {
             if (addOrRemove == "add") {
                 const response = await api.addTitleToUserList(titleTmdbId, type);
                 if (response && response.success) {
-                    // Change the data on site for the title
-                    this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = true;
+                    console.log(response);
+                    // Find the title and update the in_watch_list to reflect the current state and set the title_id
+                    // to make the link update to the internal site.
+                    const result = this.searchResults.find(result => result.id === titleTmdbId);
+                    if (result) {
+                        result.in_watch_list = true;
+                        result.title_id = response.title_id;
+                    }
                 }
                 
                 // Allow click

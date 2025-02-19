@@ -189,7 +189,7 @@ export default {
                     }
                 },
                 {
-                    listName: "Recently updated",
+                    listName: "Recently modified",
                     watched: true,
                     text: "The titles that you have e.g. watched or edited notes on recently.",
                     titles: [],

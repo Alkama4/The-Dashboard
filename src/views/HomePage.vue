@@ -88,6 +88,43 @@
 		</div>
 
 		<div class="content-width-large">
+			<h2>Fastapi logs analysis</h2>	
+			<p>The logs do not include the automated loggin reqests since they make the data unreadable.</p>
+			<div class="flex-column">
+				<div style="margin: var(--spacing-xs);" class="card flex-column">
+					<label for="avg_backend_time">Average server processing time</label>
+					<span id="avg_backend_time">{{ new Number(serverStats.fastapiData.avg_backend_time).toFixed(0) }} ms</span>
+				</div>
+
+				<div style="margin: var(--spacing-xs);" class="card flex-column">
+					<label for="total_requests">Total request in the timespan</label>
+					<span id="total_requests">{{ serverStats.fastapiData.total_requests }} kpl</span>
+				</div>
+
+				<div style="margin: var(--spacing-xs);" class="card flex-column">
+					<label>Requests by endpoint</label>
+					
+					<div class="server-info-row">
+						<span class="endpoint-name endpoint-label">Endpoint name</span>
+						<span class="endpoint-value endpoint-label">Requests</span>
+						<span class="endpoint-value endpoint-label">
+							Avg. time 
+							<InfoTooltip text="The average time that the backend takes to process the request." position="left"/>
+						</span>
+					</div>
+					<div class="server-info-scroll">
+						<div v-for="(item, index) in serverStats.fastapiData.endpoint_count" :key="index" class="server-info-row">
+							<span class="endpoint-name">{{ item.endpoint }}</span>
+							<span class="endpoint-value">{{ item.count }} kpl</span>
+							<span class="endpoint-value">{{ item.avg_response_time_ms }} ms</span>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="content-width-large">
 			<h2>Server resource usages</h2>
 			<div class="card server-resources content-width-large">
 				<!-- Chart 1 - CPU temp -->
@@ -120,7 +157,7 @@
 					</button>  
 				</div>
 
-				<!-- Chart 3 - RAM Usage -->
+				<!-- Chart 3 - CPU Usage -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart3' }"
@@ -135,22 +172,7 @@
 					</button>  
 				</div>
 
-				<!-- Chart 4 - RAM Usage -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart4' }"
-				>
-					<div class="chart" ref="chartContainer4"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart4')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart4'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
-
-				<!-- Chart 5 - RAM Usage -->
+				<!-- Chart 5 - System load -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart5' }"
@@ -165,10 +187,11 @@
 					</button>  
 				</div>
 
-				<!-- Chart 6 - RAM Usage -->
+				<!-- Chart 6 - Network up/down -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart6' }"
+					style="width: 100%;"
 				>
 					<div class="chart" ref="chartContainer6"></div>
 					<button 
@@ -180,10 +203,11 @@
 					</button>  
 				</div>
 
-				<!-- Chart 7 - RAM Usage -->
+				<!-- Chart 7 - FASTAPI -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart7' }"
+					style="width: 33.333%;"
 				>
 					<div class="chart" ref="chartContainer7"></div>
 					<button 
@@ -195,6 +219,82 @@
 					</button>  
 				</div>
 
+				<!-- Chart 8 - FASTAPI -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart8' }"
+					style="width: 33.333%;"
+				>
+					<div class="chart" ref="chartContainer8"></div>
+					<button 
+						class="button-simple fullscreen-button" 
+						@click="toggleFullscreenChart('chart8')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart8'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 9 - FASTAPI -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart9' }"
+					style="width: 33.333%;"
+				>
+					<div class="chart" ref="chartContainer9"></div>
+					<button 
+						class="button-simple fullscreen-button" 
+						@click="toggleFullscreenChart('chart9')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart9'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 10 - FASTAPI -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart10' }"
+				>
+					<div class="chart" ref="chartContainer10"></div>
+					<button 
+						class="button-simple fullscreen-button" 
+						@click="toggleFullscreenChart('chart10')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart10'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 11 - Fastapi requesttime histogram -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart11' }"
+				>
+					<div class="chart" ref="chartContainer11"></div>
+					<button 
+						class="button-simple fullscreen-button" 
+						@click="toggleFullscreenChart('chart11')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart11'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
+
+				<!-- Chart 12 - Fastapi endpoints and error codes -->
+				<div 
+					class="chartContainer"
+					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart12' }"
+				>
+					<div class="chart" ref="chartContainer12"></div>
+					<button 
+						class="button-simple fullscreen-button" 
+						@click="toggleFullscreenChart('chart12')"
+					>
+						<IconCollapse v-if="fullscreenChart === 'chart12'"/>
+						<IconExpand v-else/>
+					</button>  
+				</div>
 			</div>
 		</div>
 
@@ -250,6 +350,7 @@ import { convert, getCssVar } from '@/utils/mytools'
 import { notify } from '@/utils/notification';
 import { 
     generateTooltipMultiValue, 
+	generateTooltipSingleValue,
     initializeAndSetupChart,
     toggleFullscreenChart,
 	commonChartValues,
@@ -258,16 +359,18 @@ import {
 
 // ECharts imports
 import { use } from 'echarts/core'
-import { LineChart } from 'echarts/charts'
+import { LineChart, PieChart } from 'echarts/charts'
 import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
+import InfoTooltip from '@/components/InfoTooltip.vue';
 // import { SVGRenderer } from 'echarts/renderers'
 
-use([TooltipComponent, GridComponent, LineChart, CanvasRenderer, TitleComponent, LegendComponent]);
+use([TooltipComponent, GridComponent, LineChart, PieChart, CanvasRenderer, TitleComponent, LegendComponent]);
 
 export default {
 	name: 'HomePage',
 	components: {
+		InfoTooltip,
 		IconHDD,
 		IconBackup,
 		IconBackupDown,
@@ -281,7 +384,8 @@ export default {
             isLoaded: {},
             fullscreenChart: "",
 			serverStats: {
-				storage: []
+				storage: [],
+				fastapiData: {},
 			}
 		};
 	},
@@ -352,23 +456,22 @@ export default {
 		// console.log(this.serverStats.storage);
 
 		const resourceLogsResponse = await api.getServerResourceLogs("24h");
-		if (resourceLogsResponse) {
-			console.log(resourceLogsResponse && resourceLogsResponse.data)
+		console.log("resourceLogsResponse", resourceLogsResponse);
+		if (resourceLogsResponse && resourceLogsResponse.data) {
 			const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
 			const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
 			const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
 			const chart3YaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
-			const chart4YaxisValues = resourceLogsResponse.data.map(log => log.disk_usage);
 			const chart5YaxisValues = resourceLogsResponse.data.map(log => log.system_load);
-			const chart6YaxisValues = resourceLogsResponse.data.map((log, index, array) => {
-				if (index === 0) return 0;	// The first one can't have a differnce
-				const difference = log.network_sent_bytes - array[index - 1].network_sent_bytes;	// Calculate
-				return difference >= 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
-			});
-			const chart7YaxisValues = resourceLogsResponse.data.map((log, index, array) => {
+			const chartNetRecv = resourceLogsResponse.data.map((log, index, array) => {
 				if (index === 0) return 0;	// The first one can't have a differnce
 				const difference = log.network_recv_bytes - array[index - 1].network_recv_bytes;	// Calculate
-				return difference >= 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
+				return difference > 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
+			});
+			const chartNetSent = resourceLogsResponse.data.map((log, index, array) => {
+				if (index === 0) return 0;	// The first one can't have a differnce
+				const difference = -log.network_sent_bytes + array[index - 1].network_sent_bytes;	// Calculate
+				return difference < 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
 			});
 
 			// Chart 1 - CPU temperature
@@ -550,62 +653,6 @@ export default {
 			});
 			initializeAndSetupChart(this, "chart3", "chartContainer3", chart3Options);
 
-			// Chart 4 - Disk Usage
-			const chart4Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Disk Usage',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-quaternary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
-				},
-				grid: {
-					left: 40,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: resourceLogsTimeStamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Usage (%)',  // Y-akselin nimi
-					max: 100,
-					min: 0,
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiNumber(value)
-					}
-				},
-				series: [
-					{
-						name: 'Disk Usage',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chart4YaxisValues,
-						smooth: true,
-					},
-				],
-			});
-			initializeAndSetupChart(this, "chart4", "chartContainer4", chart4Options);
-
 			// Chart 5 - System load
 			const chart5Options = () => ({
 				textStyle: commonChartValues().textStyle,
@@ -666,13 +713,13 @@ export default {
 			const chart6Options = () => ({
 				textStyle: commonChartValues().textStyle,
 				title: {
-					text: 'Network upload',
+					text: 'Network up/down',
 					textStyle: {
 						color: getCssVar('color-text'),
 						fontSize: 24,
 					}
 				},
-				color: [getCssVar('color-jokumikalie')],
+				color: [getCssVar('color-jokumikalie'), getCssVar('color-senary')],
 				tooltip: { 
 					trigger: 'axis',
 					backgroundColor: getCssVar('color-background-card'),
@@ -699,40 +746,218 @@ export default {
 				},
 				yAxis: { 
 					type: 'value',      
-					name: 'Data (t)',  // Y-akselin nimi
+					name: 'Data (t/min)',  // Y-akselin nimi
 					axisLabel: {        // Y-akselin arvojen muotoilu
 						formatter: value => convert.toBytes(value)
 					}
 				},
 				series: [
 					{
-						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						name: 'Data received',    // Tooltipissa näkyvä nimi
 						type: 'line',
 						areaStyle: {},
-						data: chart6YaxisValues,
+						data: chartNetRecv,
+						smooth: true,
+					},
+					{
+						name: 'Data sent',    // Tooltipissa näkyvä nimi
+						type: 'line',
+						areaStyle: {},
+						data: chartNetSent,
 						smooth: true,
 					},
 				],
 			});
 			initializeAndSetupChart(this, "chart6", "chartContainer6", chart6Options);
 
-			// Chart 7 - Network download
+			// After charts are set setup the esc listener
+			setupFullscreenEscExit(this)
+		}
+
+		// Fastapi logs data
+		const fastapiLogDataResponse = await api.getFastapiRequestLogData("24h");
+		if (fastapiLogDataResponse && fastapiLogDataResponse.data) {
+			this.serverStats.fastapiData = fastapiLogDataResponse.data;
+			console.log("Fastapi data: ", this.serverStats.fastapiData);
+
+			const chart7Values = fastapiLogDataResponse.data.client_ip_count.map(item => ({
+				name: item.client_ip,
+				value: item.count,
+			}));
+			const chart8Values = fastapiLogDataResponse.data.status_code.map(item => ({
+				name: item.status_code,
+				value: item.count,
+			}));
+			const chart9Values = fastapiLogDataResponse.data.method_count.map(item => ({
+				name: item.method,
+				value: item.count,
+			}));
+
+			// Need to multiply by 60 (for s in min) * 1000 (for ms in s)
+			const chart10Timestamps = fastapiLogDataResponse.data.requests_over_time.map(log => new Date(new Number(log.minute_bucket * 60000)));	
+			const chart10Values = fastapiLogDataResponse.data.requests_over_time.map(log => log.count);
+
+			const chart11Timestamps = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.time_range);
+			const chart11Values = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.count);
+
+			// - - - - - Chart 12 values - - - - - 
+			const errorSeries = [];
+			const endpointNames = [];
+			const errorCodeMap = {};
+
+			// Loop through each endpoint's error summary
+			fastapiLogDataResponse.data.endpoint_error_summary.forEach(endpoint => {
+				// Skip endpoints starting with "/image" if there is a 404 error with count <= 1
+				if (
+					endpoint.endpoint.startsWith("/image") && 
+					endpoint.errors.some(error => error.status_code === 404 && error.count <= 1)
+				) return;
+
+				endpointNames.push(endpoint.endpoint);
+
+				// Loop through the errors of each endpoint
+				endpoint.errors.forEach(error => {
+					const { status_code: errorCode, count: errorCount } = error;
+
+					// Initialize the series for this error code if not already initialized
+					if (!errorCodeMap[errorCode]) {
+						errorCodeMap[errorCode] = {
+							name: `Error ${errorCode} count`,
+							type: 'bar',
+							stack: true,
+							data: Array(fastapiLogDataResponse.data.endpoint_error_summary.length).fill(0)
+						};
+					}
+
+					const endpointIndex = endpointNames.length - 1;
+					errorCodeMap[errorCode].data[endpointIndex] = errorCount;
+				});
+			});
+
+			// Convert errorCodeMap to an array
+			for (const errorCode in errorCodeMap) {
+				errorSeries.push(errorCodeMap[errorCode]);
+			}
+
+			// Chart 7 - FASTAPI
 			const chart7Options = () => ({
 				textStyle: commonChartValues().textStyle,
 				title: {
-					text: 'Network download',
+					text: 'Fastapi requests by client IP',
+					textStyle: {
+						color: getCssVar('color-text-lighter'),
+						fontSize: 16,
+						fontWeight: 500,
+					},
+					x: 'center',
+				},
+				legend: commonChartValues().legend,
+				color: commonChartValues().color,
+				tooltip: { 
+					trigger: 'item',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipSingleValue(params, 'count'),
+				},
+				series: [
+					{
+						name: 'Monthly Average Spending',
+						type: 'pie',
+						label: {
+							color: getCssVar('color-text'),
+						},
+						data: chart7Values,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart7", "chartContainer7", chart7Options);
+
+			// Chart 8 - FASTAPI
+			const chart8Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Fastapi requests by status code',
+					textStyle: {
+						color: getCssVar('color-text-lighter'),
+						fontSize: 16,
+						fontWeight: 500,
+					},
+					x: 'center',
+				},
+				legend: commonChartValues().legend,
+				color: commonChartValues().color,
+				tooltip: { 
+					trigger: 'item',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipSingleValue(params, 'count'),
+				},
+				series: [
+					{
+						name: 'Monthly Average Spending',
+						type: 'pie',
+						label: {
+							color: getCssVar('color-text'),
+						},
+						data: chart8Values,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart8", "chartContainer8", chart8Options);
+
+			// Chart 9 - FASTAPI
+			const chart9Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Fastapi requests by method',
+					textStyle: {
+						color: getCssVar('color-text-lighter'),
+						fontSize: 16,
+						fontWeight: 500,
+					},
+					x: 'center',
+				},
+				legend: commonChartValues().legend,
+				color: commonChartValues().color,
+				tooltip: { 
+					trigger: 'item',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipSingleValue(params, 'count'),
+				},
+				series: [
+					{
+						name: 'Monthly Average Spending',
+						type: 'pie',
+						label: {
+							color: getCssVar('color-text'),
+						},
+						data: chart9Values,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart9", "chartContainer9", chart9Options);
+
+			// Chart 10 - FASTAPI
+			const chart10Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Fastapi requests over time',
 					textStyle: {
 						color: getCssVar('color-text'),
 						fontSize: 24,
 					}
 				},
-				color: [getCssVar('color-senary')],
+				color: [getCssVar('color-septenary')],
 				tooltip: { 
 					trigger: 'axis',
 					backgroundColor: getCssVar('color-background-card'),
 					borderWidth: 1,
 					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toBytes, false)
+					formatter: params => generateTooltipMultiValue(params, 'time', convert.toFiCount, false)
 				},
 				grid: {
 					left: 48,
@@ -742,10 +967,10 @@ export default {
 				},
 				xAxis: {
 					type: 'category',
-					data: resourceLogsTimeStamps,
+					data: chart10Timestamps,
 					axisLabel: {
 						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
+						formatter: value => convert.toFiDate(value, "time"),
 					},
 					axisTick: {
 						alignWithLabel: true
@@ -753,25 +978,134 @@ export default {
 				},
 				yAxis: { 
 					type: 'value',      
-					name: 'Data (t)',  // Y-akselin nimi
+					name: 'Requests (kpl)',  // Y-akselin nimi
 					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toBytes(value)
+						formatter: value => convert.toFiCount(value)
 					}
 				},
 				series: [
 					{
-						name: 'RAM used',    // Tooltipissa näkyvä nimi
+						name: 'Reqests/min',    // Tooltipissa näkyvä nimi
 						type: 'line',
 						areaStyle: {},
-						data: chart7YaxisValues,
+						data: chart10Values,
 						smooth: true,
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart7", "chartContainer7", chart7Options);
+			initializeAndSetupChart(this, "chart10", "chartContainer10", chart10Options);
 
-			// After charts are set setup the esc listener
-			setupFullscreenEscExit(this)
+			// Chart 11 - FASTAPI
+			const chart11Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Fastapi response times',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: [getCssVar('color-octonary')],
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'none', convert.toFiCount, false),
+					axisPointer: {
+						type: 'shadow',  // Ensure axisPointer is also here
+						shadowStyle: {
+							color: getCssVar('color-border'),
+							opacity: 1,
+						},
+					}
+				},
+				grid: {
+					left: 64,
+					right: 8,
+					top: 80,
+					bottom: 80,
+				},
+				xAxis: {
+					type: 'category',
+					data: chart11Timestamps,
+					axisLabel: {
+						rotate: 45,
+						// formatter: value => convert.toFiDate(value, "time"),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Backend time (ms)',  // Y-akselin nimi
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiCount(value)
+					}
+				},
+				series: [
+					{
+						name: 'Reqests',    // Tooltipissa näkyvä nimi
+						type: 'bar',
+						data: chart11Values,
+					},
+				],
+			});
+			initializeAndSetupChart(this, "chart11", "chartContainer11", chart11Options);
+
+			// Chart 12 - FASTAPI
+			const chart12Options = () => ({
+				textStyle: commonChartValues().textStyle,
+				title: {
+					text: 'Error codes by endpoint',
+					textStyle: {
+						color: getCssVar('color-text'),
+						fontSize: 24,
+					}
+				},
+				color: commonChartValues().color,
+				tooltip: { 
+					trigger: 'axis',
+					backgroundColor: getCssVar('color-background-card'),
+					borderWidth: 1,
+					borderColor: getCssVar("color-border"),
+					formatter: params => generateTooltipMultiValue(params, 'none', convert.toFiCount, false),
+					axisPointer: {
+						type: 'shadow',  // Ensure axisPointer is also here
+						shadowStyle: {
+							color: getCssVar('color-border'),
+							opacity: 1,
+						},
+					}
+				},
+				grid: {
+					left: 64,
+					right: 8,
+					top: 80,
+					bottom: 64,
+				},
+				xAxis: {
+					type: 'category',
+					data: endpointNames,
+					axisLabel: {
+						rotate: 45,
+						// formatter: value => convert.toFiDate(value, "time"),
+					},
+					axisTick: {
+						alignWithLabel: true
+					},
+				},
+				yAxis: { 
+					type: 'value',      
+					name: 'Error count (kpl)',  // Y-akselin nimi
+					axisLabel: {        // Y-akselin arvojen muotoilu
+						formatter: value => convert.toFiCount(value)
+					}
+				},
+				series: errorSeries
+			});
+			initializeAndSetupChart(this, "chart12", "chartContainer12", chart12Options);
 		}
 	}
 };
@@ -1006,9 +1340,7 @@ export default {
 	flex-direction: row;
 	align-items: start;
 	overflow: hidden;
-	mask-image: 
-        linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
-    mask-size: 100%;
+	mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
 }
 .backup-row .path {
 	white-space: nowrap;
@@ -1043,6 +1375,36 @@ export default {
 		grid-template-columns: auto;
 	}
 } */
+
+/* - - - - - Fastapi info - - - - */
+.server-info-row {
+	display: grid;
+	grid-template-columns: auto 80px 120px;
+	gap: 0;
+}
+
+.server-info-row .endpoint-name {
+	text-align: start;
+	color: var(--color-text-light);
+	white-space: nowrap;
+	overflow: hidden;
+	mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+}
+.server-info-row .endpoint-value {
+	text-align: end;
+	color: var(--color-text);
+	font-weight: 500;
+}
+.server-info-row .endpoint-label {
+	/* Overwrite the properties for the labels */
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+.server-info-scroll {
+	max-height: 200px;
+	overflow: scroll;
+}
 
 /* - - - - Server drives - - - - */
 .drive-card {
