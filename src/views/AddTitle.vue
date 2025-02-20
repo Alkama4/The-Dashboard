@@ -237,7 +237,7 @@ export default {
         },
         titleLink(title) {
             if (title.title_id) {
-                return `/watchList/title/${title.title_id}`;
+                return `/watch_list/title/${title.title_id}`;
             }
             return `https://www.themoviedb.org/${this.resultTitleCategory}/${title.id}`;
         },

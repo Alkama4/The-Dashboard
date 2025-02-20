@@ -22,7 +22,7 @@
         <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;" style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"> 
             <IconFilter size="28px"/> 
         </button>
-        <router-link to="/spendings/newEntry">
+        <router-link to="/spendings/new_entry">
             <button class="color-primary sticky-corner-button"> 
                 <IconAdd size="28px"/> 
             </button>
@@ -267,7 +267,7 @@
             }
         },
         async mounted() {
-            const loadingLimit = localStorage.getItem("transactionsLoadedAtOnce");
+            const loadingLimit = localStorage.getItem("transactions_load_limit");
             if (loadingLimit) {
                 this.apiFilters.limit = Number(loadingLimit);
             }

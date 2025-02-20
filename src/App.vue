@@ -25,6 +25,7 @@ export default {
     async mounted() {
         initializeDarkMode();
         api.getLoginStatus();
+        api.getSettings();
     },
 }
 </script>

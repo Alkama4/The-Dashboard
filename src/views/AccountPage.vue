@@ -24,7 +24,7 @@
                 <div class="setting-value">
                     <input 
                         type="number" 
-                        v-model="chart1StartingPosition" 
+                        v-model="settings.chart_balance_initial_value" 
                         placeholder="0" 
                         step="0.01" 
                         @change="saveSettings"
@@ -38,7 +38,7 @@
                 <div class="setting-value">
                     <input 
                         type="number" 
-                        v-model="transactionsLoadedAtOnce" 
+                        v-model="settings.transactions_load_limit" 
                         placeholder="25" 
                         step="1" 
                         min="5" 
@@ -46,6 +46,24 @@
                         @change="saveSettings"
                     >
                 </div>
+            </div>
+        </div>
+
+        <div class="content-width-small">
+            <h2>
+                <span class="icon-align">
+                    <IconWarningTriangle size="24" right="var(--spacing-xs)"/>
+                    Danger zone
+                </span>
+            </h2>
+            <p>Pay extra attention and be careful with these buttons, as they have significant consequences and are not reversible.</p>
+            <div>
+                <button 
+                    class="color-warning"
+                    @click="handleAccountDelete"
+                >
+                    Delete account permanently
+                </button>
             </div>
         </div>
 
@@ -58,19 +76,24 @@ import ModalWindow from '@/components/ModalWindow.vue';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
+import IconWarningTriangle from '@/components/icons/IconWarningTriangle.vue';
 
 export default {
     components: {
         ModalWindow,
         InfoTooltip,
+        IconWarningTriangle,
     },
     data() {
         return {
             isLoggedIn: "unknown",
             username: '',
             showModal: false,
-            chart1StartingPosition: 0,
-            transactionsLoadedAtOnce: 25,
+            settingNames: [
+                "chart_balance_initial_value",
+                "transactions_load_limit",
+            ],
+            settings: {},
         };
     },
     methods: {
@@ -83,56 +106,87 @@ export default {
                 this.isLoggedIn = "yes";
             }
         },
+        async handleAccountDelete() {
+            // Launch a modal that asks for password to confirm
+            notify("To be implemented")
+        },
+        // This should be replaced when the modal is remade
         showLogOutModal() {
             this.showModal = true;
         },
-        saveSettings() {
-            if (Number.isFinite(this.chart1StartingPosition)) {
-                localStorage.setItem('chart1StartingPosition', this.chart1StartingPosition);
-            } else {
-                notify("Setting not saved! Please enter a valid number.", "warning")
-            }
-            
-            // Check if the value is a valid number before proceeding
-            if (!Number.isFinite(this.transactionsLoadedAtOnce)) {
+        async saveSettings() {
+            // Check that the values are proper numbers
+            if (!this.settingNames.every(setting => Number.isFinite(this.settings[setting]))) {
+                // If any setting is not a valid number, notify the user and do not proceed
                 notify("Setting not saved! Please enter a valid number.", "warning");
-            } else {
-                // Cap the value between 5 and 100
-                if (this.transactionsLoadedAtOnce < 5) {
-                    this.transactionsLoadedAtOnce = 5;
-                } else if (this.transactionsLoadedAtOnce > 100) {
-                    this.transactionsLoadedAtOnce = 100;
+                // Here we coul silently set the values back, but it propably is more annoying than just letting them fix it
+                // E.g. if they typed "," when the input wanted "."
+                return;
+            }
+
+            // Cap transactionsLoadLimit between 5 and 100
+            this.settings.transactions_load_limit = Math.max(5, Math.min(this.settings.transactions_load_limit, 100));
+
+            
+            // Create an array to store changed settings and loop through 
+            // each setting and compare the localStorage value with the current value
+            const changedSettings = [];
+            this.settingNames.forEach(setting => {
+                const storedValue = localStorage.getItem(setting);
+                const currentValue = this.settings[setting];
+
+                // Push to the array for api
+                if (currentValue != storedValue) {
+                    changedSettings.push({ setting, value: currentValue });
                 }
 
-                // Save the valid value to localStorage
-                localStorage.setItem('transactionsLoadedAtOnce', this.transactionsLoadedAtOnce);
+                // Save the current value to localStorage
+                localStorage.setItem(setting, currentValue);
+            });
+
+            // If changes were made, send them to the API
+            if (changedSettings.length > 0) {
+
+                console.log("Calling api:", changedSettings);
+
+                // Call API with changed settings (you can adjust the API call as needed)
+                const response = await api.updateSettings(changedSettings);
+                if (response && response.message) {
+                    console.log(response.message);
+                }
+            } else {
+                console.info('No settings changed');
             }
-            
-            console.log('Settings saved');
         },
         loadSettings() {
-            const chart1StartingPosition = localStorage.getItem('chart1StartingPosition');
-            if (chart1StartingPosition) {
-                this.chart1StartingPosition = Number(chart1StartingPosition);
-            }
-
-            const transactionsLoadedAtOnce = localStorage.getItem('transactionsLoadedAtOnce');
-            if (transactionsLoadedAtOnce) {
-                this.transactionsLoadedAtOnce = Number(transactionsLoadedAtOnce);
-            }
-
-            const username = localStorage.getItem("username");
-            if (username) {
-                this.username = username;
-            }
-        }
+            this.settingNames.forEach(setting => {
+                const value = localStorage.getItem(setting);
+                if (value) {
+                    this.settings[setting] = Number(value);
+                }
+            });
+        },
     },
     mounted() {
+        // A logged in check that automatically sends to login page if the user isn't logged in.
         const loggedIn = localStorage.getItem("isLoggedIn");
         if (loggedIn != "true") {
             router.push("/login");
         }
+
+        // Set the local storage values. Might get updated, might not. 
+        // Depends on if the the first view loaded is this or something else.
         this.loadSettings();
+
+        // Get the username
+        const username = localStorage.getItem("username");
+        if (username) {
+            this.username = username;
+        }
+
+        // Add a listener that refreshes the values on page if the function on app.vue 
+        // just updated the values to localstorage.
+        window.addEventListener("settingsUpdated", this.loadSettings);
     }
 };
 </script>

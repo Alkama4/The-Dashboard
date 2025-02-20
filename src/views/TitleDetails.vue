@@ -511,7 +511,7 @@ export default {
                     console.log("[queryTitleData] Values set to this.titleInfo: ", this.titleInfo)
                 } else {
                     notify("The title doesn't exist!", "error");
-                    router.push("/watchlist");
+                    router.push("/watch_list");
                 }
             }
         },

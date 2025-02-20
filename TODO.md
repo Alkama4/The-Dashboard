@@ -66,6 +66,10 @@ In here I will collect my notes about this website and list the stuff that need 
         - Month? Day? Max count? 50?
 - If input method touch fullscreen button should enable f11 mode fullscreen also. 
     - And make the fullscreen functionality work on homepage to.
+- Custom password field
+    - Nothing fancy, maybe not even a component
+    - Change input type when clicking on a button with icon hovering on right side
+    - password <-> text
 
 
 ### Known issues

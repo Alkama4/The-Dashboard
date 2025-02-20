@@ -1,7 +1,10 @@
 <template>
     <div class="login-page content-width-small">
         <h1>Login</h1>
-        <p>Log in in order to access the data that is linked to your account. You can browse the website without logging in, but you are limited the example data.</p>
+        <p>Log in in order to access the data that is linked to your account. You can browse the website without logging in, but you can only view the example data and can not edit it.</p>
+
+        <p>Use the form below to log in by filling in the details. Don't have an account? Create one <a href="/create_account">here.</a> If you have forgotten your username or password please contanct the server admin.</p>
+
         <form @submit.prevent="handleLogin">
             <div>
                 <label for="username">Username:</label>
@@ -11,7 +14,7 @@
                 <label for="password">Password:</label>
                 <input type="password" v-model="password" required />
             </div>
-            <button class="color-primary center login-submit" type="submit">Log in</button>
+            <button class="color-primary center" type="submit">Log in</button>
         </form>
     </div>
 </template>
@@ -19,7 +22,6 @@
 <script>
 import api from '@/utils/dataQuery';
 import router from '@/router';
-// import { notify } from '@/utils/notification';
 
 export default {
     data() {
@@ -30,8 +32,6 @@ export default {
     },
     methods: {
         async handleLogin() {
-            // console.log('Email:', this.username);
-            // console.log('Password:', this.password);
             const responseSuccess = await api.logIn({
                 username: this.username,
                 password: this.password
@@ -55,8 +55,5 @@ export default {
         display: flex;
         flex-direction: column;
         max-width: 350px;
-    }
-    .login-submit {
-        margin-top: var(--spacing-md)
     }
 </style>

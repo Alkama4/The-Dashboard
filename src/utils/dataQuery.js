@@ -25,20 +25,19 @@ async function handleError(error, endpoint) {
             // Since the sessionKey is invalid log out locally and prompt for log in.
             api.localLogOut();
         } else if (statusCode === 403) {
-            notify("Unexpected error occurred. Please try again.", "error");
+            notify("Unexpected error occurred. Please try again." + detail, "error");
         } else if (statusCode === 404) {
-            notify("Resource not found: Please verify the endpoint.", "error");
+            notify("Resource not found: Please verify the endpoint." + detail, "error");
         } else if (statusCode === 405) {
-            notify("This feature requires an account. Please login.", "error");
+            notify("This feature requires an account. Please login." + detail, "error");
+        } else if (statusCode === 400) {
+            notify(`Invalid request: ${detail}`, "error");
         } else if (statusCode === 500) {
-            notify("Internal server error. Please try again later.", "error");
+            notify("Internal server error: " + detail, "error");
         } else {
-            notify(`Unexpected error (${statusCode}): ${error.response.data.message || "Unknown error."}`, "error");
+            notify(`${statusCode}: ${detail}`, "error");
         }
-    } else if (error.request) {
-        // No response received from the server
-        console.error(`[Error] No response from server: ${error.request}`);
-        notify("Network error: Please check your connection.", "error");
+
     } else {
         // Other errors (e.g., request setup)
         console.error(`[Error] Error setting up request: ${error.message}`);
@@ -79,7 +78,7 @@ const api = {
     // - - - - - - - - - - - - - GENERAL LOGINS ETC. - - - - - - - - - - - - - 
     async logIn(params = {}) {
         params.previousSessionKey = localStorage.getItem('sessionKey');
-        const response = await this.postData('/login', null, { params });
+        const response = await this.postData('/account/login', null, { params });
         if (response) {
             if (response.loginStatus === "success") {
                 notify("Logged in successfully!", "success");
@@ -106,21 +105,30 @@ const api = {
         }
     },
 
-    async getLoginStatus() {
-        const sessionKey = localStorage.getItem('sessionKey');
-        if (sessionKey) {
-            let params = {};
-            params.session_key = sessionKey;
-            const response = await this.getData('/account/get_login_status', params);
-            if (response) {
-                console.log("[getLoginStatus] log in attempt response", response);
-                localStorage.setItem("isLoggedIn", response.loggedIn);
-                localStorage.setItem("username", response.loggedIn ? response.username : null)
-                const event = new CustomEvent("logInStatusUpdated", {});
-                window.dispatchEvent(event);
-            }
+    async createAccount(username, password) {
+        let params = {};
+        params.username = username;
+        params.password = password;
+        const response = await this.postData('/account/create', params, null);
+        if (response) {
+            return response;
         } else {
-            console.log("[getLoginStatus] Did not try: no session key");
+            console.error("[createAccount] response failed:", response);
+            return null;
+        }
+    },
+
+    async deleteAccount(password) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.password = password;
+        console.log(params);
+        const response = await this.postData('/account/delete', params, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[deleteAccount] response failed:", response);
+            return null;
         }
     },
 
@@ -153,6 +161,60 @@ const api = {
                 notify("Your session has expired, and you have been logged out. Please log in again.", "info", 15000);
             }
             router.push("/login");
+        }
+    },
+
+    async getLoginStatus() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        if (sessionKey) {
+            let params = {};
+            params.session_key = sessionKey;
+            const response = await this.getData('/account/get_login_status', params);
+            if (response) {
+                console.log("[getLoginStatus] log in attempt response", response);
+                localStorage.setItem("isLoggedIn", response.loggedIn);
+                localStorage.setItem("username", response.loggedIn ? response.username : null)
+                const event = new CustomEvent("logInStatusUpdated", {});
+                window.dispatchEvent(event);
+            }
+        } else {
+            console.log("[getLoginStatus] Did not try: no session key");
+        }
+    },
+
+    async getSettings() {
+        const sessionKey = localStorage.getItem('sessionKey');
+        if (sessionKey) {
+            let params = {};
+            params.session_key = sessionKey;
+            const response = await this.getData('/account/get_settings', params);
+            if (response) {
+                console.log("[getSettings] Settings given:", response);
+
+                // Loop through the settings and set them to localstorage
+                for (const [key, value] of Object.entries(response)) {
+                    localStorage.setItem(key, value);
+                }
+
+                // Set off a custom event to tell the account page that the values just updated
+                // and that it should refresh the values on page.
+                window.dispatchEvent(new CustomEvent("settingsUpdated", {}));
+            }
+        } else {
+            console.log("[getLoginStatus] Did not try: no session key");
+        }
+    },
+
+    async updateSettings(changedSettings) {
+        let params = {};
+        params.changed_settings = changedSettings;
+        params.session_key = localStorage.getItem('sessionKey');
+        const response = await this.postData('/account/update_settings', params);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateSettings] response failed:", response);
+            return null;
         }
     },
 
@@ -249,7 +311,7 @@ const api = {
     async getChartBalanceOverTime() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
-        params.initial_balance = localStorage.getItem('chart1StartingPosition');
+        params.initial_balance = localStorage.getItem('chart_balance_initial_value');
         const response = await this.getData('/get_chart/balance_over_time', params);
         if (response) {
             return response;

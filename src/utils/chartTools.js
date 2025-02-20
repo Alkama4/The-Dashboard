@@ -7,8 +7,12 @@ export async function initializeAndSetupChart(thisComponent, name, chartContaine
         console.error("[initializeAndSetupChart] Invalid 'getChartOptions': Expected a function");
         return;
     }
-    if (!chartContainerName || !thisComponent.$refs[chartContainerName]) {
+    if (!chartContainerName) {
         console.error(`[initializeAndSetupChart] Invalid 'chartContainerName': ${chartContainerName}`);
+        return;
+    }
+    if (!thisComponent.$refs[chartContainerName]) {
+        console.debug(`[initializeAndSetupChart] Ref element ${chartContainerName} doesn't exist!`)
         return;
     }
     if (!name) {

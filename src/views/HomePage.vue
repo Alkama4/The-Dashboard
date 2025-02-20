@@ -4,7 +4,7 @@
 			<div class="text-area">
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span>
-				<router-link class="no-decoration" to="/spendings/newEntry" style="padding-bottom: var(--spacing-md);">
+				<router-link class="no-decoration" to="/spendings/new_entry" style="padding-bottom: var(--spacing-md);">
 					<button class="color-primary">Start logging</button>
 				</router-link>
 			</div>
@@ -456,7 +456,7 @@ export default {
 		// console.log(this.serverStats.storage);
 
 		const resourceLogsResponse = await api.getServerResourceLogs("24h");
-		console.log("resourceLogsResponse", resourceLogsResponse);
+		// console.log("resourceLogsResponse", resourceLogsResponse);
 		if (resourceLogsResponse && resourceLogsResponse.data) {
 			const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
 			const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
@@ -728,7 +728,7 @@ export default {
 					formatter: params => generateTooltipMultiValue(params, 'time', convert.toBytes, false)
 				},
 				grid: {
-					left: 48,
+					left: 64,
 					right: 8,
 					top: 80,
 					bottom: 48,
@@ -778,7 +778,7 @@ export default {
 		const fastapiLogDataResponse = await api.getFastapiRequestLogData("24h");
 		if (fastapiLogDataResponse && fastapiLogDataResponse.data) {
 			this.serverStats.fastapiData = fastapiLogDataResponse.data;
-			console.log("Fastapi data: ", this.serverStats.fastapiData);
+			// console.log("Fastapi data: ", this.serverStats.fastapiData);
 
 			const chart7Values = fastapiLogDataResponse.data.client_ip_count.map(item => ({
 				name: item.client_ip,

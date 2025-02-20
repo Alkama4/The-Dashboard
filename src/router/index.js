@@ -10,6 +10,7 @@ import FourOFourPage from '@/views/404Page.vue'
 import WatchList from '@/views/WatchList.vue';
 import AddTitle from '@/views/AddTitle.vue';
 import TitleDetails from '@/views/TitleDetails.vue';
+import CreateAccountPage from '@/views/CreateAccountPage.vue';
 
 const routes = [
     {
@@ -31,7 +32,7 @@ const routes = [
         meta: { title: 'Spendings' }
     },
     {
-        path: '/spendings/newEntry',
+        path: '/spendings/new_entry',
         name: 'New Entry',
         component: NewEntryPage,
         meta: { title: 'New Entry' }
@@ -41,6 +42,12 @@ const routes = [
         name: 'Log in',
         component: LogInPage,
         meta: { title: 'Log In' }
+    },
+    {
+        path: '/create_account',
+        name: 'Create account',
+        component: CreateAccountPage,
+        meta: { title: 'Create account' }
     },
     {
         path: '/debug',
@@ -55,19 +62,19 @@ const routes = [
         meta: { title: 'Analytics' }
     },
     {
-        path: '/watchList',
+        path: '/watch_list',
         name: 'Watch list',
         component: WatchList,
         meta: { title: 'Watch list' }
     },
     {
-        path: '/watchList/addTitle',
+        path: '/watch_list/add_title',
         name: 'Add Title',
         component: AddTitle,
         meta: { title: 'Add Title' }
     },
     {
-        path: '/watchList/title/:titleID',
+        path: '/watch_list/title/:titleID',
         name: 'Title Details',
         component: TitleDetails,
         meta: { title: 'Title Details' }

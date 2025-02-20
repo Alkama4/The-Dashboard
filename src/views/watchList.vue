@@ -5,7 +5,7 @@
             <p>Here you can find and track movies and TV-series from your watch list. If your watch list is empty you can search for titles to add with the button on the bottom right corner of the screen. </p>
         </div>
 
-        <router-link to="/watchList/addTitle">
+        <router-link to="/watch_list/addTitle">
             <button class="color-primary sticky-corner-button">
                 <IconAdd size="28px"/>
             </button>
@@ -205,7 +205,7 @@ export default {
     },
     methods: {
         openDetailsPageFor(titleID) {
-            router.push(`/watchList/title/${titleID}`);
+            router.push(`/watch_list/title/${titleID}`);
         },
         formatRuntime(runtime) {
             const hours = Math.floor(runtime / 60);
@@ -227,7 +227,7 @@ export default {
                         );
                         if (titleData && titleData.titles) {
                             list.titles = titleData.titles;
-                            console.info(list.listName, "titles and their info:", list.titles);
+                            console.debug(list.listName, "titles and their info:", list.titles);
                         }
                     } catch (error) {
                         console.error(`Error fetching data for ${list.listName}:`, error);
