@@ -813,6 +813,13 @@ input[type="radio"] {
     width: 100%;
 }
 
+.flex-1 {
+    flex: 1;
+}
+.flex-2 {
+    flex: 2;
+}
+
 .text-light {
     color: var(--color-text-light);
 }

@@ -100,6 +100,8 @@ In here I will collect my notes about this website and list the stuff that need 
 - The api calls aren't cancelled when changing page. Research if they can be cancelled on unmount
 - Home screen charts don't react to esc
 - Delete transaction doesn't use DELETE
+- Transactions load never ends. 
+    - Simple state change when reponse fails and an another v-if element.
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions

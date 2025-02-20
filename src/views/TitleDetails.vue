@@ -29,19 +29,7 @@
                     <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)"><IconChevronDown size="50"/></button>
                     <button class="right all-pointer-events" @click="addOrSubtractSlideshowIndex(1)"><IconChevronDown size="50"/></button>
                 </div>
-
-                <div class="name-and-tagline no-pointer-events">
-                    <h1 class="title-name">
-                        <span class="all-pointer-events" :title="titleInfo.name">
-                            {{ titleInfo.name }} 
-                        </span>
-                        <span class="all-pointer-events original-title" :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name">
-                            ({{ titleInfo.original_name }})
-                        </span>
-                    </h1>
-                    <!-- <img :src="`http://pibox.lan:800/image/${titleInfo.title_id}/logo/1`" alt=" "> -->
-                    <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
-                </div>
+                
                 <div class="indicator">
                     <IndicatorDots 
                         :dotIndex="imageSlideshowData.chosenOne" 
@@ -54,12 +42,25 @@
 
         <div class="content-width-medium title-details">
 
+            <div class="name-and-tagline no-pointer-events">
+                <h1 class="title-name">
+                    <span class="all-pointer-events" :title="titleInfo.name">
+                        {{ titleInfo.name }} 
+                    </span>
+                    <span class="all-pointer-events original-title" :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name">
+                        ({{ titleInfo.original_name }})
+                    </span>
+                </h1>
+                <!-- <img :src="`http://pibox.lan:800/image/${titleInfo.title_id}/logo/1`" alt=" "> -->
+                <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
+            </div>
+
             <div class="mark-watched combined-buttons">
                 <!-- Favourite buttons -->
                 <!-- class="icon-button favourite"  -->
                 <button 
                     v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
-                    class="color-primary left-button" 
+                    class="color-primary left-button flex-1" 
                     @click="handleFavouriteToggle"
                     :disabled="waitingForResult.includes('favourite')"
                     :class="{loading: waitingForResult.includes('favourite')}"
@@ -68,7 +69,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning left-button" 
+                    class="color-warning left-button flex-1" 
                     @click="handleFavouriteToggle" 
                     :disabled="waitingForResult.includes('favourite')"
                     :class="{loading: waitingForResult.includes('favourite')}"
@@ -79,7 +80,7 @@
                 <!-- Watched buttons -->
                 <button 
                     v-if="titleInfo.user_title_watch_count <= 0"
-                    class="color-primary middle-button" 
+                    class="color-primary middle-button flex-2" 
                     @click="handleTitleWatchClick('title', 'watched')"
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -88,7 +89,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning middle-button" 
+                    class="color-warning middle-button flex-2" 
                     @click="handleTitleWatchClick('title', 'unwatched')" 
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -99,7 +100,7 @@
                 <!-- Watch list buttons -->
                 <button 
                     v-if="titleInfo.user_title_watch_count <= -1"
-                    class="color-primary right-button" 
+                    class="color-primary right-button flex-1" 
                     @click="handleWatchListModification('add')"
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -108,7 +109,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning right-button" 
+                    class="color-warning right-button flex-1" 
                     @click="handleWatchListModification('remove')" 
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -586,6 +587,8 @@ export default {
     --z-backdrop-content-inside: 4;
     --z-backdrop-arrow-buttons: 5;
     --z-backdrop-indicator: 6;
+
+    margin-bottom: var(--spacing-hg);
 }
 
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
@@ -683,7 +686,7 @@ export default {
     width: 90%;
     top: 50%;
     left: 50%;
-    transform: translate(-50%);
+    transform: translateX(-50%) translateY(-50%);
     z-index: var(--z-backdrop-arrow-buttons);
 }
 .backdrop-container .button-holder button {
@@ -724,12 +727,11 @@ export default {
 }.backdrop-container button.right:hover svg {
     transform: rotate(-90deg) scale(1.5);
 }
-@media (max-width: 666px) {
+/* @media (max-width: 666px) {
     .backdrop-container .button-holder button svg {
         fill: transparent;
     }
     .backdrop-container .button-holder button {
-        /* background-color: red; */
         border-radius: 0;
         height: 100%;
         width: 30%;
@@ -745,22 +747,18 @@ export default {
     .backdrop-container .button-holder button:hover::after {
         background-color: transparent;
     }
-}
+} */
 
 
-.backdrop-container .name-and-tagline {
-    position: absolute;
-    bottom: var(--spacing-md);
-    left: 50%;
-    transform: translateX(-50%);
+.name-and-tagline {
+    margin-bottom: var(--spacing-lg);
     align-items: left;
-    width: 90%;
-    z-index: var(--z-backdrop-content-inside);
 }
 
 /* Maybe try and pop the orignial to next row when it would overflow or wrap */
 .name-and-tagline .title-name {
     margin-bottom: 0;
+    margin-top: 0;
 }
 .name-and-tagline .title-name .original-title {
     color: var(--color-text-lighter)
@@ -769,7 +767,7 @@ export default {
     color: var(--color-text-light);
 }
 
-@media (min-width: 900px) {
+@media (min-width: 750px) {
     .name-and-tagline .title-name {
         font-size: 48px;
     }
@@ -799,26 +797,54 @@ export default {
 }
 
 .mark-watched {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: 0;
-    margin: 0;
+    position: fixed;
+    bottom: var(--spacing-md);
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100vw - 2vw * 2);
+    z-index: 10;
+    background-color: var(--color-background-card);
+    border: 1px solid var(--color-border);
+    padding: 10px;
+    border-radius: var(--border-radius-medium);
+    box-sizing: border-box;
+    box-shadow: var(--shadow-card);
+
 }
 .mark-watched button {
-    padding-inline: var(--spacing-lg);
     white-space: nowrap;
     margin: 0;
+    padding-inline: var(--spacing-md);
 }
 
-@media (max-width: 666px) {
+@media (min-width: 550px) {
     .mark-watched {
-        position: relative;
-        width: 100%;
-        margin: var(--spacing-md) 0;
+        gap: var(--spacing-sm);
+
     }
     .mark-watched button {
+        padding-inline: var(--spacing-lg);
+        border-radius: var(--border-radius-small) !important;
+    }
+}
+
+@media (min-width: 700px) {
+    .mark-watched {
+        position: static;
+        transform: none;
         width: 100%;
-        margin: 0;
+        border: none;
+        padding: 0;
+        margin: var(--spacing-md) 0;
+        box-shadow: none;
+        background-color: initial;
+    }
+    .mark-watched button {
+        padding-inline: var(--spacing-lg);
+        border-radius: var(--border-radius-small) !important;
+    }
+    .title-info {
+        margin-bottom: 0;
     }
 }
 
@@ -827,6 +853,12 @@ export default {
     grid-template-columns: auto 1fr;
     gap: var(--spacing-lg);
 }
+
+.details-container h2 {
+    /* Smaller margin, because its inside a div causing margins not to overlap */
+    margin-top: 16px !important;
+}
+
 .trailer-container {
     margin-left: auto;
 }
