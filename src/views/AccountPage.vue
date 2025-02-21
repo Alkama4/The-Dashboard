@@ -94,6 +94,7 @@ export default {
                 "transactions_load_limit",
             ],
             settings: {},
+            settingsInitial: {},
         };
     },
     methods: {
@@ -119,64 +120,61 @@ export default {
             if (!this.settingNames.every(setting => Number.isFinite(this.settings[setting]))) {
                 // If any setting is not a valid number, notify the user and do not proceed
                 notify("Setting not saved! Please enter a valid number.", "warning");
-                // Here we coul silently set the values back, but it propably is more annoying than just letting them fix it
-                // E.g. if they typed "," when the input wanted "."
                 return;
             }
 
             // Cap transactionsLoadLimit between 5 and 100
             this.settings.transactions_load_limit = Math.max(5, Math.min(this.settings.transactions_load_limit, 100));
 
-            
-            // Create an array to store changed settings and loop through 
-            // each setting and compare the localStorage value with the current value
+            // Create an array to store changed settings
             const changedSettings = [];
+
+            // Compare the current settings with initial settings and find differences
             this.settingNames.forEach(setting => {
-                const storedValue = localStorage.getItem(setting);
+                const initialValue = this.settingsInitial[setting];
                 const currentValue = this.settings[setting];
 
-                // Push to the array for api
-                if (currentValue != storedValue) {
+                // If the setting has changed, push it to the array
+                if (currentValue !== initialValue) {
                     changedSettings.push({ setting, value: currentValue });
                 }
-
-                // Save the current value to localStorage
-                localStorage.setItem(setting, currentValue);
             });
 
-            // If changes were made, send them to the API
+            // If there are changes, send them to the API
             if (changedSettings.length > 0) {
-
-                console.log("Calling api:", changedSettings);
-
-                // Call API with changed settings (you can adjust the API call as needed)
+                // Call the API with the changed settings
                 const response = await api.updateSettings(changedSettings);
                 if (response && response.message) {
-                    console.log(response.message);
+                    console.log("[saveSettings]", response.message);
+                    
+                    // After the settings have been successfully saved, update the initial settings
+                    changedSettings.forEach(({ setting, value }) => {
+                        this.settingsInitial[setting] = value;
+                    });
                 }
             } else {
-                console.info('No settings changed');
+                console.log('[saveSettings] No settings changed');
             }
         },
-        loadSettings() {
-            this.settingNames.forEach(setting => {
-                const value = localStorage.getItem(setting);
-                if (value) {
-                    this.settings[setting] = Number(value);
+        async loadSettings() {
+            // Call API to get settings
+            const response = await api.getSettings();
+            if (response) {
+                // Store the fetched settings in `this.settings` and `this.settingsInitial`
+                for (const [key, value] of Object.entries(response)) {
+                    // console.debug(key, value);
+                    this.settings[key] = Number(value);
+                    this.settingsInitial[key] = Number(value); // Save initial values
                 }
-            });
+            }
         },
     },
-    mounted() {
+    async mounted() {
         // A logged in check that automatically sends to login page if the user isn't logged in.
         const loggedIn = localStorage.getItem("isLoggedIn");
         if (loggedIn != "true") {
             router.push("/login");
         }
-
-        // Set the local storage values. Might get updated, might not. 
-        // Depends on if the the first view loaded is this or something else.
-        this.loadSettings();
 
         // Get the username
         const username = localStorage.getItem("username");
@@ -184,9 +182,7 @@ export default {
             this.username = username;
         }
 
-        // Add a listener that refreshes the values on page if the function on app.vue 
-        // just updated the values to localstorage.
-        window.addEventListener("settingsUpdated", this.loadSettings);
+        this.loadSettings();
     }
 };
 </script>
@@ -196,7 +192,7 @@ export default {
     margin: var(--spacing-lg) auto;
     gap: var(--spacing-md);
     width: 100%;
-    box-sizing: border-box; /* Tää on ihan paras! Ignoraa paddingin kun asetetaan width */
+    box-sizing: border-box; /* Tää on ihan paras! Ignoraa paddingin kun asetetaan width tms */
 }
 .loggedInAs > div {
     font-size: 16px;

@@ -6,22 +6,19 @@ In here I will collect my notes about this website and list the stuff that need 
     - Think of a better way to implement the modal. 
     - Way too manual and inconvenient. 
     - Should work more like the native popup where it stops progress and returns a value.
+    - Split into two. One for simple confimations with customaizeable texts and one for just slotting stuff into
 
-- PROPABLY SHOULD STILL USE THE MAX AMOUNT OF QUERIES AT ONCE SINCE ITS QUITE STUPID TO SEND TENS OF NOT HUNDREADS OF QUERIES AT ONCE AND WAIT FOR THEM ALL!
 - Title details
-    - Move the title out of the backdrop on mobile and make dots more prominant by moving a bit up like sm amount.
     - Possibility to replace the images.
         - Started already on fastapi
-- TMDB icon to season and episode rating
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
     - Backups kind of dull, give it some life and readability
-- Charts shold propably be a component
+- Charts should propably be a component
     - Or chart setup and values all handled in the .js file. No thisComponent etc. Just give it the stuff and it will handle it.
-- Resrource monitoring things should check if there is one entry for every minute
-    - If missing average between
-    - If extra just prune the one further from minute. (More seconds)
+    - Although the current setup works fine and is already quite good so propably not worth the effort
+
 
 ### Features to add
 - Navigation
@@ -106,6 +103,7 @@ In here I will collect my notes about this website and list the stuff that need 
 - Delete transaction doesn't use DELETE
 - Transactions load never ends. 
     - Simple state change when reponse fails and an another v-if element.
+    
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions

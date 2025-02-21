@@ -23,9 +23,11 @@ export default {
         TopBar,
     },
     async mounted() {
+        // Check for browser stuff and localstorage for previous choises
         initializeDarkMode();
+
+        // Automatically check the login status so that it can be used page wide 
         api.getLoginStatus();
-        api.getSettings();
     },
 }
 </script>

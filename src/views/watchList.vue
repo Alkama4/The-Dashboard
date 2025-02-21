@@ -57,17 +57,19 @@
                     </swiper-slide>
 
                     <swiper-slide 
-                        class="card full-width-swiper-slide loading-placeholder" 
+                        class="full-width-swiper-slide loading-placeholder" 
                         v-if="titleList.titles.length == 0 && titleList.loading"
                     >
                     </swiper-slide>
 
                     <swiper-slide 
-                        class="card full-width-swiper-slide" 
+                        class="full-width-swiper-slide" 
                         v-if="titleList.titles.length == 0 && !titleList.loading"
                     >
-                        Looks like there's nothing here. Try adding titles to your watchlist.
+                        Looks like there's nothing here.<br>
+                        <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
                     </swiper-slide>
+                    
                     <div class="slides-indicator-holder">
                         <!-- Minus one since we only use in mobile layout which never reaches the last one -->
                         <IndicatorDots 
@@ -168,7 +170,7 @@ export default {
                 {
                     listName: "Upcoming titles",
                     watched: true,
-                    text: "Titles to be released.",
+                    text: "Titles to look forward to.",
                     titles: [],
                     loading: true,
                     activeSlide: 0,
@@ -408,9 +410,10 @@ export default {
 }
 
 .full-width-swiper-slide {
-    height: 300px;
+    height: calc(300px * 0.95);
     width: calc(100% - var(--spacing-hg)) !important;
     margin: 0;
+    margin: calc(300px * 0.025) calc(200px * 0.025);
     box-sizing: border-box;
     padding-inline: calc(22% - var(--spacing-lg));
 

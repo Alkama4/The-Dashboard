@@ -123,7 +123,6 @@
                 apiFilters: {
                     sort_by: 'date',
                     sort_order: 'desc',
-                    limit: 25,   // Fall back value if not set in localstorage
                     offset: 0,
                     // Filter values
                     start_date: 946684800000,
@@ -179,29 +178,22 @@
                 this.expandedIndex = this.expandedIndex === index ? null : index;
             },
             async fetchTransactions() {
-                // Disable buttons
                 this.waitingForResponse = true;
 
-                // Make the query
                 const response = await api.getTransactions(this.apiFilters);
                 if (response && response.transactions) {
-                    // Detect if the user managed to send an another request before we got an answer from the first
-                    // If they did just replace with the new data
-                    if (response.offset == 0) {
-                        this.transactions = [...response.transactions];
-                    } else {    // If not add to it
-                        this.transactions = [...this.transactions, ...response.transactions];
+                    if (this.apiFilters.offset === 0) {
+                        this.transactions = [...response.transactions];  // First page, reset
+                    } else {
+                        this.transactions = [...this.transactions, ...response.transactions]; // Append new data
                     }
-                    
-                    // Make the loading button active since we got an answer
+
                     this.waitingForResponse = false;
 
-                    // If there are more entries show load more button
+                    // If there are more entries, keep showing "Load More" button
                     this.loadMoreButtonVisible = response.hasMore;
-
                 } else {
-                    //i notify("Failed to retrieve transactions.", "error");
-                    console.error("[SpendingsPage] response && response.Values failed");
+                    console.error("[SpendingsPage] Failed to retrieve transactions.");
                 }
             },
             async fetchFilters() {
@@ -230,7 +222,7 @@
             },
             loadMore() {
                 if (!this.waitingForResponse) {
-                    this.apiFilters.offset += this.apiFilters.limit;
+                    this.apiFilters.offset += 1;  // Increment by 1 instead of by `limit`
                     this.fetchTransactions();
                 }
             },
@@ -240,7 +232,7 @@
                 this.apiFilters.offset = 0;
                 this.transactions = [];
 
-                console.log("[SpendingsPage] filterdata before to api", this.filterData);
+                console.log("[applyFilters] filterdata before to api", this.filterData);
 
                 // Set the filters values to the API filters
                 // Sliders
@@ -254,7 +246,7 @@
                 this.apiFilters.categories = this.filterData.category.selected;
                 this.apiFilters.category_inclusion_mode = this.filterData.category.mode === 'include';
 
-                console.log("[SpendingsPage] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
+                console.log("[applyFilters] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
                 
                 this.fetchTransactions();
             },

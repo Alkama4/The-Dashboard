@@ -36,6 +36,24 @@
 						<span>Pihole</span>
 					</button>
 				</a>
+				<a href="/watch_list/add_title" class="no-decoration">
+					<button class="tile-button">
+						<img 
+							src=""
+							@load="(event) => event.target.classList.add('loaded')"
+						>
+						<span>Add a title</span>
+					</button>
+				</a>
+				<a href="/watch_list/add_title" class="no-decoration">
+					<button class="tile-button">
+						<img 
+							src=""
+							@load="(event) => event.target.classList.add('loaded')"
+						>
+						<span>Log a transaction</span>
+					</button>
+				</a>
 			</div>
 		</div>
 

@@ -55,7 +55,7 @@
                 <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
             </div>
 
-            <div class="mark-watched combined-buttons">
+            <div class="control-button-array combined-buttons">
                 <!-- Favourite buttons -->
                 <!-- class="icon-button favourite"  -->
                 <button 
@@ -69,7 +69,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning left-button flex-1" 
+                    class=" left-button flex-1" 
                     @click="handleFavouriteToggle" 
                     :disabled="waitingForResult.includes('favourite')"
                     :class="{loading: waitingForResult.includes('favourite')}"
@@ -89,7 +89,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning middle-button flex-2" 
+                    class=" middle-button flex-2" 
                     @click="handleTitleWatchClick('title', 'unwatched')" 
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -109,7 +109,7 @@
                 </button>
                 <button 
                     v-else
-                    class="color-warning right-button flex-1" 
+                    class=" right-button flex-1" 
                     @click="handleWatchListModification('remove')" 
                     :disabled="waitingForResult.includes('titleWatched')"
                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -262,7 +262,7 @@
                         Mark season watched
                     </button>
                     <button
-                        class="modify-watched color-warning"
+                        class="modify-watched "
                         v-else
                         @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)"
                         :disabled="waitingForResult.includes('titleWatched')"
@@ -313,7 +313,7 @@
                                 </button>
                                 <button 
                                     v-else
-                                    class="modify-watched color-warning"
+                                    class="modify-watched "
                                     @click="handleTitleWatchClick('episode', 'unwatched', episode.episode_id)"
                                     :disabled="waitingForResult.includes('titleWatched')"
                                     :class="{loading: waitingForResult.includes('titleWatched')}"
@@ -587,8 +587,6 @@ export default {
     --z-backdrop-content-inside: 4;
     --z-backdrop-arrow-buttons: 5;
     --z-backdrop-indicator: 6;
-
-    margin-bottom: var(--spacing-hg);
 }
 
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
@@ -796,7 +794,7 @@ export default {
     white-space: nowrap;
 }
 
-.mark-watched {
+.control-button-array {
     position: fixed;
     bottom: var(--spacing-md);
     left: 50%;
@@ -810,43 +808,33 @@ export default {
     box-sizing: border-box;
     box-shadow: var(--shadow-card);
 
+    position: static;
+    transform: none;
+    width: 100%;
+    border: none;
+    padding: 0;
+    margin: var(--spacing-md) 0;
+    box-shadow: none;
+    background-color: initial;
+
 }
-.mark-watched button {
+.control-button-array button {
     white-space: nowrap;
     margin: 0;
     padding-inline: var(--spacing-md);
 }
 
 @media (min-width: 550px) {
-    .mark-watched {
+    .control-button-array {
         gap: var(--spacing-sm);
 
     }
-    .mark-watched button {
+    .control-button-array button {
         padding-inline: var(--spacing-lg);
         border-radius: var(--border-radius-small) !important;
     }
 }
 
-@media (min-width: 700px) {
-    .mark-watched {
-        position: static;
-        transform: none;
-        width: 100%;
-        border: none;
-        padding: 0;
-        margin: var(--spacing-md) 0;
-        box-shadow: none;
-        background-color: initial;
-    }
-    .mark-watched button {
-        padding-inline: var(--spacing-lg);
-        border-radius: var(--border-radius-small) !important;
-    }
-    .title-info {
-        margin-bottom: 0;
-    }
-}
 
 .trailer-details-flex {
     display: grid;

@@ -144,7 +144,7 @@
     --color-button-delete-active: rgb(182, 29, 29);
 
     /* Shadows */
-    --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.1);
     --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
     --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.2);
     --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -233,7 +233,7 @@
     --color-button-delete-active: rgb(145, 13, 13);
 
     /* Shadows */
-    /* --shadow-card: 0 4px 8px rgba(0, 0, 0, 0.5); */
+    /* --shadow-card: 0 4px 8px rgba(255, 0, 0, 0.5); */
     --shadow-card: none;
     /* --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.2); */
     --shadow-button-hover: none;
@@ -826,6 +826,9 @@ input[type="radio"] {
 .text-lighter {
     color: var(--color-text-lighter);
 }
+.text-hidden {
+    color: var(--color-text-hidden);
+}
 
 .icon-align {
     display: inline-flex !important;
@@ -884,6 +887,7 @@ input[type="radio"] {
     );
     background-size: 200% 100%;
     animation: highlight-wave 2s infinite linear;
+    box-shadow: none !important;
 }
 @keyframes highlight-wave {
     0% {

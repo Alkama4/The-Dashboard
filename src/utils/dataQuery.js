@@ -188,18 +188,7 @@ const api = {
             let params = {};
             params.session_key = sessionKey;
             const response = await this.getData('/account/get_settings', params);
-            if (response) {
-                console.log("[getSettings] Settings given:", response);
-
-                // Loop through the settings and set them to localstorage
-                for (const [key, value] of Object.entries(response)) {
-                    localStorage.setItem(key, value);
-                }
-
-                // Set off a custom event to tell the account page that the values just updated
-                // and that it should refresh the values on page.
-                window.dispatchEvent(new CustomEvent("settingsUpdated", {}));
-            }
+            if (response) return response;
         } else {
             console.log("[getLoginStatus] Did not try: no session key");
         }
@@ -311,7 +300,6 @@ const api = {
     async getChartBalanceOverTime() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
-        params.initial_balance = localStorage.getItem('chart_balance_initial_value');
         const response = await this.getData('/get_chart/balance_over_time', params);
         if (response) {
             return response;
