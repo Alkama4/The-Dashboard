@@ -5,7 +5,7 @@
             <p>Here you can find and track movies and TV-series from your watch list. If your watch list is empty you can search for titles to add with the button on the bottom right corner of the screen. </p>
         </div>
 
-        <router-link to="/watch_list/addTitle">
+        <router-link to="/watch_list/add_title">
             <button class="color-primary sticky-corner-button">
                 <IconAdd size="28px"/>
             </button>
@@ -31,7 +31,7 @@
                         @click="openDetailsPageFor(title.id)"
                     >
                         <img 
-                            :src="`http://pibox.lan:800/image/${title.id}/poster.jpg`" 
+                            :src="`${apiUrl}/image/${title.id}/poster.jpg`" 
                             class="thumbnail"
                             @load="(event) => event.target.classList.add('loaded')" 
                         />

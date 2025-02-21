@@ -1,5 +1,5 @@
 # Notes
-In here I will collect my notes about this website and list the stuff that need to be done or fixed.
+This file is a collection of notes for things that need to be done or fixed. It serves as an idea bank where I jot down tasks or thoughts as they come to mind. Most of these issues are typically resolved on their own over time, and the list often goes unnoticed once completed.
 
 ### Next time
 - Modal remake
@@ -67,6 +67,12 @@ In here I will collect my notes about this website and list the stuff that need 
     - Nothing fancy, maybe not even a component
     - Change input type when clicking on a button with icon hovering on right side
     - password <-> text
+- Possible color palette:
+    - #f99e1c
+    - #e56528
+    - #425d94
+    - #2c3361
+    - #3d3e40
 
 
 ### Known issues
@@ -85,7 +91,8 @@ In here I will collect my notes about this website and list the stuff that need 
     - Also vue select?
 - When in mobile nav page scrolling isn't disabled
 - Only mobile nav has smooth fadeout
-- Doesn't use the internal fastapi address but the external 192.168.0.2:800 which is not optimal
+- Doesn't use the internal fastapi address but the external which is not optimal. 
+    - The requests seem to be coming from the client ip and not the webserver so can't do that?
 - Filter date slider labels only every 3 months so with transactions on a short timespan it looks odd/broken.
 - Light mode bg, text, modal, generic button etc. colors need a restructuring. 
     - Try out mirroring what dark mode does instead of brining some stuff to lighter like buttons

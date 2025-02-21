@@ -1,12 +1,15 @@
 <template>
     <div class="debug-page">
         <h1>Debug Page</h1>
-        <p>This is a basic debug page. For everything debugging and testing related.</p>
+        <p>Congralutions just you found an easter egg! Unfortunately though this is just a basic debug page and not something more exciting. This page can be used for everything debugging and testing related.</p>
+
 		<h2>Notification buttons</h2>
-		<button @click="notificationInfo">Info</button>
-		<button @click="notificationSuccess">Success</button>
-		<button @click="notificationError">Error</button>
-		<button @click="notificationWarning">Warning</button>
+        <div class="flex-row" style="gap: 0">
+            <button style="margin: var(--spacing-xs) var(--spacing-sm)" @click="notificationInfo">Info</button>
+            <button style="margin: var(--spacing-xs) var(--spacing-sm)" @click="notificationSuccess">Success</button>
+            <button style="margin: var(--spacing-xs) var(--spacing-sm)" @click="notificationError">Error</button>
+            <button style="margin: var(--spacing-xs) var(--spacing-sm)" @click="notificationWarning">Warning</button>
+        </div>
 
         <div class="color-palette">
             <div style="background-color: var(--color-primary);"></div>
@@ -23,112 +26,16 @@
             <div style="background-color: var(--color-undecenary);"></div>
         </div>
 
-        <FadeDebug/>
-
-        <!-- 			
-		<h2>Ascii Art</h2>
-		<p>Here's some ascii art for your viewing pleasures since I haven't had the time to implement anything else.</p>
-		<div class="card">
-			<pre>
-.              +   .                .   . .     .  .
-                   .                    .       .     *
-  .       *                        . . . .  .   .  + .
-            "You Are Here"            .   .  +  . . .
-.                 |             .  .   .    .    . .
-                  |           .     .     . +.    +  .
-                 \|/            .       .   . .
-        . .       V          .    * . . .  .  +   .
-           +      .           .   .      +
-                            .       . +  .+. .
-  .                      .     . + .  . .     .      .
-           .      .    .     . .   . . .        ! /
-      *             .    . .  +    .  .       - O -
-          .     .    .  +   . .  *  .       . / |
-               . + .  .  .  .. +  .
-.      .  .  .  *   .  *  . +..  .            *
- .      .   . .   .   .   . .  +   .    .            +
-			</pre>
-			<h3>"You are here"</h3>
-		</div>
-
-		<div class="card">
-			<pre>
-              |    |    |      v
-          v  )_)  )_)  )_)
-v           )___))___))___)\        v
-      v    )____)____)_____)\\
-         _____|____|____|____\\\__
----------\                   /---------
-  ^^^^^ ^^^^^^^^^^^^^^^^^^^^^
-    ^^^^      ^^^^     ^^^    ^^
-         ^^^^      ^^^
-			</pre>
-			<h3>Sail boat</h3>
-		</div>
-
-		<div class="card">
-			<pre>
-   .-.                                                   \ /
-  ( (                                |                  - * -
-   '-`                              -+-                  / \
-            \            o          _|_          \
-            ))          }^{        /___\         ))
-          .-#-----.     /|\     .---'-'---.    .-#-----.
-     ___ /_________\   //|\\   /___________\  /_________\  
-    /___\ |[] _ []|    //|\\    | A /^\ A |    |[] _ []| _.O,_
-....|"#"|.|  |*|  |...///|\\\...|   |"|   |....|  |*|  |..(^).ldb
-			</pre>
-			<h3>Christmas town</h3>
-		</div>
-
-		<div class="card">
-			<pre>
-                                           /
-                        _,.------....___,.' ',.-.
-                     ,-'          _,.--"        |
-                   ,'         _.-'              .
-                  /   ,     ,'                   `
-                 .   /     /                     ``.
-                 |  |     .                       \.\
-       ____      |___._.  |       __               \ `.
-     .'    `---""       ``"-.--"'`  \               .  \
-    .  ,            __               `              |   .
-    `,'         ,-"'  .               \             |    L
-   ,'          '    _.'                -._          /    |
-  ,`-.    ,".   `--'                      >.      ,'     |
- . .'\'   `-'       __    ,  ,-.         /  `.__.-      ,'
- ||:, .           ,'  ;  /  / \ `        `.    .      .'/
- j|:D  \          `--'  ' ,'_  . .         `.__, \   , /
-/ L:_  |                 .  "' :_;                `.'.'
-.    ""'                  """""'                    V
- `.                                 .    `.   _,..  `
-   `,_   .    .                _,-'/    .. `,'   __  `
-    ) \`._        ___....----"'  ,'   .'  \ |   '  \  .
-   /   `. "`-.--"'         _,' ,'     `---' |    `./  |
-  .   _  `""'--.._____..--"   ,             '         |
-  | ." `. `-.                /-.           /          ,
-  | `._.'    `,_            ;  /         ,'          .
- .'          /| `-.        . ,'         ,           ,
- '-.__ __ _,','    '`-..___;-...__   ,.'\ ____.___.'
- `"^--'..'   '-`-^-'"--    `-^-'`.''"""""`.,^.`.--' mh
-			</pre>
-			<h3>Bulbasaur</h3>
-		</div>
-
-		<p>All art is from <a href="https://www.asciiart.eu">asciiart.eu</a>.</p> -->
     </div>
 </template>
 
 <script>
-import FadeDebug from '@/components/FadeDebug.vue';
 import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
 
 export default {
     name: 'DebugPage',
-    components: {
-        FadeDebug,
-    },
+    components: {},
     methods: {
         notificationInfo() {
             notify("This is a generic info notification that I can place tips or tricks into.", "info");

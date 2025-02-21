@@ -18,7 +18,7 @@
 		<div class="flex-column">
 			<h2>Other services</h2>
 			<div class="tile-container">
-				<a href="https://pibox.lan:9443" class="no-decoration">
+				<a :href="serviceUrl1" class="no-decoration">
 					<button class="tile-button">
 						<img 
 							src="../assets/thumbnails/portainer.svg" 
@@ -27,7 +27,7 @@
 						<span>Portainer</span>
 					</button>
 				</a>
-				<a href="http://pibox.lan:81/admin/" class="no-decoration">
+				<a :href="serviceUrl2" class="no-decoration">
 					<button class="tile-button">
 						<img 
 							src="../assets/thumbnails/pihole.png"
@@ -36,6 +36,8 @@
 						<span>Pihole</span>
 					</button>
 				</a>
+
+				<!-- Buttons like this could be useful, but I don't have logos? Just come icons? -->
 				<a href="/watch_list/add_title" class="no-decoration">
 					<button class="tile-button">
 						<img 
@@ -56,8 +58,6 @@
 				</a>
 			</div>
 		</div>
-
-		<!-- Might want to implement the following logic for security reasons: If login username == aleksi -->
 
 		<div class="flex-column content-width-medium">
 			<h2>Backups</h2>
@@ -397,6 +397,8 @@ export default {
 	},
 	data() {
 		return {
+			serviceUrl1: process.env.VUE_APP_OTHER_SERVICE_1_URL,
+			serviceUrl2: process.env.VUE_APP_OTHER_SERVICE_2_URL,
 			greeting: this.getGreeting(),
 			backups: [],
             isLoaded: {},

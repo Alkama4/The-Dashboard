@@ -6,7 +6,7 @@
                     v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                     @load="image.isLoaded = true" 
                     :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                    :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                    :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
                 />
             </div>
         </div>
@@ -20,7 +20,7 @@
                             v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                             @load="image.isLoaded = true" 
                             :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                            :src="`http://pibox.lan:800/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                            :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
                         />
                     </div>
                 </div>
@@ -51,7 +51,6 @@
                         ({{ titleInfo.original_name }})
                     </span>
                 </h1>
-                <!-- <img :src="`http://pibox.lan:800/image/${titleInfo.title_id}/logo/1`" alt=" "> -->
                 <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
             </div>
 
@@ -236,7 +235,7 @@
                 <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
                     <img 
                         class="poster" 
-                        :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
+                        :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
                         @load="(event) => event.target.classList.add('loaded')"
                     />
                     <div class="text">
@@ -286,7 +285,7 @@
                             <img 
                                 v-else
                                 class="still" 
-                                :src="`http://pibox.lan:800/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
+                                :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
                                 @error="failedToLoadImages.push(episode.episode_id)"
                                 @load="(event) => event.target.classList.add('loaded')"
                             >
@@ -352,6 +351,7 @@ import IconRefresh from '@/components/icons/IconRefresh.vue';
 export default {
     data() {
         return {
+            apiUrl: process.env.VUE_APP_API_URL,
             titleID: this.$route.params.titleID,
             titleInfo: null,
             expandedSeason: null,

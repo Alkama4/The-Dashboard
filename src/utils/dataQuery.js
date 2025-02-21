@@ -3,8 +3,9 @@ import qs from 'qs';
 import { notify } from './notification';
 import router from '@/router';
 
+console.info(process.env);
 const apiClient = axios.create({
-    baseURL: 'http://192.168.0.2:800', // Your FastAPI base URL
+    baseURL: process.env.VUE_APP_API_URL, // Your FastAPI base URL
     // Times out anyway at 5000 when it doesn't hear from the api
     timeout: 0,
     headers: {
