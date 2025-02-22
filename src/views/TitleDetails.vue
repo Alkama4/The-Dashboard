@@ -68,8 +68,8 @@
                             v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
                             class="color-primary left-button flex-1" 
                             @click="handleFavouriteToggle"
-                            :disabled="waitingForResult.includes('favourite')"
-                            :class="{loading: waitingForResult.includes('favourite')}"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
                         >
                             <IconHeart/>
                         </button>
@@ -77,8 +77,8 @@
                             v-else
                             class="red-heart left-button flex-1" 
                             @click="handleFavouriteToggle" 
-                            :disabled="waitingForResult.includes('favourite')"
-                            :class="{loading: waitingForResult.includes('favourite')}"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
                         >
                             <IconHeart/>
                         </button>
@@ -88,8 +88,8 @@
                             v-if="titleInfo.user_title_watch_count <= 0"
                             class="color-primary middle-button flex-2" 
                             @click="handleTitleWatchClick('title', 'watched')"
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
                         >
                             Mark title as watched
                         </button>
@@ -97,8 +97,8 @@
                             v-else
                             class=" middle-button flex-2" 
                             @click="handleTitleWatchClick('title', 'unwatched')" 
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
                         >
                             Reset title watch status 
                         </button>
@@ -108,8 +108,8 @@
                             v-if="titleInfo.user_title_watch_count <= -1"
                             class="color-primary right-button flex-1" 
                             @click="handleWatchListModification('add')"
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
                         >
                             <IconListAdd/>
                         </button>
@@ -117,8 +117,8 @@
                             v-else
                             class=" right-button flex-1" 
                             @click="handleWatchListModification('remove')" 
-                            :disabled="waitingForResult.includes('titleWatched')"
-                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
                         >
                             <IconListRemove/>
                         </button>
@@ -240,7 +240,7 @@
         </div>
 
         <!-- TV-SHOW SPECIFIC -->
-        <div class="content-width-medium-unrestricted">
+        <div class="content-width-medium-unrestricted" v-if="titleInfo.seasons">
             <h2>Episode map</h2>
 
             <div class="episode-map">
@@ -313,8 +313,8 @@
                         class="modify-watched color-primary"
                         v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
                         @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
-                        :disabled="waitingForResult.includes('titleWatched')"
-                        :class="{loading: waitingForResult.includes('titleWatched')}"
+                        :disabled="waitingForResult.length != 0"
+                        :class="{loading: waitingForResult.length != 0}"
                     >
                         Mark season watched
                     </button>
@@ -322,8 +322,8 @@
                         class="modify-watched "
                         v-else
                         @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)"
-                        :disabled="waitingForResult.includes('titleWatched')"
-                        :class="{loading: waitingForResult.includes('titleWatched')}"
+                        :disabled="waitingForResult.length != 0"
+                        :class="{loading: waitingForResult.length != 0}"
                     >
                         Mark season unwatched
                     </button>
@@ -367,8 +367,8 @@
                                     v-if="episode.watch_count == 0 || episode.watch_count == null"
                                     class="modify-watched color-primary"
                                     @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
-                                    :disabled="waitingForResult.includes('titleWatched')"
-                                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                                    :class="{
+                                        loading: waitingForResult.length != 0}"
                                 >
                                     Mark watched
                                 </button>
@@ -376,8 +376,7 @@
                                     v-else
                                     class="modify-watched "
                                     @click="handleTitleWatchClick('episode', 'unwatched', episode.episode_id)"
-                                    :disabled="waitingForResult.includes('titleWatched')"
-                                    :class="{loading: waitingForResult.includes('titleWatched')}"
+                                    :class="{loading: waitingForResult.length != 0}"
                                 >
                                     Unwatch
                                 </button>
@@ -509,7 +508,7 @@ export default {
         },
         // make this go through a MODAL?
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
-            this.waitingForResult.push("titleWatched");
+            this.waitingForResult.push(`${titleOrSeasonOrEpisode}${watchedOrUnwatched}${customID}`);
                 
             // A funny little if else where it gets whether we are getting tv, movie, season or episode
             let type = "";
@@ -552,7 +551,8 @@ export default {
                 }
 
             }
-            this.removeItemFromWaitingArray("titleWatched");
+
+            this.removeItemFromWaitingArray(`${titleOrSeasonOrEpisode}${watchedOrUnwatched}${customID}`);
         },
         async handleNotesSave() {
             this.waitingForResult.push("saveNotes");
@@ -603,7 +603,8 @@ export default {
                     console.debug("Title added successfully!", "success")
                 }
             }            
-            this.queryTitleData()
+            await this.queryTitleData()
+            this.episodeMapTileBackgroundColors();
             this.removeItemFromWaitingArray("titleWatched");
         },
         removeItemFromWaitingArray(item) {
@@ -666,25 +667,28 @@ export default {
             this.updateSlideshowImageTo(newNumber);
         },
         episodeMapTileBackgroundColors() {
-            const baseColor = getCssVar("color-background-card");
-            const ratingColor = getCssVar("color-primary");
+            if (this.titleInfo.seasons) {
+                const baseColor = getCssVar("color-background-card");
+                const ratingColor = getCssVar("color-primary");
 
-            this.titleInfo.seasons.forEach(season => {
-                season.episodes.forEach(episode => {
-                    let rating = episode.vote_average;
+                this.titleInfo.seasons.forEach(season => {
+                    season.episodes.forEach(episode => {
+                        let rating = episode.vote_average;
 
-                    // Convert to be between 0 and 1
-                    rating = rating / 10;
+                        // Convert to be between 0 and 1
+                        rating = rating / 10;
 
-                    // Convert to blocks of 0.1 (groups based on starting number)
-                    rating = Math.floor(rating * 10) / 10 + 0.1;
+                        // Convert to blocks of 0.1 (groups based on starting number)
+                        rating = Math.floor(rating * 10) / 10 + 0.1;
 
-                    // Adjust the color scaling with power
-                    rating = Math.pow(rating, 5);
-                    
-                    episode.tileColor = interpolateBetweenColors(baseColor, ratingColor, rating);
-                });        
-            });
+                        // Adjust the color scaling with power
+                        rating = Math.pow(rating, 5);
+                        
+                        episode.tileColor = interpolateBetweenColors(baseColor, ratingColor, rating);
+                    });        
+                });
+            }
+
         },
     },
     async mounted() {

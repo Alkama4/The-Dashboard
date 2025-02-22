@@ -368,6 +368,7 @@ button:disabled {
     opacity: 0.6;
 } button:disabled:hover {
     box-shadow: 0 0 0 transparent;
+    color: var(--color-text);
 }
 
 /* Button primary */
@@ -385,6 +386,10 @@ button.color-primary:hover svg {
 button.color-primary:active {
     background-color: var(--color-primary-active);
     color: var(--color-text-white-hover);
+}
+button.color-primary:hover:disabled {
+    background-color: var(--color-primary);
+    color: var(--color-text-white);
 }
 
 /* Button secondary */
@@ -852,6 +857,7 @@ input[type="radio"] {
 .loading {
     /* pointer-events: none !important; */
     cursor: wait !important;
+    opacity: 0.5;
 }
 
 .chart {
