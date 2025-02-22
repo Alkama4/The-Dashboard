@@ -26,12 +26,24 @@
             <div style="background-color: var(--color-undecenary);"></div>
         </div>
 
+        <div class="flex-row">
+            <div 
+                class="tile" 
+                v-for="n in 10" 
+                :key="n"
+                :style="{'background-color': dynamicBgColor(n)}"
+            >
+                Div {{ n }}
+            </div>
+        </div>
+
     </div>
 </template>
 
 <script>
-import api from '@/utils/dataQuery';
+// import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
+import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
 
 export default {
     name: 'DebugPage',
@@ -48,47 +60,59 @@ export default {
         },
 		notificationWarning() {
             notify("Somethings not right...", "warning");
+        },
+        dynamicBgColor(rating) {
+            const baseColor = getCssVar("color-background-card");
+            const ratingColor = getCssVar("color-primary");
+            const position = Math.pow(rating / 10, 2);
+            return interpolateBetweenColors(baseColor, ratingColor, position)
         }
     },
-    async mounted() {
-			// Fetch the transactions
-			const response = await api.getTransactions();
-			if (response && response.transactions) {
-				// Log the values from the transactions API
-				console.log("[Transaction] Transaction values:", response.transactions);
-			}
+    // async mounted() {
+    //     // Fetch the transactions
+    //     const response = await api.getTransactions();
+    //     if (response && response.transactions) {
+    //         // Log the values from the transactions API
+    //         console.log("[Transaction] Transaction values:", response.transactions);
+    //     }
 
-			// Fetch the options
-			const optionsResponse = await api.getOptions();
-			if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
-				// Log the categories data
-				console.log("[Options] All:", optionsResponse);
+    //     // Fetch the options
+    //     const optionsResponse = await api.getOptions();
+    //     if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
+    //         // Log the categories data
+    //         console.log("[Options] All:", optionsResponse);
 
-				// Log individual things
-				console.log("[Options] Counterparty:", optionsResponse.counterparty);
-				console.log("[Options] Category:", optionsResponse.category);
-			}
+    //         // Log individual things
+    //         console.log("[Options] Counterparty:", optionsResponse.counterparty);
+    //         console.log("[Options] Category:", optionsResponse.category);
+    //     }
 
-			// Fetch the options
-			const filtersResponse = await api.getFilters();
-			if (filtersResponse && filtersResponse.counterparty 
-								&& filtersResponse.category 
-								&& filtersResponse.amount 
-								&& filtersResponse.date) {
-				// Log the categories data
-				console.log("[Filters] All:", filtersResponse);
+    //     // Fetch the options
+    //     const filtersResponse = await api.getFilters();
+    //     if (filtersResponse && filtersResponse.counterparty 
+    //                         && filtersResponse.category 
+    //                         && filtersResponse.amount 
+    //                         && filtersResponse.date) {
+    //         // Log the categories data
+    //         console.log("[Filters] All:", filtersResponse);
 
-				// Log individual things
-				console.log("[Filters] Counterparty:", filtersResponse.counterparty);
-				console.log("[Filters] Category:", filtersResponse.category);
-				console.log("[Filters] Amount:", filtersResponse.amount);
-				console.log("[Filters] Date:", filtersResponse.date);
-			}
-		}
+    //         // Log individual things
+    //         console.log("[Filters] Counterparty:", filtersResponse.counterparty);
+    //         console.log("[Filters] Category:", filtersResponse.category);
+    //         console.log("[Filters] Amount:", filtersResponse.amount);
+    //         console.log("[Filters] Date:", filtersResponse.date);
+    //     }
+    // }
 }
 </script>
 
 <style scoped>
+.tile {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-small);
+    margin: 0;
+}
+
 .debug-page {
     padding: 20px;
 }

@@ -91,11 +91,38 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
-    scrollBehavior() {
-        return {top: 0};
+    scrollBehavior(to, from, savedPosition) {
+        if (to.hash) {
+            // Check if the element exists after a slight delay
+            const element = document.getElementById(to.hash.slice(1)); // Remove the '#' from the hash
+            if (element) {
+                // Scroll the element into view with smooth behavior
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+                // Offset to compensate for topbar + a little gap
+                const offset = 60 + 8;
+                const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+
+                // Scroll to the element's top position plus the offset
+                window.scrollTo({
+                    top: elementTop - offset,
+                    behavior: 'smooth'
+                });
+
+                // Return saved position in case the user is going back
+                return savedPosition;
+            } else {
+                // If the element is not found, return saved position
+                return savedPosition;
+            }
+        }
+
+        // Default return for non-hash routes
+        return savedPosition || { top: 0 };
     }
 });
-
+  
+  
 router.beforeEach((to, from, next) => {
     document.title = `Dashboard - ${to.meta.title || 'Default Title'}`;
     next();

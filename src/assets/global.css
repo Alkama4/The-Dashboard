@@ -355,9 +355,9 @@ button:hover {
     background-color: var(--color-button-general-hover);
     box-shadow: var(--shadow-button-hover);
 }
-button:hover svg {
+/* button:hover svg {
     fill: var(--color-text-bold)
-}
+} */
 button:active {
     background-color: var(--color-button-general-active);
     box-shadow: var(--shadow-button-active);
@@ -368,8 +368,6 @@ button:disabled {
     opacity: 0.6;
 } button:disabled:hover {
     box-shadow: 0 0 0 transparent;
-} button:disabled:hover svg {
-    fill: var(--color-text);
 }
 
 /* Button primary */
@@ -924,10 +922,19 @@ overflow: hidden;
     max-width: 100ch;
 }
 
+.content-width-medium-unrestricted {
+    margin-inline: auto;
+    max-width: 100%;
+    min-width: min(100ch, 100%);
+    width: fit-content;
+}
+
+
 .content-width-large {
     margin-inline: auto;
     max-width: 140ch;
 }
+
 
 
 /* - - - - ANIMATIONS - - - - */

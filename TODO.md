@@ -11,6 +11,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Title details
     - Possibility to replace the images.
         - Started already on fastapi
+    - Do not wait for api when marking watched for episodes and change wording
+    - Add a season progress bar or text (or other)
+        - The Episodes watched status could be modified to look alike?
+    - Tag for not released episodes or a clear way to seperate from released episodes
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
@@ -110,6 +114,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Delete transaction doesn't use DELETE
 - Transactions load never ends. 
     - Simple state change when reponse fails and an another v-if element.
+- Setting episode wathced/unwatched updates all episodes in the season to be watched on the dom incorrectly even though data on db is correct. Refresh fixes. Check how the data is updated on confirmation.
     
 
 ### Feature or a bug?

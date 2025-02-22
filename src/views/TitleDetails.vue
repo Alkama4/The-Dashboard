@@ -42,84 +42,93 @@
 
         <div class="content-width-medium title-details">
 
-            <div class="name-and-tagline no-pointer-events">
-                <h1 class="title-name">
-                    <span class="all-pointer-events" :title="titleInfo.name">
-                        {{ titleInfo.name }} 
-                    </span>
-                    <span class="all-pointer-events original-title" :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name">
-                        ({{ titleInfo.original_name }})
-                    </span>
-                </h1>
-                <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
-            </div>
+            <div class="poster-next-to-stuff">
+                <img 
+                    :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg`" 
+                    @load="(event) => event.target.classList.add('loaded')"
+                >
 
-            <div class="control-button-array combined-buttons">
-                <!-- Favourite buttons -->
-                <!-- class="icon-button favourite"  -->
-                <button 
-                    v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
-                    class="color-primary left-button flex-1" 
-                    @click="handleFavouriteToggle"
-                    :disabled="waitingForResult.includes('favourite')"
-                    :class="{loading: waitingForResult.includes('favourite')}"
-                >
-                    <IconHeart/>
-                </button>
-                <button 
-                    v-else
-                    class=" left-button flex-1" 
-                    @click="handleFavouriteToggle" 
-                    :disabled="waitingForResult.includes('favourite')"
-                    :class="{loading: waitingForResult.includes('favourite')}"
-                >
-                    <IconHeart style="color: var(--color-secondary);"/>
-                </button>
+                <div>
+                    <div class="name-and-tagline no-pointer-events">
+                        <h1 class="title-name">
+                            <span class="all-pointer-events" :title="titleInfo.name">
+                                {{ titleInfo.name }} 
+                            </span>
+                            <span class="all-pointer-events original-title" :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name">
+                                ({{ titleInfo.original_name }})
+                            </span>
+                        </h1>
+                        <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
+                    </div>
 
-                <!-- Watched buttons -->
-                <button 
-                    v-if="titleInfo.user_title_watch_count <= 0"
-                    class="color-primary middle-button flex-2" 
-                    @click="handleTitleWatchClick('title', 'watched')"
-                    :disabled="waitingForResult.includes('titleWatched')"
-                    :class="{loading: waitingForResult.includes('titleWatched')}"
-                >
-                    Mark title as watched
-                </button>
-                <button 
-                    v-else
-                    class=" middle-button flex-2" 
-                    @click="handleTitleWatchClick('title', 'unwatched')" 
-                    :disabled="waitingForResult.includes('titleWatched')"
-                    :class="{loading: waitingForResult.includes('titleWatched')}"
-                >
-                    Reset title watch status 
-                </button>
+                    <div class="control-button-array combined-buttons">
+                        <!-- Favourite buttons -->
+                        <!-- class="icon-button favourite"  -->
+                        <button 
+                            v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
+                            class="color-primary left-button flex-1" 
+                            @click="handleFavouriteToggle"
+                            :disabled="waitingForResult.includes('favourite')"
+                            :class="{loading: waitingForResult.includes('favourite')}"
+                        >
+                            <IconHeart/>
+                        </button>
+                        <button 
+                            v-else
+                            class="red-heart left-button flex-1" 
+                            @click="handleFavouriteToggle" 
+                            :disabled="waitingForResult.includes('favourite')"
+                            :class="{loading: waitingForResult.includes('favourite')}"
+                        >
+                            <IconHeart/>
+                        </button>
 
-                <!-- Watch list buttons -->
-                <button 
-                    v-if="titleInfo.user_title_watch_count <= -1"
-                    class="color-primary right-button flex-1" 
-                    @click="handleWatchListModification('add')"
-                    :disabled="waitingForResult.includes('titleWatched')"
-                    :class="{loading: waitingForResult.includes('titleWatched')}"
-                >
-                    <IconListAdd/>
-                </button>
-                <button 
-                    v-else
-                    class=" right-button flex-1" 
-                    @click="handleWatchListModification('remove')" 
-                    :disabled="waitingForResult.includes('titleWatched')"
-                    :class="{loading: waitingForResult.includes('titleWatched')}"
-                >
-                    <IconListRemove/>
-                </button>
-            </div>
+                        <!-- Watched buttons -->
+                        <button 
+                            v-if="titleInfo.user_title_watch_count <= 0"
+                            class="color-primary middle-button flex-2" 
+                            @click="handleTitleWatchClick('title', 'watched')"
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                        >
+                            Mark title as watched
+                        </button>
+                        <button 
+                            v-else
+                            class=" middle-button flex-2" 
+                            @click="handleTitleWatchClick('title', 'unwatched')" 
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                        >
+                            Reset title watch status 
+                        </button>
 
-            <h2>Genres</h2>
-            <div class="genres flex">
-                <div class="genre" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
+                        <!-- Watch list buttons -->
+                        <button 
+                            v-if="titleInfo.user_title_watch_count <= -1"
+                            class="color-primary right-button flex-1" 
+                            @click="handleWatchListModification('add')"
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                        >
+                            <IconListAdd/>
+                        </button>
+                        <button 
+                            v-else
+                            class=" right-button flex-1" 
+                            @click="handleWatchListModification('remove')" 
+                            :disabled="waitingForResult.includes('titleWatched')"
+                            :class="{loading: waitingForResult.includes('titleWatched')}"
+                        >
+                            <IconListRemove/>
+                        </button>
+                    </div>
+
+                    <h2>Genres</h2>
+                    <div class="genres flex">
+                        <div class="genre" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
+                    </div>
+                </div>
             </div>
             
             <h2>Overview</h2>
@@ -127,10 +136,11 @@
 
             <div class="trailer-details-flex">
                 <div class="details-container">
-                    <h2 class="icon-align" title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information.">
+                    <h2 class="icon-align header-margin-fix" title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information.">
                         Details 
                         <IconRefresh
                             size="28px"
+                            left="6px"
                             @click="handleTitleUpdate"
                             :class="{
                                 'loading': waitingForResult.includes('titleUpdate'),
@@ -197,7 +207,7 @@
                 </div>
 
                 <div v-if="titleInfo.trailer_key != null" class="trailer-container">
-                    <h2>Trailer</h2>
+                    <h2 class="header-margin-fix">Trailer</h2>
                     <div class="iframe-container">
                         <iframe
                             :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`"
@@ -209,7 +219,13 @@
             </div>
                 
             <div v-if="titleInfo.user_title_watch_count >= 0">
-                <h2>Notes <InfoTooltip :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`" position="right"/></h2>
+                <h2 class="header-margin-fix">
+                    Notes 
+                    <InfoTooltip 
+                        :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`"
+                        position="right"
+                    />
+                </h2>
                 <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
                     @click="handleNotesSave"
@@ -223,16 +239,58 @@
 
         </div>
 
-        <!-- SEASONS -->
+        <!-- TV-SHOW SPECIFIC -->
+        <div class="content-width-medium-unrestricted">
+            <h2>Episode map</h2>
+
+            <div class="episode-map">
+                <div class="season-row">
+                    <div class="episode-tile label">
+                    </div>
+                    <div 
+                        v-for="(episode, index) in titleInfo.seasons.reduce((maxSeason, season) => 
+                            season.episodes.length > maxSeason.episodes.length ? season : maxSeason, titleInfo.seasons[0]).episodes" 
+                        :key="episode.id"
+                        class="episode-tile label" 
+                    >
+                        E{{ index + 1 }}
+                    </div>
+                </div>
+                <div v-for="season in titleInfo.seasons" 
+                    :key="season.season_id" 
+                    class="season-row"
+                >
+                    <div class="episode-tile label">
+                        S{{ season.season_number }}
+                    </div>
+                    <div 
+                        v-for="episode in season.episodes" 
+                        @click="scrollToEpisode(`refSeason${season.season_id}`, `#S${season.season_number}E${episode.episode_number}`)"
+                        :key="episode.episode_number" 
+                        class="episode-tile"
+                        :class="{ 
+                            watched: episode.watch_count > 0,
+                            'un-released': new Date(episode.air_date) > new Date()
+                        }"
+                        :style="{'background-color': episode.tileColor || 'var(--color-background-card)'}"
+                        :title="`S${season.season_number} E${episode.episode_number}`"
+                    >
+                        <!-- S{{ season.season_number }} E{{ episode.episode_number }} -->
+                        {{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="content-width-large" v-if="titleInfo.seasons">
-            <h2>Seasons</h2>
+            <h2>Season & episode details</h2>
 
             <div v-for="season in titleInfo.seasons" 
                 :key="season.season_id" 
                 class="card season" 
                 :class="{'active': expandedSeason == season.season_id}"
             >
-                <div class="about" @click="toggleHeight(`ref${season.season_id}`)">
+                <div class="about" @click="toggleHeight(`refSeason${season.season_id}`)">
                     <img 
                         class="poster" 
                         :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
@@ -272,9 +330,9 @@
                 </div>
                 
                 <!-- EPISODES -->
-                <div class="episodes" :ref="`ref${season.season_id}`">
-                    <div class="episodes-padding" v-if="this.openedSeasons.includes(`ref${season.season_id}`)">
-                        <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode">
+                <div class="episodes" :ref="`refSeason${season.season_id}`">
+                    <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_id}`)">
+                        <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode" :id="`S${season.season_number}E${episode.episode_number}`">
                             <div 
                                 v-if="failedToLoadImages.includes(episode.episode_id)"
                                 class="still failed-to-load"
@@ -294,21 +352,25 @@
                                 <div class="details" :title="`${episode.vote_count} votes`">
                                     <span class="icon-align">
                                         <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                        <span class="icon-align"><IconTMDB/>{{ episode.vote_average }}</span>
+                                        <span class="icon-align"><IconTMDB/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }}</span>
                                     </span>
                                     <div>
-                                        {{ episode.air_date ? new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                                        {{ 
+                                            episode.air_date ? 
+                                            new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : 
+                                            "No release date"
+                                        }}
                                     </div>
                                 </div>
                                 <p :title="episode.overview">{{ episode.overview }}</p>
                                 <button 
-                                    v-if="episode.watch_count == 0"
+                                    v-if="episode.watch_count == 0 || episode.watch_count == null"
                                     class="modify-watched color-primary"
                                     @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
                                     :disabled="waitingForResult.includes('titleWatched')"
                                     :class="{loading: waitingForResult.includes('titleWatched')}"
                                 >
-                                    Watched
+                                    Mark watched
                                 </button>
                                 <button 
                                     v-else
@@ -337,6 +399,7 @@ import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
+import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
 
 // Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
@@ -403,6 +466,47 @@ export default {
                 }
             }, 1)
         },
+        setHeightToNone(refKey) {
+            // Change the actual height
+            const element = this.$refs[refKey]?.[0]; // Get the first element because it gives an array (and there is only one)
+            if (element) {
+                element.style.transition = 'height 0s';
+                element.style.height = "0px"; // Collapse
+                setTimeout(() => {
+                    element.style.transition = '';
+                }, 1)
+            }
+        },
+        scrollToEpisode(refKey, episodeElementID) {
+            // Close all other seasons
+            this.titleInfo.seasons.forEach(season => {
+                const seasonRef = `refSeason${season.season_id}`;
+                // Don't set height for the one that we wan't to be open
+                if (seasonRef != refKey) {
+                    this.setHeightToNone(seasonRef);
+                }
+            })
+
+            // Mark the season as opened to load to dom with v-if to start loading images
+            if (!this.openedSeasons.includes(refKey)) {
+                this.openedSeasons.push(refKey)
+            }
+            
+            // Set a minimal timeout so that the dom change registers before the height is calculated
+            setTimeout(() => {
+                // Set height
+                const element = this.$refs[refKey]?.[0]; // Get the first element
+                if (!element) return;   // Check if exists
+                element.style.transition = 'height 0s';
+                element.style.height = element.scrollHeight + "px"; // Expand
+                // Ensure the height change is finished before setting back with a miniscule delay
+                setTimeout(() => {
+                    element.style.transition = '';
+                    // Go to position
+                    router.push(episodeElementID);
+                }, 1)
+            }, 1)
+        },
         // make this go through a MODAL?
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
             this.waitingForResult.push("titleWatched");
@@ -467,7 +571,10 @@ export default {
             if (response) {
                 // console.log(response);
                 notify(`"${this.titleInfo.name}" info updated! Missing images are still being queried.`, "success")
-                this.queryTitleData();
+
+                // Update data without refreshing
+                await this.queryTitleData();
+                this.episodeMapTileBackgroundColors();
             }
             this.removeItemFromWaitingArray("titleUpdate");
         },
@@ -558,6 +665,27 @@ export default {
             // Call updateImage with the new number
             this.updateSlideshowImageTo(newNumber);
         },
+        episodeMapTileBackgroundColors() {
+            const baseColor = getCssVar("color-background-card");
+            const ratingColor = getCssVar("color-primary");
+
+            this.titleInfo.seasons.forEach(season => {
+                season.episodes.forEach(episode => {
+                    let rating = episode.vote_average;
+
+                    // Convert to be between 0 and 1
+                    rating = rating / 10;
+
+                    // Convert to blocks of 0.1 (groups based on starting number)
+                    rating = Math.floor(rating * 10) / 10 + 0.1;
+
+                    // Adjust the color scaling with power
+                    rating = Math.pow(rating, 5);
+                    
+                    episode.tileColor = interpolateBetweenColors(baseColor, ratingColor, rating);
+                });        
+            });
+        },
     },
     async mounted() {
         await this.queryTitleData();
@@ -567,6 +695,14 @@ export default {
             number: i,
             isLoaded: false
         }));
+
+        // Run initially
+        this.episodeMapTileBackgroundColors();
+
+        // Add the event listener to update on darkmode change
+        window.addEventListener("darkModeChange", () => {
+            this.episodeMapTileBackgroundColors();
+        });
     },
     watch: {
         backdropNumber() {
@@ -778,6 +914,17 @@ export default {
     position: relative;
 }
 
+.title-details .poster-next-to-stuff {
+    display: grid;
+    gap: var(--spacing-lg);
+    grid-template-columns: auto 1fr;
+}
+
+.title-details .poster-next-to-stuff img {
+    height: 276px;
+    border-radius: var(--border-radius-medium);
+}
+
 .title-details .genres {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
@@ -835,6 +982,12 @@ export default {
     }
 }
 
+.red-heart {
+    color: var(--color-secondary);
+}
+.red-heart:hover {
+    color: var(--color-secondary-hover);
+}
 
 .trailer-details-flex {
     display: grid;
@@ -842,7 +995,7 @@ export default {
     gap: var(--spacing-lg);
 }
 
-.details-container h2 {
+h2.header-margin-fix {
     /* Smaller margin, because its inside a div causing margins not to overlap */
     margin-top: 16px !important;
 }
@@ -945,6 +1098,56 @@ iframe {
 
 
 
+/* - - - - - EPISODE MAP - - - - -  */
+.episode-map {
+    overflow-x: scroll;
+    padding-bottom: var(--spacing-sm);
+}
+
+.season-row {
+    display: flex;
+    gap: var(--spacing-xs);
+}
+
+.episode-tile {
+    width: 30px;
+    min-width: 30px;
+    padding: var(--spacing-sm);
+    padding-bottom: calc(var(--spacing-sm) - 4px);
+    margin: var(--spacing-xs) 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-small);
+    background-color: var(--color-background-card); /* Default background */
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    border-bottom: 4px solid transparent; /* Watched - Green line */
+    color: var(--color-text);
+    text-decoration: none;
+}
+.episode-tile:hover {
+    text-decoration: underline;
+}
+
+.episode-tile.watched {
+    border: 0px solid transparent;
+    border-bottom: 4px solid green; /* Watched - Green line */
+}
+
+.episode-tile.un-released {
+    background-color: var(--color-background-card-section) !important;
+    color: var(--color-text-hidden);
+}
+
+.episode-tile.label{
+    background-color: transparent;
+    color: var(--color-text-light);
+    text-decoration: none;
+    cursor: initial;
+    user-select: initial;
+}
 
 /* - - - - - SEASON - - - - -  */
 .season {
@@ -1007,6 +1210,12 @@ iframe {
         position: static;
         grid-area: button;
         width: 100%;
+    }
+    .title-details .poster-next-to-stuff {
+        grid-template-columns: auto;
+    }
+    .title-details .poster-next-to-stuff img {
+        display: none;
     }
 }
 
