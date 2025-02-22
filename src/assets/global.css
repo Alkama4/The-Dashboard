@@ -736,7 +736,13 @@ input[type="radio"] {
     aspect-ratio: 1;
     padding: 10px;
     border-radius: 50%;
-    box-shadow: var(--shadow-floating-button);
+    box-shadow: var(--shadow-floating-button)
+}
+
+.link-button {
+    background-color: var(--color-button-general);
+    color: var(--color-text);
+    display: flex;
 }
 
 .flex {

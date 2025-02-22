@@ -241,7 +241,16 @@
 
         <!-- TV-SHOW SPECIFIC -->
         <div class="content-width-medium-unrestricted" v-if="titleInfo.seasons">
-            <h2>Episode map</h2>
+            <h2 id="episode_map">Episode map</h2>
+
+            <button 
+                class="sticky-corner-button" 
+                style="transition: opacity 0.1s ease-out;"
+                :style="{ opacity: scrolledPastEpisodeMap ? 1 : 0 }"
+                @click="scrollBackToEpisodeMap"
+            >
+                <IconChevronDown size="28px" style="rotate: 180deg;"/>
+            </button>
 
             <div class="episode-map">
                 <div class="season-row">
@@ -332,7 +341,15 @@
                 <!-- EPISODES -->
                 <div class="episodes" :ref="`refSeason${season.season_id}`">
                     <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_id}`)">
-                        <div v-for="episode in season.episodes" :key="episode.episode_number" class="episode" :id="`S${season.season_number}E${episode.episode_number}`">
+                        <div 
+                            v-for="(episode, index) in season.episodes" 
+                            :key="episode.episode_number" class="episode" 
+                            :id="`S${season.season_number}E${episode.episode_number}`"
+                            :class="{
+                                'not-realeased': new Date(episode.air_date) > new Date(),
+                                'last': index === season.episodes.length - 1
+                            }"
+                        >
                             <div 
                                 v-if="failedToLoadImages.includes(episode.episode_id)"
                                 class="still failed-to-load"
@@ -426,6 +443,7 @@ export default {
                 individualData: []
             },
             openedSeasons: [],
+            scrolledPastEpisodeMap: false,
         };
     },
     components: {
@@ -465,26 +483,29 @@ export default {
                 }
             }, 1)
         },
-        setHeightToNone(refKey) {
+        setHeightToNone(refKey, noTransition = true) {
             // Change the actual height
             const element = this.$refs[refKey]?.[0]; // Get the first element because it gives an array (and there is only one)
             if (element) {
-                element.style.transition = 'height 0s';
+                if (noTransition) element.style.transition = 'height 0s';
                 element.style.height = "0px"; // Collapse
-                setTimeout(() => {
+                if (noTransition) setTimeout(() => {
                     element.style.transition = '';
                 }, 1)
             }
         },
-        scrollToEpisode(refKey, episodeElementID) {
-            // Close all other seasons
+        closeAllSeasons(keepRef = "", noTransition = true) {
             this.titleInfo.seasons.forEach(season => {
                 const seasonRef = `refSeason${season.season_id}`;
                 // Don't set height for the one that we wan't to be open
-                if (seasonRef != refKey) {
-                    this.setHeightToNone(seasonRef);
+                if (seasonRef != keepRef) {
+                    this.setHeightToNone(seasonRef, noTransition);
                 }
             })
+        },
+        scrollToEpisode(refKey, episodeElementID) {
+            // Close all other seasons
+            this.closeAllSeasons(refKey);
 
             // Mark the season as opened to load to dom with v-if to start loading images
             if (!this.openedSeasons.includes(refKey)) {
@@ -688,8 +709,18 @@ export default {
                     });        
                 });
             }
-
         },
+        checkScroll() {
+            const episodeMap = document.getElementById('episode_map');
+            if (episodeMap) {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                this.scrolledPastEpisodeMap = scrollY > episodeMap.offsetTop;
+            }
+        },
+        scrollBackToEpisodeMap() {
+            router.push("#episode_map");
+            // setTimeout(() => (this.closeAllSeasons("", false)), 300);
+        }
     },
     async mounted() {
         await this.queryTitleData();
@@ -700,13 +731,16 @@ export default {
             isLoaded: false
         }));
 
-        // Run initially
+        // Run initially and add the event listener to update on darkmode change
         this.episodeMapTileBackgroundColors();
-
-        // Add the event listener to update on darkmode change
-        window.addEventListener("darkModeChange", () => {
-            this.episodeMapTileBackgroundColors();
-        });
+        window.addEventListener("darkModeChange", this.episodeMapTileBackgroundColors)
+        
+        // Add a scroll listener to show and hide the scroll back to episode map button
+        window.addEventListener('scroll', this.checkScroll);
+    },
+    unmounted() {
+        window.removeEventListener('darkModeChange', this.episodeMapTileBackgroundColors);
+        window.removeEventListener('scroll', this.checkScroll);
     },
     watch: {
         backdropNumber() {
@@ -1233,15 +1267,15 @@ iframe {
     margin-top: var(--spacing-md);
 }
 .season .episodes-padding {
+    --episode-gap-line-height: 3px;
     display: flex;
     flex-direction: column;
-    /* gap: var(--spacing-sm); */
+    gap: var(--episode-gap-line-height);
     border-radius: var(--border-radius-medium);    
     background-color: var(--color-background-card-section);
     padding: var(--spacing-sm);
     margin-bottom: var(--spacing-md);
 }
-
 
 
 /* - - - - - EPISODE - - - - -  */
@@ -1253,12 +1287,34 @@ iframe {
     display: flex;
     flex-direction: row;
     gap: var(--spacing-md);
-    border-radius: var(--border-radius-medium);
+    /* border-radius: var(--border-radius-medium); */
     transition: background-color 0.1s ease-out;
 }
-.episode:hover {
-    background-color: var(--color-background-tr-hover);
+.episode::after {
+    content: "";
+    width: calc(100% - var(--spacing-lg));
+    height: var(--episode-gap-line-height);
+    position: absolute;
+    bottom: calc(var(--episode-gap-line-height) * -1);
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: var(--color-border);
+    border-radius: var(--episode-gap-line-height);
+    z-index: 2;
 }
+.episode.last::after {
+    display: none;
+}
+/* .episode:hover {
+    background-color: var(--color-background-tr-hover);
+} */
+.episode.not-realeased {
+    filter: opacity(0.5);
+    pointer-events: none;
+    user-select: none;
+}
+
+
 .episode h3 {
     margin: 0;
     display: -webkit-box;
