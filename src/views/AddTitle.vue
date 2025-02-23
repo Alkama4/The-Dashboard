@@ -340,7 +340,7 @@ export default {
         height: 32px;
     }
     .result .genre {
-        padding: var(--spacing-xs);
+        padding: var(--spacing-xs) var(--spacing-sm);
         background-color: var(--color-background-card-section);
         border-radius: var(--border-radius-small);
         font-size: var(--font-size-small);

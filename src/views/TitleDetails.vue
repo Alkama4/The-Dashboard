@@ -43,10 +43,23 @@
         <div class="content-width-medium title-details">
 
             <div class="poster-next-to-stuff">
-                <img 
-                    :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg`" 
-                    @load="(event) => event.target.classList.add('loaded')"
-                >
+                <div class="poster-container">
+                    <img 
+                        :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg`" 
+                        @load="(event) => event.target.classList.add('loaded')"
+                    >
+                    <div class="tag-holder">
+                        <div class="tag watched" v-if="titleInfo.user_title_watch_count >= 1">
+                            Watched
+                        </div>
+                        <div class="tag recent" v-else-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                            Just released
+                        </div>
+                        <div class="tag" v-else-if="new Date(titleInfo.release_date) > new Date()">
+                            Upcoming
+                        </div>
+                    </div>
+                </div>
 
                 <div>
                     <div class="name-and-tagline no-pointer-events">
@@ -126,7 +139,7 @@
 
                     <h2>Genres</h2>
                     <div class="genres flex">
-                        <div class="genre" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
+                        <div class="genre tag" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
                     </div>
                 </div>
             </div>
@@ -300,11 +313,21 @@
                 :class="{'active': expandedSeason == season.season_id}"
             >
                 <div class="about" @click="toggleHeight(`refSeason${season.season_id}`)">
-                    <img 
-                        class="poster" 
-                        :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
-                        @load="(event) => event.target.classList.add('loaded')"
-                    />
+                    <div class="poster-container">
+                        <img 
+                            class="poster" 
+                            :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
+                            @load="(event) => event.target.classList.add('loaded')"
+                        />
+                        <div class="tag-holder">
+                            <div class="tag watched" v-if="0 != season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity) && season.episodes.length >= 1">
+                                Watched
+                            </div>
+                            <div class="tag" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
+                                Upcoming
+                            </div>
+                        </div>
+                    </div>
                     <div class="text">
                         <h2>{{ season.season_name }}</h2>
                         <div class="details">
@@ -350,20 +373,35 @@
                                 'last': index === season.episodes.length - 1
                             }"
                         >
-                            <div 
-                                v-if="failedToLoadImages.includes(episode.episode_id)"
-                                class="still failed-to-load"
-                            >
-                                <IconFileImage size="40px"/>
-                                <span>404</span>
+                            <div class="still-container">
+                                <div 
+                                    v-if="failedToLoadImages.includes(episode.episode_id)"
+                                    class="still failed-to-load"
+                                >
+                                    <IconFileImage size="40px"/>
+                                    <span>404</span>
+                                </div>
+                                <img 
+                                    v-else
+                                    class="still" 
+                                    :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
+                                    @error="failedToLoadImages.push(episode.episode_id)"
+                                    @load="(event) => event.target.classList.add('loaded')"
+                                >
+                                <!-- Tag to show if newly released or watched, or maybe even un released status -->
+                                <div class="tag-holder">
+                                    <div class="tag watched" v-if="episode.watch_count >= 1">
+                                        Watched
+                                    </div>
+                                    <div class="tag recent" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                                        New episode
+                                    </div>
+                                    <div class="tag" v-else-if="new Date(episode.air_date) > new Date()">
+                                        Upcoming
+                                    </div>
+                                </div>
                             </div>
-                            <img 
-                                v-else
-                                class="still" 
-                                :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
-                                @error="failedToLoadImages.push(episode.episode_id)"
-                                @load="(event) => event.target.classList.add('loaded')"
-                            >
+                            
                             <div class="text">
                                 <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
                                 <div class="details" :title="`${episode.vote_count} votes`">
@@ -963,6 +1001,10 @@ export default {
     border-radius: var(--border-radius-medium);
 }
 
+.poster-container {
+    position: relative;
+}
+
 .title-details .genres {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
@@ -971,12 +1013,8 @@ export default {
     /* margin: var(--spacing-md) 0; */
 }
 .title-details .genre {
-    padding: var(--spacing-xs);
-    background-color: var(--color-background-card);
-    border-radius: var(--border-radius-small);
-    font-size: var(--font-size-small);
     font-weight: 500;
-    white-space: nowrap;
+    background-color: var(--color-background-card);
 }
 
 .control-button-array {
@@ -1305,14 +1343,11 @@ iframe {
 .episode.last::after {
     display: none;
 }
-/* .episode:hover {
-    background-color: var(--color-background-tr-hover);
-} */
-.episode.not-realeased {
+/* .episode.not-realeased {
     filter: opacity(0.5);
     pointer-events: none;
     user-select: none;
-}
+} */
 
 
 .episode h3 {
@@ -1324,15 +1359,25 @@ iframe {
     overflow: hidden;
     max-width: calc(100% - 160px);
 }
-.episode .still {
+
+.episode .still-container {
+    display: flex;
     width: 300px;
     min-width: 300px;
     border-radius: var(--border-radius-medium);
-    object-fit: contain;
+    height: fit-content;
     aspect-ratio: 16/9;
     background-color: var(--color-background-card);
+    position: relative;
 }
-.episode .still.failed-to-load {
+
+.episode .still-container .still {
+    width: inherit;
+    aspect-ratio: inherit;
+    border-radius: inherit;
+    object-fit: contain;
+}
+.episode .still-container .still.failed-to-load {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -1341,6 +1386,25 @@ iframe {
     font-weight: 700;
     font-size: 32px;
 }
+
+.tag-holder {
+    position: absolute;
+    width: calc(100% - var(--spacing-sm) * 2);
+    height: calc(100% - var(--spacing-sm) * 2);
+    top: var(--spacing-sm);
+    left: var(--spacing-sm);
+    display: inline;
+    pointer-events: none;
+}
+
+.tag.watched {
+    background-color: var(--color-positive);
+}
+.tag.recent {
+    background-color: var(--color-primary);
+}
+
+
 .episode .text {
     /* padding-top: var(--spacing-sm); */
     width: 100%;
@@ -1376,7 +1440,7 @@ iframe {
     .episode {
         flex-direction: column;
     }
-    .episode .still {
+    .episode .still-container {
         width: 100%;
         min-width: none;
         max-height: 220px;

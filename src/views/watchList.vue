@@ -49,10 +49,18 @@
                                 </template>
                             </div>
                         </div>
-                        <div class="watched" v-if="title.watch_count >= 1">
+
+                        <div class="tag watched" v-if="title.watch_count >= 1">
                             <!-- <IconCheck size="22px"/> -->
                             Watched
                         </div>
+                        <div class="tag recent" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                            Just released
+                        </div>
+                        <div class="tag" v-else-if="new Date(title.release_date) > new Date()">
+                            Upcoming
+                        </div>
+                        
                         <div class="favourite-icon" v-if="title.is_favourite"><IconHeart/></div>
                     </swiper-slide>
 
@@ -155,7 +163,7 @@ export default {
                     }
                 },
                 {
-                    listName: "TV-series to watch",
+                    listName: "TV-series to start watching",
                     text: "TV-series that you are have on you watch list but haven't started to watch yet.",
                     titles: [],
                     loading: true,
@@ -171,7 +179,7 @@ export default {
                 {
                     listName: "Upcoming titles",
                     watched: true,
-                    text: "Titles to look forward to.",
+                    text: "Upcoming titles you've added to your list.",
                     titles: [],
                     loading: true,
                     activeSlide: 0,
@@ -377,30 +385,17 @@ export default {
     right: 0;
 }
 
-.swiper-slide .watched {
+
+.swiper-slide .tag {
     position: absolute;
     top: var(--spacing-sm);
     left: var(--spacing-sm);
     z-index: 10;
-
-    display: flex;
-    flex-direction: row;
-    border-radius: var(--border-radius-small);
-    padding: 1px;
-    padding-bottom: 2px;
-    padding-inline: 8px;
-
-    color: black;
-    font-size: var(--font-size-small);
-    font-weight: 500;
-    background-color: var(--color-positive);
-    /* mix-blend-mode: screen; */
 }
-/* .swiper-slide .watched::after {
-    transform: translate(-20%, -20%);
-    left: 0;
-} */
 
+.swiper-slide .watched {
+    background-color: var(--color-positive);
+}
 
 
 .season-after::after {
