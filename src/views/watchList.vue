@@ -61,7 +61,24 @@
                             Upcoming
                         </div>
                         
-                        <div class="favourite-icon" v-if="title.is_favourite"><IconHeart/></div>
+                        <button 
+                            v-if="title.is_favourite"
+                            class="tag favourite-button icon-align" 
+                            @click.stop="handleFavouriteToggle(title)"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
+                        >
+                            <IconHeart size="22"/>
+                        </button>
+                        <button 
+                            v-else
+                            class="tag favourite-button not-favourite icon-align" 
+                            @click.stop="handleFavouriteToggle(title)"
+                            :disabled="waitingForResult.length != 0"
+                            :class="{loading: waitingForResult.length != 0}"
+                        >
+                            <IconHeart size="22" color="var(--color-text)"/>
+                        </button>
                     </swiper-slide>
 
                     <swiper-slide 
@@ -122,6 +139,7 @@ export default {
     data() {
         return {
             apiUrl: process.env.VUE_APP_API_URL,
+            waitingForResult: [],
             titleLists: [
                 // {
                 //     listName: "TESTING",
@@ -200,9 +218,9 @@ export default {
                     }
                 },
                 {
-                    listName: "Recently modified",
+                    listName: "Watched titles",
                     watched: true,
-                    text: "The titles that you have e.g. watched or edited notes on recently.",
+                    text: "The titles that you have completed sorted by last modified.",
                     titles: [],
                     loading: true,
                     activeSlide: 0,
@@ -249,6 +267,18 @@ export default {
             } catch (error) {
                 console.error("Error fetching title lists:", error);
             }
+        },
+        removeItemFromWaitingArray(item) {
+            this.waitingForResult = this.waitingForResult.filter(i => i !== item);
+        },
+        async handleFavouriteToggle(title) {
+            this.waitingForResult.push(`${title.id}Favourite`);
+            const response = await api.toggleTitleFavourite(title.id)
+            if (response) {
+                console.log(response);
+                title.is_favourite = !title.is_favourite;
+            }
+            this.removeItemFromWaitingArray(`${title.id}Favourite`);
         }
     },
     async mounted() {
@@ -331,7 +361,7 @@ export default {
 }
 .swiper-slide .details {
     opacity: 0;
-    transform: translateX(10%);
+    transform: translateX(15px);
 }
 
 .slides-indicator-holder {
@@ -362,14 +392,8 @@ export default {
     gap: var(--spacing-xs);
 }
 
-.swiper-slide .favourite-icon {
-    position: absolute;
-    top: var(--spacing-sm);
-    right: var(--spacing-sm);
-    z-index: 10;
-    color: var(--color-secondary);
-}
-.swiper-slide .favourite-icon::after {
+
+/* .swiper-slide .favourite-icon::after {
     content: "";
     height: 40px;
     width: 40px;
@@ -383,7 +407,7 @@ export default {
 .swiper-slide .favourite-icon::after {
     transform: translate(20%, -20%);
     right: 0;
-}
+} */
 
 
 .swiper-slide .tag {
@@ -397,6 +421,23 @@ export default {
     background-color: var(--color-positive);
 }
 
+.swiper-slide .favourite-button {
+    color: var(--color-secondary);
+    left: auto;
+    right: var(--spacing-sm);
+    border-radius: 100px;
+    margin: 0;
+    padding: 6px;
+    transform: translateX(2.5px) translateY(-2.5px);
+}
+
+.swiper-slide .favourite-button.not-favourite {
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+.swiper-slide:hover .favourite-button.not-favourite {
+    opacity: 1;
+}
 
 .season-after::after {
     content: " seasons, ";
