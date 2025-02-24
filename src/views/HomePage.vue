@@ -4,7 +4,7 @@
 			<div class="text-area">
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span>
-				<router-link class="no-decoration" to="/spendings/new_entry" style="padding-bottom: var(--spacing-md);">
+				<router-link class="no-decoration" to="/spendings/new_entry" tabindex="-1">
 					<button class="color-primary">Start logging</button>
 				</router-link>
 			</div>
@@ -18,7 +18,7 @@
 		<div class="flex-column">
 			<h2>Other services</h2>
 			<div class="tile-container">
-				<a :href="serviceUrl1" class="no-decoration">
+				<a :href="serviceUrl1" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
 						<img 
 							src="../assets/thumbnails/portainer.svg" 
@@ -27,7 +27,7 @@
 						<span>Portainer</span>
 					</button>
 				</a>
-				<a :href="serviceUrl2" class="no-decoration">
+				<a :href="serviceUrl2" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
 						<img 
 							src="../assets/thumbnails/pihole.png"
@@ -38,7 +38,7 @@
 				</a>
 
 				<!-- Buttons like this could be useful, but I don't have logos? Just come icons? -->
-				<a href="/watch_list/add_title" class="no-decoration">
+				<a href="/watch_list/add_title" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
 						<img 
 							src=""
@@ -47,7 +47,7 @@
 						<span>Add a title</span>
 					</button>
 				</a>
-				<a href="/watch_list/add_title" class="no-decoration">
+				<a href="/watch_list/add_title" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
 						<img 
 							src=""
@@ -1162,7 +1162,6 @@ export default {
     z-index: 1; /* Otherwise under chart */
     color: var(--color-text-light);
     background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
-    border-radius: 0;
     padding: var(--spacing-sm);
 	margin: 0;
 }

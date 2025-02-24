@@ -5,13 +5,6 @@
             <p>Here you can find and track movies and TV-series from your watch list. If your watch list is empty you can search for titles to add with the button on the bottom right corner of the screen. </p>
         </div>
 
-        <router-link to="/watch_list/add_title">
-            <button class="color-primary sticky-corner-button">
-                <IconAdd size="28px"/>
-            </button>
-        </router-link>
-
-        
         <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large title-list">
             <h2>{{ titleList.listName }}</h2>
             <p class="text-light title-list-text">{{ titleList.text }}</p>
@@ -111,9 +104,17 @@
             <h2>Titles listed</h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
         </div>
+
+        <router-link to="/watch_list/add_title" tabindex="-1">
+            <button class="color-primary sticky-corner-button">
+                <IconAdd size="28px"/>
+            </button>
+        </router-link>
         
     </div>
 </template>
+
+
 <script>
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
@@ -436,6 +437,9 @@ export default {
     transition: opacity 0.2s ease-out;
 }
 .swiper-slide:hover .favourite-button.not-favourite {
+    opacity: 1;
+}
+.swiper-slide .favourite-button.not-favourite:focus {
     opacity: 1;
 }
 

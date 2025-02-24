@@ -112,6 +112,7 @@ export default {
         padding: var(--spacing-sm);
         transition: color 0.1s;
         background-color: transparent;
+        border-radius: var(--border-radius-small);
 
         /* Keep elements aligned horizontally */
         display: inline-flex;
@@ -136,6 +137,7 @@ export default {
         padding: var(--spacing-sm);
         padding-left: 0;
         transition: color 0.2s ease;
+        border-radius: var(--border-radius-small);
     }
     .website-name:hover {
         color: var(--color-text-bold);
