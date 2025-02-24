@@ -22,6 +22,9 @@
                         v-for="title in titleList.titles" 
                         :key="title.id" 
                         @click="openDetailsPageFor(title.id)"
+                        tabindex="0"
+                        @keydown.enter="openDetailsPageFor(title.id)"
+                        @keydown.space.prevent="openDetailsPageFor(title.id)"
                     >
                         <img 
                             :src="`${apiUrl}/image/${title.id}/poster.jpg`" 
@@ -106,7 +109,7 @@
         </div>
 
         <router-link to="/watch_list/add_title" tabindex="-1">
-            <button class="color-primary sticky-corner-button">
+            <button class="color-primary sticky-corner-button" tabindex="0">
                 <IconAdd size="28px"/>
             </button>
         </router-link>

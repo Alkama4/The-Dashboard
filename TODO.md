@@ -9,12 +9,20 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Split into two. One for simple confimations with customaizeable texts and one for just slotting stuff into
 
 - Title details
+    - poster
+        - Bg color when loading or doesn't exist
+        - Also show on mobile layout
+        - Make bigger if title goes to two rows?
+        - Move watched to "Tags" which replases genres?
     - Possibility to replace the images.
         - Started already on fastapi
     - Do not wait for api when marking watched for episodes and change wording
     - Add a season progress bar or text (or other)
         - The Episodes watched status could be modified to look alike?
     - Tag for not released episodes or a clear way to seperate from released episodes
+
+- Favourite button background transparent dark
+
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?

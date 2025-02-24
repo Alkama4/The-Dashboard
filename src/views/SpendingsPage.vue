@@ -49,7 +49,7 @@
                     @refreshTable="refreshTable"
                 />
                 <div v-if="waitingForResponse && apiFilters.offset === 0">
-                    <div class="transaction-row" v-for="i in Math.min(Number(this.apiFilters.limit), 15)" :key="i">
+                    <div class="transaction-row" v-for="i in 15" :key="i">
                         <div class="loading-placeholder transaction-cell column-date"></div>
                         <div class="loading-placeholder transaction-cell column-counterparty"></div>
                         <div class="loading-placeholder transaction-cell column-category"></div>
@@ -284,10 +284,8 @@
     flex-direction: row; */
     display: flex;
 }
-.transaction-row > div {
+.loading-placeholder.transaction-cell {
     height: 25px;
-    transition: height 0.2s ease-out,
-                mask-size 0.2s ease-out;
 }
 
 /* - - - - Different columns - - - - - */

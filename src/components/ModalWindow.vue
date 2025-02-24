@@ -111,8 +111,12 @@ export default {
             console.log("[ModalWindow] Deleting entry with ID:", this.modalData.transactionID);
             const succcess = await api.deleteTransaction(this.modalData.transactionID);
             if (succcess === true) {
-                this.$emit("refreshTable");
                 this.$emit("close");
+                
+                // USE A EVENT INSTEAD OF PASSING THROUGH LIKE THIS
+                // USE A EVENT INSTEAD OF PASSING THROUGH LIKE THIS
+                // USE A EVENT INSTEAD OF PASSING THROUGH LIKE THIS
+                this.$emit("refreshTable");
             }
         },
         async handleEditSubmit(formData) {
