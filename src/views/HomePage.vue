@@ -16,7 +16,7 @@
 		</div>
 
 		<div class="flex-column">
-			<h2>Other services</h2>
+			<h2>Service links</h2>
 			<div class="tile-container">
 				<a :href="serviceUrl1" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
@@ -36,24 +36,20 @@
 						<span>Pihole</span>
 					</button>
 				</a>
+				
+				<div class="service-seperator"></div>
 
 				<!-- Buttons like this could be useful, but I don't have logos? Just come icons? -->
-				<a href="/watch_list/add_title" class="no-decoration" tabindex="-1">
+				<a href="/spendings/new_entry" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
-						<img 
-							src=""
-							@load="(event) => event.target.classList.add('loaded')"
-						>
-						<span>Add a title</span>
+						<IconWallet/>
+						<span>New entry</span>
 					</button>
 				</a>
 				<a href="/watch_list/add_title" class="no-decoration" tabindex="-1">
 					<button class="tile-button">
-						<img 
-							src=""
-							@load="(event) => event.target.classList.add('loaded')"
-						>
-						<span>Log a transaction</span>
+						<IconFilm/>
+						<span>Add a title</span>
 					</button>
 				</a>
 			</div>
@@ -381,6 +377,8 @@ import { LineChart, PieChart } from 'echarts/charts'
 import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
 import { CanvasRenderer } from 'echarts/renderers'
 import InfoTooltip from '@/components/InfoTooltip.vue';
+import IconFilm from '@/components/icons/IconFilm.vue';
+import IconWallet from '@/components/icons/IconWallet.vue';
 // import { SVGRenderer } from 'echarts/renderers'
 
 use([TooltipComponent, GridComponent, LineChart, PieChart, CanvasRenderer, TitleComponent, LegendComponent]);
@@ -394,6 +392,8 @@ export default {
 		IconBackupDown,
 		IconExpand,
 		IconCollapse,
+		IconFilm,
+		IconWallet,
 	},
 	data() {
 		return {
@@ -1170,7 +1170,8 @@ export default {
 }
 
 .greeting-area {
-	height: 60vh;
+	--greeting-area-height: min(60vh, 800px);
+	height: var(--greeting-area-height);
 	display: flex;
 	position: relative;
 	flex-direction: row;
@@ -1184,7 +1185,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: 15vh;
+	margin-top: min(15vh, calc(800px / 60 * 15));
 }
 
 .greeting-area .text-area h1 {
@@ -1210,7 +1211,7 @@ export default {
     animation: moveBlobs 5s infinite cubic-bezier(0.5, 0, 0.5, 1);
     filter: blur(50px);
 	--x-offset: calc(-250px + 50%);
-	--y-offset: calc(-200px + 60vh * 0.5)
+	--y-offset: calc(-200px + var(--greeting-area-height) * 0.5)
 }
 
 .greeting-area .color-blob.one {
@@ -1283,15 +1284,31 @@ export default {
 	border-radius: var(--border-radius-medium);
 	margin: 0;
 }
-.tile-button img {
+.tile-button img, .tile-button svg {
 	position: absolute;
 	top: var(--spacing-md);
 	width: 80px;
+	height: 80px;
 	aspect-ratio: 1;
+	color: var(--color-text-light);
 }
 .tile-button span {
 	position: absolute;
 	bottom: var(--spacing-md);
+}
+
+.service-seperator {
+	background-color: var(--color-border);
+	width: 2px;
+	border-radius: 100px;
+	margin-inline: var(--spacing-sm);
+}
+@media (max-width: 575px) {
+	.service-seperator {
+		width: 100%;
+		height: 2px;
+		margin: var(--spacing-sm);
+	}
 }
 
 /* - - - - Backup cards - - - - */
