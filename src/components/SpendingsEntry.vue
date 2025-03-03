@@ -87,6 +87,7 @@
             @close="showModal = false"
             @refreshTable="refreshTable"
             @click.stop
+            @keydown.stop
         />
     </div>
 </template>

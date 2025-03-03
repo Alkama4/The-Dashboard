@@ -52,7 +52,7 @@
                         <div class="tag watched" v-if="titleInfo.user_title_watch_count >= 1">
                             Watched
                         </div>
-                        <div class="tag recent" v-else-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                        <div class="tag recent" v-else-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
                             Just released
                         </div>
                         <div class="tag" v-else-if="new Date(titleInfo.release_date) > new Date()">
@@ -150,7 +150,7 @@
             <div class="trailer-details-flex">
                 <div class="details-container">
                     <h2 class="icon-align header-margin-fix" title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information.">
-                        Details 
+                        Details
                         <IconRefresh
                             size="28px"
                             left="6px"
@@ -163,7 +163,7 @@
                         />
                     </h2>
                     <div class="details-grid">
-                        <div>Watched status</div>
+                        <div>Progress</div>
                         <div class="value">
                             <template v-if="titleInfo.user_title_watch_count >= 1">Watched</template>
                             <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_title_watch_count == 0">{{ getWatchedStats() }}</template>
@@ -177,7 +177,7 @@
                             Age rating 
                             <InfoTooltip 
                                 text="
-                                    By default age ratings are Finnish and US ratings are used as a backup:<br>
+                                    By default age ratings are Finnish and US ratings are used as a backup. The US ratings convertion table:<br>
                                     &bullet; G (S) General Audience<br>
                                     &bullet; PG (K-7) Parental Guidance Suggested<br>
                                     &bullet; PG-13 (K-12) Parents Strongly Cautioned, Suitable for 13+<br>
@@ -214,8 +214,11 @@
                         <div>IMDB id</div>
                         <div class="value">{{ titleInfo.imdb_id }}<a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
 
-                        <div>Title Last Updated <InfoTooltip text="When a title is added to the watch list for the first time, its details are cached on the server. The data is only updated when manually refreshed using the refresh button." position="right"/></div>
+                        <div>Title details updated <InfoTooltip text="Title information is updated only when the title is first added to your watch list or when you manually refresh its data using the button above. Please note that refreshing only fetches missing images and does not overwrite existing ones." position="right"/></div>
                         <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
+
+                        <div>User data updated <InfoTooltip text="User-related information updates when you mark the title (or any of its episodes or seasons for TV shows) as watched, edit notes, or add it to favourites." position="right"/></div>
+                        <div class="value">{{ new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI') }}</div>
                     </div>
                 </div>
 
@@ -232,13 +235,7 @@
             </div>
                 
             <div v-if="titleInfo.user_title_watch_count >= 0">
-                <h2 class="header-margin-fix">
-                    Notes 
-                    <InfoTooltip 
-                        :text="`Watch count or notes last saved on ${new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI')}`"
-                        position="right"
-                    />
-                </h2>
+                <h2 class="header-margin-fix">Notes</h2>
                 <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
                     @click="handleNotesSave"
@@ -441,7 +438,10 @@
                 </div>
             </div>
         </div>
-        
+    </div>
+
+    <div v-else-if="!waitingForResult.includes('titleInfo')">
+        <notFoundPage/>
     </div>
 </template>
 
@@ -454,6 +454,7 @@ import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
+import notFoundPage from '@/views/404Page.vue';
 
 // Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
@@ -495,6 +496,7 @@ export default {
         IconHeart,
         IconLinkExternal,
         IconRefresh,
+        notFoundPage,
     },
     methods: {
         formatRuntime(runtime) {
@@ -670,6 +672,7 @@ export default {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
         },
         async queryTitleData() {
+            this.waitingForResult.push("titleInfo");
             // Query the details from api for the title here:
             const response = await api.getTitleInfo(this.titleID);
             if (response && response.title_info) {
@@ -681,6 +684,7 @@ export default {
                     router.push("/watch_list");
                 }
             }
+            this.removeItemFromWaitingArray("titleInfo");
         },
         backdropKeypress(event) {
             if (['ArrowLeft', 'a', 'w'].includes(event.key)) {
@@ -726,7 +730,7 @@ export default {
             this.updateSlideshowImageTo(newNumber);
         },
         episodeMapTileBackgroundColors() {
-            if (this.titleInfo.seasons) {
+            if (this.titleInfo && this.titleInfo.seasons) {
                 const baseColor = getCssVar("color-background-card");
                 const ratingColor = getCssVar("color-primary");
 
@@ -764,10 +768,12 @@ export default {
         await this.queryTitleData();
 
         // Generate individual data for each backdrop image dynamically
-        this.imageSlideshowData.individualData = Array.from({ length: this.titleInfo.backdrop_image_count }, (_, i) => ({
-            number: i,
-            isLoaded: false
-        }));
+        if (this.titleInfo) {
+            this.imageSlideshowData.individualData = Array.from({ length: this.titleInfo.backdrop_image_count }, (_, i) => ({
+                number: i,
+                isLoaded: false
+            }));
+        }
 
         // Run initially and add the event listener to update on darkmode change
         this.episodeMapTileBackgroundColors();
@@ -1395,13 +1401,6 @@ iframe {
     left: var(--spacing-sm);
     display: inline;
     pointer-events: none;
-}
-
-.tag.watched {
-    background-color: var(--color-positive);
-}
-.tag.recent {
-    background-color: var(--color-primary);
 }
 
 

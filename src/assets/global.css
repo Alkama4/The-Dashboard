@@ -35,17 +35,17 @@
     --cubic-ease-slow-in-slow-out: cubic-bezier(.75,0,.25,1);
 
     /* Z-indexes */
-    --z-index-fullscreen: 10000002;
-    --z-mobile-nav: 10000001;
+    --z-index-fullscreen: 10000700;
+    --z-mobile-nav: 10000600;
+    --z-notification: 10000500;
+    --z-modal: 10000400;
+    --z-filters: 10000300;
+    --z-top-bar: 10000200;
+    --z-hovering-corner-button: 10000100;
     /* Apache echart tooltip is at 10 000 000 */
-    --z-notification: 350;
-    --z-modal: 300;
-    --z-filters: 250;
-    --z-top-bar: 200;
-    --z-app: 100;
-    --z-spendings-entry-after: 90;
-    --z-hovering-button: 10;
-    --z-background-colors: 0;
+    /* To hard to change it,
+       cannot add spaces or markers between thousands in css */
+    --z-app: 0;
 
     /* Media break off points */
     /* 
@@ -150,7 +150,7 @@
     --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.dark-mode {
+:root.dark-mode {
     /* - - - - - - - - - - - - - - - */
     /* - - - - - DARK MODE - - - - - */
     /* - - - - - - - - - - - - - - - */
@@ -731,7 +731,7 @@ input[type="radio"] {
     bottom: 0;
     right: 0;
     margin: var(--spacing-lg);
-    z-index: var(--z-hovering-button);
+    z-index: var(--z-hovering-corner-button);
     aspect-ratio: 1;
     padding: 10px;
     border-radius: 50%;
@@ -890,6 +890,13 @@ input[type="radio"] {
     white-space: nowrap;
     /* border: 1px solid var(--color-border); */
 }
+.tag.watched {
+    background-color: var(--color-positive);
+}
+.tag.recent {
+    background-color: var(--color-primary);
+}
+
 
 .fullscreen {
     max-height: none !important;

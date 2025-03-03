@@ -27,7 +27,7 @@ async function handleError(error, endpoint) {
         } else if (statusCode === 403) {
             notify("Unexpected error occurred. Please try again." + detail, "error");
         } else if (statusCode === 404) {
-            notify("Resource not found: Please verify the endpoint." + detail, "error");
+            notify(`Resource not found: ${detail}`, "error");
         } else if (statusCode === 405) {
             notify("This feature requires an account. Please login." + detail, "error");
         } else if (statusCode === 400) {

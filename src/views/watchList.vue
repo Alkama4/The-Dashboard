@@ -50,7 +50,7 @@
                             <!-- <IconCheck size="22px"/> -->
                             Watched
                         </div>
-                        <div class="tag recent" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                        <div class="tag recent" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
                             Just released
                         </div>
                         <div class="tag" v-else-if="new Date(title.release_date) > new Date()">
