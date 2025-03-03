@@ -450,7 +450,21 @@ export default {
                                 name: 'Balance',    // Tooltipissa näkyvä nimi
                                 type: 'line',
                                 data: runningSums,
-                                smooth: true,
+                                // smooth: true,
+                                areaStyle: {
+                                    color: {
+                                        type: 'linear',
+                                        x: 0,
+                                        y: 0,
+                                        x2: 0,
+                                        y2: 1,
+                                        colorStops: [{
+                                            offset: 0, color: getCssVar("color-primary")
+                                        }, {
+                                            offset: 1, color: 'transparent'
+                                        }]
+                                    }
+                                },
                             },
                         ],
                     });

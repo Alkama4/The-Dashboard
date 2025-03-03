@@ -1,8 +1,11 @@
 <template>
     <div 
         class="transaction-component" 
-        :class="{'expanded': isExpanded}"
-        @click="toggleEntry" 
+        :class="{
+            'expanded': isExpanded,
+            'in-future': new Date(transaction.date) > new Date()
+        }"
+        @click="toggleEntry" f
         :ref="`transaction${transaction.transaction_id}`"
         tabindex="0"
         @keydown.enter="toggleEntry"
@@ -248,6 +251,9 @@
 }
 .transaction-component:focus {
     z-index: 2;
+}
+.transaction-component.in-future {
+    filter: opacity(0.3);
 }
 
 .transaction-row {

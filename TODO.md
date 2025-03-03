@@ -10,18 +10,15 @@ This file is a collection of notes for things that need to be done or fixed. It 
 
 - Title details
     - poster
-        - Bg color when loading or doesn't exist
-        - Also show on mobile layout
-        - Make bigger if title goes to two rows?
-        - Move watched to "Tags" which replases genres?
-    - Possibility to replace the images.
+        - Also show on mobile layout?
+            - Doesn't really fit :/
+    - Possibility to requery the images.
         - Started already on fastapi
     - Do not wait for api when marking watched for episodes and change wording
     - Add a season progress bar or text (or other)
         - The Episodes watched status could be modified to look alike?
+        - Layout has to be reworked
     - Tag for not released episodes or a clear way to seperate from released episodes
-
-- Favourite button background transparent dark
 
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
@@ -31,6 +28,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Or chart setup and values all handled in the .js file. No thisComponent etc. Just give it the stuff and it will handle it.
     - Although the current setup works fine and is already quite good so propably not worth the effort
 
+- watch list poster scroll z-issues when hovering hover cards.
 
 ### Features to add
 - Navigation
@@ -125,6 +123,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Transactions load never ends. 
     - Simple state change when reponse fails and an another v-if element.
 - Setting episode wathced/unwatched updates all episodes in the season to be watched on the dom incorrectly even though data on db is correct. Refresh fixes. Check how the data is updated on confirmation.
+- Title details user data updated isn't updated when saving notes on the client side. Need to refresh for it to display.
+    - Do not always just set the current date. If the value is the same that it was in the db it doesn't actually update anything.
     
 
 ### Feature or a bug?

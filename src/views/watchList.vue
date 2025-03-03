@@ -59,7 +59,7 @@
                         
                         <button 
                             v-if="title.is_favourite"
-                            class="tag favourite-button icon-align" 
+                            class="tag favourite-button button-transparent icon-align" 
                             @click.stop="handleFavouriteToggle(title)"
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -68,7 +68,7 @@
                         </button>
                         <button 
                             v-else
-                            class="tag favourite-button not-favourite icon-align" 
+                            class="tag favourite-button button-transparent not-favourite icon-align" 
                             @click.stop="handleFavouriteToggle(title)"
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -396,24 +396,6 @@ export default {
     gap: var(--spacing-xs);
 }
 
-
-/* .swiper-slide .favourite-icon::after {
-    content: "";
-    height: 40px;
-    width: 40px;
-    background-color: rgba(0, 0, 0, 0.7);
-    position: absolute;
-    filter: blur(10px);
-    top: 0;
-    z-index: -1;
-    border-radius: 50%;
-}
-.swiper-slide .favourite-icon::after {
-    transform: translate(20%, -20%);
-    right: 0;
-} */
-
-
 .swiper-slide .tag {
     position: absolute;
     top: var(--spacing-sm);
@@ -437,7 +419,6 @@ export default {
 
 .swiper-slide .favourite-button.not-favourite {
     opacity: 0;
-    transition: opacity 0.2s ease-out;
 }
 .swiper-slide:hover .favourite-button.not-favourite {
     opacity: 1;

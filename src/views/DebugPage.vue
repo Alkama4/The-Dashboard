@@ -3,6 +3,12 @@
         <h1>Debug Page</h1>
         <p>Congralutions just you found an easter egg! Unfortunately though this is just a basic debug page and not something more exciting. This page can be used for everything debugging and testing related.</p>
 
+        <p>In the future this could be turned to a about page, that would for example have the github link, about me and the project and general info like the stuff in README.md.</p>
+
+        <h2>GitHub</h2>
+        <p>Here's the link to the <a href="https://github.com/Alkama4/The-Dashboard">GitHub repo</a>.</p>
+
+
 		<h2>Notification buttons</h2>
         <div class="flex-row" style="gap: 0">
             <button style="margin: var(--spacing-xs) var(--spacing-sm)" @click="notificationInfo">Info</button>
@@ -34,6 +40,17 @@
                 :style="{'background-color': dynamicBgColor(n)}"
             >
                 Div {{ n }}
+            </div>
+        </div>
+
+        <div class="parent">
+            <div class="image">
+                <img src="http://192.168.0.2:800/image/225/poster.jpg?width=500" class="loaded">
+            </div>
+            <div class="child">
+                <h2>Wow</h2>
+                <p>Somsdklfj sdlkjf slkdjf slkdjf lskdjf lksdjf lksjdf lksdj flksjfiowjfiomwp qfnwefkojbwm pkldnc pn</p>
+                <button style="width: 100%;">Button</button>
             </div>
         </div>
 
@@ -107,6 +124,28 @@ export default {
 </script>
 
 <style scoped>
+
+.parent {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 12px;
+}
+.image {
+    background-color: red;
+    height: 100%;
+    aspect-ratio: 2/3; /* Or set based on your desired shape */
+}
+.image img {
+    height: 100%;
+    width: auto;
+    object-fit: cover;
+}
+.child {
+    height: fit-content;
+}
+
+
 .tile {
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--border-radius-small);

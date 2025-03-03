@@ -43,25 +43,14 @@
         <div class="content-width-medium title-details">
 
             <div class="poster-next-to-stuff">
-                <div class="poster-container">
+                <div class="poster-holder">
                     <img 
                         :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg`" 
                         @load="(event) => event.target.classList.add('loaded')"
                     >
-                    <div class="tag-holder">
-                        <div class="tag watched" v-if="titleInfo.user_title_watch_count >= 1">
-                            Watched
-                        </div>
-                        <div class="tag recent" v-else-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
-                            Just released
-                        </div>
-                        <div class="tag" v-else-if="new Date(titleInfo.release_date) > new Date()">
-                            Upcoming
-                        </div>
-                    </div>
                 </div>
 
-                <div>
+                <div class="name-and-stuff">
                     <div class="name-and-tagline no-pointer-events">
                         <h1 class="title-name">
                             <span class="all-pointer-events" :title="titleInfo.name">
@@ -75,8 +64,6 @@
                     </div>
 
                     <div class="control-button-array combined-buttons">
-                        <!-- Favourite buttons -->
-                        <!-- class="icon-button favourite"  -->
                         <button 
                             v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
                             class="color-primary left-button flex-1" 
@@ -128,7 +115,7 @@
                         </button>
                         <button 
                             v-else
-                            class=" right-button flex-1" 
+                            class=" right-button flex-1"
                             @click="handleWatchListModification('remove')" 
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -137,14 +124,27 @@
                         </button>
                     </div>
 
-                    <h2>Genres</h2>
-                    <div class="genres flex">
-                        <div class="genre tag" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
+                    <h2 style="margin-top: var(--spacing-md);">Tags</h2>
+                    <div class="tags flex">
+                        <div class="tag tag-positive" v-if="titleInfo.user_title_watch_count >= 1">
+                            Watched
+                        </div>
+                        <div class="tag tag-primary" v-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
+                            Just released
+                        </div>
+                        <div class="tag tag-upcoming" v-if="new Date(titleInfo.release_date) > new Date()">
+                            Upcoming
+                        </div>
+                        <div class="tag tag-secondary" v-if="titleInfo.user_title_favourite == 1">
+                            Favourite
+                        </div>
+
+                        <div class="tag" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
                     </div>
                 </div>
             </div>
-            
-            <h2>Overview</h2>
+
+           <h2>Overview</h2>
             <p>{{ titleInfo.overview }}</p>
 
             <div class="trailer-details-flex">
@@ -317,10 +317,10 @@
                             @load="(event) => event.target.classList.add('loaded')"
                         />
                         <div class="tag-holder">
-                            <div class="tag watched" v-if="0 != season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity) && season.episodes.length >= 1">
+                            <div class="tag tag-positive" v-if="0 != season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity) && season.episodes.length >= 1">
                                 Watched
                             </div>
-                            <div class="tag" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
+                            <div class="tag tag-primary" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
                                 Upcoming
                             </div>
                         </div>
@@ -387,10 +387,10 @@
                                 >
                                 <!-- Tag to show if newly released or watched, or maybe even un released status -->
                                 <div class="tag-holder">
-                                    <div class="tag watched" v-if="episode.watch_count >= 1">
+                                    <div class="tag tag-positive" v-if="episode.watch_count >= 1">
                                         Watched
                                     </div>
-                                    <div class="tag recent" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                                    <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
                                         New episode
                                     </div>
                                     <div class="tag" v-else-if="new Date(episode.air_date) > new Date()">
@@ -967,7 +967,7 @@ export default {
 
 
 .name-and-tagline {
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
     align-items: left;
 }
 
@@ -975,6 +975,11 @@ export default {
 .name-and-tagline .title-name {
     margin-bottom: 0;
     margin-top: 0;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 .name-and-tagline .title-name .original-title {
     color: var(--color-text-lighter)
@@ -998,41 +1003,46 @@ export default {
 
 .title-details .poster-next-to-stuff {
     display: grid;
-    gap: var(--spacing-lg);
+    gap: 20px;
+    row-gap: 0;
     grid-template-columns: auto 1fr;
 }
 
-.title-details .poster-next-to-stuff img {
-    height: 276px;
+.poster-next-to-stuff .poster-holder {
+    background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
+    height: 316px;
+    display: flex;
+    aspect-ratio: 2/3;
+}
+.poster-next-to-stuff .poster-holder img {
+    border-radius: var(--border-radius-medium);
+    height: 100%;
 }
 
-.poster-container {
-    position: relative;
-}
 
-.title-details .genres {
+.poster-next-to-stuff .name-and-stuff {
+    display: flex;
+    flex-direction: column;
+}
+.title-details .tags {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
     overflow: hidden;
     /* height: 32px; */
-    /* margin: var(--spacing-md) 0; */
+    /* margin:  0; */
+    /* margin-top: var(--spacing-md); */
 }
-.title-details .genre {
+.title-details .tags .tag {
     font-weight: 500;
     background-color: var(--color-background-card);
 }
 
+.title-details .tags .tag.tag-upcoming {
+    background-color: var(--color-button-general);
+}
+
 .control-button-array {
-    position: fixed;
-    bottom: var(--spacing-md);
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100vw - 2vw * 2);
-    z-index: 10;
-    background-color: var(--color-background-card);
-    border: 1px solid var(--color-border);
-    padding: 10px;
     border-radius: var(--border-radius-medium);
     box-sizing: border-box;
     box-shadow: var(--shadow-card);
@@ -1042,7 +1052,7 @@ export default {
     width: 100%;
     border: none;
     padding: 0;
-    margin: var(--spacing-md) 0;
+    margin: 0;
     box-shadow: none;
     background-color: initial;
 
@@ -1056,7 +1066,6 @@ export default {
 @media (min-width: 550px) {
     .control-button-array {
         gap: var(--spacing-sm);
-
     }
     .control-button-array button {
         padding-inline: var(--spacing-lg);
@@ -1087,7 +1096,7 @@ h2.header-margin-fix {
 }
 iframe {
     aspect-ratio: 16/9;
-    width: 480px;
+    width: 510px;
     max-width: 100%;
     margin-inline: auto;
 }
@@ -1252,6 +1261,15 @@ iframe {
 }
 .season h2 {
     margin: 0;
+    max-width: calc(100% - 243px - 8px);
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.season .about .poster-container {
+    display: flex;
 }
 .season .about .poster {
     height: 200px;
@@ -1293,7 +1311,12 @@ iframe {
         grid-area: button;
         width: 100%;
     }
+    .season h2 {
+        max-width: none;
+    }
+
     .title-details .poster-next-to-stuff {
+        gap: 0;
         grid-template-columns: auto;
     }
     .title-details .poster-next-to-stuff img {
