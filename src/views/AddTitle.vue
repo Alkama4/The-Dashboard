@@ -323,6 +323,10 @@ export default {
         /* Adjust the dots color with this */
         color: var(--color-text-lighter);
     }
+    .result a.no-decoration {
+        margin: 0;
+        margin-bottom: var(--spacing-xs);
+    }
     .result a:hover {
         text-decoration: underline;
     }

@@ -81,18 +81,18 @@
                 <IconDetails size="18px"/>Details
             </button>
         </div>
-
-        <ModalWindow
-            v-if="showModal"
-            :modalType="modalCategory"
-            :modalData="this.transaction"
-            :header="modalHeader"
-            @close="showModal = false"
-            @refreshTable="refreshTable"
-            @click.stop
-            @keydown.stop
-        />
     </div>
+
+    <ModalWindow
+        v-if="showModal"
+        :modalType="modalCategory"
+        :modalData="this.transaction"
+        :header="modalHeader"
+        @close="showModal = false"
+        @refreshTable="refreshTable"
+        @click.stop
+        @keydown.stop
+    />
 </template>
 
 <script>
@@ -253,7 +253,7 @@
     z-index: 2;
 }
 .transaction-component.in-future {
-    filter: opacity(0.3);
+    filter: opacity(0.5);
 }
 
 .transaction-row {

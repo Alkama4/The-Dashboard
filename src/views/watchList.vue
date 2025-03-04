@@ -46,12 +46,15 @@
                             </div>
                         </div>
 
-                        <div class="tag watched" v-if="title.watch_count >= 1">
+                        <div class="tag tag-positive" v-if="title.watch_count >= 1">
                             <!-- <IconCheck size="22px"/> -->
                             Watched
                         </div>
-                        <div class="tag recent" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
+                        <div class="tag tag-primary" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
                             Just released
+                        </div>
+                        <div class="tag tag-primary" v-else-if="title.new_episodes >= 1">
+                            New episodes
                         </div>
                         <div class="tag" v-else-if="new Date(title.release_date) > new Date()">
                             Upcoming

@@ -49,7 +49,7 @@
             </div>
         </div>
 
-        <div class="content-width-small">
+        <div class="content-width-small card">
             <h2>
                 <span class="icon-align">
                     <IconWarningTriangle size="24" right="var(--spacing-xs)"/>
@@ -65,6 +65,9 @@
                     Delete account permanently
                 </button>
             </div>
+
+            <!-- What was the other thing that I could add here? -->
+             
         </div>
 
     </div>

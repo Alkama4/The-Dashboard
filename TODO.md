@@ -14,7 +14,6 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Doesn't really fit :/
     - Possibility to requery the images.
         - Started already on fastapi
-    - Do not wait for api when marking watched for episodes and change wording
     - Add a season progress bar or text (or other)
         - The Episodes watched status could be modified to look alike?
         - Layout has to be reworked
@@ -85,6 +84,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - #3d3e40
 - Wathced tag looks bad
     - Add the same tag to seasons and even episodes?
+- Title space taken
+    - Seperate images and data?
+    - How do I get the data amount?
 
 
 ### Known issues

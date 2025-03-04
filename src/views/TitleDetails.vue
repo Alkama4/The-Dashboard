@@ -328,9 +328,10 @@
                     <div class="text">
                         <h2>{{ season.season_name }}</h2>
                         <div class="details">
-                            <div class="icon-align">
-                                <span>{{ season.episode_count }} episodes &bullet;</span>
-                                <span class="icon-align"><IconTMDB/> {{ season.vote_average }} </span>
+                            <div class="icon-align single-line">
+                                <span>{{ season.episode_count }} episodes</span>
+                                <span class="bullet">&bullet;</span>
+                                <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.vote_average }} ({{ seasonVotes(season) }} votes)</span>
                             </div>
                             <div>
                                 {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
@@ -401,10 +402,10 @@
                             
                             <div class="text">
                                 <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
-                                <div class="details" :title="`${episode.vote_count} votes`">
-                                    <span class="icon-align">
+                                <div class="details">
+                                    <span class="icon-align" >
                                         <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                        <span class="icon-align"><IconTMDB/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }}</span>
+                                        <span class="icon-align"><IconTMDB/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }} ({{ episode.vote_count }} votes)</span>
                                     </span>
                                     <div>
                                         {{ 
@@ -762,6 +763,14 @@ export default {
         scrollBackToEpisodeMap() {
             router.push("#episode_map");
             // setTimeout(() => (this.closeAllSeasons("", false)), 300);
+        },
+        seasonVotes(season) {
+            let runningSum = 0
+            if (season && season.episodes)
+            season.episodes.forEach((episode) => {
+                runningSum += episode.vote_count;
+            });
+            return runningSum;
         }
     },
     async mounted() {
@@ -1013,7 +1022,8 @@ export default {
     border-radius: var(--border-radius-medium);
     height: 316px;
     display: flex;
-    aspect-ratio: 2/3;
+    /* Causes issues with gap. Don't use. */
+    /* aspect-ratio: 2/3; */
 }
 .poster-next-to-stuff .poster-holder img {
     border-radius: var(--border-radius-medium);
@@ -1270,11 +1280,12 @@ iframe {
 }
 .season .about .poster-container {
     display: flex;
+    position: relative;
 }
 .season .about .poster {
-    height: 200px;
-    width: 133.33px;
-    min-width: 133.33px;
+    height: 250px;
+    width: 166.666px;
+    min-width: 166.666px;
     background-color: var(--color-background-card-section);
     border-radius: var(--border-radius-medium);
     grid-area: img;
@@ -1283,8 +1294,8 @@ iframe {
     margin-bottom: 0;
     margin-top: 10px;
     display: -webkit-box;
-    line-clamp: 4;
-    -webkit-line-clamp: 4;
+    line-clamp: 6;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -1319,7 +1330,33 @@ iframe {
         gap: 0;
         grid-template-columns: auto;
     }
-    .title-details .poster-next-to-stuff img {
+    .title-details .poster-next-to-stuff .poster-holder {
+        display: none;
+    }
+
+    .season .about .poster {
+        height: 200px;
+        width: 133.333px;
+        min-width: 133.333px;
+        background-color: var(--color-background-card-section);
+        border-radius: var(--border-radius-medium);
+        grid-area: img;
+    }
+    .season .about p {
+        line-clamp: 4;
+        -webkit-line-clamp: 4;
+    }
+}
+@media (max-width: 550px) {
+    .season .about p {
+        line-clamp: 3;
+        -webkit-line-clamp: 3;
+    }
+    .season .details .single-line {
+        flex-direction: column;
+        align-items: start;
+    }
+    .season .details .single-line .bullet {
         display: none;
     }
 }

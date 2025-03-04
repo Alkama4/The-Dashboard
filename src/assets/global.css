@@ -443,7 +443,9 @@ button.button-simple {
 /* Button transparent */
 button.button-transparent {
     background-color: var(--color-background-button-transparent);
-    backdrop-filter: blur(8px);
+    /* Causes a bug that hides the swiper masks when a button in a slide has a backdrop-filter */
+    /* could have a seperate object with just filter e.g. but to much hassle */
+    /* backdrop-filter: blur(8px); */
     transition: background-color 0.1s ease-out,
                 opacity 0.2s ease-out;
 }
@@ -749,7 +751,7 @@ input[type="radio"] {
     margin: var(--spacing-lg);
     z-index: var(--z-hovering-corner-button);
     aspect-ratio: 1;
-    padding: 10px;
+    padding: 12px;
     border-radius: 50%;
     box-shadow: var(--shadow-floating-button)
 }
