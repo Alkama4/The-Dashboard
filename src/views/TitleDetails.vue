@@ -253,14 +253,14 @@
         <div class="content-width-medium-unrestricted" v-if="titleInfo.seasons">
             <h2 id="episode_map">Episode map</h2>
 
-            <button 
-                class="sticky-corner-button" 
+            <router-link 
+                class="sticky-corner-button link-button" 
                 style="transition: opacity 0.1s ease-out;"
                 :style="{ opacity: scrolledPastEpisodeMap ? 1 : 0 }"
-                @click="scrollBackToEpisodeMap"
+                to="#episode_map"
             >
                 <IconChevronDown size="28px" style="rotate: 180deg;"/>
-            </button>
+            </router-link>
 
             <div class="episode-map">
                 <div class="season-row">
@@ -282,9 +282,8 @@
                     <div class="episode-tile label">
                         S{{ season.season_number }}
                     </div>
-                    <div 
+                    <router-link 
                         v-for="episode in season.episodes" 
-                        @click="scrollToEpisode(`refSeason${season.season_id}`, `#S${season.season_number}E${episode.episode_number}`)"
                         :key="episode.episode_number" 
                         class="episode-tile"
                         :class="{ 
@@ -293,10 +292,11 @@
                         }"
                         :style="{'background-color': episode.tileColor || 'var(--color-background-card)'}"
                         :title="`S${season.season_number} E${episode.episode_number}`"
+                        :to="`/watch_list/title/${titleInfo.title_id}#S${season.season_number}E${episode.episode_number}`"
                     >
                         <!-- S{{ season.season_number }} E{{ episode.episode_number }} -->
                         {{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }}
-                    </div>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -309,7 +309,7 @@
                 class="card season" 
                 :class="{'active': expandedSeason == season.season_id}"
             >
-                <div class="about" @click="toggleHeight(`refSeason${season.season_id}`)">
+                <div class="about" @click="toggleHeight(`refSeason${season.season_number}`)">
                     <div class="poster-container">
                         <img 
                             class="poster" 
@@ -360,8 +360,8 @@
                 </div>
                 
                 <!-- EPISODES -->
-                <div class="episodes" :ref="`refSeason${season.season_id}`">
-                    <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_id}`)">
+                <div class="episodes" :ref="`refSeason${season.season_number}`">
+                    <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_number}`)">
                         <div 
                             v-for="(episode, index) in season.episodes" 
                             :key="episode.episode_number" class="episode" 
@@ -537,36 +537,12 @@ export default {
         },
         closeAllSeasons(keepRef = "", noTransition = true) {
             this.titleInfo.seasons.forEach(season => {
-                const seasonRef = `refSeason${season.season_id}`;
+                const seasonRef = `refSeason${season.season_number}`;
                 // Don't set height for the one that we wan't to be open
                 if (seasonRef != keepRef) {
                     this.setHeightToNone(seasonRef, noTransition);
                 }
             })
-        },
-        scrollToEpisode(refKey, episodeElementID) {
-            // Close all other seasons
-            this.closeAllSeasons(refKey);
-
-            // Mark the season as opened to load to dom with v-if to start loading images
-            if (!this.openedSeasons.includes(refKey)) {
-                this.openedSeasons.push(refKey)
-            }
-            
-            // Set a minimal timeout so that the dom change registers before the height is calculated
-            setTimeout(() => {
-                // Set height
-                const element = this.$refs[refKey]?.[0]; // Get the first element
-                if (!element) return;   // Check if exists
-                element.style.transition = 'height 0s';
-                element.style.height = element.scrollHeight + "px"; // Expand
-                // Ensure the height change is finished before setting back with a miniscule delay
-                setTimeout(() => {
-                    element.style.transition = '';
-                    // Go to position
-                    router.push(episodeElementID);
-                }, 1)
-            }, 1)
         },
         // make this go through a MODAL?
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
@@ -760,10 +736,6 @@ export default {
                 this.scrolledPastEpisodeMap = scrollY > episodeMap.offsetTop;
             }
         },
-        scrollBackToEpisodeMap() {
-            router.push("#episode_map");
-            // setTimeout(() => (this.closeAllSeasons("", false)), 300);
-        },
         seasonVotes(season) {
             let runningSum = 0
             if (season && season.episodes)
@@ -771,6 +743,52 @@ export default {
                 runningSum += episode.vote_count;
             });
             return runningSum;
+        },
+        openCorrectSeason(hash) {
+            return new Promise((resolve) => {
+                // console.log(to);
+
+                const match = hash.match(/#S(\d+)E\d+/);
+                const seasonNumber = match ? match[1] : null;
+
+                // If a link to other stuff like #episode_map the get season number should return null
+                // allowing us to quit here quietly
+                if (seasonNumber == null)
+                    return resolve();
+
+                const refKey = `refSeason${seasonNumber}`
+                // console.log(seasonNumber, refKey);
+
+                // Close all other seasons
+                this.closeAllSeasons(refKey);
+
+                // Mark the season as opened to load to dom with v-if to start loading images
+                if (!this.openedSeasons.includes(refKey)) {
+                    this.openedSeasons.push(refKey);
+                }
+                
+                // Set a minimal timeout so that the dom change registers before the height is calculated
+                setTimeout(() => {
+                    // Set height
+                    const element = this.$refs[refKey]?.[0]; // Get the first element
+                    if (!element) 
+                        return resolve();   // Check if exists
+                    element.style.transition = 'height 0s';
+                    element.style.height = element.scrollHeight + "px"; // Expand
+
+                    // Ensure the height change is finished before setting back
+                    setTimeout(() => {
+                        element.style.transition = '';
+                        // Allow the router to finish it's thing
+                        resolve();
+                    }, 1)
+                }, 1)
+            });
+        },
+    },
+    async beforeRouteUpdate(to) {
+        if (to.hash) {
+            await this.openCorrectSeason(to.hash);
         }
     },
     async mounted() {
@@ -790,7 +808,26 @@ export default {
         
         // Add a scroll listener to show and hide the scroll back to episode map button
         window.addEventListener('scroll', this.checkScroll);
+
+        // Scroll to the hash on the url if there is one.
+        // Need to do this here instead of "beforeRouteEnter" because we need access to this and the titles info.
+        const hash = window.location.hash;
+        if (hash) {
+            // Open season based on hash
+            this.openCorrectSeason(hash);
+
+            // Miniscule delay to wait for the opening to happen. Haven't yet come up with a better
+            // way to do it so I use this even though it feels janky.
+            setTimeout(() => {
+                const element = document.querySelector(hash);
+                if (element) {
+                    // Use the custom function to scroll to the position with correct offset
+                    router.scrollToElementWithOffset(element);
+                }
+            }, 1)
+        }
     },
+
     unmounted() {
         window.removeEventListener('darkModeChange', this.episodeMapTileBackgroundColors);
         window.removeEventListener('scroll', this.checkScroll);

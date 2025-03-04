@@ -355,7 +355,7 @@ button {
                 background-color 0.1s ease-out,
                 box-shadow 0.1s ease-out;
 }
-button:hover {
+button:hover, .link-button:hover {
     color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
     box-shadow: var(--shadow-button-hover);
@@ -363,7 +363,7 @@ button:hover {
 /* button:hover svg {
     fill: var(--color-text-bold)
 } */
-button:active {
+button:active, .link-button:active {
     background-color: var(--color-button-general-active);
     box-shadow: var(--shadow-button-active);
 }
@@ -753,6 +753,9 @@ input[type="radio"] {
     aspect-ratio: 1;
     padding: 12px;
     border-radius: 50%;
+    box-shadow: var(--shadow-floating-button)
+}
+.sticky-corner-button:hover, .sticky-corner-button:active {
     box-shadow: var(--shadow-floating-button)
 }
 

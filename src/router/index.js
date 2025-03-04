@@ -88,6 +88,18 @@ const routes = [
 ];
 
 // Create the router instance
+function scrollToElementWithOffset(element) {
+    // Offset to compensate for topbar + a little gap
+    const offset = 60 + 8;
+    const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+
+    // Scroll to the element's top position plus the offset
+    window.scrollTo({
+        top: elementTop - offset,
+        behavior: 'smooth'
+    });
+}
+
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes,
@@ -99,15 +111,8 @@ const router = createRouter({
                 // Scroll the element into view with smooth behavior
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-                // Offset to compensate for topbar + a little gap
-                const offset = 60 + 8;
-                const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
-
-                // Scroll to the element's top position plus the offset
-                window.scrollTo({
-                    top: elementTop - offset,
-                    behavior: 'smooth'
-                });
+                // Reuse the scroll logic with offset
+                scrollToElementWithOffset(element);
 
                 // Return saved position in case the user is going back
                 return savedPosition;
@@ -121,7 +126,9 @@ const router = createRouter({
         return savedPosition || { top: 0 };
     }
 });
-  
+
+// Add the scrollToElementWithOffset function as a method on the router instance
+router.scrollToElementWithOffset = scrollToElementWithOffset;
   
 router.beforeEach((to, from, next) => {
     document.title = `Dashboard - ${to.meta.title || 'Default Title'}`;
