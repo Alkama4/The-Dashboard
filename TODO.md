@@ -82,6 +82,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - #425d94
     - #2c3361
     - #3d3e40
+- Nice colors:
+    - #601020
 - Wathced tag looks bad
     - Add the same tag to seasons and even episodes?
 - Title space taken

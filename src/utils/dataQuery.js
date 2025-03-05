@@ -496,11 +496,12 @@ const api = {
         }
     },
 
-    async getTitleCards(sortBy, titleType, watched, favourite, released, started) {
+    async getTitleCards(sortBy, direction, titleType, watched, favourite, released, started) {
         let params = {};
         params.title_count = 12;
         params.session_key = localStorage.getItem('sessionKey');
         if (sortBy != null) params.sort_by = sortBy;
+        if (direction != null) params.direction = direction;
         if (titleType != null) params.title_type = titleType;
         if (watched != null) params.watched = watched;
         if (favourite != null) params.favourite = favourite;

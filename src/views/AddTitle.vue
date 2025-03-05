@@ -63,7 +63,7 @@
 
                             <!-- External TMDB Link Icon (only if title_id exists) -->
                             <a v-if="title.title_id" class="no-decoration icon-align external-link-icon" :href="tmdbLink(title)" target="_blank" rel="noopener noreferrer">
-                                <IconLinkExternal size="18px"/>
+                                <IconLinkExternal style="margin-left: 5px;" size="18px"/>
                             </a>
                         </h3>
                         <div class="flex details">

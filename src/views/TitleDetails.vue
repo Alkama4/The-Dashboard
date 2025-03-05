@@ -6,7 +6,7 @@
                     v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                     @load="image.isLoaded = true" 
                     :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                    :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                    :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg?width=1200`" 
                 />
             </div>
         </div>
@@ -20,7 +20,7 @@
                             v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                             @load="image.isLoaded = true" 
                             :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                            :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg`" 
+                            :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg?width=1200`" 
                         />
                     </div>
                 </div>
@@ -45,7 +45,7 @@
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
                     <img 
-                        :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg`" 
+                        :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg?width=600`" 
                         @load="(event) => event.target.classList.add('loaded')"
                     >
                 </div>
@@ -382,7 +382,7 @@
                                 <img 
                                     v-else
                                     class="still" 
-                                    :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg`" 
+                                    :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg?width=900`" 
                                     @error="failedToLoadImages.push(episode.episode_id)"
                                     @load="(event) => event.target.classList.add('loaded')"
                                 >

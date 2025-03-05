@@ -27,7 +27,7 @@
                         @keydown.space.prevent="openDetailsPageFor(title.id)"
                     >
                         <img 
-                            :src="`${apiUrl}/image/${title.id}/poster.jpg`" 
+                            :src="`${apiUrl}/image/${title.id}/poster.jpg?width=600`" 
                             class="thumbnail"
                             @load="(event) => event.target.classList.add('loaded')" 
                         />
@@ -210,6 +210,7 @@ export default {
                     activeSlide: 0,
                     fetchDetails: {
                         sortBy: "release_date",
+                        direction: "asc",
                         released: false,
                     }
                 },
@@ -255,6 +256,7 @@ export default {
                     try {
                         const titleData = await api.getTitleCards(
                             list.fetchDetails.sortBy,
+                            list.fetchDetails.direction,
                             list.fetchDetails.titleType,
                             list.fetchDetails.watched,
                             list.fetchDetails.favourite,
