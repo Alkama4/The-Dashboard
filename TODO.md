@@ -27,9 +27,19 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Or chart setup and values all handled in the .js file. No thisComponent etc. Just give it the stuff and it will handle it.
     - Although the current setup works fine and is already quite good so propably not worth the effort
 
-- watch list imporve layout for desktop and focus...
-    - on the description 
-    - on mobile compability
+- watch list finish the all titles list
+    - add sort by
+        - Use the list in fastapi's end
+    - super basic filters
+        - watched, unwatched, don't care
+        - favourite, not favourite, don't care
+        - tv, movie, don't care
+        - Released, started...?
+    - Whole title act as a link
+        - Hover highlight, cursor, router-link replaces div
+    - description is awkward 
+    - mobile compability non existant
+
 
 ### Features to add
 - Navigation

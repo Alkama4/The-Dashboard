@@ -106,7 +106,7 @@
              </div>
         </div>
 
-        <div class="content-width-small">
+        <div class="content-width-medium">
             <h2>Titles listed</h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
         </div>
@@ -119,6 +119,15 @@
         </div>
 
         <div class="content-width-medium all-titles-list" v-else>
+            <div class="controls">
+                <label for="">Sort by</label>
+                <CustomSelect v-model="allTitlesListOptions.sortBy" :options="allTitlesListSortByOptions"/>
+                <button @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'">
+                    <IconSortDown size="22px" v-if="allTitlesListOptions.direction == 'desc'"/>
+                    <IconSortUp size="22px" v-if="allTitlesListOptions.direction == 'asc'"/>
+                </button>
+            </div>
+
             <div v-for="title in allTitlesList" :key="title.id" class="title">
                 <router-link :to="`/watch_list/title/${title.id}`" style="display: flex;">
                     <img 
@@ -219,16 +228,22 @@ import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import { convert } from '@/utils/mytools';
+import CustomSelect from '@/components/CustomSelect.vue';
+import IconSortDown from '@/components/icons/IconSortDown.vue';
+import IconSortUp from '@/components/icons/IconSortUp.vue';
 
 export default {
     name: 'HomePage',
     components: {
         Swiper,
         SwiperSlide,
+        CustomSelect,
         IndicatorDots,
         IconAdd,
         IconTMDB,
         IconHeart,
+        IconSortDown,
+        IconSortUp,
     },
     data() {
         return {
@@ -315,6 +330,11 @@ export default {
                 },
             ],
             allTitlesList: null,
+            allTitlesListOptions: {
+                sortBy: 'TMDB rating',
+                direction: "asc",
+            },
+            allTitlesListSortByOptions: ['TMDB rating', 'Release date', 'Modified'],
         };
     },
     methods: {
@@ -354,6 +374,18 @@ export default {
                 console.error("Error fetching title lists:", error);
             }
         },
+        async fetchAllTitlesList(customSortBy = this.allTitlesListOptions.sortBy) {
+            this.waitingForResult.push("allTitlesList");
+            const titlesListedResponse = await api.listTitles({
+                sort_by: customSortBy,
+                direction: this.allTitlesListOptions.direction,
+            });
+            if (titlesListedResponse) {
+                this.allTitlesList = titlesListedResponse.titles;
+                console.log(this.allTitlesList);
+            }
+            this.removeItemFromWaitingArray("allTitlesList")
+        },
         removeItemFromWaitingArray(item) {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
         },
@@ -371,20 +403,47 @@ export default {
         },
     },
     async mounted() {
-        // Add immidiately so that looks like it's always loading
-        this.waitingForResult.push("allTitlesList");
-
         // Use a seperate function because of it's complexity
         await this.fetchTitleLists();
 
         // Get all the titles listed
-        const titlesListedResponse = await api.listTitles();
-        if (titlesListedResponse) {
-            this.allTitlesList = titlesListedResponse.titles;
-            console.log(this.allTitlesList);
-        }
-        this.removeItemFromWaitingArray("allTitlesList")
+        await this.fetchAllTitlesList();
     },
+    watch: {
+        allTitlesListOptions: {
+            deep: true,
+            async handler(value) {
+                let sortByTranslated;
+
+                switch (value.sortBy) {
+                    case 'TMDB rating':
+                        sortByTranslated = 'vote_average';
+                        break;
+                    case 'Release date':
+                        sortByTranslated = 'release_date';
+                        break;
+                    case 'Modified':
+                        sortByTranslated = 'latest_updated'
+                        break;
+                    // case 'Name':
+                    //     sortByTranslated = 'name'
+                    //     break;
+
+                    // This could be the sum of minutes of all episodes. That way it would be logical?
+                    // case 'Length/Episode count': HOW TO HANDLE TV AND MOVIE DIFFERENCE?
+                    //     sortByTranslated = 'length'
+                    //     break;
+                    default:
+                        return;
+                }
+
+                console.log("New sorting values detected:", sortByTranslated, value.direction);
+
+                await this.fetchAllTitlesList(sortByTranslated);
+            }
+        }
+    }
+
 };
 </script>
 
@@ -603,17 +662,41 @@ export default {
     flex-direction: column;
 }
 
+.all-titles-list .controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: end;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-sm) 0;
+}
+
+.all-titles-list .controls button {
+    color: var(--color-text-light);
+    padding: 0;
+    margin: 0;
+    aspect-ratio: 1;
+    border: 1px solid var(--color-border);
+    height: 35px;
+    background-color: var(--color-background-input);
+    box-sizing: content-box;
+    transition: border 0.1s ease-out;
+}
+.all-titles-list .controls button:hover {
+    border-color: var(--color-border-hover);
+}
+
 .all-titles-list .title {
     border-top: 2px solid var(--color-border);
     padding: var(--spacing-md) 0;
     gap: var(--spacing-md);
     display: flex;
     flex-direction: row;
-    max-height: 150px;
+    max-height: 200px;
 }
 
 .all-titles-list .poster {
-    width: 100px;
+    width: 133.33px;
     border-radius: var(--border-radius-small);
 }
 
