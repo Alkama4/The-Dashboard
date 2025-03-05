@@ -792,6 +792,9 @@ input[type="radio"] {
     /* Button margins transferred here */
     margin: var(--spacing-md) 0;
 }
+.no-decoration:hover {
+    text-decoration: underline;
+}
 .no-decoration button {
     margin: 0 !important;
 }
@@ -920,6 +923,9 @@ input[type="radio"] {
 .tag.tag-secondary {
     background-color: var(--color-secondary) !important;
 }
+.tag.tag-general {
+    background-color: var(--color-button-general) !important;
+}
 
 
 .fullscreen {
@@ -956,6 +962,16 @@ input[type="radio"] {
     100% {
         background-position: -200% 0;
     }
+}
+
+.content-not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-text-light);
+    font-weight: 500;
+    user-select: none;
 }
 
 /* 

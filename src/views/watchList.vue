@@ -87,7 +87,7 @@
                     </swiper-slide>
 
                     <swiper-slide 
-                        class="full-width-swiper-slide" 
+                        class="full-width-swiper-slide content-not-found" 
                         v-if="titleList.titles.length == 0 && !titleList.loading"
                     >
                         Looks like there's nothing here.<br>
@@ -111,6 +111,91 @@
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
         </div>
 
+        <div class="content-width-medium all-titles-list-placeholder loading-placeholder" v-if="waitingForResult.includes('allTitlesList')"></div>
+        
+        <div class="content-width-medium all-titles-list-placeholder content-not-found" v-else-if="allTitlesList && allTitlesList.length == 0">
+            Looks like there's nothing here.<br>
+            <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
+        </div>
+
+        <div class="content-width-medium all-titles-list" v-else>
+            <div v-for="title in allTitlesList" :key="title.id" class="title">
+                <router-link :to="`/watch_list/title/${title.id}`" style="display: flex;">
+                    <img 
+                        :src="`${apiUrl}/image/${title.id}/poster.jpg?width=300`" 
+                        @load="(event) => event.target.classList.add('loaded')" 
+                        class="poster"
+                    >
+                </router-link>
+                <div class="content">
+                    <router-link class="title-name no-decoration" :to="`/watch_list/title/${title.id}`">
+                        <span>{{ title.name }}</span>
+                        &MediumSpace;
+                        <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
+                    </router-link>
+                    <div class="tags">
+                        <div class="tag tag-general">
+                            {{ title.type === 'tv' ? 'TV' : 'Movie' }}
+                        </div>
+                        <div class="tag tag-positive" v-if="title.watch_count >= 1">
+                            Watched
+                        </div>
+                        <div class="tag tag-secondary" v-if="title.is_favourite">
+                            Favourite
+                        </div>
+                        <div class="tag tag-primary" v-if="title.new_episodes">
+                            New episodes
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="detail-list">
+                            <span class="icon-align">
+                                <IconTMDB style="margin-right: 4px;"/>
+                                {{ title.vote_average }}
+                                ({{ title.vote_count }})
+                            </span>
+                            <span>
+                                {{ convertToDate(title.release_date) }}
+                            </span>
+                            <span class="progress-details">
+                                <template v-if="title.type === 'tv'">
+                                    <span class="season-after">{{ title.season_count }}</span>
+                                    <span class="episode-after">{{ title.episode_count }}</span>
+                                </template>
+                                <template v-else>
+                                    {{ formatRuntime(title.movie_runtime) }}
+                                </template>
+                            </span>
+                        </div>
+                        <div class="overview">
+                            <p>{{ title.overview }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 
+            id: 20
+
+        movie_runtime: null
+        episode_count: 62
+        season_count: 5
+
+            is_favourite: 0
+            new_episodes: 0
+            type: "tv"
+            watch_count: 0 
+
+            name: "Breaking Bad"
+            release_date: "2008-01-20"
+            vote_average: 8.9
+            vote_count: 15078
+
+        STUFF TO ADD:
+        tags
+        -->
+
         <router-link to="/watch_list/add_title" tabindex="-1">
             <button class="color-primary sticky-corner-button" tabindex="0">
                 <IconAdd size="28px"/>
@@ -122,15 +207,18 @@
 
 
 <script>
+// Swiper
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/swiper-bundle.css';
+
+// My imports
 import IconAdd from '@/components/icons/IconAdd.vue';
 import router from '@/router';
 import api from '@/utils/dataQuery.js';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
-// import IconCheck from '@/components/icons/IconCheck.vue';
+import { convert } from '@/utils/mytools';
 
 export default {
     name: 'HomePage',
@@ -141,24 +229,12 @@ export default {
         IconAdd,
         IconTMDB,
         IconHeart,
-        // IconCheck,
     },
     data() {
         return {
             apiUrl: process.env.VUE_APP_API_URL,
             waitingForResult: [],
             titleLists: [
-                // {
-                //     listName: "TESTING",
-                //     watched: true,
-                //     text: "testing",
-                //     titles: [],
-                //     loading: true,
-                //     activeSlide: 0,
-                //     fetchDetails: {
-                //         started: true,
-                //     }
-                // },
                 {
                     listName: "In progress",
                     watched: true,
@@ -238,6 +314,7 @@ export default {
                     }
                 },
             ],
+            allTitlesList: null,
         };
     },
     methods: {
@@ -288,11 +365,26 @@ export default {
                 title.is_favourite = !title.is_favourite;
             }
             this.removeItemFromWaitingArray(`${title.id}Favourite`);
-        }
+        },
+        convertToDate(date) {
+            return convert.toFiDate(date, "default");
+        },
     },
     async mounted() {
+        // Add immidiately so that looks like it's always loading
+        this.waitingForResult.push("allTitlesList");
+
+        // Use a seperate function because of it's complexity
         await this.fetchTitleLists();
-    }
+
+        // Get all the titles listed
+        const titlesListedResponse = await api.listTitles();
+        if (titlesListedResponse) {
+            this.allTitlesList = titlesListedResponse.titles;
+            console.log(this.allTitlesList);
+        }
+        this.removeItemFromWaitingArray("allTitlesList")
+    },
 };
 </script>
 
@@ -442,20 +534,9 @@ export default {
 .full-width-swiper-slide {
     height: calc(300px * 0.95);
     width: calc(100% - var(--spacing-hg)) !important;
-    margin: 0;
     margin: calc(300px * 0.025) calc(200px * 0.025);
     box-sizing: border-box;
     padding-inline: calc(22% - var(--spacing-lg));
-
-    color: var(--color-text-light);
-    text-align: center;
-    font-weight: 500;
-    font-size: var(--font-size-medium);
-    
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
     
     cursor: default;
     transform: none !important;
@@ -507,4 +588,94 @@ export default {
         transform: scale(1);
     }
 }
+
+
+.all-titles-list-placeholder {
+    height: 200px;
+    background-color: var(--color-background-card);
+    border-radius: var(--border-radius-medium);
+    font-weight: 500;
+    margin: 0 auto;
+}
+
+.all-titles-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.all-titles-list .title {
+    border-top: 2px solid var(--color-border);
+    padding: var(--spacing-md) 0;
+    gap: var(--spacing-md);
+    display: flex;
+    flex-direction: row;
+    max-height: 150px;
+}
+
+.all-titles-list .poster {
+    width: 100px;
+    border-radius: var(--border-radius-small);
+}
+
+.all-titles-list .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.all-titles-list .title-name {
+    color: var(--color-text);
+    font-weight: 700;
+    font-size: var(--font-size-large);
+    margin-top: 0;
+    margin-bottom: 0;
+    /* gap: var(--spacing-sm); */
+    display: flex;
+}
+.all-titles-list .title-name:hover {
+    text-decoration: underline;
+}
+
+.all-titles-list .tags {
+    display: flex;
+    gap: var(--spacing-xs);
+    margin: var(--spacing-sm) 0;
+}
+
+.all-titles-list .tags .tag {
+    font-size: var(--font-size-small);
+    padding: 2px 6px;
+}
+
+
+.all-titles-list .details {
+    height: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--spacing-md);
+}
+
+.all-titles-list .detail-list {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+}
+
+.all-titles-list p {
+    color: var(--color-text-light);
+    margin: 0;
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Optimize for mobile. Curren't setup not anywhere near */
+@media (max-width: 600px) {
+    .all-titles-list p {
+        display: none;
+    }
+}
+
 </style>

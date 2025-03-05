@@ -27,7 +27,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Or chart setup and values all handled in the .js file. No thisComponent etc. Just give it the stuff and it will handle it.
     - Although the current setup works fine and is already quite good so propably not worth the effort
 
-- watch list poster scroll z-issues when hovering hover cards.
+- watch list imporve layout for desktop and focus...
+    - on the description 
+    - on mobile compability
 
 ### Features to add
 - Navigation
@@ -89,6 +91,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Title space taken
     - Seperate images and data?
     - How do I get the data amount?
+- Swiper add horizontal scrolling
+    - https://codesandbox.io/p/sandbox/54f29d?file=%2Fsrc%2FApp.vue
+    - https://swiperjs.com/demos#scroll-container
 
 
 ### Known issues

@@ -510,6 +510,13 @@ const api = {
         return this.getData('/watch_list/get_title_cards', params);
     },
 
+    async listTitles(params) {
+        return this.getData('/watch_list/list_titles', {
+            session_key: localStorage.getItem('sessionKey'),
+            ...params
+        });
+    },
+
     async getTitleInfo(titleID) {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
