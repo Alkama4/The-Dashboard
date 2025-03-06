@@ -1065,6 +1065,7 @@ export default {
 .poster-next-to-stuff .poster-holder img {
     border-radius: var(--border-radius-medium);
     height: 100%;
+    aspect-ratio: 2/3;
 }
 
 

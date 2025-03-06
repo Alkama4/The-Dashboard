@@ -465,7 +465,7 @@ input, textarea, select {
 
     background-color: var(--color-background-input);
     padding: 0px 8px;
-    height: 35px;
+    height: 39px;
     width: calc(100% - 19px);       /* 2 x 6px ja 2 lisää koska v-select?? */
     max-width: calc(100% - 19px);   /* 2 x 6px ja 2 lisää koska v-select?? */
     min-width: 82px;
@@ -788,11 +788,9 @@ input[type="radio"] {
     text-decoration: none;
     width: fit-content;
     height: fit-content;
-
-    /* Button margins transferred here */
-    margin: var(--spacing-md) 0;
+    color: var(--color-text);
 }
-.no-decoration:hover {
+.hover-decoration:hover {
     text-decoration: underline;
 }
 .no-decoration button {
@@ -893,7 +891,6 @@ input[type="radio"] {
 }
 
 .loading {
-    /* pointer-events: none !important; */
     cursor: wait !important;
     opacity: 0.5;
 }
@@ -916,12 +913,15 @@ input[type="radio"] {
 }
 .tag.tag-positive {
     background-color: var(--color-positive) !important;
+    color: var(--color-text-white);
 }
 .tag.tag-primary {
     background-color: var(--color-primary) !important;
+    color: var(--color-text-white);
 }
 .tag.tag-secondary {
     background-color: var(--color-secondary) !important;
+    color: var(--color-text-white);
 }
 .tag.tag-general {
     background-color: var(--color-button-general) !important;

@@ -72,7 +72,8 @@ export default {
     display: flex;
     justify-content: space-between;
     width: 200px;
-    height: 35px;
+    height: 41px;
+    box-sizing: border-box;
     padding-left: var(--spacing-sm);
 
     font-family: 'Poppins', sans-serif;

@@ -109,39 +109,70 @@
         <div class="content-width-medium">
             <h2>Titles listed</h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
-        </div>
+            <div class="all-titles-list-controls">
+                <div>
+                    <div class="combined-buttons">
+                        <button 
+                            class="left-button" :class="{'color-primary': allTitlesListOptions.titleType == 'tv'}"
+                            @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'tv' ? '' : 'tv'"
+                        >
+                            TV
+                        </button>
+                        <button 
+                            class="right-button" :class="{'color-primary': allTitlesListOptions.titleType == 'movie'}"
+                            @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'movie' ? '' : 'movie'"
+                        >
+                            Movies
+                        </button>
+                    </div>
+                    <div class="combined-buttons title-progress">
+                        <button 
+                            class="left-button" :class="{'color-primary': allTitlesListOptions.titleProgress == 'watched'}"
+                            @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'watched' ? '' : 'watched'"
+                        >
+                            Watched
+                        </button>
+                        <button 
+                            class="right-button" :class="{'color-primary': allTitlesListOptions.titleProgress == 'unwatched'}"
+                            @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'unwatched' ? '' : 'unwatched'"
+                        >
+                            Unwatched
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <!-- <label for="">Sort by</label> -->
+                    <div class="flex icon-align">
+                        <CustomSelect 
+                            v-model="allTitlesListOptions.sortBy" 
+                            :options="allTitlesListSortByOptions"
+                        />
+                        <button 
+                            @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'"
+                            class="sort-direction"
+                            >
+                            <IconSortDown size="28px" v-if="allTitlesListOptions.direction == 'desc'"/>
+                            <IconSortUp size="28px" v-if="allTitlesListOptions.direction == 'asc'"/>
+                        </button>
+                    </div>
+                </div>
 
-        <div class="content-width-medium all-titles-list-placeholder loading-placeholder" v-if="waitingForResult.includes('allTitlesList')"></div>
-        
-        <div class="content-width-medium all-titles-list-placeholder content-not-found" v-else-if="allTitlesList && allTitlesList.length == 0">
-            Looks like there's nothing here.<br>
-            <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
-        </div>
-
-        <div class="content-width-medium all-titles-list" v-else>
-            <div class="controls">
-                <label for="">Sort by</label>
-                <CustomSelect v-model="allTitlesListOptions.sortBy" :options="allTitlesListSortByOptions"/>
-                <button @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'">
-                    <IconSortDown size="22px" v-if="allTitlesListOptions.direction == 'desc'"/>
-                    <IconSortUp size="22px" v-if="allTitlesListOptions.direction == 'asc'"/>
-                </button>
             </div>
+        </div>
 
-            <div v-for="title in allTitlesList" :key="title.id" class="title">
-                <router-link :to="`/watch_list/title/${title.id}`" style="display: flex;">
-                    <img 
-                        :src="`${apiUrl}/image/${title.id}/poster.jpg?width=300`" 
-                        @load="(event) => event.target.classList.add('loaded')" 
-                        class="poster"
-                    >
-                </router-link>
+        <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1">
+            <router-link v-for="title in allTitlesList" :key="title.id" :to="`/watch_list/title/${title.id}`" class="title no-decoration">
+                <img 
+                    :src="`${apiUrl}/image/${title.id}/poster.jpg?width=300`" 
+                    @load="(event) => event.target.classList.add('loaded')" 
+                    class="poster"
+                >
                 <div class="content">
-                    <router-link class="title-name no-decoration" :to="`/watch_list/title/${title.id}`">
+                    <span class="title-name" :to="`/watch_list/title/${title.id}`">
                         <span>{{ title.name }}</span>
                         &MediumSpace;
                         <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
-                    </router-link>
+                    </span>
                     <div class="tags">
                         <div class="tag tag-general">
                             {{ title.type === 'tv' ? 'TV' : 'Movie' }}
@@ -168,8 +199,8 @@
                             </span>
                             <span class="progress-details">
                                 <template v-if="title.type === 'tv'">
-                                    <span class="season-after">{{ title.season_count }}</span>
-                                    <span class="episode-after">{{ title.episode_count }}</span>
+                                    <div class="season-after">{{ title.season_count }}</div>
+                                    <div class="episode-after">{{ title.episode_count }}</div>
                                 </template>
                                 <template v-else>
                                     {{ formatRuntime(title.movie_runtime) }}
@@ -181,26 +212,20 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </router-link>
+        </div>
+
+        <div
+            class="content-width-medium all-titles-list-placeholder loading-placeholder" 
+            v-else-if="waitingForResult.includes('allTitlesList')"
+        ></div>
+
+        <div class="content-width-medium all-titles-list-placeholder content-not-found" v-else>
+            Looks like there's nothing here.<br>
+            <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
         </div>
 
         <!-- 
-            id: 20
-
-        movie_runtime: null
-        episode_count: 62
-        season_count: 5
-
-            is_favourite: 0
-            new_episodes: 0
-            type: "tv"
-            watch_count: 0 
-
-            name: "Breaking Bad"
-            release_date: "2008-01-20"
-            vote_average: 8.9
-            vote_count: 15078
-
         STUFF TO ADD:
         tags
         -->
@@ -332,7 +357,9 @@ export default {
             allTitlesList: null,
             allTitlesListOptions: {
                 sortBy: 'TMDB rating',
-                direction: "asc",
+                direction: "desc",
+                titleType: "",
+                titleProgress: "",
             },
             allTitlesListSortByOptions: ['TMDB rating', 'Release date', 'Modified'],
         };
@@ -376,10 +403,17 @@ export default {
         },
         async fetchAllTitlesList(customSortBy = this.allTitlesListOptions.sortBy) {
             this.waitingForResult.push("allTitlesList");
-            const titlesListedResponse = await api.listTitles({
+
+            const options = {
                 sort_by: customSortBy,
-                direction: this.allTitlesListOptions.direction,
-            });
+                direction: this.allTitlesListOptions.direction
+            };
+            if (this.allTitlesListOptions.titleType)
+                options.title_type = this.allTitlesListOptions.titleType;
+            if (this.allTitlesListOptions.titleProgress)
+                options.watched = this.allTitlesListOptions.titleProgress === 'watched';
+            const titlesListedResponse = await api.listTitles(options);
+
             if (titlesListedResponse) {
                 this.allTitlesList = titlesListedResponse.titles;
                 console.log(this.allTitlesList);
@@ -403,6 +437,8 @@ export default {
         },
     },
     async mounted() {
+        this.waitingForResult.push("allTitlesList");
+
         // Use a seperate function because of it's complexity
         await this.fetchTitleLists();
 
@@ -654,7 +690,6 @@ export default {
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
     font-weight: 500;
-    margin: 0 auto;
 }
 
 .all-titles-list {
@@ -662,41 +697,68 @@ export default {
     flex-direction: column;
 }
 
-.all-titles-list .controls {
+.all-titles-list-controls {
     display: flex;
     flex-direction: row;
-    justify-content: end;
+    justify-content: space-between;
     align-items: center;
     gap: var(--spacing-sm);
     margin: var(--spacing-sm) 0;
 }
+.all-titles-list-controls > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
 
-.all-titles-list .controls button {
+
+.all-titles-list-controls .combined-buttons {
+    width: 200px;
+}
+.all-titles-list-controls .combined-buttons.title-progress {
+    width: 250px;
+}
+
+.all-titles-list-controls .sort-direction {
     color: var(--color-text-light);
     padding: 0;
     margin: 0;
     aspect-ratio: 1;
-    border: 1px solid var(--color-border);
-    height: 35px;
-    background-color: var(--color-background-input);
-    box-sizing: content-box;
+    /* border: 1px solid var(--color-border); */
+    height: 41px;
+    box-sizing: border-box;
+    /* background-color: var(--color-background-input); */
+    background-color: transparent;
     transition: border 0.1s ease-out;
 }
-.all-titles-list .controls button:hover {
+.all-titles-list-controls .sort-direction:hover {
     border-color: var(--color-border-hover);
 }
 
 .all-titles-list .title {
+    --title-height: 175px;
+    --padding: var(--spacing-md);
     border-top: 2px solid var(--color-border);
-    padding: var(--spacing-md) 0;
+    padding: var(--padding);
     gap: var(--spacing-md);
     display: flex;
+    width: 100%;
     flex-direction: row;
-    max-height: 200px;
+    max-height: calc(var(--title-height) + 2 * var(--padding));
+    box-sizing: border-box;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.1s ease-out;
+    margin-bottom: -2px;
+}
+
+.all-titles-list .title:hover {
+    background-color: var(--color-background-tr-hover);
 }
 
 .all-titles-list .poster {
-    width: 133.33px;
+    width: calc(var(--title-height) / 3 * 2);
     border-radius: var(--border-radius-small);
 }
 
@@ -715,14 +777,13 @@ export default {
     /* gap: var(--spacing-sm); */
     display: flex;
 }
-.all-titles-list .title-name:hover {
-    text-decoration: underline;
-}
 
 .all-titles-list .tags {
     display: flex;
-    gap: var(--spacing-xs);
-    margin: var(--spacing-sm) 0;
+    gap: var(--spacing-sm);
+    margin: 0;
+    margin-top: 4px;
+    margin-bottom: 12px;
 }
 
 .all-titles-list .tags .tag {
@@ -741,15 +802,15 @@ export default {
 .all-titles-list .detail-list {
     display: flex;
     flex-direction: column;
-    min-width: 200px;
+    min-width: 125px;
 }
 
 .all-titles-list p {
     color: var(--color-text-light);
     margin: 0;
     display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
