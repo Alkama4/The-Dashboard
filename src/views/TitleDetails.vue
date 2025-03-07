@@ -827,7 +827,6 @@ export default {
             }, 1)
         }
     },
-
     unmounted() {
         window.removeEventListener('darkModeChange', this.episodeMapTileBackgroundColors);
         window.removeEventListener('scroll', this.checkScroll);

@@ -46,6 +46,22 @@
                         @change="saveSettings"
                     >
                 </div>
+
+                <div class="setting-name">
+                    Amount of titles loaded at once in all titles list
+                    <InfoTooltip text="Must be between 5 and 100"/>
+                </div>
+                <div class="setting-value">
+                    <input 
+                        type="number" 
+                        v-model="settings.list_all_titles_load_limit" 
+                        placeholder="25" 
+                        step="1" 
+                        min="5" 
+                        max="100" 
+                        @change="saveSettings"
+                    >
+                </div>
             </div>
         </div>
 
@@ -95,6 +111,7 @@ export default {
             settingNames: [
                 "chart_balance_initial_value",
                 "transactions_load_limit",
+                "list_all_titles_load_limit",
             ],
             settings: {},
             settingsInitial: {},
@@ -126,8 +143,9 @@ export default {
                 return;
             }
 
-            // Cap transactionsLoadLimit between 5 and 100
+            // Cap transactions_load_limit and list_all_titles_load_limit between 5 and 100
             this.settings.transactions_load_limit = Math.max(5, Math.min(this.settings.transactions_load_limit, 100));
+            this.settings.list_all_titles_load_limit = Math.max(5, Math.min(this.settings.list_all_titles_load_limit, 100));
 
             // Create an array to store changed settings
             const changedSettings = [];
@@ -163,6 +181,7 @@ export default {
             // Call API to get settings
             const response = await api.getSettings();
             if (response) {
+                console.debug("[loadSettings]", response)
                 // Store the fetched settings in `this.settings` and `this.settingsInitial`
                 for (const [key, value] of Object.entries(response)) {
                     // console.debug(key, value);

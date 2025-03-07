@@ -107,7 +107,7 @@
         </div>
 
         <div class="content-width-medium">
-            <h2>Titles listed</h2>
+            <h2 id="titles_listed">Titles listed</h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
             <div class="all-titles-list-controls">
                 <div>
@@ -174,9 +174,6 @@
                         <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
                     </span>
                     <div class="tags">
-                        <div class="tag tag-general">
-                            {{ title.type === 'tv' ? 'TV' : 'Movie' }}
-                        </div>
                         <div class="tag tag-positive" v-if="title.watch_count >= 1">
                             Watched
                         </div>
@@ -185,6 +182,12 @@
                         </div>
                         <div class="tag tag-primary" v-if="title.new_episodes">
                             New episodes
+                        </div>
+                        <div class="tag tag-general">
+                            {{ title.type === 'tv' ? 'TV' : 'Movie' }}
+                        </div>
+                        <div class="tag tag-general" v-for="genre in title.genres" :key="genre">
+                            {{ genre }}
                         </div>
                     </div>
                     <div class="details">
@@ -213,6 +216,16 @@
                     </div>
                 </div>
             </router-link>
+            <div class="flex-row">
+                <button 
+                    v-if="allTitlesListHasMore"
+                    :disabled="waitingForResult.includes('allTitlesList')"
+                    :class="{'loading': waitingForResult.includes('allTitlesList')}"
+                    @click="loadMoreTitlesForAllTitlesList"
+                >
+                    Load more
+                </button>
+            </div>
         </div>
 
         <div
@@ -225,15 +238,24 @@
             <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
         </div>
 
-        <!-- 
-        STUFF TO ADD:
-        tags
-        -->
+        <!-- Corner buttons -->
+        <router-link 
+            class="sticky-corner-button link-button" 
+            style="
+                transition: opacity 0.1s ease-out;
+                margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);
+            "
+            :style="{ opacity: scrolledPastTitlesListed ? 1 : 0 }"
+            to="#titles_listed"
+        >
+            <IconChevronDown size="28px" style="rotate: 180deg;"/>
+        </router-link>
 
-        <router-link to="/watch_list/add_title" tabindex="-1">
-            <button class="color-primary sticky-corner-button" tabindex="0">
-                <IconAdd size="28px"/>
-            </button>
+        <router-link 
+            class="sticky-corner-button link-button color-primary"
+            to="/watch_list/add_title" 
+        >
+            <IconAdd size="28px"/>
         </router-link>
         
     </div>
@@ -256,6 +278,7 @@ import { convert } from '@/utils/mytools';
 import CustomSelect from '@/components/CustomSelect.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
+import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 
 export default {
     name: 'HomePage',
@@ -269,6 +292,7 @@ export default {
         IconHeart,
         IconSortDown,
         IconSortUp,
+        IconChevronDown,
     },
     data() {
         return {
@@ -355,6 +379,8 @@ export default {
                 },
             ],
             allTitlesList: null,
+            allTitlesListHasMore: false,
+            allTitlesListOffset: 0,
             allTitlesListOptions: {
                 sortBy: 'TMDB rating',
                 direction: "desc",
@@ -362,6 +388,7 @@ export default {
                 titleProgress: "",
             },
             allTitlesListSortByOptions: ['TMDB rating', 'Release date', 'Modified'],
+            scrolledPastTitlesListed: false,    // A tracker to hide and show the scroll back button
         };
     },
     methods: {
@@ -406,19 +433,32 @@ export default {
 
             const options = {
                 sort_by: customSortBy,
-                direction: this.allTitlesListOptions.direction
+                direction: this.allTitlesListOptions.direction,
+                offset: this.allTitlesListOffset
             };
             if (this.allTitlesListOptions.titleType)
                 options.title_type = this.allTitlesListOptions.titleType;
             if (this.allTitlesListOptions.titleProgress)
                 options.watched = this.allTitlesListOptions.titleProgress === 'watched';
+            
             const titlesListedResponse = await api.listTitles(options);
 
             if (titlesListedResponse) {
-                this.allTitlesList = titlesListedResponse.titles;
-                console.log(this.allTitlesList);
+                // Replace the whole thing if offset is 0 and if not just append the new ones
+                if (this.allTitlesListOffset == 0) {
+                    this.allTitlesList = titlesListedResponse.titles;
+                } else {
+                    this.allTitlesList = this.allTitlesList.concat(titlesListedResponse.titles);
+                }
+
+                this.allTitlesListHasMore = titlesListedResponse.has_more;
+                console.debug("[fetchAllTitlesList]", this.allTitlesList);
             }
             this.removeItemFromWaitingArray("allTitlesList")
+        },
+        async loadMoreTitlesForAllTitlesList() {
+            this.allTitlesListOffset += 1;
+            await this.fetchAllTitlesList();
         },
         removeItemFromWaitingArray(item) {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
@@ -435,6 +475,13 @@ export default {
         convertToDate(date) {
             return convert.toFiDate(date, "default");
         },
+        checkScroll() {
+            const titleslistedHeader = document.getElementById('titles_listed');
+            if (titleslistedHeader) {
+                const scrollY = window.scrollY || document.documentElement.scrollTop;
+                this.scrolledPastTitlesListed = scrollY > titleslistedHeader.offsetTop;
+            }
+        },
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
@@ -444,6 +491,12 @@ export default {
 
         // Get all the titles listed
         await this.fetchAllTitlesList();
+
+        // Add a scroll listener to show and hide the scroll back button
+        window.addEventListener('scroll', this.checkScroll);
+    },
+    unmounted() {
+        window.removeEventListener('scroll', this.checkScroll);
     },
     watch: {
         allTitlesListOptions: {
@@ -473,8 +526,8 @@ export default {
                         return;
                 }
 
-                console.log("New sorting values detected:", sortByTranslated, value.direction);
-
+                // console.debug("New sorting values detected:", sortByTranslated, value.direction);
+                this.allTitlesListOffset = 0;
                 await this.fetchAllTitlesList(sortByTranslated);
             }
         }

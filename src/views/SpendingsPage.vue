@@ -72,7 +72,11 @@
         </button>
 
         <!-- Buttons in the bottom right corner -->
-        <button class="color-primary sticky-corner-button" @click="this.showFilters = !this.showFilters;" style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"> 
+        <button 
+            class="color-primary sticky-corner-button" 
+            @click="this.showFilters = !this.showFilters;" 
+            style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"
+        >
             <IconFilter size="28px"/> 
         </button>
         <router-link to="/spendings/new_entry" tabindex="-1">

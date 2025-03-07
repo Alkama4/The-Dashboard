@@ -377,58 +377,58 @@ button:disabled {
 }
 
 /* Button primary */
-button.color-primary {
+.button-primary {
     background-color: var(--color-primary);
     color: var(--color-text-white);
 } 
-button.color-primary:hover {
+.button-primary:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white-hover);
 }
-button.color-primary:hover svg {
+.button-primary:hover svg {
     fill: var(--color-text-white-hover);
 }
-button.color-primary:active {
+.button-primary:active {
     background-color: var(--color-primary-active);
     color: var(--color-text-white-hover);
 }
-button.color-primary:hover:disabled {
+.button-primary:hover:disabled {
     background-color: var(--color-primary);
     color: var(--color-text-white);
 }
 
 /* Button secondary */
-button.color-secondary {
+.button-secondary {
     background-color: var(--color-secondary);
 } 
-button.color-secondary:hover {
+.button-secondary:hover {
     background-color: var(--color-secondary-hover);
 }
-button.color-secondary:active {
+.button-secondary:active {
     background-color: var(--color-secondary-active);
 }
 
 /* Button warning */
-button.color-warning:hover {
+.button-warning:hover {
     background-color: var(--color-button-delete-hover);
     color: var(--color-text-white-hover);
 }
-button.color-warning:hover svg {
+.button-warning:hover svg {
     fill: var(--color-text-white-hover);
 }
-button.color-warning:active {
+.button-warning:active {
     background-color: var(--color-button-delete-active);
     color: var(--color-text-white-hover);
 }
 
-button.color-hidden-primary:hover {
+.button-hidden-primary:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white-hover);
 }
-button.color-hidden-primary:hover svg {
+.button-hidden-primary:hover svg {
     fill: var(--color-text-white-hover);
 }
-button.color-hidden-primary:active {
+.button-hidden-primary:active {
     background-color: var(--color-primary-active);
     color: var(--color-text-white-hover);
 }
