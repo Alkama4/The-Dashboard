@@ -5,7 +5,7 @@
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span>
 				<router-link class="no-decoration" to="/spendings/new_entry" tabindex="-1">
-					<button class="color-primary">Start logging</button>
+					<button class="button-primary">Start logging</button>
 				</router-link>
 			</div>
 			<div class="action-area">

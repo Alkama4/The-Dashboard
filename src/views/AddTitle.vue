@@ -23,7 +23,7 @@
             </div>
             <div class="flex-row">
                 <button 
-                    class="color-primary" 
+                    class="button-primary" 
                     :disabled="waitingForResult.includes('search')" 
                     :class="{ loading: waitingForResult.includes('search')}"
                 >
@@ -86,7 +86,7 @@
                     <div class="add-or-remove flex">
                         <button 
                             v-if="title.in_watch_list" 
-                            class="color-warning" 
+                            class="button-danger" 
                             @click="handleTitleStoring('remove', title.id)"
                             :disabled="waitingForResult.includes(title.id)" 
                             :class="{ loading: waitingForResult.includes(title.id)}"
@@ -94,7 +94,7 @@
                             <IconTrash size="16px"/>Remove
                         </button>
                         <button 
-                            v-else class="color-primary" 
+                            v-else class="button-primary" 
                             @click="handleTitleStoring('add', title.id, title.title ? 'movie' : 'tv')"
                             :disabled="waitingForResult.includes(title.id)" 
                             :class="{ loading: waitingForResult.includes(title.id)}"

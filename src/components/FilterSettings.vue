@@ -146,7 +146,7 @@
                 </div>
             </div>
 
-            <button class="color-primary apply" @click="applyFilters()">Apply</button>
+            <button class="button-primary apply" @click="applyFilters()">Apply</button>
         </div>
     </div>
 </template>

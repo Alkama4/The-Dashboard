@@ -66,7 +66,7 @@
                     <div class="control-button-array combined-buttons">
                         <button 
                             v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
-                            class="color-primary left-button flex-1" 
+                            class="button-primary left-button flex-1" 
                             @click="handleFavouriteToggle"
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -86,7 +86,7 @@
                         <!-- Watched buttons -->
                         <button 
                             v-if="titleInfo.user_title_watch_count <= 0"
-                            class="color-primary middle-button flex-2" 
+                            class="button-primary middle-button flex-2" 
                             @click="handleTitleWatchClick('title', 'watched')"
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -106,7 +106,7 @@
                         <!-- Watch list buttons -->
                         <button 
                             v-if="titleInfo.user_title_watch_count <= -1"
-                            class="color-primary right-button flex-1" 
+                            class="button-primary right-button flex-1" 
                             @click="handleWatchListModification('add')"
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -340,7 +340,7 @@
                         <p :title="season.overview">{{ season.overview }}</p>
                     </div>
                     <button 
-                        class="modify-watched color-primary"
+                        class="modify-watched button-primary"
                         v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
                         @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
                         :disabled="waitingForResult.length != 0"
@@ -418,7 +418,7 @@
                                 <p :title="episode.overview">{{ episode.overview }}</p>
                                 <button 
                                     v-if="episode.watch_count == 0 || episode.watch_count == null"
-                                    class="modify-watched color-primary"
+                                    class="modify-watched button-primary"
                                     @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
                                     :class="{
                                         loading: waitingForResult.length != 0}"

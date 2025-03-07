@@ -113,13 +113,13 @@
                 <div>
                     <div class="combined-buttons">
                         <button 
-                            class="left-button" :class="{'color-primary': allTitlesListOptions.titleType == 'tv'}"
+                            class="left-button" :class="{'button-primary': allTitlesListOptions.titleType == 'tv'}"
                             @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'tv' ? '' : 'tv'"
                         >
                             TV
                         </button>
                         <button 
-                            class="right-button" :class="{'color-primary': allTitlesListOptions.titleType == 'movie'}"
+                            class="right-button" :class="{'button-primary': allTitlesListOptions.titleType == 'movie'}"
                             @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'movie' ? '' : 'movie'"
                         >
                             Movies
@@ -127,13 +127,13 @@
                     </div>
                     <div class="combined-buttons title-progress">
                         <button 
-                            class="left-button" :class="{'color-primary': allTitlesListOptions.titleProgress == 'watched'}"
+                            class="left-button" :class="{'button-primary': allTitlesListOptions.titleProgress == 'watched'}"
                             @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'watched' ? '' : 'watched'"
                         >
                             Watched
                         </button>
                         <button 
-                            class="right-button" :class="{'color-primary': allTitlesListOptions.titleProgress == 'unwatched'}"
+                            class="right-button" :class="{'button-primary': allTitlesListOptions.titleProgress == 'unwatched'}"
                             @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'unwatched' ? '' : 'unwatched'"
                         >
                             Unwatched
@@ -252,7 +252,7 @@
         </router-link>
 
         <router-link 
-            class="sticky-corner-button link-button color-primary"
+            class="sticky-corner-button link-button button-primary"
             to="/watch_list/add_title" 
         >
             <IconAdd size="28px"/>

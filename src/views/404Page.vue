@@ -3,7 +3,7 @@
         <h1 class="humogous">404</h1>
         <h1>Page not found</h1>
         <p>The page you are looking for doesn't seem to exist.</p>
-        <button @click="goBack()" class="color-primary">Go back</button>
+        <button @click="goBack()" class="button-primary">Go back</button>
     </div>
 </template>
 

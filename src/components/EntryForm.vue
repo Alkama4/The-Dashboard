@@ -48,7 +48,7 @@
             <label for="notes">Notes</label><br>
             <textarea v-model="formData.notes" id="notes" placeholder="Optional notes or details about this transaction"></textarea>
         </div>
-        <button type="submit" class="color-primary center grid-submit submit-button">Submit</button>
+        <button type="submit" class="button-primary center grid-submit submit-button">Submit</button>
     </form>
 </template>
 

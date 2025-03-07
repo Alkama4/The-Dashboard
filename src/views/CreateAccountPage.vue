@@ -16,7 +16,7 @@
                 <label for="password">Repeat password:</label>
                 <input type="password" minlength="4" v-model="passwordRepeat" required />
             </div>
-            <button class="color-primary center" type="submit">Log in</button>
+            <button class="button-primary center" type="submit">Log in</button>
         </form>
     </div>
 </template>

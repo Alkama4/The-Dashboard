@@ -355,6 +355,11 @@ button {
                 background-color 0.1s ease-out,
                 box-shadow 0.1s ease-out;
 }
+.link-button {
+    background-color: var(--color-button-general);
+    color: var(--color-text);
+    display: flex;
+}
 button:hover, .link-button:hover {
     color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
@@ -408,15 +413,15 @@ button:disabled {
     background-color: var(--color-secondary-active);
 }
 
-/* Button warning */
-.button-warning:hover {
+/* Button danger */
+.button-danger:hover {
     background-color: var(--color-button-delete-hover);
     color: var(--color-text-white-hover);
 }
-.button-warning:hover svg {
+.button-danger:hover svg {
     fill: var(--color-text-white-hover);
 }
-.button-warning:active {
+.button-danger:active {
     background-color: var(--color-button-delete-active);
     color: var(--color-text-white-hover);
 }
@@ -757,12 +762,6 @@ input[type="radio"] {
 }
 .sticky-corner-button:hover, .sticky-corner-button:active {
     box-shadow: var(--shadow-floating-button)
-}
-
-.link-button {
-    background-color: var(--color-button-general);
-    color: var(--color-text);
-    display: flex;
 }
 
 .flex {

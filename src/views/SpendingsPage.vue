@@ -24,8 +24,14 @@
                 <div 
                     v-for="column in columns" 
                     :key="column.key" 
-                    :class="[column.class, { active: apiFilters.sort_by === column.key, inactive: apiFilters.sort_by !== column.key }]" 
-                    :style="{ cursor: waitingForResponse ? 'wait' : 'pointer' }"
+                    :class="[
+                        column.class,
+                        { 
+                            active: apiFilters.sort_by === column.key,
+                            inactive: apiFilters.sort_by !== column.key,
+                            loading: waitingForResponse
+                        }
+                    ]" 
                     tabindex="0"
                     @click="sortBy(column.key)"
                     @keydown.enter="sortBy(column.key)"
@@ -65,7 +71,7 @@
             class="center" 
             @click="loadMore"
             :disabled="waitingForResponse"
-            :style="{ cursor: waitingForResponse ? 'wait' : 'default' }"
+            :class="{loading: waitingForResponse}"
             v-if="loadMoreButtonVisible"
         >
             Load more
@@ -73,14 +79,14 @@
 
         <!-- Buttons in the bottom right corner -->
         <button 
-            class="color-primary sticky-corner-button" 
+            class="button-primary sticky-corner-button" 
             @click="this.showFilters = !this.showFilters;" 
             style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"
         >
             <IconFilter size="28px"/> 
         </button>
         <router-link to="/spendings/new_entry" tabindex="-1">
-            <button class="color-primary sticky-corner-button"> 
+            <button class="button-primary sticky-corner-button"> 
                 <IconAdd size="28px"/> 
             </button>
         </router-link>

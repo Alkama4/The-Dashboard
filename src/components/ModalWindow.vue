@@ -55,7 +55,7 @@
                         <!-- {{ modalData.transactionID }} -->
                     </p>
                     <div class="two-buttons">
-                        <button class="color-warning color-primary" @click="deleteEntry">Delete</button>
+                        <button class="button-danger button-primary" @click="deleteEntry">Delete</button>
                         <button class="" @click="closeModal">Cancel</button>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         Are you sure you want to log out?
                     </p>
                     <div class="two-buttons">
-                        <button class="color-primary" @click="sendLogout">Log out</button>
+                        <button class="button-primary" @click="sendLogout">Log out</button>
                         <button class="" @click="closeModal">Cancel</button>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                         Are you sure you want to remove the title. Your notes and title watched status will be lost.
                     </p>
                     <div class="two-buttons">
-                        <button class="color-primary color-warning" @click="sendRemoveTitle">Remove</button>
+                        <button class="button-primary button-danger" @click="sendRemoveTitle">Remove</button>
                         <button class="" @click="closeModal">Cancel</button>
                     </div>
                 </div>

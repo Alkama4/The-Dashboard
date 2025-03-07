@@ -51,7 +51,7 @@
 
         <div class="control-buttons">
             <button 
-                class="button-delete color-warning" 
+                class="button-delete button-danger" 
                 @click.stop="deleteTransaction"
                 :tabindex="isExpanded ? 0 : -1"
             >
@@ -74,7 +74,7 @@
                 <IconEdit size="18px"/>
             </button>
             <button 
-                class="button-details color-primary" 
+                class="button-details button-primary" 
                 @click.stop="showDetails"
                 :tabindex="isExpanded ? 0 : -1"
             >
