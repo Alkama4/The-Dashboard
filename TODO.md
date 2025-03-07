@@ -144,6 +144,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Setting episode wathced/unwatched updates all episodes in the season to be watched on the dom incorrectly even though data on db is correct. Refresh fixes. Check how the data is updated on confirmation.
 - Title details user data updated isn't updated when saving notes on the client side. Need to refresh for it to display.
     - Do not always just set the current date. If the value is the same that it was in the db it doesn't actually update anything.
+- The all titles listed title-element can't be just a click to the page
+    - Mixed signals to the user since the spendings entry doesn't do that.
+    - And the user is punished by resetting their filters by opening the page in current tab.
+        - Laxy fix by always opening in new tab before proper fix?
     
 
 ### Feature or a bug?

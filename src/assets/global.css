@@ -331,7 +331,7 @@ img.loaded {
 }
 
 /* Default button */
-button {
+button, .link-button {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -344,7 +344,6 @@ button {
     padding: var(--spacing-sm) var(--spacing-lg);
     
     cursor: pointer;
-    text-decoration: none;
     font-family: 'Poppins';
     font-size: var(--font-size-base);
     font-weight: 600;
@@ -354,11 +353,6 @@ button {
     transition: color 0.1s ease-out,
                 background-color 0.1s ease-out,
                 box-shadow 0.1s ease-out;
-}
-.link-button {
-    background-color: var(--color-button-general);
-    color: var(--color-text);
-    display: flex;
 }
 button:hover, .link-button:hover {
     color: var(--color-text-bold);

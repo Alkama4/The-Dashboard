@@ -18,40 +18,32 @@
 		<div class="flex-column">
 			<h2>Service links</h2>
 			<div class="tile-container">
-				<a :href="serviceUrl1" class="no-decoration" tabindex="-1">
-					<button class="tile-button">
-						<img 
-							src="../assets/thumbnails/portainer.svg" 
-							@load="(event) => event.target.classList.add('loaded')"
-						>
-						<span>Portainer</span>
-					</button>
+				<a :href="serviceUrl1" class="tile-button link-button">
+					<img 
+						src="../assets/thumbnails/portainer.svg" 
+						@load="(event) => event.target.classList.add('loaded')"
+					>
+					<span>Portainer</span>
 				</a>
-				<a :href="serviceUrl2" class="no-decoration" tabindex="-1">
-					<button class="tile-button">
-						<img 
-							src="../assets/thumbnails/pihole.png"
-							@load="(event) => event.target.classList.add('loaded')"
-						>
-						<span>Pihole</span>
-					</button>
+				<a :href="serviceUrl2" class="tile-button link-button">
+					<img 
+						src="../assets/thumbnails/pihole.png"
+						@load="(event) => event.target.classList.add('loaded')"
+					>
+					<span>Pihole</span>
 				</a>
 				
 				<div class="service-seperator"></div>
 
 				<!-- Buttons like this could be useful, but I don't have logos? Just come icons? -->
-				<a href="/spendings/new_entry" class="no-decoration" tabindex="-1">
-					<button class="tile-button">
-						<IconWallet/>
-						<span>New entry</span>
-					</button>
-				</a>
-				<a href="/watch_list/add_title" class="no-decoration" tabindex="-1">
-					<button class="tile-button">
-						<IconFilm/>
-						<span>Add a title</span>
-					</button>
-				</a>
+				<router-link to="/spendings/new_entry" class="tile-button link-button">
+					<IconWallet/>
+					<span>New entry</span>
+				</router-link>
+				<router-link to="/watch_list/add_title" class="tile-button link-button">
+					<IconFilm/>
+					<span>Add a title</span>
+				</router-link>
 			</div>
 		</div>
 
@@ -296,6 +288,9 @@
 				</div>
 
 				<!-- Chart 12 - Fastapi endpoints and error codes -->
+				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
+				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
+				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
 				<div 
 					class="chartContainer"
 					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart12' }"
@@ -1282,6 +1277,7 @@ export default {
 	aspect-ratio: 1;
 	width: 150px;
 	border-radius: var(--border-radius-medium);
+	box-sizing: border-box;
 	margin: 0;
 }
 .tile-button img, .tile-button svg {

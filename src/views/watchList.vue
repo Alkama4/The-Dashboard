@@ -161,12 +161,15 @@
         </div>
 
         <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1">
-            <router-link v-for="title in allTitlesList" :key="title.id" :to="`/watch_list/title/${title.id}`" class="title no-decoration">
-                <img 
-                    :src="`${apiUrl}/image/${title.id}/poster.jpg?width=300`" 
-                    @load="(event) => event.target.classList.add('loaded')" 
-                    class="poster"
-                >
+            <router-link v-for="title in allTitlesList" :key="title.id" :to="`/watch_list/title/${title.id}`" class="title-element no-decoration">
+                <div class="poster-holder">
+                    <img 
+                        :src="`${apiUrl}/image/${title.id}/poster.jpg?width=300`" 
+                        @load="(event) => event.target.classList.add('loaded')" 
+                        class="poster"
+                    >
+                </div>
+
                 <div class="content">
                     <span class="title-name" :to="`/watch_list/title/${title.id}`">
                         <span>{{ title.name }}</span>
@@ -368,7 +371,7 @@ export default {
                 {
                     listName: "Watched titles",
                     watched: true,
-                    text: "The titles that you have completed sorted by last modified.",
+                    text: "The titles you've recently watched or interacted with, such as those you've watched or added to your favorites.",
                     titles: [],
                     loading: true,
                     activeSlide: 0,
@@ -789,7 +792,7 @@ export default {
     border-color: var(--color-border-hover);
 }
 
-.all-titles-list .title {
+.all-titles-list .title-element {
     --title-height: 175px;
     --padding: var(--spacing-md);
     border-top: 2px solid var(--color-border);
@@ -806,13 +809,21 @@ export default {
     margin-bottom: -2px;
 }
 
-.all-titles-list .title:hover {
+.all-titles-list .title-element:hover {
     background-color: var(--color-background-tr-hover);
 }
 
-.all-titles-list .poster {
+.all-titles-list .poster-holder {
     width: calc(var(--title-height) / 3 * 2);
+    min-width: calc(var(--title-height) / 3 * 2);
     border-radius: var(--border-radius-small);
+    background-color: var(--color-background-card);
+}
+.poster-holder .poster {
+    border-radius: var(--border-radius-small);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .all-titles-list .content {
