@@ -2,6 +2,12 @@ import axios from 'axios';
 import qs from 'qs';
 import { notify } from './notification';
 import router from '@/router';
+import { STATIC_CONTENT } from '@/data/staticData.js';
+
+const standAloneBuild = process.env.VUE_APP_STANDALONE_BUILD == "true";
+if (standAloneBuild) {
+    console.warn("Note: This app is in standalone mode. Most features are disabled, but you can browse the site to explore its look and feel.")
+}
 
 const apiClient = axios.create({
     baseURL: process.env.VUE_APP_API_URL, // Your FastAPI base URL
@@ -25,11 +31,11 @@ async function handleError(error, endpoint) {
             // Since the sessionKey is invalid log out locally and prompt for log in.
             api.localLogOut();
         } else if (statusCode === 403) {
-            notify("Unexpected error occurred. Please try again." + detail, "error");
+            notify("Unexpected error occurred. Please try again. " + detail, "error");
         } else if (statusCode === 404) {
             notify(`Resource not found: ${detail}`, "error");
         } else if (statusCode === 405) {
-            notify("This feature requires an account. Please login." + detail, "error");
+            notify("This feature requires an account. Please login. " + detail, "error");
         } else if (statusCode === 400) {
             notify(`Invalid request: ${detail}`, "error");
         } else if (statusCode === 500) {
@@ -50,27 +56,77 @@ const api = {
     // - - - - - - - - - - - - - POST AND GET METHODS - - - - - - - - - - - - - 
     async getData(endpoint, params = {}) {
         const startTime = performance.now();  // Start the timer
-        try {
-            const response = await apiClient.get(endpoint, { params });
-            const endTime = performance.now();  // End the timer
-            const duration = endTime - startTime;  // Calculate the duration
-            console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
-            return response.data;
-        } catch (error) {
-            return await handleError(error, endpoint);
+
+        // Actual api call
+        if (!standAloneBuild) {
+            try {
+                // Get the data
+                const response = await apiClient.get(endpoint, { params });
+                
+                // Timer logging
+                const endTime = performance.now();      // End the timer
+                const duration = endTime - startTime;   // Calculate the duration
+                console.info(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
+
+                // Return and make a debug log
+                console.debug(response);
+                return response.data;
+            } catch (error) {
+                // Use the handleError for a unified error handling between different request methods
+                return await handleError(error, endpoint);
+            }
+        } 
+
+        // API call simulation for a standalone usecase that just gets the values from a js file.
+        else {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const endTime = performance.now();
+                    const duration = endTime - startTime;
+                    console.info(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
+        
+                    const requestKey = endpoint + JSON.stringify(params || {});
+                    console.debug("[getData] Fake requests key: ", requestKey);
+                    if (STATIC_CONTENT[requestKey]) {
+                        // console.debug("[getData] Returning fake response:", STATIC_CONTENT[requestKey]);
+                        resolve(STATIC_CONTENT[requestKey]);
+                    } else {
+                        console.warn("[getData] Missing endpoint in STATIC_CONTENT:", requestKey);
+                        resolve(null);
+                    }
+                }, 400);
+            });
         }
+        
     },
 
     async postData(endpoint, data, config = {}) {
         const startTime = performance.now();  // Start the timer
-        try {
-            const response = await apiClient.post(endpoint, data, config);
-            const endTime = performance.now();  // End the timer
-            const duration = endTime - startTime;  // Calculate the duration
-            console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
-            return response.data;
-        } catch (error) {
-            return await handleError(error, endpoint);
+        // Actual api call
+        if (!standAloneBuild) {
+            try {
+                const response = await apiClient.post(endpoint, data, config);
+                const endTime = performance.now();  // End the timer
+                const duration = endTime - startTime;  // Calculate the duration
+                console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
+                return response.data;
+            } catch (error) {
+                return await handleError(error, endpoint);
+            }
+        }
+        // API call simulation for a standalone usecase that just gets the values from a js file.
+        else {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const endTime = performance.now();
+                    const duration = endTime - startTime;
+                    console.info(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
+        
+                    notify("Action not available! This is a preview site and has no functional features.", "info");
+                    resolve(null);
+
+                }, 0);
+            });
         }
     },
 
@@ -94,12 +150,12 @@ const api = {
                 notify("Failed to log in: " + response.statusMessage, "error");
                 return false;
             } else {
-                notify("Failed to log in.", "error");
+                // notify("Failed to log in.", "error");
                 console.error("[logIn] unknown response.loginStatus");
                 return false;
             }
         } else {
-            notify("Failed to log in.", "error");
+            // notify("Failed to log in.", "error");
             console.error("[logIn] response failed");
             return false;
         }
@@ -152,7 +208,7 @@ const api = {
             return null;
         }
     },
-    localLogOut(manualLogOut = false) {
+    localLogOut(manualLogOut = false, quiet = false) {
         if (router.currentRoute.value.path !== "/account/login") {
             localStorage.removeItem("sessionKey");
             localStorage.setItem("isLoggedIn", false);
@@ -160,26 +216,35 @@ const api = {
             if (manualLogOut != true) {
                 notify("Your session has expired, and you have been logged out. Please log in again.", "info", 15000);
             }
-            router.push("/login");
+            if (!quiet) {
+                router.push("/login");
+            }
         }
     },
 
     async getLoginStatus() {
         const sessionKey = localStorage.getItem('sessionKey');
-        if (sessionKey) {
-            let params = {};
-            params.session_key = sessionKey;
-            const response = await this.getData('/account/get_login_status', params);
-            if (response) {
-                console.log("[getLoginStatus] log in attempt response", response);
-                localStorage.setItem("isLoggedIn", response.loggedIn);
-                localStorage.setItem("username", response.loggedIn ? response.username : null)
-                const event = new CustomEvent("logInStatusUpdated", {});
-                window.dispatchEvent(event);
+        if (!standAloneBuild) {
+            if (sessionKey) {
+                let params = {};
+                params.session_key = sessionKey;
+                const response = await this.getData('/account/get_login_status', params);
+                if (response) {
+                    console.log("[getLoginStatus] log in attempt response", response);
+                    localStorage.setItem("isLoggedIn", response.loggedIn);
+                    localStorage.setItem("username", response.loggedIn ? response.username : null)
+                    const event = new CustomEvent("logInStatusUpdated", {});
+                    window.dispatchEvent(event);
+                }
+            } else {
+                console.log("[getLoginStatus] Did not try: no session key");
             }
         } else {
-            console.log("[getLoginStatus] Did not try: no session key");
+            // Log out quietly if the somehow had a session key
+            // Mainy for development
+            this.localLogOut(true, true);
         }
+        
     },
 
     async getSettings() {
@@ -406,6 +471,10 @@ const api = {
         params.session_key = localStorage.getItem('sessionKey');
         params.title_name = titleName;
         params.title_category = titleCategory;
+        if (standAloneBuild) {
+            // Do not allow searching
+            return this.postData();
+        }
         return this.getData('/watch_list/search', params);
     },
 

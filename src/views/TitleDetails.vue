@@ -1,6 +1,13 @@
 <template>
     <div v-if="titleInfo" class="title-info">
-        <div class="background backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
+        <div class="background backdrop-image-container" v-if="standAloneBuild">
+            <img
+                @load="(event) => event.target.classList.add('loaded')"
+                class="visible" 
+                :src="`https://image.tmdb.org/t/p/original${titleInfo.backup_backdrop_url}`" 
+            />
+        </div>
+        <div class="background backdrop-image-container" v-else-if="titleInfo.backdrop_image_count >= 1">
             <div v-for="image in imageSlideshowData.individualData" :key="image.number">
                 <img
                     v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
@@ -14,7 +21,14 @@
         <div class="backdrop-dimension"></div>
         <div class="backdrop-container backdrop-dimension" @keydown="backdropKeypress" tabindex="0">
             <div class="content-inside">
-                <div class="main backdrop-image-container" v-if="titleInfo.backdrop_image_count >= 1">
+                <div class="main backdrop-image-container" v-if="standAloneBuild">
+                    <img
+                        @load="(event) => event.target.classList.add('loaded')"
+                        class="visible" 
+                        :src="`https://image.tmdb.org/t/p/original${titleInfo.backup_backdrop_url}`" 
+                    />
+                </div>
+                <div class="main backdrop-image-container" v-else-if="titleInfo.backdrop_image_count >= 1">
                     <div v-for="image in imageSlideshowData.individualData" :key="image.number">
                         <img
                             v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
@@ -45,7 +59,7 @@
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
                     <img 
-                        :src="`${apiUrl}/image/${titleInfo.title_id}/poster.jpg?width=600`" 
+                        :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
                         @load="(event) => event.target.classList.add('loaded')"
                     >
                 </div>
@@ -311,9 +325,10 @@
             >
                 <div class="about" @click="toggleHeight(`refSeason${season.season_number}`)">
                     <div class="poster-container">
+                        <!-- :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" -->
                         <img 
                             class="poster" 
-                            :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`"
+                            :src="imageUrl(300, season.backup_poster_url, titleInfo.title_id, season.season_number)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         />
                         <div class="tag-holder">
@@ -382,7 +397,7 @@
                                 <img 
                                     v-else
                                     class="still" 
-                                    :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/episode${episode.episode_number}.jpg?width=900`" 
+                                    :src="imageUrl(900, episode.backup_still_url, titleInfo.title_id, season.season_number, episode.episode_number)"
                                     @error="failedToLoadImages.push(episode.episode_id)"
                                     @load="(event) => event.target.classList.add('loaded')"
                                 >
@@ -484,6 +499,7 @@ export default {
             },
             openedSeasons: [],
             scrolledPastEpisodeMap: false,
+            standAloneBuild: process.env.VUE_APP_STANDALONE_BUILD == "true",
         };
     },
     components: {
@@ -655,7 +671,10 @@ export default {
             if (response && response.title_info) {
                 if (response.title_info.length !== 0) {
                     this.titleInfo = response.title_info;
-                    console.log("[queryTitleData] Values set to this.titleInfo: ", this.titleInfo)
+                    if (this.standAloneBuild) {
+                        this.titleInfo.backdrop_image_count = 1;
+                    }
+                    console.debug("[queryTitleData] Values set to this.titleInfo: ", this.titleInfo)
                 } else {
                     notify("The title doesn't exist!", "error");
                     router.push("/watch_list");
@@ -784,6 +803,23 @@ export default {
                     }, 1)
                 }, 1)
             });
+        },
+        imageUrl(width, backupUrl, titleId, seasonNumber, episodeNumber) {
+            if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+                if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
+                if (width == 900 && episodeNumber) width = 300;  // TMDB doesn't have a 900 for episodes so use the largest non-original 300 instead
+                return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
+            } else {
+                if (!seasonNumber) {
+                    return `${this.apiUrl}/image/${titleId}/poster.jpg?width=${width}`;
+                } else if (!episodeNumber){
+                    return `${this.apiUrl}/image/${titleId}/season${seasonNumber}/poster.jpg?width=${width}`;
+                } else if (episodeNumber) {
+                    return `${this.apiUrl}/image/${titleId}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
+                } else {
+                    return "";
+                }
+            }
         },
     },
     async beforeRouteUpdate(to) {

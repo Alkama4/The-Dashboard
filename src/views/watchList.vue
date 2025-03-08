@@ -27,7 +27,7 @@
                         @keydown.space.prevent="openDetailsPageFor(title.id)"
                     >
                         <img 
-                            :src="`${apiUrl}/image/${title.id}/poster.jpg?width=600`" 
+                            :src="posterUrl(title.id, 600, title.backup_poster_url)" 
                             class="thumbnail"
                             @load="(event) => event.target.classList.add('loaded')" 
                         />
@@ -164,7 +164,7 @@
             <router-link v-for="title in allTitlesList" :key="title.id" :to="`/watch_list/title/${title.id}`" class="title-element no-decoration">
                 <div class="poster-holder">
                     <img 
-                        :src="`${apiUrl}/image/${title.id}/poster.jpg?width=300`" 
+                        :src="posterUrl(title.id, 300, title.backup_poster_url)" 
                         @load="(event) => event.target.classList.add('loaded')" 
                         class="poster"
                     >
@@ -485,6 +485,14 @@ export default {
                 this.scrolledPastTitlesListed = scrollY > titleslistedHeader.offsetTop;
             }
         },
+        posterUrl(titleId, width, backupUrl) {
+            if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+                if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
+                return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
+            } else {
+                return `${this.apiUrl}/image/${titleId}/poster.jpg?width=${width}`;
+            }
+        }
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");

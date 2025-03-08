@@ -173,7 +173,7 @@
                     counterparty: {},
                     category: {}
                 },
-                waitingForResponse: false,
+                waitingForResponse: true,
                 loadMoreButtonVisible: false,
             };
         },
@@ -203,13 +203,13 @@
                         this.transactions = [...this.transactions, ...response.transactions]; // Append new data
                     }
 
-                    this.waitingForResponse = false;
 
                     // If there are more entries, keep showing "Load More" button
                     this.loadMoreButtonVisible = response.hasMore;
                 } else {
                     console.error("[SpendingsPage] Failed to retrieve transactions.");
                 }
+                this.waitingForResponse = false;
             },
             async fetchFilters() {
                 // Get filters and pass them to the FilterSettings component

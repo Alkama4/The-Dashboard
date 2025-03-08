@@ -2,17 +2,24 @@ const { defineConfig } = require('@vue/cli-service');
 const path = require('path');
 
 module.exports = defineConfig({
-  // Check the environment
-  outputDir: process.env.NODE_ENV === 'production'
-    ? '\\\\192.168.0.2\\www\\local-nginx' // Network drive for production build
-    : path.resolve(__dirname, 'dist'), // Local folder for development (you can change 'dist' to any folder you prefer)
+	outputDir: (() => {
+		// Check if we are in production and not a standalone build
+		if (process.env.NODE_ENV === 'production' && process.env.VUE_APP_STANDALONE_BUILD !== 'true') {
+			return path.normalize(process.env.VUE_APP_PRODUCTION_BUILD_PATH);
+		}
+		
+		// Check if it's a standalone build
+		if (process.env.VUE_APP_STANDALONE_BUILD === 'true') {
+			return process.env.VUE_APP_STANDALONE_BUILD_PATH;
+		}
+		
+		// Default to local folder for development
+		return path.resolve(__dirname, 'dist');
+	})(),
 
-  transpileDependencies: true,
+  	transpileDependencies: true,
 
-  devServer: {
-    // You can configure devServer options here if needed
-    // contentBase: path.join(__dirname, 'dist'), // Serve files from 'dist' directory during development
-    // compress: true,
-    port: 80
-  }
+	devServer: {
+		port: 80
+	}
 });

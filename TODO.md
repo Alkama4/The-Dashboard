@@ -148,6 +148,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Mixed signals to the user since the spendings entry doesn't do that.
     - And the user is punished by resetting their filters by opening the page in current tab.
         - Laxy fix by always opening in new tab before proper fix?
+- Primary buttons go to normal button when disabled
     
 
 ### Feature or a bug?

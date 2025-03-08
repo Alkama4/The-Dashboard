@@ -18,19 +18,17 @@
 		<div class="flex-column">
 			<h2>Service links</h2>
 			<div class="tile-container">
-				<a :href="serviceUrl1" class="tile-button link-button">
+				<a 
+					v-for="(service, index) in serviceUrls"
+					:href="service.url"
+					class="tile-button link-button"
+					:key="index"
+				>
 					<img 
-						src="../assets/thumbnails/portainer.svg" 
+						:src="service.iconUrl" 
 						@load="(event) => event.target.classList.add('loaded')"
 					>
-					<span>Portainer</span>
-				</a>
-				<a :href="serviceUrl2" class="tile-button link-button">
-					<img 
-						src="../assets/thumbnails/pihole.png"
-						@load="(event) => event.target.classList.add('loaded')"
-					>
-					<span>Pihole</span>
+					<span>{{ service.name }}</span>
 				</a>
 				
 				<div class="service-seperator"></div>
@@ -392,8 +390,7 @@ export default {
 	},
 	data() {
 		return {
-			serviceUrl1: process.env.VUE_APP_OTHER_SERVICE_1_URL,
-			serviceUrl2: process.env.VUE_APP_OTHER_SERVICE_2_URL,
+			serviceUrls: [],
 			greeting: this.getGreeting(),
 			backups: [],
             isLoaded: {},
@@ -452,9 +449,40 @@ export default {
 				notify("Cannot copy text to clipboard.", "error");
 				console.error("[copyToClipboard]", error);
 			}
+		},
+		getServiceUrls() {
+			if (process.env.VUE_APP_STANDALONE_BUILD == "false") {
+				const serviceUrls = [];
+				let i = 1;
+				
+				while (
+					process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`] 
+					&& process.env[`VUE_APP_OTHER_SERVICE_${i}_URL`]
+					&& process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`]
+				) {
+					serviceUrls.push({
+						name: process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`],
+						url: process.env[`VUE_APP_OTHER_SERVICE_${i}_URL`],
+						iconUrl: process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`]
+					});
+					i++;
+				}
+	
+				console.debug(serviceUrls);
+				this.serviceUrls = serviceUrls;
+			} else {
+				this.serviceUrls = [{
+					name: "GitHub repo",
+					url: "https://github.com/Alkama4/The-Dashboard",
+					iconUrl: "https://github.githubassets.com/favicons/favicon-dark.svg"
+				}];
+			}
 		}
 	},
 	async mounted() {
+		// Get services from env
+		this.getServiceUrls();
+
 		const backupResponse = await api.getBackups();
 		if (backupResponse) {
 			this.backups = backupResponse.backups;
