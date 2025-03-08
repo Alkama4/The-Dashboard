@@ -12,3 +12,6 @@ This project is licensed under the Apache License 2.0, so you’re free to use, 
 This repository contains only the frontend portion of the project and will not have any functionality without a backend. I may eventually push the FastAPI backend code to GitHub as well, but until then its just an empty frontend.
 
 This application is custom-built for my needs and is not suitable for general use. If you choose to fork or use the code, you can do so at your own risk, and you are entirely responsible for any modifications or deployments.
+
+## Preview page
+You can view a preview of the page on the repository's GitHub Pages site [here](https://alkama4.github.io/The-Dashboard/). This is a demo build of the site that includes some cached example data. The purpose of the site is to give you a sense of the layout and design, but please note that it is not connected to any database or API, so it is not fully functional.
