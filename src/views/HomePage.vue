@@ -474,8 +474,22 @@ export default {
 				this.serviceUrls = [{
 					name: "GitHub repo",
 					url: "https://github.com/Alkama4/The-Dashboard",
-					iconUrl: "https://github.githubassets.com/favicons/favicon-dark.svg"
+					iconUrl: localStorage.getItem("darkMode") === "true" ? 
+					"https://github.githubassets.com/favicons/favicon-dark.svg" :
+					"https://github.githubassets.com/favicons/favicon.svg"
 				}];
+
+				// Add a listener that changes the icon if dark mode is changed
+				window.addEventListener("darkModeChange", (event) => {
+					const darkModeEnabled = event.detail.darkModeEnabled;
+					this.serviceUrls = [{
+						name: "GitHub repo",
+						url: "https://github.com/Alkama4/The-Dashboard",
+						iconUrl: darkModeEnabled ? 
+						"https://github.githubassets.com/favicons/favicon-dark.svg" :
+						"https://github.githubassets.com/favicons/favicon.svg"
+					}];
+				});
 			}
 		}
 	},

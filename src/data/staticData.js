@@ -20113,7 +20113,7 @@ export const STATIC_CONTENT = {
         }
     },
 
-    '/transactions/get_transactions{"sort_by":"date","sort_order":"desc","offset":0,"start_date":946684800000,"end_date":2208988800000,"min_amount":-999999,"max_amount":999999,"counterparties":[],"counterparty_inclusion_mode":true,"categories":[],"category_inclusion_mode":true,"limit":100,"session_key":null}': {
+    '/transactions/get_transactions{"sort_by":"date","sort_order":"desc","offset":0,"start_date":946684800000,"end_date":2208988800000,"min_amount":-999999,"max_amount":999999,"counterparties":[],"counterparty_inclusion_mode":true,"categories":[],"category_inclusion_mode":true,"session_key":null}': {
         "transactions": [
           {
             "transaction_id": 9,
