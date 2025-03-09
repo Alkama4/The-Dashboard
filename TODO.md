@@ -37,6 +37,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Released, started...?
     - Whole title act as a link
         - Hover highlight, cursor, router-link replaces div
+    - Upcoming tag to all titles list
     - description is awkward 
     - mobile compability non existant
 

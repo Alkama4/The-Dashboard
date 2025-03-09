@@ -962,9 +962,12 @@ input[type="radio"] {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     color: var(--color-text-light);
     font-weight: 500;
     user-select: none;
+
+    padding-inline: calc(22% - var(--spacing-lg));
 }
 
 /* 

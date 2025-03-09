@@ -20550,7 +20550,7 @@ export const STATIC_CONTENT = {
     },
 
     // Movies to watch
-    '/watch_list/get_title_cards{"title_count":12,"session_key":null,"sort_by":"release_date","title_type":"tv","watched":false,"released":true,"started":false}': {
+    '/watch_list/get_title_cards{"title_count":12,"session_key":null,"sort_by":"release_date","title_type":"movie","watched":false,"released":true}': {
         "titles": [
           {
             "id": 199,
@@ -20658,10 +20658,10 @@ export const STATIC_CONTENT = {
             "new_episodes": 0
           }
         ]
-      },
+    },
         
     // TV-series to start watching
-    '/watch_list/get_title_cards{"title_count":12,"session_key":null,"sort_by":"release_date","title_type":"movie","watched":false,"released":true}': {
+    '/watch_list/get_title_cards{"title_count":12,"session_key":null,"sort_by":"release_date","title_type":"tv","watched":false,"released":true,"started":false}': {
         "titles": [
           {
             "id": 225,

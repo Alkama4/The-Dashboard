@@ -63,6 +63,12 @@
                         <div class="loading-placeholder transaction-cell column-notes"></div>
                     </div>
                 </div>
+                <div v-else-if="transactions.length == 0">
+                    <div class="no-transactions-found content-not-found">
+                        Looks like there's nothing here<br>
+                        <span class="text-hidden">You either have no transactions or your filters excluded them.</span>
+                    </div>
+                </div>
             </div>
         </div>
     
@@ -352,11 +358,11 @@
 }
 
 
-.transaction-headers {
+.transaction-headers > div {
     /* padding: 6px var(--spacing-sm); */
     color: var(--color-text);
     user-select: none;
-    font-weight: 700;
+    font-weight: 700 !important;
     /* background-color: var(--color-background-th-row); */
 }
 .transaction-headers > div {
@@ -395,6 +401,12 @@
     border-radius: var(--border-radius-small);
     margin: calc(var(--spacing-sm) + 1px);  /* 2px for border */
 }
+.loading-placeholder.column-date {
+    margin-left: 0;
+}
+.loading-placeholder.column-notes {
+    margin-right: 0;
+}
 @keyframes loading-wave {
     0% {
         background-position: 200% 0;
@@ -404,5 +416,13 @@
     }
 }
 
+.no-transactions-found {
+    /* min-height: 200px; */
+    padding-top: var(--spacing-hg);
+    padding-bottom: var(--spacing-hg);
+    margin-top: var(--spacing-sm);
+    background-color: var(--color-background-card);
+    border-radius: var(--border-radius-medium);
+}
 
 </style>

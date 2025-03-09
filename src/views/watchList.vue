@@ -91,7 +91,7 @@
                         v-if="titleList.titles.length == 0 && !titleList.loading"
                     >
                         Looks like there's nothing here.<br>
-                        <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
+                        <span class="text-hidden">Try adding titles to your watch list</span>
                     </swiper-slide>
                     
                     <div class="slides-indicator-holder">
@@ -186,6 +186,9 @@
                         <div class="tag tag-primary" v-if="title.new_episodes">
                             New episodes
                         </div>
+                        <div class="tag tag-general" v-else-if="new Date(title.release_date) > new Date()">
+                            Upcoming
+                        </div>
                         <div class="tag tag-general">
                             {{ title.type === 'tv' ? 'TV' : 'Movie' }}
                         </div>
@@ -238,7 +241,7 @@
 
         <div class="content-width-medium all-titles-list-placeholder content-not-found" v-else>
             Looks like there's nothing here.<br>
-            <span class="text-hidden">(Tip: Try adding titles to your watch list)</span>
+            <span class="text-hidden">Try adding titles to your watch list</span>
         </div>
 
         <!-- Corner buttons -->
@@ -695,7 +698,6 @@ export default {
     width: calc(100% - var(--spacing-hg)) !important;
     margin: calc(300px * 0.025) calc(200px * 0.025);
     box-sizing: border-box;
-    padding-inline: calc(22% - var(--spacing-lg));
     
     cursor: default;
     transform: none !important;
@@ -803,7 +805,7 @@ export default {
 .all-titles-list .title-element {
     --title-height: 175px;
     --padding: var(--spacing-md);
-    border-top: 2px solid var(--color-border);
+    border-top: 2px solid var(--color-background-tr-hover);
     padding: var(--padding);
     gap: var(--spacing-md);
     display: flex;
