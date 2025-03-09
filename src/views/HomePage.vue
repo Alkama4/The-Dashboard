@@ -36,7 +36,7 @@
 				<!-- Buttons like this could be useful, but I don't have logos? Just come icons? -->
 				<router-link to="/spendings/new_entry" class="tile-button link-button">
 					<IconWallet/>
-					<span>New entry</span>
+					<span>New transaction</span>
 				</router-link>
 				<router-link to="/watch_list/add_title" class="tile-button link-button">
 					<IconFilm/>
@@ -132,176 +132,41 @@
 			<h2>Server resource usages</h2>
 			<div class="card server-resources content-width-large">
 				<!-- Chart 1 - CPU temp -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
-				>
-					<div class="chart" ref="chartContainer1"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart1')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart1'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
 
 				<!-- Chart 2 - RAM Usage -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart2' }"
-				>
-					<div class="chart" ref="chartContainer2"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart2')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart2'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart2"/>
 
 				<!-- Chart 3 - CPU Usage -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart3' }"
-				>
-					<div class="chart" ref="chartContainer3"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart3')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart3'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart3"/>
 
 				<!-- Chart 5 - System load -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart5' }"
-				>
-					<div class="chart" ref="chartContainer5"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart5')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart5'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart5"/>
 
 				<!-- Chart 6 - Network up/down -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart6' }"
-					style="width: 100%;"
-				>
-					<div class="chart" ref="chartContainer6"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart6')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart6'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart6"/>
 
 				<!-- Chart 7 - FASTAPI -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart7' }"
-					style="width: 33.333%;"
-				>
-					<div class="chart" ref="chartContainer7"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart7')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart7'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart7"/>
 
 				<!-- Chart 8 - FASTAPI -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart8' }"
-					style="width: 33.333%;"
-				>
-					<div class="chart" ref="chartContainer8"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart8')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart8'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart8"/>
 
 				<!-- Chart 9 - FASTAPI -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart9' }"
-					style="width: 33.333%;"
-				>
-					<div class="chart" ref="chartContainer9"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart9')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart9'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart9"/>
 
 				<!-- Chart 10 - FASTAPI -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart10' }"
-				>
-					<div class="chart" ref="chartContainer10"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart10')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart10'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart10"/>
 
 				<!-- Chart 11 - Fastapi requesttime histogram -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart11' }"
-				>
-					<div class="chart" ref="chartContainer11"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart11')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart11'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart11"/>
 
 				<!-- Chart 12 - Fastapi endpoints and error codes -->
 				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
 				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
 				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-				<div 
-					class="chartContainer"
-					:class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart12' }"
-				>
-					<div class="chart" ref="chartContainer12"></div>
-					<button 
-						class="button-simple fullscreen-button" 
-						@click="toggleFullscreenChart('chart12')"
-					>
-						<IconCollapse v-if="fullscreenChart === 'chart12'"/>
-						<IconExpand v-else/>
-					</button>  
-				</div>
+				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart12"/>
+
 			</div>
 		</div>
 
@@ -338,8 +203,6 @@
 				</div>
 			</div>
 		</div>
-
-
 	</div>
 </template>
 
@@ -348,8 +211,9 @@
 import IconHDD from '@/components/icons/IconHDD.vue';
 import IconBackup from '@/components/icons/IconBackup.vue';
 import IconBackupDown from '@/components/icons/IconBackupDown.vue';
-import IconExpand from '@/components/icons/IconExpand.vue';
-import IconCollapse from '@/components/icons/IconCollapse.vue';
+import InfoTooltip from '@/components/InfoTooltip.vue';
+import IconFilm from '@/components/icons/IconFilm.vue';
+import IconWallet from '@/components/icons/IconWallet.vue';
 
 // Other
 import api from '@/utils/dataQuery';
@@ -358,33 +222,19 @@ import { notify } from '@/utils/notification';
 import { 
     generateTooltipMultiValue, 
 	generateTooltipSingleValue,
-    initializeAndSetupChart,
-    toggleFullscreenChart,
 	commonChartValues,
-	setupFullscreenEscExit,
+	initialEchartSetup,
 } from '@/utils/chartTools'
-
-// ECharts imports
-import { use } from 'echarts/core'
-import { LineChart, PieChart } from 'echarts/charts'
-import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
-import { CanvasRenderer } from 'echarts/renderers'
-import InfoTooltip from '@/components/InfoTooltip.vue';
-import IconFilm from '@/components/icons/IconFilm.vue';
-import IconWallet from '@/components/icons/IconWallet.vue';
-// import { SVGRenderer } from 'echarts/renderers'
-
-use([TooltipComponent, GridComponent, LineChart, PieChart, CanvasRenderer, TitleComponent, LegendComponent]);
+import ChartComponent from '@/components/ChartComponent.vue';
 
 export default {
 	name: 'HomePage',
 	components: {
 		InfoTooltip,
+		ChartComponent,
 		IconHDD,
 		IconBackup,
 		IconBackupDown,
-		IconExpand,
-		IconCollapse,
 		IconFilm,
 		IconWallet,
 	},
@@ -394,7 +244,7 @@ export default {
 			greeting: this.getGreeting(),
 			backups: [],
             isLoaded: {},
-            fullscreenChart: "",
+			chartValueGenerators: {},
 			serverStats: {
 				storage: [],
 				fastapiData: {},
@@ -417,9 +267,6 @@ export default {
 		formatBytes(value) {
 			return convert.toBytes(value)
 		},
-		toggleFullscreenChart(chartId) {
-            toggleFullscreenChart(this, chartId);
-        },
 		copyToClipboard(textToCopy, what) {
 			try {
 				if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -496,6 +343,9 @@ export default {
 	async mounted() {
 		// Get services from env
 		this.getServiceUrls();
+
+		// Everything that needs to be done before echarts in one method
+		initialEchartSetup(this);
 
 		const backupResponse = await api.getBackups();
 		if (backupResponse) {
@@ -587,7 +437,7 @@ export default {
 								colorStops: [{
 									offset: 0, color: getCssVar("color-secondary")
 								}, {
-									offset: 1, color: 'transparent'
+									offset: 1, color: 'rgba(0,0,0,0)'
 								}]
 							}
 						},
@@ -596,7 +446,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart1", "chartContainer1", chart1Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart1 = chart1Options;
 
 			// Chart 2 - RAM Usage
 			const chart2Options = () => ({
@@ -652,7 +503,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart2", "chartContainer2", chart2Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart2 = chart2Options;
 
 			// Chart 3 - CPU Usage
 			const chart3Options = () => ({
@@ -708,7 +560,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart3", "chartContainer3", chart3Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart3 = chart3Options;
 
 			// Chart 5 - System load
 			const chart5Options = () => ({
@@ -764,7 +617,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart5", "chartContainer5", chart5Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart5 = chart5Options;
 
 			// Chart 6 - Network upload
 			const chart6Options = () => ({
@@ -825,10 +679,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart6", "chartContainer6", chart6Options);
-
-			// After charts are set setup the esc listener
-			setupFullscreenEscExit(this)
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart6 = chart6Options;
 		}
 
 		// Fastapi logs data
@@ -928,7 +780,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart7", "chartContainer7", chart7Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart7 = chart7Options;
 
 			// Chart 8 - FASTAPI
 			const chart8Options = () => ({
@@ -962,7 +815,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart8", "chartContainer8", chart8Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart8 = chart8Options;
 
 			// Chart 9 - FASTAPI
 			const chart9Options = () => ({
@@ -996,7 +850,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart9", "chartContainer9", chart9Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart9 = chart9Options;
 
 			// Chart 10 - FASTAPI
 			const chart10Options = () => ({
@@ -1050,7 +905,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart10", "chartContainer10", chart10Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart10 = chart10Options;
 
 			// Chart 11 - FASTAPI
 			const chart11Options = () => ({
@@ -1109,7 +965,8 @@ export default {
 					},
 				],
 			});
-			initializeAndSetupChart(this, "chart11", "chartContainer11", chart11Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart11 = chart11Options;
 
 			// Chart 12 - FASTAPI
 			const chart12Options = () => ({
@@ -1162,7 +1019,8 @@ export default {
 				},
 				series: errorSeries
 			});
-			initializeAndSetupChart(this, "chart12", "chartContainer12", chart12Options);
+			// Set the value generator for the chart
+			this.chartValueGenerators.chart12 = chart12Options;
 		}
 	}
 };
@@ -1175,21 +1033,19 @@ export default {
 	flex-direction: row;
 	flex-wrap: wrap;
 }
-.chartContainer {
-	position: relative;
-	padding: var(--spacing-sm);
+.ChartComponent {
 	width: 50%;
-	box-sizing: border-box;
 	height: 300px;
-	background-color: var(--color-background-card);
 }
-.chartContainer.fullscreen {
-	padding: var(--spacing-md);
-}
+
 @media (max-width: 900px) {
-	.chartContainer {
+	.ChartComponent {
 		width: 100%;
 	}
+}
+
+.loaded {
+    animation: fadeIn 0.4s ease-out;
 }
 
 .fullscreen-button {
@@ -1235,6 +1091,7 @@ export default {
 	display: inline-block;
 	color: var(--color-text-light);
 	margin-top: var(--spacing-md);
+	margin-bottom: var(--spacing-sm);
 }
 .greeting-area .text-area button {
 	margin-top: var(--spacing-md);
@@ -1308,9 +1165,7 @@ export default {
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
-}
-.tile-container a {
-	margin: var(--spacing-sm);
+	gap: var(--spacing-md);
 }
 .tile-button {
 	position: relative;
@@ -1320,6 +1175,7 @@ export default {
 	width: 150px;
 	border-radius: var(--border-radius-medium);
 	box-sizing: border-box;
+	padding-inline: var(--spacing-sm);
 	margin: 0;
 }
 .tile-button img, .tile-button svg {
@@ -1339,13 +1195,13 @@ export default {
 	background-color: var(--color-border);
 	width: 2px;
 	border-radius: 100px;
-	margin-inline: var(--spacing-sm);
+	/* margin-inline: var(--spacing-sm); */
 }
 @media (max-width: 575px) {
 	.service-seperator {
 		width: 100%;
 		height: 2px;
-		margin: var(--spacing-sm);
+		/* margin: var(--spacing-sm); */
 	}
 }
 

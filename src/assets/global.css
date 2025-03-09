@@ -921,6 +921,26 @@ input[type="radio"] {
 }
 
 
+.fullwindow {
+    max-height: none !important;
+    max-width: none !important;
+    height: auto !important;
+    width: auto !important;
+    aspect-ratio: initial !important;
+    position: fixed !important;
+    border-radius: 0;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+    z-index: var(--z-index-fullscreen);
+    padding-top: var(--spacing-md);
+    padding-bottom: var(--spacing-md);
+    padding-left: var(--spacing-md);
+    padding-right: var(--spacing-md);
+}
+
 .fullscreen {
     max-height: none !important;
     max-width: none !important;
@@ -928,13 +948,17 @@ input[type="radio"] {
     width: auto !important;
     aspect-ratio: initial !important;
     position: fixed !important;
-    margin: 0;
     border-radius: 0;
     top: 0px;
     bottom: 0;
     left: 0;
     right: 0;
+    margin: 0;
     z-index: var(--z-index-fullscreen);
+    padding-top: max(env(safe-area-inset-top), var(--spacing-md));
+    padding-bottom: max(env(safe-area-inset-bottom), var(--spacing-md));
+    padding-left: max(env(safe-area-inset-left), var(--spacing-md));
+    padding-right: max(env(safe-area-inset-right), var(--spacing-md));
 }
 
 .loading-placeholder {

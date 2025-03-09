@@ -1,57 +1,18 @@
+// My tools
 import { convert, getCssVar } from '@/utils/mytools'
-import { init } from 'echarts/core'
 
-// All in one solution for setting up charts. 
-export async function initializeAndSetupChart(thisComponent, name, chartContainerName, getChartOptions) {
-    if (typeof getChartOptions !== 'function') {
-        console.error("[initializeAndSetupChart] Invalid 'getChartOptions': Expected a function");
-        return;
-    }
-    if (!chartContainerName) {
-        console.error(`[initializeAndSetupChart] Invalid 'chartContainerName': ${chartContainerName}`);
-        return;
-    }
-    if (!thisComponent.$refs[chartContainerName]) {
-        console.debug(`[initializeAndSetupChart] Ref element ${chartContainerName} doesn't exist!`)
-        return;
-    }
-    if (!name) {
-        console.error("[initializeAndSetupChart] Invalid 'name': Expected a non-empty string");
-        return;
-    }
+// ECharts imports
+import { use } from 'echarts/core'
+import { LineChart, BarChart, PieChart } from 'echarts/charts'
+import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
 
-    // Init the charts container and avoid storing the chart instance in data
-    const chart = init(thisComponent.$refs[chartContainerName]);
+// Pick a renderer
+// import { CanvasRenderer } from 'echarts/renderers'
+import { SVGRenderer } from 'echarts/renderers'
 
-    // Initialize the chart with the dynamic options
-    chart.setOption(getChartOptions());
 
-    // Add a listener to resize the chart when needed
-    setupResizeObserver(thisComponent, chartContainerName, chart);
-
-    // Listen for custom dark mode change event and recalculate options
-    window.addEventListener("darkModeChange", () => {
-        chart.setOption(getChartOptions());
-    });
-
-    // Display the chart
-    thisComponent.isLoaded[name] = true;
-}
-function setupResizeObserver(thisComponent, containerRef, chart) {
-    const container = thisComponent.$refs[containerRef];
-    if (!container) return;
-
-    const resizeObserver = new ResizeObserver(() => {
-        chart.resize();
-    });
-
-    resizeObserver.observe(container);
-
-    // Store the observer for cleanup
-    if (!thisComponent.resizeObservers) {
-        thisComponent.resizeObservers = [];
-    }
-    thisComponent.resizeObservers.push(resizeObserver);
+export function initialEchartSetup() {
+    use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, SVGRenderer, TitleComponent, LegendComponent]);
 }
 
 export function generateTooltipMultiValue(params, yAxisFormatToDateType, xAxisFormatter, showSumRow) {
@@ -118,39 +79,6 @@ export function generateTooltipSingleValue(params, countOrEur) {
     `;
 }
 
-export function toggleFullscreenChart(thisComponent, chartId = "") {
-    const isTouchDevice = 'ontouchstart' in document.documentElement;
-
-    if (thisComponent.fullscreenChart !== chartId && chartId !== "") {
-        thisComponent.fullscreenChart = chartId;
-        document.documentElement.classList.add('no-scroll');
-
-        if (isTouchDevice) {
-            document.documentElement.requestFullscreen?.().then(() => {
-                document.addEventListener('fullscreenchange', handleFullscreenExit);
-            });
-        }
-    } else {
-        exitFullscreen(thisComponent);
-    }
-
-    function handleFullscreenExit() {
-        if (!document.fullscreenElement) {
-            exitFullscreen(thisComponent);
-            document.removeEventListener('fullscreenchange', handleFullscreenExit);
-        }
-    }
-
-    function exitFullscreen(thisComponent) {
-        thisComponent.fullscreenChart = '';
-        document.documentElement.classList.remove('no-scroll');
-        if (document.fullscreenElement) {
-            document.exitFullscreen?.();
-        }
-    }
-}
-
-
 export function commonChartValues() {
     return {
         color: [
@@ -187,15 +115,4 @@ export function commonChartValues() {
             color: getCssVar('color-text-lighter'),
         },
     }
-}
-
-export function setupFullscreenEscExit(thisElement) {
-    // Define the event listener function
-    const exitFullscreenListener = (event) => {
-        if (event.key === 'Escape') {
-            thisElement.toggleFullscreenChart()
-        }
-    };
-    document.addEventListener('keydown', exitFullscreenListener);   // Setup the listener
-    thisElement.exitFullscreenListener = exitFullscreenListener;    // Store the listener function in a property or variable if needed later
 }

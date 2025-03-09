@@ -94,19 +94,8 @@
 
             <div class="card-spacer"></div>
 
-            <div 
-                class="pieChartHolder"
-                :class="{ loaded: isLoaded.pie1, fullscreen: fullscreenChart === 'pie1' }"
-            >
-                <div class="chart" ref="pieChartContainer1"></div>
-                <button 
-                    class="button-simple fs-button" 
-                    @click="toggleFullscreenChart('pie1')"
-                >
-                    <IconCollapse v-if="fullscreenChart === 'pie1'"/>
-                    <IconExpand v-else/>
-                </button>
-            </div>
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.pie1"/>
+
         </div>
 
         <div class="card content-width-medium">
@@ -145,20 +134,9 @@
             </div>
 
             <div class="card-spacer"></div>
+    
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.pie2"/>
 
-            <div 
-                class="pieChartHolder"
-                :class="{ loaded: isLoaded.pie2, fullscreen: fullscreenChart === 'pie2' }"
-            >
-                <div class="chart" ref="pieChartContainer2"></div>
-                <button 
-                    class="button-simple fs-button" 
-                    @click="toggleFullscreenChart('pie2')"
-                >
-                    <IconCollapse v-if="fullscreenChart === 'pie2'"/>
-                    <IconExpand v-else/>
-                </button>
-            </div>
         </div>
 
         <!-- <h2>All time?</h2> -->
@@ -170,103 +148,48 @@
             <p>This allows you to observe trends, identify patterns, and track changes in your financial behavior across an extended timeline. Whether you're analyzing seasonal variations or monitoring long-term progress, these charts are a helpful tool for gaining a deeper understanding of your financial activity.</p>
         </div>
 
-        <div 
-            class="card chartCard content-width-large"
-            :class="{ loaded: isLoaded.chart1, fullscreen: fullscreenChart === 'chart1' }"
-        >
-            <div class="chart" ref="chartContainer1"></div>
-            <button 
-                class="button-simple fs-button" 
-                @click="toggleFullscreenChart('chart1')"
-            >
-                <IconCollapse v-if="fullscreenChart === 'chart1'"/>
-                <IconExpand v-else/>
-            </button>  
+        <div class="chartCard card">
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
         </div>
 
-        <div 
-            class="card chartCard content-width-large"
-            :class="{ loaded: isLoaded.chart2, fullscreen: fullscreenChart === 'chart2' }"
-        >
-            <div class="chart" ref="chartContainer2"></div>
-            <button 
-                class="button-simple fs-button" 
-                @click="toggleFullscreenChart('chart2')"
-            >
-                <IconCollapse v-if="fullscreenChart === 'chart2'"/>
-                <IconExpand v-else/>
-            </button>  
+        <div class="chartCard card">
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart2"/>
         </div>
 
-        <div 
-            class="card chartCard content-width-large"
-            :class="{ loaded: isLoaded.chart3, fullscreen: fullscreenChart === 'chart3' }"
-        >
-            <div class="chart" ref="chartContainer3"></div>
-            <button 
-                class="button-simple fs-button" 
-                @click="toggleFullscreenChart('chart3')"
-            >
-                <IconCollapse v-if="fullscreenChart === 'chart3'"/>
-                <IconExpand v-else/>
-            </button>  
+        <div class="chartCard card">
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart3"/>
         </div>
 
-        <div 
-            class="card chartCard content-width-large"
-            :class="{ loaded: isLoaded.chart4, fullscreen: fullscreenChart === 'chart4' }"
-        >
-            <div class="chart" ref="chartContainer4"></div>
-            <button 
-                class="button-simple fs-button" 
-                @click="toggleFullscreenChart('chart4')"
-            >
-                <IconCollapse v-if="fullscreenChart === 'chart4'"/>
-                <IconExpand v-else/>
-            </button>  
+        <div class="chartCard card">
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart4"/>
         </div>
+
     </div>
 </template>
 
 
 <script>
-// ECharts imports
-import { use } from 'echarts/core'
-import { LineChart, BarChart, PieChart } from 'echarts/charts'
-import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
-// import { SVGRenderer } from 'echarts/renderers'
-import { CanvasRenderer } from 'echarts/renderers'
 // My utils
 import api from '@/utils/dataQuery';
-import IconExpand from '@/components/icons/IconExpand.vue';
-import IconCollapse from '@/components/icons/IconCollapse.vue';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import { convert, getCssVar } from '@/utils/mytools'
 import { 
     generateTooltipMultiValue, 
     generateTooltipSingleValue, 
-    initializeAndSetupChart,
-    toggleFullscreenChart,
     commonChartValues,
-    setupFullscreenEscExit
+    initialEchartSetup,
 } from '@/utils/chartTools'
-
-// import { notify } from '@/utils/notification';
-
-// Register only the required components
-use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, CanvasRenderer, TitleComponent, LegendComponent]);
+import ChartComponent from '@/components/ChartComponent.vue';
 
 export default {
     name: 'AnalyticsPage',
     components: {
-        IconExpand,
-        IconCollapse,
         InfoTooltip,
+        ChartComponent,
     },
     data() {
         return {
-            isLoaded: {},
-            fullscreenChart: "",
+            chartValueGenerators: {},
             pageValues: {
                 generalStats: {},
                 lastMonth: {},
@@ -285,11 +208,11 @@ export default {
         toEur(value) {
             return convert.toEur(value)
         },
-        toggleFullscreenChart(chartId) {
-            toggleFullscreenChart(this, chartId);
-        }
     },
     async mounted() {
+        // Everything that needs to be done before echarts in one method
+        initialEchartSetup(this);
+        
         // Async setup for each chart
         const fetchAndSetupCharts = [
             
@@ -343,8 +266,8 @@ export default {
                         ],
                     });
 
-                    // Run the setup function
-                    initializeAndSetupChart(this, "pie1", "pieChartContainer1", pie1Options);
+                    // Set the value generator for the chart
+                    this.chartValueGenerators.pie1 = pie1Options;
                 }
             })(),
 
@@ -391,8 +314,8 @@ export default {
                         ]
                     })
 
-                    // Run the setup function
-                    initializeAndSetupChart(this, "pie2", "pieChartContainer2", pie2Options);
+                    // Set the value generator for the chart
+                    this.chartValueGenerators.pie2 = pie2Options;
                 }
             })(),
 
@@ -461,7 +384,7 @@ export default {
                                         colorStops: [{
                                             offset: 0, color: getCssVar("color-primary")
                                         }, {
-                                            offset: 1, color: 'transparent'
+                                            offset: 1, color: 'rgba(0,0,0,0)'
                                         }]
                                     }
                                 },
@@ -469,8 +392,8 @@ export default {
                         ],
                     });
 
-                    // Run the setup function
-                    initializeAndSetupChart(this, "chart1", "chartContainer1", chart1Options);
+                    // Set the value generator for the chart
+                    this.chartValueGenerators.chart1 = chart1Options;
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 1] Error fetching data:", error);
@@ -558,8 +481,8 @@ export default {
                         ],
                     });
                     
-                    // Run the setup function
-                    initializeAndSetupChart(this, "chart2", "chartContainer2", chart2Options);
+                    // Set the value generator for the chart
+                    this.chartValueGenerators.chart2 = chart2Options;
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 2] Error fetching data:", error);
@@ -636,8 +559,8 @@ export default {
                         series: seriesData,
                     });
 
-                    // Run the setup function
-                    initializeAndSetupChart(this, "chart3", "chartContainer3", chart3Options);
+                    // Set the value generator for the chart
+                    this.chartValueGenerators.chart3 = chart3Options;
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 3] Error fetching data:", error);
@@ -714,8 +637,8 @@ export default {
                         series: seriesData,
                     });
 
-                    // Run the setup function
-                    initializeAndSetupChart(this, "chart4", "chartContainer4", chart4Options);
+                    // Set the value generator for the chart
+                    this.chartValueGenerators.chart4 = chart4Options;
                 } catch (error) {
                     // notify('Failed to display Chart', "error");
                     console.error("[Chart 4] Error fetching data:", error);
@@ -725,8 +648,6 @@ export default {
 
         // Finally run the setups
         await Promise.all(fetchAndSetupCharts);
-
-        setupFullscreenEscExit(this);
     },
     beforeUnmount() {
         // Get rid of the class in case the user changes page with the chart active
@@ -745,56 +666,14 @@ export default {
 
 
 <style scoped>
-.pieChartHolder {
-    position: relative;
-    height: 450px;
-    width: 100%;
-    background-color: var(--color-background-card);
-}
-.pieChartHolder.fullscreen {
-    padding: var(--spacing-md);
-}
-
-
 .chartCard {
     position: relative;
-    max-height: 650px;
-    height: calc(100vw * 0.5 + 168px);
     width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
 }
-.fullscreen {
-    max-height: none;
-    max-width: none;
-    height: auto;
-    width: auto;
-    position: fixed !important;
-    margin: 0;
-    border-radius: 0;
-    top: 0px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: var(--z-index-fullscreen);
+.chartCard .ChartComponent {
+    height: calc(100vw * 0.5 + 168px);
+    max-height: 650px;
 }
-.fs-button {
-    border-radius: 0;
-    border-top-right-radius: var(--border-radius-medium);
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 1; /* Otherwise under chart */
-    color: var(--color-text-light);
-    background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
-    padding: var(--spacing-md);
-    margin: 0;
-    padding-left: 32px !important;
-}
-.pieChartHolder .fs-button {
-    padding: 0; /* Override padding */
-} .pieChartHolder.fullscreen .fs-button {
-    padding: var(--spacing-md); /* Reinstate padding */
-}
-
 
 .loaded {
     animation: fadeIn 0.4s ease-out;

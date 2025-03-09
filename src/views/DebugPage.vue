@@ -42,6 +42,8 @@
                 Div {{ n }}
             </div>
         </div>
+
+        <ChartComponent :chartOptionsGenerator="exampleChartOptions"/>
     </div>
 </template>
 
@@ -49,10 +51,20 @@
 // import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
 import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
+import { loadEchartsImports, commonChartValues, generateTooltipSingleValue } from '@/utils/chartTools';
+import api from '@/utils/dataQuery';
+import ChartComponent from '@/components/ChartComponent.vue';
 
 export default {
     name: 'DebugPage',
-    components: {},
+    components: {
+        ChartComponent,
+    },  
+    data() {
+        return {
+            exampleChartOptions: null
+        }
+    },
     methods: {
         notificationInfo() {
             notify("This is a generic info notification that I can place tips or tricks into.", "info");
@@ -73,41 +85,53 @@ export default {
             return interpolateBetweenColors(baseColor, ratingColor, position)
         }
     },
-    // async mounted() {
-    //     // Fetch the transactions
-    //     const response = await api.getTransactions();
-    //     if (response && response.transactions) {
-    //         // Log the values from the transactions API
-    //         console.log("[Transaction] Transaction values:", response.transactions);
-    //     }
+    async mounted() {
+        loadEchartsImports();
 
-    //     // Fetch the options
-    //     const optionsResponse = await api.getOptions();
-    //     if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
-    //         // Log the categories data
-    //         console.log("[Options] All:", optionsResponse);
+        const lastMonthResponse = await api.getStatsForTimespan("month");
+        if (lastMonthResponse && lastMonthResponse.stats) {
+            // this.pageValues.lastMonth = { ...lastMonthResponse.stats };
 
-    //         // Log individual things
-    //         console.log("[Options] Counterparty:", optionsResponse.counterparty);
-    //         console.log("[Options] Category:", optionsResponse.category);
-    //     }
+            const pieData1 = lastMonthResponse.stats.topMostExpensiveCategories.map(item => ({
+                name: item.category,
+                value: item.totalAmount,
+            }));
 
-    //     // Fetch the options
-    //     const filtersResponse = await api.getFilters();
-    //     if (filtersResponse && filtersResponse.counterparty 
-    //                         && filtersResponse.category 
-    //                         && filtersResponse.amount 
-    //                         && filtersResponse.date) {
-    //         // Log the categories data
-    //         console.log("[Filters] All:", filtersResponse);
+            const pie1Options = () => ({
+                textStyle: commonChartValues().textStyle,
+                title: {
+                    text: 'Spendings This Month by Category',
+                    textStyle: {
+                        color: getCssVar('color-text-lighter'),
+                        fontSize: 16,
+                        fontWeight: 500,
+                    },
+                    x: 'center',
+                },
+                legend: commonChartValues().legend,
+                color: commonChartValues().color,
+                tooltip: { 
+                    trigger: 'item',
+                    backgroundColor: getCssVar('color-background-card'),
+                    borderWidth: 1,
+                    borderColor: getCssVar("color-border"),
+                    formatter: params => generateTooltipSingleValue(params, 'eur'),
+                },
+                series: [
+                    {
+                        name: 'Monthly Average Spending',
+                        type: 'pie',
+                        label: {
+                            color: getCssVar('color-text'),
+                        },
+                        data: pieData1,
+                    },
+                ],
+            });
 
-    //         // Log individual things
-    //         console.log("[Filters] Counterparty:", filtersResponse.counterparty);
-    //         console.log("[Filters] Category:", filtersResponse.category);
-    //         console.log("[Filters] Amount:", filtersResponse.amount);
-    //         console.log("[Filters] Date:", filtersResponse.date);
-    //     }
-    // }
+            this.exampleChartOptions = pie1Options;
+        }
+    }
 }
 </script>
 
