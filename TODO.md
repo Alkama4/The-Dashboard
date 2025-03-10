@@ -1,7 +1,8 @@
 # Notes
 This file is a collection of notes for things that need to be done or fixed. It serves as an idea bank where I jot down tasks or thoughts as they come to mind. Most of these issues are typically resolved on their own over time, and the list often goes unnoticed once completed.
 
-### Next time
+
+### Working on right now
 - Modal remake
     - Think of a better way to implement the modal. 
     - Way too manual and inconvenient. 
@@ -9,23 +10,30 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Split into two. One for simple confimations with customaizeable texts and one for just slotting stuff into
 
 - Title details
-    - poster
-        - Also show on mobile layout?
-            - Doesn't really fit :/
     - Possibility to requery the images.
-        - Started already on fastapi
-    - Add a season progress bar or text (or other)
-        - The Episodes watched status could be modified to look alike?
-        - Layout has to be reworked
-    - Tag for not released episodes or a clear way to seperate from released episodes
+        - Started already on fastapi, but just a skeleton
+    - Add a season progress like for title. Maybe even a bar
+    - Title name to tab
 
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
     - Backups kind of dull, give it some life and readability
-- Charts should propably be a component
-    - Or chart setup and values all handled in the .js file. No thisComponent etc. Just give it the stuff and it will handle it.
-    - Although the current setup works fine and is already quite good so propably not worth the effort
+    - Backend:
+        - Add:
+            - disks
+            - uptime
+        - More frequent logs?
+            - every 10s?
+        - Change to 24h of logs stored
+        - Allowed time frames
+            - Last 24h (full dataset)
+            - Last 12h (half-day trends)
+            - Last 6h (short-term trends)
+            - Last 3h (medium-term insights)
+            - Last 1h (real-time monitoring)
+            - Last 30m (quick diagnostics)
+            - Last 15m (very short-term issues)
 
 - watch list finish the all titles list
     - add sort by
@@ -35,14 +43,15 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - favourite, not favourite, don't care
         - tv, movie, don't care
         - Released, started...?
-    - Whole title act as a link
-        - Hover highlight, cursor, router-link replaces div
-    - Upcoming tag to all titles list
-    - description is awkward 
+    - Whole title act as a link should be modified to be different
+        - Current implementation confusing for user since similar just expands in spendings
     - mobile compability non existant
+    - Remake sidebar filter thingy so that it can be used here
+        - And fix the instant hide at the same time.
 
 
-### Features to add
+## Features
+### Feature ideas
 - Navigation
     - link highlight when page open to show where we are.
         - Don't know. Kind of like it as is but it wouldn't hurt.
@@ -102,12 +111,20 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Title space taken
     - Seperate images and data?
     - How do I get the data amount?
+
+
+### Feature ideas that might never see the light of day
 - Swiper add horizontal scrolling
+    - "Swiper" doesn't seem to support it in the way that I hoped it would
+    - Might have to can this one for now and if I later wish to I can make my own slider component
     - https://codesandbox.io/p/sandbox/54f29d?file=%2Fsrc%2FApp.vue
     - https://swiperjs.com/demos#scroll-container
+- Title details poster also show on mobile layout?
+    - Doesn't really fit and doesn't really work with the current layout :/
 
 
-### Known issues
+## Issues
+### Waiting to be fixed
 - InfoTooltips positioning is stupid and doesn't detect window borders
     - Make it position itself smartly
 - pie chart fullscren button not aligned properly in either fullscreen or normal view
@@ -138,8 +155,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Be carefule when working with this
 - User episodes in mysql might not get deleted on title deletion
 - The api calls aren't cancelled when changing page. Research if they can be cancelled on unmount
-- Home screen charts don't react to esc
-- Delete transaction doesn't use DELETE
+- Delete transaction doesn't use DELETE (not proper REST)
 - Transactions load never ends. 
     - Simple state change when reponse fails and an another v-if element.
 - Setting episode wathced/unwatched updates all episodes in the season to be watched on the dom incorrectly even though data on db is correct. Refresh fixes. Check how the data is updated on confirmation.
@@ -150,7 +166,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - And the user is punished by resetting their filters by opening the page in current tab.
         - Laxy fix by always opening in new tab before proper fix?
 - Primary buttons go to normal button when disabled
-    
+- Load more button visible when we don't get an aswer from api after the first batch of transactions has been loaded and the "looks like htere's nothing here" shows up
+
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions

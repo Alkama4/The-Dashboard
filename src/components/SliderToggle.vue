@@ -86,7 +86,7 @@ export default {
 .slider-toggle {
     width: 100%;
     max-width: 200px;
-    height: 35px;
+    height: calc(41px - 1px * 2);
     border-radius: var(--border-radius-small);
     background-color: var(--color-background-input);
     display: flex;

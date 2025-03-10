@@ -92,7 +92,7 @@
 		</div>
 
 		<div class="content-width-large">
-			<h2>Fastapi logs analysis</h2>	
+			<h2>Fastapi logs analysis <span class="text-lighter">(Under construction)</span></h2>	
 			<p>The logs do not include the automated loggin reqests since they make the data unreadable.</p>
 			<div class="flex-column">
 				<div style="margin: var(--spacing-xs);" class="card flex-column">
@@ -104,6 +104,10 @@
 					<label for="total_requests">Total request in the timespan</label>
 					<span id="total_requests">{{ serverStats.fastapiData.total_requests }} kpl</span>
 				</div>
+
+
+				<!-- REQUEST SUCCESS RATE -->
+
 
 				<div style="margin: var(--spacing-xs);" class="card flex-column">
 					<label>Requests by endpoint</label>
@@ -129,7 +133,7 @@
 		</div>
 
 		<div class="content-width-large">
-			<h2>Server resource usages</h2>
+			<h2>Server resource usages <span class="text-lighter">(Under construction)</span></h2>
 			<div class="card server-resources content-width-large">
 				<!-- Chart 1 - CPU temp -->
 				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
@@ -1037,29 +1041,10 @@ export default {
 	width: 50%;
 	height: 300px;
 }
-
 @media (max-width: 900px) {
 	.ChartComponent {
 		width: 100%;
 	}
-}
-
-.loaded {
-    animation: fadeIn 0.4s ease-out;
-}
-
-.fullscreen-button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    z-index: 1; /* Otherwise under chart */
-    color: var(--color-text-light);
-    background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
-    padding: var(--spacing-sm);
-	margin: 0;
-}
-.fullscreen .fullscreen-button {
-    padding: var(--spacing-md);
 }
 
 .greeting-area {

@@ -10,61 +10,61 @@ export const STATIC_CONTENT = {
         "backups": {
             "Server Backups": [
                 {
-                    "backup_name": "Main Server Backup",
+                    "backup_name": "Example Server Backup",
                     "backup_direction": "down",
-                    "peer_device": "Main Server",
+                    "peer_device": "Example Server",
                     "schedule": "Daily, 0:00 AM",
                     "status": "good",
-                    "source_path": "\\\\127.0.0.1\\MainServer",
-                    "destination_path": "C:\\Server_Backup",
+                    "source_path": "\\\\127.0.0.1\\ExampleServer",
+                    "destination_path": "C:\\Example_server_backup",
                     "last_success_time_since": "18h 34min",
                     "time_until_next": "5h 26min"
                 }
             ],
-            "Client-Side Backups": [
+            "Example Client-Side Backups": [
                 {
-                    "backup_name": "Project Files",
+                    "backup_name": "Example files laptop",
                     "backup_direction": "up",
-                    "peer_device": "Project PC",
+                    "peer_device": "Example laptop",
                     "schedule": "Daily, 10:00 AM",
                     "status": "warning",
-                    "source_path": "C:\\Users\\User\\Documents\\Projects",
-                    "destination_path": "\\\\127.0.0.1\\MainServer\\Backup\\Projects\\",
+                    "source_path": "C:\\example\\path\\to\\data",
+                    "destination_path": "\\\\127.0.0.1\\example\\path",
                     "last_success_time_since": "29h 20min",
                     "time_until_next": "4h 40min"
                 },
                 {
-                    "backup_name": "Game Clips",
+                    "backup_name": "Example files desktop",
                     "backup_direction": "up",
-                    "peer_device": "Gaming PC",
+                    "peer_device": "Example desktop",
                     "schedule": "Daily, 10:00 AM",
                     "status": "good",
-                    "source_path": "C:\\Users\\User\\Videos\\GameClips",
-                    "destination_path": "\\\\127.0.0.1\\MainServer\\Backup\\Media\\Game Clips\\",
+                    "source_path": "C:\\example\\path\\to\\data",
+                    "destination_path": "\\\\127.0.0.1\\example\\path",
                     "last_success_time_since": "5h 21min",
                     "time_until_next": "4h 39min"
                 }
             ],
             "Server-Side Backups": [
                 {
-                    "backup_name": "Database Backup",
+                    "backup_name": "Example database backup",
                     "backup_direction": "up",
                     "peer_device": "Database Server",
                     "schedule": "Daily, 0:00 AM",
                     "status": "good",
-                    "source_path": "mysqldump",
-                    "destination_path": "\\\\127.0.0.1\\MainServer\\Backup\\mysql_backup",
+                    "source_path": "Database dump",
+                    "destination_path": "\\\\127.0.0.1\\example\\path",
                     "last_success_time_since": "18h 19min",
                     "time_until_next": "5h 40min"
                 },
                 {
-                    "backup_name": "API Server Files",
+                    "backup_name": "Example server www backup",
                     "backup_direction": "up",
                     "peer_device": "Webserver",
                     "schedule": "Daily, 0:00 AM",
                     "status": "bad",
-                    "source_path": "server root",
-                    "destination_path": "\\\\127.0.0.1\\MainServer\\Backup\\api_server_backup",
+                    "source_path": "\\example\\path\\to\\www",
+                    "destination_path": "\\\\127.0.0.1\\example\\path",
                     "last_success_time_since": "66h 19min",
                     "time_until_next": "5h 40min"
                 }
@@ -20076,54 +20076,54 @@ export const STATIC_CONTENT = {
     // - - - - - SPENDINGS - - - - - 
     '/transactions/get_filters{"session_key":null}': {
         "counterparty": {
-        "expense": [
-            "Cotton Club",
-            "K-Citymarket",
-            "Minimani",
-            "Parturi",
-            "Supermarket",
-            "S-Market"
-        ],
-        "income": [
-            "Kela"
-        ]
+          "expense": [
+            "Counterparty 4",
+            "Counterparty 1",
+            "Counterparty 2",
+            "Counterparty 7",
+            "Counterparty 6",
+            "Counterparty 3"
+          ],
+          "income": [
+            "Counterparty 5"
+          ]
         },
         "category": {
-        "expense": [
-            "Ruokaostokset",
-            "Herkut",
-            "Parturi",
-            "Opiskelija lounas",
-            "Yleinen eläminen",
-            "Sekalainen",
-            "Kulutustavara"
-        ],
-        "income": [
-            "Asumistuki",
-            "Opintotuki"
-        ]
+          "expense": [
+            "Category 3",
+            "Category 5",
+            "Category 7",
+            "Category 1",
+            "Category 2",
+            "Category 6",
+            "Category 4"
+          ],
+          "income": [
+            "Category 8",
+            "Category 9"
+          ]
         },
         "amount": {
-        "min": -45.62,
-        "max": 179.99
+          "min": -45.62,
+          "max": 179.99
         },
         "date": {
-        "min": 1703023200000,
-        "max": 1704232800000
+          "min": 1703023200000,
+          "max": 1704232800000
         }
     },
 
-    '/transactions/get_transactions{"sort_by":"date","sort_order":"desc","offset":0,"start_date":946684800000,"end_date":2208988800000,"min_amount":-999999,"max_amount":999999,"counterparties":[],"counterparty_inclusion_mode":true,"categories":[],"category_inclusion_mode":true,"session_key":null}': {
+    '/transactions/get_transactions{"standalone":true,"session_key":null}': {
         "transactions": [
           {
             "transaction_id": 9,
             "direction": "expense",
             "date": "2024-01-03",
-            "counterparty": "K-Citymarket",
-            "notes": "Jotaki safkaa",
+            "counterparty": "Counterparty 1",
+            "notes": null,
             "categories": [
               {
-                "category": "Ruokaostokset",
+                "category": "Category 3",
                 "amount": 4.84
               }
             ],
@@ -20133,11 +20133,11 @@ export const STATIC_CONTENT = {
             "transaction_id": 7,
             "direction": "expense",
             "date": "2024-01-01",
-            "counterparty": "Minimani",
-            "notes": "Ruokaa ja palaa",
+            "counterparty": "Counterparty 2",
+            "notes": "Average length note",
             "categories": [
               {
-                "category": "Ruokaostokset",
+                "category": "Category 3",
                 "amount": 15.96
               }
             ],
@@ -20147,15 +20147,15 @@ export const STATIC_CONTENT = {
             "transaction_id": 6,
             "direction": "expense",
             "date": "2023-12-31",
-            "counterparty": "S-Market",
-            "notes": "Mässy pussi",
+            "counterparty": "Counterparty 3",
+            "notes": "Short note",
             "categories": [
               {
-                "category": "Herkut",
+                "category": "Category 5",
                 "amount": 1.99
               },
               {
-                "category": "Ruokaostokset",
+                "category": "Category 3",
                 "amount": 9.34
               }
             ],
@@ -20165,11 +20165,11 @@ export const STATIC_CONTENT = {
             "transaction_id": 5,
             "direction": "expense",
             "date": "2023-12-29",
-            "counterparty": "Cotton Club",
-            "notes": "Hyvää ruokaa",
+            "counterparty": "Counterparty 4",
+            "notes": "An even longer note abotu the details of the transaction.",
             "categories": [
               {
-                "category": "Kulutustavara",
+                "category": "Category 4",
                 "amount": 12.46
               }
             ],
@@ -20179,15 +20179,15 @@ export const STATIC_CONTENT = {
             "transaction_id": 2,
             "direction": "income",
             "date": "2023-12-28",
-            "counterparty": "Kela",
+            "counterparty": "Counterparty 5",
             "notes": "",
             "categories": [
               {
-                "category": "Asumistuki",
+                "category": "Category 8",
                 "amount": 99.99
               },
               {
-                "category": "Opintotuki",
+                "category": "Category 9",
                 "amount": 80
               }
             ],
@@ -20197,11 +20197,11 @@ export const STATIC_CONTENT = {
             "transaction_id": 4,
             "direction": "expense",
             "date": "2023-12-28",
-            "counterparty": "Minimani",
-            "notes": "safkaa",
+            "counterparty": "Counterparty 2",
+            "notes": "Notes",
             "categories": [
               {
-                "category": "Ruokaostokset",
+                "category": "Category 3",
                 "amount": 20.24
               }
             ],
@@ -20211,19 +20211,19 @@ export const STATIC_CONTENT = {
             "transaction_id": 8,
             "direction": "expense",
             "date": "2023-12-26",
-            "counterparty": "Supermarket",
-            "notes": "Vähään kaikkea kulutustavarasta ruoasta herkkuihin.",
+            "counterparty": "Counterparty 6",
+            "notes": "A super long note that goes to incredible detail on what the transaction was about.",
             "categories": [
               {
-                "category": "Sekalainen",
+                "category": "Category 6",
                 "amount": 25
               },
               {
-                "category": "Ruokaostokset",
+                "category": "Category 3",
                 "amount": 14.23
               },
               {
-                "category": "Herkut",
+                "category": "Category 5",
                 "amount": 6.39
               }
             ],
@@ -20233,11 +20233,11 @@ export const STATIC_CONTENT = {
             "transaction_id": 3,
             "direction": "expense",
             "date": "2023-12-25",
-            "counterparty": "K-Citymarket",
-            "notes": "Jotaki mikä nyt voitas luokitella yleisen elämisen luokkaan",
+            "counterparty": "Counterparty 1",
+            "notes": "A bit longer note about the transaction",
             "categories": [
               {
-                "category": "Yleinen eläminen",
+                "category": "Category 2",
                 "amount": 8.75
               }
             ],
@@ -20247,11 +20247,11 @@ export const STATIC_CONTENT = {
             "transaction_id": 1,
             "direction": "expense",
             "date": "2023-12-21",
-            "counterparty": "Cotton Club",
-            "notes": "Hernekeittoa",
+            "counterparty": "Counterparty 4",
+            "notes": "Example note",
             "categories": [
               {
-                "category": "Opiskelija lounas",
+                "category": "Category 1",
                 "amount": 2.9
               }
             ],
@@ -20261,11 +20261,11 @@ export const STATIC_CONTENT = {
             "transaction_id": 10,
             "direction": "expense",
             "date": "2023-12-20",
-            "counterparty": "Parturi",
-            "notes": "Jotaki safkaa",
+            "counterparty": "Counterparty 7",
+            "notes": "An example note about the transaction",
             "categories": [
               {
-                "category": "Parturi",
+                "category": "Category 7",
                 "amount": 27.95
               }
             ],
@@ -20279,30 +20279,30 @@ export const STATIC_CONTENT = {
     '/transactions/get_options{"session_key":null}': {
         "counterparty": {
           "expense": [
-            "Cotton Club",
-            "K-Citymarket",
-            "Minimani",
-            "Parturi",
-            "Supermarket",
-            "S-Market"
+            "Counterparty 4",
+            "Counterparty 1",
+            "Counterparty 2",
+            "Counterparty 7",
+            "Counterparty 6",
+            "Counterparty 3"
           ],
           "income": [
-            "Kela"
+            "Counterparty 5"
           ]
         },
         "category": {
           "expense": [
-            "Ruokaostokset",
-            "Herkut",
-            "Parturi",
-            "Opiskelija lounas",
-            "Yleinen eläminen",
-            "Sekalainen",
-            "Kulutustavara"
+            "Category 3",
+            "Category 5",
+            "Category 7",
+            "Category 1",
+            "Category 2",
+            "Category 6",
+            "Category 4"
           ],
           "income": [
-            "Asumistuki",
-            "Opintotuki"
+            "Category 8",
+            "Category 9"
           ]
         }
     },

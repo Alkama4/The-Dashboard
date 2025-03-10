@@ -201,14 +201,16 @@
             async fetchTransactions() {
                 this.waitingForResponse = true;
 
-                const response = await api.getTransactions(this.apiFilters);
+                // Use {standalone: true} as filter's when in a standalone build to avoid the query from
+                // changing when the user plays with filters and not displaying anything.
+                const standalone = process.env.VUE_APP_STANDALONE_BUILD == "true";
+                const response = await api.getTransactions(standalone ? {standalone: true} : this.apiFilters);
                 if (response && response.transactions) {
                     if (this.apiFilters.offset === 0) {
                         this.transactions = [...response.transactions];  // First page, reset
                     } else {
                         this.transactions = [...this.transactions, ...response.transactions]; // Append new data
                     }
-
 
                     // If there are more entries, keep showing "Load More" button
                     this.loadMoreButtonVisible = response.hasMore;
@@ -253,7 +255,7 @@
                 this.apiFilters.offset = 0;
                 this.transactions = [];
 
-                console.log("[applyFilters] filterdata before to api", this.filterData);
+                console.debug("[applyFilters] filterdata before to api", this.filterData);
 
                 // Set the filters values to the API filters
                 // Sliders

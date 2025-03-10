@@ -14,4 +14,4 @@ This repository contains only the frontend portion of the project and will not h
 This application is custom-built for my needs and is not suitable for general use. If you choose to fork or use the code, you can do so at your own risk, and you are entirely responsible for any modifications or deployments.
 
 ## Preview page
-You can view a preview of the page on the repository's GitHub Pages site [here](https://alkama4.github.io/The-Dashboard/). This is a demo build of the site that includes some cached example data. The purpose of the site is to give you a sense of the layout and design, but please note that it is not connected to any database or API, so it is not fully functional. The preview page is updated irregularly and might be out of date.
+I've created a demo of the site with placeholder data to showcase the layout and design. The preview page displays only static data and lacks any features that requires a backend server. You can view it on the repository's GitHub Pages site [here](https://alkama4.github.io/The-Dashboard/). Note that updates to the preview page are irregular, so it may not reflect the latest version.

@@ -519,7 +519,7 @@ input[type="radio"] {
     border-color: var(--color-border);
     transition: border-color 0.1s ease-out;
     color: var(--color-text-light);
-    height: calc(35px + 2px);
+    height: 41px;
     min-width: 222px;
     padding: 0;
 }
