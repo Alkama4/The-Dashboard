@@ -70,7 +70,7 @@ export default {
                     // Set the options again with the function (but now with appropriate colors)
                     chart.setOption(this.chartOptionsGenerator());
                 });
-    
+
                 // Display the chart
                 this.isLoaded = true;
             } else {

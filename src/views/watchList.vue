@@ -107,7 +107,7 @@
         </div>
 
         <div class="content-width-medium">
-            <h2 id="titles_listed">Titles listed</h2>
+            <h2 id="titles_listed">Titles listed <span class="text-lighter">(Under construction)</span></h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
             <div class="all-titles-list-controls">
                 <div>

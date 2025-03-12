@@ -34,10 +34,11 @@ export const convert = {
             full: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
             date: { day: 'numeric', month: 'short', year: '2-digit' },
             month: { month: 'short', year: '2-digit' },
-            time: { weekday: 'short', minute: '2-digit', hour: '2-digit'},
+            timetimeInMinutes: { weekday: 'short', minute: '2-digit', hour: '2-digit'},
+            titimeInSecondsme: { weekday: 'short', second: '2-digit', minute: '2-digit', hour: '2-digit'},
         };
 
-        if (['time'].includes(formatType)) {
+        if (['timetimeInMinutes', 'timeInSeconds'].includes(formatType)) {
             result = date.toLocaleTimeString('fi-FI', dateOptions[formatType]);
         } else {
             result = date.toLocaleDateString('fi-FI', dateOptions[formatType]);

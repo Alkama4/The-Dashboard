@@ -3,7 +3,7 @@ import { convert, getCssVar } from '@/utils/mytools'
 
 // ECharts imports
 import { use } from 'echarts/core'
-import { LineChart, BarChart, PieChart } from 'echarts/charts'
+import { LineChart, BarChart, PieChart, GaugeChart } from 'echarts/charts'
 import { TooltipComponent, GridComponent, TitleComponent, LegendComponent } from 'echarts/components'
 
 // Pick a renderer
@@ -12,7 +12,7 @@ import { SVGRenderer } from 'echarts/renderers'
 
 
 export function initialEchartSetup() {
-    use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, SVGRenderer, TitleComponent, LegendComponent]);
+    use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, GaugeChart, SVGRenderer, TitleComponent, LegendComponent]);
 }
 
 export function generateTooltipMultiValue(params, yAxisFormatToDateType, xAxisFormatter, showSumRow) {

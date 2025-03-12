@@ -141,26 +141,26 @@
 
         <!-- <h2>All time?</h2> -->
 
-        <div class="content-width-medium">
+        <div class="content-width-large">
             <h1>Charts</h1>
             <p> If you want to take a more comprehensive look at your spending habits over time, the charts below can provide valuable insights. These charts are not limited to showing data from just the past month or even the past year. Instead, they present a complete view of all available spending data, organized month by month. </p>
                 
             <p>This allows you to observe trends, identify patterns, and track changes in your financial behavior across an extended timeline. Whether you're analyzing seasonal variations or monitoring long-term progress, these charts are a helpful tool for gaining a deeper understanding of your financial activity.</p>
         </div>
 
-        <div class="chartCard card">
+        <div class="chartCard card content-width-large">
             <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
         </div>
 
-        <div class="chartCard card">
+        <div class="chartCard card content-width-large">
             <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart2"/>
         </div>
 
-        <div class="chartCard card">
+        <div class="chartCard card content-width-large">
             <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart3"/>
         </div>
 
-        <div class="chartCard card">
+        <div class="chartCard card content-width-large">
             <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart4"/>
         </div>
 

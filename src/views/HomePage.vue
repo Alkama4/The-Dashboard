@@ -129,11 +129,40 @@
 					</div>
 				</div>
 
+				<div class="card server-resources">
+					<!-- Chart 7 - FASTAPI -->
+					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart7"/>
+
+					<!-- Chart 8 - FASTAPI -->
+					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart8"/>
+
+					<!-- Chart 9 - FASTAPI -->
+					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart9"/>
+
+					<!-- Chart 10 - FASTAPI -->
+					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart10"/>
+
+					<!-- Chart 11 - Fastapi requesttime histogram -->
+					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart11"/>
+
+					<!-- Chart 12 - Fastapi endpoints and error codes -->
+					<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
+					<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
+					<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
+					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart12"/>
+				</div>
+
 			</div>
 		</div>
 
 		<div class="content-width-large">
 			<h2>Server resource usages <span class="text-lighter">(Under construction)</span></h2>
+			<CustomSelect 
+				v-model="serverLogsTimespan" 
+				:options="serverLogsTimespans"
+				:disabled="waitingFor.length != 0"
+				:class="{loading: waitingFor.length != 0}"
+			/>
 			<div class="card server-resources content-width-large">
 				<!-- Chart 1 - CPU temp -->
 				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
@@ -149,28 +178,6 @@
 
 				<!-- Chart 6 - Network up/down -->
 				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart6"/>
-
-				<!-- Chart 7 - FASTAPI -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart7"/>
-
-				<!-- Chart 8 - FASTAPI -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart8"/>
-
-				<!-- Chart 9 - FASTAPI -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart9"/>
-
-				<!-- Chart 10 - FASTAPI -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart10"/>
-
-				<!-- Chart 11 - Fastapi requesttime histogram -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart11"/>
-
-				<!-- Chart 12 - Fastapi endpoints and error codes -->
-				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart12"/>
-
 			</div>
 		</div>
 
@@ -230,12 +237,14 @@ import {
 	initialEchartSetup,
 } from '@/utils/chartTools'
 import ChartComponent from '@/components/ChartComponent.vue';
+import CustomSelect from '@/components/CustomSelect.vue';
 
 export default {
 	name: 'HomePage',
 	components: {
 		InfoTooltip,
 		ChartComponent,
+		CustomSelect,
 		IconHDD,
 		IconBackup,
 		IconBackupDown,
@@ -244,15 +253,19 @@ export default {
 	},
 	data() {
 		return {
-			serviceUrls: [],
 			greeting: this.getGreeting(),
-			backups: [],
             isLoaded: {},
 			chartValueGenerators: {},
+			waitingFor: [],
+			// Data on site
+			serviceUrls: [],
+			backups: [],
 			serverStats: {
 				storage: [],
 				fastapiData: {},
-			}
+			},
+			serverLogsTimespan: "1h",
+			serverLogsTimespans: ["24h", "12h", "6h", "3h", "1h", "30m", "15m"],
 		};
 	},
 	methods: {
@@ -342,14 +355,727 @@ export default {
 					}];
 				});
 			}
+		},
+		removeItemFromWaitingArray(item) {
+            this.waitingFor = this.waitingFor.filter(i => i !== item);
+        },
+		async fetchServerLogs(refresh = false) {
+			this.waitingFor.push("fetchServerLogs");
+
+			const resourceLogsResponse = await api.getServerResourceLogs(this.serverLogsTimespan);
+			// console.log("resourceLogsResponse", resourceLogsResponse);
+			if (resourceLogsResponse && resourceLogsResponse.data) {
+				const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
+				const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
+				const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
+				const chart3YaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
+				const chart5YaxisValues = resourceLogsResponse.data.map(log => log.system_load);
+				const chartNetRecv = resourceLogsResponse.data.map((log, index, array) => {
+					if (index === 0) return 0;	// The first one can't have a differnce
+					const difference = log.network_recv_bytes - array[index - 1].network_recv_bytes;	// Calculate
+					return difference > 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
+				});
+				const chartNetSent = resourceLogsResponse.data.map((log, index, array) => {
+					if (index === 0) return 0;	// The first one can't have a differnce
+					const difference = -log.network_sent_bytes + array[index - 1].network_sent_bytes;	// Calculate
+					return difference < 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
+				});
+
+				// Chart 1 - CPU temperature
+				const chart1Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'CPU temperature',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-secondary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toCelcius, false)
+					},
+					grid: {
+						left: 40,
+						right: 8,
+						top: 80,
+						bottom: 48,
+					},
+					xAxis: {
+						type: 'category',
+						data: resourceLogsTimeStamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, 'timeInSeconds'),
+						},
+						axisTick: {
+							alignWithLabel: true
+						}
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Temp (°C)',  // Y-akselin nimi
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiNumber(value)
+						}
+					},
+					series: [
+						{
+							name: 'Temperature',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {
+								color: {
+									type: 'linear',
+									x: 0,
+									y: 0,
+									x2: 0,
+									y2: 1,
+									colorStops: [{
+										offset: 0, color: getCssVar("color-secondary")
+									}, {
+										offset: 1, color: 'rgba(0,0,0,0)'
+									}]
+								}
+							},
+							data: chart1YaxisValues,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart1 = chart1Options;
+
+				// Chart 2 - RAM Usage
+				const chart2Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'RAM Usage',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-tertiary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
+					},
+					grid: {
+						left: 40,
+						right: 8,
+						top: 80,
+						bottom: 48,
+					},
+					xAxis: {
+						type: 'category',
+						data: resourceLogsTimeStamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, 'timeInSeconds'),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Usage (%)',  // Y-akselin nimi
+						max: 100,
+						min: 0,
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiNumber(value)
+						}
+					},
+					series: [
+						{
+							name: 'RAM Usage',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chart2YaxisValues,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart2 = chart2Options;
+
+				// Chart 3 - CPU Usage
+				const chart3Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'CPU Usage',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-primary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
+					},
+					grid: {
+						left: 40,
+						right: 8,
+						top: 80,
+						bottom: 48,
+					},
+					xAxis: {
+						type: 'category',
+						data: resourceLogsTimeStamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, 'timeInSeconds'),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Usage (%)',  // Y-akselin nimi
+						max: 100,
+						min: 0,
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiNumber(value)
+						}
+					},
+					series: [
+						{
+							name: 'CPU Usage',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chart3YaxisValues,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart3 = chart3Options;
+
+				// Chart 5 - System load
+				const chart5Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'System load',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-quinary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
+					},
+					grid: {
+						left: 40,
+						right: 8,
+						top: 80,
+						bottom: 48,
+					},
+					xAxis: {
+						type: 'category',
+						data: resourceLogsTimeStamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, 'timeInSeconds'),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Usage (%)',  // Y-akselin nimi
+						max: 100,
+						min: 0,
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiNumber(value)
+						}
+					},
+					series: [
+						{
+							name: 'System load',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chart5YaxisValues,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart5 = chart5Options;
+
+				// Chart 6 - Network upload
+				const chart6Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Network up/down',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-jokumikalie'), getCssVar('color-senary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toBytes, false)
+					},
+					grid: {
+						left: 64,
+						right: 8,
+						top: 80,
+						bottom: 48,
+					},
+					xAxis: {
+						type: 'category',
+						data: resourceLogsTimeStamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, 'timeInSeconds'),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Data (t/min)',  // Y-akselin nimi
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toBytes(value)
+						}
+					},
+					series: [
+						{
+							name: 'Data received',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chartNetRecv,
+							smooth: true,
+						},
+						{
+							name: 'Data sent',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chartNetSent,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart6 = chart6Options;
+			}
+
+			if (refresh) {
+				console.log("Refreshing");
+				// HERE IMPLEMENT A PROPER PER CHART REFHRESH EVENTS INSTEAD OF A GLOBAL ONE
+				const event = new CustomEvent("darkModeChange", { detail: true });
+				window.dispatchEvent(event);
+			}
+
+			this.removeItemFromWaitingArray("fetchServerLogs");
+		},
+		async fetchFastapiLogs() {
+			// Fastapi logs data
+			const fastapiLogDataResponse = await api.getFastapiRequestLogData("24h");
+			if (fastapiLogDataResponse && fastapiLogDataResponse.data) {
+				this.serverStats.fastapiData = fastapiLogDataResponse.data;
+				// console.log("Fastapi data: ", this.serverStats.fastapiData);
+
+				const chart7Values = fastapiLogDataResponse.data.client_ip_count.map(item => ({
+					name: item.client_ip,
+					value: item.count,
+				}));
+				const chart8Values = fastapiLogDataResponse.data.status_code.map(item => ({
+					name: item.status_code,
+					value: item.count,
+				}));
+				const chart9Values = fastapiLogDataResponse.data.method_count.map(item => ({
+					name: item.method,
+					value: item.count,
+				}));
+
+				// Need to multiply by 60 (for s in min) * 1000 (for ms in s)
+				const chart10Timestamps = fastapiLogDataResponse.data.requests_over_time.map(log => new Date(new Number(log.minute_bucket * 60000)));	
+				const chart10Values = fastapiLogDataResponse.data.requests_over_time.map(log => log.count);
+
+				const chart11Timestamps = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.time_range);
+				const chart11Values = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.count);
+
+				// - - - - - Chart 12 values - - - - - 
+				const errorSeries = [];
+				const endpointNames = [];
+				const errorCodeMap = {};
+
+				// Loop through each endpoint's error summary
+				fastapiLogDataResponse.data.endpoint_error_summary.forEach(endpoint => {
+					// Skip endpoints starting with "/image" if there is a 404 error with count <= 1
+					if (
+						endpoint.endpoint.startsWith("/image") && 
+						endpoint.errors.some(error => error.status_code === 404 && error.count <= 1)
+					) return;
+
+					endpointNames.push(endpoint.endpoint);
+
+					// Loop through the errors of each endpoint
+					endpoint.errors.forEach(error => {
+						const { status_code: errorCode, count: errorCount } = error;
+
+						// Initialize the series for this error code if not already initialized
+						if (!errorCodeMap[errorCode]) {
+							errorCodeMap[errorCode] = {
+								name: `Error ${errorCode} count`,
+								type: 'bar',
+								stack: true,
+								data: Array(fastapiLogDataResponse.data.endpoint_error_summary.length).fill(0)
+							};
+						}
+
+						const endpointIndex = endpointNames.length - 1;
+						errorCodeMap[errorCode].data[endpointIndex] = errorCount;
+					});
+				});
+
+				// Convert errorCodeMap to an array
+				for (const errorCode in errorCodeMap) {
+					errorSeries.push(errorCodeMap[errorCode]);
+				}
+
+				// Chart 7 - FASTAPI
+				const chart7Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Fastapi requests by client IP',
+						textStyle: {
+							color: getCssVar('color-text-lighter'),
+							fontSize: 16,
+							fontWeight: 500,
+						},
+						x: 'center',
+					},
+					legend: commonChartValues().legend,
+					color: commonChartValues().color,
+					tooltip: { 
+						trigger: 'item',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipSingleValue(params, 'count'),
+					},
+					series: [
+						{
+							name: 'Monthly Average Spending',
+							type: 'pie',
+							label: {
+								color: getCssVar('color-text'),
+							},
+							data: chart7Values,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart7 = chart7Options;
+
+				// Chart 8 - FASTAPI
+				const chart8Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Fastapi requests by status code',
+						textStyle: {
+							color: getCssVar('color-text-lighter'),
+							fontSize: 16,
+							fontWeight: 500,
+						},
+						x: 'center',
+					},
+					legend: commonChartValues().legend,
+					color: commonChartValues().color,
+					tooltip: { 
+						trigger: 'item',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipSingleValue(params, 'count'),
+					},
+					series: [
+						{
+							name: 'Monthly Average Spending',
+							type: 'pie',
+							label: {
+								color: getCssVar('color-text'),
+							},
+							data: chart8Values,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart8 = chart8Options;
+
+				// Chart 9 - FASTAPI
+				const chart9Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Fastapi requests by method',
+						textStyle: {
+							color: getCssVar('color-text-lighter'),
+							fontSize: 16,
+							fontWeight: 500,
+						},
+						x: 'center',
+					},
+					legend: commonChartValues().legend,
+					color: commonChartValues().color,
+					tooltip: { 
+						trigger: 'item',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipSingleValue(params, 'count'),
+					},
+					series: [
+						{
+							name: 'Monthly Average Spending',
+							type: 'pie',
+							label: {
+								color: getCssVar('color-text'),
+							},
+							data: chart9Values,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart9 = chart9Options;
+
+				// Chart 10 - FASTAPI
+				const chart10Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Fastapi requests over time',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-septenary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timetimeInMinutes', convert.toFiCount, false)
+					},
+					grid: {
+						left: 48,
+						right: 8,
+						top: 80,
+						bottom: 48,
+					},
+					xAxis: {
+						type: 'category',
+						data: chart10Timestamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, "timetimeInMinutes"),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Requests (kpl)',  // Y-akselin nimi
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiCount(value)
+						}
+					},
+					series: [
+						{
+							name: 'Reqests/min',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chart10Values,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart10 = chart10Options;
+
+				// Chart 11 - FASTAPI
+				const chart11Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Fastapi response times',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-octonary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'none', convert.toFiCount, false),
+						axisPointer: {
+							type: 'shadow',  // Ensure axisPointer is also here
+							shadowStyle: {
+								color: getCssVar('color-border'),
+								opacity: 1,
+							},
+						}
+					},
+					grid: {
+						left: 64,
+						right: 8,
+						top: 80,
+						bottom: 80,
+					},
+					xAxis: {
+						type: 'category',
+						data: chart11Timestamps,
+						axisLabel: {
+							rotate: 45,
+							// formatter: value => convert.toFiDate(value, "time"),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Backend time (ms)',  // Y-akselin nimi
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiCount(value)
+						}
+					},
+					series: [
+						{
+							name: 'Reqests',    // Tooltipissa näkyvä nimi
+							type: 'bar',
+							data: chart11Values,
+							barWidth: '100%',
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart11 = chart11Options;
+
+				// Chart 12 - FASTAPI
+				const chart12Options = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Error codes by endpoint',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: commonChartValues().color,
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'none', convert.toFiCount, false),
+						axisPointer: {
+							type: 'shadow',  // Ensure axisPointer is also here
+							shadowStyle: {
+								color: getCssVar('color-border'),
+								opacity: 1,
+							},
+						}
+					},
+					grid: {
+						left: 64,
+						right: 8,
+						top: 80,
+						bottom: 64,
+					},
+					xAxis: {
+						type: 'category',
+						data: endpointNames,
+						axisLabel: {
+							rotate: 45,
+							// formatter: value => convert.toFiDate(value, "time"),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Error count (kpl)',  // Y-akselin nimi
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toFiCount(value)
+						}
+					},
+					series: errorSeries
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chart12 = chart12Options;
+			}
 		}
 	},
+	watch: {
+        serverLogsTimespan: {
+            deep: true,
+            async handler() {
+			// async handler(value) {
+                // let sortByTranslated;
+
+                // switch (value.sortBy) {
+                //     case 'TMDB rating':
+                //         sortByTranslated = 'vote_average';
+                //         break;
+                //     case 'Release date':
+                //         sortByTranslated = 'release_date';
+                //         break;
+                //     case 'Modified':
+                //         sortByTranslated = 'latest_updated'
+                //         break;
+                //     // case 'Name':
+                //     //     sortByTranslated = 'name'
+                //     //     break;
+
+                //     // This could be the sum of minutes of all episodes. That way it would be logical?
+                //     // case 'Length/Episode count': HOW TO HANDLE TV AND MOVIE DIFFERENCE?
+                //     //     sortByTranslated = 'length'
+                //     //     break;
+                //     default:
+                //         return;
+                // }
+
+                // console.debug("New sorting values detected:", sortByTranslated, value.direction);
+                // this.allTitlesListOffset = 0;
+                await this.fetchServerLogs(true);
+            }
+        }
+    },
 	async mounted() {
 		// Get services from env
 		this.getServiceUrls();
 
 		// Everything that needs to be done before echarts in one method
-		initialEchartSetup(this);
+		initialEchartSetup();
 
 		const backupResponse = await api.getBackups();
 		if (backupResponse) {
@@ -366,666 +1092,9 @@ export default {
 		}
 		// console.log(this.serverStats.storage);
 
-		const resourceLogsResponse = await api.getServerResourceLogs("24h");
-		// console.log("resourceLogsResponse", resourceLogsResponse);
-		if (resourceLogsResponse && resourceLogsResponse.data) {
-			const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
-			const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
-			const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
-			const chart3YaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
-			const chart5YaxisValues = resourceLogsResponse.data.map(log => log.system_load);
-			const chartNetRecv = resourceLogsResponse.data.map((log, index, array) => {
-				if (index === 0) return 0;	// The first one can't have a differnce
-				const difference = log.network_recv_bytes - array[index - 1].network_recv_bytes;	// Calculate
-				return difference > 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
-			});
-			const chartNetSent = resourceLogsResponse.data.map((log, index, array) => {
-				if (index === 0) return 0;	// The first one can't have a differnce
-				const difference = -log.network_sent_bytes + array[index - 1].network_sent_bytes;	// Calculate
-				return difference < 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
-			});
+		await this.fetchServerLogs();
+		await this.fetchFastapiLogs();
 
-			// Chart 1 - CPU temperature
-			const chart1Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'CPU temperature',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-secondary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toCelcius, false)
-				},
-				grid: {
-					left: 40,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: resourceLogsTimeStamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
-					},
-					axisTick: {
-						alignWithLabel: true
-					}
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Temp (°C)',  // Y-akselin nimi
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiNumber(value)
-					}
-				},
-				series: [
-					{
-						name: 'Temperature',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {
-							color: {
-								type: 'linear',
-								x: 0,
-								y: 0,
-								x2: 0,
-								y2: 1,
-								colorStops: [{
-									offset: 0, color: getCssVar("color-secondary")
-								}, {
-									offset: 1, color: 'rgba(0,0,0,0)'
-								}]
-							}
-						},
-						data: chart1YaxisValues,
-						smooth: true,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart1 = chart1Options;
-
-			// Chart 2 - RAM Usage
-			const chart2Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'RAM Usage',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-tertiary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
-				},
-				grid: {
-					left: 40,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: resourceLogsTimeStamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Usage (%)',  // Y-akselin nimi
-					max: 100,
-					min: 0,
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiNumber(value)
-					}
-				},
-				series: [
-					{
-						name: 'RAM Usage',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chart2YaxisValues,
-						smooth: true,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart2 = chart2Options;
-
-			// Chart 3 - CPU Usage
-			const chart3Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'CPU Usage',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-primary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
-				},
-				grid: {
-					left: 40,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: resourceLogsTimeStamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Usage (%)',  // Y-akselin nimi
-					max: 100,
-					min: 0,
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiNumber(value)
-					}
-				},
-				series: [
-					{
-						name: 'CPU Usage',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chart3YaxisValues,
-						smooth: true,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart3 = chart3Options;
-
-			// Chart 5 - System load
-			const chart5Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'System load',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-quinary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toPercentage, false)
-				},
-				grid: {
-					left: 40,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: resourceLogsTimeStamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Usage (%)',  // Y-akselin nimi
-					max: 100,
-					min: 0,
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiNumber(value)
-					}
-				},
-				series: [
-					{
-						name: 'System load',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chart5YaxisValues,
-						smooth: true,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart5 = chart5Options;
-
-			// Chart 6 - Network upload
-			const chart6Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Network up/down',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-jokumikalie'), getCssVar('color-senary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toBytes, false)
-				},
-				grid: {
-					left: 64,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: resourceLogsTimeStamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, 'time'),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Data (t/min)',  // Y-akselin nimi
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toBytes(value)
-					}
-				},
-				series: [
-					{
-						name: 'Data received',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chartNetRecv,
-						smooth: true,
-					},
-					{
-						name: 'Data sent',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chartNetSent,
-						smooth: true,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart6 = chart6Options;
-		}
-
-		// Fastapi logs data
-		const fastapiLogDataResponse = await api.getFastapiRequestLogData("24h");
-		if (fastapiLogDataResponse && fastapiLogDataResponse.data) {
-			this.serverStats.fastapiData = fastapiLogDataResponse.data;
-			// console.log("Fastapi data: ", this.serverStats.fastapiData);
-
-			const chart7Values = fastapiLogDataResponse.data.client_ip_count.map(item => ({
-				name: item.client_ip,
-				value: item.count,
-			}));
-			const chart8Values = fastapiLogDataResponse.data.status_code.map(item => ({
-				name: item.status_code,
-				value: item.count,
-			}));
-			const chart9Values = fastapiLogDataResponse.data.method_count.map(item => ({
-				name: item.method,
-				value: item.count,
-			}));
-
-			// Need to multiply by 60 (for s in min) * 1000 (for ms in s)
-			const chart10Timestamps = fastapiLogDataResponse.data.requests_over_time.map(log => new Date(new Number(log.minute_bucket * 60000)));	
-			const chart10Values = fastapiLogDataResponse.data.requests_over_time.map(log => log.count);
-
-			const chart11Timestamps = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.time_range);
-			const chart11Values = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.count);
-
-			// - - - - - Chart 12 values - - - - - 
-			const errorSeries = [];
-			const endpointNames = [];
-			const errorCodeMap = {};
-
-			// Loop through each endpoint's error summary
-			fastapiLogDataResponse.data.endpoint_error_summary.forEach(endpoint => {
-				// Skip endpoints starting with "/image" if there is a 404 error with count <= 1
-				if (
-					endpoint.endpoint.startsWith("/image") && 
-					endpoint.errors.some(error => error.status_code === 404 && error.count <= 1)
-				) return;
-
-				endpointNames.push(endpoint.endpoint);
-
-				// Loop through the errors of each endpoint
-				endpoint.errors.forEach(error => {
-					const { status_code: errorCode, count: errorCount } = error;
-
-					// Initialize the series for this error code if not already initialized
-					if (!errorCodeMap[errorCode]) {
-						errorCodeMap[errorCode] = {
-							name: `Error ${errorCode} count`,
-							type: 'bar',
-							stack: true,
-							data: Array(fastapiLogDataResponse.data.endpoint_error_summary.length).fill(0)
-						};
-					}
-
-					const endpointIndex = endpointNames.length - 1;
-					errorCodeMap[errorCode].data[endpointIndex] = errorCount;
-				});
-			});
-
-			// Convert errorCodeMap to an array
-			for (const errorCode in errorCodeMap) {
-				errorSeries.push(errorCodeMap[errorCode]);
-			}
-
-			// Chart 7 - FASTAPI
-			const chart7Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Fastapi requests by client IP',
-					textStyle: {
-						color: getCssVar('color-text-lighter'),
-						fontSize: 16,
-						fontWeight: 500,
-					},
-					x: 'center',
-				},
-				legend: commonChartValues().legend,
-				color: commonChartValues().color,
-				tooltip: { 
-					trigger: 'item',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipSingleValue(params, 'count'),
-				},
-				series: [
-					{
-						name: 'Monthly Average Spending',
-						type: 'pie',
-						label: {
-							color: getCssVar('color-text'),
-						},
-						data: chart7Values,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart7 = chart7Options;
-
-			// Chart 8 - FASTAPI
-			const chart8Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Fastapi requests by status code',
-					textStyle: {
-						color: getCssVar('color-text-lighter'),
-						fontSize: 16,
-						fontWeight: 500,
-					},
-					x: 'center',
-				},
-				legend: commonChartValues().legend,
-				color: commonChartValues().color,
-				tooltip: { 
-					trigger: 'item',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipSingleValue(params, 'count'),
-				},
-				series: [
-					{
-						name: 'Monthly Average Spending',
-						type: 'pie',
-						label: {
-							color: getCssVar('color-text'),
-						},
-						data: chart8Values,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart8 = chart8Options;
-
-			// Chart 9 - FASTAPI
-			const chart9Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Fastapi requests by method',
-					textStyle: {
-						color: getCssVar('color-text-lighter'),
-						fontSize: 16,
-						fontWeight: 500,
-					},
-					x: 'center',
-				},
-				legend: commonChartValues().legend,
-				color: commonChartValues().color,
-				tooltip: { 
-					trigger: 'item',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipSingleValue(params, 'count'),
-				},
-				series: [
-					{
-						name: 'Monthly Average Spending',
-						type: 'pie',
-						label: {
-							color: getCssVar('color-text'),
-						},
-						data: chart9Values,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart9 = chart9Options;
-
-			// Chart 10 - FASTAPI
-			const chart10Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Fastapi requests over time',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-septenary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'time', convert.toFiCount, false)
-				},
-				grid: {
-					left: 48,
-					right: 8,
-					top: 80,
-					bottom: 48,
-				},
-				xAxis: {
-					type: 'category',
-					data: chart10Timestamps,
-					axisLabel: {
-						rotate: 45,
-						formatter: value => convert.toFiDate(value, "time"),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Requests (kpl)',  // Y-akselin nimi
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiCount(value)
-					}
-				},
-				series: [
-					{
-						name: 'Reqests/min',    // Tooltipissa näkyvä nimi
-						type: 'line',
-						areaStyle: {},
-						data: chart10Values,
-						smooth: true,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart10 = chart10Options;
-
-			// Chart 11 - FASTAPI
-			const chart11Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Fastapi response times',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: [getCssVar('color-octonary')],
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'none', convert.toFiCount, false),
-					axisPointer: {
-						type: 'shadow',  // Ensure axisPointer is also here
-						shadowStyle: {
-							color: getCssVar('color-border'),
-							opacity: 1,
-						},
-					}
-				},
-				grid: {
-					left: 64,
-					right: 8,
-					top: 80,
-					bottom: 80,
-				},
-				xAxis: {
-					type: 'category',
-					data: chart11Timestamps,
-					axisLabel: {
-						rotate: 45,
-						// formatter: value => convert.toFiDate(value, "time"),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Backend time (ms)',  // Y-akselin nimi
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiCount(value)
-					}
-				},
-				series: [
-					{
-						name: 'Reqests',    // Tooltipissa näkyvä nimi
-						type: 'bar',
-						data: chart11Values,
-					},
-				],
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart11 = chart11Options;
-
-			// Chart 12 - FASTAPI
-			const chart12Options = () => ({
-				textStyle: commonChartValues().textStyle,
-				title: {
-					text: 'Error codes by endpoint',
-					textStyle: {
-						color: getCssVar('color-text'),
-						fontSize: 24,
-					}
-				},
-				color: commonChartValues().color,
-				tooltip: { 
-					trigger: 'axis',
-					backgroundColor: getCssVar('color-background-card'),
-					borderWidth: 1,
-					borderColor: getCssVar("color-border"),
-					formatter: params => generateTooltipMultiValue(params, 'none', convert.toFiCount, false),
-					axisPointer: {
-						type: 'shadow',  // Ensure axisPointer is also here
-						shadowStyle: {
-							color: getCssVar('color-border'),
-							opacity: 1,
-						},
-					}
-				},
-				grid: {
-					left: 64,
-					right: 8,
-					top: 80,
-					bottom: 64,
-				},
-				xAxis: {
-					type: 'category',
-					data: endpointNames,
-					axisLabel: {
-						rotate: 45,
-						// formatter: value => convert.toFiDate(value, "time"),
-					},
-					axisTick: {
-						alignWithLabel: true
-					},
-				},
-				yAxis: { 
-					type: 'value',      
-					name: 'Error count (kpl)',  // Y-akselin nimi
-					axisLabel: {        // Y-akselin arvojen muotoilu
-						formatter: value => convert.toFiCount(value)
-					}
-				},
-				series: errorSeries
-			});
-			// Set the value generator for the chart
-			this.chartValueGenerators.chart12 = chart12Options;
-		}
 	}
 };
 </script>

@@ -25,6 +25,7 @@ export default {
     props: {
         options: Array,
         modelValue: String,
+        disabled: Boolean,
     },
     data() {
         return {
@@ -40,8 +41,10 @@ export default {
     },
     methods: {
         toggleDropdown(event) {
-            event.stopPropagation();
-            this.isOpen = !this.isOpen;
+            if (this.disabled != true) {
+                event.stopPropagation();
+                this.isOpen = !this.isOpen;
+            }
         },
         handleClickOutside(event) {
             if (!this.$el.contains(event.target)) {
@@ -67,13 +70,20 @@ export default {
 <style scoped>
 .custom-select {
     position: relative;
+    width: 200px;
+    height: 41px;
+    --selected-option-border-radius: var(--border-radius-small);
 }
+.loading.custom-select .selected-option {
+    cursor: wait;
+}
+
 .selected-option {
     display: flex;
     justify-content: space-between;
-    width: 200px;
-    height: 41px;
     box-sizing: border-box;
+    width: 100%;
+    height: 100%;
     padding-left: var(--spacing-sm);
 
     font-family: 'Poppins', sans-serif;
@@ -83,7 +93,7 @@ export default {
     user-select: none;
     
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--selected-option-border-radius);
     transition: border 0.1s ease-out;
 }
 .selected-option:hover, 
@@ -99,18 +109,21 @@ export default {
 
 .options-list {
     background-color: var(--color-background-input);
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-hover);
     border-radius: var(--border-radius-small);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 
     overflow: hidden;
     list-style: none;
-    top: 100%;
+    top: calc(100% - var(--selected-option-border-radius));
     left: 0;
     right: 0;
     padding: var(--border-radius-small) 0;
     margin: 0;
     position: absolute;
     z-index: 10;
+    user-select: none;
 }
 .options-list li {
     color: var(--color-text-light);

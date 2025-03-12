@@ -51,7 +51,7 @@
 // import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
 import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
-import { loadEchartsImports, commonChartValues, generateTooltipSingleValue } from '@/utils/chartTools';
+import { initialEchartSetup, commonChartValues, generateTooltipSingleValue } from '@/utils/chartTools';
 import api from '@/utils/dataQuery';
 import ChartComponent from '@/components/ChartComponent.vue';
 
@@ -86,7 +86,7 @@ export default {
         }
     },
     async mounted() {
-        loadEchartsImports();
+        initialEchartSetup();
 
         const lastMonthResponse = await api.getStatsForTimespan("month");
         if (lastMonthResponse && lastMonthResponse.stats) {
