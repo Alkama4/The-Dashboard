@@ -53,7 +53,13 @@ export const convert = {
         const i = Math.floor(Math.log10(Math.abs(bytes)) / 3);
         const value = (bytes / Math.pow(1000, i)).toFixed(decimal);
         return (parseFloat(value) === parseInt(value) ? parseInt(value) : value) + ' ' + sizes[i];
-    }
+    },
+
+    runtime(runtime) {
+        const hours = Math.floor(runtime / 60);
+        const minutes = runtime % 60;
+        return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
+    },
 
 };
 

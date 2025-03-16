@@ -402,9 +402,7 @@ export default {
             router.push(`/watch_list/title/${titleID}`);
         },
         formatRuntime(runtime) {
-            const hours = Math.floor(runtime / 60);
-            const minutes = runtime % 60;
-            return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
+            return convert.runtime(runtime);
         },
         async fetchTitleLists() {
             try {

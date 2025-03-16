@@ -184,8 +184,38 @@
                             <template v-else>Unwatched</template>
                         </div>
 
+                        <div v-if="titleInfo.type == 'movie'">
+                            Movie length
+                        </div>
+                        <div v-if="titleInfo.type == 'movie'" class="value">
+                            {{ formatRuntime(titleInfo.movie_runtime) }}
+                        </div>
+
+                        <div v-if="titleInfo.type == 'tv'">
+                            Season count
+                        </div>
+                        <div v-if="titleInfo.type == 'tv'" class="value">
+                            {{ titleInfo.seasons.length }} season<template v-if="titleInfo.seasons.length > 1">s</template>
+                        </div>
+                        <div v-if="titleInfo.type == 'tv'">
+                            Episode count
+                        </div>
+                        <div v-if="titleInfo.type == 'tv'" class="value">
+                            {{ titleEpisodeCount }} episode<template v-if="titleEpisodeCount > 1">s</template>
+                        </div>
+
+
+                        <div>IMDB average score</div>
+                        <div class="value">
+                            <IconIMDB style="margin-left: -3px;"/>
+                            {{ titleInfo?.imdb_vote_average ?? 'N/A' }} ({{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
+                        </div>
                         <div>TMDB average score</div>
-                        <div class="value"><IconTMDB style="margin-left: -3px;"/>{{ titleInfo.tmdb_vote_average }} ({{ titleInfo.tmdb_vote_count.toLocaleString("fi-FI") }} votes)</div>
+                        <div class="value">
+                            <IconTMDB style="margin-left: -3px;"/>
+                            {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
+                            ({{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
+                        </div>
 
                         <div>
                             Age rating 
@@ -221,12 +251,12 @@
 
                         <div>Original language</div>
                         <div class="value">{{ titleInfo.original_language }}</div>
-
-                        <div>TMDB id</div>
-                        <div class="value">{{ titleInfo.tmdb_id }}<a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
                         
                         <div>IMDB id</div>
                         <div class="value">{{ titleInfo.imdb_id }}<a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
+
+                        <div>TMDB id</div>
+                        <div class="value">{{ titleInfo.tmdb_id }}<a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
 
                         <div>Title details updated <InfoTooltip text="Title information is updated only when the title is first added to your watch list or when you manually refresh its data using the button above. Please note that refreshing only fetches missing images and does not overwrite existing ones." position="right"/></div>
                         <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
@@ -308,8 +338,7 @@
                         :title="`S${season.season_number} E${episode.episode_number}`"
                         :to="`/watch_list/title/${titleInfo.title_id}#S${season.season_number}E${episode.episode_number}`"
                     >
-                        <!-- S{{ season.season_number }} E{{ episode.episode_number }} -->
-                        {{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }}
+                        {{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }}
                     </router-link>
                 </div>
             </div>
@@ -346,7 +375,7 @@
                             <div class="icon-align single-line">
                                 <span>{{ season.episode_count }} episodes</span>
                                 <span class="bullet">&bullet;</span>
-                                <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.vote_average }} ({{ seasonVotes(season) }} votes)</span>
+                                <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.tmdb_vote_average }} ({{ seasonVotes(season) }} votes)</span>
                             </div>
                             <div>
                                 {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
@@ -420,7 +449,7 @@
                                 <div class="details">
                                     <span class="icon-align" >
                                         <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                        <span class="icon-align"><IconTMDB/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.vote_average }} ({{ episode.vote_count }} votes)</span>
+                                        <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.vote_count }} votes)</span>
                                     </span>
                                     <div>
                                         {{ 
@@ -469,11 +498,12 @@ import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
-import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
+import { interpolateBetweenColors, getCssVar, convert } from '@/utils/mytools'
 import notFoundPage from '@/views/404Page.vue';
 
 // Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
+import IconIMDB from '@/components/icons/IconIMDB.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
@@ -506,6 +536,7 @@ export default {
         InfoTooltip,
         IndicatorDots,
         IconTMDB,
+        IconIMDB,
         IconChevronDown,
         IconListRemove,
         IconListAdd,
@@ -517,9 +548,7 @@ export default {
     },
     methods: {
         formatRuntime(runtime) {
-            const hours = Math.floor(runtime / 60);
-            const minutes = runtime % 60;
-            return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
+            return convert.runtime(runtime);
         },
         toggleHeight(refKey) {
             // Mark the season as opened to load to dom with v-if to start loading images
@@ -732,7 +761,7 @@ export default {
 
                 this.titleInfo.seasons.forEach(season => {
                     season.episodes.forEach(episode => {
-                        let rating = episode.vote_average;
+                        let rating = episode.tmdb_vote_average;
 
                         // Convert to be between 0 and 1
                         rating = rating / 10;
@@ -821,6 +850,15 @@ export default {
                 }
             }
         },
+    },
+    computed: {
+        titleEpisodeCount() {
+            let count = 0;
+            this.titleInfo.seasons.forEach(season => {
+                count += season.episode_count;
+            });
+            return count;
+        }
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1056,11 +1094,11 @@ export default {
 .name-and-tagline .title-name {
     margin-bottom: 0;
     margin-top: 0;
-    display: -webkit-box;
+    /* display: -webkit-box;
     line-clamp: 2;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    overflow: hidden;
+    overflow: hidden; */
 }
 .name-and-tagline .title-name .original-title {
     color: var(--color-text-lighter)
@@ -1375,10 +1413,14 @@ iframe {
 .season .about .details {
     color: var(--color-text-light);
 }
+.season .details .single-line {
+    column-gap: var(--spacing-xs);
+}
 
 .season .about .text {
     grid-area: text;
 }
+
 
 .season .about .modify-watched {
     position: absolute;

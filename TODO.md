@@ -12,6 +12,13 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Title details
     - Possibility to requery the images.
         - Started already on fastapi, but just a skeleton
+        - On click open MODAL
+            - All data (no images)
+            - Title data (no images)
+            - All images
+        - Add button to seasons
+            - The appropriate refreshes like images and data
+            - Figure out what is most natural in terms of tmdb requests
     - Add a season progress like for title. Maybe even a bar
     - Title name to tab
 
@@ -49,6 +56,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Remake sidebar filter thingy so that it can be used here
         - And fix the instant hide at the same time.
 
+- Incorporate rest of the info from OMDb to titles table and change naming for vote_average to tmdb_vote_average on the rest of the page.
 
 ## Features
 ### Feature ideas

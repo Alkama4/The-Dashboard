@@ -36,7 +36,7 @@ async function handleError(error, endpoint) {
         } else if (statusCode === 404) {
             notify(`Resource not found: ${detail}`, "error");
         } else if (statusCode === 405) {
-            notify("This feature requires an account. Please login. " + detail, "error");
+            notify("This feature requires an account. Please login.");
         } else if (statusCode === 400) {
             notify(`Invalid request: ${detail}`, "error");
         } else if (statusCode === 500) {
