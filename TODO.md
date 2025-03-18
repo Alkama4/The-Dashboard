@@ -10,17 +10,11 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Split into two. One for simple confimations with customaizeable texts and one for just slotting stuff into
 
 - Title details
-    - Possibility to requery the images.
-        - Started already on fastapi, but just a skeleton
-        - On click open MODAL
-            - All data (no images)
-            - Title data (no images)
-            - All images
-        - Add button to seasons
-            - The appropriate refreshes like images and data
-            - Figure out what is most natural in terms of tmdb requests
+    - On update button click open MODAL
+        - Impelement once modal remade
     - Add a season progress like for title. Maybe even a bar
-    - Title name to tab
+    - Arrow buttons circles instead of a shadow
+    - Figure out the layout for the details
 
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 

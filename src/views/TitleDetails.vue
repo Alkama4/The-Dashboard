@@ -13,7 +13,7 @@
                     v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                     @load="image.isLoaded = true" 
                     :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                    :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg?width=1200`" 
+                    :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
                 />
             </div>
         </div>
@@ -34,8 +34,8 @@
                             v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                             @load="image.isLoaded = true" 
                             :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                            :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg?width=1200`" 
-                        />
+                            :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
+                            />
                     </div>
                 </div>
 
@@ -58,14 +58,16 @@
 
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
-                    <img 
-                        :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
-                        @load="(event) => event.target.classList.add('loaded')"
-                    >
+                    <div class="poster-placholder">
+                        <img 
+                            :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
+                            @load="(event) => event.target.classList.add('loaded')"
+                        >
+                    </div>
                 </div>
 
                 <div class="name-and-stuff">
-                    <div class="name-and-tagline no-pointer-events">
+                    <div class="name-and-tagline">
                         <h1 class="title-name">
                             <span class="all-pointer-events" :title="titleInfo.name">
                                 {{ titleInfo.name }} 
@@ -138,24 +140,26 @@
                         </button>
                     </div>
 
-                    <h2 style="margin-top: var(--spacing-md);">Tags</h2>
-                    <div class="tags flex">
-                        <div class="tag tag-positive" v-if="titleInfo.user_title_watch_count >= 1">
-                            Watched
-                        </div>
-                        <div class="tag tag-primary" v-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
-                            Just released
-                        </div>
-                        <div class="tag tag-upcoming" v-if="new Date(titleInfo.release_date) > new Date()">
-                            Upcoming
-                        </div>
-                        <div class="tag tag-secondary" v-if="titleInfo.user_title_favourite == 1">
-                            Favourite
-                        </div>
-
-                        <div class="tag" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
-                    </div>
+                    
                 </div>
+            </div>
+
+            <h2 style="margin-top: var(--spacing-md);">Tags</h2>
+            <div class="tags flex">
+                <div class="tag tag-positive" v-if="titleInfo.user_title_watch_count >= 1">
+                    Watched
+                </div>
+                <div class="tag tag-primary" v-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
+                    Just released
+                </div>
+                <div class="tag tag-upcoming" v-if="new Date(titleInfo.release_date) > new Date()">
+                    Upcoming
+                </div>
+                <div class="tag tag-secondary" v-if="titleInfo.user_title_favourite == 1">
+                    Favourite
+                </div>
+
+                <div class="tag" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
             </div>
 
            <h2>Overview</h2>
@@ -168,13 +172,15 @@
                         <IconRefresh
                             size="28px"
                             left="6px"
-                            @click="handleTitleUpdate"
+                            @click="handleTitleUpdate('titleInfo')"
                             :class="{
                                 'loading': waitingForResult.includes('titleUpdate'),
                                 'spin-refresh-icon': waitingForResult.includes('titleUpdate')
                             }"
                             class="icon-button"
                         />
+                        <!-- <button @click="handleTitleUpdate('titleImages')">Title images</button> -->
+                        <!-- <button @click="handleTitleUpdate('fullUpdate')">Full update</button> -->
                     </h2>
                     <div class="details-grid">
                         <div>Progress</div>
@@ -244,6 +250,25 @@
                         <div>Release date</div>
                         <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
                     </div>
+                    <h3>Production</h3>
+                    <div class="details-grid">
+                        <div>Production country</div>
+                        <div class="value">{{ titleInfo.production_country }}</div>
+
+                        <div>Director</div>
+                        <div class="value">{{ titleInfo.director }}</div>
+                        
+                        <div>Writer</div>
+                        <div class="value">{{ titleInfo.writer }}</div>
+                        
+                        <div>Box-office</div>
+                        <!-- Without ,00 and use "miljoonaa" and "miljardia" -->
+                        <div class="value">{{ formatEur(titleInfo.box_office) }}</div>
+
+                        <div>Awards</div>
+                        <div class="value">{{ titleInfo.awards }}</div>
+
+                    </div>
                     <h3>Metadata</h3>
                     <div class="details-grid">
                         <div>Title type</div>
@@ -296,6 +321,7 @@
         <!-- TV-SHOW SPECIFIC -->
         <div class="content-width-medium-unrestricted" v-if="titleInfo.seasons">
             <h2 id="episode_map">Episode map</h2>
+            <!-- <h2 id="episode_map" class="icon-align"><IconTMDB size="42px" style="margin-right: 6px;"/> Episode map</h2> -->
 
             <router-link 
                 class="sticky-corner-button link-button" 
@@ -370,7 +396,21 @@
                         </div>
                     </div>
                     <div class="text">
-                        <h2>{{ season.season_name }}</h2>
+                        <h2 class="icon-align">
+                            {{ season.season_name }}
+                            <IconRefresh 
+                                size="28px"
+                                left="6px"
+                                @click="handleTitleUpdate('titleInfo')"
+                                :class="{
+                                    'loading': waitingForResult.includes('titleUpdate'),
+                                    'spin-refresh-icon': waitingForResult.includes('titleUpdate')
+                                }"
+                                class="icon-button"
+                            />
+                        </h2>
+                        <!-- <button @click.stop="handleTitleUpdate('seasonInfo', season.season_number)">Season info</button>
+                        <button @click.stop="handleTitleUpdate('seasonImages', season.season_number)">Season images</button> -->
                         <div class="details">
                             <div class="icon-align single-line">
                                 <span>{{ season.episode_count }} episodes</span>
@@ -530,6 +570,7 @@ export default {
             openedSeasons: [],
             scrolledPastEpisodeMap: false,
             standAloneBuild: process.env.VUE_APP_STANDALONE_BUILD == "true",
+            isTouchDevice: false,
         };
     },
     components: {
@@ -549,6 +590,9 @@ export default {
     methods: {
         formatRuntime(runtime) {
             return convert.runtime(runtime);
+        },
+        formatEur(amount) {
+            return convert.toEur(amount);
         },
         toggleHeight(refKey) {
             // Mark the season as opened to load to dom with v-if to start loading images
@@ -648,17 +692,45 @@ export default {
             
             this.removeItemFromWaitingArray("saveNotes");
         },
-        async handleTitleUpdate() {
+        async handleTitleUpdate(whatIsUpdated, seasonNumber = 0) {
             this.waitingForResult.push("titleUpdate");
-            const response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type)
+            let response = null;
+            
+            if (whatIsUpdated == "titleInfo") {
+                response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type);
+            } else if (whatIsUpdated == "titleImages") {
+                response = await api.updateTitleImages(this.titleInfo.tmdb_id, this.titleInfo.type);
+            } else if (whatIsUpdated == "seasonInfo") {
+                response = await api.updateSeasonInfo(this.titleInfo.tmdb_id, this.titleInfo.type, seasonNumber);
+            } else if (whatIsUpdated == "seasonImages") {
+                response = await api.updateSeasonImages(this.titleInfo.tmdb_id, this.titleInfo.type, seasonNumber);
+            } else if (whatIsUpdated == "fullUpdate") {
+                response = await api.updateTitleFully(this.titleInfo.tmdb_id, this.titleInfo.type);
+            }
+            
             if (response) {
-                // console.log(response);
-                notify(`"${this.titleInfo.name}" info updated! Missing images are still being queried.`, "success")
+                let updateMessage = `"${this.titleInfo.name}" info updated!`;
+                
+                if (whatIsUpdated === "titleInfo") {
+                    updateMessage = `"${this.titleInfo.name}" title information has been updated. Missing images might still be loading in the background.`;
+                } else if (whatIsUpdated === "titleImages") {
+                    updateMessage = `"${this.titleInfo.name}" title images are now updating in the background.`;
+                } else if (whatIsUpdated === "seasonInfo") {
+                    updateMessage = `Season ${seasonNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`;
+                } else if (whatIsUpdated === "seasonImages") {
+                    updateMessage = `Season ${seasonNumber} images for "${this.titleInfo.name}" are now updating in the background.`;
+                } else if (whatIsUpdated === "fullUpdate") {
+                    updateMessage = `All the data for "${this.titleInfo.name}" has been replaced. Images are also now updating in the background.`;
+                }
+                
+                // Notify with the appropriate message
+                notify(updateMessage, "success");
 
                 // Update data without refreshing
                 await this.queryTitleData();
                 this.episodeMapTileBackgroundColors();
             }
+
             this.removeItemFromWaitingArray("titleUpdate");
         },
         async handleFavouriteToggle() {
@@ -865,6 +937,9 @@ export default {
             await this.openCorrectSeason(to.hash);
         }
     },
+    created () {
+        this.isTouchDevice = 'ontouchstart' in document.documentElement;
+    },
     async mounted() {
         await this.queryTitleData();
 
@@ -874,6 +949,9 @@ export default {
                 number: i,
                 isLoaded: false
             }));
+
+            // Set the title to the titles name instead of "Title info"
+            document.title = `Dashboard - ${this.titleInfo.name || 'Default Title'}`
         }
 
         // Run initially and add the event listener to update on darkmode change
@@ -924,6 +1002,7 @@ export default {
     --z-backdrop-content-inside: 4;
     --z-backdrop-arrow-buttons: 5;
     --z-backdrop-indicator: 6;
+    --z-title-poster: 10;
 }
 
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
@@ -1084,16 +1163,33 @@ export default {
     }
 } */
 
-
-.name-and-tagline {
-    margin-bottom: var(--spacing-md);
-    align-items: left;
+.poster-next-to-stuff .name-and-stuff {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-sm);
 }
+.name-and-tagline {
+    align-items: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    height: 100%;
+}
+
+/* .name-and-tagline .logo {
+    max-height: 200px;
+    max-width: 100%;
+    object-fit: contain;
+    width: auto;
+} */
 
 /* Maybe try and pop the orignial to next row when it would overflow or wrap */
 .name-and-tagline .title-name {
     margin-bottom: 0;
     margin-top: 0;
+    font-size: 48px;
+    line-height: 64px;
     /* display: -webkit-box;
     line-clamp: 2;
     -webkit-line-clamp: 2;
@@ -1107,9 +1203,10 @@ export default {
     color: var(--color-text-light);
 }
 
-@media (min-width: 750px) {
+@media (max-width: 750px) {
     .name-and-tagline .title-name {
-        font-size: 48px;
+        font-size: 36px;
+        line-height: 48px;
     }
 }
 
@@ -1125,9 +1222,18 @@ export default {
     gap: 20px;
     row-gap: 0;
     grid-template-columns: auto 1fr;
+    min-height: 200px;
 }
 
 .poster-next-to-stuff .poster-holder {
+    position: relative;
+    width: 210px;
+}
+
+.poster-next-to-stuff .poster-placholder {
+    position: absolute;
+    bottom: 0;
+    z-index: var(--z-title-poster);
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
     height: 316px;
@@ -1135,17 +1241,12 @@ export default {
     /* Causes issues with gap. Don't use. */
     /* aspect-ratio: 2/3; */
 }
-.poster-next-to-stuff .poster-holder img {
+.poster-next-to-stuff .poster-placholder img {
     border-radius: var(--border-radius-medium);
     height: 100%;
     aspect-ratio: 2/3;
 }
 
-
-.poster-next-to-stuff .name-and-stuff {
-    display: flex;
-    flex-direction: column;
-}
 .title-details .tags {
     gap: var(--spacing-xs);
     flex-wrap: wrap;
@@ -1217,7 +1318,7 @@ h2.header-margin-fix {
 }
 iframe {
     aspect-ratio: 16/9;
-    width: 510px;
+    width: 600px;
     max-width: 100%;
     margin-inline: auto;
 }
@@ -1269,6 +1370,7 @@ iframe {
     display: flex;
     flex-direction: row;
     align-items: center;
+    max-width: 200px;
     gap: var(--spacing-xs);
 }
 
@@ -1445,7 +1547,7 @@ iframe {
         gap: 0;
         grid-template-columns: auto;
     }
-    .title-details .poster-next-to-stuff .poster-holder {
+    .title-details .poster-next-to-stuff .poster-placholder {
         display: none;
     }
 

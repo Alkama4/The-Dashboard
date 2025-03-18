@@ -6,8 +6,9 @@ import { STATIC_CONTENT } from '@/data/staticData.js';
 
 const standAloneBuild = process.env.VUE_APP_STANDALONE_BUILD == "true";
 if (standAloneBuild) {
-    notify("Please note: This app is in standalone mode. Most features are disabled, but you can browse the site to explore its look and feel.", "info", 15000)
-    console.warn("Note: This app is in standalone mode. Most features are disabled, but you can browse the site to explore its look and feel.")
+    const disclaimer = "Please note: This app is in standalone mode. Most features are disabled, but you can browse the site to explore its look and feel.";
+    notify(disclaimer, "info", 15000);
+    console.warn(disclaimer);
 }
 
 const apiClient = axios.create({
@@ -479,11 +480,11 @@ const api = {
         return this.getData('/watch_list/search', params);
     },
 
-    async addTitleToUserList(tmdb_id, type) {
+    async addTitleToUserList(tmdbId, type) {
         const sessionKey = localStorage.getItem('sessionKey');
         const response = await this.postData('/watch_list/add_user_title', { 
             session_key: sessionKey, 
-            title_tmdb_id: tmdb_id, 
+            title_tmdb_id: tmdbId, 
             title_type: type
         }, null);
         if (response) {
@@ -494,10 +495,75 @@ const api = {
         }
     },
 
-    async updateTitleInfo(tmdb_id, type) {
-        const response = await this.postData('/watch_list/update_title_info', { 
-            title_tmdb_id: tmdb_id, 
+    async updateTitleInfo(tmdbId, type) {
+        const response = await this.postData('/watch_list/update_title', { 
+            title_tmdb_id: tmdbId, 
             title_type: type, 
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateTitleInfo] response failed:", response);
+            return null;
+        }
+    },
+    async updateTitleImages(tmdbId, type) {
+        const response = await this.postData('/watch_list/update_title', { 
+            title_tmdb_id: tmdbId, 
+            title_type: type,
+            update_title_info: false,
+            update_title_images: true
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateTitleInfo] response failed:", response);
+            return null;
+        }
+    },
+    async updateSeasonInfo(tmdbId, type, seasonNumber) {
+        const response = await this.postData('/watch_list/update_title', { 
+            title_tmdb_id: tmdbId, 
+            title_type: type,
+            update_title_info: false,
+            update_title_images: false,
+            update_season_number: seasonNumber,
+            update_season_info: true, 
+            update_season_images: false
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateTitleInfo] response failed:", response);
+            return null;
+        }
+    },
+    async updateSeasonImages(tmdbId, type, seasonNumber) {
+        const response = await this.postData('/watch_list/update_title', { 
+            title_tmdb_id: tmdbId, 
+            title_type: type,
+            update_title_info: false,
+            update_title_images: false,
+            update_season_number: seasonNumber,
+            update_season_info: false, 
+            update_season_images: true
+        }, null);
+        if (response) {
+            return response;
+        } else {
+            console.error("[updateTitleInfo] response failed:", response);
+            return null;
+        }
+    },
+    async updateTitleFully(tmdbId, type) {
+        const response = await this.postData('/watch_list/update_title', { 
+            title_tmdb_id: tmdbId, 
+            title_type: type,
+            update_title_info: true,
+            update_title_images: true,
+            update_season_number: 0,
+            update_season_info: true, 
+            update_season_images: true
         }, null);
         if (response) {
             return response;
