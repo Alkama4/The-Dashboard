@@ -1,5 +1,5 @@
 <template>
-    <div class="custom-select" :class="{'is-open': isOpen}">
+    <div class="custom-select" :class="{'is-open': isLogicalOpen && isStylingOpen}">
         <div 
             class="selected-option icon-align" 
             @click="toggleDropdown"
@@ -7,7 +7,11 @@
             <span>{{ selectedOption || 'Select an option' }}</span>
             <IconChevronDown/>
         </div>
-        <ul v-if="isOpen" class="options-list">
+        <ul 
+            v-if="isLogicalOpen" 
+            class="options-list"
+            :class="{'hidden': !isStylingOpen}"
+        >
             <li v-for="option in options" :key="option" @click="selectOption(option)">
                 {{ option }}
             </li>
@@ -29,7 +33,8 @@ export default {
     },
     data() {
         return {
-            isOpen: false,
+            isStylingOpen: false,
+            isLogicalOpen: false,
             selectedOption: null,
         };
     },
@@ -40,21 +45,35 @@ export default {
         document.removeEventListener('click', this.handleClickOutside);
     },
     methods: {
+        open() {
+            if (!this.disabled) {
+                this.isLogicalOpen = true;
+                setTimeout(() => {
+                    this.isStylingOpen = true;
+                }, 10);
+            }
+        },
+        close() {
+            this.isStylingOpen = false;
+            setTimeout(() => {
+                this.isLogicalOpen = false;
+            }, 200);
+        },
         toggleDropdown(event) {
-            if (this.disabled != true) {
+            if (!this.disabled) {
                 event.stopPropagation();
-                this.isOpen = !this.isOpen;
+                this.isLogicalOpen ? this.close() : this.open(); // Toggle between open and close
             }
         },
         handleClickOutside(event) {
             if (!this.$el.contains(event.target)) {
-                this.isOpen = false;
+                this.close();
             }
         },
         selectOption(option) {
             this.$emit('update:modelValue', option);
-            this.isOpen = false;
-        },
+            this.close();
+        }
     },
     watch: {
         modelValue: {
@@ -66,6 +85,7 @@ export default {
     },
 };
 </script>
+
 
 <style scoped>
 .custom-select {
@@ -119,19 +139,26 @@ export default {
     top: calc(100% - var(--selected-option-border-radius));
     left: 0;
     right: 0;
-    padding: var(--border-radius-small) 0;
+    padding: 6px 0;
     margin: 0;
     position: absolute;
     z-index: 10;
     user-select: none;
+    
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
 }
 .options-list li {
     color: var(--color-text-light);
     padding: var(--spacing-xs) var(--spacing-sm);
     cursor: pointer;
+    /* transition: background-color 0.1s ease-out; */
 }
 .options-list li:hover {
     color: var(--color-text);
-    background: var(--color-button-general);
+    background-color: var(--color-background-select-hover);
+}
+.options-list.hidden {
+    opacity: 0;
 }
 </style>
