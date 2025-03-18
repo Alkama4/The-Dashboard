@@ -265,7 +265,8 @@ export default {
 				fastapiData: {},
 			},
 			serverLogsTimespan: "1h",
-			serverLogsTimespans: ["24h", "12h", "6h", "3h", "1h", "30m", "15m"],
+			serverLogsTimespans: ["15m", "30m", "1h", "3h", "6h", "12h", "24h"]
+			,
 		};
 	},
 	methods: {
@@ -332,7 +333,7 @@ export default {
 					i++;
 				}
 	
-				console.debug(serviceUrls);
+				console.debug("[getServiceUrls] Service urls:", serviceUrls);
 				this.serviceUrls = serviceUrls;
 			} else {
 				this.serviceUrls = [{
@@ -684,10 +685,14 @@ export default {
 			}
 
 			if (refresh) {
-				console.log("Refreshing");
 				// HERE IMPLEMENT A PROPER PER CHART REFHRESH EVENTS INSTEAD OF A GLOBAL ONE
-				const event = new CustomEvent("darkModeChange", { detail: true });
-				window.dispatchEvent(event);
+
+				// Tiny delay to let the data to update first
+				setTimeout(() => {
+					console.log("Refreshing");
+					const event = new CustomEvent("darkModeChange", { detail: true });
+					window.dispatchEvent(event);
+				}, 1);
 			}
 
 			this.removeItemFromWaitingArray("fetchServerLogs");

@@ -1032,12 +1032,10 @@ overflow: hidden;
     width: fit-content;
 }
 
-
 .content-width-large {
     margin-inline: auto;
     max-width: 140ch;
 }
-
 
 
 /* - - - - ANIMATIONS - - - - */

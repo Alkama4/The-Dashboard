@@ -15,6 +15,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Add a season progress like for title. Maybe even a bar
     - Arrow buttons circles instead of a shadow
     - Figure out the layout for the details
+        - Add N/A or alternative on missing values
 
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 

@@ -94,13226 +94,3433 @@ export const STATIC_CONTENT = {
     ],
 
     // Vois vaihtaa joskus ku ei oo rakoja datassa
-    '/get_server_resource_logs{"timeframe":"24h"}': {
-        "data": [
-        {
-            "cpu_temperature": 46.9667,
-            "cpu_usage": 2.51833,
-            "ram_usage": 35.8,
-            "system_load": 0.154785,
-            "network_sent_bytes": 156389719951,
-            "network_recv_bytes": 13903804515,
-            "timestamp": "2025-03-06T22:20:00"
-        },
-        {
-            "cpu_temperature": 47.0167,
-            "cpu_usage": 4.775,
-            "ram_usage": 35.7,
-            "system_load": 0.491699,
-            "network_sent_bytes": 156390338150,
-            "network_recv_bytes": 13904450695,
-            "timestamp": "2025-03-06T22:21:00"
-        },
-        {
-            "cpu_temperature": 48,
-            "cpu_usage": 5.375,
-            "ram_usage": 35.7,
-            "system_load": 0.386719,
-            "network_sent_bytes": 156391379329,
-            "network_recv_bytes": 13905761030,
-            "timestamp": "2025-03-06T22:22:00"
-        },
-        {
-            "cpu_temperature": 47.0167,
-            "cpu_usage": 1.20167,
-            "ram_usage": 35.7,
-            "system_load": 0.310059,
-            "network_sent_bytes": 156391412488,
-            "network_recv_bytes": 13905793763,
-            "timestamp": "2025-03-06T22:23:00"
-        },
-        {
-            "cpu_temperature": 47.145,
-            "cpu_usage": 5.69833,
-            "ram_usage": 35.7,
-            "system_load": 0.760742,
-            "network_sent_bytes": 156392420940,
-            "network_recv_bytes": 13907088007,
-            "timestamp": "2025-03-06T22:24:00"
-        },
-        {
-            "cpu_temperature": 47.9283,
-            "cpu_usage": 4.215,
-            "ram_usage": 35.8,
-            "system_load": 0.277832,
-            "network_sent_bytes": 156393219559,
-            "network_recv_bytes": 13907999598,
-            "timestamp": "2025-03-06T22:25:00"
-        },
-        {
-            "cpu_temperature": 48.6683,
-            "cpu_usage": 7.79167,
-            "ram_usage": 35.8,
-            "system_load": 0.475586,
-            "network_sent_bytes": 156397695955,
-            "network_recv_bytes": 13915015918,
-            "timestamp": "2025-03-06T22:26:00"
-        },
-        {
-            "cpu_temperature": 47.8967,
-            "cpu_usage": 6.535,
-            "ram_usage": 35.8,
-            "system_load": 0.579102,
-            "network_sent_bytes": 156398571619,
-            "network_recv_bytes": 13915951452,
-            "timestamp": "2025-03-06T22:27:00"
-        },
-        {
-            "cpu_temperature": 47.6133,
-            "cpu_usage": 3.75167,
-            "ram_usage": 35.8,
-            "system_load": 0.291992,
-            "network_sent_bytes": 156399016639,
-            "network_recv_bytes": 13916426974,
-            "timestamp": "2025-03-06T22:28:00"
-        },
-        {
-            "cpu_temperature": 46.975,
-            "cpu_usage": 2.585,
-            "ram_usage": 35.8,
-            "system_load": 0.82959,
-            "network_sent_bytes": 156399259848,
-            "network_recv_bytes": 13916684905,
-            "timestamp": "2025-03-06T22:29:00"
-        },
-        {
-            "cpu_temperature": 46.94,
-            "cpu_usage": 2.47,
-            "ram_usage": 35.7,
-            "system_load": 0.351562,
-            "network_sent_bytes": 156399506618,
-            "network_recv_bytes": 13916946189,
-            "timestamp": "2025-03-06T22:30:00"
-        },
-        {
-            "cpu_temperature": 46.225,
-            "cpu_usage": 1.17167,
-            "ram_usage": 35.7,
-            "system_load": 0.259277,
-            "network_sent_bytes": 156399555910,
-            "network_recv_bytes": 13917001383,
-            "timestamp": "2025-03-06T22:31:00"
-        },
-        {
-            "cpu_temperature": 46.425,
-            "cpu_usage": 5.21833,
-            "ram_usage": 35.7,
-            "system_load": 0.733887,
-            "network_sent_bytes": 156400201761,
-            "network_recv_bytes": 13917693663,
-            "timestamp": "2025-03-06T22:32:00"
-        },
-        {
-            "cpu_temperature": 47.4683,
-            "cpu_usage": 4.03,
-            "ram_usage": 35.6,
-            "system_load": 0.373535,
-            "network_sent_bytes": 156400919694,
-            "network_recv_bytes": 13918512777,
-            "timestamp": "2025-03-06T22:33:00"
-        },
-        {
-            "cpu_temperature": 46.485,
-            "cpu_usage": 1.24167,
-            "ram_usage": 35.7,
-            "system_load": 0.297852,
-            "network_sent_bytes": 156400955793,
-            "network_recv_bytes": 13918548615,
-            "timestamp": "2025-03-06T22:34:00"
-        },
-        {
-            "cpu_temperature": 46.43,
-            "cpu_usage": 2.35,
-            "ram_usage": 35.5,
-            "system_load": 0.27002,
-            "network_sent_bytes": 156401284378,
-            "network_recv_bytes": 13918918400,
-            "timestamp": "2025-03-06T22:35:00"
-        },
-        {
-            "cpu_temperature": 46.2083,
-            "cpu_usage": 1.12333,
-            "ram_usage": 35.7,
-            "system_load": 0.178223,
-            "network_sent_bytes": 156401326410,
-            "network_recv_bytes": 13918961816,
-            "timestamp": "2025-03-06T22:36:00"
-        },
-        {
-            "cpu_temperature": 46.015,
-            "cpu_usage": 1.14833,
-            "ram_usage": 35.7,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156401378644,
-            "network_recv_bytes": 13919013873,
-            "timestamp": "2025-03-06T22:37:00"
-        },
-        {
-            "cpu_temperature": 45.8433,
-            "cpu_usage": 1.10667,
-            "ram_usage": 35.7,
-            "system_load": 0.0766602,
-            "network_sent_bytes": 156401413726,
-            "network_recv_bytes": 13919048692,
-            "timestamp": "2025-03-06T22:38:00"
-        },
-        {
-            "cpu_temperature": 46.4,
-            "cpu_usage": 4.15,
-            "ram_usage": 35.7,
-            "system_load": 0.158203,
-            "network_sent_bytes": 156401920771,
-            "network_recv_bytes": 13919593138,
-            "timestamp": "2025-03-06T22:39:00"
-        },
-        {
-            "cpu_temperature": 46.5017,
-            "cpu_usage": 5.65667,
-            "ram_usage": 35.7,
-            "system_load": 0.135742,
-            "network_sent_bytes": 156402713232,
-            "network_recv_bytes": 13920444246,
-            "timestamp": "2025-03-06T22:40:00"
-        },
-        {
-            "cpu_temperature": 46.585,
-            "cpu_usage": 1.18667,
-            "ram_usage": 35.4,
-            "system_load": 0.0473633,
-            "network_sent_bytes": 156402779623,
-            "network_recv_bytes": 13920518927,
-            "timestamp": "2025-03-06T22:41:00"
-        },
-        {
-            "cpu_temperature": 47.6683,
-            "cpu_usage": 8.90667,
-            "ram_usage": 35.7,
-            "system_load": 0.210449,
-            "network_sent_bytes": 156404051973,
-            "network_recv_bytes": 13921897088,
-            "timestamp": "2025-03-06T22:42:00"
-        },
-        {
-            "cpu_temperature": 48.0833,
-            "cpu_usage": 9.135,
-            "ram_usage": 35.5,
-            "system_load": 0.364258,
-            "network_sent_bytes": 156405334723,
-            "network_recv_bytes": 13923269361,
-            "timestamp": "2025-03-06T22:43:00"
-        },
-        {
-            "cpu_temperature": 47.7383,
-            "cpu_usage": 4.01167,
-            "ram_usage": 35.7,
-            "system_load": 0.351562,
-            "network_sent_bytes": 156405816879,
-            "network_recv_bytes": 13923781597,
-            "timestamp": "2025-03-06T22:44:00"
-        },
-        {
-            "cpu_temperature": 47.4233,
-            "cpu_usage": 6.30833,
-            "ram_usage": 35.7,
-            "system_load": 0.487793,
-            "network_sent_bytes": 156406687060,
-            "network_recv_bytes": 13924710948,
-            "timestamp": "2025-03-06T22:45:00"
-        },
-        {
-            "cpu_temperature": 48.585,
-            "cpu_usage": 9.42833,
-            "ram_usage": 35.7,
-            "system_load": 0.445312,
-            "network_sent_bytes": 156408155012,
-            "network_recv_bytes": 13926294761,
-            "timestamp": "2025-03-06T22:46:00"
-        },
-        {
-            "cpu_temperature": 47.4283,
-            "cpu_usage": 1.41667,
-            "ram_usage": 35.7,
-            "system_load": 0.292969,
-            "network_sent_bytes": 156409708745,
-            "network_recv_bytes": 13936655249,
-            "timestamp": "2025-03-06T22:47:00"
-        },
-        {
-            "cpu_temperature": 49.3583,
-            "cpu_usage": 14.4517,
-            "ram_usage": 36.2,
-            "system_load": 0.526855,
-            "network_sent_bytes": 156421479906,
-            "network_recv_bytes": 13954132271,
-            "timestamp": "2025-03-06T22:48:00"
-        },
-        {
-            "cpu_temperature": 48.48,
-            "cpu_usage": 3.98667,
-            "ram_usage": 36.6,
-            "system_load": 0.249023,
-            "network_sent_bytes": 156431164424,
-            "network_recv_bytes": 13967832920,
-            "timestamp": "2025-03-06T22:49:00"
-        },
-        {
-            "cpu_temperature": 48.3283,
-            "cpu_usage": 4.97,
-            "ram_usage": 36.6,
-            "system_load": 0.378418,
-            "network_sent_bytes": 156433087410,
-            "network_recv_bytes": 13970333128,
-            "timestamp": "2025-03-06T22:50:00"
-        },
-        {
-            "cpu_temperature": 49.17,
-            "cpu_usage": 12.4383,
-            "ram_usage": 36.5,
-            "system_load": 0.97998,
-            "network_sent_bytes": 156437952062,
-            "network_recv_bytes": 13977722979,
-            "timestamp": "2025-03-06T22:51:00"
-        },
-        {
-            "cpu_temperature": 49.3683,
-            "cpu_usage": 7.13,
-            "ram_usage": 36.6,
-            "system_load": 0.599121,
-            "network_sent_bytes": 156439028106,
-            "network_recv_bytes": 13978909782,
-            "timestamp": "2025-03-06T22:52:00"
-        },
-        {
-            "cpu_temperature": 47.955,
-            "cpu_usage": 2.79333,
-            "ram_usage": 36.5,
-            "system_load": 0.490234,
-            "network_sent_bytes": 156441025475,
-            "network_recv_bytes": 13982430810,
-            "timestamp": "2025-03-06T22:53:00"
-        },
-        {
-            "cpu_temperature": 48.5867,
-            "cpu_usage": 9.975,
-            "ram_usage": 36.5,
-            "system_load": 0.578613,
-            "network_sent_bytes": 156451372496,
-            "network_recv_bytes": 14001002384,
-            "timestamp": "2025-03-06T22:54:00"
-        },
-        {
-            "cpu_temperature": 48.9467,
-            "cpu_usage": 6.83,
-            "ram_usage": 36.6,
-            "system_load": 0.251953,
-            "network_sent_bytes": 156452205534,
-            "network_recv_bytes": 14001866741,
-            "timestamp": "2025-03-06T22:55:00"
-        },
-        {
-            "cpu_temperature": 47.455,
-            "cpu_usage": 1.16,
-            "ram_usage": 36.5,
-            "system_load": 0.408203,
-            "network_sent_bytes": 156452240807,
-            "network_recv_bytes": 14001906572,
-            "timestamp": "2025-03-06T22:56:00"
-        },
-        {
-            "cpu_temperature": 47.6217,
-            "cpu_usage": 5.61333,
-            "ram_usage": 36.2,
-            "system_load": 0.470215,
-            "network_sent_bytes": 156455299317,
-            "network_recv_bytes": 14007103413,
-            "timestamp": "2025-03-06T22:57:00"
-        },
-        {
-            "cpu_temperature": 47.6467,
-            "cpu_usage": 2.98333,
-            "ram_usage": 36.6,
-            "system_load": 0.23877,
-            "network_sent_bytes": 156457642438,
-            "network_recv_bytes": 14011250630,
-            "timestamp": "2025-03-06T22:58:00"
-        },
-        {
-            "cpu_temperature": 47.355,
-            "cpu_usage": 3.76333,
-            "ram_usage": 36.4,
-            "system_load": 0.317383,
-            "network_sent_bytes": 156460108302,
-            "network_recv_bytes": 14015606300,
-            "timestamp": "2025-03-06T22:59:00"
-        },
-        {
-            "cpu_temperature": 46.9233,
-            "cpu_usage": 1.53,
-            "ram_usage": 36.8,
-            "system_load": 0.114258,
-            "network_sent_bytes": 156460195688,
-            "network_recv_bytes": 14015692183,
-            "timestamp": "2025-03-06T23:00:00"
-        },
-        {
-            "cpu_temperature": 47.375,
-            "cpu_usage": 7.75833,
-            "ram_usage": 36.3,
-            "system_load": 0.681152,
-            "network_sent_bytes": 156461259584,
-            "network_recv_bytes": 14016834836,
-            "timestamp": "2025-03-06T23:01:00"
-        },
-        {
-            "cpu_temperature": 48.085,
-            "cpu_usage": 6.33833,
-            "ram_usage": 36.7,
-            "system_load": 0.376465,
-            "network_sent_bytes": 156462119396,
-            "network_recv_bytes": 14017754522,
-            "timestamp": "2025-03-06T23:02:00"
-        },
-        {
-            "cpu_temperature": 47.47,
-            "cpu_usage": 3.69333,
-            "ram_usage": 36.3,
-            "system_load": 0.296875,
-            "network_sent_bytes": 156462570871,
-            "network_recv_bytes": 14018234681,
-            "timestamp": "2025-03-06T23:03:00"
-        },
-        {
-            "cpu_temperature": 47.4083,
-            "cpu_usage": 3.73333,
-            "ram_usage": 36.6,
-            "system_load": 0.834961,
-            "network_sent_bytes": 156463025014,
-            "network_recv_bytes": 14018718278,
-            "timestamp": "2025-03-06T23:04:00"
-        },
-        {
-            "cpu_temperature": 47.6517,
-            "cpu_usage": 5.05167,
-            "ram_usage": 36.4,
-            "system_load": 0.432617,
-            "network_sent_bytes": 156463696274,
-            "network_recv_bytes": 14019435114,
-            "timestamp": "2025-03-06T23:05:00"
-        },
-        {
-            "cpu_temperature": 47,
-            "cpu_usage": 2.25,
-            "ram_usage": 36.7,
-            "system_load": 0.465332,
-            "network_sent_bytes": 156464260278,
-            "network_recv_bytes": 14020389884,
-            "timestamp": "2025-03-06T23:06:00"
-        },
-        {
-            "cpu_temperature": 46.8167,
-            "cpu_usage": 1.14833,
-            "ram_usage": 36.3,
-            "system_load": 0.348633,
-            "network_sent_bytes": 156465769956,
-            "network_recv_bytes": 14030679863,
-            "timestamp": "2025-03-06T23:07:00"
-        },
-        {
-            "cpu_temperature": 47.5783,
-            "cpu_usage": 4.69333,
-            "ram_usage": 37.5,
-            "system_load": 0.125977,
-            "network_sent_bytes": 156469652494,
-            "network_recv_bytes": 14036999169,
-            "timestamp": "2025-03-06T23:08:00"
-        },
-        {
-            "cpu_temperature": 46.875,
-            "cpu_usage": 1.25833,
-            "ram_usage": 37.1,
-            "system_load": 0.236816,
-            "network_sent_bytes": 156469702148,
-            "network_recv_bytes": 14037047428,
-            "timestamp": "2025-03-06T23:09:00"
-        },
-        {
-            "cpu_temperature": 46.475,
-            "cpu_usage": 1.06333,
-            "ram_usage": 37.5,
-            "system_load": 0.243652,
-            "network_sent_bytes": 156469788062,
-            "network_recv_bytes": 14037137334,
-            "timestamp": "2025-03-06T23:10:00"
-        },
-        {
-            "cpu_temperature": 46.3533,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37.2,
-            "system_load": 0.0874023,
-            "network_sent_bytes": 156469819547,
-            "network_recv_bytes": 14037168955,
-            "timestamp": "2025-03-06T23:11:00"
-        },
-        {
-            "cpu_temperature": 46.0517,
-            "cpu_usage": 1.06,
-            "ram_usage": 37.6,
-            "system_load": 0.241211,
-            "network_sent_bytes": 156469909198,
-            "network_recv_bytes": 14037254824,
-            "timestamp": "2025-03-06T23:12:00"
-        },
-        {
-            "cpu_temperature": 45.93,
-            "cpu_usage": 1.075,
-            "ram_usage": 37.3,
-            "system_load": 0.0869141,
-            "network_sent_bytes": 156469941553,
-            "network_recv_bytes": 14037287467,
-            "timestamp": "2025-03-06T23:13:00"
-        },
-        {
-            "cpu_temperature": 45.985,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.4,
-            "system_load": 0.178223,
-            "network_sent_bytes": 156469966874,
-            "network_recv_bytes": 14037311963,
-            "timestamp": "2025-03-06T23:14:00"
-        },
-        {
-            "cpu_temperature": 45.8783,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.3,
-            "system_load": 0.137207,
-            "network_sent_bytes": 156469999726,
-            "network_recv_bytes": 14037344324,
-            "timestamp": "2025-03-06T23:15:00"
-        },
-        {
-            "cpu_temperature": 45.8283,
-            "cpu_usage": 1.03667,
-            "ram_usage": 37.5,
-            "system_load": 0.0834961,
-            "network_sent_bytes": 156470031628,
-            "network_recv_bytes": 14037378715,
-            "timestamp": "2025-03-06T23:16:00"
-        },
-        {
-            "cpu_temperature": 45.785,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.4,
-            "system_load": 0.220703,
-            "network_sent_bytes": 156470069676,
-            "network_recv_bytes": 14037416384,
-            "timestamp": "2025-03-06T23:17:00"
-        },
-        {
-            "cpu_temperature": 45.78,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.5,
-            "system_load": 0.246094,
-            "network_sent_bytes": 156470094080,
-            "network_recv_bytes": 14037440833,
-            "timestamp": "2025-03-06T23:18:00"
-        },
-        {
-            "cpu_temperature": 45.92,
-            "cpu_usage": 1.22667,
-            "ram_usage": 37.4,
-            "system_load": 0.0878906,
-            "network_sent_bytes": 156470129432,
-            "network_recv_bytes": 14037475969,
-            "timestamp": "2025-03-06T23:19:00"
-        },
-        {
-            "cpu_temperature": 45.9167,
-            "cpu_usage": 1.13667,
-            "ram_usage": 37.6,
-            "system_load": 0.322266,
-            "network_sent_bytes": 156470163652,
-            "network_recv_bytes": 14037508887,
-            "timestamp": "2025-03-06T23:20:00"
-        },
-        {
-            "cpu_temperature": 45.6683,
-            "cpu_usage": 1.06,
-            "ram_usage": 37.2,
-            "system_load": 0.117188,
-            "network_sent_bytes": 156470205544,
-            "network_recv_bytes": 14037561060,
-            "timestamp": "2025-03-06T23:21:00"
-        },
-        {
-            "cpu_temperature": 45.6733,
-            "cpu_usage": 1.05333,
-            "ram_usage": 37.6,
-            "system_load": 0.166016,
-            "network_sent_bytes": 156470234314,
-            "network_recv_bytes": 14037589244,
-            "timestamp": "2025-03-06T23:22:00"
-        },
-        {
-            "cpu_temperature": 45.6883,
-            "cpu_usage": 1.04333,
-            "ram_usage": 37.2,
-            "system_load": 0.25293,
-            "network_sent_bytes": 156470256372,
-            "network_recv_bytes": 14037610038,
-            "timestamp": "2025-03-06T23:23:00"
-        },
-        {
-            "cpu_temperature": 45.7633,
-            "cpu_usage": 1.04167,
-            "ram_usage": 37.5,
-            "system_load": 0.0908203,
-            "network_sent_bytes": 156470289811,
-            "network_recv_bytes": 14037637799,
-            "timestamp": "2025-03-06T23:24:00"
-        },
-        {
-            "cpu_temperature": 45.6633,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.3,
-            "system_load": 0.466797,
-            "network_sent_bytes": 156470431986,
-            "network_recv_bytes": 14037788404,
-            "timestamp": "2025-03-06T23:25:00"
-        },
-        {
-            "cpu_temperature": 45.6633,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.5,
-            "system_load": 0.256836,
-            "network_sent_bytes": 156470476740,
-            "network_recv_bytes": 14037837655,
-            "timestamp": "2025-03-06T23:26:00"
-        },
-        {
-            "cpu_temperature": 45.64,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.4,
-            "system_load": 0.172852,
-            "network_sent_bytes": 156470503809,
-            "network_recv_bytes": 14037867134,
-            "timestamp": "2025-03-06T23:27:00"
-        },
-        {
-            "cpu_temperature": 45.6367,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.5,
-            "system_load": 0.381836,
-            "network_sent_bytes": 156470538495,
-            "network_recv_bytes": 14037902718,
-            "timestamp": "2025-03-06T23:28:00"
-        },
-        {
-            "cpu_temperature": 45.73,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.6,
-            "system_load": 0.288574,
-            "network_sent_bytes": 156470570510,
-            "network_recv_bytes": 14037937579,
-            "timestamp": "2025-03-06T23:29:00"
-        },
-        {
-            "cpu_temperature": 45.6933,
-            "cpu_usage": 1.19333,
-            "ram_usage": 37.6,
-            "system_load": 0.184082,
-            "network_sent_bytes": 156470612412,
-            "network_recv_bytes": 14037980965,
-            "timestamp": "2025-03-06T23:30:00"
-        },
-        {
-            "cpu_temperature": 45.69,
-            "cpu_usage": 1.19,
-            "ram_usage": 37.6,
-            "system_load": 0.34082,
-            "network_sent_bytes": 156470645081,
-            "network_recv_bytes": 14038017928,
-            "timestamp": "2025-03-06T23:31:00"
-        },
-        {
-            "cpu_temperature": 45.6233,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.6,
-            "system_load": 0.123047,
-            "network_sent_bytes": 156470680621,
-            "network_recv_bytes": 14038052052,
-            "timestamp": "2025-03-06T23:32:00"
-        },
-        {
-            "cpu_temperature": 45.6767,
-            "cpu_usage": 1.27667,
-            "ram_usage": 37.5,
-            "system_load": 0.227539,
-            "network_sent_bytes": 156470748389,
-            "network_recv_bytes": 14038123879,
-            "timestamp": "2025-03-06T23:33:00"
-        },
-        {
-            "cpu_temperature": 45.88,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.6,
-            "system_load": 0.168457,
-            "network_sent_bytes": 156470783932,
-            "network_recv_bytes": 14038158392,
-            "timestamp": "2025-03-06T23:34:00"
-        },
-        {
-            "cpu_temperature": 45.7667,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.6,
-            "system_load": 0.110352,
-            "network_sent_bytes": 156470833167,
-            "network_recv_bytes": 14038205981,
-            "timestamp": "2025-03-06T23:35:00"
-        },
-        {
-            "cpu_temperature": 45.8167,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.6,
-            "system_load": 0.262695,
-            "network_sent_bytes": 156470870396,
-            "network_recv_bytes": 14038243886,
-            "timestamp": "2025-03-06T23:36:00"
-        },
-        {
-            "cpu_temperature": 45.8483,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.6,
-            "system_load": 0.165039,
-            "network_sent_bytes": 156470897773,
-            "network_recv_bytes": 14038270541,
-            "timestamp": "2025-03-06T23:37:00"
-        },
-        {
-            "cpu_temperature": 45.7083,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.6,
-            "system_load": 0.165039,
-            "network_sent_bytes": 156470933471,
-            "network_recv_bytes": 14038305558,
-            "timestamp": "2025-03-06T23:38:00"
-        },
-        {
-            "cpu_temperature": 45.5883,
-            "cpu_usage": 1.29,
-            "ram_usage": 37.6,
-            "system_load": 0.334473,
-            "network_sent_bytes": 156470962235,
-            "network_recv_bytes": 14038333976,
-            "timestamp": "2025-03-06T23:39:00"
-        },
-        {
-            "cpu_temperature": 45.7317,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.6,
-            "system_load": 0.19873,
-            "network_sent_bytes": 156471003548,
-            "network_recv_bytes": 14038373185,
-            "timestamp": "2025-03-06T23:40:00"
-        },
-        {
-            "cpu_temperature": 45.5933,
-            "cpu_usage": 1.105,
-            "ram_usage": 37.3,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156471036503,
-            "network_recv_bytes": 14038410068,
-            "timestamp": "2025-03-06T23:41:00"
-        },
-        {
-            "cpu_temperature": 45.645,
-            "cpu_usage": 1.10333,
-            "ram_usage": 37.6,
-            "system_load": 0.28418,
-            "network_sent_bytes": 156471063961,
-            "network_recv_bytes": 14038436322,
-            "timestamp": "2025-03-06T23:42:00"
-        },
-        {
-            "cpu_temperature": 45.6983,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.3,
-            "system_load": 0.111816,
-            "network_sent_bytes": 156471112770,
-            "network_recv_bytes": 14038486869,
-            "timestamp": "2025-03-06T23:43:00"
-        },
-        {
-            "cpu_temperature": 45.855,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.6,
-            "system_load": 0.231445,
-            "network_sent_bytes": 156471143640,
-            "network_recv_bytes": 14038519843,
-            "timestamp": "2025-03-06T23:44:00"
-        },
-        {
-            "cpu_temperature": 45.66,
-            "cpu_usage": 1.14667,
-            "ram_usage": 37.3,
-            "system_load": 0.0834961,
-            "network_sent_bytes": 156471171583,
-            "network_recv_bytes": 14038546693,
-            "timestamp": "2025-03-06T23:45:00"
-        },
-        {
-            "cpu_temperature": 45.63,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.5,
-            "system_load": 0.103027,
-            "network_sent_bytes": 156471195763,
-            "network_recv_bytes": 14038574851,
-            "timestamp": "2025-03-06T23:46:00"
-        },
-        {
-            "cpu_temperature": 45.7433,
-            "cpu_usage": 0.958333,
-            "ram_usage": 37.1,
-            "system_load": 0.399902,
-            "network_sent_bytes": 156471217810,
-            "network_recv_bytes": 14038595504,
-            "timestamp": "2025-03-06T23:47:00"
-        },
-        {
-            "cpu_temperature": 45.8,
-            "cpu_usage": 1.08,
-            "ram_usage": 37.4,
-            "system_load": 0.14502,
-            "network_sent_bytes": 156471246181,
-            "network_recv_bytes": 14038618710,
-            "timestamp": "2025-03-06T23:48:00"
-        },
-        {
-            "cpu_temperature": 45.7983,
-            "cpu_usage": 1.035,
-            "ram_usage": 37.1,
-            "system_load": 0.241699,
-            "network_sent_bytes": 156471268140,
-            "network_recv_bytes": 14038639453,
-            "timestamp": "2025-03-06T23:49:00"
-        },
-        {
-            "cpu_temperature": 45.715,
-            "cpu_usage": 1.10167,
-            "ram_usage": 37.5,
-            "system_load": 0.213379,
-            "network_sent_bytes": 156471300263,
-            "network_recv_bytes": 14038669379,
-            "timestamp": "2025-03-06T23:50:00"
-        },
-        {
-            "cpu_temperature": 45.655,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.5,
-            "system_load": 0.176758,
-            "network_sent_bytes": 156471324941,
-            "network_recv_bytes": 14038698597,
-            "timestamp": "2025-03-06T23:51:00"
-        },
-        {
-            "cpu_temperature": 45.52,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.5,
-            "system_load": 0.255371,
-            "network_sent_bytes": 156471346817,
-            "network_recv_bytes": 14038719197,
-            "timestamp": "2025-03-06T23:52:00"
-        },
-        {
-            "cpu_temperature": 45.5333,
-            "cpu_usage": 1.13167,
-            "ram_usage": 37.5,
-            "system_load": 0.210449,
-            "network_sent_bytes": 156471372084,
-            "network_recv_bytes": 14038743170,
-            "timestamp": "2025-03-06T23:53:00"
-        },
-        {
-            "cpu_temperature": 45.36,
-            "cpu_usage": 1.22333,
-            "ram_usage": 37.5,
-            "system_load": 0.0751953,
-            "network_sent_bytes": 156471393905,
-            "network_recv_bytes": 14038763763,
-            "timestamp": "2025-03-06T23:54:00"
-        },
-        {
-            "cpu_temperature": 45.3067,
-            "cpu_usage": 1.18333,
-            "ram_usage": 37.5,
-            "system_load": 0.237793,
-            "network_sent_bytes": 156471433646,
-            "network_recv_bytes": 14038802039,
-            "timestamp": "2025-03-06T23:55:00"
-        },
-        {
-            "cpu_temperature": 45.345,
-            "cpu_usage": 1.21,
-            "ram_usage": 37.6,
-            "system_load": 0.0859375,
-            "network_sent_bytes": 156471491974,
-            "network_recv_bytes": 14038865605,
-            "timestamp": "2025-03-06T23:56:00"
-        },
-        {
-            "cpu_temperature": 45.2867,
-            "cpu_usage": 1.28667,
-            "ram_usage": 37.6,
-            "system_load": 0.165527,
-            "network_sent_bytes": 156471519603,
-            "network_recv_bytes": 14038891884,
-            "timestamp": "2025-03-06T23:57:00"
-        },
-        {
-            "cpu_temperature": 45.1333,
-            "cpu_usage": 1.10833,
-            "ram_usage": 37.5,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156471542797,
-            "network_recv_bytes": 14038914018,
-            "timestamp": "2025-03-06T23:58:00"
-        },
-        {
-            "cpu_temperature": 45.23,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.1,
-            "system_load": 0.0664062,
-            "network_sent_bytes": 156471572219,
-            "network_recv_bytes": 14038941852,
-            "timestamp": "2025-03-06T23:59:00"
-        },
-        {
-            "cpu_temperature": 45.2767,
-            "cpu_usage": 1.46167,
-            "ram_usage": 37.5,
-            "system_load": 0.214355,
-            "network_sent_bytes": 156471640635,
-            "network_recv_bytes": 14039004880,
-            "timestamp": "2025-03-07T00:00:00"
-        },
-        {
-            "cpu_temperature": 45.4967,
-            "cpu_usage": 1.515,
-            "ram_usage": 37.5,
-            "system_load": 0.114258,
-            "network_sent_bytes": 156471669086,
-            "network_recv_bytes": 14039039470,
-            "timestamp": "2025-03-07T00:01:00"
-        },
-        {
-            "cpu_temperature": 45.2,
-            "cpu_usage": 1.18,
-            "ram_usage": 37.5,
-            "system_load": 0.0395508,
-            "network_sent_bytes": 156471707076,
-            "network_recv_bytes": 14039075537,
-            "timestamp": "2025-03-07T00:02:00"
-        },
-        {
-            "cpu_temperature": 45.3167,
-            "cpu_usage": 1.16667,
-            "ram_usage": 37.5,
-            "system_load": 0.297852,
-            "network_sent_bytes": 156471733713,
-            "network_recv_bytes": 14039100906,
-            "timestamp": "2025-03-07T00:03:00"
-        },
-        {
-            "cpu_temperature": 45.29,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.6,
-            "system_load": 0.10791,
-            "network_sent_bytes": 156471759825,
-            "network_recv_bytes": 14039125858,
-            "timestamp": "2025-03-07T00:04:00"
-        },
-        {
-            "cpu_temperature": 45.26,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.5,
-            "system_load": 0.138672,
-            "network_sent_bytes": 156471798747,
-            "network_recv_bytes": 14039163050,
-            "timestamp": "2025-03-07T00:05:00"
-        },
-        {
-            "cpu_temperature": 45.1933,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.5,
-            "system_load": 0.175293,
-            "network_sent_bytes": 156471826639,
-            "network_recv_bytes": 14039195472,
-            "timestamp": "2025-03-07T00:06:00"
-        },
-        {
-            "cpu_temperature": 45.175,
-            "cpu_usage": 1.18167,
-            "ram_usage": 37.4,
-            "system_load": 0.0620117,
-            "network_sent_bytes": 156471856331,
-            "network_recv_bytes": 14039224002,
-            "timestamp": "2025-03-07T00:07:00"
-        },
-        {
-            "cpu_temperature": 44.9933,
-            "cpu_usage": 1.145,
-            "ram_usage": 37.5,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156471883367,
-            "network_recv_bytes": 14039249940,
-            "timestamp": "2025-03-07T00:08:00"
-        },
-        {
-            "cpu_temperature": 45.2383,
-            "cpu_usage": 1.25167,
-            "ram_usage": 37.6,
-            "system_load": 0.163086,
-            "network_sent_bytes": 156471909364,
-            "network_recv_bytes": 14039274657,
-            "timestamp": "2025-03-07T00:09:00"
-        },
-        {
-            "cpu_temperature": 45.0533,
-            "cpu_usage": 1.33667,
-            "ram_usage": 37.5,
-            "system_load": 0.125977,
-            "network_sent_bytes": 156471950424,
-            "network_recv_bytes": 14039314024,
-            "timestamp": "2025-03-07T00:10:00"
-        },
-        {
-            "cpu_temperature": 45.1567,
-            "cpu_usage": 1.14167,
-            "ram_usage": 37.5,
-            "system_load": 0.415039,
-            "network_sent_bytes": 156471994423,
-            "network_recv_bytes": 14039362958,
-            "timestamp": "2025-03-07T00:11:00"
-        },
-        {
-            "cpu_temperature": 45.205,
-            "cpu_usage": 1.06333,
-            "ram_usage": 37.6,
-            "system_load": 0.188477,
-            "network_sent_bytes": 156472023283,
-            "network_recv_bytes": 14039386660,
-            "timestamp": "2025-03-07T00:12:00"
-        },
-        {
-            "cpu_temperature": 45.1617,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.6,
-            "system_load": 0.135254,
-            "network_sent_bytes": 156472050757,
-            "network_recv_bytes": 14039412904,
-            "timestamp": "2025-03-07T00:13:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.205,
-            "ram_usage": 37.5,
-            "system_load": 0.173828,
-            "network_sent_bytes": 156472078601,
-            "network_recv_bytes": 14039438977,
-            "timestamp": "2025-03-07T00:14:00"
-        },
-        {
-            "cpu_temperature": 44.9583,
-            "cpu_usage": 1.235,
-            "ram_usage": 37.6,
-            "system_load": 0.0615234,
-            "network_sent_bytes": 156472121117,
-            "network_recv_bytes": 14039485968,
-            "timestamp": "2025-03-07T00:15:00"
-        },
-        {
-            "cpu_temperature": 45.1583,
-            "cpu_usage": 1.12,
-            "ram_usage": 37.6,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156472149141,
-            "network_recv_bytes": 14039512699,
-            "timestamp": "2025-03-07T00:16:00"
-        },
-        {
-            "cpu_temperature": 45.0417,
-            "cpu_usage": 0.993333,
-            "ram_usage": 37.2,
-            "system_load": 0.151367,
-            "network_sent_bytes": 156472178084,
-            "network_recv_bytes": 14039540256,
-            "timestamp": "2025-03-07T00:17:00"
-        },
-        {
-            "cpu_temperature": 45.0433,
-            "cpu_usage": 1.04667,
-            "ram_usage": 37.5,
-            "system_load": 0.0541992,
-            "network_sent_bytes": 156472203782,
-            "network_recv_bytes": 14039565103,
-            "timestamp": "2025-03-07T00:18:00"
-        },
-        {
-            "cpu_temperature": 44.94,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37,
-            "system_load": 0.22998,
-            "network_sent_bytes": 156472228991,
-            "network_recv_bytes": 14039589044,
-            "timestamp": "2025-03-07T00:19:00"
-        },
-        {
-            "cpu_temperature": 45.0917,
-            "cpu_usage": 1.005,
-            "ram_usage": 37.5,
-            "system_load": 0.0830078,
-            "network_sent_bytes": 156472262230,
-            "network_recv_bytes": 14039620651,
-            "timestamp": "2025-03-07T00:20:00"
-        },
-        {
-            "cpu_temperature": 45.1183,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.6,
-            "system_load": 0.0966797,
-            "network_sent_bytes": 156472291327,
-            "network_recv_bytes": 14039654556,
-            "timestamp": "2025-03-07T00:21:00"
-        },
-        {
-            "cpu_temperature": 45.2767,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.5,
-            "system_load": 0.160645,
-            "network_sent_bytes": 156472319210,
-            "network_recv_bytes": 14039681125,
-            "timestamp": "2025-03-07T00:22:00"
-        },
-        {
-            "cpu_temperature": 45.165,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.6,
-            "system_load": 0.0561523,
-            "network_sent_bytes": 156472345558,
-            "network_recv_bytes": 14039706219,
-            "timestamp": "2025-03-07T00:23:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.18333,
-            "ram_usage": 37.5,
-            "system_load": 0.210449,
-            "network_sent_bytes": 156472374220,
-            "network_recv_bytes": 14039733707,
-            "timestamp": "2025-03-07T00:24:00"
-        },
-        {
-            "cpu_temperature": 45.185,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.5,
-            "system_load": 0.151367,
-            "network_sent_bytes": 156472406598,
-            "network_recv_bytes": 14039760563,
-            "timestamp": "2025-03-07T00:25:00"
-        },
-        {
-            "cpu_temperature": 44.98,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.3,
-            "system_load": 0.123047,
-            "network_sent_bytes": 156472434659,
-            "network_recv_bytes": 14039792666,
-            "timestamp": "2025-03-07T00:26:00"
-        },
-        {
-            "cpu_temperature": 45.1617,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.5,
-            "system_load": 0.254883,
-            "network_sent_bytes": 156472463102,
-            "network_recv_bytes": 14039820077,
-            "timestamp": "2025-03-07T00:27:00"
-        },
-        {
-            "cpu_temperature": 45.1833,
-            "cpu_usage": 1.10333,
-            "ram_usage": 37.3,
-            "system_load": 0.321289,
-            "network_sent_bytes": 156472493701,
-            "network_recv_bytes": 14039849250,
-            "timestamp": "2025-03-07T00:28:00"
-        },
-        {
-            "cpu_temperature": 45.1167,
-            "cpu_usage": 1.22,
-            "ram_usage": 37.6,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156472556850,
-            "network_recv_bytes": 14039909619,
-            "timestamp": "2025-03-07T00:29:00"
-        },
-        {
-            "cpu_temperature": 45.22,
-            "cpu_usage": 1.13833,
-            "ram_usage": 37.6,
-            "system_load": 0.266113,
-            "network_sent_bytes": 156472587307,
-            "network_recv_bytes": 14039938234,
-            "timestamp": "2025-03-07T00:30:00"
-        },
-        {
-            "cpu_temperature": 45.1433,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.7,
-            "system_load": 0.0952148,
-            "network_sent_bytes": 156472616122,
-            "network_recv_bytes": 14039971320,
-            "timestamp": "2025-03-07T00:31:00"
-        },
-        {
-            "cpu_temperature": 45.1683,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.5,
-            "system_load": 0.225098,
-            "network_sent_bytes": 156472642333,
-            "network_recv_bytes": 14039996183,
-            "timestamp": "2025-03-07T00:32:00"
-        },
-        {
-            "cpu_temperature": 45.0667,
-            "cpu_usage": 1.05833,
-            "ram_usage": 37.5,
-            "system_load": 0.118652,
-            "network_sent_bytes": 156472668241,
-            "network_recv_bytes": 14040020969,
-            "timestamp": "2025-03-07T00:33:00"
-        },
-        {
-            "cpu_temperature": 45.1917,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.2,
-            "system_load": 0.0419922,
-            "network_sent_bytes": 156472695519,
-            "network_recv_bytes": 14040047113,
-            "timestamp": "2025-03-07T00:34:00"
-        },
-        {
-            "cpu_temperature": 45.21,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.6,
-            "system_load": 0.385742,
-            "network_sent_bytes": 156472732568,
-            "network_recv_bytes": 14040088332,
-            "timestamp": "2025-03-07T00:35:00"
-        },
-        {
-            "cpu_temperature": 45.0967,
-            "cpu_usage": 1.08833,
-            "ram_usage": 37.3,
-            "system_load": 0.18457,
-            "network_sent_bytes": 156472760208,
-            "network_recv_bytes": 14040114601,
-            "timestamp": "2025-03-07T00:36:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.6,
-            "system_load": 0.45459,
-            "network_sent_bytes": 156472792502,
-            "network_recv_bytes": 14040141741,
-            "timestamp": "2025-03-07T00:37:00"
-        },
-        {
-            "cpu_temperature": 45.1,
-            "cpu_usage": 1.02667,
-            "ram_usage": 37.3,
-            "system_load": 0.291504,
-            "network_sent_bytes": 156472820289,
-            "network_recv_bytes": 14040167693,
-            "timestamp": "2025-03-07T00:38:00"
-        },
-        {
-            "cpu_temperature": 45.0817,
-            "cpu_usage": 1.18167,
-            "ram_usage": 37.6,
-            "system_load": 0.10498,
-            "network_sent_bytes": 156472846091,
-            "network_recv_bytes": 14040192371,
-            "timestamp": "2025-03-07T00:39:00"
-        },
-        {
-            "cpu_temperature": 45.0733,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37.3,
-            "system_load": 0.228516,
-            "network_sent_bytes": 156472876747,
-            "network_recv_bytes": 14040221347,
-            "timestamp": "2025-03-07T00:40:00"
-        },
-        {
-            "cpu_temperature": 45.02,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.5,
-            "system_load": 0.188477,
-            "network_sent_bytes": 156472905140,
-            "network_recv_bytes": 14040254518,
-            "timestamp": "2025-03-07T00:41:00"
-        },
-        {
-            "cpu_temperature": 44.975,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.5,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156472933801,
-            "network_recv_bytes": 14040282095,
-            "timestamp": "2025-03-07T00:42:00"
-        },
-        {
-            "cpu_temperature": 45.1317,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.5,
-            "system_load": 0.308105,
-            "network_sent_bytes": 156472960475,
-            "network_recv_bytes": 14040307435,
-            "timestamp": "2025-03-07T00:43:00"
-        },
-        {
-            "cpu_temperature": 44.9917,
-            "cpu_usage": 1.14667,
-            "ram_usage": 37.6,
-            "system_load": 0.3125,
-            "network_sent_bytes": 156472987426,
-            "network_recv_bytes": 14040333306,
-            "timestamp": "2025-03-07T00:44:00"
-        },
-        {
-            "cpu_temperature": 44.9867,
-            "cpu_usage": 1.13833,
-            "ram_usage": 37.5,
-            "system_load": 0.180664,
-            "network_sent_bytes": 156473017496,
-            "network_recv_bytes": 14040361851,
-            "timestamp": "2025-03-07T00:45:00"
-        },
-        {
-            "cpu_temperature": 45.1067,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.5,
-            "system_load": 0.243652,
-            "network_sent_bytes": 156473044374,
-            "network_recv_bytes": 14040393444,
-            "timestamp": "2025-03-07T00:46:00"
-        },
-        {
-            "cpu_temperature": 44.8867,
-            "cpu_usage": 1.21,
-            "ram_usage": 37.6,
-            "system_load": 0.0874023,
-            "network_sent_bytes": 156473070386,
-            "network_recv_bytes": 14040418134,
-            "timestamp": "2025-03-07T00:47:00"
-        },
-        {
-            "cpu_temperature": 45.095,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.5,
-            "system_load": 0.222168,
-            "network_sent_bytes": 156473098154,
-            "network_recv_bytes": 14040445121,
-            "timestamp": "2025-03-07T00:48:00"
-        },
-        {
-            "cpu_temperature": 45.095,
-            "cpu_usage": 1.26167,
-            "ram_usage": 37.6,
-            "system_load": 0.198242,
-            "network_sent_bytes": 156473137678,
-            "network_recv_bytes": 14040478983,
-            "timestamp": "2025-03-07T00:49:00"
-        },
-        {
-            "cpu_temperature": 44.9983,
-            "cpu_usage": 1.23333,
-            "ram_usage": 37.5,
-            "system_load": 0.115723,
-            "network_sent_bytes": 156473169295,
-            "network_recv_bytes": 14040508589,
-            "timestamp": "2025-03-07T00:50:00"
-        },
-        {
-            "cpu_temperature": 44.985,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.5,
-            "system_load": 0.310059,
-            "network_sent_bytes": 156473199077,
-            "network_recv_bytes": 14040542830,
-            "timestamp": "2025-03-07T00:51:00"
-        },
-        {
-            "cpu_temperature": 45.025,
-            "cpu_usage": 1.09167,
-            "ram_usage": 37.5,
-            "system_load": 0.186035,
-            "network_sent_bytes": 156473225237,
-            "network_recv_bytes": 14040567844,
-            "timestamp": "2025-03-07T00:52:00"
-        },
-        {
-            "cpu_temperature": 44.985,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.5,
-            "system_load": 0.184082,
-            "network_sent_bytes": 156473251690,
-            "network_recv_bytes": 14040593087,
-            "timestamp": "2025-03-07T00:53:00"
-        },
-        {
-            "cpu_temperature": 45.07,
-            "cpu_usage": 1.15,
-            "ram_usage": 37.5,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156473278254,
-            "network_recv_bytes": 14040618559,
-            "timestamp": "2025-03-07T00:54:00"
-        },
-        {
-            "cpu_temperature": 45.13,
-            "cpu_usage": 1.24167,
-            "ram_usage": 37.5,
-            "system_load": 0.0498047,
-            "network_sent_bytes": 156473307526,
-            "network_recv_bytes": 14040646213,
-            "timestamp": "2025-03-07T00:55:00"
-        },
-        {
-            "cpu_temperature": 45.105,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.5,
-            "system_load": 0.208496,
-            "network_sent_bytes": 156473334364,
-            "network_recv_bytes": 14040677701,
-            "timestamp": "2025-03-07T00:56:00"
-        },
-        {
-            "cpu_temperature": 45.0533,
-            "cpu_usage": 1.22333,
-            "ram_usage": 37.5,
-            "system_load": 0.193359,
-            "network_sent_bytes": 156473365163,
-            "network_recv_bytes": 14040707271,
-            "timestamp": "2025-03-07T00:57:00"
-        },
-        {
-            "cpu_temperature": 45.1183,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.5,
-            "system_load": 0.149414,
-            "network_sent_bytes": 156473392234,
-            "network_recv_bytes": 14040733270,
-            "timestamp": "2025-03-07T00:58:00"
-        },
-        {
-            "cpu_temperature": 45.365,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.1,
-            "system_load": 0.264648,
-            "network_sent_bytes": 156473417850,
-            "network_recv_bytes": 14040757760,
-            "timestamp": "2025-03-07T00:59:00"
-        },
-        {
-            "cpu_temperature": 45.3767,
-            "cpu_usage": 1.32333,
-            "ram_usage": 37.6,
-            "system_load": 0.297363,
-            "network_sent_bytes": 156473478676,
-            "network_recv_bytes": 14040822381,
-            "timestamp": "2025-03-07T01:00:00"
-        },
-        {
-            "cpu_temperature": 45.3283,
-            "cpu_usage": 1.32333,
-            "ram_usage": 37.6,
-            "system_load": 0.175781,
-            "network_sent_bytes": 156473512538,
-            "network_recv_bytes": 14040851899,
-            "timestamp": "2025-03-07T01:01:00"
-        },
-        {
-            "cpu_temperature": 45.2617,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.6,
-            "system_load": 0.27002,
-            "network_sent_bytes": 156473540499,
-            "network_recv_bytes": 14040878269,
-            "timestamp": "2025-03-07T01:02:00"
-        },
-        {
-            "cpu_temperature": 45.2433,
-            "cpu_usage": 1.19667,
-            "ram_usage": 37.6,
-            "system_load": 0.240723,
-            "network_sent_bytes": 156473570101,
-            "network_recv_bytes": 14040906431,
-            "timestamp": "2025-03-07T01:03:00"
-        },
-        {
-            "cpu_temperature": 45.4017,
-            "cpu_usage": 1.25333,
-            "ram_usage": 37.5,
-            "system_load": 0.358887,
-            "network_sent_bytes": 156473597152,
-            "network_recv_bytes": 14040932308,
-            "timestamp": "2025-03-07T01:04:00"
-        },
-        {
-            "cpu_temperature": 45.27,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.6,
-            "system_load": 0.293457,
-            "network_sent_bytes": 156473630899,
-            "network_recv_bytes": 14040964443,
-            "timestamp": "2025-03-07T01:05:00"
-        },
-        {
-            "cpu_temperature": 45.4367,
-            "cpu_usage": 1.19,
-            "ram_usage": 37.5,
-            "system_load": 0.249023,
-            "network_sent_bytes": 156473658070,
-            "network_recv_bytes": 14040996201,
-            "timestamp": "2025-03-07T01:06:00"
-        },
-        {
-            "cpu_temperature": 45.3167,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.6,
-            "system_load": 0.333984,
-            "network_sent_bytes": 156473687830,
-            "network_recv_bytes": 14041024936,
-            "timestamp": "2025-03-07T01:07:00"
-        },
-        {
-            "cpu_temperature": 45.2483,
-            "cpu_usage": 1.265,
-            "ram_usage": 37.5,
-            "system_load": 0.302734,
-            "network_sent_bytes": 156473715238,
-            "network_recv_bytes": 14041051016,
-            "timestamp": "2025-03-07T01:08:00"
-        },
-        {
-            "cpu_temperature": 44.9233,
-            "cpu_usage": 1.40667,
-            "ram_usage": 37.5,
-            "system_load": 0.177734,
-            "network_sent_bytes": 156473741715,
-            "network_recv_bytes": 14041076477,
-            "timestamp": "2025-03-07T01:09:00"
-        },
-        {
-            "cpu_temperature": 44.985,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.5,
-            "system_load": 0.26416,
-            "network_sent_bytes": 156473771266,
-            "network_recv_bytes": 14041104422,
-            "timestamp": "2025-03-07T01:10:00"
-        },
-        {
-            "cpu_temperature": 45.0333,
-            "cpu_usage": 1.185,
-            "ram_usage": 37.5,
-            "system_load": 0.317383,
-            "network_sent_bytes": 156473800412,
-            "network_recv_bytes": 14041138164,
-            "timestamp": "2025-03-07T01:11:00"
-        },
-        {
-            "cpu_temperature": 45.155,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37.6,
-            "system_load": 0.307129,
-            "network_sent_bytes": 156473829081,
-            "network_recv_bytes": 14041165503,
-            "timestamp": "2025-03-07T01:12:00"
-        },
-        {
-            "cpu_temperature": 45.1,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.5,
-            "system_load": 0.161621,
-            "network_sent_bytes": 156473858914,
-            "network_recv_bytes": 14041190154,
-            "timestamp": "2025-03-07T01:13:00"
-        },
-        {
-            "cpu_temperature": 45.14,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.6,
-            "system_load": 0.0522461,
-            "network_sent_bytes": 156473885857,
-            "network_recv_bytes": 14041215242,
-            "timestamp": "2025-03-07T01:14:00"
-        },
-        {
-            "cpu_temperature": 45.2433,
-            "cpu_usage": 1.12,
-            "ram_usage": 37.6,
-            "system_load": 0.168945,
-            "network_sent_bytes": 156473917767,
-            "network_recv_bytes": 14041245272,
-            "timestamp": "2025-03-07T01:15:00"
-        },
-        {
-            "cpu_temperature": 45.305,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.5,
-            "system_load": 0.141113,
-            "network_sent_bytes": 156473945540,
-            "network_recv_bytes": 14041277733,
-            "timestamp": "2025-03-07T01:16:00"
-        },
-        {
-            "cpu_temperature": 45.2783,
-            "cpu_usage": 1.13833,
-            "ram_usage": 37.5,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156473971899,
-            "network_recv_bytes": 14041302826,
-            "timestamp": "2025-03-07T01:17:00"
-        },
-        {
-            "cpu_temperature": 45.1367,
-            "cpu_usage": 1.04667,
-            "ram_usage": 37.1,
-            "system_load": 0.291504,
-            "network_sent_bytes": 156474002090,
-            "network_recv_bytes": 14041332121,
-            "timestamp": "2025-03-07T01:18:00"
-        },
-        {
-            "cpu_temperature": 45.0967,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.5,
-            "system_load": 0.236328,
-            "network_sent_bytes": 156474030925,
-            "network_recv_bytes": 14041359730,
-            "timestamp": "2025-03-07T01:19:00"
-        },
-        {
-            "cpu_temperature": 45.0867,
-            "cpu_usage": 1.02167,
-            "ram_usage": 37.2,
-            "system_load": 0.213867,
-            "network_sent_bytes": 156474068120,
-            "network_recv_bytes": 14041395189,
-            "timestamp": "2025-03-07T01:20:00"
-        },
-        {
-            "cpu_temperature": 45.0733,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.5,
-            "system_load": 0.196289,
-            "network_sent_bytes": 156474098037,
-            "network_recv_bytes": 14041428713,
-            "timestamp": "2025-03-07T01:21:00"
-        },
-        {
-            "cpu_temperature": 44.9067,
-            "cpu_usage": 0.996667,
-            "ram_usage": 37.2,
-            "system_load": 0.0766602,
-            "network_sent_bytes": 156474128119,
-            "network_recv_bytes": 14041457645,
-            "timestamp": "2025-03-07T01:22:00"
-        },
-        {
-            "cpu_temperature": 44.8367,
-            "cpu_usage": 1.04,
-            "ram_usage": 37.5,
-            "system_load": 0.338867,
-            "network_sent_bytes": 156474164122,
-            "network_recv_bytes": 14041492020,
-            "timestamp": "2025-03-07T01:23:00"
-        },
-        {
-            "cpu_temperature": 44.8,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.1,
-            "system_load": 0.133789,
-            "network_sent_bytes": 156474190959,
-            "network_recv_bytes": 14041517489,
-            "timestamp": "2025-03-07T01:24:00"
-        },
-        {
-            "cpu_temperature": 45.0567,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.4,
-            "system_load": 0.111328,
-            "network_sent_bytes": 156474226889,
-            "network_recv_bytes": 14041547633,
-            "timestamp": "2025-03-07T01:25:00"
-        },
-        {
-            "cpu_temperature": 45.0833,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.4,
-            "system_load": 0.165527,
-            "network_sent_bytes": 156474257484,
-            "network_recv_bytes": 14041580608,
-            "timestamp": "2025-03-07T01:26:00"
-        },
-        {
-            "cpu_temperature": 45.1067,
-            "cpu_usage": 1.20667,
-            "ram_usage": 37.3,
-            "system_load": 0.0644531,
-            "network_sent_bytes": 156474284095,
-            "network_recv_bytes": 14041606159,
-            "timestamp": "2025-03-07T01:27:00"
-        },
-        {
-            "cpu_temperature": 45.1383,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.3,
-            "system_load": 0.175293,
-            "network_sent_bytes": 156474310204,
-            "network_recv_bytes": 14041630960,
-            "timestamp": "2025-03-07T01:28:00"
-        },
-        {
-            "cpu_temperature": 45.005,
-            "cpu_usage": 1.22667,
-            "ram_usage": 37.3,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156474337827,
-            "network_recv_bytes": 14041657411,
-            "timestamp": "2025-03-07T01:29:00"
-        },
-        {
-            "cpu_temperature": 45.02,
-            "cpu_usage": 1.095,
-            "ram_usage": 37.4,
-            "system_load": 0.0917969,
-            "network_sent_bytes": 156474365761,
-            "network_recv_bytes": 14041684389,
-            "timestamp": "2025-03-07T01:30:00"
-        },
-        {
-            "cpu_temperature": 45.0433,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.3,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156474393594,
-            "network_recv_bytes": 14041716154,
-            "timestamp": "2025-03-07T01:31:00"
-        },
-        {
-            "cpu_temperature": 45.035,
-            "cpu_usage": 1.02333,
-            "ram_usage": 37.3,
-            "system_load": 0.0766602,
-            "network_sent_bytes": 156474429881,
-            "network_recv_bytes": 14041751033,
-            "timestamp": "2025-03-07T01:32:00"
-        },
-        {
-            "cpu_temperature": 45.1383,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.3,
-            "system_load": 0.23877,
-            "network_sent_bytes": 156474455839,
-            "network_recv_bytes": 14041775695,
-            "timestamp": "2025-03-07T01:33:00"
-        },
-        {
-            "cpu_temperature": 45.04,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37.1,
-            "system_load": 0.370117,
-            "network_sent_bytes": 156474483502,
-            "network_recv_bytes": 14041802242,
-            "timestamp": "2025-03-07T01:34:00"
-        },
-        {
-            "cpu_temperature": 45.28,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.4,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156474515369,
-            "network_recv_bytes": 14041832425,
-            "timestamp": "2025-03-07T01:35:00"
-        },
-        {
-            "cpu_temperature": 45.0367,
-            "cpu_usage": 1.06167,
-            "ram_usage": 37.2,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156474543007,
-            "network_recv_bytes": 14041864792,
-            "timestamp": "2025-03-07T01:36:00"
-        },
-        {
-            "cpu_temperature": 45.0583,
-            "cpu_usage": 1.06333,
-            "ram_usage": 37.4,
-            "system_load": 0.133301,
-            "network_sent_bytes": 156474575619,
-            "network_recv_bytes": 14041892010,
-            "timestamp": "2025-03-07T01:37:00"
-        },
-        {
-            "cpu_temperature": 45.0517,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.1,
-            "system_load": 0.046875,
-            "network_sent_bytes": 156474605249,
-            "network_recv_bytes": 14041919967,
-            "timestamp": "2025-03-07T01:38:00"
-        },
-        {
-            "cpu_temperature": 45.0483,
-            "cpu_usage": 1.25,
-            "ram_usage": 37.4,
-            "system_load": 0.245117,
-            "network_sent_bytes": 156474632402,
-            "network_recv_bytes": 14041945846,
-            "timestamp": "2025-03-07T01:39:00"
-        },
-        {
-            "cpu_temperature": 44.9833,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.3,
-            "system_load": 0.217773,
-            "network_sent_bytes": 156474667803,
-            "network_recv_bytes": 14041980336,
-            "timestamp": "2025-03-07T01:40:00"
-        },
-        {
-            "cpu_temperature": 44.91,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37.4,
-            "system_load": 0.151855,
-            "network_sent_bytes": 156474697650,
-            "network_recv_bytes": 14042014017,
-            "timestamp": "2025-03-07T01:41:00"
-        },
-        {
-            "cpu_temperature": 44.9767,
-            "cpu_usage": 1.01833,
-            "ram_usage": 37.2,
-            "system_load": 0.223145,
-            "network_sent_bytes": 156474727395,
-            "network_recv_bytes": 14042042582,
-            "timestamp": "2025-03-07T01:42:00"
-        },
-        {
-            "cpu_temperature": 45.0017,
-            "cpu_usage": 1.03167,
-            "ram_usage": 37.3,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156474753867,
-            "network_recv_bytes": 14042067834,
-            "timestamp": "2025-03-07T01:43:00"
-        },
-        {
-            "cpu_temperature": 44.98,
-            "cpu_usage": 1.125,
-            "ram_usage": 37.2,
-            "system_load": 0.148438,
-            "network_sent_bytes": 156474779858,
-            "network_recv_bytes": 14042092661,
-            "timestamp": "2025-03-07T01:44:00"
-        },
-        {
-            "cpu_temperature": 45.055,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.4,
-            "system_load": 0.125977,
-            "network_sent_bytes": 156474820567,
-            "network_recv_bytes": 14042131494,
-            "timestamp": "2025-03-07T01:45:00"
-        },
-        {
-            "cpu_temperature": 45.0667,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37,
-            "system_load": 0.0444336,
-            "network_sent_bytes": 156474848894,
-            "network_recv_bytes": 14042164441,
-            "timestamp": "2025-03-07T01:46:00"
-        },
-        {
-            "cpu_temperature": 45.03,
-            "cpu_usage": 0.993333,
-            "ram_usage": 37.3,
-            "system_load": 0.324707,
-            "network_sent_bytes": 156474876036,
-            "network_recv_bytes": 14042190309,
-            "timestamp": "2025-03-07T01:47:00"
-        },
-        {
-            "cpu_temperature": 45.0333,
-            "cpu_usage": 1.06,
-            "ram_usage": 36.9,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156474902319,
-            "network_recv_bytes": 14042215669,
-            "timestamp": "2025-03-07T01:48:00"
-        },
-        {
-            "cpu_temperature": 45.1817,
-            "cpu_usage": 1.02167,
-            "ram_usage": 37.4,
-            "system_load": 0.140137,
-            "network_sent_bytes": 156474935550,
-            "network_recv_bytes": 14042243572,
-            "timestamp": "2025-03-07T01:49:00"
-        },
-        {
-            "cpu_temperature": 45.18,
-            "cpu_usage": 1.02667,
-            "ram_usage": 37,
-            "system_load": 0.187012,
-            "network_sent_bytes": 156474968787,
-            "network_recv_bytes": 14042275016,
-            "timestamp": "2025-03-07T01:50:00"
-        },
-        {
-            "cpu_temperature": 45.22,
-            "cpu_usage": 1.00167,
-            "ram_usage": 37.3,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156475002577,
-            "network_recv_bytes": 14042311976,
-            "timestamp": "2025-03-07T01:51:00"
-        },
-        {
-            "cpu_temperature": 45.13,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.3,
-            "system_load": 0.156738,
-            "network_sent_bytes": 156475029156,
-            "network_recv_bytes": 14042337499,
-            "timestamp": "2025-03-07T01:52:00"
-        },
-        {
-            "cpu_temperature": 44.9967,
-            "cpu_usage": 1.21167,
-            "ram_usage": 37.4,
-            "system_load": 0.128906,
-            "network_sent_bytes": 156475055612,
-            "network_recv_bytes": 14042362639,
-            "timestamp": "2025-03-07T01:53:00"
-        },
-        {
-            "cpu_temperature": 45.0867,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.3,
-            "system_load": 0.0458984,
-            "network_sent_bytes": 156475083376,
-            "network_recv_bytes": 14042389235,
-            "timestamp": "2025-03-07T01:54:00"
-        },
-        {
-            "cpu_temperature": 45.135,
-            "cpu_usage": 1.225,
-            "ram_usage": 37.4,
-            "system_load": 0.245117,
-            "network_sent_bytes": 156475113550,
-            "network_recv_bytes": 14042417146,
-            "timestamp": "2025-03-07T01:55:00"
-        },
-        {
-            "cpu_temperature": 45.1683,
-            "cpu_usage": 1.12167,
-            "ram_usage": 37.3,
-            "system_load": 0.194336,
-            "network_sent_bytes": 156475142196,
-            "network_recv_bytes": 14042450561,
-            "timestamp": "2025-03-07T01:56:00"
-        },
-        {
-            "cpu_temperature": 45.2183,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.3,
-            "system_load": 0.144043,
-            "network_sent_bytes": 156475170874,
-            "network_recv_bytes": 14042478065,
-            "timestamp": "2025-03-07T01:57:00"
-        },
-        {
-            "cpu_temperature": 45.1933,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.3,
-            "system_load": 0.246582,
-            "network_sent_bytes": 156475196920,
-            "network_recv_bytes": 14042502849,
-            "timestamp": "2025-03-07T01:58:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.3,
-            "system_load": 0.0883789,
-            "network_sent_bytes": 156475225535,
-            "network_recv_bytes": 14042530268,
-            "timestamp": "2025-03-07T01:59:00"
-        },
-        {
-            "cpu_temperature": 44.94,
-            "cpu_usage": 1.45833,
-            "ram_usage": 37.4,
-            "system_load": 0.151367,
-            "network_sent_bytes": 156475288432,
-            "network_recv_bytes": 14042591193,
-            "timestamp": "2025-03-07T02:00:00"
-        },
-        {
-            "cpu_temperature": 44.995,
-            "cpu_usage": 1.27167,
-            "ram_usage": 37.4,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156475320574,
-            "network_recv_bytes": 14042623905,
-            "timestamp": "2025-03-07T02:01:00"
-        },
-        {
-            "cpu_temperature": 44.925,
-            "cpu_usage": 1.10333,
-            "ram_usage": 37.4,
-            "system_load": 0.0600586,
-            "network_sent_bytes": 156475356099,
-            "network_recv_bytes": 14042657703,
-            "timestamp": "2025-03-07T02:02:00"
-        },
-        {
-            "cpu_temperature": 45.1683,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.4,
-            "system_load": 0.250488,
-            "network_sent_bytes": 156475383332,
-            "network_recv_bytes": 14042683876,
-            "timestamp": "2025-03-07T02:03:00"
-        },
-        {
-            "cpu_temperature": 45.1567,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.4,
-            "system_load": 0.090332,
-            "network_sent_bytes": 156475411650,
-            "network_recv_bytes": 14042710818,
-            "timestamp": "2025-03-07T02:04:00"
-        },
-        {
-            "cpu_temperature": 45.1017,
-            "cpu_usage": 1.30667,
-            "ram_usage": 37.4,
-            "system_load": 0.158691,
-            "network_sent_bytes": 156475448810,
-            "network_recv_bytes": 14042746126,
-            "timestamp": "2025-03-07T02:05:00"
-        },
-        {
-            "cpu_temperature": 45.1867,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.2,
-            "system_load": 0.425293,
-            "network_sent_bytes": 156475477198,
-            "network_recv_bytes": 14042779264,
-            "timestamp": "2025-03-07T02:06:00"
-        },
-        {
-            "cpu_temperature": 45.195,
-            "cpu_usage": 1.115,
-            "ram_usage": 37.4,
-            "system_load": 0.191895,
-            "network_sent_bytes": 156475503258,
-            "network_recv_bytes": 14042804128,
-            "timestamp": "2025-03-07T02:07:00"
-        },
-        {
-            "cpu_temperature": 45.0667,
-            "cpu_usage": 1.115,
-            "ram_usage": 37.2,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156475532220,
-            "network_recv_bytes": 14042831852,
-            "timestamp": "2025-03-07T02:08:00"
-        },
-        {
-            "cpu_temperature": 45.0583,
-            "cpu_usage": 1.37,
-            "ram_usage": 37.4,
-            "system_load": 0.141602,
-            "network_sent_bytes": 156475560689,
-            "network_recv_bytes": 14042859251,
-            "timestamp": "2025-03-07T02:09:00"
-        },
-        {
-            "cpu_temperature": 45.0533,
-            "cpu_usage": 1.11,
-            "ram_usage": 37.4,
-            "system_load": 0.050293,
-            "network_sent_bytes": 156475591062,
-            "network_recv_bytes": 14042888447,
-            "timestamp": "2025-03-07T02:10:00"
-        },
-        {
-            "cpu_temperature": 45.025,
-            "cpu_usage": 1.11667,
-            "ram_usage": 37.3,
-            "system_load": 0.246582,
-            "network_sent_bytes": 156475619942,
-            "network_recv_bytes": 14042921296,
-            "timestamp": "2025-03-07T02:11:00"
-        },
-        {
-            "cpu_temperature": 45.1617,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.4,
-            "system_load": 0.129883,
-            "network_sent_bytes": 156475646609,
-            "network_recv_bytes": 14042946669,
-            "timestamp": "2025-03-07T02:12:00"
-        },
-        {
-            "cpu_temperature": 45.08,
-            "cpu_usage": 1.105,
-            "ram_usage": 37.3,
-            "system_load": 0.120117,
-            "network_sent_bytes": 156475681840,
-            "network_recv_bytes": 14042976738,
-            "timestamp": "2025-03-07T02:13:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.4,
-            "system_load": 0.179688,
-            "network_sent_bytes": 156475708389,
-            "network_recv_bytes": 14043001628,
-            "timestamp": "2025-03-07T02:14:00"
-        },
-        {
-            "cpu_temperature": 45.15,
-            "cpu_usage": 1.16167,
-            "ram_usage": 37.4,
-            "system_load": 0.0644531,
-            "network_sent_bytes": 156475736996,
-            "network_recv_bytes": 14043028016,
-            "timestamp": "2025-03-07T02:15:00"
-        },
-        {
-            "cpu_temperature": 45.0417,
-            "cpu_usage": 1.18167,
-            "ram_usage": 37.3,
-            "system_load": 0.217773,
-            "network_sent_bytes": 156475767037,
-            "network_recv_bytes": 14043061172,
-            "timestamp": "2025-03-07T02:16:00"
-        },
-        {
-            "cpu_temperature": 45.0867,
-            "cpu_usage": 1.23,
-            "ram_usage": 37.3,
-            "system_load": 0.256348,
-            "network_sent_bytes": 156475795145,
-            "network_recv_bytes": 14043087980,
-            "timestamp": "2025-03-07T02:17:00"
-        },
-        {
-            "cpu_temperature": 45.135,
-            "cpu_usage": 1.07333,
-            "ram_usage": 37.4,
-            "system_load": 0.172852,
-            "network_sent_bytes": 156475824451,
-            "network_recv_bytes": 14043116255,
-            "timestamp": "2025-03-07T02:18:00"
-        },
-        {
-            "cpu_temperature": 45.02,
-            "cpu_usage": 1.225,
-            "ram_usage": 37.4,
-            "system_load": 0.519531,
-            "network_sent_bytes": 156475851112,
-            "network_recv_bytes": 14043141626,
-            "timestamp": "2025-03-07T02:19:00"
-        },
-        {
-            "cpu_temperature": 44.9433,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.4,
-            "system_load": 0.314453,
-            "network_sent_bytes": 156475892322,
-            "network_recv_bytes": 14043181064,
-            "timestamp": "2025-03-07T02:20:00"
-        },
-        {
-            "cpu_temperature": 44.86,
-            "cpu_usage": 1.185,
-            "ram_usage": 37.4,
-            "system_load": 0.267578,
-            "network_sent_bytes": 156475921189,
-            "network_recv_bytes": 14043214383,
-            "timestamp": "2025-03-07T02:21:00"
-        },
-        {
-            "cpu_temperature": 44.8867,
-            "cpu_usage": 1.17167,
-            "ram_usage": 37.3,
-            "system_load": 0.4375,
-            "network_sent_bytes": 156475948218,
-            "network_recv_bytes": 14043240420,
-            "timestamp": "2025-03-07T02:22:00"
-        },
-        {
-            "cpu_temperature": 44.87,
-            "cpu_usage": 1.26167,
-            "ram_usage": 37.4,
-            "system_load": 0.200195,
-            "network_sent_bytes": 156475975911,
-            "network_recv_bytes": 14043266805,
-            "timestamp": "2025-03-07T02:23:00"
-        },
-        {
-            "cpu_temperature": 44.9617,
-            "cpu_usage": 1.31333,
-            "ram_usage": 37.3,
-            "system_load": 0.241699,
-            "network_sent_bytes": 156476003603,
-            "network_recv_bytes": 14043293327,
-            "timestamp": "2025-03-07T02:24:00"
-        },
-        {
-            "cpu_temperature": 44.855,
-            "cpu_usage": 1.31833,
-            "ram_usage": 37.4,
-            "system_load": 0.20166,
-            "network_sent_bytes": 156476037167,
-            "network_recv_bytes": 14043321205,
-            "timestamp": "2025-03-07T02:25:00"
-        },
-        {
-            "cpu_temperature": 44.8917,
-            "cpu_usage": 1.18333,
-            "ram_usage": 37.3,
-            "system_load": 0.0722656,
-            "network_sent_bytes": 156476066363,
-            "network_recv_bytes": 14043354650,
-            "timestamp": "2025-03-07T02:26:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.13833,
-            "ram_usage": 37.4,
-            "system_load": 0.254883,
-            "network_sent_bytes": 156476093648,
-            "network_recv_bytes": 14043380661,
-            "timestamp": "2025-03-07T02:27:00"
-        },
-        {
-            "cpu_temperature": 44.9433,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.3,
-            "system_load": 0.0913086,
-            "network_sent_bytes": 156476121047,
-            "network_recv_bytes": 14043406798,
-            "timestamp": "2025-03-07T02:28:00"
-        },
-        {
-            "cpu_temperature": 45.915,
-            "cpu_usage": 5.005,
-            "ram_usage": 37.4,
-            "system_load": 0.258789,
-            "network_sent_bytes": 156476645332,
-            "network_recv_bytes": 14058801834,
-            "timestamp": "2025-03-07T02:29:00"
-        },
-        {
-            "cpu_temperature": 45.2067,
-            "cpu_usage": 1.25333,
-            "ram_usage": 37.4,
-            "system_load": 0.230469,
-            "network_sent_bytes": 156476674563,
-            "network_recv_bytes": 14058829639,
-            "timestamp": "2025-03-07T02:30:00"
-        },
-        {
-            "cpu_temperature": 45.1033,
-            "cpu_usage": 1.04333,
-            "ram_usage": 37,
-            "system_load": 0.141113,
-            "network_sent_bytes": 156476705405,
-            "network_recv_bytes": 14058864752,
-            "timestamp": "2025-03-07T02:31:00"
-        },
-        {
-            "cpu_temperature": 45.0733,
-            "cpu_usage": 0.995,
-            "ram_usage": 37.4,
-            "system_load": 0.171387,
-            "network_sent_bytes": 156476732607,
-            "network_recv_bytes": 14058890702,
-            "timestamp": "2025-03-07T02:32:00"
-        },
-        {
-            "cpu_temperature": 44.955,
-            "cpu_usage": 1.06333,
-            "ram_usage": 37,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156476759771,
-            "network_recv_bytes": 14058916716,
-            "timestamp": "2025-03-07T02:33:00"
-        },
-        {
-            "cpu_temperature": 44.9717,
-            "cpu_usage": 1.05167,
-            "ram_usage": 37.4,
-            "system_load": 0.046875,
-            "network_sent_bytes": 156476786228,
-            "network_recv_bytes": 14058941947,
-            "timestamp": "2025-03-07T02:34:00"
-        },
-        {
-            "cpu_temperature": 45.1183,
-            "cpu_usage": 1.155,
-            "ram_usage": 37,
-            "system_load": 0.366699,
-            "network_sent_bytes": 156476819529,
-            "network_recv_bytes": 14058973708,
-            "timestamp": "2025-03-07T02:35:00"
-        },
-        {
-            "cpu_temperature": 45.0417,
-            "cpu_usage": 1.00833,
-            "ram_usage": 37.4,
-            "system_load": 0.181641,
-            "network_sent_bytes": 156476849302,
-            "network_recv_bytes": 14059008064,
-            "timestamp": "2025-03-07T02:36:00"
-        },
-        {
-            "cpu_temperature": 44.9933,
-            "cpu_usage": 0.983333,
-            "ram_usage": 37,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156476883916,
-            "network_recv_bytes": 14059037136,
-            "timestamp": "2025-03-07T02:37:00"
-        },
-        {
-            "cpu_temperature": 45.015,
-            "cpu_usage": 1.05667,
-            "ram_usage": 37.4,
-            "system_load": 0.367676,
-            "network_sent_bytes": 156476912121,
-            "network_recv_bytes": 14059063648,
-            "timestamp": "2025-03-07T02:38:00"
-        },
-        {
-            "cpu_temperature": 44.855,
-            "cpu_usage": 1.13,
-            "ram_usage": 37,
-            "system_load": 0.133301,
-            "network_sent_bytes": 156476938028,
-            "network_recv_bytes": 14059088417,
-            "timestamp": "2025-03-07T02:39:00"
-        },
-        {
-            "cpu_temperature": 44.82,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.4,
-            "system_load": 0.200684,
-            "network_sent_bytes": 156476971093,
-            "network_recv_bytes": 14059125883,
-            "timestamp": "2025-03-07T02:40:00"
-        },
-        {
-            "cpu_temperature": 44.9933,
-            "cpu_usage": 1.045,
-            "ram_usage": 37,
-            "system_load": 0.208008,
-            "network_sent_bytes": 156476998717,
-            "network_recv_bytes": 14059152097,
-            "timestamp": "2025-03-07T02:41:00"
-        },
-        {
-            "cpu_temperature": 44.85,
-            "cpu_usage": 1.00667,
-            "ram_usage": 37.3,
-            "system_load": 0.0742188,
-            "network_sent_bytes": 156477026061,
-            "network_recv_bytes": 14059178473,
-            "timestamp": "2025-03-07T02:42:00"
-        },
-        {
-            "cpu_temperature": 44.9217,
-            "cpu_usage": 1.02167,
-            "ram_usage": 36.9,
-            "system_load": 0.174805,
-            "network_sent_bytes": 156477055793,
-            "network_recv_bytes": 14059206801,
-            "timestamp": "2025-03-07T02:43:00"
-        },
-        {
-            "cpu_temperature": 44.795,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.3,
-            "system_load": 0.14209,
-            "network_sent_bytes": 156477082453,
-            "network_recv_bytes": 14059232363,
-            "timestamp": "2025-03-07T02:44:00"
-        },
-        {
-            "cpu_temperature": 44.7383,
-            "cpu_usage": 1.09833,
-            "ram_usage": 36.9,
-            "system_load": 0.124512,
-            "network_sent_bytes": 156477108764,
-            "network_recv_bytes": 14059257696,
-            "timestamp": "2025-03-07T02:45:00"
-        },
-        {
-            "cpu_temperature": 44.78,
-            "cpu_usage": 1.01167,
-            "ram_usage": 37.3,
-            "system_load": 0.181641,
-            "network_sent_bytes": 156477139378,
-            "network_recv_bytes": 14059292295,
-            "timestamp": "2025-03-07T02:46:00"
-        },
-        {
-            "cpu_temperature": 44.73,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.3,
-            "system_load": 0.0649414,
-            "network_sent_bytes": 156477168035,
-            "network_recv_bytes": 14059319770,
-            "timestamp": "2025-03-07T02:47:00"
-        },
-        {
-            "cpu_temperature": 44.7067,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.4,
-            "system_load": 0.143555,
-            "network_sent_bytes": 156477205036,
-            "network_recv_bytes": 14059355734,
-            "timestamp": "2025-03-07T02:48:00"
-        },
-        {
-            "cpu_temperature": 44.75,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.4,
-            "system_load": 0.124023,
-            "network_sent_bytes": 156477237970,
-            "network_recv_bytes": 14059383320,
-            "timestamp": "2025-03-07T02:49:00"
-        },
-        {
-            "cpu_temperature": 44.6317,
-            "cpu_usage": 1.20167,
-            "ram_usage": 37.3,
-            "system_load": 0.0429688,
-            "network_sent_bytes": 156477272849,
-            "network_recv_bytes": 14059416423,
-            "timestamp": "2025-03-07T02:50:00"
-        },
-        {
-            "cpu_temperature": 44.5667,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.4,
-            "system_load": 0.415039,
-            "network_sent_bytes": 156477301986,
-            "network_recv_bytes": 14059448959,
-            "timestamp": "2025-03-07T02:51:00"
-        },
-        {
-            "cpu_temperature": 44.5817,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.3,
-            "system_load": 0.150879,
-            "network_sent_bytes": 156477331762,
-            "network_recv_bytes": 14059477525,
-            "timestamp": "2025-03-07T02:52:00"
-        },
-        {
-            "cpu_temperature": 44.6667,
-            "cpu_usage": 1.07667,
-            "ram_usage": 37.4,
-            "system_load": 0.12793,
-            "network_sent_bytes": 156477358792,
-            "network_recv_bytes": 14059503419,
-            "timestamp": "2025-03-07T02:53:00"
-        },
-        {
-            "cpu_temperature": 44.7333,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.4,
-            "system_load": 0.263184,
-            "network_sent_bytes": 156477385885,
-            "network_recv_bytes": 14059529234,
-            "timestamp": "2025-03-07T02:54:00"
-        },
-        {
-            "cpu_temperature": 44.7233,
-            "cpu_usage": 1.105,
-            "ram_usage": 37.4,
-            "system_load": 0.224121,
-            "network_sent_bytes": 156477417853,
-            "network_recv_bytes": 14059559492,
-            "timestamp": "2025-03-07T02:55:00"
-        },
-        {
-            "cpu_temperature": 44.5717,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.4,
-            "system_load": 0.281738,
-            "network_sent_bytes": 156477449878,
-            "network_recv_bytes": 14059596106,
-            "timestamp": "2025-03-07T02:56:00"
-        },
-        {
-            "cpu_temperature": 44.675,
-            "cpu_usage": 1.06,
-            "ram_usage": 37.3,
-            "system_load": 0.255371,
-            "network_sent_bytes": 156477476785,
-            "network_recv_bytes": 14059621961,
-            "timestamp": "2025-03-07T02:57:00"
-        },
-        {
-            "cpu_temperature": 44.5567,
-            "cpu_usage": 1.07667,
-            "ram_usage": 37.3,
-            "system_load": 0.14502,
-            "network_sent_bytes": 156477503169,
-            "network_recv_bytes": 14059647209,
-            "timestamp": "2025-03-07T02:58:00"
-        },
-        {
-            "cpu_temperature": 44.62,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.3,
-            "system_load": 0.281738,
-            "network_sent_bytes": 156477531052,
-            "network_recv_bytes": 14059673824,
-            "timestamp": "2025-03-07T02:59:00"
-        },
-        {
-            "cpu_temperature": 44.6117,
-            "cpu_usage": 1.405,
-            "ram_usage": 37.4,
-            "system_load": 0.182617,
-            "network_sent_bytes": 156477592136,
-            "network_recv_bytes": 14059732944,
-            "timestamp": "2025-03-07T03:00:00"
-        },
-        {
-            "cpu_temperature": 44.55,
-            "cpu_usage": 1.26333,
-            "ram_usage": 37.4,
-            "system_load": 0.151855,
-            "network_sent_bytes": 156477627122,
-            "network_recv_bytes": 14059768643,
-            "timestamp": "2025-03-07T03:01:00"
-        },
-        {
-            "cpu_temperature": 44.815,
-            "cpu_usage": 1.12,
-            "ram_usage": 37.3,
-            "system_load": 0.203125,
-            "network_sent_bytes": 156477654529,
-            "network_recv_bytes": 14059794405,
-            "timestamp": "2025-03-07T03:02:00"
-        },
-        {
-            "cpu_temperature": 44.5083,
-            "cpu_usage": 1.25333,
-            "ram_usage": 37.3,
-            "system_load": 0.104492,
-            "network_sent_bytes": 156477680475,
-            "network_recv_bytes": 14059819129,
-            "timestamp": "2025-03-07T03:03:00"
-        },
-        {
-            "cpu_temperature": 44.565,
-            "cpu_usage": 1.21667,
-            "ram_usage": 37.3,
-            "system_load": 0.200684,
-            "network_sent_bytes": 156477709515,
-            "network_recv_bytes": 14059847041,
-            "timestamp": "2025-03-07T03:04:00"
-        },
-        {
-            "cpu_temperature": 44.6433,
-            "cpu_usage": 1.26833,
-            "ram_usage": 37.3,
-            "system_load": 0.184082,
-            "network_sent_bytes": 156477749298,
-            "network_recv_bytes": 14059885128,
-            "timestamp": "2025-03-07T03:05:00"
-        },
-        {
-            "cpu_temperature": 44.61,
-            "cpu_usage": 1.07833,
-            "ram_usage": 37.1,
-            "system_load": 0.100586,
-            "network_sent_bytes": 156477776532,
-            "network_recv_bytes": 14059916995,
-            "timestamp": "2025-03-07T03:06:00"
-        },
-        {
-            "cpu_temperature": 44.5233,
-            "cpu_usage": 1.09333,
-            "ram_usage": 37.4,
-            "system_load": 0.197754,
-            "network_sent_bytes": 156477804015,
-            "network_recv_bytes": 14059943458,
-            "timestamp": "2025-03-07T03:07:00"
-        },
-        {
-            "cpu_temperature": 44.51,
-            "cpu_usage": 1.04167,
-            "ram_usage": 37.3,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156477835959,
-            "network_recv_bytes": 14059974224,
-            "timestamp": "2025-03-07T03:08:00"
-        },
-        {
-            "cpu_temperature": 44.665,
-            "cpu_usage": 1.24167,
-            "ram_usage": 37.4,
-            "system_load": 0.127441,
-            "network_sent_bytes": 156477863626,
-            "network_recv_bytes": 14060000577,
-            "timestamp": "2025-03-07T03:09:00"
-        },
-        {
-            "cpu_temperature": 44.625,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.3,
-            "system_load": 0.164062,
-            "network_sent_bytes": 156477893360,
-            "network_recv_bytes": 14060028681,
-            "timestamp": "2025-03-07T03:10:00"
-        },
-        {
-            "cpu_temperature": 44.5817,
-            "cpu_usage": 1.27833,
-            "ram_usage": 37.4,
-            "system_load": 0.0585938,
-            "network_sent_bytes": 156477921912,
-            "network_recv_bytes": 14060061890,
-            "timestamp": "2025-03-07T03:11:00"
-        },
-        {
-            "cpu_temperature": 44.6817,
-            "cpu_usage": 1.11667,
-            "ram_usage": 37.3,
-            "system_load": 0.189941,
-            "network_sent_bytes": 156477947437,
-            "network_recv_bytes": 14060086409,
-            "timestamp": "2025-03-07T03:12:00"
-        },
-        {
-            "cpu_temperature": 44.7567,
-            "cpu_usage": 1.12333,
-            "ram_usage": 37.3,
-            "system_load": 0.205566,
-            "network_sent_bytes": 156477977688,
-            "network_recv_bytes": 14060111216,
-            "timestamp": "2025-03-07T03:13:00"
-        },
-        {
-            "cpu_temperature": 44.7617,
-            "cpu_usage": 1.18167,
-            "ram_usage": 37.3,
-            "system_load": 0.0732422,
-            "network_sent_bytes": 156478009044,
-            "network_recv_bytes": 14060140655,
-            "timestamp": "2025-03-07T03:14:00"
-        },
-        {
-            "cpu_temperature": 44.9067,
-            "cpu_usage": 1.22167,
-            "ram_usage": 37.3,
-            "system_load": 0.323242,
-            "network_sent_bytes": 156478041569,
-            "network_recv_bytes": 14060177540,
-            "timestamp": "2025-03-07T03:15:00"
-        },
-        {
-            "cpu_temperature": 44.9367,
-            "cpu_usage": 1.235,
-            "ram_usage": 37.4,
-            "system_load": 0.21875,
-            "network_sent_bytes": 156478069061,
-            "network_recv_bytes": 14060203836,
-            "timestamp": "2025-03-07T03:16:00"
-        },
-        {
-            "cpu_temperature": 44.785,
-            "cpu_usage": 1.165,
-            "ram_usage": 37,
-            "system_load": 0.15918,
-            "network_sent_bytes": 156478095122,
-            "network_recv_bytes": 14060228601,
-            "timestamp": "2025-03-07T03:17:00"
-        },
-        {
-            "cpu_temperature": 44.9667,
-            "cpu_usage": 1.04333,
-            "ram_usage": 37.3,
-            "system_load": 0.206055,
-            "network_sent_bytes": 156478122524,
-            "network_recv_bytes": 14060255192,
-            "timestamp": "2025-03-07T03:18:00"
-        },
-        {
-            "cpu_temperature": 45.0367,
-            "cpu_usage": 1.205,
-            "ram_usage": 37.3,
-            "system_load": 0.203125,
-            "network_sent_bytes": 156478148692,
-            "network_recv_bytes": 14060280062,
-            "timestamp": "2025-03-07T03:19:00"
-        },
-        {
-            "cpu_temperature": 45.0383,
-            "cpu_usage": 1.17333,
-            "ram_usage": 37.2,
-            "system_load": 0.246094,
-            "network_sent_bytes": 156478180650,
-            "network_recv_bytes": 14060310561,
-            "timestamp": "2025-03-07T03:20:00"
-        },
-        {
-            "cpu_temperature": 45.0217,
-            "cpu_usage": 1.13667,
-            "ram_usage": 37.3,
-            "system_load": 0.168457,
-            "network_sent_bytes": 156478209217,
-            "network_recv_bytes": 14060343659,
-            "timestamp": "2025-03-07T03:21:00"
-        },
-        {
-            "cpu_temperature": 45.0233,
-            "cpu_usage": 1.17167,
-            "ram_usage": 37.3,
-            "system_load": 0.0922852,
-            "network_sent_bytes": 156478244698,
-            "network_recv_bytes": 14060377866,
-            "timestamp": "2025-03-07T03:22:00"
-        },
-        {
-            "cpu_temperature": 44.9467,
-            "cpu_usage": 1.165,
-            "ram_usage": 37.3,
-            "system_load": 0.194824,
-            "network_sent_bytes": 156478274222,
-            "network_recv_bytes": 14060406148,
-            "timestamp": "2025-03-07T03:23:00"
-        },
-        {
-            "cpu_temperature": 45.0783,
-            "cpu_usage": 1.265,
-            "ram_usage": 37.2,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156478302924,
-            "network_recv_bytes": 14060433544,
-            "timestamp": "2025-03-07T03:24:00"
-        },
-        {
-            "cpu_temperature": 44.93,
-            "cpu_usage": 1.22667,
-            "ram_usage": 37.4,
-            "system_load": 0.116211,
-            "network_sent_bytes": 156478340291,
-            "network_recv_bytes": 14060465213,
-            "timestamp": "2025-03-07T03:25:00"
-        },
-        {
-            "cpu_temperature": 44.965,
-            "cpu_usage": 1.20667,
-            "ram_usage": 37.4,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156478368327,
-            "network_recv_bytes": 14060497349,
-            "timestamp": "2025-03-07T03:26:00"
-        },
-        {
-            "cpu_temperature": 45.1467,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.3,
-            "system_load": 0.0673828,
-            "network_sent_bytes": 156478397483,
-            "network_recv_bytes": 14060525139,
-            "timestamp": "2025-03-07T03:27:00"
-        },
-        {
-            "cpu_temperature": 44.9633,
-            "cpu_usage": 1.22333,
-            "ram_usage": 37.3,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156478424710,
-            "network_recv_bytes": 14060551310,
-            "timestamp": "2025-03-07T03:28:00"
-        },
-        {
-            "cpu_temperature": 45.1533,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.3,
-            "system_load": 0.279297,
-            "network_sent_bytes": 156478451581,
-            "network_recv_bytes": 14060576909,
-            "timestamp": "2025-03-07T03:29:00"
-        },
-        {
-            "cpu_temperature": 45.045,
-            "cpu_usage": 1.13833,
-            "ram_usage": 37.4,
-            "system_load": 0.17627,
-            "network_sent_bytes": 156478491376,
-            "network_recv_bytes": 14060615373,
-            "timestamp": "2025-03-07T03:30:00"
-        },
-        {
-            "cpu_temperature": 45.12,
-            "cpu_usage": 1.195,
-            "ram_usage": 37.3,
-            "system_load": 0.260254,
-            "network_sent_bytes": 156478520479,
-            "network_recv_bytes": 14060648968,
-            "timestamp": "2025-03-07T03:31:00"
-        },
-        {
-            "cpu_temperature": 45.175,
-            "cpu_usage": 1.145,
-            "ram_usage": 37.4,
-            "system_load": 0.125977,
-            "network_sent_bytes": 156478547838,
-            "network_recv_bytes": 14060675303,
-            "timestamp": "2025-03-07T03:32:00"
-        },
-        {
-            "cpu_temperature": 45.2583,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.4,
-            "system_load": 0.125,
-            "network_sent_bytes": 156478573829,
-            "network_recv_bytes": 14060700154,
-            "timestamp": "2025-03-07T03:33:00"
-        },
-        {
-            "cpu_temperature": 45.1467,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.4,
-            "system_load": 0.193848,
-            "network_sent_bytes": 156478599935,
-            "network_recv_bytes": 14060724940,
-            "timestamp": "2025-03-07T03:34:00"
-        },
-        {
-            "cpu_temperature": 45.075,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.3,
-            "system_load": 0.0693359,
-            "network_sent_bytes": 156478633655,
-            "network_recv_bytes": 14060757122,
-            "timestamp": "2025-03-07T03:35:00"
-        },
-        {
-            "cpu_temperature": 45.16,
-            "cpu_usage": 1.00167,
-            "ram_usage": 37.2,
-            "system_load": 0.155273,
-            "network_sent_bytes": 156478662028,
-            "network_recv_bytes": 14060790091,
-            "timestamp": "2025-03-07T03:36:00"
-        },
-        {
-            "cpu_temperature": 45.2233,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.3,
-            "system_load": 0.214355,
-            "network_sent_bytes": 156478692952,
-            "network_recv_bytes": 14060815659,
-            "timestamp": "2025-03-07T03:37:00"
-        },
-        {
-            "cpu_temperature": 45.2333,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.2,
-            "system_load": 0.0771484,
-            "network_sent_bytes": 156478720459,
-            "network_recv_bytes": 14060841469,
-            "timestamp": "2025-03-07T03:38:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.29,
-            "ram_usage": 37.4,
-            "system_load": 0.189453,
-            "network_sent_bytes": 156478748827,
-            "network_recv_bytes": 14060868785,
-            "timestamp": "2025-03-07T03:39:00"
-        },
-        {
-            "cpu_temperature": 45.205,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37.3,
-            "system_load": 0.0996094,
-            "network_sent_bytes": 156478788224,
-            "network_recv_bytes": 14060906126,
-            "timestamp": "2025-03-07T03:40:00"
-        },
-        {
-            "cpu_temperature": 45.1783,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.3,
-            "system_load": 0.115723,
-            "network_sent_bytes": 156478821375,
-            "network_recv_bytes": 14060941267,
-            "timestamp": "2025-03-07T03:41:00"
-        },
-        {
-            "cpu_temperature": 45.1317,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.3,
-            "system_load": 0.235352,
-            "network_sent_bytes": 156478849376,
-            "network_recv_bytes": 14060967996,
-            "timestamp": "2025-03-07T03:42:00"
-        },
-        {
-            "cpu_temperature": 45.1433,
-            "cpu_usage": 1.14667,
-            "ram_usage": 37.3,
-            "system_load": 0.158691,
-            "network_sent_bytes": 156478875190,
-            "network_recv_bytes": 14060992808,
-            "timestamp": "2025-03-07T03:43:00"
-        },
-        {
-            "cpu_temperature": 45.3117,
-            "cpu_usage": 1.18333,
-            "ram_usage": 37.3,
-            "system_load": 0.223633,
-            "network_sent_bytes": 156478901389,
-            "network_recv_bytes": 14061017653,
-            "timestamp": "2025-03-07T03:44:00"
-        },
-        {
-            "cpu_temperature": 45.0667,
-            "cpu_usage": 1.15667,
-            "ram_usage": 37.4,
-            "system_load": 0.228516,
-            "network_sent_bytes": 156478932537,
-            "network_recv_bytes": 14061052601,
-            "timestamp": "2025-03-07T03:45:00"
-        },
-        {
-            "cpu_temperature": 45.1183,
-            "cpu_usage": 1.075,
-            "ram_usage": 37.3,
-            "system_load": 0.0820312,
-            "network_sent_bytes": 156478960475,
-            "network_recv_bytes": 14061079906,
-            "timestamp": "2025-03-07T03:46:00"
-        },
-        {
-            "cpu_temperature": 45.2467,
-            "cpu_usage": 1.11,
-            "ram_usage": 37.4,
-            "system_load": 0.258301,
-            "network_sent_bytes": 156478988847,
-            "network_recv_bytes": 14061107124,
-            "timestamp": "2025-03-07T03:47:00"
-        },
-        {
-            "cpu_temperature": 45.3667,
-            "cpu_usage": 1.09333,
-            "ram_usage": 37.3,
-            "system_load": 0.124512,
-            "network_sent_bytes": 156479019740,
-            "network_recv_bytes": 14061136850,
-            "timestamp": "2025-03-07T03:48:00"
-        },
-        {
-            "cpu_temperature": 45.3533,
-            "cpu_usage": 1.19,
-            "ram_usage": 37.4,
-            "system_load": 0.172852,
-            "network_sent_bytes": 156479053044,
-            "network_recv_bytes": 14061165028,
-            "timestamp": "2025-03-07T03:49:00"
-        },
-        {
-            "cpu_temperature": 45.2067,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.3,
-            "system_load": 0.291504,
-            "network_sent_bytes": 156479084004,
-            "network_recv_bytes": 14061193663,
-            "timestamp": "2025-03-07T03:50:00"
-        },
-        {
-            "cpu_temperature": 44.9767,
-            "cpu_usage": 1.12167,
-            "ram_usage": 37.3,
-            "system_load": 0.10498,
-            "network_sent_bytes": 156479113266,
-            "network_recv_bytes": 14061227726,
-            "timestamp": "2025-03-07T03:51:00"
-        },
-        {
-            "cpu_temperature": 45.0183,
-            "cpu_usage": 1.07,
-            "ram_usage": 37.3,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156479140442,
-            "network_recv_bytes": 14061253686,
-            "timestamp": "2025-03-07T03:52:00"
-        },
-        {
-            "cpu_temperature": 45.0183,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.2,
-            "system_load": 0.139648,
-            "network_sent_bytes": 156479168664,
-            "network_recv_bytes": 14061280902,
-            "timestamp": "2025-03-07T03:53:00"
-        },
-        {
-            "cpu_temperature": 44.96,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.4,
-            "system_load": 0.0498047,
-            "network_sent_bytes": 156479194125,
-            "network_recv_bytes": 14061305055,
-            "timestamp": "2025-03-07T03:54:00"
-        },
-        {
-            "cpu_temperature": 45.0617,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.3,
-            "system_load": 0.179199,
-            "network_sent_bytes": 156479223608,
-            "network_recv_bytes": 14061333018,
-            "timestamp": "2025-03-07T03:55:00"
-        },
-        {
-            "cpu_temperature": 45.1167,
-            "cpu_usage": 1.18,
-            "ram_usage": 37.3,
-            "system_load": 0.149414,
-            "network_sent_bytes": 156479253485,
-            "network_recv_bytes": 14061366310,
-            "timestamp": "2025-03-07T03:56:00"
-        },
-        {
-            "cpu_temperature": 45.0467,
-            "cpu_usage": 1.19333,
-            "ram_usage": 37.4,
-            "system_load": 0.133301,
-            "network_sent_bytes": 156479281191,
-            "network_recv_bytes": 14061392800,
-            "timestamp": "2025-03-07T03:57:00"
-        },
-        {
-            "cpu_temperature": 45.085,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.3,
-            "system_load": 0.264648,
-            "network_sent_bytes": 156479312427,
-            "network_recv_bytes": 14061422606,
-            "timestamp": "2025-03-07T03:58:00"
-        },
-        {
-            "cpu_temperature": 45.2017,
-            "cpu_usage": 1.22167,
-            "ram_usage": 37.3,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156479337031,
-            "network_recv_bytes": 14061446160,
-            "timestamp": "2025-03-07T03:59:00"
-        },
-        {
-            "cpu_temperature": 45.09,
-            "cpu_usage": 1.97667,
-            "ram_usage": 37.5,
-            "system_load": 0.208008,
-            "network_sent_bytes": 156479394748,
-            "network_recv_bytes": 14061501881,
-            "timestamp": "2025-03-07T04:00:00"
-        },
-        {
-            "cpu_temperature": 45.1583,
-            "cpu_usage": 1.845,
-            "ram_usage": 37.3,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156479448125,
-            "network_recv_bytes": 14061555414,
-            "timestamp": "2025-03-07T04:01:00"
-        },
-        {
-            "cpu_temperature": 45.2283,
-            "cpu_usage": 1.04,
-            "ram_usage": 37.3,
-            "system_load": 0.0712891,
-            "network_sent_bytes": 156479476042,
-            "network_recv_bytes": 14061581590,
-            "timestamp": "2025-03-07T04:02:00"
-        },
-        {
-            "cpu_temperature": 44.9983,
-            "cpu_usage": 1.15,
-            "ram_usage": 37.3,
-            "system_load": 0.26709,
-            "network_sent_bytes": 156479501031,
-            "network_recv_bytes": 14061605405,
-            "timestamp": "2025-03-07T04:03:00"
-        },
-        {
-            "cpu_temperature": 45.0683,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.4,
-            "system_load": 0.261719,
-            "network_sent_bytes": 156479528539,
-            "network_recv_bytes": 14061631802,
-            "timestamp": "2025-03-07T04:04:00"
-        },
-        {
-            "cpu_temperature": 44.9867,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.4,
-            "system_load": 0.237305,
-            "network_sent_bytes": 156479569898,
-            "network_recv_bytes": 14061670905,
-            "timestamp": "2025-03-07T04:05:00"
-        },
-        {
-            "cpu_temperature": 44.9733,
-            "cpu_usage": 1.04333,
-            "ram_usage": 37.2,
-            "system_load": 0.288574,
-            "network_sent_bytes": 156479595787,
-            "network_recv_bytes": 14061701476,
-            "timestamp": "2025-03-07T04:06:00"
-        },
-        {
-            "cpu_temperature": 45.005,
-            "cpu_usage": 1.01833,
-            "ram_usage": 37.4,
-            "system_load": 0.103516,
-            "network_sent_bytes": 156479622182,
-            "network_recv_bytes": 14061726487,
-            "timestamp": "2025-03-07T04:07:00"
-        },
-        {
-            "cpu_temperature": 45.0633,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.1,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156479655479,
-            "network_recv_bytes": 14061758344,
-            "timestamp": "2025-03-07T04:08:00"
-        },
-        {
-            "cpu_temperature": 45.41,
-            "cpu_usage": 2.18,
-            "ram_usage": 37.4,
-            "system_load": 0.139648,
-            "network_sent_bytes": 156480261134,
-            "network_recv_bytes": 14067822960,
-            "timestamp": "2025-03-07T04:09:00"
-        },
-        {
-            "cpu_temperature": 45.0267,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.2,
-            "system_load": 0.0498047,
-            "network_sent_bytes": 156480290030,
-            "network_recv_bytes": 14067850867,
-            "timestamp": "2025-03-07T04:10:00"
-        },
-        {
-            "cpu_temperature": 44.88,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.4,
-            "system_load": 0.179199,
-            "network_sent_bytes": 156480321140,
-            "network_recv_bytes": 14067885755,
-            "timestamp": "2025-03-07T04:11:00"
-        },
-        {
-            "cpu_temperature": 44.7867,
-            "cpu_usage": 1.215,
-            "ram_usage": 37.3,
-            "system_load": 0.137695,
-            "network_sent_bytes": 156480348445,
-            "network_recv_bytes": 14067911980,
-            "timestamp": "2025-03-07T04:12:00"
-        },
-        {
-            "cpu_temperature": 44.8617,
-            "cpu_usage": 1.06833,
-            "ram_usage": 37.4,
-            "system_load": 0.128906,
-            "network_sent_bytes": 156480378603,
-            "network_recv_bytes": 14067936754,
-            "timestamp": "2025-03-07T04:13:00"
-        },
-        {
-            "cpu_temperature": 44.7417,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.4,
-            "system_load": 0.194824,
-            "network_sent_bytes": 156480405618,
-            "network_recv_bytes": 14067962196,
-            "timestamp": "2025-03-07T04:14:00"
-        },
-        {
-            "cpu_temperature": 44.7767,
-            "cpu_usage": 1.27167,
-            "ram_usage": 37.5,
-            "system_load": 0.132812,
-            "network_sent_bytes": 156480470525,
-            "network_recv_bytes": 14068024748,
-            "timestamp": "2025-03-07T04:15:00"
-        },
-        {
-            "cpu_temperature": 44.7283,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.5,
-            "system_load": 0.231445,
-            "network_sent_bytes": 156480511647,
-            "network_recv_bytes": 14068067943,
-            "timestamp": "2025-03-07T04:16:00"
-        },
-        {
-            "cpu_temperature": 44.7917,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.5,
-            "system_load": 0.256836,
-            "network_sent_bytes": 156480550869,
-            "network_recv_bytes": 14068105295,
-            "timestamp": "2025-03-07T04:17:00"
-        },
-        {
-            "cpu_temperature": 44.8183,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.4,
-            "system_load": 0.0922852,
-            "network_sent_bytes": 156480597174,
-            "network_recv_bytes": 14068150053,
-            "timestamp": "2025-03-07T04:18:00"
-        },
-        {
-            "cpu_temperature": 44.805,
-            "cpu_usage": 1.26833,
-            "ram_usage": 37.4,
-            "system_load": 0.229492,
-            "network_sent_bytes": 156480624880,
-            "network_recv_bytes": 14068176705,
-            "timestamp": "2025-03-07T04:19:00"
-        },
-        {
-            "cpu_temperature": 44.6767,
-            "cpu_usage": 1.185,
-            "ram_usage": 37.5,
-            "system_load": 0.149414,
-            "network_sent_bytes": 156480660347,
-            "network_recv_bytes": 14068210354,
-            "timestamp": "2025-03-07T04:20:00"
-        },
-        {
-            "cpu_temperature": 44.6883,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.4,
-            "system_load": 0.258789,
-            "network_sent_bytes": 156480699446,
-            "network_recv_bytes": 14068253832,
-            "timestamp": "2025-03-07T04:21:00"
-        },
-        {
-            "cpu_temperature": 44.8567,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.4,
-            "system_load": 0.287598,
-            "network_sent_bytes": 156480734581,
-            "network_recv_bytes": 14068287577,
-            "timestamp": "2025-03-07T04:22:00"
-        },
-        {
-            "cpu_temperature": 44.6167,
-            "cpu_usage": 1.14167,
-            "ram_usage": 37.4,
-            "system_load": 0.103516,
-            "network_sent_bytes": 156480761787,
-            "network_recv_bytes": 14068313557,
-            "timestamp": "2025-03-07T04:23:00"
-        },
-        {
-            "cpu_temperature": 44.7467,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.3,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156480790626,
-            "network_recv_bytes": 14068341218,
-            "timestamp": "2025-03-07T04:24:00"
-        },
-        {
-            "cpu_temperature": 44.7483,
-            "cpu_usage": 1.185,
-            "ram_usage": 37.3,
-            "system_load": 0.188477,
-            "network_sent_bytes": 156480823377,
-            "network_recv_bytes": 14068368404,
-            "timestamp": "2025-03-07T04:25:00"
-        },
-        {
-            "cpu_temperature": 44.6367,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.3,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156480852006,
-            "network_recv_bytes": 14068401197,
-            "timestamp": "2025-03-07T04:26:00"
-        },
-        {
-            "cpu_temperature": 44.7183,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.3,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156480882321,
-            "network_recv_bytes": 14068430216,
-            "timestamp": "2025-03-07T04:27:00"
-        },
-        {
-            "cpu_temperature": 44.6283,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.3,
-            "system_load": 0.179199,
-            "network_sent_bytes": 156480909029,
-            "network_recv_bytes": 14068455780,
-            "timestamp": "2025-03-07T04:28:00"
-        },
-        {
-            "cpu_temperature": 44.6917,
-            "cpu_usage": 1.23333,
-            "ram_usage": 37.3,
-            "system_load": 0.225098,
-            "network_sent_bytes": 156480935397,
-            "network_recv_bytes": 14068481010,
-            "timestamp": "2025-03-07T04:29:00"
-        },
-        {
-            "cpu_temperature": 44.69,
-            "cpu_usage": 1.16667,
-            "ram_usage": 37.3,
-            "system_load": 0.311035,
-            "network_sent_bytes": 156480963537,
-            "network_recv_bytes": 14068507524,
-            "timestamp": "2025-03-07T04:30:00"
-        },
-        {
-            "cpu_temperature": 44.675,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.3,
-            "system_load": 0.112305,
-            "network_sent_bytes": 156480991910,
-            "network_recv_bytes": 14068540402,
-            "timestamp": "2025-03-07T04:31:00"
-        },
-        {
-            "cpu_temperature": 44.9233,
-            "cpu_usage": 1.17167,
-            "ram_usage": 37.4,
-            "system_load": 0.251953,
-            "network_sent_bytes": 156481027227,
-            "network_recv_bytes": 14068574345,
-            "timestamp": "2025-03-07T04:32:00"
-        },
-        {
-            "cpu_temperature": 44.7067,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.4,
-            "system_load": 0.331055,
-            "network_sent_bytes": 156481056931,
-            "network_recv_bytes": 14068602837,
-            "timestamp": "2025-03-07T04:33:00"
-        },
-        {
-            "cpu_temperature": 44.7467,
-            "cpu_usage": 1.18167,
-            "ram_usage": 37.3,
-            "system_load": 0.119629,
-            "network_sent_bytes": 156481084820,
-            "network_recv_bytes": 14068629424,
-            "timestamp": "2025-03-07T04:34:00"
-        },
-        {
-            "cpu_temperature": 44.8417,
-            "cpu_usage": 1.22667,
-            "ram_usage": 37.3,
-            "system_load": 0.338379,
-            "network_sent_bytes": 156481112728,
-            "network_recv_bytes": 14068655822,
-            "timestamp": "2025-03-07T04:35:00"
-        },
-        {
-            "cpu_temperature": 44.8783,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.4,
-            "system_load": 0.234863,
-            "network_sent_bytes": 156481149556,
-            "network_recv_bytes": 14068697114,
-            "timestamp": "2025-03-07T04:36:00"
-        },
-        {
-            "cpu_temperature": 45.0417,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.4,
-            "system_load": 0.164551,
-            "network_sent_bytes": 156481181004,
-            "network_recv_bytes": 14068723354,
-            "timestamp": "2025-03-07T04:37:00"
-        },
-        {
-            "cpu_temperature": 44.9383,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.3,
-            "system_load": 0.351074,
-            "network_sent_bytes": 156481208181,
-            "network_recv_bytes": 14068748772,
-            "timestamp": "2025-03-07T04:38:00"
-        },
-        {
-            "cpu_temperature": 45.025,
-            "cpu_usage": 1.265,
-            "ram_usage": 37.4,
-            "system_load": 0.12793,
-            "network_sent_bytes": 156481235042,
-            "network_recv_bytes": 14068774543,
-            "timestamp": "2025-03-07T04:39:00"
-        },
-        {
-            "cpu_temperature": 44.93,
-            "cpu_usage": 1.06,
-            "ram_usage": 37.4,
-            "system_load": 0.257812,
-            "network_sent_bytes": 156481264400,
-            "network_recv_bytes": 14068802261,
-            "timestamp": "2025-03-07T04:40:00"
-        },
-        {
-            "cpu_temperature": 44.8417,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.4,
-            "system_load": 0.217285,
-            "network_sent_bytes": 156481294417,
-            "network_recv_bytes": 14068836348,
-            "timestamp": "2025-03-07T04:41:00"
-        },
-        {
-            "cpu_temperature": 44.9467,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.4,
-            "system_load": 0.0776367,
-            "network_sent_bytes": 156481323434,
-            "network_recv_bytes": 14068864019,
-            "timestamp": "2025-03-07T04:42:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.4,
-            "system_load": 0.24707,
-            "network_sent_bytes": 156481350356,
-            "network_recv_bytes": 14068889689,
-            "timestamp": "2025-03-07T04:43:00"
-        },
-        {
-            "cpu_temperature": 44.6917,
-            "cpu_usage": 1.23667,
-            "ram_usage": 37.4,
-            "system_load": 0.131836,
-            "network_sent_bytes": 156481376818,
-            "network_recv_bytes": 14068914959,
-            "timestamp": "2025-03-07T04:44:00"
-        },
-        {
-            "cpu_temperature": 44.7767,
-            "cpu_usage": 1.11,
-            "ram_usage": 37.3,
-            "system_load": 0.0463867,
-            "network_sent_bytes": 156481414515,
-            "network_recv_bytes": 14068950938,
-            "timestamp": "2025-03-07T04:45:00"
-        },
-        {
-            "cpu_temperature": 44.8717,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.1,
-            "system_load": 0.241699,
-            "network_sent_bytes": 156481443825,
-            "network_recv_bytes": 14068984747,
-            "timestamp": "2025-03-07T04:46:00"
-        },
-        {
-            "cpu_temperature": 44.83,
-            "cpu_usage": 1.10167,
-            "ram_usage": 37.3,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156481470025,
-            "network_recv_bytes": 14069009919,
-            "timestamp": "2025-03-07T04:47:00"
-        },
-        {
-            "cpu_temperature": 44.9233,
-            "cpu_usage": 1.01333,
-            "ram_usage": 37.2,
-            "system_load": 0.197754,
-            "network_sent_bytes": 156481499165,
-            "network_recv_bytes": 14069038074,
-            "timestamp": "2025-03-07T04:48:00"
-        },
-        {
-            "cpu_temperature": 45.0117,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.4,
-            "system_load": 0.203613,
-            "network_sent_bytes": 156481532686,
-            "network_recv_bytes": 14069066341,
-            "timestamp": "2025-03-07T04:49:00"
-        },
-        {
-            "cpu_temperature": 44.9883,
-            "cpu_usage": 1.10167,
-            "ram_usage": 37.2,
-            "system_load": 0.132812,
-            "network_sent_bytes": 156481563002,
-            "network_recv_bytes": 14069095137,
-            "timestamp": "2025-03-07T04:50:00"
-        },
-        {
-            "cpu_temperature": 45.0183,
-            "cpu_usage": 1.15,
-            "ram_usage": 37.4,
-            "system_load": 0.510254,
-            "network_sent_bytes": 156481599980,
-            "network_recv_bytes": 14069134824,
-            "timestamp": "2025-03-07T04:51:00"
-        },
-        {
-            "cpu_temperature": 44.91,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.3,
-            "system_load": 0.27832,
-            "network_sent_bytes": 156481627221,
-            "network_recv_bytes": 14069160893,
-            "timestamp": "2025-03-07T04:52:00"
-        },
-        {
-            "cpu_temperature": 44.89,
-            "cpu_usage": 1.21167,
-            "ram_usage": 37.3,
-            "system_load": 0.196289,
-            "network_sent_bytes": 156481654304,
-            "network_recv_bytes": 14069186802,
-            "timestamp": "2025-03-07T04:53:00"
-        },
-        {
-            "cpu_temperature": 44.94,
-            "cpu_usage": 1.28667,
-            "ram_usage": 37.4,
-            "system_load": 0.228516,
-            "network_sent_bytes": 156481680301,
-            "network_recv_bytes": 14069211691,
-            "timestamp": "2025-03-07T04:54:00"
-        },
-        {
-            "cpu_temperature": 44.8917,
-            "cpu_usage": 1.29333,
-            "ram_usage": 37.4,
-            "system_load": 0.130859,
-            "network_sent_bytes": 156481708927,
-            "network_recv_bytes": 14069238687,
-            "timestamp": "2025-03-07T04:55:00"
-        },
-        {
-            "cpu_temperature": 44.8617,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.4,
-            "system_load": 0.189453,
-            "network_sent_bytes": 156481736292,
-            "network_recv_bytes": 14069270808,
-            "timestamp": "2025-03-07T04:56:00"
-        },
-        {
-            "cpu_temperature": 44.8867,
-            "cpu_usage": 1.27167,
-            "ram_usage": 37.3,
-            "system_load": 0.255859,
-            "network_sent_bytes": 156481764118,
-            "network_recv_bytes": 14069297304,
-            "timestamp": "2025-03-07T04:57:00"
-        },
-        {
-            "cpu_temperature": 44.8433,
-            "cpu_usage": 1.16167,
-            "ram_usage": 37.4,
-            "system_load": 0.0922852,
-            "network_sent_bytes": 156481792888,
-            "network_recv_bytes": 14069325085,
-            "timestamp": "2025-03-07T04:58:00"
-        },
-        {
-            "cpu_temperature": 44.8467,
-            "cpu_usage": 1.26,
-            "ram_usage": 37.3,
-            "system_load": 0.282227,
-            "network_sent_bytes": 156481819676,
-            "network_recv_bytes": 14069350695,
-            "timestamp": "2025-03-07T04:59:00"
-        },
-        {
-            "cpu_temperature": 44.7817,
-            "cpu_usage": 1.48,
-            "ram_usage": 37.4,
-            "system_load": 0.13623,
-            "network_sent_bytes": 156481873834,
-            "network_recv_bytes": 14069403359,
-            "timestamp": "2025-03-07T05:00:00"
-        },
-        {
-            "cpu_temperature": 44.965,
-            "cpu_usage": 1.275,
-            "ram_usage": 37.3,
-            "system_load": 0.0478516,
-            "network_sent_bytes": 156481910794,
-            "network_recv_bytes": 14069440774,
-            "timestamp": "2025-03-07T05:01:00"
-        },
-        {
-            "cpu_temperature": 44.83,
-            "cpu_usage": 1.24333,
-            "ram_usage": 37.4,
-            "system_load": 0.210938,
-            "network_sent_bytes": 156481939091,
-            "network_recv_bytes": 14069467787,
-            "timestamp": "2025-03-07T05:02:00"
-        },
-        {
-            "cpu_temperature": 44.9333,
-            "cpu_usage": 1.195,
-            "ram_usage": 37.3,
-            "system_load": 0.0756836,
-            "network_sent_bytes": 156481966682,
-            "network_recv_bytes": 14069493805,
-            "timestamp": "2025-03-07T05:03:00"
-        },
-        {
-            "cpu_temperature": 44.915,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.4,
-            "system_load": 0.168945,
-            "network_sent_bytes": 156481994648,
-            "network_recv_bytes": 14069520575,
-            "timestamp": "2025-03-07T05:04:00"
-        },
-        {
-            "cpu_temperature": 44.9267,
-            "cpu_usage": 1.265,
-            "ram_usage": 37.4,
-            "system_load": 0.209961,
-            "network_sent_bytes": 156482023070,
-            "network_recv_bytes": 14069547501,
-            "timestamp": "2025-03-07T05:05:00"
-        },
-        {
-            "cpu_temperature": 44.98,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.2,
-            "system_load": 0.112793,
-            "network_sent_bytes": 156482055726,
-            "network_recv_bytes": 14069584541,
-            "timestamp": "2025-03-07T05:06:00"
-        },
-        {
-            "cpu_temperature": 44.7933,
-            "cpu_usage": 1.065,
-            "ram_usage": 37.3,
-            "system_load": 0.28418,
-            "network_sent_bytes": 156482084479,
-            "network_recv_bytes": 14069612060,
-            "timestamp": "2025-03-07T05:07:00"
-        },
-        {
-            "cpu_temperature": 44.8567,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.2,
-            "system_load": 0.172363,
-            "network_sent_bytes": 156482113439,
-            "network_recv_bytes": 14069639784,
-            "timestamp": "2025-03-07T05:08:00"
-        },
-        {
-            "cpu_temperature": 44.8383,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.4,
-            "system_load": 0.0615234,
-            "network_sent_bytes": 156482145781,
-            "network_recv_bytes": 14069670898,
-            "timestamp": "2025-03-07T05:09:00"
-        },
-        {
-            "cpu_temperature": 44.8083,
-            "cpu_usage": 1.18333,
-            "ram_usage": 37.3,
-            "system_load": 0.283203,
-            "network_sent_bytes": 156482175200,
-            "network_recv_bytes": 14069698579,
-            "timestamp": "2025-03-07T05:10:00"
-        },
-        {
-            "cpu_temperature": 44.7617,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.3,
-            "system_load": 0.143555,
-            "network_sent_bytes": 156482202308,
-            "network_recv_bytes": 14069730301,
-            "timestamp": "2025-03-07T05:11:00"
-        },
-        {
-            "cpu_temperature": 44.76,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.4,
-            "system_load": 0.193848,
-            "network_sent_bytes": 156482248286,
-            "network_recv_bytes": 14069774701,
-            "timestamp": "2025-03-07T05:12:00"
-        },
-        {
-            "cpu_temperature": 44.7567,
-            "cpu_usage": 1.19667,
-            "ram_usage": 37.4,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156482278382,
-            "network_recv_bytes": 14069799309,
-            "timestamp": "2025-03-07T05:13:00"
-        },
-        {
-            "cpu_temperature": 44.7117,
-            "cpu_usage": 1.22,
-            "ram_usage": 37.4,
-            "system_load": 0.0556641,
-            "network_sent_bytes": 156482300323,
-            "network_recv_bytes": 14069820046,
-            "timestamp": "2025-03-07T05:14:00"
-        },
-        {
-            "cpu_temperature": 44.775,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.5,
-            "system_load": 0.195312,
-            "network_sent_bytes": 156482324717,
-            "network_recv_bytes": 14069842281,
-            "timestamp": "2025-03-07T05:15:00"
-        },
-        {
-            "cpu_temperature": 44.8483,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.3,
-            "system_load": 0.178711,
-            "network_sent_bytes": 156482347990,
-            "network_recv_bytes": 14069870125,
-            "timestamp": "2025-03-07T05:16:00"
-        },
-        {
-            "cpu_temperature": 44.815,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.3,
-            "system_load": 0.0991211,
-            "network_sent_bytes": 156482370083,
-            "network_recv_bytes": 14069891046,
-            "timestamp": "2025-03-07T05:17:00"
-        },
-        {
-            "cpu_temperature": 44.8533,
-            "cpu_usage": 1.15,
-            "ram_usage": 37.2,
-            "system_load": 0.229004,
-            "network_sent_bytes": 156482392277,
-            "network_recv_bytes": 14069912141,
-            "timestamp": "2025-03-07T05:18:00"
-        },
-        {
-            "cpu_temperature": 44.7367,
-            "cpu_usage": 1.16167,
-            "ram_usage": 37.3,
-            "system_load": 0.131348,
-            "network_sent_bytes": 156482414292,
-            "network_recv_bytes": 14069933070,
-            "timestamp": "2025-03-07T05:19:00"
-        },
-        {
-            "cpu_temperature": 44.5967,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.3,
-            "system_load": 0.24707,
-            "network_sent_bytes": 156482453908,
-            "network_recv_bytes": 14069970736,
-            "timestamp": "2025-03-07T05:20:00"
-        },
-        {
-            "cpu_temperature": 44.55,
-            "cpu_usage": 1.21667,
-            "ram_usage": 37.3,
-            "system_load": 0.175293,
-            "network_sent_bytes": 156482477310,
-            "network_recv_bytes": 14069998749,
-            "timestamp": "2025-03-07T05:21:00"
-        },
-        {
-            "cpu_temperature": 44.7317,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.3,
-            "system_load": 0.0620117,
-            "network_sent_bytes": 156482500119,
-            "network_recv_bytes": 14070020140,
-            "timestamp": "2025-03-07T05:22:00"
-        },
-        {
-            "cpu_temperature": 44.6883,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.2,
-            "system_load": 0.327637,
-            "network_sent_bytes": 156482522273,
-            "network_recv_bytes": 14070041100,
-            "timestamp": "2025-03-07T05:23:00"
-        },
-        {
-            "cpu_temperature": 44.5733,
-            "cpu_usage": 1.23167,
-            "ram_usage": 37.3,
-            "system_load": 0.118164,
-            "network_sent_bytes": 156482544164,
-            "network_recv_bytes": 14070061611,
-            "timestamp": "2025-03-07T05:24:00"
-        },
-        {
-            "cpu_temperature": 44.8217,
-            "cpu_usage": 1.16167,
-            "ram_usage": 37.3,
-            "system_load": 0.0766602,
-            "network_sent_bytes": 156482574392,
-            "network_recv_bytes": 14070086261,
-            "timestamp": "2025-03-07T05:25:00"
-        },
-        {
-            "cpu_temperature": 44.9383,
-            "cpu_usage": 1.07333,
-            "ram_usage": 37.1,
-            "system_load": 0.221191,
-            "network_sent_bytes": 156482597791,
-            "network_recv_bytes": 14070114219,
-            "timestamp": "2025-03-07T05:26:00"
-        },
-        {
-            "cpu_temperature": 44.9033,
-            "cpu_usage": 1.095,
-            "ram_usage": 37.3,
-            "system_load": 0.15332,
-            "network_sent_bytes": 156482620490,
-            "network_recv_bytes": 14070135163,
-            "timestamp": "2025-03-07T05:27:00"
-        },
-        {
-            "cpu_temperature": 44.8917,
-            "cpu_usage": 1.04667,
-            "ram_usage": 37.1,
-            "system_load": 0.198242,
-            "network_sent_bytes": 156482642860,
-            "network_recv_bytes": 14070156313,
-            "timestamp": "2025-03-07T05:28:00"
-        },
-        {
-            "cpu_temperature": 45.2083,
-            "cpu_usage": 1.06833,
-            "ram_usage": 37.3,
-            "system_load": 0.157227,
-            "network_sent_bytes": 156482665025,
-            "network_recv_bytes": 14070177086,
-            "timestamp": "2025-03-07T05:29:00"
-        },
-        {
-            "cpu_temperature": 45.1617,
-            "cpu_usage": 1.11,
-            "ram_usage": 37.2,
-            "system_load": 0.0561523,
-            "network_sent_bytes": 156482690933,
-            "network_recv_bytes": 14070201946,
-            "timestamp": "2025-03-07T05:30:00"
-        },
-        {
-            "cpu_temperature": 45.1567,
-            "cpu_usage": 1.07333,
-            "ram_usage": 37.3,
-            "system_load": 0.195312,
-            "network_sent_bytes": 156482716786,
-            "network_recv_bytes": 14070229978,
-            "timestamp": "2025-03-07T05:31:00"
-        },
-        {
-            "cpu_temperature": 45.02,
-            "cpu_usage": 0.975,
-            "ram_usage": 37.1,
-            "system_load": 0.104492,
-            "network_sent_bytes": 156482738531,
-            "network_recv_bytes": 14070250483,
-            "timestamp": "2025-03-07T05:32:00"
-        },
-        {
-            "cpu_temperature": 44.9383,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.3,
-            "system_load": 0.0356445,
-            "network_sent_bytes": 156482760565,
-            "network_recv_bytes": 14070271255,
-            "timestamp": "2025-03-07T05:33:00"
-        },
-        {
-            "cpu_temperature": 45.0217,
-            "cpu_usage": 1.07667,
-            "ram_usage": 37,
-            "system_load": 0.258301,
-            "network_sent_bytes": 156482782322,
-            "network_recv_bytes": 14070291762,
-            "timestamp": "2025-03-07T05:34:00"
-        },
-        {
-            "cpu_temperature": 44.8833,
-            "cpu_usage": 1.15,
-            "ram_usage": 37.3,
-            "system_load": 0.0932617,
-            "network_sent_bytes": 156482815770,
-            "network_recv_bytes": 14070323452,
-            "timestamp": "2025-03-07T05:35:00"
-        },
-        {
-            "cpu_temperature": 44.7917,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.1,
-            "system_load": 0.175781,
-            "network_sent_bytes": 156482840594,
-            "network_recv_bytes": 14070352899,
-            "timestamp": "2025-03-07T05:36:00"
-        },
-        {
-            "cpu_temperature": 44.745,
-            "cpu_usage": 1.095,
-            "ram_usage": 37.3,
-            "system_load": 0.183105,
-            "network_sent_bytes": 156482868446,
-            "network_recv_bytes": 14070375349,
-            "timestamp": "2025-03-07T05:37:00"
-        },
-        {
-            "cpu_temperature": 44.6267,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.2,
-            "system_load": 0.232422,
-            "network_sent_bytes": 156482890481,
-            "network_recv_bytes": 14070396032,
-            "timestamp": "2025-03-07T05:38:00"
-        },
-        {
-            "cpu_temperature": 44.7233,
-            "cpu_usage": 1.23833,
-            "ram_usage": 37.3,
-            "system_load": 0.259766,
-            "network_sent_bytes": 156482912945,
-            "network_recv_bytes": 14070416773,
-            "timestamp": "2025-03-07T05:39:00"
-        },
-        {
-            "cpu_temperature": 44.5967,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.1,
-            "system_load": 0.128418,
-            "network_sent_bytes": 156482937227,
-            "network_recv_bytes": 14070439481,
-            "timestamp": "2025-03-07T05:40:00"
-        },
-        {
-            "cpu_temperature": 44.6617,
-            "cpu_usage": 1.06167,
-            "ram_usage": 37.2,
-            "system_load": 0.0454102,
-            "network_sent_bytes": 156482960524,
-            "network_recv_bytes": 14070467284,
-            "timestamp": "2025-03-07T05:41:00"
-        },
-        {
-            "cpu_temperature": 44.6533,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.2,
-            "system_load": 0.209473,
-            "network_sent_bytes": 156482983895,
-            "network_recv_bytes": 14070489459,
-            "timestamp": "2025-03-07T05:42:00"
-        },
-        {
-            "cpu_temperature": 44.6717,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.3,
-            "system_load": 0.187012,
-            "network_sent_bytes": 156483009249,
-            "network_recv_bytes": 14070513493,
-            "timestamp": "2025-03-07T05:43:00"
-        },
-        {
-            "cpu_temperature": 44.7283,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.3,
-            "system_load": 0.28418,
-            "network_sent_bytes": 156483031040,
-            "network_recv_bytes": 14070534154,
-            "timestamp": "2025-03-07T05:44:00"
-        },
-        {
-            "cpu_temperature": 44.8367,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.3,
-            "system_load": 0.237793,
-            "network_sent_bytes": 156483055756,
-            "network_recv_bytes": 14070556525,
-            "timestamp": "2025-03-07T05:45:00"
-        },
-        {
-            "cpu_temperature": 44.78,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.2,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156483079697,
-            "network_recv_bytes": 14070584534,
-            "timestamp": "2025-03-07T05:46:00"
-        },
-        {
-            "cpu_temperature": 44.8617,
-            "cpu_usage": 1.02833,
-            "ram_usage": 36.9,
-            "system_load": 0.294434,
-            "network_sent_bytes": 156483101770,
-            "network_recv_bytes": 14070605329,
-            "timestamp": "2025-03-07T05:47:00"
-        },
-        {
-            "cpu_temperature": 44.8433,
-            "cpu_usage": 0.956667,
-            "ram_usage": 37.3,
-            "system_load": 0.222168,
-            "network_sent_bytes": 156483124087,
-            "network_recv_bytes": 14070626691,
-            "timestamp": "2025-03-07T05:48:00"
-        },
-        {
-            "cpu_temperature": 44.9417,
-            "cpu_usage": 0.986667,
-            "ram_usage": 36.9,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156483150092,
-            "network_recv_bytes": 14070647314,
-            "timestamp": "2025-03-07T05:49:00"
-        },
-        {
-            "cpu_temperature": 44.87,
-            "cpu_usage": 0.956667,
-            "ram_usage": 37.3,
-            "system_load": 0.330566,
-            "network_sent_bytes": 156483174869,
-            "network_recv_bytes": 14070676637,
-            "timestamp": "2025-03-07T05:50:00"
-        },
-        {
-            "cpu_temperature": 44.9667,
-            "cpu_usage": 1.01,
-            "ram_usage": 37,
-            "system_load": 0.160645,
-            "network_sent_bytes": 156483197614,
-            "network_recv_bytes": 14070697622,
-            "timestamp": "2025-03-07T05:51:00"
-        },
-        {
-            "cpu_temperature": 44.8517,
-            "cpu_usage": 1,
-            "ram_usage": 37.2,
-            "system_load": 0.249023,
-            "network_sent_bytes": 156483219891,
-            "network_recv_bytes": 14070718705,
-            "timestamp": "2025-03-07T05:52:00"
-        },
-        {
-            "cpu_temperature": 44.8533,
-            "cpu_usage": 0.976667,
-            "ram_usage": 37,
-            "system_load": 0.17627,
-            "network_sent_bytes": 156483242129,
-            "network_recv_bytes": 14070739557,
-            "timestamp": "2025-03-07T05:53:00"
-        },
-        {
-            "cpu_temperature": 45.0067,
-            "cpu_usage": 1.01833,
-            "ram_usage": 37.3,
-            "system_load": 0.0629883,
-            "network_sent_bytes": 156483264034,
-            "network_recv_bytes": 14070760390,
-            "timestamp": "2025-03-07T05:54:00"
-        },
-        {
-            "cpu_temperature": 44.875,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37.1,
-            "system_load": 0.197754,
-            "network_sent_bytes": 156483288269,
-            "network_recv_bytes": 14070783471,
-            "timestamp": "2025-03-07T05:55:00"
-        },
-        {
-            "cpu_temperature": 44.965,
-            "cpu_usage": 1.07667,
-            "ram_usage": 37.3,
-            "system_load": 0.150879,
-            "network_sent_bytes": 156483313312,
-            "network_recv_bytes": 14070811550,
-            "timestamp": "2025-03-07T05:56:00"
-        },
-        {
-            "cpu_temperature": 45.0683,
-            "cpu_usage": 1.10333,
-            "ram_usage": 37.1,
-            "system_load": 0.141602,
-            "network_sent_bytes": 156483335524,
-            "network_recv_bytes": 14070832454,
-            "timestamp": "2025-03-07T05:57:00"
-        },
-        {
-            "cpu_temperature": 44.845,
-            "cpu_usage": 1.04,
-            "ram_usage": 37.3,
-            "system_load": 0.38916,
-            "network_sent_bytes": 156483357425,
-            "network_recv_bytes": 14070853225,
-            "timestamp": "2025-03-07T05:58:00"
-        },
-        {
-            "cpu_temperature": 45.0567,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.1,
-            "system_load": 0.211426,
-            "network_sent_bytes": 156483379409,
-            "network_recv_bytes": 14070873783,
-            "timestamp": "2025-03-07T05:59:00"
-        },
-        {
-            "cpu_temperature": 44.9017,
-            "cpu_usage": 1.45,
-            "ram_usage": 37.3,
-            "system_load": 0.219727,
-            "network_sent_bytes": 156483426217,
-            "network_recv_bytes": 14070919123,
-            "timestamp": "2025-03-07T06:00:00"
-        },
-        {
-            "cpu_temperature": 45.1333,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.2,
-            "system_load": 0.165039,
-            "network_sent_bytes": 156483455220,
-            "network_recv_bytes": 14070948609,
-            "timestamp": "2025-03-07T06:01:00"
-        },
-        {
-            "cpu_temperature": 45.075,
-            "cpu_usage": 1.12333,
-            "ram_usage": 37.3,
-            "system_load": 0.059082,
-            "network_sent_bytes": 156483477264,
-            "network_recv_bytes": 14070969321,
-            "timestamp": "2025-03-07T06:02:00"
-        },
-        {
-            "cpu_temperature": 45.0533,
-            "cpu_usage": 1.125,
-            "ram_usage": 37.3,
-            "system_load": 0.323242,
-            "network_sent_bytes": 156483499638,
-            "network_recv_bytes": 14070989944,
-            "timestamp": "2025-03-07T06:03:00"
-        },
-        {
-            "cpu_temperature": 44.9883,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.3,
-            "system_load": 0.186035,
-            "network_sent_bytes": 156483521505,
-            "network_recv_bytes": 14071010449,
-            "timestamp": "2025-03-07T06:04:00"
-        },
-        {
-            "cpu_temperature": 45.05,
-            "cpu_usage": 0.975,
-            "ram_usage": 36.9,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156483543588,
-            "network_recv_bytes": 14071031268,
-            "timestamp": "2025-03-07T06:05:00"
-        },
-        {
-            "cpu_temperature": 45.0483,
-            "cpu_usage": 1.02833,
-            "ram_usage": 37.3,
-            "system_load": 0.342773,
-            "network_sent_bytes": 156483568929,
-            "network_recv_bytes": 14071060905,
-            "timestamp": "2025-03-07T06:06:00"
-        },
-        {
-            "cpu_temperature": 45.0483,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.2,
-            "system_load": 0.123535,
-            "network_sent_bytes": 156483590990,
-            "network_recv_bytes": 14071081850,
-            "timestamp": "2025-03-07T06:07:00"
-        },
-        {
-            "cpu_temperature": 45.05,
-            "cpu_usage": 1.075,
-            "ram_usage": 37.3,
-            "system_load": 0.186523,
-            "network_sent_bytes": 156483613234,
-            "network_recv_bytes": 14071102764,
-            "timestamp": "2025-03-07T06:08:00"
-        },
-        {
-            "cpu_temperature": 45.1117,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.3,
-            "system_load": 0.153809,
-            "network_sent_bytes": 156483635148,
-            "network_recv_bytes": 14071123570,
-            "timestamp": "2025-03-07T06:09:00"
-        },
-        {
-            "cpu_temperature": 45.0667,
-            "cpu_usage": 1.23333,
-            "ram_usage": 37.3,
-            "system_load": 0.0922852,
-            "network_sent_bytes": 156483658554,
-            "network_recv_bytes": 14071145832,
-            "timestamp": "2025-03-07T06:10:00"
-        },
-        {
-            "cpu_temperature": 45.065,
-            "cpu_usage": 1.22167,
-            "ram_usage": 37.3,
-            "system_load": 0.282227,
-            "network_sent_bytes": 156483683213,
-            "network_recv_bytes": 14071174497,
-            "timestamp": "2025-03-07T06:11:00"
-        },
-        {
-            "cpu_temperature": 44.9917,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.3,
-            "system_load": 0.13623,
-            "network_sent_bytes": 156483705104,
-            "network_recv_bytes": 14071195008,
-            "timestamp": "2025-03-07T06:12:00"
-        },
-        {
-            "cpu_temperature": 45.04,
-            "cpu_usage": 1.13833,
-            "ram_usage": 37.3,
-            "system_load": 0.0478516,
-            "network_sent_bytes": 156483731029,
-            "network_recv_bytes": 14071215549,
-            "timestamp": "2025-03-07T06:13:00"
-        },
-        {
-            "cpu_temperature": 45.03,
-            "cpu_usage": 1.195,
-            "ram_usage": 37.3,
-            "system_load": 0.246094,
-            "network_sent_bytes": 156483752748,
-            "network_recv_bytes": 14071236046,
-            "timestamp": "2025-03-07T06:14:00"
-        },
-        {
-            "cpu_temperature": 45.0083,
-            "cpu_usage": 1.18333,
-            "ram_usage": 37.3,
-            "system_load": 0.0878906,
-            "network_sent_bytes": 156483777097,
-            "network_recv_bytes": 14071258432,
-            "timestamp": "2025-03-07T06:15:00"
-        },
-        {
-            "cpu_temperature": 45.0517,
-            "cpu_usage": 1.05,
-            "ram_usage": 37,
-            "system_load": 0.172852,
-            "network_sent_bytes": 156483800305,
-            "network_recv_bytes": 14071286043,
-            "timestamp": "2025-03-07T06:16:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.07,
-            "ram_usage": 37.3,
-            "system_load": 0.147949,
-            "network_sent_bytes": 156483822360,
-            "network_recv_bytes": 14071306906,
-            "timestamp": "2025-03-07T06:17:00"
-        },
-        {
-            "cpu_temperature": 45.07,
-            "cpu_usage": 1.02167,
-            "ram_usage": 37.1,
-            "system_load": 0.0517578,
-            "network_sent_bytes": 156483844777,
-            "network_recv_bytes": 14071328240,
-            "timestamp": "2025-03-07T06:18:00"
-        },
-        {
-            "cpu_temperature": 45.0683,
-            "cpu_usage": 1.14667,
-            "ram_usage": 37.3,
-            "system_load": 0.337402,
-            "network_sent_bytes": 156483866526,
-            "network_recv_bytes": 14071348841,
-            "timestamp": "2025-03-07T06:19:00"
-        },
-        {
-            "cpu_temperature": 45.0867,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37.1,
-            "system_load": 0.191406,
-            "network_sent_bytes": 156483889971,
-            "network_recv_bytes": 14071371079,
-            "timestamp": "2025-03-07T06:20:00"
-        },
-        {
-            "cpu_temperature": 45.015,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.3,
-            "system_load": 0.0683594,
-            "network_sent_bytes": 156483913830,
-            "network_recv_bytes": 14071398924,
-            "timestamp": "2025-03-07T06:21:00"
-        },
-        {
-            "cpu_temperature": 45.0283,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.2,
-            "system_load": 0.218262,
-            "network_sent_bytes": 156483935682,
-            "network_recv_bytes": 14071419422,
-            "timestamp": "2025-03-07T06:22:00"
-        },
-        {
-            "cpu_temperature": 44.975,
-            "cpu_usage": 1.14167,
-            "ram_usage": 37.2,
-            "system_load": 0.078125,
-            "network_sent_bytes": 156483957431,
-            "network_recv_bytes": 14071440023,
-            "timestamp": "2025-03-07T06:23:00"
-        },
-        {
-            "cpu_temperature": 45.0583,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.3,
-            "system_load": 0.169922,
-            "network_sent_bytes": 156483979165,
-            "network_recv_bytes": 14071460589,
-            "timestamp": "2025-03-07T06:24:00"
-        },
-        {
-            "cpu_temperature": 44.8933,
-            "cpu_usage": 1.22833,
-            "ram_usage": 37.4,
-            "system_load": 0.228027,
-            "network_sent_bytes": 156484007443,
-            "network_recv_bytes": 14071483699,
-            "timestamp": "2025-03-07T06:25:00"
-        },
-        {
-            "cpu_temperature": 45.04,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.3,
-            "system_load": 0.0820312,
-            "network_sent_bytes": 156484031423,
-            "network_recv_bytes": 14071511567,
-            "timestamp": "2025-03-07T06:26:00"
-        },
-        {
-            "cpu_temperature": 44.95,
-            "cpu_usage": 1.17333,
-            "ram_usage": 37.3,
-            "system_load": 0.285156,
-            "network_sent_bytes": 156484054123,
-            "network_recv_bytes": 14071532506,
-            "timestamp": "2025-03-07T06:27:00"
-        },
-        {
-            "cpu_temperature": 45.0767,
-            "cpu_usage": 1.15667,
-            "ram_usage": 37.4,
-            "system_load": 0.246582,
-            "network_sent_bytes": 156484076041,
-            "network_recv_bytes": 14071553060,
-            "timestamp": "2025-03-07T06:28:00"
-        },
-        {
-            "cpu_temperature": 45.0217,
-            "cpu_usage": 1.23167,
-            "ram_usage": 37.3,
-            "system_load": 0.0961914,
-            "network_sent_bytes": 156484098000,
-            "network_recv_bytes": 14071573803,
-            "timestamp": "2025-03-07T06:29:00"
-        },
-        {
-            "cpu_temperature": 44.7717,
-            "cpu_usage": 1.23833,
-            "ram_usage": 37.3,
-            "system_load": 0.397949,
-            "network_sent_bytes": 156484122082,
-            "network_recv_bytes": 14071596271,
-            "timestamp": "2025-03-07T06:30:00"
-        },
-        {
-            "cpu_temperature": 44.9783,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.1,
-            "system_load": 0.156738,
-            "network_sent_bytes": 156484145322,
-            "network_recv_bytes": 14071624062,
-            "timestamp": "2025-03-07T06:31:00"
-        },
-        {
-            "cpu_temperature": 44.825,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.3,
-            "system_load": 0.282227,
-            "network_sent_bytes": 156484167227,
-            "network_recv_bytes": 14071644835,
-            "timestamp": "2025-03-07T06:32:00"
-        },
-        {
-            "cpu_temperature": 44.9767,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.1,
-            "system_load": 0.325195,
-            "network_sent_bytes": 156484189121,
-            "network_recv_bytes": 14071665393,
-            "timestamp": "2025-03-07T06:33:00"
-        },
-        {
-            "cpu_temperature": 44.9133,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.3,
-            "system_load": 0.137207,
-            "network_sent_bytes": 156484211111,
-            "network_recv_bytes": 14071686105,
-            "timestamp": "2025-03-07T06:34:00"
-        },
-        {
-            "cpu_temperature": 44.8933,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.1,
-            "system_load": 0.325195,
-            "network_sent_bytes": 156484235116,
-            "network_recv_bytes": 14071708476,
-            "timestamp": "2025-03-07T06:35:00"
-        },
-        {
-            "cpu_temperature": 45.5883,
-            "cpu_usage": 4.09167,
-            "ram_usage": 37.4,
-            "system_load": 0.200195,
-            "network_sent_bytes": 156484259663,
-            "network_recv_bytes": 14071736592,
-            "timestamp": "2025-03-07T06:36:00"
-        },
-        {
-            "cpu_temperature": 45.0783,
-            "cpu_usage": 1.16667,
-            "ram_usage": 37.2,
-            "system_load": 0.103516,
-            "network_sent_bytes": 156484285792,
-            "network_recv_bytes": 14071757273,
-            "timestamp": "2025-03-07T06:37:00"
-        },
-        {
-            "cpu_temperature": 44.98,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.4,
-            "system_load": 0.280273,
-            "network_sent_bytes": 156484307691,
-            "network_recv_bytes": 14071778044,
-            "timestamp": "2025-03-07T06:38:00"
-        },
-        {
-            "cpu_temperature": 44.8683,
-            "cpu_usage": 1.24167,
-            "ram_usage": 37.4,
-            "system_load": 0.133301,
-            "network_sent_bytes": 156484330444,
-            "network_recv_bytes": 14071798958,
-            "timestamp": "2025-03-07T06:39:00"
-        },
-        {
-            "cpu_temperature": 45.0267,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.4,
-            "system_load": 0.183105,
-            "network_sent_bytes": 156484354272,
-            "network_recv_bytes": 14071821329,
-            "timestamp": "2025-03-07T06:40:00"
-        },
-        {
-            "cpu_temperature": 45.025,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.3,
-            "system_load": 0.191406,
-            "network_sent_bytes": 156484378657,
-            "network_recv_bytes": 14071850134,
-            "timestamp": "2025-03-07T06:41:00"
-        },
-        {
-            "cpu_temperature": 45.12,
-            "cpu_usage": 1.04333,
-            "ram_usage": 37.3,
-            "system_load": 0.0683594,
-            "network_sent_bytes": 156484400355,
-            "network_recv_bytes": 14071870672,
-            "timestamp": "2025-03-07T06:42:00"
-        },
-        {
-            "cpu_temperature": 44.91,
-            "cpu_usage": 1.10167,
-            "ram_usage": 37.3,
-            "system_load": 0.294922,
-            "network_sent_bytes": 156484422285,
-            "network_recv_bytes": 14071891242,
-            "timestamp": "2025-03-07T06:43:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.3,
-            "system_load": 0.144531,
-            "network_sent_bytes": 156484443989,
-            "network_recv_bytes": 14071911782,
-            "timestamp": "2025-03-07T06:44:00"
-        },
-        {
-            "cpu_temperature": 44.8167,
-            "cpu_usage": 1.21667,
-            "ram_usage": 37.3,
-            "system_load": 0.173828,
-            "network_sent_bytes": 156484468282,
-            "network_recv_bytes": 14071934465,
-            "timestamp": "2025-03-07T06:45:00"
-        },
-        {
-            "cpu_temperature": 44.8067,
-            "cpu_usage": 1.06,
-            "ram_usage": 37.2,
-            "system_load": 0.40918,
-            "network_sent_bytes": 156484497568,
-            "network_recv_bytes": 14071968807,
-            "timestamp": "2025-03-07T06:46:00"
-        },
-        {
-            "cpu_temperature": 44.9633,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.3,
-            "system_load": 0.224121,
-            "network_sent_bytes": 156484519481,
-            "network_recv_bytes": 14071989548,
-            "timestamp": "2025-03-07T06:47:00"
-        },
-        {
-            "cpu_temperature": 44.9867,
-            "cpu_usage": 1.09333,
-            "ram_usage": 37.3,
-            "system_load": 0.148438,
-            "network_sent_bytes": 156484541997,
-            "network_recv_bytes": 14072011023,
-            "timestamp": "2025-03-07T06:48:00"
-        },
-        {
-            "cpu_temperature": 45.1033,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.4,
-            "system_load": 0.347168,
-            "network_sent_bytes": 156484564206,
-            "network_recv_bytes": 14072031988,
-            "timestamp": "2025-03-07T06:49:00"
-        },
-        {
-            "cpu_temperature": 44.975,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.4,
-            "system_load": 0.125488,
-            "network_sent_bytes": 156484595173,
-            "network_recv_bytes": 14072057165,
-            "timestamp": "2025-03-07T06:50:00"
-        },
-        {
-            "cpu_temperature": 44.9183,
-            "cpu_usage": 0.998333,
-            "ram_usage": 37,
-            "system_load": 0.270996,
-            "network_sent_bytes": 156484619141,
-            "network_recv_bytes": 14072085083,
-            "timestamp": "2025-03-07T06:51:00"
-        },
-        {
-            "cpu_temperature": 44.755,
-            "cpu_usage": 1.03833,
-            "ram_usage": 37.3,
-            "system_load": 0.135254,
-            "network_sent_bytes": 156484640944,
-            "network_recv_bytes": 14072105744,
-            "timestamp": "2025-03-07T06:52:00"
-        },
-        {
-            "cpu_temperature": 44.8433,
-            "cpu_usage": 1.105,
-            "ram_usage": 37,
-            "system_load": 0.046875,
-            "network_sent_bytes": 156484666862,
-            "network_recv_bytes": 14072130254,
-            "timestamp": "2025-03-07T06:53:00"
-        },
-        {
-            "cpu_temperature": 44.8933,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.4,
-            "system_load": 0.300293,
-            "network_sent_bytes": 156484688655,
-            "network_recv_bytes": 14072150867,
-            "timestamp": "2025-03-07T06:54:00"
-        },
-        {
-            "cpu_temperature": 44.9633,
-            "cpu_usage": 1.26833,
-            "ram_usage": 37,
-            "system_load": 0.10791,
-            "network_sent_bytes": 156484713685,
-            "network_recv_bytes": 14072174660,
-            "timestamp": "2025-03-07T06:55:00"
-        },
-        {
-            "cpu_temperature": 44.8483,
-            "cpu_usage": 0.968333,
-            "ram_usage": 37.3,
-            "system_load": 0.106445,
-            "network_sent_bytes": 156484737460,
-            "network_recv_bytes": 14072202471,
-            "timestamp": "2025-03-07T06:56:00"
-        },
-        {
-            "cpu_temperature": 44.8967,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.3,
-            "system_load": 0.208496,
-            "network_sent_bytes": 156484759362,
-            "network_recv_bytes": 14072223243,
-            "timestamp": "2025-03-07T06:57:00"
-        },
-        {
-            "cpu_temperature": 44.94,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.3,
-            "system_load": 0.074707,
-            "network_sent_bytes": 156484781450,
-            "network_recv_bytes": 14072243985,
-            "timestamp": "2025-03-07T06:58:00"
-        },
-        {
-            "cpu_temperature": 44.835,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.3,
-            "system_load": 0.286133,
-            "network_sent_bytes": 156484803444,
-            "network_recv_bytes": 14072264837,
-            "timestamp": "2025-03-07T06:59:00"
-        },
-        {
-            "cpu_temperature": 44.805,
-            "cpu_usage": 1.50833,
-            "ram_usage": 37.3,
-            "system_load": 0.141602,
-            "network_sent_bytes": 156484854984,
-            "network_recv_bytes": 14072314479,
-            "timestamp": "2025-03-07T07:00:00"
-        },
-        {
-            "cpu_temperature": 44.715,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.3,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156484879994,
-            "network_recv_bytes": 14072344089,
-            "timestamp": "2025-03-07T07:01:00"
-        },
-        {
-            "cpu_temperature": 44.5983,
-            "cpu_usage": 0.97,
-            "ram_usage": 36.9,
-            "system_load": 0.430176,
-            "network_sent_bytes": 156484906153,
-            "network_recv_bytes": 14072364766,
-            "timestamp": "2025-03-07T07:02:00"
-        },
-        {
-            "cpu_temperature": 44.5867,
-            "cpu_usage": 1.00333,
-            "ram_usage": 37.3,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156484928412,
-            "network_recv_bytes": 14072385426,
-            "timestamp": "2025-03-07T07:03:00"
-        },
-        {
-            "cpu_temperature": 44.63,
-            "cpu_usage": 1.06667,
-            "ram_usage": 37,
-            "system_load": 0.204102,
-            "network_sent_bytes": 156484950311,
-            "network_recv_bytes": 14072406043,
-            "timestamp": "2025-03-07T07:04:00"
-        },
-        {
-            "cpu_temperature": 44.4967,
-            "cpu_usage": 1.04,
-            "ram_usage": 37.3,
-            "system_load": 0.200195,
-            "network_sent_bytes": 156484976906,
-            "network_recv_bytes": 14072431611,
-            "timestamp": "2025-03-07T07:05:00"
-        },
-        {
-            "cpu_temperature": 44.5033,
-            "cpu_usage": 1.01333,
-            "ram_usage": 37,
-            "system_load": 0.0717773,
-            "network_sent_bytes": 156485028993,
-            "network_recv_bytes": 14072481552,
-            "timestamp": "2025-03-07T07:06:00"
-        },
-        {
-            "cpu_temperature": 44.5967,
-            "cpu_usage": 1.04333,
-            "ram_usage": 37.3,
-            "system_load": 0.216797,
-            "network_sent_bytes": 156485058256,
-            "network_recv_bytes": 14072509463,
-            "timestamp": "2025-03-07T07:07:00"
-        },
-        {
-            "cpu_temperature": 44.4783,
-            "cpu_usage": 0.993333,
-            "ram_usage": 37,
-            "system_load": 0.115723,
-            "network_sent_bytes": 156485081671,
-            "network_recv_bytes": 14072531504,
-            "timestamp": "2025-03-07T07:08:00"
-        },
-        {
-            "cpu_temperature": 44.66,
-            "cpu_usage": 1.305,
-            "ram_usage": 37.4,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156485103786,
-            "network_recv_bytes": 14072552537,
-            "timestamp": "2025-03-07T07:09:00"
-        },
-        {
-            "cpu_temperature": 44.4367,
-            "cpu_usage": 0.928333,
-            "ram_usage": 37,
-            "system_load": 0.254395,
-            "network_sent_bytes": 156485126054,
-            "network_recv_bytes": 14072573297,
-            "timestamp": "2025-03-07T07:10:00"
-        },
-        {
-            "cpu_temperature": 44.5667,
-            "cpu_usage": 1.075,
-            "ram_usage": 37.5,
-            "system_load": 0.0913086,
-            "network_sent_bytes": 156485192091,
-            "network_recv_bytes": 14072645635,
-            "timestamp": "2025-03-07T07:11:00"
-        },
-        {
-            "cpu_temperature": 44.4983,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.1,
-            "system_load": 0.100586,
-            "network_sent_bytes": 156485294490,
-            "network_recv_bytes": 14072747976,
-            "timestamp": "2025-03-07T07:12:00"
-        },
-        {
-            "cpu_temperature": 44.5267,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.9,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156485512511,
-            "network_recv_bytes": 14072959377,
-            "timestamp": "2025-03-07T07:13:00"
-        },
-        {
-            "cpu_temperature": 44.5817,
-            "cpu_usage": 1.345,
-            "ram_usage": 37.8,
-            "system_load": 0.0703125,
-            "network_sent_bytes": 156485552876,
-            "network_recv_bytes": 14072994546,
-            "timestamp": "2025-03-07T07:14:00"
-        },
-        {
-            "cpu_temperature": 44.6783,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.8,
-            "system_load": 0.21582,
-            "network_sent_bytes": 156485593893,
-            "network_recv_bytes": 14073034008,
-            "timestamp": "2025-03-07T07:15:00"
-        },
-        {
-            "cpu_temperature": 44.5167,
-            "cpu_usage": 1.26833,
-            "ram_usage": 37.4,
-            "system_load": 0.178711,
-            "network_sent_bytes": 156485625295,
-            "network_recv_bytes": 14073069197,
-            "timestamp": "2025-03-07T07:16:00"
-        },
-        {
-            "cpu_temperature": 44.34,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.2,
-            "system_load": 0.0639648,
-            "network_sent_bytes": 156485660345,
-            "network_recv_bytes": 14073102833,
-            "timestamp": "2025-03-07T07:17:00"
-        },
-        {
-            "cpu_temperature": 44.4,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.4,
-            "system_load": 0.233398,
-            "network_sent_bytes": 156485699390,
-            "network_recv_bytes": 14073141255,
-            "timestamp": "2025-03-07T07:18:00"
-        },
-        {
-            "cpu_temperature": 44.5217,
-            "cpu_usage": 1.27833,
-            "ram_usage": 37.5,
-            "system_load": 0.137207,
-            "network_sent_bytes": 156485870475,
-            "network_recv_bytes": 14073307493,
-            "timestamp": "2025-03-07T07:19:00"
-        },
-        {
-            "cpu_temperature": 44.6,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.7,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156485908797,
-            "network_recv_bytes": 14073344694,
-            "timestamp": "2025-03-07T07:20:00"
-        },
-        {
-            "cpu_temperature": 44.6367,
-            "cpu_usage": 1.11833,
-            "ram_usage": 37.6,
-            "system_load": 0.194824,
-            "network_sent_bytes": 156485951267,
-            "network_recv_bytes": 14073394497,
-            "timestamp": "2025-03-07T07:21:00"
-        },
-        {
-            "cpu_temperature": 44.5,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.5,
-            "system_load": 0.0703125,
-            "network_sent_bytes": 156485987927,
-            "network_recv_bytes": 14073433128,
-            "timestamp": "2025-03-07T07:22:00"
-        },
-        {
-            "cpu_temperature": 44.5233,
-            "cpu_usage": 1.145,
-            "ram_usage": 37.5,
-            "system_load": 0.35498,
-            "network_sent_bytes": 156486024535,
-            "network_recv_bytes": 14073468503,
-            "timestamp": "2025-03-07T07:23:00"
-        },
-        {
-            "cpu_temperature": 44.5683,
-            "cpu_usage": 1.20167,
-            "ram_usage": 37.4,
-            "system_load": 0.283203,
-            "network_sent_bytes": 156486054625,
-            "network_recv_bytes": 14073497950,
-            "timestamp": "2025-03-07T07:24:00"
-        },
-        {
-            "cpu_temperature": 44.6033,
-            "cpu_usage": 1.14667,
-            "ram_usage": 37.3,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156486087493,
-            "network_recv_bytes": 14073529666,
-            "timestamp": "2025-03-07T07:25:00"
-        },
-        {
-            "cpu_temperature": 44.525,
-            "cpu_usage": 1.19333,
-            "ram_usage": 37.4,
-            "system_load": 0.247559,
-            "network_sent_bytes": 156486124747,
-            "network_recv_bytes": 14073566681,
-            "timestamp": "2025-03-07T07:26:00"
-        },
-        {
-            "cpu_temperature": 44.6983,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.4,
-            "system_load": 0.0893555,
-            "network_sent_bytes": 156486166599,
-            "network_recv_bytes": 14073606779,
-            "timestamp": "2025-03-07T07:27:00"
-        },
-        {
-            "cpu_temperature": 44.7283,
-            "cpu_usage": 1.36833,
-            "ram_usage": 37.7,
-            "system_load": 0.271484,
-            "network_sent_bytes": 156486374278,
-            "network_recv_bytes": 14073808476,
-            "timestamp": "2025-03-07T07:28:00"
-        },
-        {
-            "cpu_temperature": 44.8133,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.8,
-            "system_load": 0.406738,
-            "network_sent_bytes": 156486404083,
-            "network_recv_bytes": 14073837167,
-            "timestamp": "2025-03-07T07:29:00"
-        },
-        {
-            "cpu_temperature": 44.805,
-            "cpu_usage": 1.24333,
-            "ram_usage": 37.4,
-            "system_load": 0.147461,
-            "network_sent_bytes": 156486439023,
-            "network_recv_bytes": 14073871042,
-            "timestamp": "2025-03-07T07:30:00"
-        },
-        {
-            "cpu_temperature": 44.7033,
-            "cpu_usage": 1.235,
-            "ram_usage": 37.4,
-            "system_load": 0.301758,
-            "network_sent_bytes": 156486470975,
-            "network_recv_bytes": 14073907659,
-            "timestamp": "2025-03-07T07:31:00"
-        },
-        {
-            "cpu_temperature": 44.825,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.3,
-            "system_load": 0.356445,
-            "network_sent_bytes": 156486494659,
-            "network_recv_bytes": 14073929831,
-            "timestamp": "2025-03-07T07:32:00"
-        },
-        {
-            "cpu_temperature": 44.5433,
-            "cpu_usage": 1.26,
-            "ram_usage": 37.4,
-            "system_load": 0.422852,
-            "network_sent_bytes": 156486576344,
-            "network_recv_bytes": 14074013820,
-            "timestamp": "2025-03-07T07:33:00"
-        },
-        {
-            "cpu_temperature": 44.5833,
-            "cpu_usage": 1.435,
-            "ram_usage": 37.7,
-            "system_load": 0.452148,
-            "network_sent_bytes": 156486760762,
-            "network_recv_bytes": 14074195127,
-            "timestamp": "2025-03-07T07:34:00"
-        },
-        {
-            "cpu_temperature": 44.7567,
-            "cpu_usage": 1.24,
-            "ram_usage": 37.8,
-            "system_load": 0.164551,
-            "network_sent_bytes": 156486797369,
-            "network_recv_bytes": 14074230296,
-            "timestamp": "2025-03-07T07:35:00"
-        },
-        {
-            "cpu_temperature": 44.6183,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.4,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156486837508,
-            "network_recv_bytes": 14074275531,
-            "timestamp": "2025-03-07T07:36:00"
-        },
-        {
-            "cpu_temperature": 44.7033,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.4,
-            "system_load": 0.245117,
-            "network_sent_bytes": 156486866163,
-            "network_recv_bytes": 14074302954,
-            "timestamp": "2025-03-07T07:37:00"
-        },
-        {
-            "cpu_temperature": 44.75,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.3,
-            "system_load": 0.0878906,
-            "network_sent_bytes": 156486907599,
-            "network_recv_bytes": 14074339272,
-            "timestamp": "2025-03-07T07:38:00"
-        },
-        {
-            "cpu_temperature": 44.905,
-            "cpu_usage": 1.27167,
-            "ram_usage": 37.4,
-            "system_load": 0.222168,
-            "network_sent_bytes": 156486939351,
-            "network_recv_bytes": 14074369333,
-            "timestamp": "2025-03-07T07:39:00"
-        },
-        {
-            "cpu_temperature": 44.6483,
-            "cpu_usage": 1.35,
-            "ram_usage": 37.7,
-            "system_load": 0.117676,
-            "network_sent_bytes": 156487153353,
-            "network_recv_bytes": 14074577547,
-            "timestamp": "2025-03-07T07:40:00"
-        },
-        {
-            "cpu_temperature": 44.73,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.8,
-            "system_load": 0.0415039,
-            "network_sent_bytes": 156487193775,
-            "network_recv_bytes": 14074622107,
-            "timestamp": "2025-03-07T07:41:00"
-        },
-        {
-            "cpu_temperature": 44.9167,
-            "cpu_usage": 1.19,
-            "ram_usage": 37.8,
-            "system_load": 0.225098,
-            "network_sent_bytes": 156487230788,
-            "network_recv_bytes": 14074658325,
-            "timestamp": "2025-03-07T07:42:00"
-        },
-        {
-            "cpu_temperature": 44.8533,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.5,
-            "system_load": 0.169922,
-            "network_sent_bytes": 156487272198,
-            "network_recv_bytes": 14074702671,
-            "timestamp": "2025-03-07T07:43:00"
-        },
-        {
-            "cpu_temperature": 44.8117,
-            "cpu_usage": 1.27333,
-            "ram_usage": 37.4,
-            "system_load": 0.128906,
-            "network_sent_bytes": 156487306633,
-            "network_recv_bytes": 14074737392,
-            "timestamp": "2025-03-07T07:44:00"
-        },
-        {
-            "cpu_temperature": 44.845,
-            "cpu_usage": 1.20167,
-            "ram_usage": 37.5,
-            "system_load": 0.171875,
-            "network_sent_bytes": 156487343302,
-            "network_recv_bytes": 14074773218,
-            "timestamp": "2025-03-07T07:45:00"
-        },
-        {
-            "cpu_temperature": 44.8433,
-            "cpu_usage": 1.17167,
-            "ram_usage": 37.4,
-            "system_load": 0.0957031,
-            "network_sent_bytes": 156487378502,
-            "network_recv_bytes": 14074807464,
-            "timestamp": "2025-03-07T07:46:00"
-        },
-        {
-            "cpu_temperature": 45.03,
-            "cpu_usage": 1.095,
-            "ram_usage": 37.4,
-            "system_load": 0.225098,
-            "network_sent_bytes": 156487406494,
-            "network_recv_bytes": 14074834496,
-            "timestamp": "2025-03-07T07:47:00"
-        },
-        {
-            "cpu_temperature": 44.9083,
-            "cpu_usage": 1.27,
-            "ram_usage": 37.4,
-            "system_load": 0.312012,
-            "network_sent_bytes": 156487447777,
-            "network_recv_bytes": 14074874980,
-            "timestamp": "2025-03-07T07:48:00"
-        },
-        {
-            "cpu_temperature": 44.8833,
-            "cpu_usage": 1.42,
-            "ram_usage": 37.7,
-            "system_load": 0.224121,
-            "network_sent_bytes": 156487638913,
-            "network_recv_bytes": 14075061056,
-            "timestamp": "2025-03-07T07:49:00"
-        },
-        {
-            "cpu_temperature": 44.99,
-            "cpu_usage": 1.25833,
-            "ram_usage": 37.7,
-            "system_load": 0.291504,
-            "network_sent_bytes": 156487674068,
-            "network_recv_bytes": 14075090811,
-            "timestamp": "2025-03-07T07:50:00"
-        },
-        {
-            "cpu_temperature": 44.7783,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.1,
-            "system_load": 0.162598,
-            "network_sent_bytes": 156487710263,
-            "network_recv_bytes": 14075131269,
-            "timestamp": "2025-03-07T07:51:00"
-        },
-        {
-            "cpu_temperature": 44.9,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.4,
-            "system_load": 0.351074,
-            "network_sent_bytes": 156487743810,
-            "network_recv_bytes": 14075163957,
-            "timestamp": "2025-03-07T07:52:00"
-        },
-        {
-            "cpu_temperature": 44.9217,
-            "cpu_usage": 1.06333,
-            "ram_usage": 37.2,
-            "system_load": 0.306641,
-            "network_sent_bytes": 156487788425,
-            "network_recv_bytes": 14075211452,
-            "timestamp": "2025-03-07T07:53:00"
-        },
-        {
-            "cpu_temperature": 44.9133,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.4,
-            "system_load": 0.111328,
-            "network_sent_bytes": 156487823363,
-            "network_recv_bytes": 14075246881,
-            "timestamp": "2025-03-07T07:54:00"
-        },
-        {
-            "cpu_temperature": 44.99,
-            "cpu_usage": 1.06167,
-            "ram_usage": 37.3,
-            "system_load": 0.230957,
-            "network_sent_bytes": 156487856630,
-            "network_recv_bytes": 14075279438,
-            "timestamp": "2025-03-07T07:55:00"
-        },
-        {
-            "cpu_temperature": 44.805,
-            "cpu_usage": 1.26667,
-            "ram_usage": 37.4,
-            "system_load": 0.165527,
-            "network_sent_bytes": 156487918551,
-            "network_recv_bytes": 14075344749,
-            "timestamp": "2025-03-07T07:56:00"
-        },
-        {
-            "cpu_temperature": 44.74,
-            "cpu_usage": 1.21167,
-            "ram_usage": 37.5,
-            "system_load": 0.059082,
-            "network_sent_bytes": 156487972019,
-            "network_recv_bytes": 14075396428,
-            "timestamp": "2025-03-07T07:57:00"
-        },
-        {
-            "cpu_temperature": 44.8117,
-            "cpu_usage": 1.315,
-            "ram_usage": 37.5,
-            "system_load": 0.263184,
-            "network_sent_bytes": 156488050389,
-            "network_recv_bytes": 14075472510,
-            "timestamp": "2025-03-07T07:58:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.31667,
-            "ram_usage": 37.9,
-            "system_load": 0.0952148,
-            "network_sent_bytes": 156488264538,
-            "network_recv_bytes": 14075680572,
-            "timestamp": "2025-03-07T07:59:00"
-        },
-        {
-            "cpu_temperature": 45.0217,
-            "cpu_usage": 1.43167,
-            "ram_usage": 37.9,
-            "system_load": 0.100586,
-            "network_sent_bytes": 156488316030,
-            "network_recv_bytes": 14075730690,
-            "timestamp": "2025-03-07T08:00:00"
-        },
-        {
-            "cpu_temperature": 45.0817,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.2,
-            "system_load": 0.276855,
-            "network_sent_bytes": 156488349943,
-            "network_recv_bytes": 14075769311,
-            "timestamp": "2025-03-07T08:01:00"
-        },
-        {
-            "cpu_temperature": 45.035,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.4,
-            "system_load": 0.323242,
-            "network_sent_bytes": 156488384919,
-            "network_recv_bytes": 14075799285,
-            "timestamp": "2025-03-07T08:02:00"
-        },
-        {
-            "cpu_temperature": 44.9233,
-            "cpu_usage": 1.10833,
-            "ram_usage": 37.2,
-            "system_load": 0.394531,
-            "network_sent_bytes": 156488434123,
-            "network_recv_bytes": 14075849908,
-            "timestamp": "2025-03-07T08:03:00"
-        },
-        {
-            "cpu_temperature": 45.0717,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.4,
-            "system_load": 0.299316,
-            "network_sent_bytes": 156488481133,
-            "network_recv_bytes": 14075897819,
-            "timestamp": "2025-03-07T08:04:00"
-        },
-        {
-            "cpu_temperature": 44.955,
-            "cpu_usage": 1.08,
-            "ram_usage": 37.2,
-            "system_load": 0.10791,
-            "network_sent_bytes": 156488506916,
-            "network_recv_bytes": 14075922375,
-            "timestamp": "2025-03-07T08:05:00"
-        },
-        {
-            "cpu_temperature": 44.86,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.4,
-            "system_load": 0.249023,
-            "network_sent_bytes": 156488563055,
-            "network_recv_bytes": 14075981407,
-            "timestamp": "2025-03-07T08:06:00"
-        },
-        {
-            "cpu_temperature": 45.0367,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.4,
-            "system_load": 0.0893555,
-            "network_sent_bytes": 156488602428,
-            "network_recv_bytes": 14076019308,
-            "timestamp": "2025-03-07T08:07:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.21667,
-            "ram_usage": 37.4,
-            "system_load": 0.256348,
-            "network_sent_bytes": 156488639775,
-            "network_recv_bytes": 14076055589,
-            "timestamp": "2025-03-07T08:08:00"
-        },
-        {
-            "cpu_temperature": 44.8933,
-            "cpu_usage": 1.38,
-            "ram_usage": 37.4,
-            "system_load": 0.379395,
-            "network_sent_bytes": 156488666624,
-            "network_recv_bytes": 14076081132,
-            "timestamp": "2025-03-07T08:09:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.22333,
-            "ram_usage": 37.4,
-            "system_load": 0.217773,
-            "network_sent_bytes": 156488710368,
-            "network_recv_bytes": 14076124009,
-            "timestamp": "2025-03-07T08:10:00"
-        },
-        {
-            "cpu_temperature": 44.83,
-            "cpu_usage": 1.255,
-            "ram_usage": 37.4,
-            "system_load": 0.634766,
-            "network_sent_bytes": 156488745949,
-            "network_recv_bytes": 14076163721,
-            "timestamp": "2025-03-07T08:11:00"
-        },
-        {
-            "cpu_temperature": 44.9217,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.4,
-            "system_load": 0.331543,
-            "network_sent_bytes": 156488773011,
-            "network_recv_bytes": 14076189749,
-            "timestamp": "2025-03-07T08:12:00"
-        },
-        {
-            "cpu_temperature": 44.9433,
-            "cpu_usage": 1.21167,
-            "ram_usage": 37.4,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156488803913,
-            "network_recv_bytes": 14076219179,
-            "timestamp": "2025-03-07T08:13:00"
-        },
-        {
-            "cpu_temperature": 45.1017,
-            "cpu_usage": 1.27,
-            "ram_usage": 37.4,
-            "system_load": 0.282715,
-            "network_sent_bytes": 156488835747,
-            "network_recv_bytes": 14076245787,
-            "timestamp": "2025-03-07T08:14:00"
-        },
-        {
-            "cpu_temperature": 45.0033,
-            "cpu_usage": 1.225,
-            "ram_usage": 37.4,
-            "system_load": 0.241699,
-            "network_sent_bytes": 156488875178,
-            "network_recv_bytes": 14076283164,
-            "timestamp": "2025-03-07T08:15:00"
-        },
-        {
-            "cpu_temperature": 44.8033,
-            "cpu_usage": 1.10333,
-            "ram_usage": 37.4,
-            "system_load": 0.161621,
-            "network_sent_bytes": 156488902230,
-            "network_recv_bytes": 14076314203,
-            "timestamp": "2025-03-07T08:16:00"
-        },
-        {
-            "cpu_temperature": 44.775,
-            "cpu_usage": 1.15,
-            "ram_usage": 37.3,
-            "system_load": 0.227051,
-            "network_sent_bytes": 156488929424,
-            "network_recv_bytes": 14076340028,
-            "timestamp": "2025-03-07T08:17:00"
-        },
-        {
-            "cpu_temperature": 44.8467,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.3,
-            "system_load": 0.081543,
-            "network_sent_bytes": 156488958109,
-            "network_recv_bytes": 14076367760,
-            "timestamp": "2025-03-07T08:18:00"
-        },
-        {
-            "cpu_temperature": 45.03,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.3,
-            "system_load": 0.181152,
-            "network_sent_bytes": 156488982530,
-            "network_recv_bytes": 14076391101,
-            "timestamp": "2025-03-07T08:19:00"
-        },
-        {
-            "cpu_temperature": 44.9567,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.4,
-            "system_load": 0.138672,
-            "network_sent_bytes": 156489009830,
-            "network_recv_bytes": 14076421925,
-            "timestamp": "2025-03-07T08:20:00"
-        },
-        {
-            "cpu_temperature": 44.8533,
-            "cpu_usage": 1.11667,
-            "ram_usage": 37.3,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156489036612,
-            "network_recv_bytes": 14076447863,
-            "timestamp": "2025-03-07T08:21:00"
-        },
-        {
-            "cpu_temperature": 44.8417,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.4,
-            "system_load": 0.277344,
-            "network_sent_bytes": 156489062817,
-            "network_recv_bytes": 14076472976,
-            "timestamp": "2025-03-07T08:22:00"
-        },
-        {
-            "cpu_temperature": 44.92,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.2,
-            "system_load": 0.0996094,
-            "network_sent_bytes": 156489087895,
-            "network_recv_bytes": 14076496664,
-            "timestamp": "2025-03-07T08:23:00"
-        },
-        {
-            "cpu_temperature": 44.665,
-            "cpu_usage": 1.19333,
-            "ram_usage": 37.3,
-            "system_load": 0.23877,
-            "network_sent_bytes": 156489111959,
-            "network_recv_bytes": 14076519684,
-            "timestamp": "2025-03-07T08:24:00"
-        },
-        {
-            "cpu_temperature": 44.615,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.3,
-            "system_load": 0.463379,
-            "network_sent_bytes": 156489149660,
-            "network_recv_bytes": 14076555443,
-            "timestamp": "2025-03-07T08:25:00"
-        },
-        {
-            "cpu_temperature": 44.6183,
-            "cpu_usage": 1.145,
-            "ram_usage": 37.3,
-            "system_load": 0.168457,
-            "network_sent_bytes": 156489181665,
-            "network_recv_bytes": 14076588031,
-            "timestamp": "2025-03-07T08:26:00"
-        },
-        {
-            "cpu_temperature": 44.71,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.4,
-            "system_load": 0.243164,
-            "network_sent_bytes": 156489225623,
-            "network_recv_bytes": 14076631441,
-            "timestamp": "2025-03-07T08:27:00"
-        },
-        {
-            "cpu_temperature": 44.7033,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.4,
-            "system_load": 0.119629,
-            "network_sent_bytes": 156489253230,
-            "network_recv_bytes": 14076657832,
-            "timestamp": "2025-03-07T08:28:00"
-        },
-        {
-            "cpu_temperature": 44.7133,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.4,
-            "system_load": 0.0419922,
-            "network_sent_bytes": 156489280643,
-            "network_recv_bytes": 14076683829,
-            "timestamp": "2025-03-07T08:29:00"
-        },
-        {
-            "cpu_temperature": 44.615,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.3,
-            "system_load": 0.403809,
-            "network_sent_bytes": 156489307569,
-            "network_recv_bytes": 14076709195,
-            "timestamp": "2025-03-07T08:30:00"
-        },
-        {
-            "cpu_temperature": 44.5583,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.3,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156489337840,
-            "network_recv_bytes": 14076741020,
-            "timestamp": "2025-03-07T08:31:00"
-        },
-        {
-            "cpu_temperature": 44.615,
-            "cpu_usage": 1.04833,
-            "ram_usage": 37.1,
-            "system_load": 0.305176,
-            "network_sent_bytes": 156489362375,
-            "network_recv_bytes": 14076764549,
-            "timestamp": "2025-03-07T08:32:00"
-        },
-        {
-            "cpu_temperature": 44.6617,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.5,
-            "system_load": 0.247559,
-            "network_sent_bytes": 156489414743,
-            "network_recv_bytes": 14076815557,
-            "timestamp": "2025-03-07T08:33:00"
-        },
-        {
-            "cpu_temperature": 44.775,
-            "cpu_usage": 1.06,
-            "ram_usage": 37.2,
-            "system_load": 0.0893555,
-            "network_sent_bytes": 156489439997,
-            "network_recv_bytes": 14076841063,
-            "timestamp": "2025-03-07T08:34:00"
-        },
-        {
-            "cpu_temperature": 44.74,
-            "cpu_usage": 0.936667,
-            "ram_usage": 37.2,
-            "system_load": 0.151855,
-            "network_sent_bytes": 156489467262,
-            "network_recv_bytes": 14076867243,
-            "timestamp": "2025-03-07T08:35:00"
-        },
-        {
-            "cpu_temperature": 44.6517,
-            "cpu_usage": 1.005,
-            "ram_usage": 37.4,
-            "system_load": 0.168457,
-            "network_sent_bytes": 156489508199,
-            "network_recv_bytes": 14076914939,
-            "timestamp": "2025-03-07T08:36:00"
-        },
-        {
-            "cpu_temperature": 44.6683,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.4,
-            "system_load": 0.0600586,
-            "network_sent_bytes": 156489533530,
-            "network_recv_bytes": 14076938896,
-            "timestamp": "2025-03-07T08:37:00"
-        },
-        {
-            "cpu_temperature": 44.4917,
-            "cpu_usage": 1.13667,
-            "ram_usage": 37.3,
-            "system_load": 0.39209,
-            "network_sent_bytes": 156489563418,
-            "network_recv_bytes": 14076963406,
-            "timestamp": "2025-03-07T08:38:00"
-        },
-        {
-            "cpu_temperature": 44.51,
-            "cpu_usage": 1.22333,
-            "ram_usage": 37.4,
-            "system_load": 0.206055,
-            "network_sent_bytes": 156489585808,
-            "network_recv_bytes": 14076984007,
-            "timestamp": "2025-03-07T08:39:00"
-        },
-        {
-            "cpu_temperature": 44.715,
-            "cpu_usage": 1.13167,
-            "ram_usage": 37.3,
-            "system_load": 0.192383,
-            "network_sent_bytes": 156489611353,
-            "network_recv_bytes": 14077008427,
-            "timestamp": "2025-03-07T08:40:00"
-        },
-        {
-            "cpu_temperature": 44.45,
-            "cpu_usage": 1.22833,
-            "ram_usage": 37.3,
-            "system_load": 0.347656,
-            "network_sent_bytes": 156489635831,
-            "network_recv_bytes": 14077036314,
-            "timestamp": "2025-03-07T08:41:00"
-        },
-        {
-            "cpu_temperature": 44.4817,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.2,
-            "system_load": 0.125488,
-            "network_sent_bytes": 156489657884,
-            "network_recv_bytes": 14077057047,
-            "timestamp": "2025-03-07T08:42:00"
-        },
-        {
-            "cpu_temperature": 44.5717,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.2,
-            "system_load": 0.165527,
-            "network_sent_bytes": 156489679916,
-            "network_recv_bytes": 14077077999,
-            "timestamp": "2025-03-07T08:43:00"
-        },
-        {
-            "cpu_temperature": 44.5067,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.3,
-            "system_load": 0.132324,
-            "network_sent_bytes": 156489702027,
-            "network_recv_bytes": 14077098912,
-            "timestamp": "2025-03-07T08:44:00"
-        },
-        {
-            "cpu_temperature": 44.6067,
-            "cpu_usage": 1.165,
-            "ram_usage": 37.3,
-            "system_load": 0.046875,
-            "network_sent_bytes": 156489725708,
-            "network_recv_bytes": 14077121788,
-            "timestamp": "2025-03-07T08:45:00"
-        },
-        {
-            "cpu_temperature": 44.5933,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.3,
-            "system_load": 0.245117,
-            "network_sent_bytes": 156489749944,
-            "network_recv_bytes": 14077149833,
-            "timestamp": "2025-03-07T08:46:00"
-        },
-        {
-            "cpu_temperature": 44.6483,
-            "cpu_usage": 1.13167,
-            "ram_usage": 37.3,
-            "system_load": 0.162109,
-            "network_sent_bytes": 156489771934,
-            "network_recv_bytes": 14077170545,
-            "timestamp": "2025-03-07T08:47:00"
-        },
-        {
-            "cpu_temperature": 44.765,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.3,
-            "system_load": 0.131836,
-            "network_sent_bytes": 156489794173,
-            "network_recv_bytes": 14077191817,
-            "timestamp": "2025-03-07T08:48:00"
-        },
-        {
-            "cpu_temperature": 44.7367,
-            "cpu_usage": 1.24833,
-            "ram_usage": 37.3,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156489816254,
-            "network_recv_bytes": 14077212724,
-            "timestamp": "2025-03-07T08:49:00"
-        },
-        {
-            "cpu_temperature": 44.7117,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.3,
-            "system_load": 0.0664062,
-            "network_sent_bytes": 156489845142,
-            "network_recv_bytes": 14077235885,
-            "timestamp": "2025-03-07T08:50:00"
-        },
-        {
-            "cpu_temperature": 44.6283,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.3,
-            "system_load": 0.143555,
-            "network_sent_bytes": 156489868982,
-            "network_recv_bytes": 14077263913,
-            "timestamp": "2025-03-07T08:51:00"
-        },
-        {
-            "cpu_temperature": 44.8583,
-            "cpu_usage": 1.07,
-            "ram_usage": 37.3,
-            "system_load": 0.124023,
-            "network_sent_bytes": 156489891026,
-            "network_recv_bytes": 14077284595,
-            "timestamp": "2025-03-07T08:52:00"
-        },
-        {
-            "cpu_temperature": 44.6583,
-            "cpu_usage": 1.105,
-            "ram_usage": 37.2,
-            "system_load": 0.0429688,
-            "network_sent_bytes": 156489913044,
-            "network_recv_bytes": 14077305419,
-            "timestamp": "2025-03-07T08:53:00"
-        },
-        {
-            "cpu_temperature": 44.68,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.3,
-            "system_load": 0.243652,
-            "network_sent_bytes": 156489935451,
-            "network_recv_bytes": 14077326560,
-            "timestamp": "2025-03-07T08:54:00"
-        },
-        {
-            "cpu_temperature": 44.7733,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.3,
-            "system_load": 0.0874023,
-            "network_sent_bytes": 156489959294,
-            "network_recv_bytes": 14077348841,
-            "timestamp": "2025-03-07T08:55:00"
-        },
-        {
-            "cpu_temperature": 44.8583,
-            "cpu_usage": 1.04,
-            "ram_usage": 37,
-            "system_load": 0.104004,
-            "network_sent_bytes": 156489982427,
-            "network_recv_bytes": 14077376517,
-            "timestamp": "2025-03-07T08:56:00"
-        },
-        {
-            "cpu_temperature": 44.695,
-            "cpu_usage": 1.03167,
-            "ram_usage": 37.3,
-            "system_load": 0.218262,
-            "network_sent_bytes": 156490004281,
-            "network_recv_bytes": 14077397271,
-            "timestamp": "2025-03-07T08:57:00"
-        },
-        {
-            "cpu_temperature": 44.5133,
-            "cpu_usage": 1.05333,
-            "ram_usage": 37.1,
-            "system_load": 0.158203,
-            "network_sent_bytes": 156490026144,
-            "network_recv_bytes": 14077417834,
-            "timestamp": "2025-03-07T08:58:00"
-        },
-        {
-            "cpu_temperature": 44.6917,
-            "cpu_usage": 1.12167,
-            "ram_usage": 37.3,
-            "system_load": 0.292969,
-            "network_sent_bytes": 156490048070,
-            "network_recv_bytes": 14077438462,
-            "timestamp": "2025-03-07T08:59:00"
-        },
-        {
-            "cpu_temperature": 44.93,
-            "cpu_usage": 1.25333,
-            "ram_usage": 37.1,
-            "system_load": 0.179199,
-            "network_sent_bytes": 156490078849,
-            "network_recv_bytes": 14077467980,
-            "timestamp": "2025-03-07T09:00:00"
-        },
-        {
-            "cpu_temperature": 44.93,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.2,
-            "system_load": 0.0644531,
-            "network_sent_bytes": 156490122029,
-            "network_recv_bytes": 14077513636,
-            "timestamp": "2025-03-07T09:01:00"
-        },
-        {
-            "cpu_temperature": 44.7667,
-            "cpu_usage": 1.04833,
-            "ram_usage": 37.3,
-            "system_load": 0.251465,
-            "network_sent_bytes": 156490148016,
-            "network_recv_bytes": 14077534407,
-            "timestamp": "2025-03-07T09:02:00"
-        },
-        {
-            "cpu_temperature": 44.8583,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.2,
-            "system_load": 0.0908203,
-            "network_sent_bytes": 156490170460,
-            "network_recv_bytes": 14077554978,
-            "timestamp": "2025-03-07T09:03:00"
-        },
-        {
-            "cpu_temperature": 44.8267,
-            "cpu_usage": 1.07333,
-            "ram_usage": 37.2,
-            "system_load": 0.105957,
-            "network_sent_bytes": 156490192405,
-            "network_recv_bytes": 14077575675,
-            "timestamp": "2025-03-07T09:04:00"
-        },
-        {
-            "cpu_temperature": 44.8183,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.2,
-            "system_load": 0.117676,
-            "network_sent_bytes": 156490215606,
-            "network_recv_bytes": 14077597801,
-            "timestamp": "2025-03-07T09:05:00"
-        },
-        {
-            "cpu_temperature": 44.815,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.3,
-            "system_load": 0.0415039,
-            "network_sent_bytes": 156490240303,
-            "network_recv_bytes": 14077625930,
-            "timestamp": "2025-03-07T09:06:00"
-        },
-        {
-            "cpu_temperature": 44.7967,
-            "cpu_usage": 1.12,
-            "ram_usage": 37,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156490262353,
-            "network_recv_bytes": 14077646660,
-            "timestamp": "2025-03-07T09:07:00"
-        },
-        {
-            "cpu_temperature": 44.8717,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.3,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156490284349,
-            "network_recv_bytes": 14077667374,
-            "timestamp": "2025-03-07T09:08:00"
-        },
-        {
-            "cpu_temperature": 44.7833,
-            "cpu_usage": 1.22,
-            "ram_usage": 37.3,
-            "system_load": 0.0424805,
-            "network_sent_bytes": 156490306298,
-            "network_recv_bytes": 14077688113,
-            "timestamp": "2025-03-07T09:09:00"
-        },
-        {
-            "cpu_temperature": 44.8317,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.4,
-            "system_load": 0.32373,
-            "network_sent_bytes": 156490330211,
-            "network_recv_bytes": 14077710568,
-            "timestamp": "2025-03-07T09:10:00"
-        },
-        {
-            "cpu_temperature": 44.7383,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.3,
-            "system_load": 0.165527,
-            "network_sent_bytes": 156490353761,
-            "network_recv_bytes": 14077738535,
-            "timestamp": "2025-03-07T09:11:00"
-        },
-        {
-            "cpu_temperature": 44.665,
-            "cpu_usage": 1.24333,
-            "ram_usage": 37.3,
-            "system_load": 0.133301,
-            "network_sent_bytes": 156490375624,
-            "network_recv_bytes": 14077759248,
-            "timestamp": "2025-03-07T09:12:00"
-        },
-        {
-            "cpu_temperature": 44.7483,
-            "cpu_usage": 1.17167,
-            "ram_usage": 37.3,
-            "system_load": 0.241699,
-            "network_sent_bytes": 156490397557,
-            "network_recv_bytes": 14077779819,
-            "timestamp": "2025-03-07T09:13:00"
-        },
-        {
-            "cpu_temperature": 44.765,
-            "cpu_usage": 1.245,
-            "ram_usage": 37.3,
-            "system_load": 0.275879,
-            "network_sent_bytes": 156490423397,
-            "network_recv_bytes": 14077800421,
-            "timestamp": "2025-03-07T09:14:00"
-        },
-        {
-            "cpu_temperature": 44.8033,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.3,
-            "system_load": 0.258301,
-            "network_sent_bytes": 156490448674,
-            "network_recv_bytes": 14077823570,
-            "timestamp": "2025-03-07T09:15:00"
-        },
-        {
-            "cpu_temperature": 44.8867,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37,
-            "system_load": 0.166016,
-            "network_sent_bytes": 156490471677,
-            "network_recv_bytes": 14077851277,
-            "timestamp": "2025-03-07T09:16:00"
-        },
-        {
-            "cpu_temperature": 44.8383,
-            "cpu_usage": 1.08,
-            "ram_usage": 37.3,
-            "system_load": 0.140137,
-            "network_sent_bytes": 156490493819,
-            "network_recv_bytes": 14077872167,
-            "timestamp": "2025-03-07T09:17:00"
-        },
-        {
-            "cpu_temperature": 44.6333,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37.1,
-            "system_load": 0.279297,
-            "network_sent_bytes": 156490516461,
-            "network_recv_bytes": 14077893700,
-            "timestamp": "2025-03-07T09:18:00"
-        },
-        {
-            "cpu_temperature": 44.735,
-            "cpu_usage": 1.12,
-            "ram_usage": 37.4,
-            "system_load": 0.100586,
-            "network_sent_bytes": 156490538444,
-            "network_recv_bytes": 14077914561,
-            "timestamp": "2025-03-07T09:19:00"
-        },
-        {
-            "cpu_temperature": 44.7667,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.2,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156490562585,
-            "network_recv_bytes": 14077937084,
-            "timestamp": "2025-03-07T09:20:00"
-        },
-        {
-            "cpu_temperature": 44.75,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.3,
-            "system_load": 0.192383,
-            "network_sent_bytes": 156490585846,
-            "network_recv_bytes": 14077964995,
-            "timestamp": "2025-03-07T09:21:00"
-        },
-        {
-            "cpu_temperature": 44.715,
-            "cpu_usage": 1.115,
-            "ram_usage": 37.3,
-            "system_load": 0.145996,
-            "network_sent_bytes": 156490607739,
-            "network_recv_bytes": 14077985642,
-            "timestamp": "2025-03-07T09:22:00"
-        },
-        {
-            "cpu_temperature": 44.7383,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.3,
-            "system_load": 0.172852,
-            "network_sent_bytes": 156490629738,
-            "network_recv_bytes": 14078006313,
-            "timestamp": "2025-03-07T09:23:00"
-        },
-        {
-            "cpu_temperature": 44.6417,
-            "cpu_usage": 1.235,
-            "ram_usage": 37.3,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156490651499,
-            "network_recv_bytes": 14078026824,
-            "timestamp": "2025-03-07T09:24:00"
-        },
-        {
-            "cpu_temperature": 44.765,
-            "cpu_usage": 1.165,
-            "ram_usage": 37.4,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156490674790,
-            "network_recv_bytes": 14078048868,
-            "timestamp": "2025-03-07T09:25:00"
-        },
-        {
-            "cpu_temperature": 44.635,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.3,
-            "system_load": 0.330078,
-            "network_sent_bytes": 156490703352,
-            "network_recv_bytes": 14078077443,
-            "timestamp": "2025-03-07T09:26:00"
-        },
-        {
-            "cpu_temperature": 44.6533,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.2,
-            "system_load": 0.119141,
-            "network_sent_bytes": 156490725765,
-            "network_recv_bytes": 14078098215,
-            "timestamp": "2025-03-07T09:27:00"
-        },
-        {
-            "cpu_temperature": 44.69,
-            "cpu_usage": 1.21,
-            "ram_usage": 37.3,
-            "system_load": 0.116211,
-            "network_sent_bytes": 156490747767,
-            "network_recv_bytes": 14078118883,
-            "timestamp": "2025-03-07T09:28:00"
-        },
-        {
-            "cpu_temperature": 44.7533,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.3,
-            "system_load": 0.23584,
-            "network_sent_bytes": 156490769913,
-            "network_recv_bytes": 14078139813,
-            "timestamp": "2025-03-07T09:29:00"
-        },
-        {
-            "cpu_temperature": 44.6417,
-            "cpu_usage": 1.145,
-            "ram_usage": 37.3,
-            "system_load": 0.125977,
-            "network_sent_bytes": 156490794586,
-            "network_recv_bytes": 14078163021,
-            "timestamp": "2025-03-07T09:30:00"
-        },
-        {
-            "cpu_temperature": 44.6583,
-            "cpu_usage": 1.07833,
-            "ram_usage": 37.3,
-            "system_load": 0.165527,
-            "network_sent_bytes": 156490817619,
-            "network_recv_bytes": 14078190713,
-            "timestamp": "2025-03-07T09:31:00"
-        },
-        {
-            "cpu_temperature": 44.6683,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.3,
-            "system_load": 0.309082,
-            "network_sent_bytes": 156490839708,
-            "network_recv_bytes": 14078211456,
-            "timestamp": "2025-03-07T09:32:00"
-        },
-        {
-            "cpu_temperature": 44.7383,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.3,
-            "system_load": 0.149902,
-            "network_sent_bytes": 156490861748,
-            "network_recv_bytes": 14078232304,
-            "timestamp": "2025-03-07T09:33:00"
-        },
-        {
-            "cpu_temperature": 44.5917,
-            "cpu_usage": 1.28167,
-            "ram_usage": 37.3,
-            "system_load": 0.401367,
-            "network_sent_bytes": 156490883618,
-            "network_recv_bytes": 14078252810,
-            "timestamp": "2025-03-07T09:34:00"
-        },
-        {
-            "cpu_temperature": 44.75,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.3,
-            "system_load": 0.145508,
-            "network_sent_bytes": 156490907700,
-            "network_recv_bytes": 14078275278,
-            "timestamp": "2025-03-07T09:35:00"
-        },
-        {
-            "cpu_temperature": 44.64,
-            "cpu_usage": 1.165,
-            "ram_usage": 37.2,
-            "system_load": 0.125488,
-            "network_sent_bytes": 156490930825,
-            "network_recv_bytes": 14078302951,
-            "timestamp": "2025-03-07T09:36:00"
-        },
-        {
-            "cpu_temperature": 44.655,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.3,
-            "system_load": 0.182129,
-            "network_sent_bytes": 156490952821,
-            "network_recv_bytes": 14078323665,
-            "timestamp": "2025-03-07T09:37:00"
-        },
-        {
-            "cpu_temperature": 44.6483,
-            "cpu_usage": 1.16167,
-            "ram_usage": 37.3,
-            "system_load": 0.109375,
-            "network_sent_bytes": 156490978793,
-            "network_recv_bytes": 14078344337,
-            "timestamp": "2025-03-07T09:38:00"
-        },
-        {
-            "cpu_temperature": 44.6017,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.4,
-            "system_load": 0.159668,
-            "network_sent_bytes": 156491001362,
-            "network_recv_bytes": 14078365273,
-            "timestamp": "2025-03-07T09:39:00"
-        },
-        {
-            "cpu_temperature": 44.8383,
-            "cpu_usage": 1.22,
-            "ram_usage": 37.2,
-            "system_load": 0.170898,
-            "network_sent_bytes": 156491025459,
-            "network_recv_bytes": 14078387586,
-            "timestamp": "2025-03-07T09:40:00"
-        },
-        {
-            "cpu_temperature": 44.6367,
-            "cpu_usage": 1.11667,
-            "ram_usage": 37.3,
-            "system_load": 0.0615234,
-            "network_sent_bytes": 156491050304,
-            "network_recv_bytes": 14078415373,
-            "timestamp": "2025-03-07T09:41:00"
-        },
-        {
-            "cpu_temperature": 44.62,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.3,
-            "system_load": 0.288086,
-            "network_sent_bytes": 156491072234,
-            "network_recv_bytes": 14078435943,
-            "timestamp": "2025-03-07T09:42:00"
-        },
-        {
-            "cpu_temperature": 44.7117,
-            "cpu_usage": 1.08833,
-            "ram_usage": 37.3,
-            "system_load": 0.179688,
-            "network_sent_bytes": 156491094055,
-            "network_recv_bytes": 14078456642,
-            "timestamp": "2025-03-07T09:43:00"
-        },
-        {
-            "cpu_temperature": 44.7867,
-            "cpu_usage": 1.165,
-            "ram_usage": 37.4,
-            "system_load": 0.274414,
-            "network_sent_bytes": 156491115792,
-            "network_recv_bytes": 14078477209,
-            "timestamp": "2025-03-07T09:44:00"
-        },
-        {
-            "cpu_temperature": 44.7717,
-            "cpu_usage": 1.22,
-            "ram_usage": 37.3,
-            "system_load": 0.318848,
-            "network_sent_bytes": 156491139829,
-            "network_recv_bytes": 14078500148,
-            "timestamp": "2025-03-07T09:45:00"
-        },
-        {
-            "cpu_temperature": 44.5633,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.3,
-            "system_load": 0.249023,
-            "network_sent_bytes": 156491163984,
-            "network_recv_bytes": 14078528076,
-            "timestamp": "2025-03-07T09:46:00"
-        },
-        {
-            "cpu_temperature": 44.5833,
-            "cpu_usage": 1.105,
-            "ram_usage": 37.3,
-            "system_load": 0.211426,
-            "network_sent_bytes": 156491185676,
-            "network_recv_bytes": 14078548610,
-            "timestamp": "2025-03-07T09:47:00"
-        },
-        {
-            "cpu_temperature": 44.54,
-            "cpu_usage": 1.05667,
-            "ram_usage": 37.3,
-            "system_load": 0.148926,
-            "network_sent_bytes": 156491207954,
-            "network_recv_bytes": 14078569809,
-            "timestamp": "2025-03-07T09:48:00"
-        },
-        {
-            "cpu_temperature": 45,
-            "cpu_usage": 2.15667,
-            "ram_usage": 37.3,
-            "system_load": 0.0942383,
-            "network_sent_bytes": 156495654516,
-            "network_recv_bytes": 14082896318,
-            "timestamp": "2025-03-07T09:49:00"
-        },
-        {
-            "cpu_temperature": 45.1817,
-            "cpu_usage": 2.71833,
-            "ram_usage": 37.3,
-            "system_load": 0.432617,
-            "network_sent_bytes": 156498781116,
-            "network_recv_bytes": 14085317604,
-            "timestamp": "2025-03-07T09:50:00"
-        },
-        {
-            "cpu_temperature": 46.505,
-            "cpu_usage": 10.785,
-            "ram_usage": 37.4,
-            "system_load": 0.368652,
-            "network_sent_bytes": 156512576638,
-            "network_recv_bytes": 14098757280,
-            "timestamp": "2025-03-07T09:51:00"
-        },
-        {
-            "cpu_temperature": 46.0167,
-            "cpu_usage": 3.00333,
-            "ram_usage": 37.3,
-            "system_load": 0.288086,
-            "network_sent_bytes": 156513049794,
-            "network_recv_bytes": 14099222812,
-            "timestamp": "2025-03-07T09:52:00"
-        },
-        {
-            "cpu_temperature": 46.6283,
-            "cpu_usage": 6.42167,
-            "ram_usage": 37.3,
-            "system_load": 0.241211,
-            "network_sent_bytes": 156515534767,
-            "network_recv_bytes": 14101668490,
-            "timestamp": "2025-03-07T09:53:00"
-        },
-        {
-            "cpu_temperature": 45.9183,
-            "cpu_usage": 1.44167,
-            "ram_usage": 37.3,
-            "system_load": 0.0947266,
-            "network_sent_bytes": 156515706996,
-            "network_recv_bytes": 14101837425,
-            "timestamp": "2025-03-07T09:54:00"
-        },
-        {
-            "cpu_temperature": 45.2117,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.3,
-            "system_load": 0.180664,
-            "network_sent_bytes": 156515736819,
-            "network_recv_bytes": 14101864096,
-            "timestamp": "2025-03-07T09:55:00"
-        },
-        {
-            "cpu_temperature": 44.9833,
-            "cpu_usage": 1.19,
-            "ram_usage": 37.3,
-            "system_load": 0.194824,
-            "network_sent_bytes": 156515763579,
-            "network_recv_bytes": 14101894418,
-            "timestamp": "2025-03-07T09:56:00"
-        },
-        {
-            "cpu_temperature": 44.915,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.3,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156515786825,
-            "network_recv_bytes": 14101915862,
-            "timestamp": "2025-03-07T09:57:00"
-        },
-        {
-            "cpu_temperature": 44.9017,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.3,
-            "system_load": 0.22998,
-            "network_sent_bytes": 156515812042,
-            "network_recv_bytes": 14101939766,
-            "timestamp": "2025-03-07T09:58:00"
-        },
-        {
-            "cpu_temperature": 44.9283,
-            "cpu_usage": 0.99,
-            "ram_usage": 36.9,
-            "system_load": 0.114258,
-            "network_sent_bytes": 156515838142,
-            "network_recv_bytes": 14101961701,
-            "timestamp": "2025-03-07T09:59:00"
-        },
-        {
-            "cpu_temperature": 44.9567,
-            "cpu_usage": 1.42167,
-            "ram_usage": 37.4,
-            "system_load": 0.168945,
-            "network_sent_bytes": 156515889556,
-            "network_recv_bytes": 14102007638,
-            "timestamp": "2025-03-07T10:00:00"
-        },
-        {
-            "cpu_temperature": 45.06,
-            "cpu_usage": 1.25333,
-            "ram_usage": 37.3,
-            "system_load": 0.353027,
-            "network_sent_bytes": 156515915918,
-            "network_recv_bytes": 14102038542,
-            "timestamp": "2025-03-07T10:01:00"
-        },
-        {
-            "cpu_temperature": 44.8983,
-            "cpu_usage": 1.14667,
-            "ram_usage": 37.2,
-            "system_load": 0.159668,
-            "network_sent_bytes": 156515945829,
-            "network_recv_bytes": 14102061265,
-            "timestamp": "2025-03-07T10:02:00"
-        },
-        {
-            "cpu_temperature": 44.9167,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.3,
-            "system_load": 0.284668,
-            "network_sent_bytes": 156515972527,
-            "network_recv_bytes": 14102084994,
-            "timestamp": "2025-03-07T10:03:00"
-        },
-        {
-            "cpu_temperature": 45.1317,
-            "cpu_usage": 1.18,
-            "ram_usage": 37.3,
-            "system_load": 0.182617,
-            "network_sent_bytes": 156515998303,
-            "network_recv_bytes": 14102106484,
-            "timestamp": "2025-03-07T10:04:00"
-        },
-        {
-            "cpu_temperature": 45.08,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.4,
-            "system_load": 0.0654297,
-            "network_sent_bytes": 156516026403,
-            "network_recv_bytes": 14102128920,
-            "timestamp": "2025-03-07T10:05:00"
-        },
-        {
-            "cpu_temperature": 45.165,
-            "cpu_usage": 1.095,
-            "ram_usage": 37.1,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156516051509,
-            "network_recv_bytes": 14102157163,
-            "timestamp": "2025-03-07T10:06:00"
-        },
-        {
-            "cpu_temperature": 45.1067,
-            "cpu_usage": 1.09833,
-            "ram_usage": 37.3,
-            "system_load": 0.0664062,
-            "network_sent_bytes": 156516073426,
-            "network_recv_bytes": 14102177846,
-            "timestamp": "2025-03-07T10:07:00"
-        },
-        {
-            "cpu_temperature": 45.035,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.2,
-            "system_load": 0.135742,
-            "network_sent_bytes": 156516095410,
-            "network_recv_bytes": 14102198556,
-            "timestamp": "2025-03-07T10:08:00"
-        },
-        {
-            "cpu_temperature": 45.1217,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.3,
-            "system_load": 0.197754,
-            "network_sent_bytes": 156516117308,
-            "network_recv_bytes": 14102219296,
-            "timestamp": "2025-03-07T10:09:00"
-        },
-        {
-            "cpu_temperature": 45.1233,
-            "cpu_usage": 1.06667,
-            "ram_usage": 37.3,
-            "system_load": 0.0708008,
-            "network_sent_bytes": 156516141275,
-            "network_recv_bytes": 14102241639,
-            "timestamp": "2025-03-07T10:10:00"
-        },
-        {
-            "cpu_temperature": 45.1433,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.1,
-            "system_load": 0.191406,
-            "network_sent_bytes": 156516166875,
-            "network_recv_bytes": 14102269531,
-            "timestamp": "2025-03-07T10:11:00"
-        },
-        {
-            "cpu_temperature": 45.06,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.2,
-            "system_load": 0.192871,
-            "network_sent_bytes": 156516188825,
-            "network_recv_bytes": 14102290361,
-            "timestamp": "2025-03-07T10:12:00"
-        },
-        {
-            "cpu_temperature": 45.24,
-            "cpu_usage": 1.02667,
-            "ram_usage": 37.2,
-            "system_load": 0.175293,
-            "network_sent_bytes": 156516210818,
-            "network_recv_bytes": 14102310984,
-            "timestamp": "2025-03-07T10:13:00"
-        },
-        {
-            "cpu_temperature": 45.2267,
-            "cpu_usage": 1.20667,
-            "ram_usage": 37.3,
-            "system_load": 0.224609,
-            "network_sent_bytes": 156516236670,
-            "network_recv_bytes": 14102331496,
-            "timestamp": "2025-03-07T10:14:00"
-        },
-        {
-            "cpu_temperature": 45.2183,
-            "cpu_usage": 1.06667,
-            "ram_usage": 37.2,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156516261187,
-            "network_recv_bytes": 14102354606,
-            "timestamp": "2025-03-07T10:15:00"
-        },
-        {
-            "cpu_temperature": 45.3183,
-            "cpu_usage": 1.10167,
-            "ram_usage": 37.3,
-            "system_load": 0.10791,
-            "network_sent_bytes": 156516285849,
-            "network_recv_bytes": 14102382363,
-            "timestamp": "2025-03-07T10:16:00"
-        },
-        {
-            "cpu_temperature": 45.3833,
-            "cpu_usage": 1.04,
-            "ram_usage": 36.9,
-            "system_load": 0.19873,
-            "network_sent_bytes": 156516307881,
-            "network_recv_bytes": 14102402995,
-            "timestamp": "2025-03-07T10:17:00"
-        },
-        {
-            "cpu_temperature": 45.2917,
-            "cpu_usage": 1,
-            "ram_usage": 37.3,
-            "system_load": 0.0712891,
-            "network_sent_bytes": 156516330165,
-            "network_recv_bytes": 14102424388,
-            "timestamp": "2025-03-07T10:18:00"
-        },
-        {
-            "cpu_temperature": 45.42,
-            "cpu_usage": 1.07833,
-            "ram_usage": 36.9,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156516351953,
-            "network_recv_bytes": 14102444988,
-            "timestamp": "2025-03-07T10:19:00"
-        },
-        {
-            "cpu_temperature": 45.305,
-            "cpu_usage": 1.11167,
-            "ram_usage": 37.3,
-            "system_load": 0.250977,
-            "network_sent_bytes": 156516376857,
-            "network_recv_bytes": 14102474050,
-            "timestamp": "2025-03-07T10:20:00"
-        },
-        {
-            "cpu_temperature": 45.4483,
-            "cpu_usage": 0.985,
-            "ram_usage": 36.9,
-            "system_load": 0.0908203,
-            "network_sent_bytes": 156516399321,
-            "network_recv_bytes": 14102495237,
-            "timestamp": "2025-03-07T10:21:00"
-        },
-        {
-            "cpu_temperature": 45.3517,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.3,
-            "system_load": 0.194336,
-            "network_sent_bytes": 156516421391,
-            "network_recv_bytes": 14102516151,
-            "timestamp": "2025-03-07T10:22:00"
-        },
-        {
-            "cpu_temperature": 45.3167,
-            "cpu_usage": 0.988333,
-            "ram_usage": 37,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156516443293,
-            "network_recv_bytes": 14102536923,
-            "timestamp": "2025-03-07T10:23:00"
-        },
-        {
-            "cpu_temperature": 45.9717,
-            "cpu_usage": 3.12167,
-            "ram_usage": 37.3,
-            "system_load": 0.222656,
-            "network_sent_bytes": 156544030563,
-            "network_recv_bytes": 14118057762,
-            "timestamp": "2025-03-07T10:24:00"
-        },
-        {
-            "cpu_temperature": 45.5433,
-            "cpu_usage": 1.19167,
-            "ram_usage": 37.1,
-            "system_load": 0.229492,
-            "network_sent_bytes": 156553592347,
-            "network_recv_bytes": 14123026098,
-            "timestamp": "2025-03-07T10:25:00"
-        },
-        {
-            "cpu_temperature": 45.5383,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.4,
-            "system_load": 0.0825195,
-            "network_sent_bytes": 156554450808,
-            "network_recv_bytes": 14123539757,
-            "timestamp": "2025-03-07T10:26:00"
-        },
-        {
-            "cpu_temperature": 45.465,
-            "cpu_usage": 1.105,
-            "ram_usage": 37.3,
-            "system_load": 0.160156,
-            "network_sent_bytes": 156555014597,
-            "network_recv_bytes": 14123885718,
-            "timestamp": "2025-03-07T10:27:00"
-        },
-        {
-            "cpu_temperature": 45.4383,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.3,
-            "system_load": 0.136719,
-            "network_sent_bytes": 156555055603,
-            "network_recv_bytes": 14123924285,
-            "timestamp": "2025-03-07T10:28:00"
-        },
-        {
-            "cpu_temperature": 45.5433,
-            "cpu_usage": 1.17667,
-            "ram_usage": 37.3,
-            "system_load": 0.0483398,
-            "network_sent_bytes": 156555080579,
-            "network_recv_bytes": 14123947815,
-            "timestamp": "2025-03-07T10:29:00"
-        },
-        {
-            "cpu_temperature": 45.2867,
-            "cpu_usage": 1.23,
-            "ram_usage": 37.3,
-            "system_load": 0.219727,
-            "network_sent_bytes": 156555298442,
-            "network_recv_bytes": 14124136556,
-            "timestamp": "2025-03-07T10:30:00"
-        },
-        {
-            "cpu_temperature": 45.335,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.3,
-            "system_load": 0.0786133,
-            "network_sent_bytes": 156556356322,
-            "network_recv_bytes": 14124776098,
-            "timestamp": "2025-03-07T10:31:00"
-        },
-        {
-            "cpu_temperature": 45.32,
-            "cpu_usage": 1.195,
-            "ram_usage": 37.3,
-            "system_load": 0.10791,
-            "network_sent_bytes": 156557665930,
-            "network_recv_bytes": 14125531279,
-            "timestamp": "2025-03-07T10:32:00"
-        },
-        {
-            "cpu_temperature": 45.235,
-            "cpu_usage": 1.43,
-            "ram_usage": 37.2,
-            "system_load": 0.239746,
-            "network_sent_bytes": 156582009715,
-            "network_recv_bytes": 14138574346,
-            "timestamp": "2025-03-07T10:33:00"
-        },
-        {
-            "cpu_temperature": 45.3983,
-            "cpu_usage": 1.15333,
-            "ram_usage": 37.3,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156584953628,
-            "network_recv_bytes": 14140155563,
-            "timestamp": "2025-03-07T10:34:00"
-        },
-        {
-            "cpu_temperature": 45.1933,
-            "cpu_usage": 1.21167,
-            "ram_usage": 37.3,
-            "system_load": 0.174316,
-            "network_sent_bytes": 156585294654,
-            "network_recv_bytes": 14140376205,
-            "timestamp": "2025-03-07T10:35:00"
-        },
-        {
-            "cpu_temperature": 45.1283,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.3,
-            "system_load": 0.249512,
-            "network_sent_bytes": 156585383324,
-            "network_recv_bytes": 14140451755,
-            "timestamp": "2025-03-07T10:36:00"
-        },
-        {
-            "cpu_temperature": 45.1367,
-            "cpu_usage": 1.34667,
-            "ram_usage": 37.3,
-            "system_load": 0.0898438,
-            "network_sent_bytes": 156587451561,
-            "network_recv_bytes": 14142108755,
-            "timestamp": "2025-03-07T10:37:00"
-        },
-        {
-            "cpu_temperature": 45.395,
-            "cpu_usage": 1.58667,
-            "ram_usage": 37.3,
-            "system_load": 0.251953,
-            "network_sent_bytes": 156595930166,
-            "network_recv_bytes": 14147135763,
-            "timestamp": "2025-03-07T10:38:00"
-        },
-        {
-            "cpu_temperature": 45.3283,
-            "cpu_usage": 1.565,
-            "ram_usage": 37.3,
-            "system_load": 0.157227,
-            "network_sent_bytes": 156625915040,
-            "network_recv_bytes": 14162654606,
-            "timestamp": "2025-03-07T10:39:00"
-        },
-        {
-            "cpu_temperature": 45.3033,
-            "cpu_usage": 1.36,
-            "ram_usage": 37.4,
-            "system_load": 0.136719,
-            "network_sent_bytes": 156629846747,
-            "network_recv_bytes": 14164859285,
-            "timestamp": "2025-03-07T10:40:00"
-        },
-        {
-            "cpu_temperature": 45.3233,
-            "cpu_usage": 1.14833,
-            "ram_usage": 37.3,
-            "system_load": 0.272461,
-            "network_sent_bytes": 156629880838,
-            "network_recv_bytes": 14164895973,
-            "timestamp": "2025-03-07T10:41:00"
-        },
-        {
-            "cpu_temperature": 45.1667,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.3,
-            "system_load": 0.0986328,
-            "network_sent_bytes": 156629906668,
-            "network_recv_bytes": 14164922061,
-            "timestamp": "2025-03-07T10:42:00"
-        },
-        {
-            "cpu_temperature": 45.2617,
-            "cpu_usage": 1.15667,
-            "ram_usage": 37.3,
-            "system_load": 0.166504,
-            "network_sent_bytes": 156629932673,
-            "network_recv_bytes": 14164946010,
-            "timestamp": "2025-03-07T10:43:00"
-        },
-        {
-            "cpu_temperature": 45.27,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.3,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156629958848,
-            "network_recv_bytes": 14164969624,
-            "timestamp": "2025-03-07T10:44:00"
-        },
-        {
-            "cpu_temperature": 45.21,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.3,
-            "system_load": 0.141602,
-            "network_sent_bytes": 156629986727,
-            "network_recv_bytes": 14164993105,
-            "timestamp": "2025-03-07T10:45:00"
-        },
-        {
-            "cpu_temperature": 45.0533,
-            "cpu_usage": 1.24833,
-            "ram_usage": 37.3,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156630010563,
-            "network_recv_bytes": 14165021232,
-            "timestamp": "2025-03-07T10:46:00"
-        },
-        {
-            "cpu_temperature": 45.125,
-            "cpu_usage": 1.15667,
-            "ram_usage": 37.3,
-            "system_load": 0.156738,
-            "network_sent_bytes": 156630036904,
-            "network_recv_bytes": 14165044502,
-            "timestamp": "2025-03-07T10:47:00"
-        },
-        {
-            "cpu_temperature": 45.0383,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.2,
-            "system_load": 0.136719,
-            "network_sent_bytes": 156630063896,
-            "network_recv_bytes": 14165068357,
-            "timestamp": "2025-03-07T10:48:00"
-        },
-        {
-            "cpu_temperature": 45.1167,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.2,
-            "system_load": 0.198242,
-            "network_sent_bytes": 156630089606,
-            "network_recv_bytes": 14165095062,
-            "timestamp": "2025-03-07T10:49:00"
-        },
-        {
-            "cpu_temperature": 44.995,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.3,
-            "system_load": 0.14502,
-            "network_sent_bytes": 156630121494,
-            "network_recv_bytes": 14165125016,
-            "timestamp": "2025-03-07T10:50:00"
-        },
-        {
-            "cpu_temperature": 45,
-            "cpu_usage": 1.16833,
-            "ram_usage": 37.3,
-            "system_load": 0.228516,
-            "network_sent_bytes": 156630150344,
-            "network_recv_bytes": 14165154745,
-            "timestamp": "2025-03-07T10:51:00"
-        },
-        {
-            "cpu_temperature": 44.8967,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.3,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156630176159,
-            "network_recv_bytes": 14165175950,
-            "timestamp": "2025-03-07T10:52:00"
-        },
-        {
-            "cpu_temperature": 45.0317,
-            "cpu_usage": 1.10833,
-            "ram_usage": 37.3,
-            "system_load": 0.128906,
-            "network_sent_bytes": 156630202502,
-            "network_recv_bytes": 14165197061,
-            "timestamp": "2025-03-07T10:53:00"
-        },
-        {
-            "cpu_temperature": 45.0567,
-            "cpu_usage": 1.205,
-            "ram_usage": 37.3,
-            "system_load": 0.20752,
-            "network_sent_bytes": 156630228222,
-            "network_recv_bytes": 14165217825,
-            "timestamp": "2025-03-07T10:54:00"
-        },
-        {
-            "cpu_temperature": 44.8683,
-            "cpu_usage": 0.95,
-            "ram_usage": 36.9,
-            "system_load": 0.0737305,
-            "network_sent_bytes": 156630250340,
-            "network_recv_bytes": 14165238741,
-            "timestamp": "2025-03-07T10:55:00"
-        },
-        {
-            "cpu_temperature": 44.9383,
-            "cpu_usage": 1.03667,
-            "ram_usage": 37.3,
-            "system_load": 0.105469,
-            "network_sent_bytes": 156630275564,
-            "network_recv_bytes": 14165268143,
-            "timestamp": "2025-03-07T10:56:00"
-        },
-        {
-            "cpu_temperature": 45.0267,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.3,
-            "system_load": 0.248535,
-            "network_sent_bytes": 156630297644,
-            "network_recv_bytes": 14165288883,
-            "timestamp": "2025-03-07T10:57:00"
-        },
-        {
-            "cpu_temperature": 44.9633,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.3,
-            "system_load": 0.0893555,
-            "network_sent_bytes": 156630319393,
-            "network_recv_bytes": 14165309484,
-            "timestamp": "2025-03-07T10:58:00"
-        },
-        {
-            "cpu_temperature": 45.0717,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.3,
-            "system_load": 0.20752,
-            "network_sent_bytes": 156630341397,
-            "network_recv_bytes": 14165330288,
-            "timestamp": "2025-03-07T10:59:00"
-        },
-        {
-            "cpu_temperature": 44.9983,
-            "cpu_usage": 1.51833,
-            "ram_usage": 37.3,
-            "system_load": 0.203613,
-            "network_sent_bytes": 156630387637,
-            "network_recv_bytes": 14165375365,
-            "timestamp": "2025-03-07T11:00:00"
-        },
-        {
-            "cpu_temperature": 45.1417,
-            "cpu_usage": 1.23333,
-            "ram_usage": 37.3,
-            "system_load": 0.0727539,
-            "network_sent_bytes": 156630414487,
-            "network_recv_bytes": 14165405632,
-            "timestamp": "2025-03-07T11:01:00"
-        },
-        {
-            "cpu_temperature": 45.0983,
-            "cpu_usage": 1.05833,
-            "ram_usage": 37,
-            "system_load": 0.335938,
-            "network_sent_bytes": 156630440492,
-            "network_recv_bytes": 14165426345,
-            "timestamp": "2025-03-07T11:02:00"
-        },
-        {
-            "cpu_temperature": 45.0367,
-            "cpu_usage": 1.04833,
-            "ram_usage": 37.4,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156630462893,
-            "network_recv_bytes": 14165447023,
-            "timestamp": "2025-03-07T11:03:00"
-        },
-        {
-            "cpu_temperature": 45.1267,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37,
-            "system_load": 0.135742,
-            "network_sent_bytes": 156630485086,
-            "network_recv_bytes": 14165467874,
-            "timestamp": "2025-03-07T11:04:00"
-        },
-        {
-            "cpu_temperature": 45.0033,
-            "cpu_usage": 1.02833,
-            "ram_usage": 37.3,
-            "system_load": 0.197754,
-            "network_sent_bytes": 156630508927,
-            "network_recv_bytes": 14165490215,
-            "timestamp": "2025-03-07T11:05:00"
-        },
-        {
-            "cpu_temperature": 45.075,
-            "cpu_usage": 1.04167,
-            "ram_usage": 36.9,
-            "system_load": 0.128418,
-            "network_sent_bytes": 156630532339,
-            "network_recv_bytes": 14165518061,
-            "timestamp": "2025-03-07T11:06:00"
-        },
-        {
-            "cpu_temperature": 44.9867,
-            "cpu_usage": 0.981667,
-            "ram_usage": 37.3,
-            "system_load": 0.177246,
-            "network_sent_bytes": 156630554332,
-            "network_recv_bytes": 14165538774,
-            "timestamp": "2025-03-07T11:07:00"
-        },
-        {
-            "cpu_temperature": 45,
-            "cpu_usage": 0.946667,
-            "ram_usage": 36.9,
-            "system_load": 0.251953,
-            "network_sent_bytes": 156630576533,
-            "network_recv_bytes": 14165559767,
-            "timestamp": "2025-03-07T11:08:00"
-        },
-        {
-            "cpu_temperature": 45.0233,
-            "cpu_usage": 1.09,
-            "ram_usage": 37.3,
-            "system_load": 0.128906,
-            "network_sent_bytes": 156630598392,
-            "network_recv_bytes": 14165580524,
-            "timestamp": "2025-03-07T11:09:00"
-        },
-        {
-            "cpu_temperature": 44.89,
-            "cpu_usage": 1.06833,
-            "ram_usage": 37,
-            "system_load": 0.20752,
-            "network_sent_bytes": 156630620429,
-            "network_recv_bytes": 14165601203,
-            "timestamp": "2025-03-07T11:10:00"
-        },
-        {
-            "cpu_temperature": 44.86,
-            "cpu_usage": 1.01667,
-            "ram_usage": 37.3,
-            "system_load": 0.0737305,
-            "network_sent_bytes": 156630646435,
-            "network_recv_bytes": 14165630772,
-            "timestamp": "2025-03-07T11:11:00"
-        },
-        {
-            "cpu_temperature": 44.8317,
-            "cpu_usage": 0.925,
-            "ram_usage": 36.9,
-            "system_load": 0.105469,
-            "network_sent_bytes": 156630668368,
-            "network_recv_bytes": 14165651343,
-            "timestamp": "2025-03-07T11:12:00"
-        },
-        {
-            "cpu_temperature": 44.8767,
-            "cpu_usage": 0.953333,
-            "ram_usage": 37.3,
-            "system_load": 0.186035,
-            "network_sent_bytes": 156630690264,
-            "network_recv_bytes": 14165672113,
-            "timestamp": "2025-03-07T11:13:00"
-        },
-        {
-            "cpu_temperature": 44.9917,
-            "cpu_usage": 1.24,
-            "ram_usage": 37.3,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156630716242,
-            "network_recv_bytes": 14165692623,
-            "timestamp": "2025-03-07T11:14:00"
-        },
-        {
-            "cpu_temperature": 44.7933,
-            "cpu_usage": 1.22333,
-            "ram_usage": 37.4,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156630741501,
-            "network_recv_bytes": 14165715800,
-            "timestamp": "2025-03-07T11:15:00"
-        },
-        {
-            "cpu_temperature": 44.7833,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.1,
-            "system_load": 0.231445,
-            "network_sent_bytes": 156630764687,
-            "network_recv_bytes": 14165743530,
-            "timestamp": "2025-03-07T11:16:00"
-        },
-        {
-            "cpu_temperature": 44.7717,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.3,
-            "system_load": 0.0834961,
-            "network_sent_bytes": 156630786716,
-            "network_recv_bytes": 14165764221,
-            "timestamp": "2025-03-07T11:17:00"
-        },
-        {
-            "cpu_temperature": 44.5433,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.2,
-            "system_load": 0.190918,
-            "network_sent_bytes": 156630809088,
-            "network_recv_bytes": 14165785434,
-            "timestamp": "2025-03-07T11:18:00"
-        },
-        {
-            "cpu_temperature": 44.6467,
-            "cpu_usage": 1.10667,
-            "ram_usage": 37.3,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156630830836,
-            "network_recv_bytes": 14165806140,
-            "timestamp": "2025-03-07T11:19:00"
-        },
-        {
-            "cpu_temperature": 44.58,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.2,
-            "system_load": 0.140625,
-            "network_sent_bytes": 156630854661,
-            "network_recv_bytes": 14165828389,
-            "timestamp": "2025-03-07T11:20:00"
-        },
-        {
-            "cpu_temperature": 44.4267,
-            "cpu_usage": 1.14167,
-            "ram_usage": 37.3,
-            "system_load": 0.39502,
-            "network_sent_bytes": 156630877936,
-            "network_recv_bytes": 14165856155,
-            "timestamp": "2025-03-07T11:21:00"
-        },
-        {
-            "cpu_temperature": 44.5833,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.3,
-            "system_load": 0.243652,
-            "network_sent_bytes": 156630900118,
-            "network_recv_bytes": 14165877005,
-            "timestamp": "2025-03-07T11:22:00"
-        },
-        {
-            "cpu_temperature": 44.55,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.2,
-            "system_load": 0.21875,
-            "network_sent_bytes": 156630922023,
-            "network_recv_bytes": 14165897778,
-            "timestamp": "2025-03-07T11:23:00"
-        },
-        {
-            "cpu_temperature": 44.6817,
-            "cpu_usage": 1.215,
-            "ram_usage": 37.3,
-            "system_load": 0.283691,
-            "network_sent_bytes": 156630943871,
-            "network_recv_bytes": 14165918456,
-            "timestamp": "2025-03-07T11:24:00"
-        },
-        {
-            "cpu_temperature": 44.6583,
-            "cpu_usage": 1.26667,
-            "ram_usage": 37.4,
-            "system_load": 0.42334,
-            "network_sent_bytes": 156630968163,
-            "network_recv_bytes": 14165941096,
-            "timestamp": "2025-03-07T11:25:00"
-        },
-        {
-            "cpu_temperature": 44.6783,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37.3,
-            "system_load": 0.315918,
-            "network_sent_bytes": 156630995386,
-            "network_recv_bytes": 14165968714,
-            "timestamp": "2025-03-07T11:26:00"
-        },
-        {
-            "cpu_temperature": 44.5983,
-            "cpu_usage": 1.05667,
-            "ram_usage": 37.3,
-            "system_load": 0.334473,
-            "network_sent_bytes": 156631017703,
-            "network_recv_bytes": 14165989376,
-            "timestamp": "2025-03-07T11:27:00"
-        },
-        {
-            "cpu_temperature": 44.6617,
-            "cpu_usage": 1.05667,
-            "ram_usage": 37.2,
-            "system_load": 0.20166,
-            "network_sent_bytes": 156631039610,
-            "network_recv_bytes": 14166010059,
-            "timestamp": "2025-03-07T11:28:00"
-        },
-        {
-            "cpu_temperature": 44.4917,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.3,
-            "system_load": 0.413574,
-            "network_sent_bytes": 156631061543,
-            "network_recv_bytes": 14166030630,
-            "timestamp": "2025-03-07T11:29:00"
-        },
-        {
-            "cpu_temperature": 44.6083,
-            "cpu_usage": 1.17333,
-            "ram_usage": 37.2,
-            "system_load": 0.150391,
-            "network_sent_bytes": 156631086047,
-            "network_recv_bytes": 14166053709,
-            "timestamp": "2025-03-07T11:30:00"
-        },
-        {
-            "cpu_temperature": 44.575,
-            "cpu_usage": 1.085,
-            "ram_usage": 37.3,
-            "system_load": 0.234375,
-            "network_sent_bytes": 156631109456,
-            "network_recv_bytes": 14166081556,
-            "timestamp": "2025-03-07T11:31:00"
-        },
-        {
-            "cpu_temperature": 44.5867,
-            "cpu_usage": 1.11333,
-            "ram_usage": 37.3,
-            "system_load": 0.262695,
-            "network_sent_bytes": 156631131346,
-            "network_recv_bytes": 14166102324,
-            "timestamp": "2025-03-07T11:32:00"
-        },
-        {
-            "cpu_temperature": 44.5367,
-            "cpu_usage": 1.135,
-            "ram_usage": 37.3,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156631153387,
-            "network_recv_bytes": 14166123005,
-            "timestamp": "2025-03-07T11:33:00"
-        },
-        {
-            "cpu_temperature": 44.5767,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.3,
-            "system_load": 0.318848,
-            "network_sent_bytes": 156631175334,
-            "network_recv_bytes": 14166143702,
-            "timestamp": "2025-03-07T11:34:00"
-        },
-        {
-            "cpu_temperature": 44.38,
-            "cpu_usage": 1.18,
-            "ram_usage": 37.3,
-            "system_load": 0.228027,
-            "network_sent_bytes": 156631199300,
-            "network_recv_bytes": 14166166080,
-            "timestamp": "2025-03-07T11:35:00"
-        },
-        {
-            "cpu_temperature": 44.565,
-            "cpu_usage": 1.15667,
-            "ram_usage": 37.3,
-            "system_load": 0.242676,
-            "network_sent_bytes": 156631231217,
-            "network_recv_bytes": 14166203199,
-            "timestamp": "2025-03-07T11:36:00"
-        },
-        {
-            "cpu_temperature": 44.6217,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.3,
-            "system_load": 0.365723,
-            "network_sent_bytes": 156631256497,
-            "network_recv_bytes": 14166227019,
-            "timestamp": "2025-03-07T11:37:00"
-        },
-        {
-            "cpu_temperature": 44.6267,
-            "cpu_usage": 1.12,
-            "ram_usage": 37.2,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156631282607,
-            "network_recv_bytes": 14166247905,
-            "timestamp": "2025-03-07T11:38:00"
-        },
-        {
-            "cpu_temperature": 44.6883,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.3,
-            "system_load": 0.32959,
-            "network_sent_bytes": 156631305159,
-            "network_recv_bytes": 14166268586,
-            "timestamp": "2025-03-07T11:39:00"
-        },
-        {
-            "cpu_temperature": 44.7283,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.3,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156631338961,
-            "network_recv_bytes": 14166300530,
-            "timestamp": "2025-03-07T11:40:00"
-        },
-        {
-            "cpu_temperature": 44.7567,
-            "cpu_usage": 1.30333,
-            "ram_usage": 37.2,
-            "system_load": 0.151855,
-            "network_sent_bytes": 156633116928,
-            "network_recv_bytes": 14166518704,
-            "timestamp": "2025-03-07T11:41:00"
-        },
-        {
-            "cpu_temperature": 45.0717,
-            "cpu_usage": 2.83667,
-            "ram_usage": 37.4,
-            "system_load": 0.313965,
-            "network_sent_bytes": 156635144519,
-            "network_recv_bytes": 14169226835,
-            "timestamp": "2025-03-07T11:42:00"
-        },
-        {
-            "cpu_temperature": 45.1167,
-            "cpu_usage": 1.20333,
-            "ram_usage": 37.1,
-            "system_load": 0.216309,
-            "network_sent_bytes": 156635237990,
-            "network_recv_bytes": 14169323473,
-            "timestamp": "2025-03-07T11:43:00"
-        },
-        {
-            "cpu_temperature": 45.1067,
-            "cpu_usage": 1.18167,
-            "ram_usage": 37.3,
-            "system_load": 0.240234,
-            "network_sent_bytes": 156635312201,
-            "network_recv_bytes": 14169398363,
-            "timestamp": "2025-03-07T11:44:00"
-        },
-        {
-            "cpu_temperature": 45.11,
-            "cpu_usage": 3.67833,
-            "ram_usage": 37.2,
-            "system_load": 0.349121,
-            "network_sent_bytes": 156639242611,
-            "network_recv_bytes": 14171086936,
-            "timestamp": "2025-03-07T11:45:00"
-        },
-        {
-            "cpu_temperature": 45.7583,
-            "cpu_usage": 2.63333,
-            "ram_usage": 37.4,
-            "system_load": 0.246094,
-            "network_sent_bytes": 156650574713,
-            "network_recv_bytes": 14172430506,
-            "timestamp": "2025-03-07T11:46:00"
-        },
-        {
-            "cpu_temperature": 45.69,
-            "cpu_usage": 2.23,
-            "ram_usage": 37,
-            "system_load": 0.239258,
-            "network_sent_bytes": 156650831706,
-            "network_recv_bytes": 14172709411,
-            "timestamp": "2025-03-07T11:47:00"
-        },
-        {
-            "cpu_temperature": 45.52,
-            "cpu_usage": 2.42,
-            "ram_usage": 37.4,
-            "system_load": 0.187988,
-            "network_sent_bytes": 156651105822,
-            "network_recv_bytes": 14173005940,
-            "timestamp": "2025-03-07T11:48:00"
-        },
-        {
-            "cpu_temperature": 45.4267,
-            "cpu_usage": 1.10333,
-            "ram_usage": 37,
-            "system_load": 0.0732422,
-            "network_sent_bytes": 156651154893,
-            "network_recv_bytes": 14173055424,
-            "timestamp": "2025-03-07T11:49:00"
-        },
-        {
-            "cpu_temperature": 45.3683,
-            "cpu_usage": 1.145,
-            "ram_usage": 37.4,
-            "system_load": 0.217285,
-            "network_sent_bytes": 156651192633,
-            "network_recv_bytes": 14173093013,
-            "timestamp": "2025-03-07T11:50:00"
-        },
-        {
-            "cpu_temperature": 45.33,
-            "cpu_usage": 0.968333,
-            "ram_usage": 37,
-            "system_load": 0.120117,
-            "network_sent_bytes": 156651238761,
-            "network_recv_bytes": 14173140062,
-            "timestamp": "2025-03-07T11:51:00"
-        },
-        {
-            "cpu_temperature": 45.37,
-            "cpu_usage": 1.13167,
-            "ram_usage": 37.4,
-            "system_load": 0.0424805,
-            "network_sent_bytes": 156651272132,
-            "network_recv_bytes": 14173173325,
-            "timestamp": "2025-03-07T11:52:00"
-        },
-        {
-            "cpu_temperature": 45.4517,
-            "cpu_usage": 1.305,
-            "ram_usage": 37.1,
-            "system_load": 0.240723,
-            "network_sent_bytes": 156651349118,
-            "network_recv_bytes": 14173249733,
-            "timestamp": "2025-03-07T11:53:00"
-        },
-        {
-            "cpu_temperature": 47.4933,
-            "cpu_usage": 12.2817,
-            "ram_usage": 37.4,
-            "system_load": 0.226074,
-            "network_sent_bytes": 156658309904,
-            "network_recv_bytes": 14185089766,
-            "timestamp": "2025-03-07T11:54:00"
-        },
-        {
-            "cpu_temperature": 46.68,
-            "cpu_usage": 2.80667,
-            "ram_usage": 37.1,
-            "system_load": 0.288086,
-            "network_sent_bytes": 156658854720,
-            "network_recv_bytes": 14185758743,
-            "timestamp": "2025-03-07T11:55:00"
-        },
-        {
-            "cpu_temperature": 46.03,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.4,
-            "system_load": 0.190918,
-            "network_sent_bytes": 156658917643,
-            "network_recv_bytes": 14185826228,
-            "timestamp": "2025-03-07T11:56:00"
-        },
-        {
-            "cpu_temperature": 45.94,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.5,
-            "system_load": 0.100586,
-            "network_sent_bytes": 156659013588,
-            "network_recv_bytes": 14185920668,
-            "timestamp": "2025-03-07T11:57:00"
-        },
-        {
-            "cpu_temperature": 45.7833,
-            "cpu_usage": 1.40333,
-            "ram_usage": 37.9,
-            "system_load": 0.244141,
-            "network_sent_bytes": 156659230031,
-            "network_recv_bytes": 14186131015,
-            "timestamp": "2025-03-07T11:58:00"
-        },
-        {
-            "cpu_temperature": 45.6683,
-            "cpu_usage": 1.305,
-            "ram_usage": 37.9,
-            "system_load": 0.543457,
-            "network_sent_bytes": 156659267335,
-            "network_recv_bytes": 14186168042,
-            "timestamp": "2025-03-07T11:59:00"
-        },
-        {
-            "cpu_temperature": 45.63,
-            "cpu_usage": 1.43833,
-            "ram_usage": 37.9,
-            "system_load": 0.197754,
-            "network_sent_bytes": 156659313594,
-            "network_recv_bytes": 14186213772,
-            "timestamp": "2025-03-07T12:00:00"
-        },
-        {
-            "cpu_temperature": 45.74,
-            "cpu_usage": 1.37,
-            "ram_usage": 37.4,
-            "system_load": 0.196777,
-            "network_sent_bytes": 156659371109,
-            "network_recv_bytes": 14186276745,
-            "timestamp": "2025-03-07T12:01:00"
-        },
-        {
-            "cpu_temperature": 45.445,
-            "cpu_usage": 1.1,
-            "ram_usage": 37,
-            "system_load": 0.0708008,
-            "network_sent_bytes": 156659418045,
-            "network_recv_bytes": 14186318671,
-            "timestamp": "2025-03-07T12:02:00"
-        },
-        {
-            "cpu_temperature": 45.6417,
-            "cpu_usage": 1.08667,
-            "ram_usage": 37.5,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156659463643,
-            "network_recv_bytes": 14186382860,
-            "timestamp": "2025-03-07T12:03:00"
-        },
-        {
-            "cpu_temperature": 45.85,
-            "cpu_usage": 1.21833,
-            "ram_usage": 37.2,
-            "system_load": 0.157715,
-            "network_sent_bytes": 156659637536,
-            "network_recv_bytes": 14186552065,
-            "timestamp": "2025-03-07T12:04:00"
-        },
-        {
-            "cpu_temperature": 45.87,
-            "cpu_usage": 1.09667,
-            "ram_usage": 37.7,
-            "system_load": 0.100586,
-            "network_sent_bytes": 156659679649,
-            "network_recv_bytes": 14186599220,
-            "timestamp": "2025-03-07T12:05:00"
-        },
-        {
-            "cpu_temperature": 45.6383,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.3,
-            "system_load": 0.211914,
-            "network_sent_bytes": 156659723321,
-            "network_recv_bytes": 14186643013,
-            "timestamp": "2025-03-07T12:06:00"
-        },
-        {
-            "cpu_temperature": 45.7417,
-            "cpu_usage": 1.08167,
-            "ram_usage": 37.5,
-            "system_load": 0.145508,
-            "network_sent_bytes": 156659772988,
-            "network_recv_bytes": 14186691970,
-            "timestamp": "2025-03-07T12:07:00"
-        },
-        {
-            "cpu_temperature": 45.6417,
-            "cpu_usage": 1.07,
-            "ram_usage": 37.2,
-            "system_load": 0.0512695,
-            "network_sent_bytes": 156659818299,
-            "network_recv_bytes": 14186736763,
-            "timestamp": "2025-03-07T12:08:00"
-        },
-        {
-            "cpu_temperature": 45.7567,
-            "cpu_usage": 1.17833,
-            "ram_usage": 37.4,
-            "system_load": 0.217773,
-            "network_sent_bytes": 156659856717,
-            "network_recv_bytes": 14186775295,
-            "timestamp": "2025-03-07T12:09:00"
-        },
-        {
-            "cpu_temperature": 45.8217,
-            "cpu_usage": 1.07167,
-            "ram_usage": 37.2,
-            "system_load": 0.078125,
-            "network_sent_bytes": 156659891280,
-            "network_recv_bytes": 14186809695,
-            "timestamp": "2025-03-07T12:10:00"
-        },
-        {
-            "cpu_temperature": 45.5217,
-            "cpu_usage": 1.02167,
-            "ram_usage": 37.4,
-            "system_load": 0.294922,
-            "network_sent_bytes": 156659941415,
-            "network_recv_bytes": 14186864834,
-            "timestamp": "2025-03-07T12:11:00"
-        },
-        {
-            "cpu_temperature": 45.63,
-            "cpu_usage": 1.275,
-            "ram_usage": 37.4,
-            "system_load": 0.193848,
-            "network_sent_bytes": 156659981150,
-            "network_recv_bytes": 14186904216,
-            "timestamp": "2025-03-07T12:12:00"
-        },
-        {
-            "cpu_temperature": 45.7217,
-            "cpu_usage": 1.25667,
-            "ram_usage": 37.7,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156660190609,
-            "network_recv_bytes": 14187109152,
-            "timestamp": "2025-03-07T12:13:00"
-        },
-        {
-            "cpu_temperature": 45.7083,
-            "cpu_usage": 1.26667,
-            "ram_usage": 37.8,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156660233913,
-            "network_recv_bytes": 14187147532,
-            "timestamp": "2025-03-07T12:14:00"
-        },
-        {
-            "cpu_temperature": 45.6833,
-            "cpu_usage": 1.2,
-            "ram_usage": 37.4,
-            "system_load": 0.151855,
-            "network_sent_bytes": 156660265241,
-            "network_recv_bytes": 14187180266,
-            "timestamp": "2025-03-07T12:15:00"
-        },
-        {
-            "cpu_temperature": 45.7717,
-            "cpu_usage": 1.20167,
-            "ram_usage": 37.5,
-            "system_load": 0.102539,
-            "network_sent_bytes": 156660403951,
-            "network_recv_bytes": 14187334069,
-            "timestamp": "2025-03-07T12:16:00"
-        },
-        {
-            "cpu_temperature": 45.7083,
-            "cpu_usage": 1.14167,
-            "ram_usage": 37.1,
-            "system_load": 0.347168,
-            "network_sent_bytes": 156660475313,
-            "network_recv_bytes": 14187405188,
-            "timestamp": "2025-03-07T12:17:00"
-        },
-        {
-            "cpu_temperature": 45.7217,
-            "cpu_usage": 1.13167,
-            "ram_usage": 37.4,
-            "system_load": 0.193848,
-            "network_sent_bytes": 156660564538,
-            "network_recv_bytes": 14187493621,
-            "timestamp": "2025-03-07T12:18:00"
-        },
-        {
-            "cpu_temperature": 45.8883,
-            "cpu_usage": 1.12167,
-            "ram_usage": 37.2,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156660639300,
-            "network_recv_bytes": 14187568921,
-            "timestamp": "2025-03-07T12:19:00"
-        },
-        {
-            "cpu_temperature": 45.71,
-            "cpu_usage": 1.25,
-            "ram_usage": 37.4,
-            "system_load": 0.163086,
-            "network_sent_bytes": 156660715619,
-            "network_recv_bytes": 14187644478,
-            "timestamp": "2025-03-07T12:20:00"
-        },
-        {
-            "cpu_temperature": 45.815,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.4,
-            "system_load": 0.0957031,
-            "network_sent_bytes": 156660801656,
-            "network_recv_bytes": 14187736287,
-            "timestamp": "2025-03-07T12:21:00"
-        },
-        {
-            "cpu_temperature": 46.2617,
-            "cpu_usage": 4.55,
-            "ram_usage": 36.7,
-            "system_load": 0.641113,
-            "network_sent_bytes": 156664063324,
-            "network_recv_bytes": 14192927820,
-            "timestamp": "2025-03-07T12:22:00"
-        },
-        {
-            "cpu_temperature": 46.7067,
-            "cpu_usage": 2.205,
-            "ram_usage": 36.8,
-            "system_load": 0.268555,
-            "network_sent_bytes": 156668483631,
-            "network_recv_bytes": 14195304938,
-            "timestamp": "2025-03-07T12:23:00"
-        },
-        {
-            "cpu_temperature": 45.8117,
-            "cpu_usage": 1.31333,
-            "ram_usage": 36.8,
-            "system_load": 0.0961914,
-            "network_sent_bytes": 156668509686,
-            "network_recv_bytes": 14195330989,
-            "timestamp": "2025-03-07T12:24:00"
-        },
-        {
-            "cpu_temperature": 45.65,
-            "cpu_usage": 1.1,
-            "ram_usage": 36.9,
-            "system_load": 0.228516,
-            "network_sent_bytes": 156668536395,
-            "network_recv_bytes": 14195362770,
-            "timestamp": "2025-03-07T12:25:00"
-        },
-        {
-            "cpu_temperature": 45.545,
-            "cpu_usage": 1.12833,
-            "ram_usage": 36.7,
-            "system_load": 0.0820312,
-            "network_sent_bytes": 156668565507,
-            "network_recv_bytes": 14195387417,
-            "timestamp": "2025-03-07T12:26:00"
-        },
-        {
-            "cpu_temperature": 45.6233,
-            "cpu_usage": 1.005,
-            "ram_usage": 36.3,
-            "system_load": 0.171387,
-            "network_sent_bytes": 156668595533,
-            "network_recv_bytes": 14195416766,
-            "timestamp": "2025-03-07T12:27:00"
-        },
-        {
-            "cpu_temperature": 45.5433,
-            "cpu_usage": 1.10833,
-            "ram_usage": 36.7,
-            "system_load": 0.196289,
-            "network_sent_bytes": 156668620961,
-            "network_recv_bytes": 14195441776,
-            "timestamp": "2025-03-07T12:28:00"
-        },
-        {
-            "cpu_temperature": 45.5167,
-            "cpu_usage": 1.28,
-            "ram_usage": 36.6,
-            "system_load": 0.0703125,
-            "network_sent_bytes": 156668649409,
-            "network_recv_bytes": 14195470382,
-            "timestamp": "2025-03-07T12:29:00"
-        },
-        {
-            "cpu_temperature": 45.5633,
-            "cpu_usage": 1.225,
-            "ram_usage": 36.7,
-            "system_load": 0.299805,
-            "network_sent_bytes": 156668680909,
-            "network_recv_bytes": 14195500589,
-            "timestamp": "2025-03-07T12:30:00"
-        },
-        {
-            "cpu_temperature": 45.3883,
-            "cpu_usage": 1.08833,
-            "ram_usage": 36.7,
-            "system_load": 0.490234,
-            "network_sent_bytes": 156668710262,
-            "network_recv_bytes": 14195534042,
-            "timestamp": "2025-03-07T12:31:00"
-        },
-        {
-            "cpu_temperature": 45.425,
-            "cpu_usage": 1.015,
-            "ram_usage": 36.3,
-            "system_load": 0.178711,
-            "network_sent_bytes": 156668734772,
-            "network_recv_bytes": 14195558112,
-            "timestamp": "2025-03-07T12:32:00"
-        },
-        {
-            "cpu_temperature": 45.25,
-            "cpu_usage": 1.08333,
-            "ram_usage": 36.7,
-            "system_load": 0.258301,
-            "network_sent_bytes": 156668761504,
-            "network_recv_bytes": 14195584508,
-            "timestamp": "2025-03-07T12:33:00"
-        },
-        {
-            "cpu_temperature": 45.405,
-            "cpu_usage": 1.02167,
-            "ram_usage": 36.3,
-            "system_load": 0.0932617,
-            "network_sent_bytes": 156668789590,
-            "network_recv_bytes": 14195613023,
-            "timestamp": "2025-03-07T12:34:00"
-        },
-        {
-            "cpu_temperature": 45.3133,
-            "cpu_usage": 1.00667,
-            "ram_usage": 36.7,
-            "system_load": 0.237793,
-            "network_sent_bytes": 156668816538,
-            "network_recv_bytes": 14195644180,
-            "timestamp": "2025-03-07T12:35:00"
-        },
-        {
-            "cpu_temperature": 45.4283,
-            "cpu_usage": 0.996667,
-            "ram_usage": 36.3,
-            "system_load": 0.172363,
-            "network_sent_bytes": 156668845073,
-            "network_recv_bytes": 14195672721,
-            "timestamp": "2025-03-07T12:36:00"
-        },
-        {
-            "cpu_temperature": 45.3967,
-            "cpu_usage": 0.943333,
-            "ram_usage": 36.6,
-            "system_load": 0.119141,
-            "network_sent_bytes": 156668870333,
-            "network_recv_bytes": 14195697559,
-            "timestamp": "2025-03-07T12:37:00"
-        },
-        {
-            "cpu_temperature": 45.3833,
-            "cpu_usage": 0.986667,
-            "ram_usage": 36.3,
-            "system_load": 0.250488,
-            "network_sent_bytes": 156668900832,
-            "network_recv_bytes": 14195723488,
-            "timestamp": "2025-03-07T12:38:00"
-        },
-        {
-            "cpu_temperature": 45.4017,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.7,
-            "system_load": 0.228027,
-            "network_sent_bytes": 156668928180,
-            "network_recv_bytes": 14195750830,
-            "timestamp": "2025-03-07T12:39:00"
-        },
-        {
-            "cpu_temperature": 45.2983,
-            "cpu_usage": 1.17833,
-            "ram_usage": 36.7,
-            "system_load": 0.257324,
-            "network_sent_bytes": 156668956534,
-            "network_recv_bytes": 14195783465,
-            "timestamp": "2025-03-07T12:40:00"
-        },
-        {
-            "cpu_temperature": 45.2167,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.7,
-            "system_load": 0.287598,
-            "network_sent_bytes": 156668982578,
-            "network_recv_bytes": 14195809692,
-            "timestamp": "2025-03-07T12:41:00"
-        },
-        {
-            "cpu_temperature": 45.1,
-            "cpu_usage": 1.02833,
-            "ram_usage": 36.3,
-            "system_load": 0.171875,
-            "network_sent_bytes": 156669008908,
-            "network_recv_bytes": 14195835049,
-            "timestamp": "2025-03-07T12:42:00"
-        },
-        {
-            "cpu_temperature": 45.26,
-            "cpu_usage": 1.00333,
-            "ram_usage": 36.7,
-            "system_load": 0.204102,
-            "network_sent_bytes": 156669037199,
-            "network_recv_bytes": 14195862718,
-            "timestamp": "2025-03-07T12:43:00"
-        },
-        {
-            "cpu_temperature": 45.1033,
-            "cpu_usage": 1.125,
-            "ram_usage": 36.3,
-            "system_load": 0.159668,
-            "network_sent_bytes": 156669064666,
-            "network_recv_bytes": 14195890401,
-            "timestamp": "2025-03-07T12:44:00"
-        },
-        {
-            "cpu_temperature": 45.145,
-            "cpu_usage": 1.11333,
-            "ram_usage": 36.8,
-            "system_load": 0.336914,
-            "network_sent_bytes": 156669116303,
-            "network_recv_bytes": 14195946298,
-            "timestamp": "2025-03-07T12:45:00"
-        },
-        {
-            "cpu_temperature": 45.045,
-            "cpu_usage": 1.21333,
-            "ram_usage": 36.7,
-            "system_load": 0.459473,
-            "network_sent_bytes": 156669141004,
-            "network_recv_bytes": 14195971197,
-            "timestamp": "2025-03-07T12:46:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.13,
-            "ram_usage": 36.7,
-            "system_load": 0.347656,
-            "network_sent_bytes": 156669164228,
-            "network_recv_bytes": 14195994039,
-            "timestamp": "2025-03-07T12:47:00"
-        },
-        {
-            "cpu_temperature": 45.1283,
-            "cpu_usage": 1.18667,
-            "ram_usage": 36.6,
-            "system_load": 0.160645,
-            "network_sent_bytes": 156669195629,
-            "network_recv_bytes": 14196024987,
-            "timestamp": "2025-03-07T12:48:00"
-        },
-        {
-            "cpu_temperature": 45.1233,
-            "cpu_usage": 1.07667,
-            "ram_usage": 36.2,
-            "system_load": 0.251953,
-            "network_sent_bytes": 156669224096,
-            "network_recv_bytes": 14196053612,
-            "timestamp": "2025-03-07T12:49:00"
-        },
-        {
-            "cpu_temperature": 45.22,
-            "cpu_usage": 1.02167,
-            "ram_usage": 36.7,
-            "system_load": 0.131836,
-            "network_sent_bytes": 156669256997,
-            "network_recv_bytes": 14196086680,
-            "timestamp": "2025-03-07T12:50:00"
-        },
-        {
-            "cpu_temperature": 45.2467,
-            "cpu_usage": 0.931667,
-            "ram_usage": 36.3,
-            "system_load": 0.189941,
-            "network_sent_bytes": 156669281389,
-            "network_recv_bytes": 14196110576,
-            "timestamp": "2025-03-07T12:51:00"
-        },
-        {
-            "cpu_temperature": 45.0967,
-            "cpu_usage": 1.09167,
-            "ram_usage": 36.7,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156669309834,
-            "network_recv_bytes": 14196138386,
-            "timestamp": "2025-03-07T12:52:00"
-        },
-        {
-            "cpu_temperature": 45.05,
-            "cpu_usage": 0.991667,
-            "ram_usage": 36.3,
-            "system_load": 0.0551758,
-            "network_sent_bytes": 156669332156,
-            "network_recv_bytes": 14196160340,
-            "timestamp": "2025-03-07T12:53:00"
-        },
-        {
-            "cpu_temperature": 44.8967,
-            "cpu_usage": 1.08667,
-            "ram_usage": 36.7,
-            "system_load": 0.244141,
-            "network_sent_bytes": 156669363333,
-            "network_recv_bytes": 14196190942,
-            "timestamp": "2025-03-07T12:54:00"
-        },
-        {
-            "cpu_temperature": 44.9,
-            "cpu_usage": 1.04,
-            "ram_usage": 36.3,
-            "system_load": 0.157227,
-            "network_sent_bytes": 156669394970,
-            "network_recv_bytes": 14196221851,
-            "timestamp": "2025-03-07T12:55:00"
-        },
-        {
-            "cpu_temperature": 45.0183,
-            "cpu_usage": 1.11167,
-            "ram_usage": 36.6,
-            "system_load": 0.0561523,
-            "network_sent_bytes": 156669422217,
-            "network_recv_bytes": 14196253907,
-            "timestamp": "2025-03-07T12:56:00"
-        },
-        {
-            "cpu_temperature": 45.0133,
-            "cpu_usage": 1.08833,
-            "ram_usage": 36.6,
-            "system_load": 0.213379,
-            "network_sent_bytes": 156669445804,
-            "network_recv_bytes": 14196276954,
-            "timestamp": "2025-03-07T12:57:00"
-        },
-        {
-            "cpu_temperature": 45.0633,
-            "cpu_usage": 1.13167,
-            "ram_usage": 36.7,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156669471352,
-            "network_recv_bytes": 14196302309,
-            "timestamp": "2025-03-07T12:58:00"
-        },
-        {
-            "cpu_temperature": 45.0567,
-            "cpu_usage": 1.13167,
-            "ram_usage": 36.6,
-            "system_load": 0.282227,
-            "network_sent_bytes": 156669498905,
-            "network_recv_bytes": 14196330086,
-            "timestamp": "2025-03-07T12:59:00"
-        },
-        {
-            "cpu_temperature": 45.13,
-            "cpu_usage": 1.84167,
-            "ram_usage": 36.7,
-            "system_load": 0.307129,
-            "network_sent_bytes": 156669637999,
-            "network_recv_bytes": 14196469578,
-            "timestamp": "2025-03-07T13:00:00"
-        },
-        {
-            "cpu_temperature": 45.7283,
-            "cpu_usage": 5.525,
-            "ram_usage": 36.4,
-            "system_load": 0.382324,
-            "network_sent_bytes": 156674444744,
-            "network_recv_bytes": 14204957051,
-            "timestamp": "2025-03-07T13:01:00"
-        },
-        {
-            "cpu_temperature": 46.5533,
-            "cpu_usage": 4.88333,
-            "ram_usage": 36.4,
-            "system_load": 0.31543,
-            "network_sent_bytes": 156675742051,
-            "network_recv_bytes": 14206805519,
-            "timestamp": "2025-03-07T13:02:00"
-        },
-        {
-            "cpu_temperature": 45.455,
-            "cpu_usage": 1.10833,
-            "ram_usage": 36.4,
-            "system_load": 0.148926,
-            "network_sent_bytes": 156675777724,
-            "network_recv_bytes": 14206840910,
-            "timestamp": "2025-03-07T13:03:00"
-        },
-        {
-            "cpu_temperature": 45.4833,
-            "cpu_usage": 1.19333,
-            "ram_usage": 36.2,
-            "system_load": 0.0527344,
-            "network_sent_bytes": 156675805262,
-            "network_recv_bytes": 14206868694,
-            "timestamp": "2025-03-07T13:04:00"
-        },
-        {
-            "cpu_temperature": 45.4283,
-            "cpu_usage": 1.18833,
-            "ram_usage": 36.4,
-            "system_load": 0.260742,
-            "network_sent_bytes": 156675830165,
-            "network_recv_bytes": 14206901149,
-            "timestamp": "2025-03-07T13:05:00"
-        },
-        {
-            "cpu_temperature": 45.1333,
-            "cpu_usage": 1.16333,
-            "ram_usage": 36.3,
-            "system_load": 0.206543,
-            "network_sent_bytes": 156675854758,
-            "network_recv_bytes": 14206937524,
-            "timestamp": "2025-03-07T13:06:00"
-        },
-        {
-            "cpu_temperature": 45.3233,
-            "cpu_usage": 1.16333,
-            "ram_usage": 36.3,
-            "system_load": 0.27002,
-            "network_sent_bytes": 156675876889,
-            "network_recv_bytes": 14206959127,
-            "timestamp": "2025-03-07T13:07:00"
-        },
-        {
-            "cpu_temperature": 45.3067,
-            "cpu_usage": 1.05,
-            "ram_usage": 35.9,
-            "system_load": 0.184082,
-            "network_sent_bytes": 156675902025,
-            "network_recv_bytes": 14206983887,
-            "timestamp": "2025-03-07T13:08:00"
-        },
-        {
-            "cpu_temperature": 45.4517,
-            "cpu_usage": 1.22167,
-            "ram_usage": 36.3,
-            "system_load": 0.178711,
-            "network_sent_bytes": 156675930844,
-            "network_recv_bytes": 14207012664,
-            "timestamp": "2025-03-07T13:09:00"
-        },
-        {
-            "cpu_temperature": 45.365,
-            "cpu_usage": 0.99,
-            "ram_usage": 35.9,
-            "system_load": 0.240723,
-            "network_sent_bytes": 156675960623,
-            "network_recv_bytes": 14207041944,
-            "timestamp": "2025-03-07T13:10:00"
-        },
-        {
-            "cpu_temperature": 45.3983,
-            "cpu_usage": 1.04667,
-            "ram_usage": 36.3,
-            "system_load": 0.121582,
-            "network_sent_bytes": 156675987205,
-            "network_recv_bytes": 14207072824,
-            "timestamp": "2025-03-07T13:11:00"
-        },
-        {
-            "cpu_temperature": 45.0883,
-            "cpu_usage": 1.32167,
-            "ram_usage": 36.3,
-            "system_load": 0.0429688,
-            "network_sent_bytes": 156676014159,
-            "network_recv_bytes": 14207099352,
-            "timestamp": "2025-03-07T13:12:00"
-        },
-        {
-            "cpu_temperature": 45.2633,
-            "cpu_usage": 1.15833,
-            "ram_usage": 36.3,
-            "system_load": 0.246582,
-            "network_sent_bytes": 156676037986,
-            "network_recv_bytes": 14207122644,
-            "timestamp": "2025-03-07T13:13:00"
-        },
-        {
-            "cpu_temperature": 45.2283,
-            "cpu_usage": 1.28,
-            "ram_usage": 36.2,
-            "system_load": 0.0883789,
-            "network_sent_bytes": 156676068250,
-            "network_recv_bytes": 14207148902,
-            "timestamp": "2025-03-07T13:14:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.26167,
-            "ram_usage": 36.3,
-            "system_load": 0.17334,
-            "network_sent_bytes": 156676093373,
-            "network_recv_bytes": 14207173746,
-            "timestamp": "2025-03-07T13:15:00"
-        },
-        {
-            "cpu_temperature": 45.215,
-            "cpu_usage": 1.16667,
-            "ram_usage": 36.3,
-            "system_load": 0.277344,
-            "network_sent_bytes": 156676120683,
-            "network_recv_bytes": 14207205671,
-            "timestamp": "2025-03-07T13:16:00"
-        },
-        {
-            "cpu_temperature": 45.2383,
-            "cpu_usage": 1.13667,
-            "ram_usage": 36.2,
-            "system_load": 0.0996094,
-            "network_sent_bytes": 156676145266,
-            "network_recv_bytes": 14207229850,
-            "timestamp": "2025-03-07T13:17:00"
-        },
-        {
-            "cpu_temperature": 45.28,
-            "cpu_usage": 1.21833,
-            "ram_usage": 36.2,
-            "system_load": 0.29248,
-            "network_sent_bytes": 156676183610,
-            "network_recv_bytes": 14207267356,
-            "timestamp": "2025-03-07T13:18:00"
-        },
-        {
-            "cpu_temperature": 45.3933,
-            "cpu_usage": 1.15333,
-            "ram_usage": 36.2,
-            "system_load": 0.220703,
-            "network_sent_bytes": 156676216774,
-            "network_recv_bytes": 14207300526,
-            "timestamp": "2025-03-07T13:19:00"
-        },
-        {
-            "cpu_temperature": 45.2917,
-            "cpu_usage": 1.18833,
-            "ram_usage": 36.3,
-            "system_load": 0.0791016,
-            "network_sent_bytes": 156676242224,
-            "network_recv_bytes": 14207325274,
-            "timestamp": "2025-03-07T13:20:00"
-        },
-        {
-            "cpu_temperature": 45.3317,
-            "cpu_usage": 1.06,
-            "ram_usage": 36,
-            "system_load": 0.32373,
-            "network_sent_bytes": 156676271320,
-            "network_recv_bytes": 14207358925,
-            "timestamp": "2025-03-07T13:21:00"
-        },
-        {
-            "cpu_temperature": 45.4567,
-            "cpu_usage": 1.05,
-            "ram_usage": 36.3,
-            "system_load": 0.221191,
-            "network_sent_bytes": 156676293528,
-            "network_recv_bytes": 14207380890,
-            "timestamp": "2025-03-07T13:22:00"
-        },
-        {
-            "cpu_temperature": 45.3083,
-            "cpu_usage": 0.995,
-            "ram_usage": 36,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156676320372,
-            "network_recv_bytes": 14207407166,
-            "timestamp": "2025-03-07T13:23:00"
-        },
-        {
-            "cpu_temperature": 45.3683,
-            "cpu_usage": 1.17167,
-            "ram_usage": 36.3,
-            "system_load": 0.303223,
-            "network_sent_bytes": 156676345889,
-            "network_recv_bytes": 14207432901,
-            "timestamp": "2025-03-07T13:24:00"
-        },
-        {
-            "cpu_temperature": 45.3283,
-            "cpu_usage": 1.15833,
-            "ram_usage": 36.1,
-            "system_load": 0.119141,
-            "network_sent_bytes": 156676390992,
-            "network_recv_bytes": 14207476971,
-            "timestamp": "2025-03-07T13:25:00"
-        },
-        {
-            "cpu_temperature": 45.495,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.3,
-            "system_load": 0.35498,
-            "network_sent_bytes": 156676421969,
-            "network_recv_bytes": 14207508081,
-            "timestamp": "2025-03-07T13:26:00"
-        },
-        {
-            "cpu_temperature": 45.3017,
-            "cpu_usage": 1.14333,
-            "ram_usage": 36.3,
-            "system_load": 0.32373,
-            "network_sent_bytes": 156676443992,
-            "network_recv_bytes": 14207529528,
-            "timestamp": "2025-03-07T13:27:00"
-        },
-        {
-            "cpu_temperature": 45.3133,
-            "cpu_usage": 1.175,
-            "ram_usage": 36.3,
-            "system_load": 0.198242,
-            "network_sent_bytes": 156676473304,
-            "network_recv_bytes": 14207558428,
-            "timestamp": "2025-03-07T13:28:00"
-        },
-        {
-            "cpu_temperature": 45.24,
-            "cpu_usage": 1.25,
-            "ram_usage": 36.2,
-            "system_load": 0.265625,
-            "network_sent_bytes": 156676501204,
-            "network_recv_bytes": 14207586602,
-            "timestamp": "2025-03-07T13:29:00"
-        },
-        {
-            "cpu_temperature": 45.2817,
-            "cpu_usage": 1.245,
-            "ram_usage": 36.2,
-            "system_load": 0.103516,
-            "network_sent_bytes": 156676531925,
-            "network_recv_bytes": 14207615996,
-            "timestamp": "2025-03-07T13:30:00"
-        },
-        {
-            "cpu_temperature": 45.2767,
-            "cpu_usage": 1.23667,
-            "ram_usage": 36.3,
-            "system_load": 0.303711,
-            "network_sent_bytes": 156676563840,
-            "network_recv_bytes": 14207650269,
-            "timestamp": "2025-03-07T13:31:00"
-        },
-        {
-            "cpu_temperature": 45.2817,
-            "cpu_usage": 1.11167,
-            "ram_usage": 36.2,
-            "system_load": 0.276855,
-            "network_sent_bytes": 156676587062,
-            "network_recv_bytes": 14207673109,
-            "timestamp": "2025-03-07T13:32:00"
-        },
-        {
-            "cpu_temperature": 45.3217,
-            "cpu_usage": 1.20667,
-            "ram_usage": 36.2,
-            "system_load": 0.108398,
-            "network_sent_bytes": 156676613288,
-            "network_recv_bytes": 14207698721,
-            "timestamp": "2025-03-07T13:33:00"
-        },
-        {
-            "cpu_temperature": 45.3833,
-            "cpu_usage": 1.27,
-            "ram_usage": 36.3,
-            "system_load": 0.293457,
-            "network_sent_bytes": 156676639909,
-            "network_recv_bytes": 14207725812,
-            "timestamp": "2025-03-07T13:34:00"
-        },
-        {
-            "cpu_temperature": 45.405,
-            "cpu_usage": 1.17667,
-            "ram_usage": 36.2,
-            "system_load": 0.208008,
-            "network_sent_bytes": 156676665716,
-            "network_recv_bytes": 14207750709,
-            "timestamp": "2025-03-07T13:35:00"
-        },
-        {
-            "cpu_temperature": 45.43,
-            "cpu_usage": 1.185,
-            "ram_usage": 36.3,
-            "system_load": 0.23877,
-            "network_sent_bytes": 156676690722,
-            "network_recv_bytes": 14207781058,
-            "timestamp": "2025-03-07T13:36:00"
-        },
-        {
-            "cpu_temperature": 45.3233,
-            "cpu_usage": 1.13,
-            "ram_usage": 36.2,
-            "system_load": 0.533203,
-            "network_sent_bytes": 156676716147,
-            "network_recv_bytes": 14207806071,
-            "timestamp": "2025-03-07T13:37:00"
-        },
-        {
-            "cpu_temperature": 45.3117,
-            "cpu_usage": 1.14,
-            "ram_usage": 36.3,
-            "system_load": 0.298828,
-            "network_sent_bytes": 156676745599,
-            "network_recv_bytes": 14207830865,
-            "timestamp": "2025-03-07T13:38:00"
-        },
-        {
-            "cpu_temperature": 45.31,
-            "cpu_usage": 1.325,
-            "ram_usage": 36.3,
-            "system_load": 0.233398,
-            "network_sent_bytes": 156676779631,
-            "network_recv_bytes": 14207864839,
-            "timestamp": "2025-03-07T13:39:00"
-        },
-        {
-            "cpu_temperature": 45.1233,
-            "cpu_usage": 1.16,
-            "ram_usage": 36.3,
-            "system_load": 0.294922,
-            "network_sent_bytes": 156676803111,
-            "network_recv_bytes": 14207888086,
-            "timestamp": "2025-03-07T13:40:00"
-        },
-        {
-            "cpu_temperature": 45.2817,
-            "cpu_usage": 1.19167,
-            "ram_usage": 36.3,
-            "system_load": 0.278809,
-            "network_sent_bytes": 156676829832,
-            "network_recv_bytes": 14207917967,
-            "timestamp": "2025-03-07T13:41:00"
-        },
-        {
-            "cpu_temperature": 45.34,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.3,
-            "system_load": 0.341309,
-            "network_sent_bytes": 156676858438,
-            "network_recv_bytes": 14207945514,
-            "timestamp": "2025-03-07T13:42:00"
-        },
-        {
-            "cpu_temperature": 45.2967,
-            "cpu_usage": 1.135,
-            "ram_usage": 36.3,
-            "system_load": 0.296875,
-            "network_sent_bytes": 156676880557,
-            "network_recv_bytes": 14207967177,
-            "timestamp": "2025-03-07T13:43:00"
-        },
-        {
-            "cpu_temperature": 45.2717,
-            "cpu_usage": 1.30333,
-            "ram_usage": 36.2,
-            "system_load": 0.14502,
-            "network_sent_bytes": 156676906344,
-            "network_recv_bytes": 14207993164,
-            "timestamp": "2025-03-07T13:44:00"
-        },
-        {
-            "cpu_temperature": 45.225,
-            "cpu_usage": 1.29,
-            "ram_usage": 36.4,
-            "system_load": 0.336914,
-            "network_sent_bytes": 156676961976,
-            "network_recv_bytes": 14208054031,
-            "timestamp": "2025-03-07T13:45:00"
-        },
-        {
-            "cpu_temperature": 45.2067,
-            "cpu_usage": 1.14833,
-            "ram_usage": 36.1,
-            "system_load": 0.159668,
-            "network_sent_bytes": 156676992768,
-            "network_recv_bytes": 14208091157,
-            "timestamp": "2025-03-07T13:46:00"
-        },
-        {
-            "cpu_temperature": 45.1867,
-            "cpu_usage": 1.15833,
-            "ram_usage": 36.3,
-            "system_load": 0.124023,
-            "network_sent_bytes": 156677016428,
-            "network_recv_bytes": 14208115921,
-            "timestamp": "2025-03-07T13:47:00"
-        },
-        {
-            "cpu_temperature": 45.2833,
-            "cpu_usage": 1.15167,
-            "ram_usage": 36.1,
-            "system_load": 0.169922,
-            "network_sent_bytes": 156677054260,
-            "network_recv_bytes": 14208154214,
-            "timestamp": "2025-03-07T13:48:00"
-        },
-        {
-            "cpu_temperature": 45.3917,
-            "cpu_usage": 1.21667,
-            "ram_usage": 36.3,
-            "system_load": 0.0610352,
-            "network_sent_bytes": 156677086056,
-            "network_recv_bytes": 14208187640,
-            "timestamp": "2025-03-07T13:49:00"
-        },
-        {
-            "cpu_temperature": 45.3917,
-            "cpu_usage": 1.22,
-            "ram_usage": 36.1,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156677120405,
-            "network_recv_bytes": 14208220652,
-            "timestamp": "2025-03-07T13:50:00"
-        },
-        {
-            "cpu_temperature": 45.4483,
-            "cpu_usage": 1.09667,
-            "ram_usage": 36.3,
-            "system_load": 0.290039,
-            "network_sent_bytes": 156677150479,
-            "network_recv_bytes": 14208254093,
-            "timestamp": "2025-03-07T13:51:00"
-        },
-        {
-            "cpu_temperature": 45.33,
-            "cpu_usage": 1.13,
-            "ram_usage": 36.1,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156677174746,
-            "network_recv_bytes": 14208277962,
-            "timestamp": "2025-03-07T13:52:00"
-        },
-        {
-            "cpu_temperature": 45.37,
-            "cpu_usage": 1.03167,
-            "ram_usage": 36.3,
-            "system_load": 0.402832,
-            "network_sent_bytes": 156677201609,
-            "network_recv_bytes": 14208304359,
-            "timestamp": "2025-03-07T13:53:00"
-        },
-        {
-            "cpu_temperature": 45.38,
-            "cpu_usage": 1.17667,
-            "ram_usage": 36.2,
-            "system_load": 0.145996,
-            "network_sent_bytes": 156677229709,
-            "network_recv_bytes": 14208331988,
-            "timestamp": "2025-03-07T13:54:00"
-        },
-        {
-            "cpu_temperature": 45.3917,
-            "cpu_usage": 1.115,
-            "ram_usage": 36.3,
-            "system_load": 0.119629,
-            "network_sent_bytes": 156677260591,
-            "network_recv_bytes": 14208362084,
-            "timestamp": "2025-03-07T13:55:00"
-        },
-        {
-            "cpu_temperature": 45.3917,
-            "cpu_usage": 1.275,
-            "ram_usage": 36.2,
-            "system_load": 0.221191,
-            "network_sent_bytes": 156677286896,
-            "network_recv_bytes": 14208394105,
-            "timestamp": "2025-03-07T13:56:00"
-        },
-        {
-            "cpu_temperature": 45.7317,
-            "cpu_usage": 1.62167,
-            "ram_usage": 36.3,
-            "system_load": 0.128418,
-            "network_sent_bytes": 156678598509,
-            "network_recv_bytes": 14209123776,
-            "timestamp": "2025-03-07T13:57:00"
-        },
-        {
-            "cpu_temperature": 45.4983,
-            "cpu_usage": 1.145,
-            "ram_usage": 36.3,
-            "system_load": 0.237305,
-            "network_sent_bytes": 156678624101,
-            "network_recv_bytes": 14209149081,
-            "timestamp": "2025-03-07T13:58:00"
-        },
-        {
-            "cpu_temperature": 45.485,
-            "cpu_usage": 1.17667,
-            "ram_usage": 36.4,
-            "system_load": 0.161133,
-            "network_sent_bytes": 156678652732,
-            "network_recv_bytes": 14209177850,
-            "timestamp": "2025-03-07T13:59:00"
-        },
-        {
-            "cpu_temperature": 45.4233,
-            "cpu_usage": 1.26833,
-            "ram_usage": 36.2,
-            "system_load": 0.0566406,
-            "network_sent_bytes": 156678687992,
-            "network_recv_bytes": 14209212092,
-            "timestamp": "2025-03-07T14:00:00"
-        },
-        {
-            "cpu_temperature": 45.575,
-            "cpu_usage": 1.30833,
-            "ram_usage": 36.3,
-            "system_load": 0.22998,
-            "network_sent_bytes": 156678742190,
-            "network_recv_bytes": 14209270277,
-            "timestamp": "2025-03-07T14:01:00"
-        },
-        {
-            "cpu_temperature": 45.4833,
-            "cpu_usage": 1.12333,
-            "ram_usage": 36.3,
-            "system_load": 0.0830078,
-            "network_sent_bytes": 156678768173,
-            "network_recv_bytes": 14209295790,
-            "timestamp": "2025-03-07T14:02:00"
-        },
-        {
-            "cpu_temperature": 45.4867,
-            "cpu_usage": 1.03833,
-            "ram_usage": 36.3,
-            "system_load": 0.0966797,
-            "network_sent_bytes": 156678800919,
-            "network_recv_bytes": 14209324022,
-            "timestamp": "2025-03-07T14:03:00"
-        },
-        {
-            "cpu_temperature": 45.3633,
-            "cpu_usage": 1.185,
-            "ram_usage": 36.3,
-            "system_load": 0.360352,
-            "network_sent_bytes": 156678828921,
-            "network_recv_bytes": 14209352252,
-            "timestamp": "2025-03-07T14:04:00"
-        },
-        {
-            "cpu_temperature": 45.2117,
-            "cpu_usage": 1.21833,
-            "ram_usage": 36.3,
-            "system_load": 0.130371,
-            "network_sent_bytes": 156678855495,
-            "network_recv_bytes": 14209386249,
-            "timestamp": "2025-03-07T14:05:00"
-        },
-        {
-            "cpu_temperature": 45.14,
-            "cpu_usage": 1.16333,
-            "ram_usage": 36.3,
-            "system_load": 0.291016,
-            "network_sent_bytes": 156678887854,
-            "network_recv_bytes": 14209431426,
-            "timestamp": "2025-03-07T14:06:00"
-        },
-        {
-            "cpu_temperature": 45.1967,
-            "cpu_usage": 1.08167,
-            "ram_usage": 36.3,
-            "system_load": 0.143555,
-            "network_sent_bytes": 156678911368,
-            "network_recv_bytes": 14209454242,
-            "timestamp": "2025-03-07T14:07:00"
-        },
-        {
-            "cpu_temperature": 45.1517,
-            "cpu_usage": 0.941667,
-            "ram_usage": 35.9,
-            "system_load": 0.0507812,
-            "network_sent_bytes": 156678936695,
-            "network_recv_bytes": 14209479399,
-            "timestamp": "2025-03-07T14:08:00"
-        },
-        {
-            "cpu_temperature": 45.26,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.3,
-            "system_load": 0.277344,
-            "network_sent_bytes": 156678966944,
-            "network_recv_bytes": 14209509832,
-            "timestamp": "2025-03-07T14:09:00"
-        },
-        {
-            "cpu_temperature": 45.2083,
-            "cpu_usage": 1.15833,
-            "ram_usage": 35.9,
-            "system_load": 0.303223,
-            "network_sent_bytes": 156678997303,
-            "network_recv_bytes": 14209540114,
-            "timestamp": "2025-03-07T14:10:00"
-        },
-        {
-            "cpu_temperature": 45.1533,
-            "cpu_usage": 1.01833,
-            "ram_usage": 36.3,
-            "system_load": 0.177734,
-            "network_sent_bytes": 156679028608,
-            "network_recv_bytes": 14209575857,
-            "timestamp": "2025-03-07T14:11:00"
-        },
-        {
-            "cpu_temperature": 45.19,
-            "cpu_usage": 1.23667,
-            "ram_usage": 36.2,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156679052903,
-            "network_recv_bytes": 14209599612,
-            "timestamp": "2025-03-07T14:12:00"
-        },
-        {
-            "cpu_temperature": 45.195,
-            "cpu_usage": 1.15,
-            "ram_usage": 36.2,
-            "system_load": 0.0673828,
-            "network_sent_bytes": 156679077213,
-            "network_recv_bytes": 14209623324,
-            "timestamp": "2025-03-07T14:13:00"
-        },
-        {
-            "cpu_temperature": 45.1917,
-            "cpu_usage": 1.22667,
-            "ram_usage": 36.3,
-            "system_load": 0.276855,
-            "network_sent_bytes": 156679106452,
-            "network_recv_bytes": 14209652871,
-            "timestamp": "2025-03-07T14:14:00"
-        },
-        {
-            "cpu_temperature": 45.1167,
-            "cpu_usage": 1.19167,
-            "ram_usage": 36.3,
-            "system_load": 0.138184,
-            "network_sent_bytes": 156679141382,
-            "network_recv_bytes": 14209683448,
-            "timestamp": "2025-03-07T14:15:00"
-        },
-        {
-            "cpu_temperature": 45.0983,
-            "cpu_usage": 1.2,
-            "ram_usage": 36.3,
-            "system_load": 0.0488281,
-            "network_sent_bytes": 156679170958,
-            "network_recv_bytes": 14209717122,
-            "timestamp": "2025-03-07T14:16:00"
-        },
-        {
-            "cpu_temperature": 45.1817,
-            "cpu_usage": 0.981667,
-            "ram_usage": 35.9,
-            "system_load": 0.333008,
-            "network_sent_bytes": 156679194806,
-            "network_recv_bytes": 14209740374,
-            "timestamp": "2025-03-07T14:17:00"
-        },
-        {
-            "cpu_temperature": 45.18,
-            "cpu_usage": 0.998333,
-            "ram_usage": 36.3,
-            "system_load": 0.120605,
-            "network_sent_bytes": 156679231953,
-            "network_recv_bytes": 14209776731,
-            "timestamp": "2025-03-07T14:18:00"
-        },
-        {
-            "cpu_temperature": 45.175,
-            "cpu_usage": 1.03667,
-            "ram_usage": 35.8,
-            "system_load": 0.11084,
-            "network_sent_bytes": 156679262740,
-            "network_recv_bytes": 14209807424,
-            "timestamp": "2025-03-07T14:19:00"
-        },
-        {
-            "cpu_temperature": 45.1117,
-            "cpu_usage": 1.07167,
-            "ram_usage": 36.3,
-            "system_load": 0.165039,
-            "network_sent_bytes": 156679291385,
-            "network_recv_bytes": 14209841215,
-            "timestamp": "2025-03-07T14:20:00"
-        },
-        {
-            "cpu_temperature": 45.155,
-            "cpu_usage": 1.00167,
-            "ram_usage": 35.9,
-            "system_load": 0.059082,
-            "network_sent_bytes": 156679320357,
-            "network_recv_bytes": 14209868673,
-            "timestamp": "2025-03-07T14:21:00"
-        },
-        {
-            "cpu_temperature": 45.155,
-            "cpu_usage": 1.06333,
-            "ram_usage": 36.2,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156679351253,
-            "network_recv_bytes": 14209899350,
-            "timestamp": "2025-03-07T14:22:00"
-        },
-        {
-            "cpu_temperature": 45.1,
-            "cpu_usage": 1.015,
-            "ram_usage": 35.9,
-            "system_load": 0.184082,
-            "network_sent_bytes": 156679378496,
-            "network_recv_bytes": 14209926049,
-            "timestamp": "2025-03-07T14:23:00"
-        },
-        {
-            "cpu_temperature": 45.3333,
-            "cpu_usage": 1.07333,
-            "ram_usage": 36.1,
-            "system_load": 0.065918,
-            "network_sent_bytes": 156679410756,
-            "network_recv_bytes": 14209958619,
-            "timestamp": "2025-03-07T14:24:00"
-        },
-        {
-            "cpu_temperature": 45.1417,
-            "cpu_usage": 0.975,
-            "ram_usage": 36,
-            "system_load": 0.234375,
-            "network_sent_bytes": 156679437145,
-            "network_recv_bytes": 14209984683,
-            "timestamp": "2025-03-07T14:25:00"
-        },
-        {
-            "cpu_temperature": 45.0667,
-            "cpu_usage": 1.12167,
-            "ram_usage": 36.2,
-            "system_load": 0.0839844,
-            "network_sent_bytes": 156679465684,
-            "network_recv_bytes": 14210017073,
-            "timestamp": "2025-03-07T14:26:00"
-        },
-        {
-            "cpu_temperature": 45.09,
-            "cpu_usage": 1.07833,
-            "ram_usage": 36.3,
-            "system_load": 0.255859,
-            "network_sent_bytes": 156679491926,
-            "network_recv_bytes": 14210038875,
-            "timestamp": "2025-03-07T14:27:00"
-        },
-        {
-            "cpu_temperature": 45.0367,
-            "cpu_usage": 1.21167,
-            "ram_usage": 36.3,
-            "system_load": 0.334473,
-            "network_sent_bytes": 156679522486,
-            "network_recv_bytes": 14210068713,
-            "timestamp": "2025-03-07T14:28:00"
-        },
-        {
-            "cpu_temperature": 45.035,
-            "cpu_usage": 1.17333,
-            "ram_usage": 36.3,
-            "system_load": 0.281738,
-            "network_sent_bytes": 156679549455,
-            "network_recv_bytes": 14210095854,
-            "timestamp": "2025-03-07T14:29:00"
-        },
-        {
-            "cpu_temperature": 45.2433,
-            "cpu_usage": 1.215,
-            "ram_usage": 36.3,
-            "system_load": 0.453613,
-            "network_sent_bytes": 156679575995,
-            "network_recv_bytes": 14210120911,
-            "timestamp": "2025-03-07T14:30:00"
-        },
-        {
-            "cpu_temperature": 45.25,
-            "cpu_usage": 1.14333,
-            "ram_usage": 36.3,
-            "system_load": 0.283203,
-            "network_sent_bytes": 156679606902,
-            "network_recv_bytes": 14210156388,
-            "timestamp": "2025-03-07T14:31:00"
-        },
-        {
-            "cpu_temperature": 45.225,
-            "cpu_usage": 1.225,
-            "ram_usage": 36.3,
-            "system_load": 0.17627,
-            "network_sent_bytes": 156679634257,
-            "network_recv_bytes": 14210183115,
-            "timestamp": "2025-03-07T14:32:00"
-        },
-        {
-            "cpu_temperature": 45.2133,
-            "cpu_usage": 1.11167,
-            "ram_usage": 36.3,
-            "system_load": 0.348633,
-            "network_sent_bytes": 156679667974,
-            "network_recv_bytes": 14210216344,
-            "timestamp": "2025-03-07T14:33:00"
-        },
-        {
-            "cpu_temperature": 45.39,
-            "cpu_usage": 1.21333,
-            "ram_usage": 36.3,
-            "system_load": 0.170898,
-            "network_sent_bytes": 156679695523,
-            "network_recv_bytes": 14210244662,
-            "timestamp": "2025-03-07T14:34:00"
-        },
-        {
-            "cpu_temperature": 45.2867,
-            "cpu_usage": 1.14833,
-            "ram_usage": 36.3,
-            "system_load": 0.161621,
-            "network_sent_bytes": 156679727236,
-            "network_recv_bytes": 14210275555,
-            "timestamp": "2025-03-07T14:35:00"
-        },
-        {
-            "cpu_temperature": 45.2817,
-            "cpu_usage": 1.21333,
-            "ram_usage": 36.3,
-            "system_load": 0.18457,
-            "network_sent_bytes": 156679757204,
-            "network_recv_bytes": 14210310993,
-            "timestamp": "2025-03-07T14:36:00"
-        },
-        {
-            "cpu_temperature": 45.25,
-            "cpu_usage": 1.10333,
-            "ram_usage": 36.3,
-            "system_load": 0.065918,
-            "network_sent_bytes": 156679784066,
-            "network_recv_bytes": 14210337423,
-            "timestamp": "2025-03-07T14:37:00"
-        },
-        {
-            "cpu_temperature": 45.2683,
-            "cpu_usage": 1.21667,
-            "ram_usage": 36.3,
-            "system_load": 0.214355,
-            "network_sent_bytes": 156679809364,
-            "network_recv_bytes": 14210362261,
-            "timestamp": "2025-03-07T14:38:00"
-        },
-        {
-            "cpu_temperature": 45.31,
-            "cpu_usage": 1.19333,
-            "ram_usage": 36.4,
-            "system_load": 0.114258,
-            "network_sent_bytes": 156679844666,
-            "network_recv_bytes": 14210393589,
-            "timestamp": "2025-03-07T14:39:00"
-        },
-        {
-            "cpu_temperature": 45.385,
-            "cpu_usage": 1.31833,
-            "ram_usage": 36.2,
-            "system_load": 0.0395508,
-            "network_sent_bytes": 156679873075,
-            "network_recv_bytes": 14210420918,
-            "timestamp": "2025-03-07T14:40:00"
-        },
-        {
-            "cpu_temperature": 45.5,
-            "cpu_usage": 1.13,
-            "ram_usage": 36.3,
-            "system_load": 0.370117,
-            "network_sent_bytes": 156679909682,
-            "network_recv_bytes": 14210462688,
-            "timestamp": "2025-03-07T14:41:00"
-        },
-        {
-            "cpu_temperature": 45.3067,
-            "cpu_usage": 1.19,
-            "ram_usage": 36.2,
-            "system_load": 0.134277,
-            "network_sent_bytes": 156679945204,
-            "network_recv_bytes": 14210497609,
-            "timestamp": "2025-03-07T14:42:00"
-        },
-        {
-            "cpu_temperature": 45.4717,
-            "cpu_usage": 1.00667,
-            "ram_usage": 35.8,
-            "system_load": 0.172852,
-            "network_sent_bytes": 156679976287,
-            "network_recv_bytes": 14210537134,
-            "timestamp": "2025-03-07T14:43:00"
-        },
-        {
-            "cpu_temperature": 45.375,
-            "cpu_usage": 1.11167,
-            "ram_usage": 36.3,
-            "system_load": 0.1875,
-            "network_sent_bytes": 156680012446,
-            "network_recv_bytes": 14210578639,
-            "timestamp": "2025-03-07T14:44:00"
-        },
-        {
-            "cpu_temperature": 45.2567,
-            "cpu_usage": 1.02,
-            "ram_usage": 35.9,
-            "system_load": 0.125,
-            "network_sent_bytes": 156680041185,
-            "network_recv_bytes": 14210607296,
-            "timestamp": "2025-03-07T14:45:00"
-        },
-        {
-            "cpu_temperature": 45.495,
-            "cpu_usage": 1.03167,
-            "ram_usage": 36.3,
-            "system_load": 0.293457,
-            "network_sent_bytes": 156680074985,
-            "network_recv_bytes": 14210646253,
-            "timestamp": "2025-03-07T14:46:00"
-        },
-        {
-            "cpu_temperature": 45.345,
-            "cpu_usage": 1.13667,
-            "ram_usage": 36.2,
-            "system_load": 0.105957,
-            "network_sent_bytes": 156680099293,
-            "network_recv_bytes": 14210670171,
-            "timestamp": "2025-03-07T14:47:00"
-        },
-        {
-            "cpu_temperature": 45.3283,
-            "cpu_usage": 1.15,
-            "ram_usage": 36.2,
-            "system_load": 0.0371094,
-            "network_sent_bytes": 156680134055,
-            "network_recv_bytes": 14210704918,
-            "timestamp": "2025-03-07T14:48:00"
-        },
-        {
-            "cpu_temperature": 45.4983,
-            "cpu_usage": 1.07833,
-            "ram_usage": 36.2,
-            "system_load": 0.285645,
-            "network_sent_bytes": 156680167858,
-            "network_recv_bytes": 14210738809,
-            "timestamp": "2025-03-07T14:49:00"
-        },
-        {
-            "cpu_temperature": 45.3183,
-            "cpu_usage": 1.045,
-            "ram_usage": 36.3,
-            "system_load": 0.466309,
-            "network_sent_bytes": 156680197524,
-            "network_recv_bytes": 14210766271,
-            "timestamp": "2025-03-07T14:50:00"
-        },
-        {
-            "cpu_temperature": 45.31,
-            "cpu_usage": 1.07333,
-            "ram_usage": 36.3,
-            "system_load": 0.290527,
-            "network_sent_bytes": 156680234992,
-            "network_recv_bytes": 14210804144,
-            "timestamp": "2025-03-07T14:51:00"
-        },
-        {
-            "cpu_temperature": 45.43,
-            "cpu_usage": 1.13,
-            "ram_usage": 36.3,
-            "system_load": 0.231445,
-            "network_sent_bytes": 156680259597,
-            "network_recv_bytes": 14210828385,
-            "timestamp": "2025-03-07T14:52:00"
-        },
-        {
-            "cpu_temperature": 45.47,
-            "cpu_usage": 1.09,
-            "ram_usage": 36.3,
-            "system_load": 0.164062,
-            "network_sent_bytes": 156680285760,
-            "network_recv_bytes": 14210853918,
-            "timestamp": "2025-03-07T14:53:00"
-        },
-        {
-            "cpu_temperature": 45.485,
-            "cpu_usage": 1.20833,
-            "ram_usage": 36.3,
-            "system_load": 0.250488,
-            "network_sent_bytes": 156680318290,
-            "network_recv_bytes": 14210885941,
-            "timestamp": "2025-03-07T14:54:00"
-        },
-        {
-            "cpu_temperature": 45.34,
-            "cpu_usage": 1.11667,
-            "ram_usage": 36.3,
-            "system_load": 0.170898,
-            "network_sent_bytes": 156680343529,
-            "network_recv_bytes": 14210916213,
-            "timestamp": "2025-03-07T14:55:00"
-        },
-        {
-            "cpu_temperature": 45.2433,
-            "cpu_usage": 1.19,
-            "ram_usage": 36.3,
-            "system_load": 0.179688,
-            "network_sent_bytes": 156680368901,
-            "network_recv_bytes": 14210941184,
-            "timestamp": "2025-03-07T14:56:00"
-        },
-        {
-            "cpu_temperature": 45.35,
-            "cpu_usage": 0.953333,
-            "ram_usage": 35.9,
-            "system_load": 0.274902,
-            "network_sent_bytes": 156680391104,
-            "network_recv_bytes": 14210962933,
-            "timestamp": "2025-03-07T14:57:00"
-        },
-        {
-            "cpu_temperature": 45.3033,
-            "cpu_usage": 0.975,
-            "ram_usage": 36.2,
-            "system_load": 0.179688,
-            "network_sent_bytes": 156680420554,
-            "network_recv_bytes": 14210992410,
-            "timestamp": "2025-03-07T14:58:00"
-        },
-        {
-            "cpu_temperature": 45.4217,
-            "cpu_usage": 1.08167,
-            "ram_usage": 35.9,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156680447612,
-            "network_recv_bytes": 14211019576,
-            "timestamp": "2025-03-07T14:59:00"
-        },
-        {
-            "cpu_temperature": 45.285,
-            "cpu_usage": 1.42,
-            "ram_usage": 36.2,
-            "system_load": 0.356445,
-            "network_sent_bytes": 156680500927,
-            "network_recv_bytes": 14211071979,
-            "timestamp": "2025-03-07T15:00:00"
-        },
-        {
-            "cpu_temperature": 45.3217,
-            "cpu_usage": 1.195,
-            "ram_usage": 36.3,
-            "system_load": 0.291992,
-            "network_sent_bytes": 156680534735,
-            "network_recv_bytes": 14211110477,
-            "timestamp": "2025-03-07T15:01:00"
-        },
-        {
-            "cpu_temperature": 45.3917,
-            "cpu_usage": 1.23167,
-            "ram_usage": 36.2,
-            "system_load": 0.297363,
-            "network_sent_bytes": 156680558731,
-            "network_recv_bytes": 14211134175,
-            "timestamp": "2025-03-07T15:02:00"
-        },
-        {
-            "cpu_temperature": 45.2433,
-            "cpu_usage": 1.205,
-            "ram_usage": 36.2,
-            "system_load": 0.288574,
-            "network_sent_bytes": 156680595331,
-            "network_recv_bytes": 14211166055,
-            "timestamp": "2025-03-07T15:03:00"
-        },
-        {
-            "cpu_temperature": 45.3417,
-            "cpu_usage": 1.245,
-            "ram_usage": 36.2,
-            "system_load": 0.177734,
-            "network_sent_bytes": 156680625875,
-            "network_recv_bytes": 14211196769,
-            "timestamp": "2025-03-07T15:04:00"
-        },
-        {
-            "cpu_temperature": 45.485,
-            "cpu_usage": 1.17,
-            "ram_usage": 36.3,
-            "system_load": 0.307129,
-            "network_sent_bytes": 156680655893,
-            "network_recv_bytes": 14211232819,
-            "timestamp": "2025-03-07T15:05:00"
-        },
-        {
-            "cpu_temperature": 45.4217,
-            "cpu_usage": 1.09333,
-            "ram_usage": 36.1,
-            "system_load": 0.191895,
-            "network_sent_bytes": 156680681154,
-            "network_recv_bytes": 14211271326,
-            "timestamp": "2025-03-07T15:06:00"
-        },
-        {
-            "cpu_temperature": 45.2,
-            "cpu_usage": 1.20833,
-            "ram_usage": 36.2,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156680703112,
-            "network_recv_bytes": 14211292838,
-            "timestamp": "2025-03-07T15:07:00"
-        },
-        {
-            "cpu_temperature": 45.4167,
-            "cpu_usage": 1.06667,
-            "ram_usage": 36.2,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156680734537,
-            "network_recv_bytes": 14211324342,
-            "timestamp": "2025-03-07T15:08:00"
-        },
-        {
-            "cpu_temperature": 45.3017,
-            "cpu_usage": 1.22833,
-            "ram_usage": 36.3,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156680764129,
-            "network_recv_bytes": 14211353950,
-            "timestamp": "2025-03-07T15:09:00"
-        },
-        {
-            "cpu_temperature": 45.3317,
-            "cpu_usage": 1.16333,
-            "ram_usage": 36.2,
-            "system_load": 0.192383,
-            "network_sent_bytes": 156680793494,
-            "network_recv_bytes": 14211382970,
-            "timestamp": "2025-03-07T15:10:00"
-        },
-        {
-            "cpu_temperature": 45.43,
-            "cpu_usage": 1.11667,
-            "ram_usage": 36.3,
-            "system_load": 0.12207,
-            "network_sent_bytes": 156680817959,
-            "network_recv_bytes": 14211412330,
-            "timestamp": "2025-03-07T15:11:00"
-        },
-        {
-            "cpu_temperature": 45.335,
-            "cpu_usage": 1.16833,
-            "ram_usage": 36.2,
-            "system_load": 0.117188,
-            "network_sent_bytes": 156680840047,
-            "network_recv_bytes": 14211434052,
-            "timestamp": "2025-03-07T15:12:00"
-        },
-        {
-            "cpu_temperature": 45.2433,
-            "cpu_usage": 1.16167,
-            "ram_usage": 36.3,
-            "system_load": 0.194336,
-            "network_sent_bytes": 156680865176,
-            "network_recv_bytes": 14211458583,
-            "timestamp": "2025-03-07T15:13:00"
-        },
-        {
-            "cpu_temperature": 45.2983,
-            "cpu_usage": 1.11,
-            "ram_usage": 36.3,
-            "system_load": 0.0698242,
-            "network_sent_bytes": 156680894755,
-            "network_recv_bytes": 14211488612,
-            "timestamp": "2025-03-07T15:14:00"
-        },
-        {
-            "cpu_temperature": 45.1867,
-            "cpu_usage": 1.2,
-            "ram_usage": 36.2,
-            "system_load": 0.674316,
-            "network_sent_bytes": 156680930001,
-            "network_recv_bytes": 14211518832,
-            "timestamp": "2025-03-07T15:15:00"
-        },
-        {
-            "cpu_temperature": 45.4233,
-            "cpu_usage": 1.11,
-            "ram_usage": 35.9,
-            "system_load": 0.42627,
-            "network_sent_bytes": 156680956135,
-            "network_recv_bytes": 14211550407,
-            "timestamp": "2025-03-07T15:16:00"
-        },
-        {
-            "cpu_temperature": 45.4483,
-            "cpu_usage": 1.01667,
-            "ram_usage": 36.2,
-            "system_load": 0.201172,
-            "network_sent_bytes": 156680983577,
-            "network_recv_bytes": 14211577209,
-            "timestamp": "2025-03-07T15:17:00"
-        },
-        {
-            "cpu_temperature": 45.4267,
-            "cpu_usage": 1.12833,
-            "ram_usage": 35.9,
-            "system_load": 0.241699,
-            "network_sent_bytes": 156681017203,
-            "network_recv_bytes": 14211610015,
-            "timestamp": "2025-03-07T15:18:00"
-        },
-        {
-            "cpu_temperature": 45.5417,
-            "cpu_usage": 1.16833,
-            "ram_usage": 36.2,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156681049413,
-            "network_recv_bytes": 14211642377,
-            "timestamp": "2025-03-07T15:19:00"
-        },
-        {
-            "cpu_temperature": 45.485,
-            "cpu_usage": 1.09667,
-            "ram_usage": 36,
-            "system_load": 0.134766,
-            "network_sent_bytes": 156681081088,
-            "network_recv_bytes": 14211673493,
-            "timestamp": "2025-03-07T15:20:00"
-        },
-        {
-            "cpu_temperature": 45.5817,
-            "cpu_usage": 1.075,
-            "ram_usage": 36.3,
-            "system_load": 0.22998,
-            "network_sent_bytes": 156681109471,
-            "network_recv_bytes": 14211704207,
-            "timestamp": "2025-03-07T15:21:00"
-        },
-        {
-            "cpu_temperature": 45.51,
-            "cpu_usage": 1.14167,
-            "ram_usage": 36.1,
-            "system_load": 0.090332,
-            "network_sent_bytes": 156681135741,
-            "network_recv_bytes": 14211730194,
-            "timestamp": "2025-03-07T15:22:00"
-        },
-        {
-            "cpu_temperature": 45.4883,
-            "cpu_usage": 1.125,
-            "ram_usage": 36.3,
-            "system_load": 0.163086,
-            "network_sent_bytes": 156681158549,
-            "network_recv_bytes": 14211752640,
-            "timestamp": "2025-03-07T15:23:00"
-        },
-        {
-            "cpu_temperature": 45.5717,
-            "cpu_usage": 1.155,
-            "ram_usage": 36,
-            "system_load": 0.214844,
-            "network_sent_bytes": 156681188362,
-            "network_recv_bytes": 14211782566,
-            "timestamp": "2025-03-07T15:24:00"
-        },
-        {
-            "cpu_temperature": 45.335,
-            "cpu_usage": 1.10333,
-            "ram_usage": 36.3,
-            "system_load": 0.0771484,
-            "network_sent_bytes": 156681213063,
-            "network_recv_bytes": 14211806480,
-            "timestamp": "2025-03-07T15:25:00"
-        },
-        {
-            "cpu_temperature": 45.4133,
-            "cpu_usage": 1.12667,
-            "ram_usage": 36.3,
-            "system_load": 0.221191,
-            "network_sent_bytes": 156681240068,
-            "network_recv_bytes": 14211838872,
-            "timestamp": "2025-03-07T15:26:00"
-        },
-        {
-            "cpu_temperature": 45.4867,
-            "cpu_usage": 1.14333,
-            "ram_usage": 36,
-            "system_load": 0.192383,
-            "network_sent_bytes": 156681268002,
-            "network_recv_bytes": 14211862266,
-            "timestamp": "2025-03-07T15:27:00"
-        },
-        {
-            "cpu_temperature": 45.2467,
-            "cpu_usage": 1.17167,
-            "ram_usage": 36.3,
-            "system_load": 0.149414,
-            "network_sent_bytes": 156681298014,
-            "network_recv_bytes": 14211891622,
-            "timestamp": "2025-03-07T15:28:00"
-        },
-        {
-            "cpu_temperature": 45.2967,
-            "cpu_usage": 1.01333,
-            "ram_usage": 36,
-            "system_load": 0.202148,
-            "network_sent_bytes": 156681328283,
-            "network_recv_bytes": 14211922121,
-            "timestamp": "2025-03-07T15:29:00"
-        },
-        {
-            "cpu_temperature": 45.2717,
-            "cpu_usage": 1.08,
-            "ram_usage": 36.3,
-            "system_load": 0.0727539,
-            "network_sent_bytes": 156681354011,
-            "network_recv_bytes": 14211951613,
-            "timestamp": "2025-03-07T15:30:00"
-        },
-        {
-            "cpu_temperature": 45.2617,
-            "cpu_usage": 1.105,
-            "ram_usage": 36.3,
-            "system_load": 0.205566,
-            "network_sent_bytes": 156681385131,
-            "network_recv_bytes": 14211982201,
-            "timestamp": "2025-03-07T15:31:00"
-        },
-        {
-            "cpu_temperature": 45.2617,
-            "cpu_usage": 1.05,
-            "ram_usage": 35.9,
-            "system_load": 0.153809,
-            "network_sent_bytes": 156681409142,
-            "network_recv_bytes": 14212005820,
-            "timestamp": "2025-03-07T15:32:00"
-        },
-        {
-            "cpu_temperature": 45.2167,
-            "cpu_usage": 1.015,
-            "ram_usage": 36.3,
-            "system_load": 0.0546875,
-            "network_sent_bytes": 156681435849,
-            "network_recv_bytes": 14212032149,
-            "timestamp": "2025-03-07T15:33:00"
-        },
-        {
-            "cpu_temperature": 45.1833,
-            "cpu_usage": 1.085,
-            "ram_usage": 35.9,
-            "system_load": 0.248535,
-            "network_sent_bytes": 156681464533,
-            "network_recv_bytes": 14212061126,
-            "timestamp": "2025-03-07T15:34:00"
-        },
-        {
-            "cpu_temperature": 45.2617,
-            "cpu_usage": 1.04667,
-            "ram_usage": 36.3,
-            "system_load": 0.18457,
-            "network_sent_bytes": 156681494399,
-            "network_recv_bytes": 14212096001,
-            "timestamp": "2025-03-07T15:35:00"
-        },
-        {
-            "cpu_temperature": 45.1717,
-            "cpu_usage": 1.03833,
-            "ram_usage": 35.9,
-            "system_load": 0.146484,
-            "network_sent_bytes": 156681523225,
-            "network_recv_bytes": 14212124309,
-            "timestamp": "2025-03-07T15:36:00"
-        },
-        {
-            "cpu_temperature": 45.1283,
-            "cpu_usage": 1.02167,
-            "ram_usage": 36.2,
-            "system_load": 0.20166,
-            "network_sent_bytes": 156681556578,
-            "network_recv_bytes": 14212157106,
-            "timestamp": "2025-03-07T15:37:00"
-        },
-        {
-            "cpu_temperature": 45.2117,
-            "cpu_usage": 1.23833,
-            "ram_usage": 36.3,
-            "system_load": 0.0722656,
-            "network_sent_bytes": 156681586946,
-            "network_recv_bytes": 14212186712,
-            "timestamp": "2025-03-07T15:38:00"
-        },
-        {
-            "cpu_temperature": 45.18,
-            "cpu_usage": 1.21167,
-            "ram_usage": 36.3,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156681618281,
-            "network_recv_bytes": 14212214118,
-            "timestamp": "2025-03-07T15:39:00"
-        },
-        {
-            "cpu_temperature": 45.1567,
-            "cpu_usage": 1.26167,
-            "ram_usage": 36.3,
-            "system_load": 0.135254,
-            "network_sent_bytes": 156681687873,
-            "network_recv_bytes": 14212283621,
-            "timestamp": "2025-03-07T15:40:00"
-        },
-        {
-            "cpu_temperature": 45.11,
-            "cpu_usage": 1.23,
-            "ram_usage": 36.5,
-            "system_load": 0.046875,
-            "network_sent_bytes": 156681729733,
-            "network_recv_bytes": 14212332367,
-            "timestamp": "2025-03-07T15:41:00"
-        },
-        {
-            "cpu_temperature": 45.11,
-            "cpu_usage": 1.24,
-            "ram_usage": 36.5,
-            "system_load": 0.177734,
-            "network_sent_bytes": 156681757923,
-            "network_recv_bytes": 14212370416,
-            "timestamp": "2025-03-07T15:42:00"
-        },
-        {
-            "cpu_temperature": 46.765,
-            "cpu_usage": 6.02833,
-            "ram_usage": 36.6,
-            "system_load": 0.315918,
-            "network_sent_bytes": 156690089355,
-            "network_recv_bytes": 14227086063,
-            "timestamp": "2025-03-07T15:43:00"
-        },
-        {
-            "cpu_temperature": 46.11,
-            "cpu_usage": 1.19667,
-            "ram_usage": 36.6,
-            "system_load": 0.274414,
-            "network_sent_bytes": 156690138061,
-            "network_recv_bytes": 14227134893,
-            "timestamp": "2025-03-07T15:44:00"
-        },
-        {
-            "cpu_temperature": 45.695,
-            "cpu_usage": 1.20667,
-            "ram_usage": 36.4,
-            "system_load": 0.248047,
-            "network_sent_bytes": 156690171203,
-            "network_recv_bytes": 14227167560,
-            "timestamp": "2025-03-07T15:45:00"
-        },
-        {
-            "cpu_temperature": 45.6183,
-            "cpu_usage": 1.14667,
-            "ram_usage": 36.4,
-            "system_load": 0.0893555,
-            "network_sent_bytes": 156690201474,
-            "network_recv_bytes": 14227201623,
-            "timestamp": "2025-03-07T15:46:00"
-        },
-        {
-            "cpu_temperature": 45.3367,
-            "cpu_usage": 1.15167,
-            "ram_usage": 36.3,
-            "system_load": 0.162598,
-            "network_sent_bytes": 156690227347,
-            "network_recv_bytes": 14227227026,
-            "timestamp": "2025-03-07T15:47:00"
-        },
-        {
-            "cpu_temperature": 45.3333,
-            "cpu_usage": 1.16833,
-            "ram_usage": 36.3,
-            "system_load": 0.443359,
-            "network_sent_bytes": 156690263610,
-            "network_recv_bytes": 14227262980,
-            "timestamp": "2025-03-07T15:48:00"
-        },
-        {
-            "cpu_temperature": 45.4067,
-            "cpu_usage": 1.22,
-            "ram_usage": 36.3,
-            "system_load": 0.192871,
-            "network_sent_bytes": 156690294957,
-            "network_recv_bytes": 14227294390,
-            "timestamp": "2025-03-07T15:49:00"
-        },
-        {
-            "cpu_temperature": 45.3733,
-            "cpu_usage": 1.21,
-            "ram_usage": 36.2,
-            "system_load": 0.231445,
-            "network_sent_bytes": 156690326607,
-            "network_recv_bytes": 14227325290,
-            "timestamp": "2025-03-07T15:50:00"
-        },
-        {
-            "cpu_temperature": 45.2367,
-            "cpu_usage": 0.956667,
-            "ram_usage": 35.9,
-            "system_load": 0.115234,
-            "network_sent_bytes": 156690362459,
-            "network_recv_bytes": 14227361520,
-            "timestamp": "2025-03-07T15:51:00"
-        },
-        {
-            "cpu_temperature": 45.2983,
-            "cpu_usage": 1.03167,
-            "ram_usage": 36.2,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156690390615,
-            "network_recv_bytes": 14227389242,
-            "timestamp": "2025-03-07T15:52:00"
-        },
-        {
-            "cpu_temperature": 45.1683,
-            "cpu_usage": 0.938333,
-            "ram_usage": 35.8,
-            "system_load": 0.236816,
-            "network_sent_bytes": 156690415395,
-            "network_recv_bytes": 14227413378,
-            "timestamp": "2025-03-07T15:53:00"
-        },
-        {
-            "cpu_temperature": 45.3283,
-            "cpu_usage": 1.01667,
-            "ram_usage": 36.2,
-            "system_load": 0.0849609,
-            "network_sent_bytes": 156690444186,
-            "network_recv_bytes": 14227442114,
-            "timestamp": "2025-03-07T15:54:00"
-        },
-        {
-            "cpu_temperature": 45.28,
-            "cpu_usage": 0.996667,
-            "ram_usage": 35.9,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156690474527,
-            "network_recv_bytes": 14227472001,
-            "timestamp": "2025-03-07T15:55:00"
-        },
-        {
-            "cpu_temperature": 45.3183,
-            "cpu_usage": 0.973333,
-            "ram_usage": 36.3,
-            "system_load": 0.151367,
-            "network_sent_bytes": 156690503813,
-            "network_recv_bytes": 14227506493,
-            "timestamp": "2025-03-07T15:56:00"
-        },
-        {
-            "cpu_temperature": 45.29,
-            "cpu_usage": 1.10667,
-            "ram_usage": 36.2,
-            "system_load": 0.0541992,
-            "network_sent_bytes": 156690525967,
-            "network_recv_bytes": 14227528237,
-            "timestamp": "2025-03-07T15:57:00"
-        },
-        {
-            "cpu_temperature": 45.3233,
-            "cpu_usage": 1.11,
-            "ram_usage": 35.9,
-            "system_load": 0.180664,
-            "network_sent_bytes": 156690556033,
-            "network_recv_bytes": 14227558058,
-            "timestamp": "2025-03-07T15:58:00"
-        },
-        {
-            "cpu_temperature": 45.465,
-            "cpu_usage": 0.998333,
-            "ram_usage": 36.3,
-            "system_load": 0.175293,
-            "network_sent_bytes": 156690586720,
-            "network_recv_bytes": 14227588875,
-            "timestamp": "2025-03-07T15:59:00"
-        },
-        {
-            "cpu_temperature": 45.4517,
-            "cpu_usage": 1.01833,
-            "ram_usage": 35.9,
-            "system_load": 0.216797,
-            "network_sent_bytes": 156690610407,
-            "network_recv_bytes": 14227612394,
-            "timestamp": "2025-03-07T16:00:00"
-        },
-        {
-            "cpu_temperature": 45.4417,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.3,
-            "system_load": 0.227051,
-            "network_sent_bytes": 156690666610,
-            "network_recv_bytes": 14227672302,
-            "timestamp": "2025-03-07T16:01:00"
-        },
-        {
-            "cpu_temperature": 45.4083,
-            "cpu_usage": 1.03667,
-            "ram_usage": 35.9,
-            "system_load": 0.129883,
-            "network_sent_bytes": 156690693424,
-            "network_recv_bytes": 14227698784,
-            "timestamp": "2025-03-07T16:02:00"
-        },
-        {
-            "cpu_temperature": 45.465,
-            "cpu_usage": 0.933333,
-            "ram_usage": 36.3,
-            "system_load": 0.177734,
-            "network_sent_bytes": 156690729826,
-            "network_recv_bytes": 14227730370,
-            "timestamp": "2025-03-07T16:03:00"
-        },
-        {
-            "cpu_temperature": 45.6617,
-            "cpu_usage": 1.04667,
-            "ram_usage": 35.9,
-            "system_load": 0.196289,
-            "network_sent_bytes": 156690760353,
-            "network_recv_bytes": 14227760909,
-            "timestamp": "2025-03-07T16:04:00"
-        },
-        {
-            "cpu_temperature": 45.4983,
-            "cpu_usage": 1.12667,
-            "ram_usage": 36.3,
-            "system_load": 0.0703125,
-            "network_sent_bytes": 156690788701,
-            "network_recv_bytes": 14227797377,
-            "timestamp": "2025-03-07T16:05:00"
-        },
-        {
-            "cpu_temperature": 45.5733,
-            "cpu_usage": 1.01667,
-            "ram_usage": 35.9,
-            "system_load": 0.244141,
-            "network_sent_bytes": 156690816662,
-            "network_recv_bytes": 14227836670,
-            "timestamp": "2025-03-07T16:06:00"
-        },
-        {
-            "cpu_temperature": 45.4917,
-            "cpu_usage": 0.995,
-            "ram_usage": 36.3,
-            "system_load": 0.268066,
-            "network_sent_bytes": 156690840882,
-            "network_recv_bytes": 14227860502,
-            "timestamp": "2025-03-07T16:07:00"
-        },
-        {
-            "cpu_temperature": 45.4083,
-            "cpu_usage": 1.00333,
-            "ram_usage": 35.9,
-            "system_load": 0.176758,
-            "network_sent_bytes": 156690872629,
-            "network_recv_bytes": 14227891599,
-            "timestamp": "2025-03-07T16:08:00"
-        },
-        {
-            "cpu_temperature": 45.5167,
-            "cpu_usage": 1.13333,
-            "ram_usage": 36.3,
-            "system_load": 0.274902,
-            "network_sent_bytes": 156690899481,
-            "network_recv_bytes": 14227918627,
-            "timestamp": "2025-03-07T16:09:00"
-        },
-        {
-            "cpu_temperature": 45.55,
-            "cpu_usage": 1.03667,
-            "ram_usage": 35.9,
-            "system_load": 0.147461,
-            "network_sent_bytes": 156690930986,
-            "network_recv_bytes": 14227949553,
-            "timestamp": "2025-03-07T16:10:00"
-        },
-        {
-            "cpu_temperature": 45.5133,
-            "cpu_usage": 1.04,
-            "ram_usage": 36.3,
-            "system_load": 0.183594,
-            "network_sent_bytes": 156690959786,
-            "network_recv_bytes": 14227982267,
-            "timestamp": "2025-03-07T16:11:00"
-        },
-        {
-            "cpu_temperature": 45.4567,
-            "cpu_usage": 0.973333,
-            "ram_usage": 35.9,
-            "system_load": 0.145508,
-            "network_sent_bytes": 156690981845,
-            "network_recv_bytes": 14228004226,
-            "timestamp": "2025-03-07T16:12:00"
-        },
-        {
-            "cpu_temperature": 45.5717,
-            "cpu_usage": 1.01833,
-            "ram_usage": 36.3,
-            "system_load": 0.121582,
-            "network_sent_bytes": 156691016190,
-            "network_recv_bytes": 14228037799,
-            "timestamp": "2025-03-07T16:13:00"
-        },
-        {
-            "cpu_temperature": 45.5517,
-            "cpu_usage": 1.10667,
-            "ram_usage": 35.9,
-            "system_load": 0.286133,
-            "network_sent_bytes": 156691041878,
-            "network_recv_bytes": 14228063633,
-            "timestamp": "2025-03-07T16:14:00"
-        },
-        {
-            "cpu_temperature": 45.535,
-            "cpu_usage": 0.986667,
-            "ram_usage": 36.3,
-            "system_load": 0.203613,
-            "network_sent_bytes": 156691079020,
-            "network_recv_bytes": 14228095533,
-            "timestamp": "2025-03-07T16:15:00"
-        },
-        {
-            "cpu_temperature": 45.4833,
-            "cpu_usage": 1.16167,
-            "ram_usage": 36.3,
-            "system_load": 0.15332,
-            "network_sent_bytes": 156691153273,
-            "network_recv_bytes": 14228173813,
-            "timestamp": "2025-03-07T16:16:00"
-        },
-        {
-            "cpu_temperature": 45.2933,
-            "cpu_usage": 1.155,
-            "ram_usage": 36.4,
-            "system_load": 0.203613,
-            "network_sent_bytes": 156691178263,
-            "network_recv_bytes": 14228198387,
-            "timestamp": "2025-03-07T16:17:00"
-        },
-        {
-            "cpu_temperature": 45.3033,
-            "cpu_usage": 1.17,
-            "ram_usage": 36.5,
-            "system_load": 0.0727539,
-            "network_sent_bytes": 156691211995,
-            "network_recv_bytes": 14228231151,
-            "timestamp": "2025-03-07T16:18:00"
-        },
-        {
-            "cpu_temperature": 45.185,
-            "cpu_usage": 1.15333,
-            "ram_usage": 36.4,
-            "system_load": 0.372559,
-            "network_sent_bytes": 156691239541,
-            "network_recv_bytes": 14228258947,
-            "timestamp": "2025-03-07T16:19:00"
-        },
-        {
-            "cpu_temperature": 45.315,
-            "cpu_usage": 1.21667,
-            "ram_usage": 36.2,
-            "system_load": 0.214844,
-            "network_sent_bytes": 156691302807,
-            "network_recv_bytes": 14228321327,
-            "timestamp": "2025-03-07T16:20:00"
-        },
-        {
-            "cpu_temperature": 45.3233,
-            "cpu_usage": 1.24833,
-            "ram_usage": 36.3,
-            "system_load": 0.0771484,
-            "network_sent_bytes": 156691354242,
-            "network_recv_bytes": 14228377583,
-            "timestamp": "2025-03-07T16:21:00"
-        },
-        {
-            "cpu_temperature": 45.3117,
-            "cpu_usage": 1.275,
-            "ram_usage": 36.3,
-            "system_load": 0.375977,
-            "network_sent_bytes": 156691409530,
-            "network_recv_bytes": 14228432741,
-            "timestamp": "2025-03-07T16:22:00"
-        },
-        {
-            "cpu_temperature": 45.3883,
-            "cpu_usage": 1.22667,
-            "ram_usage": 36.3,
-            "system_load": 0.168457,
-            "network_sent_bytes": 156691460085,
-            "network_recv_bytes": 14228482855,
-            "timestamp": "2025-03-07T16:23:00"
-        },
-        {
-            "cpu_temperature": 45.315,
-            "cpu_usage": 1.07833,
-            "ram_usage": 35.9,
-            "system_load": 0.140625,
-            "network_sent_bytes": 156691506755,
-            "network_recv_bytes": 14228530076,
-            "timestamp": "2025-03-07T16:24:00"
-        },
-        {
-            "cpu_temperature": 45.3533,
-            "cpu_usage": 1.03,
-            "ram_usage": 36.3,
-            "system_load": 0.24707,
-            "network_sent_bytes": 156691537115,
-            "network_recv_bytes": 14228565499,
-            "timestamp": "2025-03-07T16:25:00"
-        },
-        {
-            "cpu_temperature": 45.315,
-            "cpu_usage": 1.045,
-            "ram_usage": 35.9,
-            "system_load": 0.0888672,
-            "network_sent_bytes": 156691563282,
-            "network_recv_bytes": 14228591016,
-            "timestamp": "2025-03-07T16:26:00"
-        },
-        {
-            "cpu_temperature": 45.245,
-            "cpu_usage": 1.095,
-            "ram_usage": 36.3,
-            "system_load": 0.162598,
-            "network_sent_bytes": 156691591297,
-            "network_recv_bytes": 14228614571,
-            "timestamp": "2025-03-07T16:27:00"
-        },
-        {
-            "cpu_temperature": 45.345,
-            "cpu_usage": 0.935,
-            "ram_usage": 35.9,
-            "system_load": 0.138184,
-            "network_sent_bytes": 156691618728,
-            "network_recv_bytes": 14228641358,
-            "timestamp": "2025-03-07T16:28:00"
-        },
-        {
-            "cpu_temperature": 45.185,
-            "cpu_usage": 1.08,
-            "ram_usage": 36.3,
-            "system_load": 0.118164,
-            "network_sent_bytes": 156691649967,
-            "network_recv_bytes": 14228672667,
-            "timestamp": "2025-03-07T16:29:00"
-        },
-        {
-            "cpu_temperature": 45.355,
-            "cpu_usage": 0.978333,
-            "ram_usage": 35.9,
-            "system_load": 0.20459,
-            "network_sent_bytes": 156691672888,
-            "network_recv_bytes": 14228694577,
-            "timestamp": "2025-03-07T16:30:00"
-        },
-        {
-            "cpu_temperature": 45.2917,
-            "cpu_usage": 0.98,
-            "ram_usage": 36.2,
-            "system_load": 0.143555,
-            "network_sent_bytes": 156691705883,
-            "network_recv_bytes": 14228731714,
-            "timestamp": "2025-03-07T16:31:00"
-        },
-        {
-            "cpu_temperature": 45.235,
-            "cpu_usage": 1.19,
-            "ram_usage": 36.3,
-            "system_load": 0.131348,
-            "network_sent_bytes": 156691730092,
-            "network_recv_bytes": 14228755625,
-            "timestamp": "2025-03-07T16:32:00"
-        },
-        {
-            "cpu_temperature": 45.26,
-            "cpu_usage": 1.12833,
-            "ram_usage": 36.3,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156691756733,
-            "network_recv_bytes": 14228781890,
-            "timestamp": "2025-03-07T16:33:00"
-        },
-        {
-            "cpu_temperature": 45.22,
-            "cpu_usage": 1.20333,
-            "ram_usage": 36.2,
-            "system_load": 0.0703125,
-            "network_sent_bytes": 156691786019,
-            "network_recv_bytes": 14228811539,
-            "timestamp": "2025-03-07T16:34:00"
-        },
-        {
-            "cpu_temperature": 45.29,
-            "cpu_usage": 1.195,
-            "ram_usage": 36.3,
-            "system_load": 0.15625,
-            "network_sent_bytes": 156691812933,
-            "network_recv_bytes": 14228837176,
-            "timestamp": "2025-03-07T16:35:00"
-        },
-        {
-            "cpu_temperature": 45.3867,
-            "cpu_usage": 1.81,
-            "ram_usage": 36.3,
-            "system_load": 0.203613,
-            "network_sent_bytes": 156691843252,
-            "network_recv_bytes": 14228872396,
-            "timestamp": "2025-03-07T16:36:00"
-        },
-        {
-            "cpu_temperature": 45.5883,
-            "cpu_usage": 1.10667,
-            "ram_usage": 36.2,
-            "system_load": 0.0727539,
-            "network_sent_bytes": 156691868675,
-            "network_recv_bytes": 14228897737,
-            "timestamp": "2025-03-07T16:37:00"
-        },
-        {
-            "cpu_temperature": 45.3717,
-            "cpu_usage": 1.09167,
-            "ram_usage": 36.3,
-            "system_load": 0.229004,
-            "network_sent_bytes": 156691897024,
-            "network_recv_bytes": 14228925740,
-            "timestamp": "2025-03-07T16:38:00"
-        },
-        {
-            "cpu_temperature": 45.3633,
-            "cpu_usage": 1.255,
-            "ram_usage": 36.2,
-            "system_load": 0.11377,
-            "network_sent_bytes": 156691930224,
-            "network_recv_bytes": 14228954852,
-            "timestamp": "2025-03-07T16:39:00"
-        },
-        {
-            "cpu_temperature": 45.4333,
-            "cpu_usage": 1.13833,
-            "ram_usage": 36.4,
-            "system_load": 0.199707,
-            "network_sent_bytes": 156691975809,
-            "network_recv_bytes": 14229000117,
-            "timestamp": "2025-03-07T16:40:00"
-        },
-        {
-            "cpu_temperature": 45.45,
-            "cpu_usage": 1.12333,
-            "ram_usage": 36.3,
-            "system_load": 0.301758,
-            "network_sent_bytes": 156692002204,
-            "network_recv_bytes": 14229031312,
-            "timestamp": "2025-03-07T16:41:00"
-        },
-        {
-            "cpu_temperature": 45.35,
-            "cpu_usage": 1.13333,
-            "ram_usage": 36.3,
-            "system_load": 0.188965,
-            "network_sent_bytes": 156692024614,
-            "network_recv_bytes": 14229053072,
-            "timestamp": "2025-03-07T16:42:00"
-        },
-        {
-            "cpu_temperature": 45.245,
-            "cpu_usage": 1.01333,
-            "ram_usage": 35.8,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156692049896,
-            "network_recv_bytes": 14229077505,
-            "timestamp": "2025-03-07T16:43:00"
-        },
-        {
-            "cpu_temperature": 45.2767,
-            "cpu_usage": 1.08167,
-            "ram_usage": 36.2,
-            "system_load": 0.276367,
-            "network_sent_bytes": 156692077431,
-            "network_recv_bytes": 14229105238,
-            "timestamp": "2025-03-07T16:44:00"
-        },
-        {
-            "cpu_temperature": 45.2783,
-            "cpu_usage": 0.953333,
-            "ram_usage": 35.8,
-            "system_load": 0.144043,
-            "network_sent_bytes": 156692101515,
-            "network_recv_bytes": 14229128810,
-            "timestamp": "2025-03-07T16:45:00"
-        },
-        {
-            "cpu_temperature": 45.27,
-            "cpu_usage": 1.085,
-            "ram_usage": 36.3,
-            "system_load": 0.213379,
-            "network_sent_bytes": 156692129973,
-            "network_recv_bytes": 14229161886,
-            "timestamp": "2025-03-07T16:46:00"
-        },
-        {
-            "cpu_temperature": 45.2817,
-            "cpu_usage": 0.985,
-            "ram_usage": 35.9,
-            "system_load": 0.223633,
-            "network_sent_bytes": 156692153463,
-            "network_recv_bytes": 14229184772,
-            "timestamp": "2025-03-07T16:47:00"
-        },
-        {
-            "cpu_temperature": 45.2917,
-            "cpu_usage": 1.00667,
-            "ram_usage": 36.3,
-            "system_load": 0.160645,
-            "network_sent_bytes": 156692189317,
-            "network_recv_bytes": 14229220133,
-            "timestamp": "2025-03-07T16:48:00"
-        },
-        {
-            "cpu_temperature": 45.3683,
-            "cpu_usage": 1.175,
-            "ram_usage": 35.9,
-            "system_load": 0.277344,
-            "network_sent_bytes": 156692221159,
-            "network_recv_bytes": 14229251939,
-            "timestamp": "2025-03-07T16:49:00"
-        },
-        {
-            "cpu_temperature": 45.21,
-            "cpu_usage": 1.03667,
-            "ram_usage": 36.2,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156692257459,
-            "network_recv_bytes": 14229292933,
-            "timestamp": "2025-03-07T16:50:00"
-        },
-        {
-            "cpu_temperature": 45.14,
-            "cpu_usage": 1.015,
-            "ram_usage": 35.9,
-            "system_load": 0.189941,
-            "network_sent_bytes": 156692286840,
-            "network_recv_bytes": 14229321129,
-            "timestamp": "2025-03-07T16:51:00"
-        },
-        {
-            "cpu_temperature": 45.2533,
-            "cpu_usage": 0.975,
-            "ram_usage": 36.2,
-            "system_load": 0.201172,
-            "network_sent_bytes": 156692320189,
-            "network_recv_bytes": 14229350022,
-            "timestamp": "2025-03-07T16:52:00"
-        },
-        {
-            "cpu_temperature": 45.2717,
-            "cpu_usage": 1.01,
-            "ram_usage": 35.9,
-            "system_load": 0.452637,
-            "network_sent_bytes": 156692350738,
-            "network_recv_bytes": 14229380137,
-            "timestamp": "2025-03-07T16:53:00"
-        },
-        {
-            "cpu_temperature": 45.1033,
-            "cpu_usage": 1.015,
-            "ram_usage": 36.3,
-            "system_load": 0.41748,
-            "network_sent_bytes": 156692384518,
-            "network_recv_bytes": 14229414099,
-            "timestamp": "2025-03-07T16:54:00"
-        },
-        {
-            "cpu_temperature": 45.1567,
-            "cpu_usage": 1.01833,
-            "ram_usage": 35.9,
-            "system_load": 0.200195,
-            "network_sent_bytes": 156692410503,
-            "network_recv_bytes": 14229439039,
-            "timestamp": "2025-03-07T16:55:00"
-        },
-        {
-            "cpu_temperature": 45.0617,
-            "cpu_usage": 1.06167,
-            "ram_usage": 36.3,
-            "system_load": 0.205078,
-            "network_sent_bytes": 156692438808,
-            "network_recv_bytes": 14229471946,
-            "timestamp": "2025-03-07T16:56:00"
-        },
-        {
-            "cpu_temperature": 45.0517,
-            "cpu_usage": 1.12,
-            "ram_usage": 36.2,
-            "system_load": 0.303223,
-            "network_sent_bytes": 156692460822,
-            "network_recv_bytes": 14229493556,
-            "timestamp": "2025-03-07T16:57:00"
-        },
-        {
-            "cpu_temperature": 45.1217,
-            "cpu_usage": 1.17333,
-            "ram_usage": 36.2,
-            "system_load": 0.147461,
-            "network_sent_bytes": 156692492423,
-            "network_recv_bytes": 14229524784,
-            "timestamp": "2025-03-07T16:58:00"
-        },
-        {
-            "cpu_temperature": 45.0533,
-            "cpu_usage": 1.18333,
-            "ram_usage": 36.2,
-            "system_load": 0.199707,
-            "network_sent_bytes": 156692521157,
-            "network_recv_bytes": 14229553512,
-            "timestamp": "2025-03-07T16:59:00"
-        },
-        {
-            "cpu_temperature": 45.0167,
-            "cpu_usage": 1.45167,
-            "ram_usage": 36.3,
-            "system_load": 0.209473,
-            "network_sent_bytes": 156692568644,
-            "network_recv_bytes": 14229599526,
-            "timestamp": "2025-03-07T17:00:00"
-        },
-        {
-            "cpu_temperature": 45.0417,
-            "cpu_usage": 1.26833,
-            "ram_usage": 36.3,
-            "system_load": 0.0820312,
-            "network_sent_bytes": 156692601923,
-            "network_recv_bytes": 14229635398,
-            "timestamp": "2025-03-07T17:01:00"
-        },
-        {
-            "cpu_temperature": 46.2167,
-            "cpu_usage": 8.26167,
-            "ram_usage": 36.3,
-            "system_load": 0.64502,
-            "network_sent_bytes": 156703382292,
-            "network_recv_bytes": 14248540419,
-            "timestamp": "2025-03-07T17:02:00"
-        },
-        {
-            "cpu_temperature": 46.9567,
-            "cpu_usage": 8.1,
-            "ram_usage": 36.3,
-            "system_load": 0.606445,
-            "network_sent_bytes": 156706801363,
-            "network_recv_bytes": 14254143691,
-            "timestamp": "2025-03-07T17:03:00"
-        },
-        {
-            "cpu_temperature": 46.03,
-            "cpu_usage": 1.20167,
-            "ram_usage": 36.3,
-            "system_load": 0.252441,
-            "network_sent_bytes": 156706924075,
-            "network_recv_bytes": 14254260807,
-            "timestamp": "2025-03-07T17:04:00"
-        },
-        {
-            "cpu_temperature": 45.505,
-            "cpu_usage": 1.10167,
-            "ram_usage": 36.6,
-            "system_load": 0.285645,
-            "network_sent_bytes": 156707136160,
-            "network_recv_bytes": 14254474735,
-            "timestamp": "2025-03-07T17:05:00"
-        },
-        {
-            "cpu_temperature": 45.3817,
-            "cpu_usage": 1.07333,
-            "ram_usage": 36.9,
-            "system_load": 0.103027,
-            "network_sent_bytes": 156707184540,
-            "network_recv_bytes": 14254535418,
-            "timestamp": "2025-03-07T17:06:00"
-        },
-        {
-            "cpu_temperature": 45.3217,
-            "cpu_usage": 1.04667,
-            "ram_usage": 36.3,
-            "system_load": 0.179199,
-            "network_sent_bytes": 156707223128,
-            "network_recv_bytes": 14254572979,
-            "timestamp": "2025-03-07T17:07:00"
-        },
-        {
-            "cpu_temperature": 45.2917,
-            "cpu_usage": 1.03,
-            "ram_usage": 36.8,
-            "system_load": 0.150879,
-            "network_sent_bytes": 156707261399,
-            "network_recv_bytes": 14254611174,
-            "timestamp": "2025-03-07T17:08:00"
-        },
-        {
-            "cpu_temperature": 45.31,
-            "cpu_usage": 1.04833,
-            "ram_usage": 36,
-            "system_load": 0.0859375,
-            "network_sent_bytes": 156707299419,
-            "network_recv_bytes": 14254648562,
-            "timestamp": "2025-03-07T17:09:00"
-        },
-        {
-            "cpu_temperature": 45.39,
-            "cpu_usage": 1.07333,
-            "ram_usage": 36.4,
-            "system_load": 0.244141,
-            "network_sent_bytes": 156707341220,
-            "network_recv_bytes": 14254700967,
-            "timestamp": "2025-03-07T17:10:00"
-        },
-        {
-            "cpu_temperature": 45.1,
-            "cpu_usage": 1.305,
-            "ram_usage": 36.4,
-            "system_load": 0.186523,
-            "network_sent_bytes": 156707582567,
-            "network_recv_bytes": 14254947375,
-            "timestamp": "2025-03-07T17:11:00"
-        },
-        {
-            "cpu_temperature": 45.29,
-            "cpu_usage": 1.195,
-            "ram_usage": 36.6,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156707650126,
-            "network_recv_bytes": 14255015271,
-            "timestamp": "2025-03-07T17:12:00"
-        },
-        {
-            "cpu_temperature": 45.1633,
-            "cpu_usage": 1.255,
-            "ram_usage": 36.2,
-            "system_load": 0.217285,
-            "network_sent_bytes": 156707695145,
-            "network_recv_bytes": 14255059694,
-            "timestamp": "2025-03-07T17:13:00"
-        },
-        {
-            "cpu_temperature": 45.1883,
-            "cpu_usage": 1.22833,
-            "ram_usage": 36.4,
-            "system_load": 0.172363,
-            "network_sent_bytes": 156707804155,
-            "network_recv_bytes": 14255179028,
-            "timestamp": "2025-03-07T17:14:00"
-        },
-        {
-            "cpu_temperature": 45.265,
-            "cpu_usage": 1.28,
-            "ram_usage": 36.4,
-            "system_load": 0.20459,
-            "network_sent_bytes": 156707914764,
-            "network_recv_bytes": 14255293838,
-            "timestamp": "2025-03-07T17:15:00"
-        },
-        {
-            "cpu_temperature": 45.1933,
-            "cpu_usage": 1.09333,
-            "ram_usage": 36.5,
-            "system_load": 0.159668,
-            "network_sent_bytes": 156707958990,
-            "network_recv_bytes": 14255341057,
-            "timestamp": "2025-03-07T17:16:00"
-        },
-        {
-            "cpu_temperature": 45.0333,
-            "cpu_usage": 1.06,
-            "ram_usage": 36.4,
-            "system_load": 0.0561523,
-            "network_sent_bytes": 156707989134,
-            "network_recv_bytes": 14255374737,
-            "timestamp": "2025-03-07T17:17:00"
-        },
-        {
-            "cpu_temperature": 45.2383,
-            "cpu_usage": 1.12667,
-            "ram_usage": 36.4,
-            "system_load": 0.195312,
-            "network_sent_bytes": 156708026347,
-            "network_recv_bytes": 14255413670,
-            "timestamp": "2025-03-07T17:18:00"
-        },
-        {
-            "cpu_temperature": 45.1183,
-            "cpu_usage": 1.20667,
-            "ram_usage": 36.4,
-            "system_load": 0.104492,
-            "network_sent_bytes": 156708071223,
-            "network_recv_bytes": 14255462507,
-            "timestamp": "2025-03-07T17:19:00"
-        },
-        {
-            "cpu_temperature": 45.145,
-            "cpu_usage": 1.24333,
-            "ram_usage": 36.5,
-            "system_load": 0.0356445,
-            "network_sent_bytes": 156708169001,
-            "network_recv_bytes": 14255565123,
-            "timestamp": "2025-03-07T17:20:00"
-        },
-        {
-            "cpu_temperature": 45.525,
-            "cpu_usage": 1.29,
-            "ram_usage": 36.8,
-            "system_load": 0.273438,
-            "network_sent_bytes": 156708399811,
-            "network_recv_bytes": 14255796386,
-            "timestamp": "2025-03-07T17:21:00"
-        },
-        {
-            "cpu_temperature": 45.4867,
-            "cpu_usage": 1.21167,
-            "ram_usage": 36.7,
-            "system_load": 0.0991211,
-            "network_sent_bytes": 156708553192,
-            "network_recv_bytes": 14255960070,
-            "timestamp": "2025-03-07T17:22:00"
-        },
-        {
-            "cpu_temperature": 45.4567,
-            "cpu_usage": 1.14667,
-            "ram_usage": 36.5,
-            "system_load": 0.178223,
-            "network_sent_bytes": 156708632767,
-            "network_recv_bytes": 14256039308,
-            "timestamp": "2025-03-07T17:23:00"
-        },
-        {
-            "cpu_temperature": 45.425,
-            "cpu_usage": 1.26833,
-            "ram_usage": 36.5,
-            "system_load": 0.1875,
-            "network_sent_bytes": 156708737425,
-            "network_recv_bytes": 14256152417,
-            "timestamp": "2025-03-07T17:24:00"
-        },
-        {
-            "cpu_temperature": 45.3717,
-            "cpu_usage": 1.15333,
-            "ram_usage": 36.4,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156708797735,
-            "network_recv_bytes": 14256211882,
-            "timestamp": "2025-03-07T17:25:00"
-        },
-        {
-            "cpu_temperature": 45.6183,
-            "cpu_usage": 1.15333,
-            "ram_usage": 36,
-            "system_load": 0.199219,
-            "network_sent_bytes": 156708912037,
-            "network_recv_bytes": 14256349256,
-            "timestamp": "2025-03-07T17:26:00"
-        },
-        {
-            "cpu_temperature": 45.4583,
-            "cpu_usage": 0.981667,
-            "ram_usage": 36.3,
-            "system_load": 0.106445,
-            "network_sent_bytes": 156708990324,
-            "network_recv_bytes": 14256431771,
-            "timestamp": "2025-03-07T17:27:00"
-        },
-        {
-            "cpu_temperature": 45.5883,
-            "cpu_usage": 1.08,
-            "ram_usage": 36.1,
-            "system_load": 0.0947266,
-            "network_sent_bytes": 156709062457,
-            "network_recv_bytes": 14256501664,
-            "timestamp": "2025-03-07T17:28:00"
-        },
-        {
-            "cpu_temperature": 45.4617,
-            "cpu_usage": 1.39833,
-            "ram_usage": 36.8,
-            "system_load": 0.262695,
-            "network_sent_bytes": 156709353213,
-            "network_recv_bytes": 14256790355,
-            "timestamp": "2025-03-07T17:29:00"
-        },
-        {
-            "cpu_temperature": 45.5733,
-            "cpu_usage": 1.13333,
-            "ram_usage": 36.5,
-            "system_load": 0.162598,
-            "network_sent_bytes": 156709449828,
-            "network_recv_bytes": 14256899521,
-            "timestamp": "2025-03-07T17:30:00"
-        },
-        {
-            "cpu_temperature": 45.4683,
-            "cpu_usage": 1.14167,
-            "ram_usage": 36.4,
-            "system_load": 0.275391,
-            "network_sent_bytes": 156709525903,
-            "network_recv_bytes": 14256979673,
-            "timestamp": "2025-03-07T17:31:00"
-        },
-        {
-            "cpu_temperature": 45.3833,
-            "cpu_usage": 1.21167,
-            "ram_usage": 36.4,
-            "system_load": 0.205566,
-            "network_sent_bytes": 156709557853,
-            "network_recv_bytes": 14257010853,
-            "timestamp": "2025-03-07T17:32:00"
-        },
-        {
-            "cpu_temperature": 45.39,
-            "cpu_usage": 1.20333,
-            "ram_usage": 36.4,
-            "system_load": 0.141602,
-            "network_sent_bytes": 156709587367,
-            "network_recv_bytes": 14257039799,
-            "timestamp": "2025-03-07T17:33:00"
-        },
-        {
-            "cpu_temperature": 45.5083,
-            "cpu_usage": 1.24833,
-            "ram_usage": 36.4,
-            "system_load": 0.226562,
-            "network_sent_bytes": 156709690258,
-            "network_recv_bytes": 14257148731,
-            "timestamp": "2025-03-07T17:34:00"
-        },
-        {
-            "cpu_temperature": 45.425,
-            "cpu_usage": 1.3,
-            "ram_usage": 36.7,
-            "system_load": 0.157227,
-            "network_sent_bytes": 156709934471,
-            "network_recv_bytes": 14257387250,
-            "timestamp": "2025-03-07T17:35:00"
-        },
-        {
-            "cpu_temperature": 45.4283,
-            "cpu_usage": 1.25167,
-            "ram_usage": 36.7,
-            "system_load": 0.0561523,
-            "network_sent_bytes": 156709974109,
-            "network_recv_bytes": 14257433263,
-            "timestamp": "2025-03-07T17:36:00"
-        },
-        {
-            "cpu_temperature": 45.3583,
-            "cpu_usage": 1.18167,
-            "ram_usage": 36.4,
-            "system_load": 0.374023,
-            "network_sent_bytes": 156710010798,
-            "network_recv_bytes": 14257471810,
-            "timestamp": "2025-03-07T17:37:00"
-        },
-        {
-            "cpu_temperature": 45.4217,
-            "cpu_usage": 1.18667,
-            "ram_usage": 36.4,
-            "system_load": 0.188965,
-            "network_sent_bytes": 156710046509,
-            "network_recv_bytes": 14257510701,
-            "timestamp": "2025-03-07T17:38:00"
-        },
-        {
-            "cpu_temperature": 45.29,
-            "cpu_usage": 1.35333,
-            "ram_usage": 36.4,
-            "system_load": 0.255371,
-            "network_sent_bytes": 156710185794,
-            "network_recv_bytes": 14257657479,
-            "timestamp": "2025-03-07T17:39:00"
-        },
-        {
-            "cpu_temperature": 45.2167,
-            "cpu_usage": 1.26833,
-            "ram_usage": 36.5,
-            "system_load": 0.224121,
-            "network_sent_bytes": 156710235646,
-            "network_recv_bytes": 14257703661,
-            "timestamp": "2025-03-07T17:40:00"
-        },
-        {
-            "cpu_temperature": 45.2383,
-            "cpu_usage": 1.17167,
-            "ram_usage": 36.5,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156710297116,
-            "network_recv_bytes": 14257771327,
-            "timestamp": "2025-03-07T17:41:00"
-        },
-        {
-            "cpu_temperature": 45.1767,
-            "cpu_usage": 1.27,
-            "ram_usage": 36.5,
-            "system_load": 0.204102,
-            "network_sent_bytes": 156710441604,
-            "network_recv_bytes": 14257925510,
-            "timestamp": "2025-03-07T17:42:00"
-        },
-        {
-            "cpu_temperature": 45.2167,
-            "cpu_usage": 1.18,
-            "ram_usage": 36.4,
-            "system_load": 0.143066,
-            "network_sent_bytes": 156710484774,
-            "network_recv_bytes": 14257970507,
-            "timestamp": "2025-03-07T17:43:00"
-        },
-        {
-            "cpu_temperature": 45.2317,
-            "cpu_usage": 1.34667,
-            "ram_usage": 36.3,
-            "system_load": 0.0507812,
-            "network_sent_bytes": 156710749847,
-            "network_recv_bytes": 14258250094,
-            "timestamp": "2025-03-07T17:44:00"
-        },
-        {
-            "cpu_temperature": 45.285,
-            "cpu_usage": 1.23833,
-            "ram_usage": 36.3,
-            "system_load": 0.249512,
-            "network_sent_bytes": 156710854671,
-            "network_recv_bytes": 14258357722,
-            "timestamp": "2025-03-07T17:45:00"
-        },
-        {
-            "cpu_temperature": 46.1867,
-            "cpu_usage": 6.255,
-            "ram_usage": 36.3,
-            "system_load": 0.0898438,
-            "network_sent_bytes": 156714721090,
-            "network_recv_bytes": 14264677088,
-            "timestamp": "2025-03-07T17:46:00"
-        },
-        {
-            "cpu_temperature": 48.1217,
-            "cpu_usage": 15.9417,
-            "ram_usage": 36.3,
-            "system_load": 0.734863,
-            "network_sent_bytes": 156725598209,
-            "network_recv_bytes": 14283510444,
-            "timestamp": "2025-03-07T17:47:00"
-        },
-        {
-            "cpu_temperature": 46.6417,
-            "cpu_usage": 1.2,
-            "ram_usage": 36.3,
-            "system_load": 0.41748,
-            "network_sent_bytes": 156725666466,
-            "network_recv_bytes": 14283578629,
-            "timestamp": "2025-03-07T17:48:00"
-        },
-        {
-            "cpu_temperature": 46.26,
-            "cpu_usage": 1.46333,
-            "ram_usage": 36.3,
-            "system_load": 0.151367,
-            "network_sent_bytes": 156726763796,
-            "network_recv_bytes": 14284004465,
-            "timestamp": "2025-03-07T17:49:00"
-        },
-        {
-            "cpu_temperature": 46.0183,
-            "cpu_usage": 1.19333,
-            "ram_usage": 36.4,
-            "system_load": 0.22998,
-            "network_sent_bytes": 156726826945,
-            "network_recv_bytes": 14284073186,
-            "timestamp": "2025-03-07T17:50:00"
-        },
-        {
-            "cpu_temperature": 45.945,
-            "cpu_usage": 1.32167,
-            "ram_usage": 36.4,
-            "system_load": 0.117676,
-            "network_sent_bytes": 156727833347,
-            "network_recv_bytes": 14284651956,
-            "timestamp": "2025-03-07T17:51:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156727833347,
-            "network_recv_bytes": 14284651956,
-            "timestamp": "2025-03-07T17:52:00"
-        },
-        {
-            "cpu_temperature": 48.5183,
-            "cpu_usage": 10.9633,
-            "ram_usage": 34.3,
-            "system_load": 0.49707,
-            "network_sent_bytes": 156610594879,
-            "network_recv_bytes": 14079982534,
-            "timestamp": "2025-03-07T17:53:00"
-        },
-        {
-            "cpu_temperature": 47.415,
-            "cpu_usage": 5.465,
-            "ram_usage": 34.8,
-            "system_load": 0.446777,
-            "network_sent_bytes": 156613850737,
-            "network_recv_bytes": 14085553549,
-            "timestamp": "2025-03-07T17:54:00"
-        },
-        {
-            "cpu_temperature": 46.4333,
-            "cpu_usage": 1.24833,
-            "ram_usage": 34.7,
-            "system_load": 0.293945,
-            "network_sent_bytes": 156614182848,
-            "network_recv_bytes": 14086085065,
-            "timestamp": "2025-03-07T17:55:00"
-        },
-        {
-            "cpu_temperature": 46.08,
-            "cpu_usage": 1.27333,
-            "ram_usage": 34.4,
-            "system_load": 0.220703,
-            "network_sent_bytes": 156614511986,
-            "network_recv_bytes": 14086619252,
-            "timestamp": "2025-03-07T17:56:00"
-        },
-        {
-            "cpu_temperature": 45.6783,
-            "cpu_usage": 1.13333,
-            "ram_usage": 34.8,
-            "system_load": 0.0791016,
-            "network_sent_bytes": 156614846290,
-            "network_recv_bytes": 14087153143,
-            "timestamp": "2025-03-07T17:57:00"
-        },
-        {
-            "cpu_temperature": 45.695,
-            "cpu_usage": 1.19333,
-            "ram_usage": 34.3,
-            "system_load": 0.270996,
-            "network_sent_bytes": 156615181249,
-            "network_recv_bytes": 14087685889,
-            "timestamp": "2025-03-07T17:58:00"
-        },
-        {
-            "cpu_temperature": 45.7083,
-            "cpu_usage": 1.22,
-            "ram_usage": 34.6,
-            "system_load": 0.129883,
-            "network_sent_bytes": 156615515584,
-            "network_recv_bytes": 14088218150,
-            "timestamp": "2025-03-07T17:59:00"
-        },
-        {
-            "cpu_temperature": 45.6183,
-            "cpu_usage": 1.27667,
-            "ram_usage": 34.3,
-            "system_load": 0.167969,
-            "network_sent_bytes": 156615837406,
-            "network_recv_bytes": 14088727817,
-            "timestamp": "2025-03-07T18:00:00"
-        },
-        {
-            "cpu_temperature": 45.6267,
-            "cpu_usage": 1.34,
-            "ram_usage": 34.7,
-            "system_load": 0.375,
-            "network_sent_bytes": 156616195648,
-            "network_recv_bytes": 14089290283,
-            "timestamp": "2025-03-07T18:01:00"
-        },
-        {
-            "cpu_temperature": 45.7233,
-            "cpu_usage": 1.15833,
-            "ram_usage": 34.2,
-            "system_load": 0.135742,
-            "network_sent_bytes": 156616526566,
-            "network_recv_bytes": 14089818697,
-            "timestamp": "2025-03-07T18:02:00"
-        },
-        {
-            "cpu_temperature": 45.6483,
-            "cpu_usage": 1.08,
-            "ram_usage": 34.7,
-            "system_load": 0.179199,
-            "network_sent_bytes": 156616854429,
-            "network_recv_bytes": 14090345023,
-            "timestamp": "2025-03-07T18:03:00"
-        },
-        {
-            "cpu_temperature": 45.5783,
-            "cpu_usage": 1.25167,
-            "ram_usage": 34.3,
-            "system_load": 0.143555,
-            "network_sent_bytes": 156617197632,
-            "network_recv_bytes": 14090882396,
-            "timestamp": "2025-03-07T18:04:00"
-        },
-        {
-            "cpu_temperature": 45.41,
-            "cpu_usage": 1.14,
-            "ram_usage": 34.7,
-            "system_load": 0.0893555,
-            "network_sent_bytes": 156617531138,
-            "network_recv_bytes": 14091419863,
-            "timestamp": "2025-03-07T18:05:00"
-        },
-        {
-            "cpu_temperature": 45.245,
-            "cpu_usage": 1.19167,
-            "ram_usage": 34.3,
-            "system_load": 0.193848,
-            "network_sent_bytes": 156617862543,
-            "network_recv_bytes": 14091949422,
-            "timestamp": "2025-03-07T18:06:00"
-        },
-        {
-            "cpu_temperature": 45.3983,
-            "cpu_usage": 1.195,
-            "ram_usage": 34.7,
-            "system_load": 0.237793,
-            "network_sent_bytes": 156618194107,
-            "network_recv_bytes": 14092474404,
-            "timestamp": "2025-03-07T18:07:00"
-        },
-        {
-            "cpu_temperature": 45.615,
-            "cpu_usage": 1.21333,
-            "ram_usage": 34.3,
-            "system_load": 0.224121,
-            "network_sent_bytes": 156618505251,
-            "network_recv_bytes": 14092967651,
-            "timestamp": "2025-03-07T18:08:00"
-        },
-        {
-            "cpu_temperature": 45.375,
-            "cpu_usage": 1.24167,
-            "ram_usage": 34.7,
-            "system_load": 0.310547,
-            "network_sent_bytes": 156618842543,
-            "network_recv_bytes": 14093499973,
-            "timestamp": "2025-03-07T18:09:00"
-        },
-        {
-            "cpu_temperature": 45.3833,
-            "cpu_usage": 1.17667,
-            "ram_usage": 34.3,
-            "system_load": 0.112305,
-            "network_sent_bytes": 156619146542,
-            "network_recv_bytes": 14093980569,
-            "timestamp": "2025-03-07T18:10:00"
-        },
-        {
-            "cpu_temperature": 45.5333,
-            "cpu_usage": 1.145,
-            "ram_usage": 34.7,
-            "system_load": 0.171387,
-            "network_sent_bytes": 156619460461,
-            "network_recv_bytes": 14094479681,
-            "timestamp": "2025-03-07T18:11:00"
-        },
-        {
-            "cpu_temperature": 45.45,
-            "cpu_usage": 1.18667,
-            "ram_usage": 34.5,
-            "system_load": 0.141113,
-            "network_sent_bytes": 156619783569,
-            "network_recv_bytes": 14094982181,
-            "timestamp": "2025-03-07T18:12:00"
-        },
-        {
-            "cpu_temperature": 45.5417,
-            "cpu_usage": 1.18833,
-            "ram_usage": 34.7,
-            "system_load": 0.0844727,
-            "network_sent_bytes": 156620093970,
-            "network_recv_bytes": 14095472053,
-            "timestamp": "2025-03-07T18:13:00"
-        },
-        {
-            "cpu_temperature": 45.5683,
-            "cpu_usage": 1.30833,
-            "ram_usage": 34.5,
-            "system_load": 0.280273,
-            "network_sent_bytes": 156620409207,
-            "network_recv_bytes": 14095964303,
-            "timestamp": "2025-03-07T18:14:00"
-        },
-        {
-            "cpu_temperature": 45.385,
-            "cpu_usage": 1.335,
-            "ram_usage": 34.8,
-            "system_load": 0.133301,
-            "network_sent_bytes": 156620737843,
-            "network_recv_bytes": 14096469291,
-            "timestamp": "2025-03-07T18:15:00"
-        },
-        {
-            "cpu_temperature": 45.52,
-            "cpu_usage": 1.37,
-            "ram_usage": 34.7,
-            "system_load": 0.243164,
-            "network_sent_bytes": 156621098467,
-            "network_recv_bytes": 14097007645,
-            "timestamp": "2025-03-07T18:16:00"
-        },
-        {
-            "cpu_temperature": 45.3617,
-            "cpu_usage": 1.25833,
-            "ram_usage": 34.8,
-            "system_load": 0.236816,
-            "network_sent_bytes": 156621405788,
-            "network_recv_bytes": 14097489769,
-            "timestamp": "2025-03-07T18:17:00"
-        },
-        {
-            "cpu_temperature": 45.48,
-            "cpu_usage": 1.32333,
-            "ram_usage": 34.8,
-            "system_load": 0.296387,
-            "network_sent_bytes": 156621703505,
-            "network_recv_bytes": 14097957239,
-            "timestamp": "2025-03-07T18:18:00"
-        },
-        {
-            "cpu_temperature": 45.5817,
-            "cpu_usage": 1.32333,
-            "ram_usage": 34.7,
-            "system_load": 0.239258,
-            "network_sent_bytes": 156622007633,
-            "network_recv_bytes": 14098422902,
-            "timestamp": "2025-03-07T18:19:00"
-        },
-        {
-            "cpu_temperature": 45.5617,
-            "cpu_usage": 1.38333,
-            "ram_usage": 34.8,
-            "system_load": 0.165039,
-            "network_sent_bytes": 156622306702,
-            "network_recv_bytes": 14098884283,
-            "timestamp": "2025-03-07T18:20:00"
-        },
-        {
-            "cpu_temperature": 45.5567,
-            "cpu_usage": 1.33667,
-            "ram_usage": 34.7,
-            "system_load": 0.139648,
-            "network_sent_bytes": 156622605275,
-            "network_recv_bytes": 14099349552,
-            "timestamp": "2025-03-07T18:21:00"
-        },
-        {
-            "cpu_temperature": 45.365,
-            "cpu_usage": 1.32333,
-            "ram_usage": 34.6,
-            "system_load": 0.291992,
-            "network_sent_bytes": 156622904398,
-            "network_recv_bytes": 14099808607,
-            "timestamp": "2025-03-07T18:22:00"
-        },
-        {
-            "cpu_temperature": 45.2083,
-            "cpu_usage": 1.33833,
-            "ram_usage": 34.7,
-            "system_load": 0.218262,
-            "network_sent_bytes": 156623191888,
-            "network_recv_bytes": 14100255897,
-            "timestamp": "2025-03-07T18:23:00"
-        },
-        {
-            "cpu_temperature": 45.1933,
-            "cpu_usage": 1.35667,
-            "ram_usage": 34.7,
-            "system_load": 0.29248,
-            "network_sent_bytes": 156623486178,
-            "network_recv_bytes": 14100724964,
-            "timestamp": "2025-03-07T18:24:00"
-        },
-        {
-            "cpu_temperature": 45.2367,
-            "cpu_usage": 1.19667,
-            "ram_usage": 34.4,
-            "system_load": 0.254883,
-            "network_sent_bytes": 156623777095,
-            "network_recv_bytes": 14101175541,
-            "timestamp": "2025-03-07T18:25:00"
-        },
-        {
-            "cpu_temperature": 45.315,
-            "cpu_usage": 1.24167,
-            "ram_usage": 34.7,
-            "system_load": 0.171875,
-            "network_sent_bytes": 156624104440,
-            "network_recv_bytes": 14101667487,
-            "timestamp": "2025-03-07T18:26:00"
-        },
-        {
-            "cpu_temperature": 45.2767,
-            "cpu_usage": 1.26333,
-            "ram_usage": 34.3,
-            "system_load": 0.192871,
-            "network_sent_bytes": 156624442093,
-            "network_recv_bytes": 14102167413,
-            "timestamp": "2025-03-07T18:27:00"
-        },
-        {
-            "cpu_temperature": 45.355,
-            "cpu_usage": 1.25167,
-            "ram_usage": 34.7,
-            "system_load": 0.229492,
-            "network_sent_bytes": 156625058998,
-            "network_recv_bytes": 14103090073,
-            "timestamp": "2025-03-07T18:28:00"
-        },
-        {
-            "cpu_temperature": 45.41,
-            "cpu_usage": 1.30167,
-            "ram_usage": 34.3,
-            "system_load": 0.0825195,
-            "network_sent_bytes": 156625447222,
-            "network_recv_bytes": 14103609899,
-            "timestamp": "2025-03-07T18:29:00"
-        },
-        {
-            "cpu_temperature": 45.47,
-            "cpu_usage": 1.245,
-            "ram_usage": 34.8,
-            "system_load": 0.229004,
-            "network_sent_bytes": 156625867941,
-            "network_recv_bytes": 14104141072,
-            "timestamp": "2025-03-07T18:30:00"
-        },
-        {
-            "cpu_temperature": 45.46,
-            "cpu_usage": 1.31167,
-            "ram_usage": 34.7,
-            "system_load": 0.194336,
-            "network_sent_bytes": 156626808170,
-            "network_recv_bytes": 14104963332,
-            "timestamp": "2025-03-07T18:31:00"
-        },
-        {
-            "cpu_temperature": 45.2267,
-            "cpu_usage": 1.27833,
-            "ram_usage": 34.7,
-            "system_load": 0.150391,
-            "network_sent_bytes": 156627105225,
-            "network_recv_bytes": 14105420503,
-            "timestamp": "2025-03-07T18:32:00"
-        },
-        {
-            "cpu_temperature": 45.3417,
-            "cpu_usage": 1.25,
-            "ram_usage": 34.7,
-            "system_load": 0.363281,
-            "network_sent_bytes": 156627409498,
-            "network_recv_bytes": 14105885354,
-            "timestamp": "2025-03-07T18:33:00"
-        },
-        {
-            "cpu_temperature": 48.2117,
-            "cpu_usage": 21.8133,
-            "ram_usage": 34.7,
-            "system_load": 0.67334,
-            "network_sent_bytes": 156631227333,
-            "network_recv_bytes": 14110131057,
-            "timestamp": "2025-03-07T18:34:00"
-        },
-        {
-            "cpu_temperature": 48.5383,
-            "cpu_usage": 6.92333,
-            "ram_usage": 35,
-            "system_load": 0.529785,
-            "network_sent_bytes": 156632578882,
-            "network_recv_bytes": 14111882484,
-            "timestamp": "2025-03-07T18:35:00"
-        },
-        {
-            "cpu_temperature": 48.3067,
-            "cpu_usage": 5.35167,
-            "ram_usage": 34.6,
-            "system_load": 0.472168,
-            "network_sent_bytes": 156634452643,
-            "network_recv_bytes": 14113523821,
-            "timestamp": "2025-03-07T18:36:00"
-        },
-        {
-            "cpu_temperature": 46.9317,
-            "cpu_usage": 1.42833,
-            "ram_usage": 35,
-            "system_load": 0.187012,
-            "network_sent_bytes": 156635864075,
-            "network_recv_bytes": 14114760341,
-            "timestamp": "2025-03-07T18:37:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156635864075,
-            "network_recv_bytes": 14114760341,
-            "timestamp": "2025-03-07T18:38:00"
-        },
-        {
-            "cpu_temperature": 50.1367,
-            "cpu_usage": 18.5733,
-            "ram_usage": 34.9,
-            "system_load": 0.938965,
-            "network_sent_bytes": 156639984207,
-            "network_recv_bytes": 14119388740,
-            "timestamp": "2025-03-07T18:39:00"
-        },
-        {
-            "cpu_temperature": 47.2983,
-            "cpu_usage": 1.395,
-            "ram_usage": 34.9,
-            "system_load": 0.503418,
-            "network_sent_bytes": 156640363834,
-            "network_recv_bytes": 14119968309,
-            "timestamp": "2025-03-07T18:40:00"
-        },
-        {
-            "cpu_temperature": 47.7167,
-            "cpu_usage": 9.89833,
-            "ram_usage": 28,
-            "system_load": 0.995605,
-            "network_sent_bytes": 156641074508,
-            "network_recv_bytes": 14118866156,
-            "timestamp": "2025-03-07T18:41:00"
-        },
-        {
-            "cpu_temperature": 49.6583,
-            "cpu_usage": 14.285,
-            "ram_usage": 34.8,
-            "system_load": 0.691406,
-            "network_sent_bytes": 156644636982,
-            "network_recv_bytes": 14124786018,
-            "timestamp": "2025-03-07T18:42:00"
-        },
-        {
-            "cpu_temperature": 47.6717,
-            "cpu_usage": 4.01333,
-            "ram_usage": 34.9,
-            "system_load": 0.463867,
-            "network_sent_bytes": 156645431945,
-            "network_recv_bytes": 14125829023,
-            "timestamp": "2025-03-07T18:43:00"
-        },
-        {
-            "cpu_temperature": 47.81,
-            "cpu_usage": 4.16333,
-            "ram_usage": 34.9,
-            "system_load": 0.373535,
-            "network_sent_bytes": 156646244562,
-            "network_recv_bytes": 14126903906,
-            "timestamp": "2025-03-07T18:44:00"
-        },
-        {
-            "cpu_temperature": 47.0567,
-            "cpu_usage": 1.37333,
-            "ram_usage": 34.9,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156646982647,
-            "network_recv_bytes": 14127743213,
-            "timestamp": "2025-03-07T18:45:00"
-        },
-        {
-            "cpu_temperature": 46.725,
-            "cpu_usage": 1.31667,
-            "ram_usage": 34.9,
-            "system_load": 0.296387,
-            "network_sent_bytes": 156647741640,
-            "network_recv_bytes": 14128611929,
-            "timestamp": "2025-03-07T18:46:00"
-        },
-        {
-            "cpu_temperature": 46.5833,
-            "cpu_usage": 1.36,
-            "ram_usage": 34.9,
-            "system_load": 0.260254,
-            "network_sent_bytes": 156648146031,
-            "network_recv_bytes": 14129257265,
-            "timestamp": "2025-03-07T18:47:00"
-        },
-        {
-            "cpu_temperature": 46.6917,
-            "cpu_usage": 1.42667,
-            "ram_usage": 34.9,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156648858675,
-            "network_recv_bytes": 14130147956,
-            "timestamp": "2025-03-07T18:48:00"
-        },
-        {
-            "cpu_temperature": 46.575,
-            "cpu_usage": 1.44833,
-            "ram_usage": 34.9,
-            "system_load": 0.330078,
-            "network_sent_bytes": 156649699320,
-            "network_recv_bytes": 14131035041,
-            "timestamp": "2025-03-07T18:49:00"
-        },
-        {
-            "cpu_temperature": 46.5183,
-            "cpu_usage": 1.30333,
-            "ram_usage": 35,
-            "system_load": 0.151367,
-            "network_sent_bytes": 156650419404,
-            "network_recv_bytes": 14131856549,
-            "timestamp": "2025-03-07T18:50:00"
-        },
-        {
-            "cpu_temperature": 46.1867,
-            "cpu_usage": 1.46,
-            "ram_usage": 34.9,
-            "system_load": 0.229492,
-            "network_sent_bytes": 156651128052,
-            "network_recv_bytes": 14132672165,
-            "timestamp": "2025-03-07T18:51:00"
-        },
-        {
-            "cpu_temperature": 46.2767,
-            "cpu_usage": 1.26167,
-            "ram_usage": 34.4,
-            "system_load": 0.236328,
-            "network_sent_bytes": 156651981177,
-            "network_recv_bytes": 14133570080,
-            "timestamp": "2025-03-07T18:52:00"
-        },
-        {
-            "cpu_temperature": 46.175,
-            "cpu_usage": 1.29333,
-            "ram_usage": 34.9,
-            "system_load": 0.152832,
-            "network_sent_bytes": 156652832779,
-            "network_recv_bytes": 14134474345,
-            "timestamp": "2025-03-07T18:53:00"
-        },
-        {
-            "cpu_temperature": 46.21,
-            "cpu_usage": 1.255,
-            "ram_usage": 34.5,
-            "system_load": 0.304199,
-            "network_sent_bytes": 156653544904,
-            "network_recv_bytes": 14135285109,
-            "timestamp": "2025-03-07T18:54:00"
-        },
-        {
-            "cpu_temperature": 46.0383,
-            "cpu_usage": 1.37,
-            "ram_usage": 34.9,
-            "system_load": 0.21875,
-            "network_sent_bytes": 156654254509,
-            "network_recv_bytes": 14136099695,
-            "timestamp": "2025-03-07T18:55:00"
-        },
-        {
-            "cpu_temperature": 48.8083,
-            "cpu_usage": 20.555,
-            "ram_usage": 34.4,
-            "system_load": 0.978027,
-            "network_sent_bytes": 156657544071,
-            "network_recv_bytes": 14139717503,
-            "timestamp": "2025-03-07T18:56:00"
-        },
-        {
-            "cpu_temperature": 47.995,
-            "cpu_usage": 1.17833,
-            "ram_usage": 34.8,
-            "system_load": 0.600586,
-            "network_sent_bytes": 156657892158,
-            "network_recv_bytes": 14140264470,
-            "timestamp": "2025-03-07T18:57:00"
-        },
-        {
-            "cpu_temperature": 46.8733,
-            "cpu_usage": 1.21667,
-            "ram_usage": 34.4,
-            "system_load": 0.21875,
-            "network_sent_bytes": 156658232528,
-            "network_recv_bytes": 14140803481,
-            "timestamp": "2025-03-07T18:58:00"
-        },
-        {
-            "cpu_temperature": 46.46,
-            "cpu_usage": 1.18333,
-            "ram_usage": 34.8,
-            "system_load": 0.290527,
-            "network_sent_bytes": 156658569992,
-            "network_recv_bytes": 14141339952,
-            "timestamp": "2025-03-07T18:59:00"
-        },
-        {
-            "cpu_temperature": 46.235,
-            "cpu_usage": 1.33333,
-            "ram_usage": 34.5,
-            "system_load": 0.265137,
-            "network_sent_bytes": 156658912544,
-            "network_recv_bytes": 14141881599,
-            "timestamp": "2025-03-07T19:00:00"
-        },
-        {
-            "cpu_temperature": 46.035,
-            "cpu_usage": 1.37167,
-            "ram_usage": 34.8,
-            "system_load": 0.0952148,
-            "network_sent_bytes": 156659302017,
-            "network_recv_bytes": 14142474442,
-            "timestamp": "2025-03-07T19:01:00"
-        },
-        {
-            "cpu_temperature": 46.0767,
-            "cpu_usage": 1.52833,
-            "ram_usage": 34.7,
-            "system_load": 0.290039,
-            "network_sent_bytes": 156660289228,
-            "network_recv_bytes": 14143382491,
-            "timestamp": "2025-03-07T19:02:00"
-        },
-        {
-            "cpu_temperature": 46.03,
-            "cpu_usage": 1.355,
-            "ram_usage": 34.7,
-            "system_load": 0.212891,
-            "network_sent_bytes": 156660949624,
-            "network_recv_bytes": 14144105956,
-            "timestamp": "2025-03-07T19:03:00"
-        },
-        {
-            "cpu_temperature": 46.0117,
-            "cpu_usage": 1.47,
-            "ram_usage": 34.8,
-            "system_load": 0.0766602,
-            "network_sent_bytes": 156661949233,
-            "network_recv_bytes": 14145021552,
-            "timestamp": "2025-03-07T19:04:00"
-        },
-        {
-            "cpu_temperature": 45.8867,
-            "cpu_usage": 1.38833,
-            "ram_usage": 34.8,
-            "system_load": 0.323242,
-            "network_sent_bytes": 156662281940,
-            "network_recv_bytes": 14145553303,
-            "timestamp": "2025-03-07T19:05:00"
-        },
-        {
-            "cpu_temperature": 45.9617,
-            "cpu_usage": 1.34833,
-            "ram_usage": 34.7,
-            "system_load": 0.169922,
-            "network_sent_bytes": 156663256354,
-            "network_recv_bytes": 14146443660,
-            "timestamp": "2025-03-07T19:06:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156663256354,
-            "network_recv_bytes": 14146443660,
-            "timestamp": "2025-03-07T19:07:00"
-        },
-        {
-            "cpu_temperature": 49.045,
-            "cpu_usage": 17.5767,
-            "ram_usage": 34.8,
-            "system_load": 0.819824,
-            "network_sent_bytes": 156665360766,
-            "network_recv_bytes": 14146692486,
-            "timestamp": "2025-03-07T19:08:00"
-        },
-        {
-            "cpu_temperature": 47.2267,
-            "cpu_usage": 4.39167,
-            "ram_usage": 34.8,
-            "system_load": 0.379395,
-            "network_sent_bytes": 156666170024,
-            "network_recv_bytes": 14147749516,
-            "timestamp": "2025-03-07T19:09:00"
-        },
-        {
-            "cpu_temperature": 47.535,
-            "cpu_usage": 6.495,
-            "ram_usage": 34.8,
-            "system_load": 0.512695,
-            "network_sent_bytes": 156669694441,
-            "network_recv_bytes": 14153656888,
-            "timestamp": "2025-03-07T19:10:00"
-        },
-        {
-            "cpu_temperature": 47.305,
-            "cpu_usage": 2.74833,
-            "ram_usage": 34.8,
-            "system_load": 0.221191,
-            "network_sent_bytes": 156670334881,
-            "network_recv_bytes": 14154563347,
-            "timestamp": "2025-03-07T19:11:00"
-        },
-        {
-            "cpu_temperature": 47.5617,
-            "cpu_usage": 7.42333,
-            "ram_usage": 35,
-            "system_load": 0.716309,
-            "network_sent_bytes": 156673960574,
-            "network_recv_bytes": 14160543285,
-            "timestamp": "2025-03-07T19:12:00"
-        },
-        {
-            "cpu_temperature": 47.1167,
-            "cpu_usage": 1.62833,
-            "ram_usage": 35,
-            "system_load": 0.518555,
-            "network_sent_bytes": 156674677902,
-            "network_recv_bytes": 14161474507,
-            "timestamp": "2025-03-07T19:13:00"
-        },
-        {
-            "cpu_temperature": 46.9417,
-            "cpu_usage": 1.405,
-            "ram_usage": 34.6,
-            "system_load": 0.223145,
-            "network_sent_bytes": 156675065976,
-            "network_recv_bytes": 14162066182,
-            "timestamp": "2025-03-07T19:14:00"
-        },
-        {
-            "cpu_temperature": 46.6767,
-            "cpu_usage": 1.74,
-            "ram_usage": 35.1,
-            "system_load": 0.223145,
-            "network_sent_bytes": 156675512517,
-            "network_recv_bytes": 14162728806,
-            "timestamp": "2025-03-07T19:15:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156675512517,
-            "network_recv_bytes": 14162728806,
-            "timestamp": "2025-03-07T19:16:00"
-        },
-        {
-            "cpu_temperature": 49.265,
-            "cpu_usage": 15.7383,
-            "ram_usage": 34.5,
-            "system_load": 0.352539,
-            "network_sent_bytes": 156675312619,
-            "network_recv_bytes": 14159032885,
-            "timestamp": "2025-03-07T19:17:00"
-        },
-        {
-            "cpu_temperature": 47.3167,
-            "cpu_usage": 2.07667,
-            "ram_usage": 34.6,
-            "system_load": 0.304199,
-            "network_sent_bytes": 156675750205,
-            "network_recv_bytes": 14159651233,
-            "timestamp": "2025-03-07T19:18:00"
-        },
-        {
-            "cpu_temperature": 46.8583,
-            "cpu_usage": 2.14833,
-            "ram_usage": 34.7,
-            "system_load": 0.260254,
-            "network_sent_bytes": 156676202795,
-            "network_recv_bytes": 14160285508,
-            "timestamp": "2025-03-07T19:19:00"
-        },
-        {
-            "cpu_temperature": 46.35,
-            "cpu_usage": 1.46333,
-            "ram_usage": 34.7,
-            "system_load": 0.09375,
-            "network_sent_bytes": 156676522875,
-            "network_recv_bytes": 14160789096,
-            "timestamp": "2025-03-07T19:20:00"
-        },
-        {
-            "cpu_temperature": 46.2283,
-            "cpu_usage": 1.36,
-            "ram_usage": 34.7,
-            "system_load": 0.227539,
-            "network_sent_bytes": 156676932338,
-            "network_recv_bytes": 14161382595,
-            "timestamp": "2025-03-07T19:21:00"
-        },
-        {
-            "cpu_temperature": 48.4867,
-            "cpu_usage": 16.3817,
-            "ram_usage": 34.2,
-            "system_load": 0.532715,
-            "network_sent_bytes": 156677795773,
-            "network_recv_bytes": 14162611097,
-            "timestamp": "2025-03-07T19:22:00"
-        },
-        {
-            "cpu_temperature": 47.3717,
-            "cpu_usage": 1.405,
-            "ram_usage": 34.4,
-            "system_load": 0.337402,
-            "network_sent_bytes": 156678780483,
-            "network_recv_bytes": 14163502417,
-            "timestamp": "2025-03-07T19:23:00"
-        },
-        {
-            "cpu_temperature": 46.4767,
-            "cpu_usage": 1.53667,
-            "ram_usage": 34.5,
-            "system_load": 0.276855,
-            "network_sent_bytes": 156679442670,
-            "network_recv_bytes": 14164224645,
-            "timestamp": "2025-03-07T19:24:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156679442670,
-            "network_recv_bytes": 14164224645,
-            "timestamp": "2025-03-07T19:25:00"
-        },
-        {
-            "cpu_temperature": 49.8767,
-            "cpu_usage": 20.6667,
-            "ram_usage": 34.8,
-            "system_load": 0.550293,
-            "network_sent_bytes": 156684251489,
-            "network_recv_bytes": 14171037781,
-            "timestamp": "2025-03-07T19:26:00"
-        },
-        {
-            "cpu_temperature": 48.575,
-            "cpu_usage": 4.21167,
-            "ram_usage": 34.8,
-            "system_load": 0.30957,
-            "network_sent_bytes": 156685105224,
-            "network_recv_bytes": 14172131923,
-            "timestamp": "2025-03-07T19:27:00"
-        },
-        {
-            "cpu_temperature": 49.065,
-            "cpu_usage": 12.6317,
-            "ram_usage": 35.1,
-            "system_load": 0.741211,
-            "network_sent_bytes": 156691701571,
-            "network_recv_bytes": 14183159263,
-            "timestamp": "2025-03-07T19:28:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156691701571,
-            "network_recv_bytes": 14183159263,
-            "timestamp": "2025-03-07T19:29:00"
-        },
-        {
-            "cpu_temperature": 50.36,
-            "cpu_usage": 17.9533,
-            "ram_usage": 34.8,
-            "system_load": 0.726562,
-            "network_sent_bytes": 156694156124,
-            "network_recv_bytes": 14182081181,
-            "timestamp": "2025-03-07T19:30:00"
-        },
-        {
-            "cpu_temperature": 0,
-            "cpu_usage": 0,
-            "ram_usage": 0,
-            "system_load": 0,
-            "network_sent_bytes": 156694156124,
-            "network_recv_bytes": 14182081181,
-            "timestamp": "2025-03-07T19:31:00"
-        },
-        {
-            "cpu_temperature": 49.87,
-            "cpu_usage": 14.09,
-            "ram_usage": 34,
-            "system_load": 0.615234,
-            "network_sent_bytes": 156695290001,
-            "network_recv_bytes": 14181990378,
-            "timestamp": "2025-03-07T19:32:00"
-        },
-        {
-            "cpu_temperature": 47.3867,
-            "cpu_usage": 1.16667,
-            "ram_usage": 34.4,
-            "system_load": 0.311035,
-            "network_sent_bytes": 156695637733,
-            "network_recv_bytes": 14182539147,
-            "timestamp": "2025-03-07T19:33:00"
-        },
-        {
-            "cpu_temperature": 48.1467,
-            "cpu_usage": 7.62333,
-            "ram_usage": 34.8,
-            "system_load": 0.112305,
-            "network_sent_bytes": 156698771648,
-            "network_recv_bytes": 14187648510,
-            "timestamp": "2025-03-07T19:34:00"
-        },
-        {
-            "cpu_temperature": 47.125,
-            "cpu_usage": 1.205,
-            "ram_usage": 34.8,
-            "system_load": 0.21582,
-            "network_sent_bytes": 156699145376,
-            "network_recv_bytes": 14188252858,
-            "timestamp": "2025-03-07T19:35:00"
-        },
-        {
-            "cpu_temperature": 47.35,
-            "cpu_usage": 4.92,
-            "ram_usage": 34.7,
-            "system_load": 0.549316,
-            "network_sent_bytes": 156701805298,
-            "network_recv_bytes": 14192759366,
-            "timestamp": "2025-03-07T19:36:00"
-        },
-        {
-            "cpu_temperature": 46.9167,
-            "cpu_usage": 1.19667,
-            "ram_usage": 35,
-            "system_load": 0.200195,
-            "network_sent_bytes": 156702184704,
-            "network_recv_bytes": 14193361301,
-            "timestamp": "2025-03-07T19:37:00"
-        },
-        {
-            "cpu_temperature": 47.9717,
-            "cpu_usage": 9.35167,
-            "ram_usage": 34.7,
-            "system_load": 0.460449,
-            "network_sent_bytes": 156705651473,
-            "network_recv_bytes": 14198881475,
-            "timestamp": "2025-03-07T19:38:00"
-        },
-        {
-            "cpu_temperature": 49.75,
-            "cpu_usage": 19.87,
-            "ram_usage": 34.5,
-            "system_load": 0.845703,
-            "network_sent_bytes": 156706527375,
-            "network_recv_bytes": 14195187674,
-            "timestamp": "2025-03-07T19:39:00"
-        },
-        {
-            "cpu_temperature": 49.4567,
-            "cpu_usage": 5.10333,
-            "ram_usage": 34.6,
-            "system_load": 0.525879,
-            "network_sent_bytes": 156709535762,
-            "network_recv_bytes": 14200317174,
-            "timestamp": "2025-03-07T19:40:00"
-        },
-        {
-            "cpu_temperature": 47.8383,
-            "cpu_usage": 2.915,
-            "ram_usage": 34.8,
-            "system_load": 0.27832,
-            "network_sent_bytes": 156710252326,
-            "network_recv_bytes": 14201362911,
-            "timestamp": "2025-03-07T19:41:00"
-        },
-        {
-            "cpu_temperature": 47.76,
-            "cpu_usage": 4.125,
-            "ram_usage": 34.9,
-            "system_load": 0.600586,
-            "network_sent_bytes": 156711040502,
-            "network_recv_bytes": 14202391575,
-            "timestamp": "2025-03-07T19:42:00"
-        },
-        {
-            "cpu_temperature": 47.2167,
-            "cpu_usage": 1.495,
-            "ram_usage": 34.9,
-            "system_load": 0.476562,
-            "network_sent_bytes": 156711452373,
-            "network_recv_bytes": 14203036130,
-            "timestamp": "2025-03-07T19:43:00"
-        },
-        {
-            "cpu_temperature": 47.4817,
-            "cpu_usage": 5.01833,
-            "ram_usage": 34.9,
-            "system_load": 0.208008,
-            "network_sent_bytes": 156714303695,
-            "network_recv_bytes": 14207845051,
-            "timestamp": "2025-03-07T19:44:00"
-        },
-        {
-            "cpu_temperature": 48.6817,
-            "cpu_usage": 10.3217,
-            "ram_usage": 35.1,
-            "system_load": 0.180664,
-            "network_sent_bytes": 156720032906,
-            "network_recv_bytes": 14217491766,
-            "timestamp": "2025-03-07T19:45:00"
-        },
-        {
-            "cpu_temperature": 48.0833,
-            "cpu_usage": 5.72833,
-            "ram_usage": 35.1,
-            "system_load": 0.259277,
-            "network_sent_bytes": 156721375396,
-            "network_recv_bytes": 14219330385,
-            "timestamp": "2025-03-07T19:46:00"
-        },
-        {
-            "cpu_temperature": 48.1667,
-            "cpu_usage": 3.67167,
-            "ram_usage": 34.7,
-            "system_load": 0.131836,
-            "network_sent_bytes": 156722145081,
-            "network_recv_bytes": 14220342963,
-            "timestamp": "2025-03-07T19:47:00"
-        },
-        {
-            "cpu_temperature": 47.975,
-            "cpu_usage": 8.30833,
-            "ram_usage": 35.1,
-            "system_load": 0.807617,
-            "network_sent_bytes": 156723566343,
-            "network_recv_bytes": 14222052520,
-            "timestamp": "2025-03-07T19:48:00"
-        },
-        {
-            "cpu_temperature": 47.3817,
-            "cpu_usage": 2.85667,
-            "ram_usage": 34.7,
-            "system_load": 0.836914,
-            "network_sent_bytes": 156724228042,
-            "network_recv_bytes": 14223005871,
-            "timestamp": "2025-03-07T19:49:00"
-        },
-        {
-            "cpu_temperature": 47.625,
-            "cpu_usage": 3.985,
-            "ram_usage": 35.1,
-            "system_load": 0.440918,
-            "network_sent_bytes": 156725104772,
-            "network_recv_bytes": 14224217322,
-            "timestamp": "2025-03-07T19:50:00"
-        },
-        {
-            "cpu_temperature": 47.7433,
-            "cpu_usage": 6.805,
-            "ram_usage": 34.8,
-            "system_load": 0.295898,
-            "network_sent_bytes": 156726457344,
-            "network_recv_bytes": 14225939229,
-            "timestamp": "2025-03-07T19:51:00"
-        },
-        {
-            "cpu_temperature": 47.4783,
-            "cpu_usage": 4.00333,
-            "ram_usage": 35.2,
-            "system_load": 0.332031,
-            "network_sent_bytes": 156727379018,
-            "network_recv_bytes": 14227219379,
-            "timestamp": "2025-03-07T19:52:00"
-        },
-        {
-            "cpu_temperature": 47.205,
-            "cpu_usage": 2.64833,
-            "ram_usage": 34.8,
-            "system_load": 0.554199,
-            "network_sent_bytes": 156728096612,
-            "network_recv_bytes": 14228291830,
-            "timestamp": "2025-03-07T19:53:00"
-        },
-        {
-            "cpu_temperature": 47.0167,
-            "cpu_usage": 2.715,
-            "ram_usage": 35.1,
-            "system_load": 0.20166,
-            "network_sent_bytes": 156728804547,
-            "network_recv_bytes": 14229352525,
-            "timestamp": "2025-03-07T19:54:00"
-        },
-        {
-            "cpu_temperature": 47.12,
-            "cpu_usage": 3.98833,
-            "ram_usage": 34.8,
-            "system_load": 0.298828,
-            "network_sent_bytes": 156729699524,
-            "network_recv_bytes": 14230587696,
-            "timestamp": "2025-03-07T19:55:00"
-        },
-        {
-            "cpu_temperature": 47.4467,
-            "cpu_usage": 6.245,
-            "ram_usage": 35.2,
-            "system_load": 0.241211,
-            "network_sent_bytes": 156731006582,
-            "network_recv_bytes": 14232276849,
-            "timestamp": "2025-03-07T19:56:00"
-        },
-        {
-            "cpu_temperature": 47.8483,
-            "cpu_usage": 8.22167,
-            "ram_usage": 35,
-            "system_load": 1.24658,
-            "network_sent_bytes": 156732474623,
-            "network_recv_bytes": 14234117208,
-            "timestamp": "2025-03-07T19:57:00"
-        },
-        {
-            "cpu_temperature": 47.345,
-            "cpu_usage": 1.31667,
-            "ram_usage": 35.1,
-            "system_load": 0.493164,
-            "network_sent_bytes": 156732963285,
-            "network_recv_bytes": 14234936108,
-            "timestamp": "2025-03-07T19:58:00"
-        },
-        {
-            "cpu_temperature": 46.575,
-            "cpu_usage": 1.37333,
-            "ram_usage": 35,
-            "system_load": 0.345215,
-            "network_sent_bytes": 156733438847,
-            "network_recv_bytes": 14235739362,
-            "timestamp": "2025-03-07T19:59:00"
-        },
-        {
-            "cpu_temperature": 46.3833,
-            "cpu_usage": 1.58833,
-            "ram_usage": 35.3,
-            "system_load": 0.30127,
-            "network_sent_bytes": 156733933684,
-            "network_recv_bytes": 14236559500,
-            "timestamp": "2025-03-07T20:00:00"
-        },
-        {
-            "cpu_temperature": 46.12,
-            "cpu_usage": 1.50667,
-            "ram_usage": 35.1,
-            "system_load": 0.108398,
-            "network_sent_bytes": 156734412137,
-            "network_recv_bytes": 14237364664,
-            "timestamp": "2025-03-07T20:01:00"
-        },
-        {
-            "cpu_temperature": 46.0467,
-            "cpu_usage": 1.39167,
-            "ram_usage": 35.1,
-            "system_load": 0.0385742,
-            "network_sent_bytes": 156734878414,
-            "network_recv_bytes": 14238149663,
-            "timestamp": "2025-03-07T20:02:00"
-        },
-        {
-            "cpu_temperature": 45.89,
-            "cpu_usage": 1.375,
-            "ram_usage": 35.1,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156735352543,
-            "network_recv_bytes": 14238941474,
-            "timestamp": "2025-03-07T20:03:00"
-        },
-        {
-            "cpu_temperature": 45.8633,
-            "cpu_usage": 1.37,
-            "ram_usage": 35.1,
-            "system_load": 0.0498047,
-            "network_sent_bytes": 156735821378,
-            "network_recv_bytes": 14239720978,
-            "timestamp": "2025-03-07T20:04:00"
-        },
-        {
-            "cpu_temperature": 45.8467,
-            "cpu_usage": 1.385,
-            "ram_usage": 35.2,
-            "system_load": 0.319824,
-            "network_sent_bytes": 156736280645,
-            "network_recv_bytes": 14240492615,
-            "timestamp": "2025-03-07T20:05:00"
-        },
-        {
-            "cpu_temperature": 45.8867,
-            "cpu_usage": 2.565,
-            "ram_usage": 34.7,
-            "system_load": 0.153809,
-            "network_sent_bytes": 156736927607,
-            "network_recv_bytes": 14241447539,
-            "timestamp": "2025-03-07T20:06:00"
-        },
-        {
-            "cpu_temperature": 46.2183,
-            "cpu_usage": 2.69,
-            "ram_usage": 35.1,
-            "system_load": 0.135254,
-            "network_sent_bytes": 156737626606,
-            "network_recv_bytes": 14242479372,
-            "timestamp": "2025-03-07T20:07:00"
-        },
-        {
-            "cpu_temperature": 46.545,
-            "cpu_usage": 4.96333,
-            "ram_usage": 34.8,
-            "system_load": 0.594238,
-            "network_sent_bytes": 156738592466,
-            "network_recv_bytes": 14243749492,
-            "timestamp": "2025-03-07T20:08:00"
-        },
-        {
-            "cpu_temperature": 46.135,
-            "cpu_usage": 1.33333,
-            "ram_usage": 35.2,
-            "system_load": 0.376953,
-            "network_sent_bytes": 156739063358,
-            "network_recv_bytes": 14244525797,
-            "timestamp": "2025-03-07T20:09:00"
-        },
-        {
-            "cpu_temperature": 46.3183,
-            "cpu_usage": 3.24167,
-            "ram_usage": 34.8,
-            "system_load": 0.13623,
-            "network_sent_bytes": 156740729853,
-            "network_recv_bytes": 14246812080,
-            "timestamp": "2025-03-07T20:10:00"
-        },
-        {
-            "cpu_temperature": 47.7667,
-            "cpu_usage": 6.06167,
-            "ram_usage": 36.3,
-            "system_load": 0.348145,
-            "network_sent_bytes": 156759871617,
-            "network_recv_bytes": 14258120855,
-            "timestamp": "2025-03-07T20:11:00"
-        },
-        {
-            "cpu_temperature": 46.8417,
-            "cpu_usage": 1.21,
-            "ram_usage": 36.1,
-            "system_load": 0.442871,
-            "network_sent_bytes": 156760266008,
-            "network_recv_bytes": 14258766866,
-            "timestamp": "2025-03-07T20:12:00"
-        },
-        {
-            "cpu_temperature": 46.4667,
-            "cpu_usage": 1.72333,
-            "ram_usage": 36.3,
-            "system_load": 0.37793,
-            "network_sent_bytes": 156760752605,
-            "network_recv_bytes": 14259506519,
-            "timestamp": "2025-03-07T20:13:00"
-        },
-        {
-            "cpu_temperature": 46.7283,
-            "cpu_usage": 3.95333,
-            "ram_usage": 36,
-            "system_load": 0.322754,
-            "network_sent_bytes": 156761567771,
-            "network_recv_bytes": 14260575039,
-            "timestamp": "2025-03-07T20:14:00"
-        },
-        {
-            "cpu_temperature": 46.925,
-            "cpu_usage": 2.11833,
-            "ram_usage": 36.4,
-            "system_load": 0.155273,
-            "network_sent_bytes": 156762137648,
-            "network_recv_bytes": 14261425966,
-            "timestamp": "2025-03-07T20:15:00"
-        },
-        {
-            "cpu_temperature": 47.5117,
-            "cpu_usage": 5.51,
-            "ram_usage": 35.8,
-            "system_load": 0.536621,
-            "network_sent_bytes": 156763164841,
-            "network_recv_bytes": 14262727899,
-            "timestamp": "2025-03-07T20:16:00"
-        },
-        {
-            "cpu_temperature": 47.0583,
-            "cpu_usage": 3.13333,
-            "ram_usage": 36.2,
-            "system_load": 0.310059,
-            "network_sent_bytes": 156763911553,
-            "network_recv_bytes": 14263777719,
-            "timestamp": "2025-03-07T20:17:00"
-        },
-        {
-            "cpu_temperature": 47.3117,
-            "cpu_usage": 4.55,
-            "ram_usage": 35.9,
-            "system_load": 0.12207,
-            "network_sent_bytes": 156766663469,
-            "network_recv_bytes": 14268551017,
-            "timestamp": "2025-03-07T20:18:00"
-        },
-        {
-            "cpu_temperature": 46.8317,
-            "cpu_usage": 1.52,
-            "ram_usage": 36.2,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156767526881,
-            "network_recv_bytes": 14269939627,
-            "timestamp": "2025-03-07T20:19:00"
-        },
-        {
-            "cpu_temperature": 46.2267,
-            "cpu_usage": 1.33,
-            "ram_usage": 36.1,
-            "system_load": 0.0766602,
-            "network_sent_bytes": 156767955088,
-            "network_recv_bytes": 14270655160,
-            "timestamp": "2025-03-07T20:20:00"
-        },
-        {
-            "cpu_temperature": 47.2267,
-            "cpu_usage": 5.98167,
-            "ram_usage": 36.4,
-            "system_load": 0.81543,
-            "network_sent_bytes": 156770285367,
-            "network_recv_bytes": 14273786817,
-            "timestamp": "2025-03-07T20:21:00"
-        },
-        {
-            "cpu_temperature": 46.78,
-            "cpu_usage": 2.68333,
-            "ram_usage": 36.2,
-            "system_load": 0.548828,
-            "network_sent_bytes": 156771131906,
-            "network_recv_bytes": 14275071924,
-            "timestamp": "2025-03-07T20:22:00"
-        },
-        {
-            "cpu_temperature": 46.5017,
-            "cpu_usage": 1.73667,
-            "ram_usage": 36.4,
-            "system_load": 0.183594,
-            "network_sent_bytes": 156771710503,
-            "network_recv_bytes": 14275957713,
-            "timestamp": "2025-03-07T20:23:00"
-        },
-        {
-            "cpu_temperature": 46.2667,
-            "cpu_usage": 1.43333,
-            "ram_usage": 36.5,
-            "system_load": 0.312012,
-            "network_sent_bytes": 156772149364,
-            "network_recv_bytes": 14276677724,
-            "timestamp": "2025-03-07T20:24:00"
-        },
-        {
-            "cpu_temperature": 46.2283,
-            "cpu_usage": 1.48,
-            "ram_usage": 36.8,
-            "system_load": 0.274414,
-            "network_sent_bytes": 156772727407,
-            "network_recv_bytes": 14277501978,
-            "timestamp": "2025-03-07T20:25:00"
-        },
-        {
-            "cpu_temperature": 45.8783,
-            "cpu_usage": 1.24,
-            "ram_usage": 36.3,
-            "system_load": 0.130859,
-            "network_sent_bytes": 156773143862,
-            "network_recv_bytes": 14278187356,
-            "timestamp": "2025-03-07T20:26:00"
-        },
-        {
-            "cpu_temperature": 45.8217,
-            "cpu_usage": 1.18,
-            "ram_usage": 36.4,
-            "system_load": 0.227539,
-            "network_sent_bytes": 156773556169,
-            "network_recv_bytes": 14278862295,
-            "timestamp": "2025-03-07T20:27:00"
-        },
-        {
-            "cpu_temperature": 45.8533,
-            "cpu_usage": 1.205,
-            "ram_usage": 36,
-            "system_load": 0.163086,
-            "network_sent_bytes": 156773963283,
-            "network_recv_bytes": 14279514690,
-            "timestamp": "2025-03-07T20:28:00"
-        },
-        {
-            "cpu_temperature": 46.0267,
-            "cpu_usage": 1.17833,
-            "ram_usage": 36.3,
-            "system_load": 0.335449,
-            "network_sent_bytes": 156774374231,
-            "network_recv_bytes": 14280186552,
-            "timestamp": "2025-03-07T20:29:00"
-        },
-        {
-            "cpu_temperature": 45.8,
-            "cpu_usage": 1.21333,
-            "ram_usage": 36.1,
-            "system_load": 0.173828,
-            "network_sent_bytes": 156774795589,
-            "network_recv_bytes": 14280867187,
-            "timestamp": "2025-03-07T20:30:00"
-        },
-        {
-            "cpu_temperature": 45.84,
-            "cpu_usage": 1.36333,
-            "ram_usage": 36.7,
-            "system_load": 0.154297,
-            "network_sent_bytes": 156775360531,
-            "network_recv_bytes": 14281691835,
-            "timestamp": "2025-03-07T20:31:00"
-        },
-        {
-            "cpu_temperature": 45.74,
-            "cpu_usage": 1.38333,
-            "ram_usage": 36.6,
-            "system_load": 0.554199,
-            "network_sent_bytes": 156775748368,
-            "network_recv_bytes": 14282323770,
-            "timestamp": "2025-03-07T20:32:00"
-        },
-        {
-            "cpu_temperature": 45.7967,
-            "cpu_usage": 1.33833,
-            "ram_usage": 36.3,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156776153608,
-            "network_recv_bytes": 14282981365,
-            "timestamp": "2025-03-07T20:33:00"
-        },
-        {
-            "cpu_temperature": 45.7517,
-            "cpu_usage": 1.46167,
-            "ram_usage": 36.3,
-            "system_load": 0.117676,
-            "network_sent_bytes": 156776551960,
-            "network_recv_bytes": 14283630859,
-            "timestamp": "2025-03-07T20:34:00"
-        },
-        {
-            "cpu_temperature": 45.51,
-            "cpu_usage": 1.44,
-            "ram_usage": 36.3,
-            "system_load": 0.26416,
-            "network_sent_bytes": 156776931928,
-            "network_recv_bytes": 14284245427,
-            "timestamp": "2025-03-07T20:35:00"
-        },
-        {
-            "cpu_temperature": 45.4917,
-            "cpu_usage": 1.315,
-            "ram_usage": 36.3,
-            "system_load": 0.251953,
-            "network_sent_bytes": 156777323293,
-            "network_recv_bytes": 14284883051,
-            "timestamp": "2025-03-07T20:36:00"
-        },
-        {
-            "cpu_temperature": 45.5683,
-            "cpu_usage": 1.26,
-            "ram_usage": 36.2,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156777698325,
-            "network_recv_bytes": 14285487786,
-            "timestamp": "2025-03-07T20:37:00"
-        },
-        {
-            "cpu_temperature": 45.6283,
-            "cpu_usage": 1.28833,
-            "ram_usage": 36.2,
-            "system_load": 0.222168,
-            "network_sent_bytes": 156778087082,
-            "network_recv_bytes": 14286116976,
-            "timestamp": "2025-03-07T20:38:00"
-        },
-        {
-            "cpu_temperature": 45.4467,
-            "cpu_usage": 1.49833,
-            "ram_usage": 36.3,
-            "system_load": 0.111816,
-            "network_sent_bytes": 156778469658,
-            "network_recv_bytes": 14286739510,
-            "timestamp": "2025-03-07T20:39:00"
-        },
-        {
-            "cpu_temperature": 45.625,
-            "cpu_usage": 1.53167,
-            "ram_usage": 36.2,
-            "system_load": 0.226562,
-            "network_sent_bytes": 156780450469,
-            "network_recv_bytes": 14297835739,
-            "timestamp": "2025-03-07T20:40:00"
-        },
-        {
-            "cpu_temperature": 45.6433,
-            "cpu_usage": 1.31667,
-            "ram_usage": 36.3,
-            "system_load": 0.0810547,
-            "network_sent_bytes": 156780832876,
-            "network_recv_bytes": 14298449428,
-            "timestamp": "2025-03-07T20:41:00"
-        },
-        {
-            "cpu_temperature": 46.145,
-            "cpu_usage": 5.35167,
-            "ram_usage": 36.2,
-            "system_load": 0.549805,
-            "network_sent_bytes": 156783736296,
-            "network_recv_bytes": 14303379022,
-            "timestamp": "2025-03-07T20:42:00"
-        },
-        {
-            "cpu_temperature": 46.7067,
-            "cpu_usage": 6.95167,
-            "ram_usage": 36.2,
-            "system_load": 1.16602,
-            "network_sent_bytes": 156784926783,
-            "network_recv_bytes": 14304809785,
-            "timestamp": "2025-03-07T20:43:00"
-        },
-        {
-            "cpu_temperature": 46.5583,
-            "cpu_usage": 2.77833,
-            "ram_usage": 36.3,
-            "system_load": 0.426758,
-            "network_sent_bytes": 156785521086,
-            "network_recv_bytes": 14305646548,
-            "timestamp": "2025-03-07T20:44:00"
-        },
-        {
-            "cpu_temperature": 47.7383,
-            "cpu_usage": 10.6983,
-            "ram_usage": 36.4,
-            "system_load": 0.818848,
-            "network_sent_bytes": 156793684662,
-            "network_recv_bytes": 14319482054,
-            "timestamp": "2025-03-07T20:45:00"
-        },
-        {
-            "cpu_temperature": 48.0283,
-            "cpu_usage": 8.22667,
-            "ram_usage": 36.3,
-            "system_load": 0.331055,
-            "network_sent_bytes": 156795089659,
-            "network_recv_bytes": 14321135652,
-            "timestamp": "2025-03-07T20:46:00"
-        },
-        {
-            "cpu_temperature": 47.0067,
-            "cpu_usage": 2.72667,
-            "ram_usage": 36.3,
-            "system_load": 0.182617,
-            "network_sent_bytes": 156795661122,
-            "network_recv_bytes": 14321937365,
-            "timestamp": "2025-03-07T20:47:00"
-        },
-        {
-            "cpu_temperature": 46.8417,
-            "cpu_usage": 1.88333,
-            "ram_usage": 36.3,
-            "system_load": 0.325195,
-            "network_sent_bytes": 156796260602,
-            "network_recv_bytes": 14322863000,
-            "timestamp": "2025-03-07T20:48:00"
-        },
-        {
-            "cpu_temperature": 46.9967,
-            "cpu_usage": 3.37667,
-            "ram_usage": 36.4,
-            "system_load": 0.255371,
-            "network_sent_bytes": 156797322664,
-            "network_recv_bytes": 14324433964,
-            "timestamp": "2025-03-07T20:49:00"
-        },
-        {
-            "cpu_temperature": 46.835,
-            "cpu_usage": 4.965,
-            "ram_usage": 36.4,
-            "system_load": 0.341309,
-            "network_sent_bytes": 156800298541,
-            "network_recv_bytes": 14329490720,
-            "timestamp": "2025-03-07T20:50:00"
-        },
-        {
-            "cpu_temperature": 48.52,
-            "cpu_usage": 12.3767,
-            "ram_usage": 36.6,
-            "system_load": 0.675293,
-            "network_sent_bytes": 156815191313,
-            "network_recv_bytes": 14361951389,
-            "timestamp": "2025-03-07T20:51:00"
-        },
-        {
-            "cpu_temperature": 47.49,
-            "cpu_usage": 3.26,
-            "ram_usage": 36.6,
-            "system_load": 0.299316,
-            "network_sent_bytes": 156816587453,
-            "network_recv_bytes": 14363567779,
-            "timestamp": "2025-03-07T20:52:00"
-        },
-        {
-            "cpu_temperature": 46.8167,
-            "cpu_usage": 1.24833,
-            "ram_usage": 36.7,
-            "system_load": 0.175781,
-            "network_sent_bytes": 156816757799,
-            "network_recv_bytes": 14363729964,
-            "timestamp": "2025-03-07T20:53:00"
-        },
-        {
-            "cpu_temperature": 46.625,
-            "cpu_usage": 2.56333,
-            "ram_usage": 36.8,
-            "system_load": 0.325195,
-            "network_sent_bytes": 156817052126,
-            "network_recv_bytes": 14364028937,
-            "timestamp": "2025-03-07T20:54:00"
-        },
-        {
-            "cpu_temperature": 47.655,
-            "cpu_usage": 8.31833,
-            "ram_usage": 36.5,
-            "system_load": 0.484375,
-            "network_sent_bytes": 156826064344,
-            "network_recv_bytes": 14387242197,
-            "timestamp": "2025-03-07T20:55:00"
-        },
-        {
-            "cpu_temperature": 48.0733,
-            "cpu_usage": 6.89833,
-            "ram_usage": 37.7,
-            "system_load": 0.641602,
-            "network_sent_bytes": 156858885788,
-            "network_recv_bytes": 14405407307,
-            "timestamp": "2025-03-07T20:56:00"
-        },
-        {
-            "cpu_temperature": 48.6833,
-            "cpu_usage": 7.645,
-            "ram_usage": 38.1,
-            "system_load": 0.42627,
-            "network_sent_bytes": 156861139893,
-            "network_recv_bytes": 14408895191,
-            "timestamp": "2025-03-07T20:57:00"
-        },
-        {
-            "cpu_temperature": 47.82,
-            "cpu_usage": 4.655,
-            "ram_usage": 37.4,
-            "system_load": 0.230957,
-            "network_sent_bytes": 156862113622,
-            "network_recv_bytes": 14410229855,
-            "timestamp": "2025-03-07T20:58:00"
-        },
-        {
-            "cpu_temperature": 46.8167,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.4,
-            "system_load": 0.220703,
-            "network_sent_bytes": 156862165242,
-            "network_recv_bytes": 14410281267,
-            "timestamp": "2025-03-07T20:59:00"
-        },
-        {
-            "cpu_temperature": 46.4833,
-            "cpu_usage": 1.20833,
-            "ram_usage": 37.3,
-            "system_load": 0.0791016,
-            "network_sent_bytes": 156862212486,
-            "network_recv_bytes": 14410327882,
-            "timestamp": "2025-03-07T21:00:00"
-        },
-        {
-            "cpu_temperature": 46.1533,
-            "cpu_usage": 1.31833,
-            "ram_usage": 37.4,
-            "system_load": 0.0952148,
-            "network_sent_bytes": 156862267504,
-            "network_recv_bytes": 14410387362,
-            "timestamp": "2025-03-07T21:01:00"
-        },
-        {
-            "cpu_temperature": 45.9317,
-            "cpu_usage": 1.15833,
-            "ram_usage": 37.4,
-            "system_load": 0.169434,
-            "network_sent_bytes": 156862346981,
-            "network_recv_bytes": 14410467094,
-            "timestamp": "2025-03-07T21:02:00"
-        },
-        {
-            "cpu_temperature": 45.8833,
-            "cpu_usage": 1.13667,
-            "ram_usage": 37.4,
-            "system_load": 0.0605469,
-            "network_sent_bytes": 156862380905,
-            "network_recv_bytes": 14410501497,
-            "timestamp": "2025-03-07T21:03:00"
-        },
-        {
-            "cpu_temperature": 45.8783,
-            "cpu_usage": 1.185,
-            "ram_usage": 37.4,
-            "system_load": 0.212402,
-            "network_sent_bytes": 156862440572,
-            "network_recv_bytes": 14410559978,
-            "timestamp": "2025-03-07T21:04:00"
-        },
-        {
-            "cpu_temperature": 45.9183,
-            "cpu_usage": 1.205,
-            "ram_usage": 37.4,
-            "system_load": 0.150879,
-            "network_sent_bytes": 156862473663,
-            "network_recv_bytes": 14410588901,
-            "timestamp": "2025-03-07T21:05:00"
-        },
-        {
-            "cpu_temperature": 45.7667,
-            "cpu_usage": 0.95,
-            "ram_usage": 36.9,
-            "system_load": 0.0537109,
-            "network_sent_bytes": 156862516072,
-            "network_recv_bytes": 14410635599,
-            "timestamp": "2025-03-07T21:06:00"
-        },
-        {
-            "cpu_temperature": 45.5283,
-            "cpu_usage": 1.06667,
-            "ram_usage": 37.3,
-            "system_load": 0.19043,
-            "network_sent_bytes": 156862546936,
-            "network_recv_bytes": 14410666396,
-            "timestamp": "2025-03-07T21:07:00"
-        },
-        {
-            "cpu_temperature": 45.6333,
-            "cpu_usage": 1.06333,
-            "ram_usage": 37,
-            "system_load": 0.103027,
-            "network_sent_bytes": 156862570848,
-            "network_recv_bytes": 14410690279,
-            "timestamp": "2025-03-07T21:08:00"
-        },
-        {
-            "cpu_temperature": 45.4367,
-            "cpu_usage": 1.17,
-            "ram_usage": 37.3,
-            "system_load": 0.104004,
-            "network_sent_bytes": 156862601680,
-            "network_recv_bytes": 14410720371,
-            "timestamp": "2025-03-07T21:09:00"
-        },
-        {
-            "cpu_temperature": 45.52,
-            "cpu_usage": 1.06667,
-            "ram_usage": 37,
-            "system_load": 0.162598,
-            "network_sent_bytes": 156862634668,
-            "network_recv_bytes": 14410752845,
-            "timestamp": "2025-03-07T21:10:00"
-        },
-        {
-            "cpu_temperature": 45.5767,
-            "cpu_usage": 1.065,
-            "ram_usage": 37.4,
-            "system_load": 0.0927734,
-            "network_sent_bytes": 156862666037,
-            "network_recv_bytes": 14410789048,
-            "timestamp": "2025-03-07T21:11:00"
-        },
-        {
-            "cpu_temperature": 45.1867,
-            "cpu_usage": 0.988333,
-            "ram_usage": 37,
-            "system_load": 0.224609,
-            "network_sent_bytes": 156862707396,
-            "network_recv_bytes": 14410828911,
-            "timestamp": "2025-03-07T21:12:00"
-        },
-        {
-            "cpu_temperature": 45.3667,
-            "cpu_usage": 0.951667,
-            "ram_usage": 37.3,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156862746355,
-            "network_recv_bytes": 14410867882,
-            "timestamp": "2025-03-07T21:13:00"
-        },
-        {
-            "cpu_temperature": 45.515,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.4,
-            "system_load": 0.0273438,
-            "network_sent_bytes": 156862788544,
-            "network_recv_bytes": 14410909525,
-            "timestamp": "2025-03-07T21:14:00"
-        },
-        {
-            "cpu_temperature": 45.39,
-            "cpu_usage": 1.23333,
-            "ram_usage": 37.4,
-            "system_load": 0.145508,
-            "network_sent_bytes": 156862824320,
-            "network_recv_bytes": 14410944997,
-            "timestamp": "2025-03-07T21:15:00"
-        },
-        {
-            "cpu_temperature": 45.265,
-            "cpu_usage": 1.17167,
-            "ram_usage": 37.2,
-            "system_load": 0.131836,
-            "network_sent_bytes": 156862860578,
-            "network_recv_bytes": 14410987021,
-            "timestamp": "2025-03-07T21:16:00"
-        },
-        {
-            "cpu_temperature": 45.2867,
-            "cpu_usage": 1.175,
-            "ram_usage": 37.4,
-            "system_load": 0.114746,
-            "network_sent_bytes": 156862893484,
-            "network_recv_bytes": 14411016044,
-            "timestamp": "2025-03-07T21:17:00"
-        },
-        {
-            "cpu_temperature": 45.275,
-            "cpu_usage": 1.05167,
-            "ram_usage": 37.2,
-            "system_load": 0.113281,
-            "network_sent_bytes": 156862920750,
-            "network_recv_bytes": 14411043105,
-            "timestamp": "2025-03-07T21:18:00"
-        },
-        {
-            "cpu_temperature": 45.3533,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.4,
-            "system_load": 0.109375,
-            "network_sent_bytes": 156862946687,
-            "network_recv_bytes": 14411069099,
-            "timestamp": "2025-03-07T21:19:00"
-        },
-        {
-            "cpu_temperature": 45.2217,
-            "cpu_usage": 1.13,
-            "ram_usage": 37.2,
-            "system_load": 0.310547,
-            "network_sent_bytes": 156862975464,
-            "network_recv_bytes": 14411097235,
-            "timestamp": "2025-03-07T21:20:00"
-        },
-        {
-            "cpu_temperature": 45.205,
-            "cpu_usage": 1.065,
-            "ram_usage": 37.4,
-            "system_load": 0.262695,
-            "network_sent_bytes": 156863010185,
-            "network_recv_bytes": 14411135416,
-            "timestamp": "2025-03-07T21:21:00"
-        },
-        {
-            "cpu_temperature": 45.24,
-            "cpu_usage": 1.19833,
-            "ram_usage": 37.3,
-            "system_load": 0.132324,
-            "network_sent_bytes": 156863078017,
-            "network_recv_bytes": 14411201736,
-            "timestamp": "2025-03-07T21:22:00"
-        },
-        {
-            "cpu_temperature": 45.2017,
-            "cpu_usage": 1.21333,
-            "ram_usage": 37.3,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156863151883,
-            "network_recv_bytes": 14411275608,
-            "timestamp": "2025-03-07T21:23:00"
-        },
-        {
-            "cpu_temperature": 45.1467,
-            "cpu_usage": 1.28833,
-            "ram_usage": 37.3,
-            "system_load": 0.101074,
-            "network_sent_bytes": 156863206193,
-            "network_recv_bytes": 14411345208,
-            "timestamp": "2025-03-07T21:24:00"
-        },
-        {
-            "cpu_temperature": 45.19,
-            "cpu_usage": 1.185,
-            "ram_usage": 37.4,
-            "system_load": 0.103516,
-            "network_sent_bytes": 156863255362,
-            "network_recv_bytes": 14411393989,
-            "timestamp": "2025-03-07T21:25:00"
-        },
-        {
-            "cpu_temperature": 45.165,
-            "cpu_usage": 1.13333,
-            "ram_usage": 37.2,
-            "system_load": 0.109375,
-            "network_sent_bytes": 156863290947,
-            "network_recv_bytes": 14411435020,
-            "timestamp": "2025-03-07T21:26:00"
-        },
-        {
-            "cpu_temperature": 46.0817,
-            "cpu_usage": 7.04167,
-            "ram_usage": 37.5,
-            "system_load": 0.546387,
-            "network_sent_bytes": 156867154654,
-            "network_recv_bytes": 14417474193,
-            "timestamp": "2025-03-07T21:27:00"
-        },
-        {
-            "cpu_temperature": 46.3033,
-            "cpu_usage": 3.135,
-            "ram_usage": 37.3,
-            "system_load": 0.621582,
-            "network_sent_bytes": 156868352555,
-            "network_recv_bytes": 14419009254,
-            "timestamp": "2025-03-07T21:28:00"
-        },
-        {
-            "cpu_temperature": 47.1583,
-            "cpu_usage": 4.81167,
-            "ram_usage": 37.4,
-            "system_load": 0.355469,
-            "network_sent_bytes": 156869496704,
-            "network_recv_bytes": 14420441404,
-            "timestamp": "2025-03-07T21:29:00"
-        },
-        {
-            "cpu_temperature": 47.3317,
-            "cpu_usage": 6.66833,
-            "ram_usage": 37.5,
-            "system_load": 0.288086,
-            "network_sent_bytes": 156874311626,
-            "network_recv_bytes": 14425955215,
-            "timestamp": "2025-03-07T21:30:00"
-        },
-        {
-            "cpu_temperature": 46.7017,
-            "cpu_usage": 2.355,
-            "ram_usage": 37.5,
-            "system_load": 0.285645,
-            "network_sent_bytes": 156876294904,
-            "network_recv_bytes": 14428606624,
-            "timestamp": "2025-03-07T21:31:00"
-        },
-        {
-            "cpu_temperature": 47.0317,
-            "cpu_usage": 4.10667,
-            "ram_usage": 37.5,
-            "system_load": 0.141113,
-            "network_sent_bytes": 156880811352,
-            "network_recv_bytes": 14434444359,
-            "timestamp": "2025-03-07T21:32:00"
-        },
-        {
-            "cpu_temperature": 46.2267,
-            "cpu_usage": 1.09333,
-            "ram_usage": 37.5,
-            "system_load": 0.118164,
-            "network_sent_bytes": 156880842856,
-            "network_recv_bytes": 14434475017,
-            "timestamp": "2025-03-07T21:33:00"
-        },
-        {
-            "cpu_temperature": 46.285,
-            "cpu_usage": 1.74833,
-            "ram_usage": 37.5,
-            "system_load": 0.114746,
-            "network_sent_bytes": 156881847644,
-            "network_recv_bytes": 14435810836,
-            "timestamp": "2025-03-07T21:34:00"
-        },
-        {
-            "cpu_temperature": 46.5583,
-            "cpu_usage": 2.64,
-            "ram_usage": 37.5,
-            "system_load": 0.0400391,
-            "network_sent_bytes": 156884769571,
-            "network_recv_bytes": 14439725312,
-            "timestamp": "2025-03-07T21:35:00"
-        },
-        {
-            "cpu_temperature": 45.9933,
-            "cpu_usage": 1.165,
-            "ram_usage": 37.3,
-            "system_load": 0.20459,
-            "network_sent_bytes": 156884809476,
-            "network_recv_bytes": 14439770662,
-            "timestamp": "2025-03-07T21:36:00"
-        },
-        {
-            "cpu_temperature": 46.4633,
-            "cpu_usage": 6.82,
-            "ram_usage": 37.5,
-            "system_load": 0.13623,
-            "network_sent_bytes": 156888251395,
-            "network_recv_bytes": 14445164131,
-            "timestamp": "2025-03-07T21:37:00"
-        },
-        {
-            "cpu_temperature": 46.4283,
-            "cpu_usage": 2.21333,
-            "ram_usage": 37.1,
-            "system_load": 0.0478516,
-            "network_sent_bytes": 156890206427,
-            "network_recv_bytes": 14447781043,
-            "timestamp": "2025-03-07T21:38:00"
-        },
-        {
-            "cpu_temperature": 46.2033,
-            "cpu_usage": 2.32833,
-            "ram_usage": 37.6,
-            "system_load": 0.152832,
-            "network_sent_bytes": 156894266622,
-            "network_recv_bytes": 14454225621,
-            "timestamp": "2025-03-07T21:39:00"
-        },
-        {
-            "cpu_temperature": 46.95,
-            "cpu_usage": 3.75167,
-            "ram_usage": 37.5,
-            "system_load": 0.191406,
-            "network_sent_bytes": 156899117622,
-            "network_recv_bytes": 14460732583,
-            "timestamp": "2025-03-07T21:40:00"
-        },
-        {
-            "cpu_temperature": 46.4333,
-            "cpu_usage": 2.11333,
-            "ram_usage": 37.7,
-            "system_load": 0.262207,
-            "network_sent_bytes": 156901083964,
-            "network_recv_bytes": 14463362122,
-            "timestamp": "2025-03-07T21:41:00"
-        },
-        {
-            "cpu_temperature": 46.26,
-            "cpu_usage": 1.08333,
-            "ram_usage": 37.6,
-            "system_load": 0.283203,
-            "network_sent_bytes": 156901120714,
-            "network_recv_bytes": 14463397801,
-            "timestamp": "2025-03-07T21:42:00"
-        },
-        {
-            "cpu_temperature": 46.055,
-            "cpu_usage": 1.34333,
-            "ram_usage": 37.5,
-            "system_load": 0.102051,
-            "network_sent_bytes": 156903386571,
-            "network_recv_bytes": 14475304859,
-            "timestamp": "2025-03-07T21:43:00"
-        },
-        {
-            "cpu_temperature": 45.8433,
-            "cpu_usage": 1.295,
-            "ram_usage": 37.6,
-            "system_load": 0.352051,
-            "network_sent_bytes": 156903428842,
-            "network_recv_bytes": 14475347140,
-            "timestamp": "2025-03-07T21:44:00"
-        },
-        {
-            "cpu_temperature": 45.7067,
-            "cpu_usage": 1.14333,
-            "ram_usage": 37.6,
-            "system_load": 0.12793,
-            "network_sent_bytes": 156903465872,
-            "network_recv_bytes": 14475383571,
-            "timestamp": "2025-03-07T21:45:00"
-        },
-        {
-            "cpu_temperature": 46.0933,
-            "cpu_usage": 2.09167,
-            "ram_usage": 37.7,
-            "system_load": 0.0942383,
-            "network_sent_bytes": 156916423536,
-            "network_recv_bytes": 14475536712,
-            "timestamp": "2025-03-07T21:46:00"
-        },
-        {
-            "cpu_temperature": 45.9367,
-            "cpu_usage": 1.12667,
-            "ram_usage": 37.5,
-            "system_load": 0.169922,
-            "network_sent_bytes": 156916462159,
-            "network_recv_bytes": 14475575515,
-            "timestamp": "2025-03-07T21:47:00"
-        },
-        {
-            "cpu_temperature": 45.7433,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.5,
-            "system_load": 0.0610352,
-            "network_sent_bytes": 156916517069,
-            "network_recv_bytes": 14475627457,
-            "timestamp": "2025-03-07T21:48:00"
-        },
-        {
-            "cpu_temperature": 45.695,
-            "cpu_usage": 1.075,
-            "ram_usage": 37.5,
-            "system_load": 0.133789,
-            "network_sent_bytes": 156916545322,
-            "network_recv_bytes": 14475655463,
-            "timestamp": "2025-03-07T21:49:00"
-        },
-        {
-            "cpu_temperature": 45.7067,
-            "cpu_usage": 1.23833,
-            "ram_usage": 37.4,
-            "system_load": 0.121094,
-            "network_sent_bytes": 156916641966,
-            "network_recv_bytes": 14475752396,
-            "timestamp": "2025-03-07T21:50:00"
-        },
-        {
-            "cpu_temperature": 45.9267,
-            "cpu_usage": 1.18833,
-            "ram_usage": 37.8,
-            "system_load": 0.123047,
-            "network_sent_bytes": 156920603026,
-            "network_recv_bytes": 14482899368,
-            "timestamp": "2025-03-07T21:51:00"
-        },
-        {
-            "cpu_temperature": 47.5667,
-            "cpu_usage": 11.6417,
-            "ram_usage": 37.8,
-            "system_load": 0.805664,
-            "network_sent_bytes": 156924771862,
-            "network_recv_bytes": 14488586070,
-            "timestamp": "2025-03-07T21:52:00"
-        },
-        {
-            "cpu_temperature": 46.2833,
-            "cpu_usage": 1.17333,
-            "ram_usage": 37.9,
-            "system_load": 0.374512,
-            "network_sent_bytes": 156924820506,
-            "network_recv_bytes": 14488630231,
-            "timestamp": "2025-03-07T21:53:00"
-        },
-        {
-            "cpu_temperature": 45.9933,
-            "cpu_usage": 1.155,
-            "ram_usage": 37.7,
-            "system_load": 0.135254,
-            "network_sent_bytes": 156924853048,
-            "network_recv_bytes": 14488662288,
-            "timestamp": "2025-03-07T21:54:00"
-        },
-        {
-            "cpu_temperature": 45.865,
-            "cpu_usage": 1.28,
-            "ram_usage": 37.7,
-            "system_load": 0.265625,
-            "network_sent_bytes": 156924890423,
-            "network_recv_bytes": 14488699197,
-            "timestamp": "2025-03-07T21:55:00"
-        },
-        {
-            "cpu_temperature": 45.7733,
-            "cpu_usage": 1.18667,
-            "ram_usage": 37.7,
-            "system_load": 0.255859,
-            "network_sent_bytes": 156924927190,
-            "network_recv_bytes": 14488741459,
-            "timestamp": "2025-03-07T21:56:00"
-        },
-        {
-            "cpu_temperature": 45.75,
-            "cpu_usage": 1.1,
-            "ram_usage": 37.6,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156924958108,
-            "network_recv_bytes": 14488771879,
-            "timestamp": "2025-03-07T21:57:00"
-        },
-        {
-            "cpu_temperature": 45.65,
-            "cpu_usage": 1.12333,
-            "ram_usage": 37.4,
-            "system_load": 0.382324,
-            "network_sent_bytes": 156924991105,
-            "network_recv_bytes": 14488804414,
-            "timestamp": "2025-03-07T21:58:00"
-        },
-        {
-            "cpu_temperature": 45.4333,
-            "cpu_usage": 1.16333,
-            "ram_usage": 37.6,
-            "system_load": 0.13916,
-            "network_sent_bytes": 156925021656,
-            "network_recv_bytes": 14488834830,
-            "timestamp": "2025-03-07T21:59:00"
-        },
-        {
-            "cpu_temperature": 45.605,
-            "cpu_usage": 1.24167,
-            "ram_usage": 37.4,
-            "system_load": 0.175293,
-            "network_sent_bytes": 156925069582,
-            "network_recv_bytes": 14488881676,
-            "timestamp": "2025-03-07T22:00:00"
-        },
-        {
-            "cpu_temperature": 45.615,
-            "cpu_usage": 1.24667,
-            "ram_usage": 37.6,
-            "system_load": 0.20459,
-            "network_sent_bytes": 156925128668,
-            "network_recv_bytes": 14488947534,
-            "timestamp": "2025-03-07T22:01:00"
-        },
-        {
-            "cpu_temperature": 45.6267,
-            "cpu_usage": 1.25667,
-            "ram_usage": 37.7,
-            "system_load": 0.0800781,
-            "network_sent_bytes": 156925852459,
-            "network_recv_bytes": 14490199052,
-            "timestamp": "2025-03-07T22:02:00"
-        },
-        {
-            "cpu_temperature": 46.14,
-            "cpu_usage": 3.615,
-            "ram_usage": 37.6,
-            "system_load": 0.290039,
-            "network_sent_bytes": 156929717751,
-            "network_recv_bytes": 14495388285,
-            "timestamp": "2025-03-07T22:03:00"
-        },
-        {
-            "cpu_temperature": 46.095,
-            "cpu_usage": 1.75667,
-            "ram_usage": 37.6,
-            "system_load": 0.11377,
-            "network_sent_bytes": 156930761694,
-            "network_recv_bytes": 14496804912,
-            "timestamp": "2025-03-07T22:04:00"
-        },
-        {
-            "cpu_temperature": 45.9517,
-            "cpu_usage": 1.00333,
-            "ram_usage": 37.3,
-            "system_load": 0.214355,
-            "network_sent_bytes": 156930801622,
-            "network_recv_bytes": 14496840517,
-            "timestamp": "2025-03-07T22:05:00"
-        },
-        {
-            "cpu_temperature": 45.6733,
-            "cpu_usage": 0.953333,
-            "ram_usage": 37.6,
-            "system_load": 0.173828,
-            "network_sent_bytes": 156930838988,
-            "network_recv_bytes": 14496881167,
-            "timestamp": "2025-03-07T22:06:00"
-        },
-        {
-            "cpu_temperature": 45.6683,
-            "cpu_usage": 1.09167,
-            "ram_usage": 37.2,
-            "system_load": 0.0668945,
-            "network_sent_bytes": 156930869858,
-            "network_recv_bytes": 14496911880,
-            "timestamp": "2025-03-07T22:07:00"
-        },
-        {
-            "cpu_temperature": 45.595,
-            "cpu_usage": 1.00333,
-            "ram_usage": 37.6,
-            "system_load": 0.271484,
-            "network_sent_bytes": 156930903733,
-            "network_recv_bytes": 14496945590,
-            "timestamp": "2025-03-07T22:08:00"
-        },
-        {
-            "cpu_temperature": 45.5817,
-            "cpu_usage": 1.16,
-            "ram_usage": 37.2,
-            "system_load": 0.106934,
-            "network_sent_bytes": 156930933346,
-            "network_recv_bytes": 14496974826,
-            "timestamp": "2025-03-07T22:09:00"
-        },
-        {
-            "cpu_temperature": 45.4883,
-            "cpu_usage": 1.05333,
-            "ram_usage": 37.6,
-            "system_load": 0.09375,
-            "network_sent_bytes": 156930976804,
-            "network_recv_bytes": 14497017248,
-            "timestamp": "2025-03-07T22:10:00"
-        },
-        {
-            "cpu_temperature": 45.5167,
-            "cpu_usage": 1.12167,
-            "ram_usage": 37.3,
-            "system_load": 0.185059,
-            "network_sent_bytes": 156931009816,
-            "network_recv_bytes": 14497056113,
-            "timestamp": "2025-03-07T22:11:00"
-        },
-        {
-            "cpu_temperature": 45.55,
-            "cpu_usage": 1.15167,
-            "ram_usage": 37.6,
-            "system_load": 0.182129,
-            "network_sent_bytes": 156931045388,
-            "network_recv_bytes": 14497090635,
-            "timestamp": "2025-03-07T22:12:00"
-        },
-        {
-            "cpu_temperature": 45.4117,
-            "cpu_usage": 1.11667,
-            "ram_usage": 37.5,
-            "system_load": 0.14502,
-            "network_sent_bytes": 156931074629,
-            "network_recv_bytes": 14497120031,
-            "timestamp": "2025-03-07T22:13:00"
-        },
-        {
-            "cpu_temperature": 45.6133,
-            "cpu_usage": 1.14,
-            "ram_usage": 37.6,
-            "system_load": 0.195801,
-            "network_sent_bytes": 156931109405,
-            "network_recv_bytes": 14497154165,
-            "timestamp": "2025-03-07T22:14:00"
-        },
-        {
-            "cpu_temperature": 45.6767,
-            "cpu_usage": 1.12833,
-            "ram_usage": 37.6,
-            "system_load": 0.0703125,
-            "network_sent_bytes": 156931149153,
-            "network_recv_bytes": 14497193881,
-            "timestamp": "2025-03-07T22:15:00"
-        },
-        {
-            "cpu_temperature": 45.4083,
-            "cpu_usage": 1.17333,
-            "ram_usage": 37.5,
-            "system_load": 0.145508,
-            "network_sent_bytes": 156931188916,
-            "network_recv_bytes": 14497237689,
-            "timestamp": "2025-03-07T22:16:00"
-        },
-        {
-            "cpu_temperature": 45.6983,
-            "cpu_usage": 2.715,
-            "ram_usage": 37.1,
-            "system_load": 0.259277,
-            "network_sent_bytes": 156934009118,
-            "network_recv_bytes": 14501046889,
-            "timestamp": "2025-03-07T22:17:00"
-        },
-        {
-            "cpu_temperature": 46.5583,
-            "cpu_usage": 2.75167,
-            "ram_usage": 37.6,
-            "system_load": 0.199707,
-            "network_sent_bytes": 156936830843,
-            "network_recv_bytes": 14504860305,
-            "timestamp": "2025-03-07T22:18:00"
-        },
-        {
-            "cpu_temperature": 46.8167,
-            "cpu_usage": 5.04167,
-            "ram_usage": 37.2,
-            "system_load": 0.42334,
-            "network_sent_bytes": 156943383064,
-            "network_recv_bytes": 14513729577,
-            "timestamp": "2025-03-07T22:19:00"
+    '/get_server_resource_logs{"timeframe":"12h"}': [
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 1.18,
+          "ram_usage": 35.7,
+          "system_load": 0.185059,
+          "network_sent_bytes": 196952120826,
+          "network_recv_bytes": 35696325191,
+          "timestamp": "2025-03-18T23:45:30"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.74,
+          "ram_usage": 35.7,
+          "system_load": 0.15625,
+          "network_sent_bytes": 196952186332,
+          "network_recv_bytes": 35696420305,
+          "timestamp": "2025-03-18T23:45:40"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.74,
+          "ram_usage": 35.7,
+          "system_load": 0.131836,
+          "network_sent_bytes": 196952271905,
+          "network_recv_bytes": 35696544702,
+          "timestamp": "2025-03-18T23:45:50"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.79,
+          "ram_usage": 36.2,
+          "system_load": 0.191895,
+          "network_sent_bytes": 196952343547,
+          "network_recv_bytes": 35696646171,
+          "timestamp": "2025-03-18T23:46:00"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 2.29,
+          "ram_usage": 35.7,
+          "system_load": 0.162109,
+          "network_sent_bytes": 196952448719,
+          "network_recv_bytes": 35696782400,
+          "timestamp": "2025-03-18T23:46:10"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.67,
+          "ram_usage": 35.6,
+          "system_load": 0.136719,
+          "network_sent_bytes": 196952511985,
+          "network_recv_bytes": 35696875553,
+          "timestamp": "2025-03-18T23:46:20"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.13,
+          "ram_usage": 35.7,
+          "system_load": 0.189453,
+          "network_sent_bytes": 196952592868,
+          "network_recv_bytes": 35696996194,
+          "timestamp": "2025-03-18T23:46:30"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 0.8,
+          "ram_usage": 35.7,
+          "system_load": 0.240234,
+          "network_sent_bytes": 196952656212,
+          "network_recv_bytes": 35697089371,
+          "timestamp": "2025-03-18T23:46:40"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 1.39,
+          "ram_usage": 35.7,
+          "system_load": 0.202637,
+          "network_sent_bytes": 196952768391,
+          "network_recv_bytes": 35697241624,
+          "timestamp": "2025-03-18T23:46:50"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 2.12,
+          "ram_usage": 36.1,
+          "system_load": 0.245117,
+          "network_sent_bytes": 196952835062,
+          "network_recv_bytes": 35697337876,
+          "timestamp": "2025-03-18T23:47:00"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 1.65,
+          "ram_usage": 35.6,
+          "system_load": 0.207031,
+          "network_sent_bytes": 196952905524,
+          "network_recv_bytes": 35697438828,
+          "timestamp": "2025-03-18T23:47:10"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.44,
+          "ram_usage": 35.6,
+          "system_load": 0.174805,
+          "network_sent_bytes": 196952998759,
+          "network_recv_bytes": 35697563184,
+          "timestamp": "2025-03-18T23:47:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.83,
+          "ram_usage": 35.7,
+          "system_load": 0.147461,
+          "network_sent_bytes": 196953079336,
+          "network_recv_bytes": 35697683470,
+          "timestamp": "2025-03-18T23:47:30"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.91,
+          "ram_usage": 35.7,
+          "system_load": 0.124023,
+          "network_sent_bytes": 196953144618,
+          "network_recv_bytes": 35697778794,
+          "timestamp": "2025-03-18T23:47:40"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.59,
+          "ram_usage": 35.7,
+          "system_load": 0.104492,
+          "network_sent_bytes": 196953225029,
+          "network_recv_bytes": 35697898088,
+          "timestamp": "2025-03-18T23:47:50"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 2.11,
+          "ram_usage": 36.1,
+          "system_load": 0.168457,
+          "network_sent_bytes": 196953291722,
+          "network_recv_bytes": 35697994289,
+          "timestamp": "2025-03-18T23:48:00"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 2.64,
+          "ram_usage": 35.6,
+          "system_load": 0.14209,
+          "network_sent_bytes": 196953386231,
+          "network_recv_bytes": 35698118281,
+          "timestamp": "2025-03-18T23:48:10"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.98,
+          "ram_usage": 35.7,
+          "system_load": 0.200195,
+          "network_sent_bytes": 196953476793,
+          "network_recv_bytes": 35698237642,
+          "timestamp": "2025-03-18T23:48:20"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.11,
+          "ram_usage": 35.7,
+          "system_load": 0.168945,
+          "network_sent_bytes": 196953554280,
+          "network_recv_bytes": 35698351508,
+          "timestamp": "2025-03-18T23:48:30"
+        },
+        {
+          "cpu_temperature": 46.71,
+          "cpu_usage": 0.92,
+          "ram_usage": 35.7,
+          "system_load": 0.142578,
+          "network_sent_bytes": 196953615494,
+          "network_recv_bytes": 35698439852,
+          "timestamp": "2025-03-18T23:48:40"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.7,
+          "ram_usage": 35.6,
+          "system_load": 0.120117,
+          "network_sent_bytes": 196953689542,
+          "network_recv_bytes": 35698549683,
+          "timestamp": "2025-03-18T23:48:50"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.81,
+          "ram_usage": 36,
+          "system_load": 0.101074,
+          "network_sent_bytes": 196953755185,
+          "network_recv_bytes": 35698642121,
+          "timestamp": "2025-03-18T23:49:00"
+        },
+        {
+          "cpu_temperature": 47.2,
+          "cpu_usage": 1.51,
+          "ram_usage": 35.6,
+          "system_load": 0.15918,
+          "network_sent_bytes": 196953816613,
+          "network_recv_bytes": 35698730146,
+          "timestamp": "2025-03-18T23:49:10"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.63,
+          "ram_usage": 35.6,
+          "system_load": 0.214844,
+          "network_sent_bytes": 196953880613,
+          "network_recv_bytes": 35698819654,
+          "timestamp": "2025-03-18T23:49:20"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.82,
+          "ram_usage": 35.6,
+          "system_load": 0.181152,
+          "network_sent_bytes": 196953990003,
+          "network_recv_bytes": 35698963887,
+          "timestamp": "2025-03-18T23:49:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.71,
+          "ram_usage": 35.6,
+          "system_load": 0.227051,
+          "network_sent_bytes": 196954049552,
+          "network_recv_bytes": 35699047938,
+          "timestamp": "2025-03-18T23:49:40"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 0.61,
+          "ram_usage": 35.6,
+          "system_load": 0.191406,
+          "network_sent_bytes": 196954120803,
+          "network_recv_bytes": 35699151680,
+          "timestamp": "2025-03-18T23:49:50"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 2.18,
+          "ram_usage": 36.1,
+          "system_load": 0.242188,
+          "network_sent_bytes": 196954191869,
+          "network_recv_bytes": 35699247246,
+          "timestamp": "2025-03-18T23:50:00"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 2.44,
+          "ram_usage": 35.6,
+          "system_load": 0.20459,
+          "network_sent_bytes": 196954281657,
+          "network_recv_bytes": 35699368647,
+          "timestamp": "2025-03-18T23:50:10"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 0.66,
+          "ram_usage": 35.6,
+          "system_load": 0.172852,
+          "network_sent_bytes": 196954339282,
+          "network_recv_bytes": 35699450796,
+          "timestamp": "2025-03-18T23:50:20"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.31,
+          "ram_usage": 35.7,
+          "system_load": 0.145508,
+          "network_sent_bytes": 196954397154,
+          "network_recv_bytes": 35699533658,
+          "timestamp": "2025-03-18T23:50:30"
+        },
+        {
+          "cpu_temperature": 48.16,
+          "cpu_usage": 32.94,
+          "ram_usage": 35.8,
+          "system_load": 0.36377,
+          "network_sent_bytes": 196960021287,
+          "network_recv_bytes": 35708810439,
+          "timestamp": "2025-03-18T23:50:40"
+        },
+        {
+          "cpu_temperature": 48.75,
+          "cpu_usage": 1.74,
+          "ram_usage": 35.8,
+          "system_load": 0.307617,
+          "network_sent_bytes": 196960985674,
+          "network_recv_bytes": 35710576941,
+          "timestamp": "2025-03-18T23:50:50"
+        },
+        {
+          "cpu_temperature": 47.65,
+          "cpu_usage": 2.51,
+          "ram_usage": 36.3,
+          "system_load": 0.340332,
+          "network_sent_bytes": 196961080470,
+          "network_recv_bytes": 35710703554,
+          "timestamp": "2025-03-18T23:51:00"
+        },
+        {
+          "cpu_temperature": 47.45,
+          "cpu_usage": 2.14,
+          "ram_usage": 35.8,
+          "system_load": 0.368164,
+          "network_sent_bytes": 196961143933,
+          "network_recv_bytes": 35710791070,
+          "timestamp": "2025-03-18T23:51:10"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 0.54,
+          "ram_usage": 35.8,
+          "system_load": 0.311035,
+          "network_sent_bytes": 196961202099,
+          "network_recv_bytes": 35710873163,
+          "timestamp": "2025-03-18T23:51:20"
+        },
+        {
+          "cpu_temperature": 47.3,
+          "cpu_usage": 1.09,
+          "ram_usage": 35.9,
+          "system_load": 0.262695,
+          "network_sent_bytes": 196961263765,
+          "network_recv_bytes": 35710958958,
+          "timestamp": "2025-03-18T23:51:30"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 0.86,
+          "ram_usage": 35.9,
+          "system_load": 0.22168,
+          "network_sent_bytes": 196961340256,
+          "network_recv_bytes": 35711063434,
+          "timestamp": "2025-03-18T23:51:40"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.67,
+          "ram_usage": 35.9,
+          "system_load": 0.26123,
+          "network_sent_bytes": 196961398528,
+          "network_recv_bytes": 35711145825,
+          "timestamp": "2025-03-18T23:51:50"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 2.08,
+          "ram_usage": 36.4,
+          "system_load": 0.30127,
+          "network_sent_bytes": 196961469752,
+          "network_recv_bytes": 35711249106,
+          "timestamp": "2025-03-18T23:52:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.44,
+          "ram_usage": 35.8,
+          "system_load": 0.334961,
+          "network_sent_bytes": 196961530625,
+          "network_recv_bytes": 35711335036,
+          "timestamp": "2025-03-18T23:52:10"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.69,
+          "ram_usage": 35.8,
+          "system_load": 0.357422,
+          "network_sent_bytes": 196961588279,
+          "network_recv_bytes": 35711416783,
+          "timestamp": "2025-03-18T23:52:20"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.43,
+          "ram_usage": 35.9,
+          "system_load": 0.302246,
+          "network_sent_bytes": 196961648209,
+          "network_recv_bytes": 35711501460,
+          "timestamp": "2025-03-18T23:52:30"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.75,
+          "ram_usage": 35.9,
+          "system_load": 0.255371,
+          "network_sent_bytes": 196961719709,
+          "network_recv_bytes": 35711605009,
+          "timestamp": "2025-03-18T23:52:40"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 0.57,
+          "ram_usage": 35.9,
+          "system_load": 0.21582,
+          "network_sent_bytes": 196961778285,
+          "network_recv_bytes": 35711687604,
+          "timestamp": "2025-03-18T23:52:50"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 2.11,
+          "ram_usage": 36.4,
+          "system_load": 0.182129,
+          "network_sent_bytes": 196961849489,
+          "network_recv_bytes": 35711790913,
+          "timestamp": "2025-03-18T23:53:00"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.89,
+          "ram_usage": 35.8,
+          "system_load": 0.153809,
+          "network_sent_bytes": 196961897547,
+          "network_recv_bytes": 35711854933,
+          "timestamp": "2025-03-18T23:53:10"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.67,
+          "ram_usage": 35.9,
+          "system_load": 0.129395,
+          "network_sent_bytes": 196961968322,
+          "network_recv_bytes": 35711957561,
+          "timestamp": "2025-03-18T23:53:20"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.08,
+          "ram_usage": 35.9,
+          "system_load": 0.189453,
+          "network_sent_bytes": 196962026926,
+          "network_recv_bytes": 35712040423,
+          "timestamp": "2025-03-18T23:53:30"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.73,
+          "ram_usage": 35.9,
+          "system_load": 0.159668,
+          "network_sent_bytes": 196962098977,
+          "network_recv_bytes": 35712144023,
+          "timestamp": "2025-03-18T23:53:40"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 0.98,
+          "ram_usage": 35.9,
+          "system_load": 0.134277,
+          "network_sent_bytes": 196962838102,
+          "network_recv_bytes": 35712338546,
+          "timestamp": "2025-03-18T23:53:50"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 2.13,
+          "ram_usage": 36.4,
+          "system_load": 0.112793,
+          "network_sent_bytes": 196962924211,
+          "network_recv_bytes": 35712453822,
+          "timestamp": "2025-03-18T23:54:00"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.7,
+          "ram_usage": 35.9,
+          "system_load": 0.26416,
+          "network_sent_bytes": 196962967414,
+          "network_recv_bytes": 35712512515,
+          "timestamp": "2025-03-18T23:54:10"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.83,
+          "ram_usage": 35.9,
+          "system_load": 0.223145,
+          "network_sent_bytes": 196963038428,
+          "network_recv_bytes": 35712615853,
+          "timestamp": "2025-03-18T23:54:20"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.87,
+          "ram_usage": 36,
+          "system_load": 0.24707,
+          "network_sent_bytes": 196963095720,
+          "network_recv_bytes": 35712697860,
+          "timestamp": "2025-03-18T23:54:30"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.59,
+          "ram_usage": 36,
+          "system_load": 0.289062,
+          "network_sent_bytes": 196963152341,
+          "network_recv_bytes": 35712778645,
+          "timestamp": "2025-03-18T23:54:40"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.68,
+          "ram_usage": 36,
+          "system_load": 0.244141,
+          "network_sent_bytes": 196963224160,
+          "network_recv_bytes": 35712882319,
+          "timestamp": "2025-03-18T23:54:50"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 2.04,
+          "ram_usage": 36.3,
+          "system_load": 0.280273,
+          "network_sent_bytes": 196963291879,
+          "network_recv_bytes": 35712979714,
+          "timestamp": "2025-03-18T23:55:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 1.8,
+          "ram_usage": 35.9,
+          "system_load": 0.257812,
+          "network_sent_bytes": 196963348066,
+          "network_recv_bytes": 35713059228,
+          "timestamp": "2025-03-18T23:55:10"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 2.22,
+          "ram_usage": 35.9,
+          "system_load": 0.217773,
+          "network_sent_bytes": 196964558118,
+          "network_recv_bytes": 35713565300,
+          "timestamp": "2025-03-18T23:55:20"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.86,
+          "ram_usage": 35.9,
+          "system_load": 0.236816,
+          "network_sent_bytes": 196964671165,
+          "network_recv_bytes": 35713711138,
+          "timestamp": "2025-03-18T23:55:30"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.11,
+          "ram_usage": 35.9,
+          "system_load": 0.200195,
+          "network_sent_bytes": 196964744078,
+          "network_recv_bytes": 35713813759,
+          "timestamp": "2025-03-18T23:55:40"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.69,
+          "ram_usage": 35.9,
+          "system_load": 0.168945,
+          "network_sent_bytes": 196964814365,
+          "network_recv_bytes": 35713923116,
+          "timestamp": "2025-03-18T23:55:50"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.9,
+          "ram_usage": 36.4,
+          "system_load": 0.142578,
+          "network_sent_bytes": 196964875360,
+          "network_recv_bytes": 35714008155,
+          "timestamp": "2025-03-18T23:56:00"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 2.01,
+          "ram_usage": 36,
+          "system_load": 0.130859,
+          "network_sent_bytes": 196965036464,
+          "network_recv_bytes": 35714174911,
+          "timestamp": "2025-03-18T23:56:10"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 0.79,
+          "ram_usage": 36,
+          "system_load": 0.169434,
+          "network_sent_bytes": 196965114219,
+          "network_recv_bytes": 35714273205,
+          "timestamp": "2025-03-18T23:56:20"
+        },
+        {
+          "cpu_temperature": 47.24,
+          "cpu_usage": 0.76,
+          "ram_usage": 35.9,
+          "system_load": 0.143066,
+          "network_sent_bytes": 196965179430,
+          "network_recv_bytes": 35714369604,
+          "timestamp": "2025-03-18T23:56:30"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.59,
+          "ram_usage": 36,
+          "system_load": 0.120605,
+          "network_sent_bytes": 196965234296,
+          "network_recv_bytes": 35714446152,
+          "timestamp": "2025-03-18T23:56:40"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 0.67,
+          "ram_usage": 36,
+          "system_load": 0.101562,
+          "network_sent_bytes": 196965302328,
+          "network_recv_bytes": 35714542087,
+          "timestamp": "2025-03-18T23:56:50"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 1.89,
+          "ram_usage": 36.4,
+          "system_load": 0.0854492,
+          "network_sent_bytes": 196965360838,
+          "network_recv_bytes": 35714621582,
+          "timestamp": "2025-03-18T23:57:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.5,
+          "ram_usage": 35.9,
+          "system_load": 0.158691,
+          "network_sent_bytes": 196965460865,
+          "network_recv_bytes": 35714743800,
+          "timestamp": "2025-03-18T23:57:10"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.66,
+          "ram_usage": 35.9,
+          "system_load": 0.28125,
+          "network_sent_bytes": 196965518372,
+          "network_recv_bytes": 35714821478,
+          "timestamp": "2025-03-18T23:57:20"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 1.48,
+          "ram_usage": 35.9,
+          "system_load": 0.286133,
+          "network_sent_bytes": 196965616233,
+          "network_recv_bytes": 35714948145,
+          "timestamp": "2025-03-18T23:57:30"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.08,
+          "ram_usage": 35.9,
+          "system_load": 0.315918,
+          "network_sent_bytes": 196965670072,
+          "network_recv_bytes": 35715022494,
+          "timestamp": "2025-03-18T23:57:40"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 0.63,
+          "ram_usage": 35.9,
+          "system_load": 0.347656,
+          "network_sent_bytes": 196965736088,
+          "network_recv_bytes": 35715116126,
+          "timestamp": "2025-03-18T23:57:50"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.41,
+          "ram_usage": 36.3,
+          "system_load": 0.374023,
+          "network_sent_bytes": 196965967805,
+          "network_recv_bytes": 35715218075,
+          "timestamp": "2025-03-18T23:58:00"
+        },
+        {
+          "cpu_temperature": 47.2,
+          "cpu_usage": 7.18,
+          "ram_usage": 36.1,
+          "system_load": 0.315918,
+          "network_sent_bytes": 196966109562,
+          "network_recv_bytes": 35715343137,
+          "timestamp": "2025-03-18T23:58:10"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 5.88,
+          "ram_usage": 36.3,
+          "system_load": 0.26709,
+          "network_sent_bytes": 196967311871,
+          "network_recv_bytes": 35716702242,
+          "timestamp": "2025-03-18T23:58:20"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 6.19,
+          "ram_usage": 36.3,
+          "system_load": 0.225586,
+          "network_sent_bytes": 196967479362,
+          "network_recv_bytes": 35716894178,
+          "timestamp": "2025-03-18T23:58:30"
+        },
+        {
+          "cpu_temperature": 50.8,
+          "cpu_usage": 46.33,
+          "ram_usage": 36.5,
+          "system_load": 0.572754,
+          "network_sent_bytes": 196969696565,
+          "network_recv_bytes": 35720055426,
+          "timestamp": "2025-03-18T23:58:40"
+        },
+        {
+          "cpu_temperature": 49.62,
+          "cpu_usage": 7.36,
+          "ram_usage": 36.5,
+          "system_load": 0.484375,
+          "network_sent_bytes": 196971270262,
+          "network_recv_bytes": 35722843952,
+          "timestamp": "2025-03-18T23:58:50"
+        },
+        {
+          "cpu_temperature": 47.9,
+          "cpu_usage": 2.12,
+          "ram_usage": 36.9,
+          "system_load": 0.40918,
+          "network_sent_bytes": 196971330670,
+          "network_recv_bytes": 35722931052,
+          "timestamp": "2025-03-18T23:59:00"
+        },
+        {
+          "cpu_temperature": 47.75,
+          "cpu_usage": 1.81,
+          "ram_usage": 36.2,
+          "system_load": 0.375977,
+          "network_sent_bytes": 196971391510,
+          "network_recv_bytes": 35723019076,
+          "timestamp": "2025-03-18T23:59:10"
+        },
+        {
+          "cpu_temperature": 47.4,
+          "cpu_usage": 0.87,
+          "ram_usage": 36.2,
+          "system_load": 0.360352,
+          "network_sent_bytes": 196971456519,
+          "network_recv_bytes": 35723110768,
+          "timestamp": "2025-03-18T23:59:20"
+        },
+        {
+          "cpu_temperature": 48.33,
+          "cpu_usage": 14.54,
+          "ram_usage": 36.2,
+          "system_load": 0.304199,
+          "network_sent_bytes": 196971863875,
+          "network_recv_bytes": 35723565400,
+          "timestamp": "2025-03-18T23:59:30"
+        },
+        {
+          "cpu_temperature": 48.37,
+          "cpu_usage": 7.03,
+          "ram_usage": 36.3,
+          "system_load": 0.404785,
+          "network_sent_bytes": 196973057984,
+          "network_recv_bytes": 35724938599,
+          "timestamp": "2025-03-18T23:59:40"
+        },
+        {
+          "cpu_temperature": 47.89,
+          "cpu_usage": 0.62,
+          "ram_usage": 36.3,
+          "system_load": 0.489746,
+          "network_sent_bytes": 196973120261,
+          "network_recv_bytes": 35725028336,
+          "timestamp": "2025-03-18T23:59:50"
+        },
+        {
+          "cpu_temperature": 47.84,
+          "cpu_usage": 4.82,
+          "ram_usage": 36.8,
+          "system_load": 0.574707,
+          "network_sent_bytes": 196973228421,
+          "network_recv_bytes": 35725171080,
+          "timestamp": "2025-03-19T00:00:00"
+        },
+        {
+          "cpu_temperature": 47.89,
+          "cpu_usage": 3.35,
+          "ram_usage": 36.4,
+          "system_load": 0.52832,
+          "network_sent_bytes": 196973296700,
+          "network_recv_bytes": 35725271716,
+          "timestamp": "2025-03-19T00:00:10"
+        },
+        {
+          "cpu_temperature": 47.6,
+          "cpu_usage": 1.27,
+          "ram_usage": 36.4,
+          "system_load": 0.553223,
+          "network_sent_bytes": 196973359968,
+          "network_recv_bytes": 35725361550,
+          "timestamp": "2025-03-19T00:00:20"
+        },
+        {
+          "cpu_temperature": 47.29,
+          "cpu_usage": 0.95,
+          "ram_usage": 36.4,
+          "system_load": 0.467773,
+          "network_sent_bytes": 196973439770,
+          "network_recv_bytes": 35725477227,
+          "timestamp": "2025-03-19T00:00:30"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 1.04,
+          "ram_usage": 36.4,
+          "system_load": 0.395508,
+          "network_sent_bytes": 196973501759,
+          "network_recv_bytes": 35725565458,
+          "timestamp": "2025-03-19T00:00:40"
+        },
+        {
+          "cpu_temperature": 47.35,
+          "cpu_usage": 0.68,
+          "ram_usage": 36.4,
+          "system_load": 0.334473,
+          "network_sent_bytes": 196973562895,
+          "network_recv_bytes": 35725652211,
+          "timestamp": "2025-03-19T00:00:50"
+        },
+        {
+          "cpu_temperature": 47.25,
+          "cpu_usage": 1.6,
+          "ram_usage": 36.9,
+          "system_load": 0.282715,
+          "network_sent_bytes": 196973638715,
+          "network_recv_bytes": 35725761990,
+          "timestamp": "2025-03-19T00:01:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.03,
+          "ram_usage": 36.3,
+          "system_load": 0.259766,
+          "network_sent_bytes": 196973701085,
+          "network_recv_bytes": 35725848861,
+          "timestamp": "2025-03-19T00:01:10"
+        },
+        {
+          "cpu_temperature": 47.2,
+          "cpu_usage": 0.88,
+          "ram_usage": 36.3,
+          "system_load": 0.219238,
+          "network_sent_bytes": 196973765201,
+          "network_recv_bytes": 35725937261,
+          "timestamp": "2025-03-19T00:01:20"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.63,
+          "ram_usage": 36.3,
+          "system_load": 0.238281,
+          "network_sent_bytes": 196973824054,
+          "network_recv_bytes": 35726020520,
+          "timestamp": "2025-03-19T00:01:30"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.09,
+          "ram_usage": 36.5,
+          "system_load": 0.201172,
+          "network_sent_bytes": 196973896707,
+          "network_recv_bytes": 35726125752,
+          "timestamp": "2025-03-19T00:01:40"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.5,
+          "system_load": 0.169922,
+          "network_sent_bytes": 196973954634,
+          "network_recv_bytes": 35726207919,
+          "timestamp": "2025-03-19T00:01:50"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.68,
+          "ram_usage": 36.8,
+          "system_load": 0.143555,
+          "network_sent_bytes": 196974028423,
+          "network_recv_bytes": 35726314283,
+          "timestamp": "2025-03-19T00:02:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.89,
+          "ram_usage": 36.4,
+          "system_load": 0.131836,
+          "network_sent_bytes": 196974091287,
+          "network_recv_bytes": 35726401912,
+          "timestamp": "2025-03-19T00:02:10"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.76,
+          "ram_usage": 36.4,
+          "system_load": 0.169922,
+          "network_sent_bytes": 196974154177,
+          "network_recv_bytes": 35726488826,
+          "timestamp": "2025-03-19T00:02:20"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 0.71,
+          "ram_usage": 36.4,
+          "system_load": 0.217773,
+          "network_sent_bytes": 196974215096,
+          "network_recv_bytes": 35726574531,
+          "timestamp": "2025-03-19T00:02:30"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.99,
+          "ram_usage": 36.4,
+          "system_load": 0.264648,
+          "network_sent_bytes": 196974287025,
+          "network_recv_bytes": 35726678984,
+          "timestamp": "2025-03-19T00:02:40"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.62,
+          "ram_usage": 36.4,
+          "system_load": 0.223633,
+          "network_sent_bytes": 196974344976,
+          "network_recv_bytes": 35726761255,
+          "timestamp": "2025-03-19T00:02:50"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.71,
+          "ram_usage": 36.7,
+          "system_load": 0.263184,
+          "network_sent_bytes": 196974416394,
+          "network_recv_bytes": 35726865122,
+          "timestamp": "2025-03-19T00:03:00"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 2.16,
+          "ram_usage": 36.3,
+          "system_load": 0.241699,
+          "network_sent_bytes": 196974473557,
+          "network_recv_bytes": 35726946522,
+          "timestamp": "2025-03-19T00:03:10"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.59,
+          "ram_usage": 36.3,
+          "system_load": 0.255859,
+          "network_sent_bytes": 196974532226,
+          "network_recv_bytes": 35727029372,
+          "timestamp": "2025-03-19T00:03:20"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.51,
+          "ram_usage": 36.3,
+          "system_load": 0.216309,
+          "network_sent_bytes": 196974597845,
+          "network_recv_bytes": 35727119308,
+          "timestamp": "2025-03-19T00:03:30"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.98,
+          "ram_usage": 36.3,
+          "system_load": 0.182617,
+          "network_sent_bytes": 196974673158,
+          "network_recv_bytes": 35727223191,
+          "timestamp": "2025-03-19T00:03:40"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.3,
+          "system_load": 0.154297,
+          "network_sent_bytes": 196974731112,
+          "network_recv_bytes": 35727305255,
+          "timestamp": "2025-03-19T00:03:50"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.77,
+          "ram_usage": 36.8,
+          "system_load": 0.129883,
+          "network_sent_bytes": 196974807857,
+          "network_recv_bytes": 35727414647,
+          "timestamp": "2025-03-19T00:04:00"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 1.77,
+          "ram_usage": 36.4,
+          "system_load": 0.119141,
+          "network_sent_bytes": 196974851743,
+          "network_recv_bytes": 35727474308,
+          "timestamp": "2025-03-19T00:04:10"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.4,
+          "system_load": 0.100586,
+          "network_sent_bytes": 196974922994,
+          "network_recv_bytes": 35727577976,
+          "timestamp": "2025-03-19T00:04:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.81,
+          "ram_usage": 36.4,
+          "system_load": 0.0844727,
+          "network_sent_bytes": 196974981957,
+          "network_recv_bytes": 35727661336,
+          "timestamp": "2025-03-19T00:04:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.93,
+          "ram_usage": 36.4,
+          "system_load": 0.133789,
+          "network_sent_bytes": 196975057600,
+          "network_recv_bytes": 35727769356,
+          "timestamp": "2025-03-19T00:04:40"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.58,
+          "ram_usage": 36.4,
+          "system_load": 0.112793,
+          "network_sent_bytes": 196975116909,
+          "network_recv_bytes": 35727852877,
+          "timestamp": "2025-03-19T00:04:50"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 2.16,
+          "ram_usage": 36.8,
+          "system_load": 0.0952148,
+          "network_sent_bytes": 196975198167,
+          "network_recv_bytes": 35727972526,
+          "timestamp": "2025-03-19T00:05:00"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.81,
+          "ram_usage": 36.3,
+          "system_load": 0.167969,
+          "network_sent_bytes": 196975243145,
+          "network_recv_bytes": 35728033374,
+          "timestamp": "2025-03-19T00:05:10"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.3,
+          "system_load": 0.141602,
+          "network_sent_bytes": 196975314433,
+          "network_recv_bytes": 35728136960,
+          "timestamp": "2025-03-19T00:05:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.55,
+          "ram_usage": 36.3,
+          "system_load": 0.51416,
+          "network_sent_bytes": 196975372191,
+          "network_recv_bytes": 35728218673,
+          "timestamp": "2025-03-19T00:05:30"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.01,
+          "ram_usage": 36.4,
+          "system_load": 0.541992,
+          "network_sent_bytes": 196975445283,
+          "network_recv_bytes": 35728324159,
+          "timestamp": "2025-03-19T00:05:40"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 0.65,
+          "ram_usage": 36.4,
+          "system_load": 0.458496,
+          "network_sent_bytes": 196975503666,
+          "network_recv_bytes": 35728406613,
+          "timestamp": "2025-03-19T00:05:50"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.7,
+          "ram_usage": 36.8,
+          "system_load": 0.387207,
+          "network_sent_bytes": 196975572368,
+          "network_recv_bytes": 35728499208,
+          "timestamp": "2025-03-19T00:06:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 1.82,
+          "ram_usage": 36.4,
+          "system_load": 0.355957,
+          "network_sent_bytes": 196975636478,
+          "network_recv_bytes": 35728587306,
+          "timestamp": "2025-03-19T00:06:10"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.4,
+          "system_load": 0.300781,
+          "network_sent_bytes": 196975709646,
+          "network_recv_bytes": 35728692759,
+          "timestamp": "2025-03-19T00:06:20"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.86,
+          "ram_usage": 36.4,
+          "system_load": 0.301758,
+          "network_sent_bytes": 196975766838,
+          "network_recv_bytes": 35728774257,
+          "timestamp": "2025-03-19T00:06:30"
+        },
+        {
+          "cpu_temperature": 46.51,
+          "cpu_usage": 0.92,
+          "ram_usage": 36.4,
+          "system_load": 0.254883,
+          "network_sent_bytes": 196975838317,
+          "network_recv_bytes": 35728877764,
+          "timestamp": "2025-03-19T00:06:40"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 0.56,
+          "ram_usage": 36.4,
+          "system_load": 0.215332,
+          "network_sent_bytes": 196975896599,
+          "network_recv_bytes": 35728959039,
+          "timestamp": "2025-03-19T00:06:50"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 1.76,
+          "ram_usage": 36.8,
+          "system_load": 0.181641,
+          "network_sent_bytes": 196975968105,
+          "network_recv_bytes": 35729062253,
+          "timestamp": "2025-03-19T00:07:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.72,
+          "ram_usage": 36.4,
+          "system_load": 0.166992,
+          "network_sent_bytes": 196976014858,
+          "network_recv_bytes": 35729124677,
+          "timestamp": "2025-03-19T00:07:10"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.58,
+          "ram_usage": 36.4,
+          "system_load": 0.140625,
+          "network_sent_bytes": 196976087337,
+          "network_recv_bytes": 35729227980,
+          "timestamp": "2025-03-19T00:07:20"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.65,
+          "ram_usage": 36.4,
+          "system_load": 0.176758,
+          "network_sent_bytes": 196976147699,
+          "network_recv_bytes": 35729311453,
+          "timestamp": "2025-03-19T00:07:30"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.93,
+          "ram_usage": 36.4,
+          "system_load": 0.149414,
+          "network_sent_bytes": 196976218029,
+          "network_recv_bytes": 35729412773,
+          "timestamp": "2025-03-19T00:07:40"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.4,
+          "system_load": 0.200195,
+          "network_sent_bytes": 196976276285,
+          "network_recv_bytes": 35729493563,
+          "timestamp": "2025-03-19T00:07:50"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.55,
+          "ram_usage": 36.7,
+          "system_load": 0.249512,
+          "network_sent_bytes": 196976333268,
+          "network_recv_bytes": 35729573231,
+          "timestamp": "2025-03-19T00:08:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 2.19,
+          "ram_usage": 36.3,
+          "system_load": 0.229492,
+          "network_sent_bytes": 196976388499,
+          "network_recv_bytes": 35729650892,
+          "timestamp": "2025-03-19T00:08:10"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 0.44,
+          "ram_usage": 36.3,
+          "system_load": 0.274414,
+          "network_sent_bytes": 196976448301,
+          "network_recv_bytes": 35729733005,
+          "timestamp": "2025-03-19T00:08:20"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.91,
+          "ram_usage": 36.3,
+          "system_load": 0.231445,
+          "network_sent_bytes": 196976518906,
+          "network_recv_bytes": 35729834090,
+          "timestamp": "2025-03-19T00:08:30"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1,
+          "ram_usage": 36.3,
+          "system_load": 0.195801,
+          "network_sent_bytes": 196976575557,
+          "network_recv_bytes": 35729913190,
+          "timestamp": "2025-03-19T00:08:40"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.7,
+          "ram_usage": 36.3,
+          "system_load": 0.219727,
+          "network_sent_bytes": 196976644649,
+          "network_recv_bytes": 35730012110,
+          "timestamp": "2025-03-19T00:08:50"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 1.86,
+          "ram_usage": 36.8,
+          "system_load": 0.185059,
+          "network_sent_bytes": 196976701248,
+          "network_recv_bytes": 35730091193,
+          "timestamp": "2025-03-19T00:09:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.23,
+          "ram_usage": 36.3,
+          "system_load": 0.169922,
+          "network_sent_bytes": 196976758958,
+          "network_recv_bytes": 35730171283,
+          "timestamp": "2025-03-19T00:09:10"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.56,
+          "ram_usage": 36.3,
+          "system_load": 0.224121,
+          "network_sent_bytes": 196976814036,
+          "network_recv_bytes": 35730248604,
+          "timestamp": "2025-03-19T00:09:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.75,
+          "ram_usage": 36.3,
+          "system_load": 0.189453,
+          "network_sent_bytes": 196976883986,
+          "network_recv_bytes": 35730348451,
+          "timestamp": "2025-03-19T00:09:30"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.98,
+          "ram_usage": 36.4,
+          "system_load": 0.159668,
+          "network_sent_bytes": 196976939717,
+          "network_recv_bytes": 35730426499,
+          "timestamp": "2025-03-19T00:09:40"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 0.75,
+          "ram_usage": 36.4,
+          "system_load": 0.191406,
+          "network_sent_bytes": 196977011941,
+          "network_recv_bytes": 35730528531,
+          "timestamp": "2025-03-19T00:09:50"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 2.66,
+          "ram_usage": 36.8,
+          "system_load": 0.161621,
+          "network_sent_bytes": 196977352055,
+          "network_recv_bytes": 35731046289,
+          "timestamp": "2025-03-19T00:10:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.31,
+          "ram_usage": 36.4,
+          "system_load": 0.148438,
+          "network_sent_bytes": 196977413328,
+          "network_recv_bytes": 35731130082,
+          "timestamp": "2025-03-19T00:10:10"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.63,
+          "ram_usage": 36.4,
+          "system_load": 0.125,
+          "network_sent_bytes": 196977469557,
+          "network_recv_bytes": 35731208291,
+          "timestamp": "2025-03-19T00:10:20"
+        },
+        {
+          "cpu_temperature": 46.2,
+          "cpu_usage": 0.85,
+          "ram_usage": 36.4,
+          "system_load": 0.186035,
+          "network_sent_bytes": 196977540498,
+          "network_recv_bytes": 35731309282,
+          "timestamp": "2025-03-19T00:10:30"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 1.04,
+          "ram_usage": 36.5,
+          "system_load": 0.292969,
+          "network_sent_bytes": 196977598998,
+          "network_recv_bytes": 35731389830,
+          "timestamp": "2025-03-19T00:10:40"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 0.58,
+          "ram_usage": 36.5,
+          "system_load": 0.24707,
+          "network_sent_bytes": 196977655080,
+          "network_recv_bytes": 35731467983,
+          "timestamp": "2025-03-19T00:10:50"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 1.55,
+          "ram_usage": 36.8,
+          "system_load": 0.282715,
+          "network_sent_bytes": 196977730916,
+          "network_recv_bytes": 35731573647,
+          "timestamp": "2025-03-19T00:11:00"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 2.06,
+          "ram_usage": 36.4,
+          "system_load": 0.259766,
+          "network_sent_bytes": 196977789789,
+          "network_recv_bytes": 35731654552,
+          "timestamp": "2025-03-19T00:11:10"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.51,
+          "ram_usage": 36.4,
+          "system_load": 0.219238,
+          "network_sent_bytes": 196977846440,
+          "network_recv_bytes": 35731733183,
+          "timestamp": "2025-03-19T00:11:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.7,
+          "ram_usage": 36.4,
+          "system_load": 0.185059,
+          "network_sent_bytes": 196977903223,
+          "network_recv_bytes": 35731812191,
+          "timestamp": "2025-03-19T00:11:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.91,
+          "ram_usage": 36.4,
+          "system_load": 0.15625,
+          "network_sent_bytes": 196977972725,
+          "network_recv_bytes": 35731911441,
+          "timestamp": "2025-03-19T00:11:40"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.4,
+          "system_load": 0.121094,
+          "network_sent_bytes": 196978028944,
+          "network_recv_bytes": 35731989662,
+          "timestamp": "2025-03-19T00:11:50"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.88,
+          "ram_usage": 36.8,
+          "system_load": 0.102051,
+          "network_sent_bytes": 196978091421,
+          "network_recv_bytes": 35732074024,
+          "timestamp": "2025-03-19T00:12:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 1.76,
+          "ram_usage": 36.4,
+          "system_load": 0.09375,
+          "network_sent_bytes": 196978152990,
+          "network_recv_bytes": 35732158313,
+          "timestamp": "2025-03-19T00:12:10"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.4,
+          "system_load": 0.0786133,
+          "network_sent_bytes": 196978220646,
+          "network_recv_bytes": 35732255538,
+          "timestamp": "2025-03-19T00:12:20"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.7,
+          "ram_usage": 36.4,
+          "system_load": 0.128906,
+          "network_sent_bytes": 196978279697,
+          "network_recv_bytes": 35732337418,
+          "timestamp": "2025-03-19T00:12:30"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 0.98,
+          "ram_usage": 36.4,
+          "system_load": 0.108398,
+          "network_sent_bytes": 196978334581,
+          "network_recv_bytes": 35732414411,
+          "timestamp": "2025-03-19T00:12:40"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.77,
+          "ram_usage": 36.4,
+          "system_load": 0.0913086,
+          "network_sent_bytes": 196978402848,
+          "network_recv_bytes": 35732512057,
+          "timestamp": "2025-03-19T00:12:50"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.65,
+          "ram_usage": 36.8,
+          "system_load": 0.0771484,
+          "network_sent_bytes": 196978462155,
+          "network_recv_bytes": 35732592879,
+          "timestamp": "2025-03-19T00:13:00"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.97,
+          "ram_usage": 36.3,
+          "system_load": 0.151367,
+          "network_sent_bytes": 196978517115,
+          "network_recv_bytes": 35732669254,
+          "timestamp": "2025-03-19T00:13:10"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.6,
+          "ram_usage": 36.3,
+          "system_load": 0.12793,
+          "network_sent_bytes": 196978574257,
+          "network_recv_bytes": 35732747553,
+          "timestamp": "2025-03-19T00:13:20"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.3,
+          "system_load": 0.182129,
+          "network_sent_bytes": 196978642644,
+          "network_recv_bytes": 35732844440,
+          "timestamp": "2025-03-19T00:13:30"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.81,
+          "ram_usage": 36.4,
+          "system_load": 0.215332,
+          "network_sent_bytes": 196978704258,
+          "network_recv_bytes": 35732926728,
+          "timestamp": "2025-03-19T00:13:40"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.69,
+          "ram_usage": 36.4,
+          "system_load": 0.181641,
+          "network_sent_bytes": 196978772145,
+          "network_recv_bytes": 35733022017,
+          "timestamp": "2025-03-19T00:13:50"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.61,
+          "ram_usage": 36.8,
+          "system_load": 0.15332,
+          "network_sent_bytes": 196978827254,
+          "network_recv_bytes": 35733097490,
+          "timestamp": "2025-03-19T00:14:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.97,
+          "ram_usage": 36.4,
+          "system_load": 0.140625,
+          "network_sent_bytes": 196978880586,
+          "network_recv_bytes": 35733171157,
+          "timestamp": "2025-03-19T00:14:10"
+        },
+        {
+          "cpu_temperature": 46.35,
+          "cpu_usage": 0.94,
+          "ram_usage": 36.4,
+          "system_load": 0.118164,
+          "network_sent_bytes": 196978942099,
+          "network_recv_bytes": 35733253075,
+          "timestamp": "2025-03-19T00:14:20"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 0.86,
+          "ram_usage": 36.4,
+          "system_load": 0.0996094,
+          "network_sent_bytes": 196978995366,
+          "network_recv_bytes": 35733326866,
+          "timestamp": "2025-03-19T00:14:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.19,
+          "ram_usage": 36.3,
+          "system_load": 0.0839844,
+          "network_sent_bytes": 196979063224,
+          "network_recv_bytes": 35733421893,
+          "timestamp": "2025-03-19T00:14:40"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 6.55,
+          "ram_usage": 36.4,
+          "system_load": 0.0708008,
+          "network_sent_bytes": 196980275128,
+          "network_recv_bytes": 35735415684,
+          "timestamp": "2025-03-19T00:14:50"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 2.69,
+          "ram_usage": 36.7,
+          "system_load": 0.0595703,
+          "network_sent_bytes": 196980396929,
+          "network_recv_bytes": 35735595061,
+          "timestamp": "2025-03-19T00:15:00"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.08,
+          "ram_usage": 36.4,
+          "system_load": 0.130859,
+          "network_sent_bytes": 196980453125,
+          "network_recv_bytes": 35735671053,
+          "timestamp": "2025-03-19T00:15:10"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.4,
+          "system_load": 0.110352,
+          "network_sent_bytes": 196980518385,
+          "network_recv_bytes": 35735762362,
+          "timestamp": "2025-03-19T00:15:20"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.64,
+          "ram_usage": 36.4,
+          "system_load": 0.0927734,
+          "network_sent_bytes": 196980574252,
+          "network_recv_bytes": 35735837474,
+          "timestamp": "2025-03-19T00:15:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 4.05,
+          "ram_usage": 36.4,
+          "system_load": 0.078125,
+          "network_sent_bytes": 196981678906,
+          "network_recv_bytes": 35737105134,
+          "timestamp": "2025-03-19T00:15:40"
+        },
+        {
+          "cpu_temperature": 46.1,
+          "cpu_usage": 0.82,
+          "ram_usage": 36.3,
+          "system_load": 0.146484,
+          "network_sent_bytes": 196981731877,
+          "network_recv_bytes": 35737177302,
+          "timestamp": "2025-03-19T00:15:50"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.73,
+          "ram_usage": 36.8,
+          "system_load": 0.261719,
+          "network_sent_bytes": 196981792367,
+          "network_recv_bytes": 35737256990,
+          "timestamp": "2025-03-19T00:16:00"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 1.83,
+          "ram_usage": 36.3,
+          "system_load": 0.240723,
+          "network_sent_bytes": 196981847896,
+          "network_recv_bytes": 35737331705,
+          "timestamp": "2025-03-19T00:16:10"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.77,
+          "ram_usage": 36.3,
+          "system_load": 0.283691,
+          "network_sent_bytes": 196981901831,
+          "network_recv_bytes": 35737404866,
+          "timestamp": "2025-03-19T00:16:20"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.81,
+          "ram_usage": 36.3,
+          "system_load": 0.239746,
+          "network_sent_bytes": 196981967678,
+          "network_recv_bytes": 35737497008,
+          "timestamp": "2025-03-19T00:16:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.08,
+          "ram_usage": 36.3,
+          "system_load": 0.202148,
+          "network_sent_bytes": 196982020676,
+          "network_recv_bytes": 35737569272,
+          "timestamp": "2025-03-19T00:16:40"
+        },
+        {
+          "cpu_temperature": 46.15,
+          "cpu_usage": 0.93,
+          "ram_usage": 36.2,
+          "system_load": 0.17041,
+          "network_sent_bytes": 196982088081,
+          "network_recv_bytes": 35737661762,
+          "timestamp": "2025-03-19T00:16:50"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 1.65,
+          "ram_usage": 36.7,
+          "system_load": 0.200684,
+          "network_sent_bytes": 196982141791,
+          "network_recv_bytes": 35737734819,
+          "timestamp": "2025-03-19T00:17:00"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 1.96,
+          "ram_usage": 36.2,
+          "system_load": 0.18457,
+          "network_sent_bytes": 196982198868,
+          "network_recv_bytes": 35737811763,
+          "timestamp": "2025-03-19T00:17:10"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.2,
+          "system_load": 0.155762,
+          "network_sent_bytes": 196982255316,
+          "network_recv_bytes": 35737887231,
+          "timestamp": "2025-03-19T00:17:20"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.64,
+          "ram_usage": 36.2,
+          "system_load": 0.211914,
+          "network_sent_bytes": 196982319351,
+          "network_recv_bytes": 35737977300,
+          "timestamp": "2025-03-19T00:17:30"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.01,
+          "ram_usage": 36.3,
+          "system_load": 0.259766,
+          "network_sent_bytes": 196982379784,
+          "network_recv_bytes": 35738056834,
+          "timestamp": "2025-03-19T00:17:40"
+        },
+        {
+          "cpu_temperature": 46.25,
+          "cpu_usage": 0.92,
+          "ram_usage": 36.3,
+          "system_load": 0.219238,
+          "network_sent_bytes": 196982434277,
+          "network_recv_bytes": 35738130299,
+          "timestamp": "2025-03-19T00:17:50"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 1.76,
+          "ram_usage": 36.7,
+          "system_load": 0.238281,
+          "network_sent_bytes": 196982509869,
+          "network_recv_bytes": 35738232122,
+          "timestamp": "2025-03-19T00:18:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 5.31,
+          "ram_usage": 36.3,
+          "system_load": 0.21875,
+          "network_sent_bytes": 196983596169,
+          "network_recv_bytes": 35739479579,
+          "timestamp": "2025-03-19T00:18:10"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 0.65,
+          "ram_usage": 36.3,
+          "system_load": 0.185059,
+          "network_sent_bytes": 196983649250,
+          "network_recv_bytes": 35739551934,
+          "timestamp": "2025-03-19T00:18:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.96,
+          "ram_usage": 36.3,
+          "system_load": 0.310547,
+          "network_sent_bytes": 196983705732,
+          "network_recv_bytes": 35739628047,
+          "timestamp": "2025-03-19T00:18:30"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.32,
+          "ram_usage": 36.3,
+          "system_load": 0.262695,
+          "network_sent_bytes": 196983771692,
+          "network_recv_bytes": 35739719964,
+          "timestamp": "2025-03-19T00:18:40"
+        },
+        {
+          "cpu_temperature": 46.3,
+          "cpu_usage": 0.64,
+          "ram_usage": 36.3,
+          "system_load": 0.339844,
+          "network_sent_bytes": 196983823772,
+          "network_recv_bytes": 35739791053,
+          "timestamp": "2025-03-19T00:18:50"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.89,
+          "ram_usage": 36.7,
+          "system_load": 0.361328,
+          "network_sent_bytes": 196983887294,
+          "network_recv_bytes": 35739880599,
+          "timestamp": "2025-03-19T00:19:00"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.87,
+          "ram_usage": 36.3,
+          "system_load": 0.332031,
+          "network_sent_bytes": 196983927686,
+          "network_recv_bytes": 35739933595,
+          "timestamp": "2025-03-19T00:19:10"
+        },
+        {
+          "cpu_temperature": 46.61,
+          "cpu_usage": 0.82,
+          "ram_usage": 36.3,
+          "system_load": 0.280273,
+          "network_sent_bytes": 196983993709,
+          "network_recv_bytes": 35740025475,
+          "timestamp": "2025-03-19T00:19:20"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.73,
+          "ram_usage": 36.3,
+          "system_load": 0.236816,
+          "network_sent_bytes": 196984050482,
+          "network_recv_bytes": 35740101550,
+          "timestamp": "2025-03-19T00:19:30"
+        },
+        {
+          "cpu_temperature": 46.51,
+          "cpu_usage": 1,
+          "ram_usage": 36.4,
+          "system_load": 0.200195,
+          "network_sent_bytes": 196984114403,
+          "network_recv_bytes": 35740191656,
+          "timestamp": "2025-03-19T00:19:40"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 0.79,
+          "ram_usage": 36.4,
+          "system_load": 0.223633,
+          "network_sent_bytes": 196984166232,
+          "network_recv_bytes": 35740262804,
+          "timestamp": "2025-03-19T00:19:50"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 1.71,
+          "ram_usage": 36.8,
+          "system_load": 0.188965,
+          "network_sent_bytes": 196984221022,
+          "network_recv_bytes": 35740335925,
+          "timestamp": "2025-03-19T00:20:00"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 2.18,
+          "ram_usage": 36.4,
+          "system_load": 0.173828,
+          "network_sent_bytes": 196984278283,
+          "network_recv_bytes": 35740418394,
+          "timestamp": "2025-03-19T00:20:10"
+        },
+        {
+          "cpu_temperature": 46.35,
+          "cpu_usage": 0.7,
+          "ram_usage": 36.4,
+          "system_load": 0.146484,
+          "network_sent_bytes": 196984342696,
+          "network_recv_bytes": 35740508736,
+          "timestamp": "2025-03-19T00:20:20"
+        },
+        {
+          "cpu_temperature": 46.35,
+          "cpu_usage": 0.83,
+          "ram_usage": 36.4,
+          "system_load": 0.123047,
+          "network_sent_bytes": 196984396731,
+          "network_recv_bytes": 35740582503,
+          "timestamp": "2025-03-19T00:20:30"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.98,
+          "ram_usage": 36.3,
+          "system_load": 0.177734,
+          "network_sent_bytes": 196984455186,
+          "network_recv_bytes": 35740660004,
+          "timestamp": "2025-03-19T00:20:40"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 3.46,
+          "ram_usage": 36.4,
+          "system_load": 0.211914,
+          "network_sent_bytes": 196985554462,
+          "network_recv_bytes": 35741926842,
+          "timestamp": "2025-03-19T00:20:50"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 1.8,
+          "ram_usage": 36.7,
+          "system_load": 0.179199,
+          "network_sent_bytes": 196985612847,
+          "network_recv_bytes": 35742004660,
+          "timestamp": "2025-03-19T00:21:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 2.07,
+          "ram_usage": 36.4,
+          "system_load": 0.245117,
+          "network_sent_bytes": 196985669577,
+          "network_recv_bytes": 35742080351,
+          "timestamp": "2025-03-19T00:21:10"
+        },
+        {
+          "cpu_temperature": 46.3,
+          "cpu_usage": 0.67,
+          "ram_usage": 36.4,
+          "system_load": 0.207031,
+          "network_sent_bytes": 196985722634,
+          "network_recv_bytes": 35742152727,
+          "timestamp": "2025-03-19T00:21:20"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.62,
+          "ram_usage": 36.4,
+          "system_load": 0.249023,
+          "network_sent_bytes": 196985787066,
+          "network_recv_bytes": 35742243123,
+          "timestamp": "2025-03-19T00:21:30"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.14,
+          "ram_usage": 36.4,
+          "system_load": 0.291016,
+          "network_sent_bytes": 196985838858,
+          "network_recv_bytes": 35742314278,
+          "timestamp": "2025-03-19T00:21:40"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 3.56,
+          "ram_usage": 36.4,
+          "system_load": 0.246094,
+          "network_sent_bytes": 196986928247,
+          "network_recv_bytes": 35743564502,
+          "timestamp": "2025-03-19T00:21:50"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 1.73,
+          "ram_usage": 36.8,
+          "system_load": 0.20752,
+          "network_sent_bytes": 196986997870,
+          "network_recv_bytes": 35743660168,
+          "timestamp": "2025-03-19T00:22:00"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 2.08,
+          "ram_usage": 36.4,
+          "system_load": 0.174805,
+          "network_sent_bytes": 196987055435,
+          "network_recv_bytes": 35743737104,
+          "timestamp": "2025-03-19T00:22:10"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.4,
+          "system_load": 0.147461,
+          "network_sent_bytes": 196987107633,
+          "network_recv_bytes": 35743808609,
+          "timestamp": "2025-03-19T00:22:20"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.68,
+          "ram_usage": 36.4,
+          "system_load": 0.124023,
+          "network_sent_bytes": 196987161286,
+          "network_recv_bytes": 35743881806,
+          "timestamp": "2025-03-19T00:22:30"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 1.3,
+          "ram_usage": 36.3,
+          "system_load": 0.104492,
+          "network_sent_bytes": 196987226551,
+          "network_recv_bytes": 35743973013,
+          "timestamp": "2025-03-19T00:22:40"
+        },
+        {
+          "cpu_temperature": 46.35,
+          "cpu_usage": 0.75,
+          "ram_usage": 36.3,
+          "system_load": 0.0878906,
+          "network_sent_bytes": 196987280513,
+          "network_recv_bytes": 35744046098,
+          "timestamp": "2025-03-19T00:22:50"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.82,
+          "ram_usage": 36.7,
+          "system_load": 0.0737305,
+          "network_sent_bytes": 196987336650,
+          "network_recv_bytes": 35744121626,
+          "timestamp": "2025-03-19T00:23:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 2.18,
+          "ram_usage": 36.4,
+          "system_load": 0.135742,
+          "network_sent_bytes": 196987391306,
+          "network_recv_bytes": 35744195620,
+          "timestamp": "2025-03-19T00:23:10"
+        },
+        {
+          "cpu_temperature": 47.68,
+          "cpu_usage": 17.65,
+          "ram_usage": 36.4,
+          "system_load": 0.194824,
+          "network_sent_bytes": 196988160990,
+          "network_recv_bytes": 35745022535,
+          "timestamp": "2025-03-19T00:23:20"
+        },
+        {
+          "cpu_temperature": 48.16,
+          "cpu_usage": 3.03,
+          "ram_usage": 36.4,
+          "system_load": 0.23877,
+          "network_sent_bytes": 196989880669,
+          "network_recv_bytes": 35748285499,
+          "timestamp": "2025-03-19T00:23:30"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 1.66,
+          "ram_usage": 36.5,
+          "system_load": 0.275391,
+          "network_sent_bytes": 196989985442,
+          "network_recv_bytes": 35748432269,
+          "timestamp": "2025-03-19T00:23:40"
+        },
+        {
+          "cpu_temperature": 47.45,
+          "cpu_usage": 1.98,
+          "ram_usage": 36.5,
+          "system_load": 0.312988,
+          "network_sent_bytes": 196990142896,
+          "network_recv_bytes": 35748656425,
+          "timestamp": "2025-03-19T00:23:50"
+        },
+        {
+          "cpu_temperature": 47.5,
+          "cpu_usage": 3.96,
+          "ram_usage": 36.9,
+          "system_load": 0.391602,
+          "network_sent_bytes": 196990365400,
+          "network_recv_bytes": 35748977683,
+          "timestamp": "2025-03-19T00:24:00"
+        },
+        {
+          "cpu_temperature": 47.89,
+          "cpu_usage": 5.54,
+          "ram_usage": 36.4,
+          "system_load": 0.359863,
+          "network_sent_bytes": 196991492967,
+          "network_recv_bytes": 35750282489,
+          "timestamp": "2025-03-19T00:24:10"
+        },
+        {
+          "cpu_temperature": 47.55,
+          "cpu_usage": 2.03,
+          "ram_usage": 36.4,
+          "system_load": 0.384277,
+          "network_sent_bytes": 196991655483,
+          "network_recv_bytes": 35750512115,
+          "timestamp": "2025-03-19T00:24:20"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.4,
+          "system_load": 0.324707,
+          "network_sent_bytes": 196991720437,
+          "network_recv_bytes": 35750603860,
+          "timestamp": "2025-03-19T00:24:30"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.27,
+          "ram_usage": 36.4,
+          "system_load": 0.274414,
+          "network_sent_bytes": 196991773250,
+          "network_recv_bytes": 35750676377,
+          "timestamp": "2025-03-19T00:24:40"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.71,
+          "ram_usage": 36.4,
+          "system_load": 0.231445,
+          "network_sent_bytes": 196991838428,
+          "network_recv_bytes": 35750767930,
+          "timestamp": "2025-03-19T00:24:50"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 2.17,
+          "ram_usage": 37,
+          "system_load": 0.416992,
+          "network_sent_bytes": 196991894207,
+          "network_recv_bytes": 35750843552,
+          "timestamp": "2025-03-19T00:25:00"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 2.04,
+          "ram_usage": 36.4,
+          "system_load": 0.42627,
+          "network_sent_bytes": 196991953083,
+          "network_recv_bytes": 35750927525,
+          "timestamp": "2025-03-19T00:25:10"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 0.76,
+          "ram_usage": 36.4,
+          "system_load": 0.360352,
+          "network_sent_bytes": 196992005264,
+          "network_recv_bytes": 35750999367,
+          "timestamp": "2025-03-19T00:25:20"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.83,
+          "ram_usage": 36.4,
+          "system_load": 0.304199,
+          "network_sent_bytes": 196992076521,
+          "network_recv_bytes": 35751097120,
+          "timestamp": "2025-03-19T00:25:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.31,
+          "ram_usage": 36.4,
+          "system_load": 0.257324,
+          "network_sent_bytes": 196992134273,
+          "network_recv_bytes": 35751174288,
+          "timestamp": "2025-03-19T00:25:40"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 0.88,
+          "ram_usage": 36.3,
+          "system_load": 0.217285,
+          "network_sent_bytes": 196992188137,
+          "network_recv_bytes": 35751247885,
+          "timestamp": "2025-03-19T00:25:50"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 1.82,
+          "ram_usage": 36.7,
+          "system_load": 0.236816,
+          "network_sent_bytes": 196992258166,
+          "network_recv_bytes": 35751344409,
+          "timestamp": "2025-03-19T00:26:00"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.54,
+          "ram_usage": 36.3,
+          "system_load": 0.217773,
+          "network_sent_bytes": 196992303156,
+          "network_recv_bytes": 35751402142,
+          "timestamp": "2025-03-19T00:26:10"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.66,
+          "ram_usage": 36.2,
+          "system_load": 0.184082,
+          "network_sent_bytes": 196992370118,
+          "network_recv_bytes": 35751495448,
+          "timestamp": "2025-03-19T00:26:20"
+        },
+        {
+          "cpu_temperature": 46.3,
+          "cpu_usage": 0.64,
+          "ram_usage": 36.2,
+          "system_load": 0.23584,
+          "network_sent_bytes": 196992423821,
+          "network_recv_bytes": 35751568981,
+          "timestamp": "2025-03-19T00:26:30"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.14,
+          "ram_usage": 36.2,
+          "system_load": 0.199219,
+          "network_sent_bytes": 196992487981,
+          "network_recv_bytes": 35751659631,
+          "timestamp": "2025-03-19T00:26:40"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.67,
+          "ram_usage": 36.2,
+          "system_load": 0.242188,
+          "network_sent_bytes": 196992540785,
+          "network_recv_bytes": 35751731932,
+          "timestamp": "2025-03-19T00:26:50"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.5,
+          "ram_usage": 36.5,
+          "system_load": 0.285156,
+          "network_sent_bytes": 196992597180,
+          "network_recv_bytes": 35751807084,
+          "timestamp": "2025-03-19T00:27:00"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 2.03,
+          "ram_usage": 36.2,
+          "system_load": 0.462402,
+          "network_sent_bytes": 196992658332,
+          "network_recv_bytes": 35751888338,
+          "timestamp": "2025-03-19T00:27:10"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.63,
+          "ram_usage": 36.1,
+          "system_load": 0.391113,
+          "network_sent_bytes": 196992724018,
+          "network_recv_bytes": 35751980304,
+          "timestamp": "2025-03-19T00:27:20"
+        },
+        {
+          "cpu_temperature": 47.25,
+          "cpu_usage": 3.24,
+          "ram_usage": 36.2,
+          "system_load": 0.330566,
+          "network_sent_bytes": 196993815514,
+          "network_recv_bytes": 35753233286,
+          "timestamp": "2025-03-19T00:27:30"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.39,
+          "ram_usage": 36.1,
+          "system_load": 0.279297,
+          "network_sent_bytes": 196993882376,
+          "network_recv_bytes": 35753326658,
+          "timestamp": "2025-03-19T00:27:40"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.63,
+          "ram_usage": 36.1,
+          "system_load": 0.23584,
+          "network_sent_bytes": 196993939297,
+          "network_recv_bytes": 35753399047,
+          "timestamp": "2025-03-19T00:27:50"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.45,
+          "ram_usage": 36.7,
+          "system_load": 0.251465,
+          "network_sent_bytes": 196993992633,
+          "network_recv_bytes": 35753471879,
+          "timestamp": "2025-03-19T00:28:00"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.97,
+          "ram_usage": 36.2,
+          "system_load": 0.230957,
+          "network_sent_bytes": 196994044647,
+          "network_recv_bytes": 35753543521,
+          "timestamp": "2025-03-19T00:28:10"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.88,
+          "ram_usage": 36.2,
+          "system_load": 0.195312,
+          "network_sent_bytes": 196994097069,
+          "network_recv_bytes": 35753615559,
+          "timestamp": "2025-03-19T00:28:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.75,
+          "ram_usage": 36.2,
+          "system_load": 0.164551,
+          "network_sent_bytes": 196994162584,
+          "network_recv_bytes": 35753707705,
+          "timestamp": "2025-03-19T00:28:30"
+        },
+        {
+          "cpu_temperature": 46.25,
+          "cpu_usage": 1.19,
+          "ram_usage": 36.3,
+          "system_load": 0.13916,
+          "network_sent_bytes": 196994216797,
+          "network_recv_bytes": 35753781676,
+          "timestamp": "2025-03-19T00:28:40"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.3,
+          "system_load": 0.117676,
+          "network_sent_bytes": 196994283744,
+          "network_recv_bytes": 35753874830,
+          "timestamp": "2025-03-19T00:28:50"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 1.83,
+          "ram_usage": 36.7,
+          "system_load": 0.0991211,
+          "network_sent_bytes": 196994337573,
+          "network_recv_bytes": 35753948323,
+          "timestamp": "2025-03-19T00:29:00"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.48,
+          "ram_usage": 36.2,
+          "system_load": 0.237793,
+          "network_sent_bytes": 196994391011,
+          "network_recv_bytes": 35754021401,
+          "timestamp": "2025-03-19T00:29:10"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.92,
+          "ram_usage": 36.4,
+          "system_load": 0.201172,
+          "network_sent_bytes": 196994447869,
+          "network_recv_bytes": 35754097900,
+          "timestamp": "2025-03-19T00:29:20"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.49,
+          "ram_usage": 36.3,
+          "system_load": 0.244141,
+          "network_sent_bytes": 196994501746,
+          "network_recv_bytes": 35754171348,
+          "timestamp": "2025-03-19T00:29:30"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.3,
+          "system_load": 0.286621,
+          "network_sent_bytes": 196994569285,
+          "network_recv_bytes": 35754265282,
+          "timestamp": "2025-03-19T00:29:40"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 0.91,
+          "ram_usage": 36.3,
+          "system_load": 0.241699,
+          "network_sent_bytes": 196994625874,
+          "network_recv_bytes": 35754341474,
+          "timestamp": "2025-03-19T00:29:50"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.79,
+          "ram_usage": 36.7,
+          "system_load": 0.204102,
+          "network_sent_bytes": 196994691499,
+          "network_recv_bytes": 35754433748,
+          "timestamp": "2025-03-19T00:30:00"
+        },
+        {
+          "cpu_temperature": 46.26,
+          "cpu_usage": 2.03,
+          "ram_usage": 36.3,
+          "system_load": 0.172363,
+          "network_sent_bytes": 196994750761,
+          "network_recv_bytes": 35754518116,
+          "timestamp": "2025-03-19T00:30:10"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.98,
+          "ram_usage": 36.3,
+          "system_load": 0.145508,
+          "network_sent_bytes": 196994804168,
+          "network_recv_bytes": 35754591088,
+          "timestamp": "2025-03-19T00:30:20"
+        },
+        {
+          "cpu_temperature": 46.25,
+          "cpu_usage": 0.63,
+          "ram_usage": 36.3,
+          "system_load": 0.123047,
+          "network_sent_bytes": 196994860639,
+          "network_recv_bytes": 35754667379,
+          "timestamp": "2025-03-19T00:30:30"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 0.71,
+          "ram_usage": 36.3,
+          "system_load": 0.103516,
+          "network_sent_bytes": 196994929021,
+          "network_recv_bytes": 35754762204,
+          "timestamp": "2025-03-19T00:30:40"
+        },
+        {
+          "cpu_temperature": 46.3,
+          "cpu_usage": 0.88,
+          "ram_usage": 36.3,
+          "system_load": 0.0874023,
+          "network_sent_bytes": 196994982377,
+          "network_recv_bytes": 35754835090,
+          "timestamp": "2025-03-19T00:30:50"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 1.67,
+          "ram_usage": 36.7,
+          "system_load": 0.135254,
+          "network_sent_bytes": 196995057174,
+          "network_recv_bytes": 35754936164,
+          "timestamp": "2025-03-19T00:31:00"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 1.63,
+          "ram_usage": 36.2,
+          "system_load": 0.124023,
+          "network_sent_bytes": 196995102371,
+          "network_recv_bytes": 35754993937,
+          "timestamp": "2025-03-19T00:31:10"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.86,
+          "ram_usage": 36.3,
+          "system_load": 0.104492,
+          "network_sent_bytes": 196995172105,
+          "network_recv_bytes": 35755089895,
+          "timestamp": "2025-03-19T00:31:20"
+        },
+        {
+          "cpu_temperature": 46.26,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.3,
+          "system_load": 0.0878906,
+          "network_sent_bytes": 196995225145,
+          "network_recv_bytes": 35755162453,
+          "timestamp": "2025-03-19T00:31:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.85,
+          "ram_usage": 36.3,
+          "system_load": 0.0737305,
+          "network_sent_bytes": 196995293713,
+          "network_recv_bytes": 35755257809,
+          "timestamp": "2025-03-19T00:31:40"
+        },
+        {
+          "cpu_temperature": 46.15,
+          "cpu_usage": 0.98,
+          "ram_usage": 36.2,
+          "system_load": 0.14209,
+          "network_sent_bytes": 196995347515,
+          "network_recv_bytes": 35755331166,
+          "timestamp": "2025-03-19T00:31:50"
+        },
+        {
+          "cpu_temperature": 46.4,
+          "cpu_usage": 1.74,
+          "ram_usage": 36.7,
+          "system_load": 0.119629,
+          "network_sent_bytes": 196995399892,
+          "network_recv_bytes": 35755403135,
+          "timestamp": "2025-03-19T00:32:00"
+        },
+        {
+          "cpu_temperature": 46.35,
+          "cpu_usage": 1.28,
+          "ram_usage": 36.2,
+          "system_load": 0.248535,
+          "network_sent_bytes": 196995455929,
+          "network_recv_bytes": 35755479472,
+          "timestamp": "2025-03-19T00:32:10"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.3,
+          "system_load": 0.290527,
+          "network_sent_bytes": 196995511422,
+          "network_recv_bytes": 35755554344,
+          "timestamp": "2025-03-19T00:32:20"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 5.46,
+          "ram_usage": 36.3,
+          "system_load": 0.326172,
+          "network_sent_bytes": 196996780087,
+          "network_recv_bytes": 35757071726,
+          "timestamp": "2025-03-19T00:32:30"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 1.2,
+          "ram_usage": 36.3,
+          "system_load": 0.275391,
+          "network_sent_bytes": 196996839004,
+          "network_recv_bytes": 35757150372,
+          "timestamp": "2025-03-19T00:32:40"
+        },
+        {
+          "cpu_temperature": 46.55,
+          "cpu_usage": 0.9,
+          "ram_usage": 36.3,
+          "system_load": 0.527344,
+          "network_sent_bytes": 196996896248,
+          "network_recv_bytes": 35757227564,
+          "timestamp": "2025-03-19T00:32:50"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 1.55,
+          "ram_usage": 36.6,
+          "system_load": 0.445801,
+          "network_sent_bytes": 196996963084,
+          "network_recv_bytes": 35757320972,
+          "timestamp": "2025-03-19T00:33:00"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 1.97,
+          "ram_usage": 36.1,
+          "system_load": 0.376465,
+          "network_sent_bytes": 196997017255,
+          "network_recv_bytes": 35757394846,
+          "timestamp": "2025-03-19T00:33:10"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.1,
+          "system_load": 0.392578,
+          "network_sent_bytes": 196997070206,
+          "network_recv_bytes": 35757467488,
+          "timestamp": "2025-03-19T00:33:20"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.69,
+          "ram_usage": 36.1,
+          "system_load": 0.331543,
+          "network_sent_bytes": 196997136178,
+          "network_recv_bytes": 35757560018,
+          "timestamp": "2025-03-19T00:33:30"
+        },
+        {
+          "cpu_temperature": 46.05,
+          "cpu_usage": 0.78,
+          "ram_usage": 36.1,
+          "system_load": 0.280273,
+          "network_sent_bytes": 196997190198,
+          "network_recv_bytes": 35757633912,
+          "timestamp": "2025-03-19T00:33:40"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.96,
+          "ram_usage": 36.2,
+          "system_load": 0.236816,
+          "network_sent_bytes": 196997247578,
+          "network_recv_bytes": 35757711191,
+          "timestamp": "2025-03-19T00:33:50"
+        },
+        {
+          "cpu_temperature": 46.45,
+          "cpu_usage": 1.7,
+          "ram_usage": 36.6,
+          "system_load": 0.319336,
+          "network_sent_bytes": 196997316882,
+          "network_recv_bytes": 35757807183,
+          "timestamp": "2025-03-19T00:34:00"
+        },
+        {
+          "cpu_temperature": 46.5,
+          "cpu_usage": 1.55,
+          "ram_usage": 36.2,
+          "system_load": 0.293457,
+          "network_sent_bytes": 196997357779,
+          "network_recv_bytes": 35757860411,
+          "timestamp": "2025-03-19T00:34:10"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 3.56,
+          "ram_usage": 36.2,
+          "system_load": 0.247559,
+          "network_sent_bytes": 196998460807,
+          "network_recv_bytes": 35759132178,
+          "timestamp": "2025-03-19T00:34:20"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 2.01,
+          "ram_usage": 36.2,
+          "system_load": 0.36377,
+          "network_sent_bytes": 196998618747,
+          "network_recv_bytes": 35759357723,
+          "timestamp": "2025-03-19T00:34:30"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 1.64,
+          "ram_usage": 36.2,
+          "system_load": 0.307617,
+          "network_sent_bytes": 196998751193,
+          "network_recv_bytes": 35759548815,
+          "timestamp": "2025-03-19T00:34:40"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 3.53,
+          "ram_usage": 36.1,
+          "system_load": 0.333984,
+          "network_sent_bytes": 196999841315,
+          "network_recv_bytes": 35760800730,
+          "timestamp": "2025-03-19T00:34:50"
+        },
+        {
+          "cpu_temperature": 46.8,
+          "cpu_usage": 2.14,
+          "ram_usage": 36.6,
+          "system_load": 0.362793,
+          "network_sent_bytes": 196999897760,
+          "network_recv_bytes": 35760882425,
+          "timestamp": "2025-03-19T00:35:00"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 1.46,
+          "ram_usage": 36.1,
+          "system_load": 0.306641,
+          "network_sent_bytes": 196999954109,
+          "network_recv_bytes": 35760958581,
+          "timestamp": "2025-03-19T00:35:10"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.92,
+          "ram_usage": 36.3,
+          "system_load": 0.258789,
+          "network_sent_bytes": 197000018472,
+          "network_recv_bytes": 35761049243,
+          "timestamp": "2025-03-19T00:35:20"
+        },
+        {
+          "cpu_temperature": 46.7,
+          "cpu_usage": 0.51,
+          "ram_usage": 36.2,
+          "system_load": 0.21875,
+          "network_sent_bytes": 197000071635,
+          "network_recv_bytes": 35761122103,
+          "timestamp": "2025-03-19T00:35:30"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 0.54,
+          "ram_usage": 36.2,
+          "system_load": 0.185059,
+          "network_sent_bytes": 197000129515,
+          "network_recv_bytes": 35761199514,
+          "timestamp": "2025-03-19T00:35:40"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 6.48,
+          "ram_usage": 36.2,
+          "system_load": 0.15625,
+          "network_sent_bytes": 197002265016,
+          "network_recv_bytes": 35763646170,
+          "timestamp": "2025-03-19T00:35:50"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 4.38,
+          "ram_usage": 36.5,
+          "system_load": 0.29248,
+          "network_sent_bytes": 197003365003,
+          "network_recv_bytes": 35764907653,
+          "timestamp": "2025-03-19T00:36:00"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 1.53,
+          "ram_usage": 36,
+          "system_load": 0.24707,
+          "network_sent_bytes": 197003419600,
+          "network_recv_bytes": 35764981509,
+          "timestamp": "2025-03-19T00:36:10"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.2,
+          "system_load": 0.208496,
+          "network_sent_bytes": 197003483711,
+          "network_recv_bytes": 35765071780,
+          "timestamp": "2025-03-19T00:36:20"
+        },
+        {
+          "cpu_temperature": 46.75,
+          "cpu_usage": 3.51,
+          "ram_usage": 36.2,
+          "system_load": 0.175781,
+          "network_sent_bytes": 197004590916,
+          "network_recv_bytes": 35766347160,
+          "timestamp": "2025-03-19T00:36:30"
+        },
+        {
+          "cpu_temperature": 47.25,
+          "cpu_usage": 1.97,
+          "ram_usage": 36.2,
+          "system_load": 0.148438,
+          "network_sent_bytes": 197004748377,
+          "network_recv_bytes": 35766571755,
+          "timestamp": "2025-03-19T00:36:40"
+        },
+        {
+          "cpu_temperature": 47.15,
+          "cpu_usage": 1.16,
+          "ram_usage": 36.3,
+          "system_load": 0.125,
+          "network_sent_bytes": 197004812846,
+          "network_recv_bytes": 35766662473,
+          "timestamp": "2025-03-19T00:36:50"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 1.61,
+          "ram_usage": 36.6,
+          "system_load": 0.105469,
+          "network_sent_bytes": 197004870959,
+          "network_recv_bytes": 35766739316,
+          "timestamp": "2025-03-19T00:37:00"
+        },
+        {
+          "cpu_temperature": 47.05,
+          "cpu_usage": 1.61,
+          "ram_usage": 36.1,
+          "system_load": 0.169434,
+          "network_sent_bytes": 197004928000,
+          "network_recv_bytes": 35766816481,
+          "timestamp": "2025-03-19T00:37:10"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.92,
+          "ram_usage": 36.3,
+          "system_load": 0.143066,
+          "network_sent_bytes": 197004982012,
+          "network_recv_bytes": 35766890160,
+          "timestamp": "2025-03-19T00:37:20"
+        },
+        {
+          "cpu_temperature": 46.6,
+          "cpu_usage": 0.69,
+          "ram_usage": 36.3,
+          "system_load": 0.194824,
+          "network_sent_bytes": 197005047387,
+          "network_recv_bytes": 35766981724,
+          "timestamp": "2025-03-19T00:37:30"
+        },
+        {
+          "cpu_temperature": 46.65,
+          "cpu_usage": 0.67,
+          "ram_usage": 36.3,
+          "system_load": 0.245117,
+          "network_sent_bytes": 197005100057,
+          "network_recv_bytes": 35767054073,
+          "timestamp": "2025-03-19T00:37:40"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 6.82,
+          "ram_usage": 36.2,
+          "system_load": 0.207031,
+          "network_sent_bytes": 197007280524,
+          "network_recv_bytes": 35769561282,
+          "timestamp": "2025-03-19T00:37:50"
+        },
+        {
+          "cpu_temperature": 47.64,
+          "cpu_usage": 8.59,
+          "ram_usage": 36.6,
+          "system_load": 0.174805,
+          "network_sent_bytes": 197009386720,
+          "network_recv_bytes": 35771892102,
+          "timestamp": "2025-03-19T00:38:00"
+        },
+        {
+          "cpu_temperature": 47.69,
+          "cpu_usage": 3.17,
+          "ram_usage": 36.2,
+          "system_load": 0.22168,
+          "network_sent_bytes": 197009503875,
+          "network_recv_bytes": 35772060520,
+          "timestamp": "2025-03-19T00:38:10"
+        },
+        {
+          "cpu_temperature": 47.4,
+          "cpu_usage": 0.91,
+          "ram_usage": 36.3,
+          "system_load": 0.187012,
+          "network_sent_bytes": 197009561010,
+          "network_recv_bytes": 35772137356,
+          "timestamp": "2025-03-19T00:38:20"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 1.68,
+          "ram_usage": 36.3,
+          "system_load": 0.157715,
+          "network_sent_bytes": 197009636258,
+          "network_recv_bytes": 35772234522,
+          "timestamp": "2025-03-19T00:38:30"
+        },
+        {
+          "cpu_temperature": 47.4,
+          "cpu_usage": 3.96,
+          "ram_usage": 36.3,
+          "system_load": 0.133301,
+          "network_sent_bytes": 197010862661,
+          "network_recv_bytes": 35773691398,
+          "timestamp": "2025-03-19T00:38:40"
+        },
+        {
+          "cpu_temperature": 47.55,
+          "cpu_usage": 2.61,
+          "ram_usage": 36.3,
+          "system_load": 0.112305,
+          "network_sent_bytes": 197011283970,
+          "network_recv_bytes": 35774354604,
+          "timestamp": "2025-03-19T00:38:50"
+        },
+        {
+          "cpu_temperature": 48.18,
+          "cpu_usage": 13.83,
+          "ram_usage": 36.8,
+          "system_load": 0.0947266,
+          "network_sent_bytes": 197013165265,
+          "network_recv_bytes": 35776755704,
+          "timestamp": "2025-03-19T00:39:00"
+        },
+        {
+          "cpu_temperature": 48.6,
+          "cpu_usage": 6.34,
+          "ram_usage": 36.3,
+          "system_load": 0.308105,
+          "network_sent_bytes": 197014439185,
+          "network_recv_bytes": 35778304178,
+          "timestamp": "2025-03-19T00:39:10"
+        },
+        {
+          "cpu_temperature": 48.03,
+          "cpu_usage": 2.17,
+          "ram_usage": 36.4,
+          "system_load": 0.260254,
+          "network_sent_bytes": 197014891596,
+          "network_recv_bytes": 35779005285,
+          "timestamp": "2025-03-19T00:39:20"
+        },
+        {
+          "cpu_temperature": 47.55,
+          "cpu_usage": 0.73,
+          "ram_usage": 36.4,
+          "system_load": 0.219727,
+          "network_sent_bytes": 197014948725,
+          "network_recv_bytes": 35779084435,
+          "timestamp": "2025-03-19T00:39:30"
+        },
+        {
+          "cpu_temperature": 47.35,
+          "cpu_usage": 0.72,
+          "ram_usage": 36.4,
+          "system_load": 0.185059,
+          "network_sent_bytes": 197015014156,
+          "network_recv_bytes": 35779177168,
+          "timestamp": "2025-03-19T00:39:40"
+        },
+        {
+          "cpu_temperature": 47.75,
+          "cpu_usage": 3.25,
+          "ram_usage": 36.4,
+          "system_load": 0.236816,
+          "network_sent_bytes": 197015528162,
+          "network_recv_bytes": 35779976914,
+          "timestamp": "2025-03-19T00:39:50"
+        },
+        {
+          "cpu_temperature": 47.45,
+          "cpu_usage": 1.88,
+          "ram_usage": 36.8,
+          "system_load": 0.200195,
+          "network_sent_bytes": 197015594817,
+          "network_recv_bytes": 35780069878,
+          "timestamp": "2025-03-19T00:40:00"
+        },
+        {
+          "cpu_temperature": 47.75,
+          "cpu_usage": 1.74,
+          "ram_usage": 36.3,
+          "system_load": 0.390625,
+          "network_sent_bytes": 197015656461,
+          "network_recv_bytes": 35780153892,
+          "timestamp": "2025-03-19T00:40:10"
+        },
+        {
+          "cpu_temperature": 47.55,
+          "cpu_usage": 3.7,
+          "ram_usage": 36.3,
+          "system_load": 0.410645,
+          "network_sent_bytes": 197016752372,
+          "network_recv_bytes": 35781413820,
+          "timestamp": "2025-03-19T00:40:20"
+        },
+        {
+          "cpu_temperature": 48.14,
+          "cpu_usage": 6.66,
+          "ram_usage": 36.4,
+          "system_load": 0.501465,
+          "network_sent_bytes": 197018041472,
+          "network_recv_bytes": 35783479582,
+          "timestamp": "2025-03-19T00:40:30"
+        },
+        {
+          "cpu_temperature": 47.94,
+          "cpu_usage": 3.16,
+          "ram_usage": 36.4,
+          "system_load": 0.423828,
+          "network_sent_bytes": 197018608949,
+          "network_recv_bytes": 35784273404,
+          "timestamp": "2025-03-19T00:40:40"
+        },
+        {
+          "cpu_temperature": 48.47,
+          "cpu_usage": 7.99,
+          "ram_usage": 36.4,
+          "system_load": 0.438965,
+          "network_sent_bytes": 197020241421,
+          "network_recv_bytes": 35787069526,
+          "timestamp": "2025-03-19T00:40:50"
+        },
+        {
+          "cpu_temperature": 50.32,
+          "cpu_usage": 23.66,
+          "ram_usage": 36.9,
+          "system_load": 0.45166,
+          "network_sent_bytes": 197020952854,
+          "network_recv_bytes": 35787808282,
+          "timestamp": "2025-03-19T00:41:00"
+        },
+        {
+          "cpu_temperature": 49.29,
+          "cpu_usage": 4.09,
+          "ram_usage": 36.3,
+          "system_load": 0.381348,
+          "network_sent_bytes": 197022679224,
+          "network_recv_bytes": 35791079697,
+          "timestamp": "2025-03-19T00:41:10"
+        },
+        {
+          "cpu_temperature": 48.62,
+          "cpu_usage": 6.95,
+          "ram_usage": 36.4,
+          "system_load": 0.402832,
+          "network_sent_bytes": 197023892120,
+          "network_recv_bytes": 35793074968,
+          "timestamp": "2025-03-19T00:41:20"
+        },
+        {
+          "cpu_temperature": 47.98,
+          "cpu_usage": 0.8,
+          "ram_usage": 36.4,
+          "system_load": 0.340332,
+          "network_sent_bytes": 197023946278,
+          "network_recv_bytes": 35793149793,
+          "timestamp": "2025-03-19T00:41:30"
+        },
+        {
+          "cpu_temperature": 47.8,
+          "cpu_usage": 0.64,
+          "ram_usage": 36.4,
+          "system_load": 0.287598,
+          "network_sent_bytes": 197024015743,
+          "network_recv_bytes": 35793247173,
+          "timestamp": "2025-03-19T00:41:40"
+        },
+        {
+          "cpu_temperature": 47.65,
+          "cpu_usage": 0.97,
+          "ram_usage": 36.4,
+          "system_load": 0.242676,
+          "network_sent_bytes": 197024069403,
+          "network_recv_bytes": 35793321265,
+          "timestamp": "2025-03-19T00:41:50"
+        },
+        {
+          "cpu_temperature": 47.85,
+          "cpu_usage": 1.64,
+          "ram_usage": 36.8,
+          "system_load": 0.279297,
+          "network_sent_bytes": 197024138189,
+          "network_recv_bytes": 35793417999,
+          "timestamp": "2025-03-19T00:42:00"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 1.59,
+          "ram_usage": 36.3,
+          "system_load": 0.396484,
+          "network_sent_bytes": 197024188785,
+          "network_recv_bytes": 35793482528,
+          "timestamp": "2025-03-19T00:42:10"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 0.87,
+          "ram_usage": 36.5,
+          "system_load": 0.334961,
+          "network_sent_bytes": 197024256319,
+          "network_recv_bytes": 35793578012,
+          "timestamp": "2025-03-19T00:42:20"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 0.86,
+          "ram_usage": 36.5,
+          "system_load": 0.36377,
+          "network_sent_bytes": 197024314628,
+          "network_recv_bytes": 35793657186,
+          "timestamp": "2025-03-19T00:42:30"
+        },
+        {
+          "cpu_temperature": 46.9,
+          "cpu_usage": 0.68,
+          "ram_usage": 36.5,
+          "system_load": 0.307617,
+          "network_sent_bytes": 197024380669,
+          "network_recv_bytes": 35793751233,
+          "timestamp": "2025-03-19T00:42:40"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 1,
+          "ram_usage": 36.5,
+          "system_load": 0.333984,
+          "network_sent_bytes": 197024434252,
+          "network_recv_bytes": 35793825125,
+          "timestamp": "2025-03-19T00:42:50"
+        },
+        {
+          "cpu_temperature": 46.95,
+          "cpu_usage": 1.71,
+          "ram_usage": 36.8,
+          "system_load": 0.362793,
+          "network_sent_bytes": 197024489114,
+          "network_recv_bytes": 35793900761,
+          "timestamp": "2025-03-19T00:43:00"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 1.99,
+          "ram_usage": 36.2,
+          "system_load": 0.380859,
+          "network_sent_bytes": 197024542282,
+          "network_recv_bytes": 35793974452,
+          "timestamp": "2025-03-19T00:43:10"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 1.03,
+          "ram_usage": 36.3,
+          "system_load": 0.321777,
+          "network_sent_bytes": 197024608574,
+          "network_recv_bytes": 35794068233,
+          "timestamp": "2025-03-19T00:43:20"
+        },
+        {
+          "cpu_temperature": 47.25,
+          "cpu_usage": 0.68,
+          "ram_usage": 36.3,
+          "system_load": 0.271973,
+          "network_sent_bytes": 197024666116,
+          "network_recv_bytes": 35794146417,
+          "timestamp": "2025-03-19T00:43:30"
+        },
+        {
+          "cpu_temperature": 46.85,
+          "cpu_usage": 0.71,
+          "ram_usage": 36.3,
+          "system_load": 0.303711,
+          "network_sent_bytes": 197024722308,
+          "network_recv_bytes": 35794223233,
+          "timestamp": "2025-03-19T00:43:40"
+        },
+        {
+          "cpu_temperature": 47.1,
+          "cpu_usage": 0.91,
+          "ram_usage": 36.4,
+          "system_load": 0.256836,
+          "network_sent_bytes": 197024790637,
+          "network_recv_bytes": 35794319080,
+          "timestamp": "2025-03-19T00:43:50"
+        },
+        {
+          "cpu_temperature": 47,
+          "cpu_usage": 1.77,
+          "ram_usage": 36.8,
+          "system_load": 0.216797,
+          "network_sent_bytes": 197024846159,
+          "network_recv_bytes": 35794395290,
+          "timestamp": "2025-03-19T00:44:00"
+        },
+        {
+          "cpu_temperature": 47.64,
+          "cpu_usage": 10.34,
+          "ram_usage": 36.2,
+          "system_load": 0.263672,
+          "network_sent_bytes": 197025542017,
+          "network_recv_bytes": 35795111140,
+          "timestamp": "2025-03-19T00:44:10"
+        },
+        {
+          "cpu_temperature": 49.43,
+          "cpu_usage": 14.58,
+          "ram_usage": 36.3,
+          "system_load": 0.296875,
+          "network_sent_bytes": 197027583789,
+          "network_recv_bytes": 35798697856,
+          "timestamp": "2025-03-19T00:44:20"
+        },
+        {
+          "cpu_temperature": 48.32,
+          "cpu_usage": 3.85,
+          "ram_usage": 36.4,
+          "system_load": 0.250977,
+          "network_sent_bytes": 197028484464,
+          "network_recv_bytes": 35800389627,
+          "timestamp": "2025-03-19T00:44:30"
+        },
+        {
+          "cpu_temperature": 47.6,
+          "cpu_usage": 0.73,
+          "ram_usage": 36.3,
+          "system_load": 0.211914,
+          "network_sent_bytes": 197028540780,
+          "network_recv_bytes": 35800466564,
+          "timestamp": "2025-03-19T00:44:40"
+        },
+        {
+          "cpu_temperature": 47.74,
+          "cpu_usage": 3.84,
+          "ram_usage": 36.4,
+          "system_load": 0.179199,
+          "network_sent_bytes": 197029667552,
+          "network_recv_bytes": 35801768688,
+          "timestamp": "2025-03-19T00:44:50"
+        },
+        {
+          "cpu_temperature": 47.25,
+          "cpu_usage": 2.06,
+          "ram_usage": 36.9,
+          "system_load": 0.151367,
+          "network_sent_bytes": 197029732961,
+          "network_recv_bytes": 35801859958,
+          "timestamp": "2025-03-19T00:45:00"
+        },
+        {
+          "cpu_temperature": 47.2,
+          "cpu_usage": 1.58,
+          "ram_usage": 36.4,
+          "system_load": 0.282227,
+          "network_sent_bytes": 197029779701,
+          "network_recv_bytes": 35801920485,
+          "timestamp": "2025-03-19T00:45:10"
+        },
+        {
+          "cpu_temperature": 47.35,
+          "cpu_usage": 0.83,
+          "ram_usage": 36.4,
+          "system_load": 0.238281,
+          "network_sent_bytes": 197029848163,
+          "network_recv_bytes": 35802016429,
+          "timestamp": "2025-03-19T00:45:20"
         }
-        ]
-    },
+    ],
 
-    '/get_fastapi_request_log_data{"timeframe":"24h"}': {
+    '/get_fastapi_request_log_data{"timeframe":"12h"}': {
         "data": {
-          "total_requests": 4420,
-          "avg_backend_time": 313.78876091402736,
+          "total_requests": 2957,
+          "avg_backend_time": 305.925620008454,
           "status_code": [
             {
               "status_code": 200,
-              "count": 4367
+              "count": 2895
             },
             {
               "status_code": 404,
-              "count": 47
+              "count": 35
             },
             {
-              "status_code": 422,
-              "count": 6
+              "status_code": 500,
+              "count": 22
+            },
+            {
+              "status_code": 405,
+              "count": 5
             }
           ],
           "method_count": [
             {
               "method": "GET",
-              "count": 4316
+              "count": 2796
             },
             {
               "method": "POST",
-              "count": 71
+              "count": 100
             },
             {
               "method": "OPTIONS",
-              "count": 33
+              "count": 61
             }
           ],
           "client_ip_count": [
             {
-              "client_ip": "192.168.0.1",
-              "count": 3569
+              "client_ip": "127.0.0.1",
+              "count": 2566
             },
             {
-              "client_ip": "192.168.0.2",
-              "count": 694
+              "client_ip": "127.0.0.2",
+              "count": 273
             },
             {
-              "client_ip": "192.168.0.3",
-              "count": 131
+              "client_ip": "127.0.0.3",
+              "count": 92
             },
             {
-              "client_ip": "192.168.0.4",
+              "client_ip": "127.0.0.4",
               "count": 26
             }
           ],
           "endpoint_count": [
             {
               "endpoint": "/watch_list/get_title_cards",
-              "count": 1206,
-              "avg_response_time_ms": 571
-            },
-            {
-              "endpoint": "/watch_list/list_titles",
-              "count": 386,
-              "avg_response_time_ms": 405
-            },
-            {
-              "endpoint": "/get_server_drives_info",
-              "count": 105,
-              "avg_response_time_ms": 2
-            },
-            {
-              "endpoint": "/get_backups",
-              "count": 104,
-              "avg_response_time_ms": 180
-            },
-            {
-              "endpoint": "/get_server_resource_logs",
-              "count": 104,
-              "avg_response_time_ms": 478
-            },
-            {
-              "endpoint": "/get_fastapi_request_log_data",
-              "count": 103,
-              "avg_response_time_ms": 313
-            },
-            {
-              "endpoint": "/account/get_login_status",
-              "count": 92,
-              "avg_response_time_ms": 195
-            },
-            {
-              "endpoint": "/image/21/poster.jpg",
-              "count": 70,
-              "avg_response_time_ms": 91
-            },
-            {
-              "endpoint": "/image/60/poster.jpg",
-              "count": 69,
-              "avg_response_time_ms": 100
-            },
-            {
-              "endpoint": "/image/14/poster.jpg",
-              "count": 69,
-              "avg_response_time_ms": 110
-            },
-            {
-              "endpoint": "/image/225/poster.jpg",
-              "count": 65,
-              "avg_response_time_ms": 107
-            },
-            {
-              "endpoint": "/image/221/poster.jpg",
-              "count": 65,
-              "avg_response_time_ms": 114
-            },
-            {
-              "endpoint": "/image/23/poster.jpg",
-              "count": 64,
-              "avg_response_time_ms": 130
-            },
-            {
-              "endpoint": "/image/20/poster.jpg",
-              "count": 64,
-              "avg_response_time_ms": 84
-            },
-            {
-              "endpoint": "/image/51/poster.jpg",
-              "count": 64,
-              "avg_response_time_ms": 117
-            },
-            {
-              "endpoint": "/image/22/poster.jpg",
-              "count": 62,
-              "avg_response_time_ms": 84
-            },
-            {
-              "endpoint": "/image/261/poster.jpg",
-              "count": 60,
-              "avg_response_time_ms": 70
-            },
-            {
-              "endpoint": "/image/212/poster.jpg",
-              "count": 60,
-              "avg_response_time_ms": 121
-            },
-            {
-              "endpoint": "/image/156/poster.jpg",
-              "count": 59,
-              "avg_response_time_ms": 106
-            },
-            {
-              "endpoint": "/image/61/poster.jpg",
-              "count": 58,
-              "avg_response_time_ms": 119
-            },
-            {
-              "endpoint": "/image/49/poster.jpg",
-              "count": 56,
-              "avg_response_time_ms": 95
-            },
-            {
-              "endpoint": "/image/9/poster.jpg",
-              "count": 49,
-              "avg_response_time_ms": 77
-            },
-            {
-              "endpoint": "/image/15/poster.jpg",
-              "count": 49,
-              "avg_response_time_ms": 95
-            },
-            {
-              "endpoint": "/image/28/poster.jpg",
-              "count": 49,
-              "avg_response_time_ms": 70
-            },
-            {
-              "endpoint": "/image/8/poster.jpg",
-              "count": 49,
-              "avg_response_time_ms": 70
-            },
-            {
-              "endpoint": "/image/10/poster.jpg",
-              "count": 49,
-              "avg_response_time_ms": 93
-            },
-            {
-              "endpoint": "/image/262/poster.jpg",
-              "count": 47,
-              "avg_response_time_ms": 108
-            },
-            {
-              "endpoint": "/image/237/poster.jpg",
-              "count": 47,
-              "avg_response_time_ms": 79
+              "count": 414,
+              "avg_response_time_ms": 383
             },
             {
               "endpoint": "/watch_list/get_title_info",
-              "count": 45,
-              "avg_response_time_ms": 527
+              "count": 346,
+              "avg_response_time_ms": 379
             },
             {
-              "endpoint": "/image/219/poster.jpg",
-              "count": 44,
-              "avg_response_time_ms": 111
+              "endpoint": "/watch_list/update_title",
+              "count": 91,
+              "avg_response_time_ms": 2695
             },
             {
-              "endpoint": "/account/update_settings",
-              "count": 36,
+              "endpoint": "/get_server_resource_logs",
+              "count": 90,
+              "avg_response_time_ms": 562
+            },
+            {
+              "endpoint": "/watch_list/list_titles",
+              "count": 69,
+              "avg_response_time_ms": 469
+            },
+            {
+              "endpoint": "/image/274/poster.jpg",
+              "count": 55,
               "avg_response_time_ms": 104
             },
             {
-              "endpoint": "/image/24/poster.jpg",
-              "count": 35,
-              "avg_response_time_ms": 28
+              "endpoint": "/image/225/poster.jpg",
+              "count": 54,
+              "avg_response_time_ms": 111
             },
             {
-              "endpoint": "/transactions/get_transactions",
-              "count": 33,
-              "avg_response_time_ms": 715
+              "endpoint": "/image/161/poster.jpg",
+              "count": 51,
+              "avg_response_time_ms": 86
             },
             {
-              "endpoint": "/account/get_settings",
-              "count": 27,
-              "avg_response_time_ms": 324
+              "endpoint": "/image/20/poster.jpg",
+              "count": 50,
+              "avg_response_time_ms": 39
             },
             {
-              "endpoint": "/transactions/get_filters",
-              "count": 25,
-              "avg_response_time_ms": 721
+              "endpoint": "/image/27/poster.jpg",
+              "count": 50,
+              "avg_response_time_ms": 83
+            },
+            {
+              "endpoint": "/image/240/poster.jpg",
+              "count": 50,
+              "avg_response_time_ms": 129
+            },
+            {
+              "endpoint": "/image/199/poster.jpg",
+              "count": 50,
+              "avg_response_time_ms": 49
+            },
+            {
+              "endpoint": "/image/159/poster.jpg",
+              "count": 49,
+              "avg_response_time_ms": 108
+            },
+            {
+              "endpoint": "/image/270/poster.jpg",
+              "count": 48,
+              "avg_response_time_ms": 50
+            },
+            {
+              "endpoint": "/image/160/poster.jpg",
+              "count": 47,
+              "avg_response_time_ms": 84
+            },
+            {
+              "endpoint": "/image/272/poster.jpg",
+              "count": 44,
+              "avg_response_time_ms": 69
+            },
+            {
+              "endpoint": "/image/273/poster.jpg",
+              "count": 44,
+              "avg_response_time_ms": 77
+            },
+            {
+              "endpoint": "/get_backups",
+              "count": 39,
+              "avg_response_time_ms": 152
+            },
+            {
+              "endpoint": "/get_server_drives_info",
+              "count": 39,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/get_fastapi_request_log_data",
+              "count": 38,
+              "avg_response_time_ms": 290
             },
             {
               "endpoint": "/cleanup_logs",
               "count": 24,
-              "avg_response_time_ms": 519
+              "avg_response_time_ms": 434
+            },
+            {
+              "endpoint": "/image/21/poster.jpg",
+              "count": 22,
+              "avg_response_time_ms": 75
             },
             {
               "endpoint": "/get_chart/categories_monthly",
-              "count": 20,
-              "avg_response_time_ms": 984
+              "count": 18,
+              "avg_response_time_ms": 878
             },
             {
               "endpoint": "/analytics/get_stats_for_timespan",
-              "count": 20,
-              "avg_response_time_ms": 1283
+              "count": 18,
+              "avg_response_time_ms": 995
             },
             {
-              "endpoint": "/image/241/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 50
+              "endpoint": "/image/20/logo.png",
+              "count": 17,
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/181/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 46
-            },
-            {
-              "endpoint": "/image/59/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 40
+              "endpoint": "/image/23/poster.jpg",
+              "count": 15,
+              "avg_response_time_ms": 109
             },
             {
               "endpoint": "/image/50/poster.jpg",
@@ -13321,712 +3528,1347 @@ export const STATIC_CONTENT = {
               "avg_response_time_ms": 80
             },
             {
-              "endpoint": "/image/53/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 58
-            },
-            {
-              "endpoint": "/image/218/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 27
-            },
-            {
-              "endpoint": "/image/240/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 72
-            },
-            {
               "endpoint": "/image/19/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 66
-            },
-            {
-              "endpoint": "/image/199/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 47
-            },
-            {
-              "endpoint": "/image/155/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 56
-            },
-            {
-              "endpoint": "/image/39/poster.jpg",
-              "count": 14,
-              "avg_response_time_ms": 28
-            },
-            {
-              "endpoint": "/watch_list/modify_title_watch_count",
-              "count": 14,
-              "avg_response_time_ms": 468
-            },
-            {
-              "endpoint": "/image/250/poster.jpg",
               "count": 13,
-              "avg_response_time_ms": 105
+              "avg_response_time_ms": 191
             },
             {
-              "endpoint": "/transactions/get_options",
+              "endpoint": "/image/21/season2/poster.jpg",
               "count": 13,
-              "avg_response_time_ms": 393
+              "avg_response_time_ms": 62
             },
             {
-              "endpoint": "/image/209/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 27
+              "endpoint": "/image/21/season1/poster.jpg",
+              "count": 13,
+              "avg_response_time_ms": 22
             },
             {
-              "endpoint": "/image/216/poster.jpg",
+              "endpoint": "/image/21/backdrop1.jpg",
               "count": 12,
-              "avg_response_time_ms": 71
+              "avg_response_time_ms": 50
             },
             {
-              "endpoint": "/image/211/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 89
+              "endpoint": "/image/22/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 101
             },
             {
-              "endpoint": "/image/243/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 81
-            },
-            {
-              "endpoint": "/image/238/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 51
-            },
-            {
-              "endpoint": "/image/58/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 30
-            },
-            {
-              "endpoint": "/image/16/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 109
-            },
-            {
-              "endpoint": "/image/248/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 17
-            },
-            {
-              "endpoint": "/image/245/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 76
-            },
-            {
-              "endpoint": "/image/63/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 5
-            },
-            {
-              "endpoint": "/image/55/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 84
-            },
-            {
-              "endpoint": "/image/258/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 65
-            },
-            {
-              "endpoint": "/image/17/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 100
-            },
-            {
-              "endpoint": "/image/18/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 78
-            },
-            {
-              "endpoint": "/image/222/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 72
-            },
-            {
-              "endpoint": "/image/182/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 17
-            },
-            {
-              "endpoint": "/image/260/poster.jpg",
-              "count": 12,
+              "endpoint": "/image/59/poster.jpg",
+              "count": 11,
               "avg_response_time_ms": 98
             },
             {
-              "endpoint": "/image/247/poster.jpg",
-              "count": 12,
-              "avg_response_time_ms": 44
+              "endpoint": "/image/288/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 96
             },
             {
-              "endpoint": "/get_chart/sum_by_month",
-              "count": 10,
-              "avg_response_time_ms": 702
+              "endpoint": "/image/271/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 80
+            },
+            {
+              "endpoint": "/image/241/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 107
+            },
+            {
+              "endpoint": "/image/53/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 107
+            },
+            {
+              "endpoint": "/image/60/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 77
+            },
+            {
+              "endpoint": "/image/14/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 157
+            },
+            {
+              "endpoint": "/watch_list/modify_title_watch_count",
+              "count": 11,
+              "avg_response_time_ms": 315
+            },
+            {
+              "endpoint": "/image/20/season4/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 134
+            },
+            {
+              "endpoint": "/image/20/season3/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 110
+            },
+            {
+              "endpoint": "/image/20/backdrop1.jpg",
+              "count": 11,
+              "avg_response_time_ms": 103
+            },
+            {
+              "endpoint": "/image/20/season2/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 119
+            },
+            {
+              "endpoint": "/image/20/season5/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 70
+            },
+            {
+              "endpoint": "/image/20/season1/poster.jpg",
+              "count": 11,
+              "avg_response_time_ms": 131
+            },
+            {
+              "endpoint": "/image/221/poster.jpg",
+              "count": 9,
+              "avg_response_time_ms": 184
+            },
+            {
+              "endpoint": "/account/get_login_status",
+              "count": 9,
+              "avg_response_time_ms": 171
             },
             {
               "endpoint": "/analytics/get_general_stats",
-              "count": 10,
-              "avg_response_time_ms": 597
+              "count": 9,
+              "avg_response_time_ms": 524
+            },
+            {
+              "endpoint": "/get_chart/sum_by_month",
+              "count": 9,
+              "avg_response_time_ms": 586
             },
             {
               "endpoint": "/get_chart/balance_over_time",
-              "count": 10,
-              "avg_response_time_ms": 1062
+              "count": 9,
+              "avg_response_time_ms": 969
             },
             {
-              "endpoint": "/image/200/poster.jpg",
-              "count": 8,
-              "avg_response_time_ms": 21
-            },
-            {
-              "endpoint": "/image/152/poster.jpg",
-              "count": 8,
-              "avg_response_time_ms": 72
+              "endpoint": "/image/270/backdrop1.jpg",
+              "count": 9,
+              "avg_response_time_ms": 3
             },
             {
               "endpoint": "/watch_list/update_title_info",
+              "count": 9,
+              "avg_response_time_ms": 3583
+            },
+            {
+              "endpoint": "/image/274/backdrop1.jpg",
+              "count": 9,
+              "avg_response_time_ms": 5
+            },
+            {
+              "endpoint": "/image/161/backdrop1.jpg",
               "count": 8,
-              "avg_response_time_ms": 5354
-            },
-            {
-              "endpoint": "/image/161/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 49
-            },
-            {
-              "endpoint": "/image/27/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 4
-            },
-            {
-              "endpoint": "/image/159/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 25
-            },
-            {
-              "endpoint": "/image/242/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 4
-            },
-            {
-              "endpoint": "/image/160/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 46
-            },
-            {
-              "endpoint": "/image/26/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 94
-            },
-            {
-              "endpoint": "/image/244/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 45
-            },
-            {
-              "endpoint": "/image/52/poster.jpg",
-              "count": 7,
-              "avg_response_time_ms": 46
+              "avg_response_time_ms": 5
             },
             {
               "endpoint": "/log_backup",
               "count": 7,
-              "avg_response_time_ms": 231
+              "avg_response_time_ms": 209
             },
             {
-              "endpoint": "/transactions/new_transaction",
+              "endpoint": "/account/get_settings",
               "count": 7,
-              "avg_response_time_ms": 251
+              "avg_response_time_ms": 385
             },
             {
-              "endpoint": "/image/259/poster.jpg",
+              "endpoint": "/transactions/get_transactions",
+              "count": 7,
+              "avg_response_time_ms": 747
+            },
+            {
+              "endpoint": "/transactions/get_filters",
+              "count": 7,
+              "avg_response_time_ms": 730
+            },
+            {
+              "endpoint": "/image/289/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 74
+            },
+            {
+              "endpoint": "/image/283/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 36
+            },
+            {
+              "endpoint": "/image/258/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 77
+            },
+            {
+              "endpoint": "/image/267/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 26
+            },
+            {
+              "endpoint": "/image/268/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 87
+            },
+            {
+              "endpoint": "/image/269/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 155
+            },
+            {
+              "endpoint": "/image/279/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 105
+            },
+            {
+              "endpoint": "/image/284/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 85
+            },
+            {
+              "endpoint": "/image/280/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 102
+            },
+            {
+              "endpoint": "/image/285/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 168
+            },
+            {
+              "endpoint": "/image/286/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 156
+            },
+            {
+              "endpoint": "/image/294/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 96
+            },
+            {
+              "endpoint": "/image/282/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 196
+            },
+            {
+              "endpoint": "/image/209/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 110
+            },
+            {
+              "endpoint": "/image/160/backdrop1.jpg",
+              "count": 7,
+              "avg_response_time_ms": 21
+            },
+            {
+              "endpoint": "/image/225/season1/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/225/season5/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 53
+            },
+            {
+              "endpoint": "/image/225/season2/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 53
+            },
+            {
+              "endpoint": "/image/225/season3/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 77
+            },
+            {
+              "endpoint": "/image/225/backdrop1.jpg",
+              "count": 7,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/225/season4/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 101
+            },
+            {
+              "endpoint": "/image/225/season6/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 55
+            },
+            {
+              "endpoint": "/image/225/season8/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 24
+            },
+            {
+              "endpoint": "/image/225/season7/poster.jpg",
+              "count": 7,
+              "avg_response_time_ms": 26
+            },
+            {
+              "endpoint": "/image/287/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 65
+            },
+            {
+              "endpoint": "/image/293/poster.jpg",
               "count": 6,
               "avg_response_time_ms": 50
             },
             {
-              "endpoint": "/image/25/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 5
+              "endpoint": "/image/243/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 142
             },
             {
-              "endpoint": "/image/154/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 4
+              "endpoint": "/image/61/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 77
             },
             {
-              "endpoint": "/image/56/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 33
+              "endpoint": "/image/181/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 118
             },
             {
-              "endpoint": "/image/249/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 103
+              "endpoint": "/image/58/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 109
             },
             {
-              "endpoint": "/image/246/poster.jpg",
-              "count": 5,
+              "endpoint": "/image/248/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 66
+            },
+            {
+              "endpoint": "/image/290/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 152
+            },
+            {
+              "endpoint": "/image/245/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 64
+            },
+            {
+              "endpoint": "/image/291/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 135
+            },
+            {
+              "endpoint": "/image/281/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 66
+            },
+            {
+              "endpoint": "/image/278/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 85
+            },
+            {
+              "endpoint": "/image/55/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 106
+            },
+            {
+              "endpoint": "/image/63/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 45
+            },
+            {
+              "endpoint": "/image/16/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 91
+            },
+            {
+              "endpoint": "/image/238/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 90
+            },
+            {
+              "endpoint": "/image/261/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 129
+            },
+            {
+              "endpoint": "/image/212/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 189
+            },
+            {
+              "endpoint": "/image/216/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 136
+            },
+            {
+              "endpoint": "/image/292/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 210
+            },
+            {
+              "endpoint": "/image/156/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 62
+            },
+            {
+              "endpoint": "/image/211/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 87
+            },
+            {
+              "endpoint": "/image/49/poster.jpg",
+              "count": 6,
               "avg_response_time_ms": 61
             },
             {
-              "endpoint": "/image/51/season6/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 26
+              "endpoint": "/image/23/backdrop1.jpg",
+              "count": 6,
+              "avg_response_time_ms": 30
             },
             {
-              "endpoint": "/image/51/season1/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 32
-            },
-            {
-              "endpoint": "/image/51/season3/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 35
-            },
-            {
-              "endpoint": "/image/51/season2/poster.jpg",
-              "count": 5,
+              "endpoint": "/image/23/season2/poster.jpg",
+              "count": 6,
               "avg_response_time_ms": 36
             },
             {
-              "endpoint": "/image/51/season4/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 101
+              "endpoint": "/image/23/season1/poster.jpg",
+              "count": 6,
+              "avg_response_time_ms": 34
             },
             {
-              "endpoint": "/image/51/season5/poster.jpg",
-              "count": 5,
-              "avg_response_time_ms": 158
-            },
-            {
-              "endpoint": "/image/51/backdrop1.jpg",
-              "count": 5,
+              "endpoint": "/image/50/backdrop1.jpg",
+              "count": 6,
               "avg_response_time_ms": 4
             },
             {
-              "endpoint": "/image/221/season3/episode4.jpg",
-              "count": 5,
-              "avg_response_time_ms": 73
+              "endpoint": "/image/21/season1/episode2.jpg",
+              "count": 6,
+              "avg_response_time_ms": 87
             },
             {
-              "endpoint": "/image/221/season3/episode3.jpg",
-              "count": 5,
-              "avg_response_time_ms": 78
+              "endpoint": "/image/21/season1/episode5.jpg",
+              "count": 6,
+              "avg_response_time_ms": 97
             },
             {
-              "endpoint": "/image/221/season3/episode2.jpg",
-              "count": 5,
-              "avg_response_time_ms": 71
+              "endpoint": "/image/21/season1/episode3.jpg",
+              "count": 6,
+              "avg_response_time_ms": 146
             },
             {
-              "endpoint": "/image/221/season3/episode1.jpg",
+              "endpoint": "/image/21/season1/episode4.jpg",
+              "count": 6,
+              "avg_response_time_ms": 49
+            },
+            {
+              "endpoint": "/image/21/season1/episode9.jpg",
+              "count": 6,
+              "avg_response_time_ms": 228
+            },
+            {
+              "endpoint": "/image/21/season1/episode7.jpg",
+              "count": 6,
+              "avg_response_time_ms": 230
+            },
+            {
+              "endpoint": "/image/21/season1/episode1.jpg",
+              "count": 6,
+              "avg_response_time_ms": 152
+            },
+            {
+              "endpoint": "/image/21/season1/episode8.jpg",
+              "count": 6,
+              "avg_response_time_ms": 255
+            },
+            {
+              "endpoint": "/image/21/season1/episode6.jpg",
+              "count": 6,
+              "avg_response_time_ms": 207
+            },
+            {
+              "endpoint": "/account/update_settings",
+              "count": 5,
+              "avg_response_time_ms": 132
+            },
+            {
+              "endpoint": "/image/51/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 87
+            },
+            {
+              "endpoint": "/image/218/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 107
+            },
+            {
+              "endpoint": "/image/242/poster.jpg",
               "count": 5,
               "avg_response_time_ms": 65
             },
             {
-              "endpoint": "/image/221/season3/episode7.jpg",
+              "endpoint": "/image/50/season3/poster.jpg",
               "count": 5,
-              "avg_response_time_ms": 114
+              "avg_response_time_ms": 91
             },
             {
-              "endpoint": "/image/221/season3/episode5.jpg",
+              "endpoint": "/image/50/season1/poster.jpg",
               "count": 5,
-              "avg_response_time_ms": 88
+              "avg_response_time_ms": 32
             },
             {
-              "endpoint": "/image/221/season3/episode6.jpg",
+              "endpoint": "/image/50/season2/poster.jpg",
               "count": 5,
-              "avg_response_time_ms": 117
+              "avg_response_time_ms": 100
             },
             {
-              "endpoint": "/image/221/season3/episode8.jpg",
+              "endpoint": "/image/273/season2/poster.jpg",
               "count": 5,
-              "avg_response_time_ms": 104
+              "avg_response_time_ms": 66
             },
             {
-              "endpoint": "/image/62/poster.jpg",
-              "count": 4,
-              "avg_response_time_ms": 6
+              "endpoint": "/image/273/season1/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 38
             },
             {
-              "endpoint": "/image/153/poster.jpg",
-              "count": 4,
-              "avg_response_time_ms": 40
+              "endpoint": "/image/273/season5/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 61
             },
             {
-              "endpoint": "/image/57/poster.jpg",
-              "count": 4,
-              "avg_response_time_ms": 40
-            },
-            {
-              "endpoint": "/watch_list/add_user_title",
-              "count": 4,
-              "avg_response_time_ms": 4101
-            },
-            {
-              "endpoint": "/image/267/poster.jpg",
-              "count": 4,
-              "avg_response_time_ms": 94
-            },
-            {
-              "endpoint": "/image/23/season2/episode8.jpg",
-              "count": 3,
-              "avg_response_time_ms": 259
-            },
-            {
-              "endpoint": "/image/23/season2/episode9.jpg",
-              "count": 3,
-              "avg_response_time_ms": 358
-            },
-            {
-              "endpoint": "/image/23/season2/episode10.jpg",
-              "count": 3,
-              "avg_response_time_ms": 2
-            },
-            {
-              "endpoint": "/image/221/season3/poster.jpg",
-              "count": 3,
+              "endpoint": "/image/273/backdrop1.jpg",
+              "count": 5,
               "avg_response_time_ms": 4
             },
             {
-              "endpoint": "/image/221/season2/poster.jpg",
-              "count": 3,
-              "avg_response_time_ms": 95
+              "endpoint": "/image/273/season3/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 173
             },
             {
-              "endpoint": "/image/221/backdrop1.jpg",
+              "endpoint": "/image/273/season4/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 96
+            },
+            {
+              "endpoint": "/image/273/season6/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/273/season7/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 35
+            },
+            {
+              "endpoint": "/image/273/season9/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 58
+            },
+            {
+              "endpoint": "/image/273/season8/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 32
+            },
+            {
+              "endpoint": "/image/273/season10/poster.jpg",
+              "count": 5,
+              "avg_response_time_ms": 29
+            },
+            {
+              "endpoint": "/image/20/logo.svg",
+              "count": 5,
+              "avg_response_time_ms": 31
+            },
+            {
+              "endpoint": "/account/login",
+              "count": 4,
+              "avg_response_time_ms": 175
+            },
+            {
+              "endpoint": "/image/23/logo.png",
+              "count": 4,
+              "avg_response_time_ms": 178
+            },
+            {
+              "endpoint": "/image/160/logo.png",
+              "count": 4,
+              "avg_response_time_ms": 103
+            },
+            {
+              "endpoint": "/image/273/logo.png",
+              "count": 4,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/159/backdrop1.jpg",
               "count": 3,
-              "avg_response_time_ms": 46
+              "avg_response_time_ms": 2
             },
             {
               "endpoint": "/image/221/season1/poster.jpg",
               "count": 3,
+              "avg_response_time_ms": 8
+            },
+            {
+              "endpoint": "/image/221/season3/poster.jpg",
+              "count": 3,
+              "avg_response_time_ms": 101
+            },
+            {
+              "endpoint": "/image/221/season2/poster.jpg",
+              "count": 3,
               "avg_response_time_ms": 5
             },
             {
-              "endpoint": "/watch_list/search",
+              "endpoint": "/image/221/backdrop1.jpg",
               "count": 3,
-              "avg_response_time_ms": 4761
+              "avg_response_time_ms": 56
             },
             {
-              "endpoint": "/image/268/poster.jpg",
+              "endpoint": "/image/270/backdrop3.jpg",
               "count": 3,
-              "avg_response_time_ms": 69
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/269/poster.jpg",
+              "endpoint": "/image/20/backdrop2.jpg",
               "count": 3,
-              "avg_response_time_ms": 205
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/transactions/edit_transaction",
-              "count": 2,
-              "avg_response_time_ms": 382
+              "endpoint": "/image/21/backdrop2.jpg",
+              "count": 3,
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/23/backdrop1.jpg",
-              "count": 2,
-              "avg_response_time_ms": 219
+              "endpoint": "/image/21/backdrop3.jpg",
+              "count": 3,
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/50/backdrop1.jpg",
-              "count": 2,
+              "endpoint": "/image/21/backdrop4.jpg",
+              "count": 3,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/21/backdrop5.jpg",
+              "count": 3,
               "avg_response_time_ms": 2
             },
             {
               "endpoint": "/image/50/season3/episode1.jpg",
-              "count": 2,
-              "avg_response_time_ms": 5
-            },
-            {
-              "endpoint": "/image/50/season3/episode3.jpg",
-              "count": 2,
-              "avg_response_time_ms": 82
+              "count": 3,
+              "avg_response_time_ms": 54
             },
             {
               "endpoint": "/image/50/season3/episode6.jpg",
-              "count": 2,
-              "avg_response_time_ms": 6
-            },
-            {
-              "endpoint": "/image/50/season3/episode5.jpg",
-              "count": 2,
-              "avg_response_time_ms": 78
-            },
-            {
-              "endpoint": "/image/50/season3/episode7.jpg",
-              "count": 2,
-              "avg_response_time_ms": 294
-            },
-            {
-              "endpoint": "/image/50/season3/episode8.jpg",
-              "count": 2,
-              "avg_response_time_ms": 167
+              "count": 3,
+              "avg_response_time_ms": 81
             },
             {
               "endpoint": "/image/50/season3/episode2.jpg",
-              "count": 2,
-              "avg_response_time_ms": 241
+              "count": 3,
+              "avg_response_time_ms": 3
             },
             {
               "endpoint": "/image/50/season3/episode4.jpg",
-              "count": 2,
-              "avg_response_time_ms": 164
+              "count": 3,
+              "avg_response_time_ms": 79
             },
             {
-              "endpoint": "/image/undefined/poster.jpg",
-              "count": 2,
-              "avg_response_time_ms": 1
-            },
-            {
-              "endpoint": "/account/logout",
-              "count": 2,
+              "endpoint": "/image/50/season3/episode5.jpg",
+              "count": 3,
               "avg_response_time_ms": 57
             },
             {
-              "endpoint": "/image/39/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 133
+              "endpoint": "/image/50/season3/episode3.jpg",
+              "count": 3,
+              "avg_response_time_ms": 139
             },
             {
-              "endpoint": "/image/39/backdrop2.jpg",
-              "count": 1,
-              "avg_response_time_ms": 123
-            },
-            {
-              "endpoint": "/image/39/backdrop3.jpg",
-              "count": 1,
-              "avg_response_time_ms": 207
-            },
-            {
-              "endpoint": "/image/39/backdrop4.jpg",
-              "count": 1,
-              "avg_response_time_ms": 96
-            },
-            {
-              "endpoint": "/image/39/backdrop5.jpg",
-              "count": 1,
-              "avg_response_time_ms": 393
-            },
-            {
-              "endpoint": "/image/14/season2/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 2
-            },
-            {
-              "endpoint": "/image/14/season1/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 2
-            },
-            {
-              "endpoint": "/image/14/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 3
-            },
-            {
-              "endpoint": "/image/14/season4/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 8
-            },
-            {
-              "endpoint": "/image/14/season3/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 190
-            },
-            {
-              "endpoint": "/image/225/season3/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 3
-            },
-            {
-              "endpoint": "/image/225/season1/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 8
-            },
-            {
-              "endpoint": "/image/225/season4/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 3
-            },
-            {
-              "endpoint": "/image/225/season2/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 5
-            },
-            {
-              "endpoint": "/image/225/season5/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 162
-            },
-            {
-              "endpoint": "/image/225/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 4
-            },
-            {
-              "endpoint": "/image/225/season7/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 4
-            },
-            {
-              "endpoint": "/image/225/season8/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 3
-            },
-            {
-              "endpoint": "/image/225/season6/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 321
-            },
-            {
-              "endpoint": "/image/225/backdrop2.jpg",
-              "count": 1,
-              "avg_response_time_ms": 231
-            },
-            {
-              "endpoint": "/image/225/backdrop3.jpg",
-              "count": 1,
-              "avg_response_time_ms": 131
-            },
-            {
-              "endpoint": "/image/225/backdrop4.jpg",
-              "count": 1,
-              "avg_response_time_ms": 462
-            },
-            {
-              "endpoint": "/image/225/backdrop5.jpg",
-              "count": 1,
-              "avg_response_time_ms": 127
-            },
-            {
-              "endpoint": "/image/212/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 221
-            },
-            {
-              "endpoint": "/image/212/backdrop2.jpg",
-              "count": 1,
-              "avg_response_time_ms": 360
-            },
-            {
-              "endpoint": "/image/212/backdrop3.jpg",
-              "count": 1,
-              "avg_response_time_ms": 361
-            },
-            {
-              "endpoint": "/image/212/backdrop4.jpg",
-              "count": 1,
-              "avg_response_time_ms": 393
-            },
-            {
-              "endpoint": "/image/212/backdrop5.jpg",
-              "count": 1,
-              "avg_response_time_ms": 370
-            },
-            {
-              "endpoint": "/image/259/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 130
-            },
-            {
-              "endpoint": "/image/259/backdrop2.jpg",
-              "count": 1,
-              "avg_response_time_ms": 85
-            },
-            {
-              "endpoint": "/image/259/backdrop3.jpg",
-              "count": 1,
-              "avg_response_time_ms": 227
-            },
-            {
-              "endpoint": "/image/259/backdrop4.jpg",
-              "count": 1,
+              "endpoint": "/image/50/season3/episode8.jpg",
+              "count": 3,
               "avg_response_time_ms": 105
             },
             {
-              "endpoint": "/image/259/backdrop5.jpg",
-              "count": 1,
-              "avg_response_time_ms": 110
+              "endpoint": "/image/50/season3/episode7.jpg",
+              "count": 3,
+              "avg_response_time_ms": 193
             },
             {
-              "endpoint": "/image/23/season1/poster.jpg",
-              "count": 1,
-              "avg_response_time_ms": 2
+              "endpoint": "/image/50/backdrop2.jpg",
+              "count": 3,
+              "avg_response_time_ms": 4
             },
             {
-              "endpoint": "/image/23/season2/poster.jpg",
-              "count": 1,
+              "endpoint": "/image/50/backdrop3.jpg",
+              "count": 3,
               "avg_response_time_ms": 3
             },
             {
+              "endpoint": "/image/274/logo.png",
+              "count": 3,
+              "avg_response_time_ms": 60
+            },
+            {
+              "endpoint": "/image/225/logo.png",
+              "count": 3,
+              "avg_response_time_ms": 135
+            },
+            {
+              "endpoint": "/image/273/logo.svg",
+              "count": 3,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/160/logo.svg",
+              "count": 3,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/240/backdrop1.jpg",
+              "count": 3,
+              "avg_response_time_ms": 39
+            },
+            {
+              "endpoint": "/transactions/get_options",
+              "count": 2,
+              "avg_response_time_ms": 290
+            },
+            {
+              "endpoint": "/transactions/new_transaction",
+              "count": 2,
+              "avg_response_time_ms": 170
+            },
+            {
               "endpoint": "/image/23/season2/episode3.jpg",
-              "count": 1,
+              "count": 2,
               "avg_response_time_ms": 2
             },
             {
               "endpoint": "/image/23/season2/episode2.jpg",
-              "count": 1,
-              "avg_response_time_ms": 2
-            },
-            {
-              "endpoint": "/image/23/season2/episode1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 2
-            },
-            {
-              "endpoint": "/image/23/season2/episode7.jpg",
-              "count": 1,
-              "avg_response_time_ms": 310
-            },
-            {
-              "endpoint": "/image/23/season2/episode6.jpg",
-              "count": 1,
-              "avg_response_time_ms": 422
+              "count": 2,
+              "avg_response_time_ms": 3
             },
             {
               "endpoint": "/image/23/season2/episode4.jpg",
-              "count": 1,
-              "avg_response_time_ms": 531
+              "count": 2,
+              "avg_response_time_ms": 12
+            },
+            {
+              "endpoint": "/image/23/season2/episode7.jpg",
+              "count": 2,
+              "avg_response_time_ms": 217
             },
             {
               "endpoint": "/image/23/season2/episode5.jpg",
-              "count": 1,
-              "avg_response_time_ms": 349
+              "count": 2,
+              "avg_response_time_ms": 180
             },
             {
-              "endpoint": "/image/221/backdrop2.jpg",
+              "endpoint": "/image/23/season2/episode1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 85
+            },
+            {
+              "endpoint": "/image/23/season2/episode8.jpg",
+              "count": 2,
+              "avg_response_time_ms": 359
+            },
+            {
+              "endpoint": "/image/23/season2/episode10.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/23/season2/episode6.jpg",
+              "count": 2,
+              "avg_response_time_ms": 325
+            },
+            {
+              "endpoint": "/image/23/season2/episode9.jpg",
+              "count": 2,
+              "avg_response_time_ms": 493
+            },
+            {
+              "endpoint": "/image/221/season3/episode2.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/221/season3/episode1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/221/season3/episode5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 158
+            },
+            {
+              "endpoint": "/image/221/season3/episode6.jpg",
+              "count": 2,
+              "avg_response_time_ms": 93
+            },
+            {
+              "endpoint": "/image/221/season3/episode4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 97
+            },
+            {
+              "endpoint": "/image/221/season3/episode3.jpg",
+              "count": 2,
+              "avg_response_time_ms": 102
+            },
+            {
+              "endpoint": "/image/221/season3/episode8.jpg",
+              "count": 2,
+              "avg_response_time_ms": 183
+            },
+            {
+              "endpoint": "/image/221/season3/episode7.jpg",
+              "count": 2,
+              "avg_response_time_ms": 278
+            },
+            {
+              "endpoint": "/image/270/backdrop2.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/270/backdrop4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/270/backdrop5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/272/backdrop1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 63
+            },
+            {
+              "endpoint": "/image/20/backdrop3.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/20/backdrop4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/20/backdrop5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/21/season2/episode3.jpg",
+              "count": 2,
+              "avg_response_time_ms": 112
+            },
+            {
+              "endpoint": "/image/21/season2/episode4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 374
+            },
+            {
+              "endpoint": "/image/21/season2/episode2.jpg",
+              "count": 2,
+              "avg_response_time_ms": 343
+            },
+            {
+              "endpoint": "/image/21/season2/episode1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 264
+            },
+            {
+              "endpoint": "/image/21/season2/episode5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 164
+            },
+            {
+              "endpoint": "/image/21/season2/episode6.jpg",
+              "count": 2,
+              "avg_response_time_ms": 424
+            },
+            {
+              "endpoint": "/image/21/season2/episode7.jpg",
+              "count": 2,
+              "avg_response_time_ms": 356
+            },
+            {
+              "endpoint": "/image/21/season2/episode8.jpg",
+              "count": 2,
+              "avg_response_time_ms": 302
+            },
+            {
+              "endpoint": "/image/21/season2/episode9.jpg",
+              "count": 2,
+              "avg_response_time_ms": 234
+            },
+            {
+              "endpoint": "/watch_list/add_user_title",
+              "count": 2,
+              "avg_response_time_ms": 1
+            },
+            {
+              "endpoint": "/watch_list/toggle_title_favourite",
+              "count": 2,
+              "avg_response_time_ms": 1
+            },
+            {
+              "endpoint": "/image/50/backdrop4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/50/backdrop5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/289/season1/episode1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/289/season1/episode2.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/289/season1/episode5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 96
+            },
+            {
+              "endpoint": "/image/289/season1/episode3.jpg",
+              "count": 2,
+              "avg_response_time_ms": 7
+            },
+            {
+              "endpoint": "/image/289/season1/episode8.jpg",
+              "count": 2,
+              "avg_response_time_ms": 80
+            },
+            {
+              "endpoint": "/image/289/season1/episode4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 94
+            },
+            {
+              "endpoint": "/image/289/season1/episode10.jpg",
+              "count": 2,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/289/season1/episode6.jpg",
+              "count": 2,
+              "avg_response_time_ms": 92
+            },
+            {
+              "endpoint": "/image/289/season1/episode9.jpg",
+              "count": 2,
+              "avg_response_time_ms": 224
+            },
+            {
+              "endpoint": "/image/289/season1/episode7.jpg",
+              "count": 2,
+              "avg_response_time_ms": 256
+            },
+            {
+              "endpoint": "/image/289/season1/episode13.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/289/season1/episode11.jpg",
+              "count": 2,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/289/season1/episode12.jpg",
+              "count": 2,
+              "avg_response_time_ms": 5
+            },
+            {
+              "endpoint": "/image/289/season2/episode1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 5
+            },
+            {
+              "endpoint": "/image/289/season2/episode4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 89
+            },
+            {
+              "endpoint": "/image/289/season2/episode11.jpg",
+              "count": 2,
+              "avg_response_time_ms": 197
+            },
+            {
+              "endpoint": "/image/289/backdrop2.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/289/backdrop3.jpg",
+              "count": 2,
+              "avg_response_time_ms": 7
+            },
+            {
+              "endpoint": "/image/289/backdrop4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/289/backdrop5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/watch_list/save_user_title_notes",
+              "count": 2,
+              "avg_response_time_ms": 111
+            },
+            {
+              "endpoint": "/account/logout",
+              "count": 2,
+              "avg_response_time_ms": 72
+            },
+            {
+              "endpoint": "/image/undefined/logo.png",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/199/backdrop1.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/240/logo.png",
+              "count": 2,
+              "avg_response_time_ms": 49
+            },
+            {
+              "endpoint": "/image/160/backdrop2.jpg",
+              "count": 2,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/160/backdrop3.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/160/backdrop4.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/160/backdrop5.jpg",
+              "count": 2,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/283/backdrop1.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/283/backdrop2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/283/backdrop3.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/283/backdrop4.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/283/backdrop5.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/272/backdrop2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/272/backdrop3.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/watch_list/search",
+              "count": 1,
+              "avg_response_time_ms": 4612
+            },
+            {
+              "endpoint": "/image/50/season1/episode1.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/50/season1/episode7.jpg",
+              "count": 1,
+              "avg_response_time_ms": 9
+            },
+            {
+              "endpoint": "/image/50/season1/episode3.jpg",
               "count": 1,
               "avg_response_time_ms": 6
             },
             {
-              "endpoint": "/image/221/backdrop3.jpg",
+              "endpoint": "/image/50/season1/episode5.jpg",
+              "count": 1,
+              "avg_response_time_ms": 11
+            },
+            {
+              "endpoint": "/image/50/season1/episode2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 178
+            },
+            {
+              "endpoint": "/image/50/season1/episode6.jpg",
+              "count": 1,
+              "avg_response_time_ms": 170
+            },
+            {
+              "endpoint": "/image/50/season1/episode4.jpg",
+              "count": 1,
+              "avg_response_time_ms": 193
+            },
+            {
+              "endpoint": "/image/50/season1/episode8.jpg",
+              "count": 1,
+              "avg_response_time_ms": 339
+            },
+            {
+              "endpoint": "/image/53/backdrop1.jpg",
               "count": 1,
               "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/221/backdrop4.jpg",
+              "endpoint": "/image/289/season1/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/289/season3/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 7
+            },
+            {
+              "endpoint": "/image/289/season2/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/289/backdrop1.jpg",
+              "count": 1,
+              "avg_response_time_ms": 167
+            },
+            {
+              "endpoint": "/image/289/season3/episode2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 228
+            },
+            {
+              "endpoint": "/image/289/season3/episode3.jpg",
+              "count": 1,
+              "avg_response_time_ms": 228
+            },
+            {
+              "endpoint": "/image/289/season3/episode5.jpg",
+              "count": 1,
+              "avg_response_time_ms": 480
+            },
+            {
+              "endpoint": "/image/289/season3/episode13.jpg",
+              "count": 1,
+              "avg_response_time_ms": 128
+            },
+            {
+              "endpoint": "/image/289/season3/episode10.jpg",
+              "count": 1,
+              "avg_response_time_ms": 146
+            },
+            {
+              "endpoint": "/image/289/season3/episode1.jpg",
+              "count": 1,
+              "avg_response_time_ms": 588
+            },
+            {
+              "endpoint": "/image/289/season3/episode7.jpg",
+              "count": 1,
+              "avg_response_time_ms": 318
+            },
+            {
+              "endpoint": "/image/289/season3/episode4.jpg",
+              "count": 1,
+              "avg_response_time_ms": 572
+            },
+            {
+              "endpoint": "/image/289/season3/episode11.jpg",
+              "count": 1,
+              "avg_response_time_ms": 127
+            },
+            {
+              "endpoint": "/image/289/season3/episode6.jpg",
+              "count": 1,
+              "avg_response_time_ms": 630
+            },
+            {
+              "endpoint": "/image/289/season3/episode12.jpg",
+              "count": 1,
+              "avg_response_time_ms": 139
+            },
+            {
+              "endpoint": "/image/289/season3/episode8.jpg",
+              "count": 1,
+              "avg_response_time_ms": 614
+            },
+            {
+              "endpoint": "/image/289/season3/episode9.jpg",
+              "count": 1,
+              "avg_response_time_ms": 635
+            },
+            {
+              "endpoint": "/image/289/season2/episode3.jpg",
               "count": 1,
               "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/221/backdrop5.jpg",
+              "endpoint": "/image/289/season2/episode5.jpg",
+              "count": 1,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/289/season2/episode2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 6
+            },
+            {
+              "endpoint": "/image/289/season2/episode13.jpg",
+              "count": 1,
+              "avg_response_time_ms": 440
+            },
+            {
+              "endpoint": "/image/289/season2/episode10.jpg",
+              "count": 1,
+              "avg_response_time_ms": 516
+            },
+            {
+              "endpoint": "/image/289/season2/episode12.jpg",
+              "count": 1,
+              "avg_response_time_ms": 374
+            },
+            {
+              "endpoint": "/image/289/season2/episode6.jpg",
+              "count": 1,
+              "avg_response_time_ms": 1086
+            },
+            {
+              "endpoint": "/image/289/season2/episode7.jpg",
+              "count": 1,
+              "avg_response_time_ms": 1203
+            },
+            {
+              "endpoint": "/image/289/season2/episode9.jpg",
+              "count": 1,
+              "avg_response_time_ms": 628
+            },
+            {
+              "endpoint": "/image/289/season2/episode8.jpg",
+              "count": 1,
+              "avg_response_time_ms": 1424
+            },
+            {
+              "endpoint": "/image/159/backdrop2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/159/backdrop3.jpg",
               "count": 1,
               "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/21/season1/poster.jpg",
+              "endpoint": "/image/159/backdrop4.jpg",
               "count": 1,
               "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/21/season2/poster.jpg",
+              "endpoint": "/image/159/backdrop5.jpg",
               "count": 1,
               "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/21/backdrop1.jpg",
+              "endpoint": "/image/49/season1/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 4
+            },
+            {
+              "endpoint": "/image/49/backdrop1.jpg",
+              "count": 1,
+              "avg_response_time_ms": 130
+            },
+            {
+              "endpoint": "/image/49/backdrop2.jpg",
+              "count": 1,
+              "avg_response_time_ms": 6
+            },
+            {
+              "endpoint": "/image/49/backdrop3.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/49/backdrop4.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/49/backdrop5.jpg",
+              "count": 1,
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/19/season1/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 5
+            },
+            {
+              "endpoint": "/image/19/backdrop1.jpg",
+              "count": 1,
+              "avg_response_time_ms": 3
+            },
+            {
+              "endpoint": "/image/19/season3/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 203
+            },
+            {
+              "endpoint": "/image/19/season2/poster.jpg",
+              "count": 1,
+              "avg_response_time_ms": 218
+            },
+            {
+              "endpoint": "/image/undefined/logo.jpg",
               "count": 1,
               "avg_response_time_ms": 2
             },
@@ -14036,19 +4878,9 @@ export const STATIC_CONTENT = {
               "avg_response_time_ms": 3
             },
             {
-              "endpoint": "/image/24/backdrop1.jpg",
+              "endpoint": "/image/22/logo.png",
               "count": 1,
-              "avg_response_time_ms": 566
-            },
-            {
-              "endpoint": "/image/24/backdrop2.jpg",
-              "count": 1,
-              "avg_response_time_ms": 361
-            },
-            {
-              "endpoint": "/image/156/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 444
+              "avg_response_time_ms": 2
             },
             {
               "endpoint": "/favicon.ico",
@@ -14056,5965 +4888,5884 @@ export const STATIC_CONTENT = {
               "avg_response_time_ms": 1
             },
             {
-              "endpoint": "/image/20/backdrop1.jpg",
+              "endpoint": "/image/199/logo.png",
               "count": 1,
-              "avg_response_time_ms": 4
+              "avg_response_time_ms": 134
             },
             {
-              "endpoint": "/image/20/season1/poster.jpg",
+              "endpoint": "/image/273/logo.jpg",
               "count": 1,
-              "avg_response_time_ms": 133
+              "avg_response_time_ms": 3
             },
             {
-              "endpoint": "/image/20/season2/poster.jpg",
+              "endpoint": "/image/273/logo",
               "count": 1,
-              "avg_response_time_ms": 136
+              "avg_response_time_ms": 1
             },
             {
-              "endpoint": "/image/20/season3/poster.jpg",
+              "endpoint": "/image/225/logo.svg",
               "count": 1,
-              "avg_response_time_ms": 264
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/20/season4/poster.jpg",
+              "endpoint": "/image/240/logo.svg",
               "count": 1,
-              "avg_response_time_ms": 132
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/20/season5/poster.jpg",
+              "endpoint": "/image/272/logo.png",
               "count": 1,
-              "avg_response_time_ms": 4
+              "avg_response_time_ms": 3
             },
             {
-              "endpoint": "/image/267/backdrop1.jpg",
+              "endpoint": "/image/161/logo.svg",
               "count": 1,
-              "avg_response_time_ms": 150
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/268/backdrop1.jpg",
+              "endpoint": "/image/270/logo.png",
               "count": 1,
-              "avg_response_time_ms": 129
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/267/backdrop2.jpg",
+              "endpoint": "/image/27/logo.png",
               "count": 1,
-              "avg_response_time_ms": 114
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/267/backdrop3.jpg",
+              "endpoint": "/image/27/backdrop1.jpg",
               "count": 1,
-              "avg_response_time_ms": 137
+              "avg_response_time_ms": 3
             },
             {
-              "endpoint": "/image/267/backdrop4.jpg",
-              "count": 1,
-              "avg_response_time_ms": 76
-            },
-            {
-              "endpoint": "/image/199/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 125
-            },
-            {
-              "endpoint": "/image/250/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 136
-            },
-            {
-              "endpoint": "/image/53/backdrop1.jpg",
-              "count": 1,
-              "avg_response_time_ms": 418
-            },
-            {
-              "endpoint": "/image/50/season2/poster.jpg",
+              "endpoint": "/image/161/backdrop2.jpg",
               "count": 1,
               "avg_response_time_ms": 5
             },
             {
-              "endpoint": "/image/50/season3/poster.jpg",
+              "endpoint": "/image/161/backdrop3.jpg",
               "count": 1,
-              "avg_response_time_ms": 132
+              "avg_response_time_ms": 2
             },
             {
-              "endpoint": "/image/50/season1/poster.jpg",
+              "endpoint": "/image/161/backdrop5.jpg",
               "count": 1,
-              "avg_response_time_ms": 247
+              "avg_response_time_ms": 2
+            },
+            {
+              "endpoint": "/image/161/backdrop4.jpg",
+              "count": 1,
+              "avg_response_time_ms": 4
             }
           ],
           "requests_over_time": [
             {
-              "minute_bucket": 29021551,
-              "count": 13
-            },
-            {
-              "minute_bucket": 29021552,
-              "count": 27
-            },
-            {
-              "minute_bucket": 29021553,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021554,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29021555,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021556,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021557,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021558,
-              "count": 16
-            },
-            {
-              "minute_bucket": 29021559,
-              "count": 24
-            },
-            {
-              "minute_bucket": 29021560,
-              "count": 2
-            },
-            {
-              "minute_bucket": 29021561,
-              "count": 42
-            },
-            {
-              "minute_bucket": 29021562,
-              "count": 41
-            },
-            {
-              "minute_bucket": 29021563,
-              "count": 17
-            },
-            {
-              "minute_bucket": 29021564,
-              "count": 28
-            },
-            {
-              "minute_bucket": 29021565,
-              "count": 48
-            },
-            {
-              "minute_bucket": 29021566,
+              "minute_bucket": 29037540,
               "count": 1
             },
             {
-              "minute_bucket": 29021567,
-              "count": 151
-            },
-            {
-              "minute_bucket": 29021568,
-              "count": 17
-            },
-            {
-              "minute_bucket": 29021569,
-              "count": 29
-            },
-            {
-              "minute_bucket": 29021570,
-              "count": 91
-            },
-            {
-              "minute_bucket": 29021571,
-              "count": 33
-            },
-            {
-              "minute_bucket": 29021572,
-              "count": 12
-            },
-            {
-              "minute_bucket": 29021573,
-              "count": 71
-            },
-            {
-              "minute_bucket": 29021574,
-              "count": 48
-            },
-            {
-              "minute_bucket": 29021575,
+              "minute_bucket": 29037541,
               "count": 0
             },
             {
-              "minute_bucket": 29021576,
-              "count": 55
-            },
-            {
-              "minute_bucket": 29021577,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29021578,
-              "count": 21
-            },
-            {
-              "minute_bucket": 29021579,
+              "minute_bucket": 29037542,
               "count": 0
             },
             {
-              "minute_bucket": 29021580,
-              "count": 28
-            },
-            {
-              "minute_bucket": 29021581,
-              "count": 36
-            },
-            {
-              "minute_bucket": 29021582,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29021583,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29021584,
-              "count": 21
-            },
-            {
-              "minute_bucket": 29021585,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29021586,
+              "minute_bucket": 29037543,
               "count": 0
             },
             {
-              "minute_bucket": 29021587,
-              "count": 24
-            },
-            {
-              "minute_bucket": 29021588,
-              "count": 2
-            },
-            {
-              "minute_bucket": 29021589,
+              "minute_bucket": 29037544,
               "count": 0
             },
             {
-              "minute_bucket": 29021590,
+              "minute_bucket": 29037545,
               "count": 0
             },
             {
-              "minute_bucket": 29021591,
+              "minute_bucket": 29037546,
               "count": 0
             },
             {
-              "minute_bucket": 29021592,
+              "minute_bucket": 29037547,
               "count": 0
             },
             {
-              "minute_bucket": 29021593,
+              "minute_bucket": 29037548,
               "count": 0
             },
             {
-              "minute_bucket": 29021594,
+              "minute_bucket": 29037549,
               "count": 0
             },
             {
-              "minute_bucket": 29021595,
+              "minute_bucket": 29037550,
               "count": 0
             },
             {
-              "minute_bucket": 29021596,
+              "minute_bucket": 29037551,
               "count": 0
             },
             {
-              "minute_bucket": 29021597,
+              "minute_bucket": 29037552,
               "count": 0
             },
             {
-              "minute_bucket": 29021598,
+              "minute_bucket": 29037553,
               "count": 0
             },
             {
-              "minute_bucket": 29021599,
+              "minute_bucket": 29037554,
               "count": 0
             },
             {
-              "minute_bucket": 29021600,
+              "minute_bucket": 29037555,
               "count": 0
             },
             {
-              "minute_bucket": 29021601,
+              "minute_bucket": 29037556,
               "count": 0
             },
             {
-              "minute_bucket": 29021602,
+              "minute_bucket": 29037557,
               "count": 0
             },
             {
-              "minute_bucket": 29021603,
+              "minute_bucket": 29037558,
               "count": 0
             },
             {
-              "minute_bucket": 29021604,
+              "minute_bucket": 29037559,
               "count": 0
             },
             {
-              "minute_bucket": 29021605,
+              "minute_bucket": 29037560,
               "count": 0
             },
             {
-              "minute_bucket": 29021606,
+              "minute_bucket": 29037561,
               "count": 0
             },
             {
-              "minute_bucket": 29021607,
+              "minute_bucket": 29037562,
               "count": 0
             },
             {
-              "minute_bucket": 29021608,
+              "minute_bucket": 29037563,
               "count": 0
             },
             {
-              "minute_bucket": 29021609,
+              "minute_bucket": 29037564,
               "count": 0
             },
             {
-              "minute_bucket": 29021610,
+              "minute_bucket": 29037565,
               "count": 0
             },
             {
-              "minute_bucket": 29021611,
+              "minute_bucket": 29037566,
               "count": 0
             },
             {
-              "minute_bucket": 29021612,
+              "minute_bucket": 29037567,
               "count": 0
             },
             {
-              "minute_bucket": 29021613,
+              "minute_bucket": 29037568,
               "count": 0
             },
             {
-              "minute_bucket": 29021614,
+              "minute_bucket": 29037569,
               "count": 0
             },
             {
-              "minute_bucket": 29021615,
+              "minute_bucket": 29037570,
               "count": 0
             },
             {
-              "minute_bucket": 29021616,
+              "minute_bucket": 29037571,
               "count": 0
             },
             {
-              "minute_bucket": 29021617,
+              "minute_bucket": 29037572,
               "count": 0
             },
             {
-              "minute_bucket": 29021618,
+              "minute_bucket": 29037573,
               "count": 0
             },
             {
-              "minute_bucket": 29021619,
+              "minute_bucket": 29037574,
               "count": 0
             },
             {
-              "minute_bucket": 29021620,
+              "minute_bucket": 29037575,
               "count": 0
             },
             {
-              "minute_bucket": 29021621,
+              "minute_bucket": 29037576,
               "count": 0
             },
             {
-              "minute_bucket": 29021622,
+              "minute_bucket": 29037577,
               "count": 0
             },
             {
-              "minute_bucket": 29021623,
+              "minute_bucket": 29037578,
               "count": 0
             },
             {
-              "minute_bucket": 29021624,
+              "minute_bucket": 29037579,
               "count": 0
             },
             {
-              "minute_bucket": 29021625,
+              "minute_bucket": 29037580,
               "count": 0
             },
             {
-              "minute_bucket": 29021626,
+              "minute_bucket": 29037581,
               "count": 0
             },
             {
-              "minute_bucket": 29021627,
+              "minute_bucket": 29037582,
               "count": 0
             },
             {
-              "minute_bucket": 29021628,
+              "minute_bucket": 29037583,
               "count": 0
             },
             {
-              "minute_bucket": 29021629,
+              "minute_bucket": 29037584,
               "count": 0
             },
             {
-              "minute_bucket": 29021630,
+              "minute_bucket": 29037585,
               "count": 0
             },
             {
-              "minute_bucket": 29021631,
+              "minute_bucket": 29037586,
               "count": 0
             },
             {
-              "minute_bucket": 29021632,
+              "minute_bucket": 29037587,
               "count": 0
             },
             {
-              "minute_bucket": 29021633,
+              "minute_bucket": 29037588,
               "count": 0
             },
             {
-              "minute_bucket": 29021634,
+              "minute_bucket": 29037589,
               "count": 0
             },
             {
-              "minute_bucket": 29021635,
+              "minute_bucket": 29037590,
               "count": 0
             },
             {
-              "minute_bucket": 29021636,
+              "minute_bucket": 29037591,
               "count": 0
             },
             {
-              "minute_bucket": 29021637,
+              "minute_bucket": 29037592,
               "count": 0
             },
             {
-              "minute_bucket": 29021638,
+              "minute_bucket": 29037593,
               "count": 0
             },
             {
-              "minute_bucket": 29021639,
+              "minute_bucket": 29037594,
               "count": 0
             },
             {
-              "minute_bucket": 29021640,
+              "minute_bucket": 29037595,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29037596,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29037597,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29037598,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29037599,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29037600,
               "count": 1
             },
             {
-              "minute_bucket": 29021641,
+              "minute_bucket": 29037601,
               "count": 0
             },
             {
-              "minute_bucket": 29021642,
+              "minute_bucket": 29037602,
               "count": 0
             },
             {
-              "minute_bucket": 29021643,
+              "minute_bucket": 29037603,
               "count": 0
             },
             {
-              "minute_bucket": 29021644,
+              "minute_bucket": 29037604,
               "count": 0
             },
             {
-              "minute_bucket": 29021645,
+              "minute_bucket": 29037605,
               "count": 0
             },
             {
-              "minute_bucket": 29021646,
+              "minute_bucket": 29037606,
               "count": 0
             },
             {
-              "minute_bucket": 29021647,
+              "minute_bucket": 29037607,
               "count": 0
             },
             {
-              "minute_bucket": 29021648,
+              "minute_bucket": 29037608,
               "count": 0
             },
             {
-              "minute_bucket": 29021649,
+              "minute_bucket": 29037609,
               "count": 0
             },
             {
-              "minute_bucket": 29021650,
+              "minute_bucket": 29037610,
               "count": 0
             },
             {
-              "minute_bucket": 29021651,
+              "minute_bucket": 29037611,
               "count": 0
             },
             {
-              "minute_bucket": 29021652,
+              "minute_bucket": 29037612,
               "count": 0
             },
             {
-              "minute_bucket": 29021653,
+              "minute_bucket": 29037613,
               "count": 0
             },
             {
-              "minute_bucket": 29021654,
+              "minute_bucket": 29037614,
               "count": 0
             },
             {
-              "minute_bucket": 29021655,
+              "minute_bucket": 29037615,
               "count": 0
             },
             {
-              "minute_bucket": 29021656,
+              "minute_bucket": 29037616,
               "count": 0
             },
             {
-              "minute_bucket": 29021657,
+              "minute_bucket": 29037617,
               "count": 0
             },
             {
-              "minute_bucket": 29021658,
+              "minute_bucket": 29037618,
               "count": 0
             },
             {
-              "minute_bucket": 29021659,
+              "minute_bucket": 29037619,
               "count": 0
             },
             {
-              "minute_bucket": 29021660,
+              "minute_bucket": 29037620,
               "count": 0
             },
             {
-              "minute_bucket": 29021661,
+              "minute_bucket": 29037621,
               "count": 0
             },
             {
-              "minute_bucket": 29021662,
+              "minute_bucket": 29037622,
               "count": 0
             },
             {
-              "minute_bucket": 29021663,
+              "minute_bucket": 29037623,
               "count": 0
             },
             {
-              "minute_bucket": 29021664,
+              "minute_bucket": 29037624,
               "count": 0
             },
             {
-              "minute_bucket": 29021665,
+              "minute_bucket": 29037625,
               "count": 0
             },
             {
-              "minute_bucket": 29021666,
+              "minute_bucket": 29037626,
               "count": 0
             },
             {
-              "minute_bucket": 29021667,
+              "minute_bucket": 29037627,
               "count": 0
             },
             {
-              "minute_bucket": 29021668,
+              "minute_bucket": 29037628,
               "count": 0
             },
             {
-              "minute_bucket": 29021669,
+              "minute_bucket": 29037629,
               "count": 0
             },
             {
-              "minute_bucket": 29021670,
+              "minute_bucket": 29037630,
               "count": 0
             },
             {
-              "minute_bucket": 29021671,
+              "minute_bucket": 29037631,
               "count": 0
             },
             {
-              "minute_bucket": 29021672,
+              "minute_bucket": 29037632,
               "count": 0
             },
             {
-              "minute_bucket": 29021673,
+              "minute_bucket": 29037633,
               "count": 0
             },
             {
-              "minute_bucket": 29021674,
+              "minute_bucket": 29037634,
               "count": 0
             },
             {
-              "minute_bucket": 29021675,
+              "minute_bucket": 29037635,
               "count": 0
             },
             {
-              "minute_bucket": 29021676,
+              "minute_bucket": 29037636,
               "count": 0
             },
             {
-              "minute_bucket": 29021677,
+              "minute_bucket": 29037637,
               "count": 0
             },
             {
-              "minute_bucket": 29021678,
+              "minute_bucket": 29037638,
               "count": 0
             },
             {
-              "minute_bucket": 29021679,
+              "minute_bucket": 29037639,
               "count": 0
             },
             {
-              "minute_bucket": 29021680,
+              "minute_bucket": 29037640,
               "count": 0
             },
             {
-              "minute_bucket": 29021681,
+              "minute_bucket": 29037641,
               "count": 0
             },
             {
-              "minute_bucket": 29021682,
+              "minute_bucket": 29037642,
               "count": 0
             },
             {
-              "minute_bucket": 29021683,
+              "minute_bucket": 29037643,
               "count": 0
             },
             {
-              "minute_bucket": 29021684,
+              "minute_bucket": 29037644,
               "count": 0
             },
             {
-              "minute_bucket": 29021685,
+              "minute_bucket": 29037645,
               "count": 0
             },
             {
-              "minute_bucket": 29021686,
+              "minute_bucket": 29037646,
               "count": 0
             },
             {
-              "minute_bucket": 29021687,
+              "minute_bucket": 29037647,
               "count": 0
             },
             {
-              "minute_bucket": 29021688,
+              "minute_bucket": 29037648,
               "count": 0
             },
             {
-              "minute_bucket": 29021689,
+              "minute_bucket": 29037649,
               "count": 0
             },
             {
-              "minute_bucket": 29021690,
+              "minute_bucket": 29037650,
               "count": 0
             },
             {
-              "minute_bucket": 29021691,
+              "minute_bucket": 29037651,
               "count": 0
             },
             {
-              "minute_bucket": 29021692,
+              "minute_bucket": 29037652,
               "count": 0
             },
             {
-              "minute_bucket": 29021693,
+              "minute_bucket": 29037653,
               "count": 0
             },
             {
-              "minute_bucket": 29021694,
+              "minute_bucket": 29037654,
               "count": 0
             },
             {
-              "minute_bucket": 29021695,
+              "minute_bucket": 29037655,
               "count": 0
             },
             {
-              "minute_bucket": 29021696,
+              "minute_bucket": 29037656,
               "count": 0
             },
             {
-              "minute_bucket": 29021697,
+              "minute_bucket": 29037657,
               "count": 0
             },
             {
-              "minute_bucket": 29021698,
+              "minute_bucket": 29037658,
               "count": 0
             },
             {
-              "minute_bucket": 29021699,
+              "minute_bucket": 29037659,
               "count": 0
             },
             {
-              "minute_bucket": 29021700,
+              "minute_bucket": 29037660,
               "count": 1
             },
             {
-              "minute_bucket": 29021701,
+              "minute_bucket": 29037661,
               "count": 0
             },
             {
-              "minute_bucket": 29021702,
+              "minute_bucket": 29037662,
               "count": 0
             },
             {
-              "minute_bucket": 29021703,
+              "minute_bucket": 29037663,
               "count": 0
             },
             {
-              "minute_bucket": 29021704,
+              "minute_bucket": 29037664,
               "count": 0
             },
             {
-              "minute_bucket": 29021705,
+              "minute_bucket": 29037665,
               "count": 0
             },
             {
-              "minute_bucket": 29021706,
+              "minute_bucket": 29037666,
               "count": 0
             },
             {
-              "minute_bucket": 29021707,
+              "minute_bucket": 29037667,
               "count": 0
             },
             {
-              "minute_bucket": 29021708,
+              "minute_bucket": 29037668,
               "count": 0
             },
             {
-              "minute_bucket": 29021709,
+              "minute_bucket": 29037669,
               "count": 0
             },
             {
-              "minute_bucket": 29021710,
+              "minute_bucket": 29037670,
               "count": 0
             },
             {
-              "minute_bucket": 29021711,
+              "minute_bucket": 29037671,
               "count": 0
             },
             {
-              "minute_bucket": 29021712,
+              "minute_bucket": 29037672,
               "count": 0
             },
             {
-              "minute_bucket": 29021713,
+              "minute_bucket": 29037673,
               "count": 0
             },
             {
-              "minute_bucket": 29021714,
+              "minute_bucket": 29037674,
               "count": 0
             },
             {
-              "minute_bucket": 29021715,
+              "minute_bucket": 29037675,
               "count": 0
             },
             {
-              "minute_bucket": 29021716,
+              "minute_bucket": 29037676,
               "count": 0
             },
             {
-              "minute_bucket": 29021717,
+              "minute_bucket": 29037677,
               "count": 0
             },
             {
-              "minute_bucket": 29021718,
+              "minute_bucket": 29037678,
               "count": 0
             },
             {
-              "minute_bucket": 29021719,
+              "minute_bucket": 29037679,
               "count": 0
             },
             {
-              "minute_bucket": 29021720,
+              "minute_bucket": 29037680,
               "count": 0
             },
             {
-              "minute_bucket": 29021721,
+              "minute_bucket": 29037681,
               "count": 0
             },
             {
-              "minute_bucket": 29021722,
+              "minute_bucket": 29037682,
               "count": 0
             },
             {
-              "minute_bucket": 29021723,
+              "minute_bucket": 29037683,
               "count": 0
             },
             {
-              "minute_bucket": 29021724,
+              "minute_bucket": 29037684,
               "count": 0
             },
             {
-              "minute_bucket": 29021725,
+              "minute_bucket": 29037685,
               "count": 0
             },
             {
-              "minute_bucket": 29021726,
+              "minute_bucket": 29037686,
               "count": 0
             },
             {
-              "minute_bucket": 29021727,
+              "minute_bucket": 29037687,
               "count": 0
             },
             {
-              "minute_bucket": 29021728,
+              "minute_bucket": 29037688,
               "count": 0
             },
             {
-              "minute_bucket": 29021729,
+              "minute_bucket": 29037689,
               "count": 0
             },
             {
-              "minute_bucket": 29021730,
+              "minute_bucket": 29037690,
               "count": 0
             },
             {
-              "minute_bucket": 29021731,
+              "minute_bucket": 29037691,
               "count": 0
             },
             {
-              "minute_bucket": 29021732,
+              "minute_bucket": 29037692,
               "count": 0
             },
             {
-              "minute_bucket": 29021733,
+              "minute_bucket": 29037693,
               "count": 0
             },
             {
-              "minute_bucket": 29021734,
+              "minute_bucket": 29037694,
               "count": 0
             },
             {
-              "minute_bucket": 29021735,
+              "minute_bucket": 29037695,
               "count": 0
             },
             {
-              "minute_bucket": 29021736,
+              "minute_bucket": 29037696,
               "count": 0
             },
             {
-              "minute_bucket": 29021737,
+              "minute_bucket": 29037697,
               "count": 0
             },
             {
-              "minute_bucket": 29021738,
+              "minute_bucket": 29037698,
               "count": 0
             },
             {
-              "minute_bucket": 29021739,
+              "minute_bucket": 29037699,
               "count": 0
             },
             {
-              "minute_bucket": 29021740,
+              "minute_bucket": 29037700,
               "count": 0
             },
             {
-              "minute_bucket": 29021741,
+              "minute_bucket": 29037701,
               "count": 0
             },
             {
-              "minute_bucket": 29021742,
+              "minute_bucket": 29037702,
               "count": 0
             },
             {
-              "minute_bucket": 29021743,
+              "minute_bucket": 29037703,
               "count": 0
             },
             {
-              "minute_bucket": 29021744,
+              "minute_bucket": 29037704,
               "count": 0
             },
             {
-              "minute_bucket": 29021745,
+              "minute_bucket": 29037705,
               "count": 0
             },
             {
-              "minute_bucket": 29021746,
+              "minute_bucket": 29037706,
               "count": 0
             },
             {
-              "minute_bucket": 29021747,
+              "minute_bucket": 29037707,
               "count": 0
             },
             {
-              "minute_bucket": 29021748,
+              "minute_bucket": 29037708,
               "count": 0
             },
             {
-              "minute_bucket": 29021749,
+              "minute_bucket": 29037709,
               "count": 0
             },
             {
-              "minute_bucket": 29021750,
+              "minute_bucket": 29037710,
               "count": 0
             },
             {
-              "minute_bucket": 29021751,
+              "minute_bucket": 29037711,
               "count": 0
             },
             {
-              "minute_bucket": 29021752,
+              "minute_bucket": 29037712,
               "count": 0
             },
             {
-              "minute_bucket": 29021753,
+              "minute_bucket": 29037713,
               "count": 0
             },
             {
-              "minute_bucket": 29021754,
+              "minute_bucket": 29037714,
               "count": 0
             },
             {
-              "minute_bucket": 29021755,
+              "minute_bucket": 29037715,
               "count": 0
             },
             {
-              "minute_bucket": 29021756,
+              "minute_bucket": 29037716,
               "count": 0
             },
             {
-              "minute_bucket": 29021757,
+              "minute_bucket": 29037717,
               "count": 0
             },
             {
-              "minute_bucket": 29021758,
+              "minute_bucket": 29037718,
               "count": 0
             },
             {
-              "minute_bucket": 29021759,
+              "minute_bucket": 29037719,
               "count": 0
             },
             {
-              "minute_bucket": 29021760,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29021761,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021762,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021763,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021764,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021765,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021766,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021767,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021768,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021769,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021770,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021771,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021772,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021773,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021774,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021775,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021776,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021777,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021778,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021779,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021780,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021781,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021782,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021783,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021784,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021785,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021786,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021787,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021788,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021789,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021790,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021791,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021792,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021793,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021794,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021795,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021796,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021797,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021798,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021799,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021800,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021801,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021802,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021803,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021804,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021805,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021806,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021807,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021808,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021809,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021810,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021811,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021812,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021813,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021814,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021815,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021816,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021817,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021818,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021819,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021820,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29021821,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021822,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021823,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021824,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021825,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021826,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021827,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021828,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021829,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021830,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021831,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021832,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021833,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021834,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021835,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021836,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021837,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021838,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021839,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021840,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021841,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021842,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021843,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021844,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021845,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021846,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021847,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021848,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021849,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021850,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021851,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021852,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021853,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021854,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021855,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021856,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021857,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021858,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021859,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021860,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021861,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021862,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021863,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021864,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021865,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021866,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021867,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021868,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021869,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021870,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021871,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021872,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021873,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021874,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021875,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021876,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021877,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021878,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021879,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29021880,
+              "minute_bucket": 29037720,
               "count": 3
             },
             {
-              "minute_bucket": 29021881,
+              "minute_bucket": 29037721,
               "count": 0
             },
             {
-              "minute_bucket": 29021882,
+              "minute_bucket": 29037722,
               "count": 0
             },
             {
-              "minute_bucket": 29021883,
+              "minute_bucket": 29037723,
               "count": 0
             },
             {
-              "minute_bucket": 29021884,
+              "minute_bucket": 29037724,
               "count": 0
             },
             {
-              "minute_bucket": 29021885,
+              "minute_bucket": 29037725,
               "count": 0
             },
             {
-              "minute_bucket": 29021886,
+              "minute_bucket": 29037726,
               "count": 0
             },
             {
-              "minute_bucket": 29021887,
+              "minute_bucket": 29037727,
               "count": 0
             },
             {
-              "minute_bucket": 29021888,
+              "minute_bucket": 29037728,
               "count": 0
             },
             {
-              "minute_bucket": 29021889,
+              "minute_bucket": 29037729,
               "count": 0
             },
             {
-              "minute_bucket": 29021890,
+              "minute_bucket": 29037730,
               "count": 0
             },
             {
-              "minute_bucket": 29021891,
+              "minute_bucket": 29037731,
               "count": 0
             },
             {
-              "minute_bucket": 29021892,
+              "minute_bucket": 29037732,
               "count": 0
             },
             {
-              "minute_bucket": 29021893,
+              "minute_bucket": 29037733,
               "count": 0
             },
             {
-              "minute_bucket": 29021894,
+              "minute_bucket": 29037734,
               "count": 0
             },
             {
-              "minute_bucket": 29021895,
+              "minute_bucket": 29037735,
               "count": 0
             },
             {
-              "minute_bucket": 29021896,
+              "minute_bucket": 29037736,
               "count": 0
             },
             {
-              "minute_bucket": 29021897,
+              "minute_bucket": 29037737,
               "count": 0
             },
             {
-              "minute_bucket": 29021898,
+              "minute_bucket": 29037738,
               "count": 0
             },
             {
-              "minute_bucket": 29021899,
+              "minute_bucket": 29037739,
               "count": 0
             },
             {
-              "minute_bucket": 29021900,
+              "minute_bucket": 29037740,
               "count": 0
             },
             {
-              "minute_bucket": 29021901,
+              "minute_bucket": 29037741,
               "count": 0
             },
             {
-              "minute_bucket": 29021902,
+              "minute_bucket": 29037742,
               "count": 0
             },
             {
-              "minute_bucket": 29021903,
+              "minute_bucket": 29037743,
               "count": 0
             },
             {
-              "minute_bucket": 29021904,
+              "minute_bucket": 29037744,
               "count": 0
             },
             {
-              "minute_bucket": 29021905,
+              "minute_bucket": 29037745,
               "count": 0
             },
             {
-              "minute_bucket": 29021906,
+              "minute_bucket": 29037746,
               "count": 0
             },
             {
-              "minute_bucket": 29021907,
+              "minute_bucket": 29037747,
               "count": 0
             },
             {
-              "minute_bucket": 29021908,
+              "minute_bucket": 29037748,
               "count": 0
             },
             {
-              "minute_bucket": 29021909,
+              "minute_bucket": 29037749,
               "count": 0
             },
             {
-              "minute_bucket": 29021910,
+              "minute_bucket": 29037750,
               "count": 0
             },
             {
-              "minute_bucket": 29021911,
+              "minute_bucket": 29037751,
               "count": 0
             },
             {
-              "minute_bucket": 29021912,
+              "minute_bucket": 29037752,
               "count": 0
             },
             {
-              "minute_bucket": 29021913,
+              "minute_bucket": 29037753,
               "count": 0
             },
             {
-              "minute_bucket": 29021914,
+              "minute_bucket": 29037754,
               "count": 0
             },
             {
-              "minute_bucket": 29021915,
+              "minute_bucket": 29037755,
               "count": 0
             },
             {
-              "minute_bucket": 29021916,
+              "minute_bucket": 29037756,
               "count": 0
             },
             {
-              "minute_bucket": 29021917,
+              "minute_bucket": 29037757,
               "count": 0
             },
             {
-              "minute_bucket": 29021918,
+              "minute_bucket": 29037758,
               "count": 0
             },
             {
-              "minute_bucket": 29021919,
+              "minute_bucket": 29037759,
               "count": 0
             },
             {
-              "minute_bucket": 29021920,
+              "minute_bucket": 29037760,
               "count": 0
             },
             {
-              "minute_bucket": 29021921,
+              "minute_bucket": 29037761,
               "count": 0
             },
             {
-              "minute_bucket": 29021922,
+              "minute_bucket": 29037762,
               "count": 0
             },
             {
-              "minute_bucket": 29021923,
+              "minute_bucket": 29037763,
               "count": 0
             },
             {
-              "minute_bucket": 29021924,
+              "minute_bucket": 29037764,
               "count": 0
             },
             {
-              "minute_bucket": 29021925,
+              "minute_bucket": 29037765,
               "count": 0
             },
             {
-              "minute_bucket": 29021926,
+              "minute_bucket": 29037766,
               "count": 0
             },
             {
-              "minute_bucket": 29021927,
+              "minute_bucket": 29037767,
               "count": 0
             },
             {
-              "minute_bucket": 29021928,
+              "minute_bucket": 29037768,
               "count": 0
             },
             {
-              "minute_bucket": 29021929,
+              "minute_bucket": 29037769,
               "count": 0
             },
             {
-              "minute_bucket": 29021930,
+              "minute_bucket": 29037770,
               "count": 0
             },
             {
-              "minute_bucket": 29021931,
+              "minute_bucket": 29037771,
               "count": 0
             },
             {
-              "minute_bucket": 29021932,
+              "minute_bucket": 29037772,
               "count": 0
             },
             {
-              "minute_bucket": 29021933,
+              "minute_bucket": 29037773,
               "count": 0
             },
             {
-              "minute_bucket": 29021934,
+              "minute_bucket": 29037774,
               "count": 0
             },
             {
-              "minute_bucket": 29021935,
+              "minute_bucket": 29037775,
               "count": 0
             },
             {
-              "minute_bucket": 29021936,
+              "minute_bucket": 29037776,
               "count": 0
             },
             {
-              "minute_bucket": 29021937,
+              "minute_bucket": 29037777,
               "count": 0
             },
             {
-              "minute_bucket": 29021938,
+              "minute_bucket": 29037778,
               "count": 0
             },
             {
-              "minute_bucket": 29021939,
+              "minute_bucket": 29037779,
               "count": 0
             },
             {
-              "minute_bucket": 29021940,
+              "minute_bucket": 29037780,
               "count": 1
             },
             {
-              "minute_bucket": 29021941,
+              "minute_bucket": 29037781,
               "count": 0
             },
             {
-              "minute_bucket": 29021942,
+              "minute_bucket": 29037782,
               "count": 0
             },
             {
-              "minute_bucket": 29021943,
+              "minute_bucket": 29037783,
               "count": 0
             },
             {
-              "minute_bucket": 29021944,
+              "minute_bucket": 29037784,
               "count": 0
             },
             {
-              "minute_bucket": 29021945,
+              "minute_bucket": 29037785,
               "count": 0
             },
             {
-              "minute_bucket": 29021946,
+              "minute_bucket": 29037786,
               "count": 0
             },
             {
-              "minute_bucket": 29021947,
+              "minute_bucket": 29037787,
               "count": 0
             },
             {
-              "minute_bucket": 29021948,
+              "minute_bucket": 29037788,
               "count": 0
             },
             {
-              "minute_bucket": 29021949,
+              "minute_bucket": 29037789,
               "count": 0
             },
             {
-              "minute_bucket": 29021950,
+              "minute_bucket": 29037790,
               "count": 0
             },
             {
-              "minute_bucket": 29021951,
+              "minute_bucket": 29037791,
               "count": 0
             },
             {
-              "minute_bucket": 29021952,
+              "minute_bucket": 29037792,
               "count": 0
             },
             {
-              "minute_bucket": 29021953,
+              "minute_bucket": 29037793,
               "count": 0
             },
             {
-              "minute_bucket": 29021954,
+              "minute_bucket": 29037794,
               "count": 0
             },
             {
-              "minute_bucket": 29021955,
+              "minute_bucket": 29037795,
               "count": 0
             },
             {
-              "minute_bucket": 29021956,
+              "minute_bucket": 29037796,
               "count": 0
             },
             {
-              "minute_bucket": 29021957,
+              "minute_bucket": 29037797,
               "count": 0
             },
             {
-              "minute_bucket": 29021958,
+              "minute_bucket": 29037798,
               "count": 0
             },
             {
-              "minute_bucket": 29021959,
+              "minute_bucket": 29037799,
               "count": 0
             },
             {
-              "minute_bucket": 29021960,
+              "minute_bucket": 29037800,
               "count": 0
             },
             {
-              "minute_bucket": 29021961,
+              "minute_bucket": 29037801,
               "count": 0
             },
             {
-              "minute_bucket": 29021962,
+              "minute_bucket": 29037802,
               "count": 0
             },
             {
-              "minute_bucket": 29021963,
+              "minute_bucket": 29037803,
               "count": 0
             },
             {
-              "minute_bucket": 29021964,
+              "minute_bucket": 29037804,
               "count": 0
             },
             {
-              "minute_bucket": 29021965,
+              "minute_bucket": 29037805,
               "count": 0
             },
             {
-              "minute_bucket": 29021966,
+              "minute_bucket": 29037806,
               "count": 0
             },
             {
-              "minute_bucket": 29021967,
+              "minute_bucket": 29037807,
               "count": 0
             },
             {
-              "minute_bucket": 29021968,
+              "minute_bucket": 29037808,
               "count": 0
             },
             {
-              "minute_bucket": 29021969,
+              "minute_bucket": 29037809,
               "count": 0
             },
             {
-              "minute_bucket": 29021970,
+              "minute_bucket": 29037810,
               "count": 0
             },
             {
-              "minute_bucket": 29021971,
+              "minute_bucket": 29037811,
               "count": 0
             },
             {
-              "minute_bucket": 29021972,
+              "minute_bucket": 29037812,
               "count": 0
             },
             {
-              "minute_bucket": 29021973,
+              "minute_bucket": 29037813,
               "count": 0
             },
             {
-              "minute_bucket": 29021974,
+              "minute_bucket": 29037814,
               "count": 0
             },
             {
-              "minute_bucket": 29021975,
+              "minute_bucket": 29037815,
               "count": 0
             },
             {
-              "minute_bucket": 29021976,
+              "minute_bucket": 29037816,
               "count": 0
             },
             {
-              "minute_bucket": 29021977,
+              "minute_bucket": 29037817,
               "count": 0
             },
             {
-              "minute_bucket": 29021978,
+              "minute_bucket": 29037818,
               "count": 0
             },
             {
-              "minute_bucket": 29021979,
+              "minute_bucket": 29037819,
               "count": 0
             },
             {
-              "minute_bucket": 29021980,
+              "minute_bucket": 29037820,
               "count": 0
             },
             {
-              "minute_bucket": 29021981,
+              "minute_bucket": 29037821,
               "count": 0
             },
             {
-              "minute_bucket": 29021982,
+              "minute_bucket": 29037822,
               "count": 0
             },
             {
-              "minute_bucket": 29021983,
+              "minute_bucket": 29037823,
               "count": 0
             },
             {
-              "minute_bucket": 29021984,
+              "minute_bucket": 29037824,
               "count": 0
             },
             {
-              "minute_bucket": 29021985,
+              "minute_bucket": 29037825,
               "count": 0
             },
             {
-              "minute_bucket": 29021986,
+              "minute_bucket": 29037826,
               "count": 0
             },
             {
-              "minute_bucket": 29021987,
+              "minute_bucket": 29037827,
               "count": 0
             },
             {
-              "minute_bucket": 29021988,
+              "minute_bucket": 29037828,
               "count": 0
             },
             {
-              "minute_bucket": 29021989,
+              "minute_bucket": 29037829,
               "count": 0
             },
             {
-              "minute_bucket": 29021990,
+              "minute_bucket": 29037830,
               "count": 0
             },
             {
-              "minute_bucket": 29021991,
+              "minute_bucket": 29037831,
               "count": 0
             },
             {
-              "minute_bucket": 29021992,
+              "minute_bucket": 29037832,
               "count": 0
             },
             {
-              "minute_bucket": 29021993,
+              "minute_bucket": 29037833,
               "count": 0
             },
             {
-              "minute_bucket": 29021994,
+              "minute_bucket": 29037834,
               "count": 0
             },
             {
-              "minute_bucket": 29021995,
+              "minute_bucket": 29037835,
               "count": 0
             },
             {
-              "minute_bucket": 29021996,
+              "minute_bucket": 29037836,
               "count": 0
             },
             {
-              "minute_bucket": 29021997,
+              "minute_bucket": 29037837,
               "count": 0
             },
             {
-              "minute_bucket": 29021998,
+              "minute_bucket": 29037838,
               "count": 0
             },
             {
-              "minute_bucket": 29021999,
+              "minute_bucket": 29037839,
               "count": 0
             },
             {
-              "minute_bucket": 29022000,
+              "minute_bucket": 29037840,
               "count": 1
             },
             {
-              "minute_bucket": 29022001,
+              "minute_bucket": 29037841,
               "count": 0
             },
             {
-              "minute_bucket": 29022002,
+              "minute_bucket": 29037842,
               "count": 0
             },
             {
-              "minute_bucket": 29022003,
+              "minute_bucket": 29037843,
               "count": 0
             },
             {
-              "minute_bucket": 29022004,
+              "minute_bucket": 29037844,
               "count": 0
             },
             {
-              "minute_bucket": 29022005,
+              "minute_bucket": 29037845,
               "count": 0
             },
             {
-              "minute_bucket": 29022006,
+              "minute_bucket": 29037846,
               "count": 0
             },
             {
-              "minute_bucket": 29022007,
+              "minute_bucket": 29037847,
               "count": 0
             },
             {
-              "minute_bucket": 29022008,
+              "minute_bucket": 29037848,
               "count": 0
             },
             {
-              "minute_bucket": 29022009,
+              "minute_bucket": 29037849,
               "count": 0
             },
             {
-              "minute_bucket": 29022010,
+              "minute_bucket": 29037850,
               "count": 0
             },
             {
-              "minute_bucket": 29022011,
+              "minute_bucket": 29037851,
               "count": 0
             },
             {
-              "minute_bucket": 29022012,
+              "minute_bucket": 29037852,
               "count": 0
             },
             {
-              "minute_bucket": 29022013,
+              "minute_bucket": 29037853,
               "count": 0
             },
             {
-              "minute_bucket": 29022014,
+              "minute_bucket": 29037854,
               "count": 0
             },
             {
-              "minute_bucket": 29022015,
+              "minute_bucket": 29037855,
               "count": 0
             },
             {
-              "minute_bucket": 29022016,
+              "minute_bucket": 29037856,
               "count": 0
             },
             {
-              "minute_bucket": 29022017,
+              "minute_bucket": 29037857,
               "count": 0
             },
             {
-              "minute_bucket": 29022018,
+              "minute_bucket": 29037858,
               "count": 0
             },
             {
-              "minute_bucket": 29022019,
+              "minute_bucket": 29037859,
               "count": 0
             },
             {
-              "minute_bucket": 29022020,
+              "minute_bucket": 29037860,
               "count": 0
             },
             {
-              "minute_bucket": 29022021,
+              "minute_bucket": 29037861,
               "count": 0
             },
             {
-              "minute_bucket": 29022022,
+              "minute_bucket": 29037862,
               "count": 0
             },
             {
-              "minute_bucket": 29022023,
+              "minute_bucket": 29037863,
               "count": 0
             },
             {
-              "minute_bucket": 29022024,
+              "minute_bucket": 29037864,
               "count": 0
             },
             {
-              "minute_bucket": 29022025,
+              "minute_bucket": 29037865,
               "count": 0
             },
             {
-              "minute_bucket": 29022026,
+              "minute_bucket": 29037866,
               "count": 0
             },
             {
-              "minute_bucket": 29022027,
+              "minute_bucket": 29037867,
               "count": 0
             },
             {
-              "minute_bucket": 29022028,
+              "minute_bucket": 29037868,
               "count": 0
             },
             {
-              "minute_bucket": 29022029,
+              "minute_bucket": 29037869,
               "count": 0
             },
             {
-              "minute_bucket": 29022030,
+              "minute_bucket": 29037870,
               "count": 0
             },
             {
-              "minute_bucket": 29022031,
+              "minute_bucket": 29037871,
               "count": 0
             },
             {
-              "minute_bucket": 29022032,
+              "minute_bucket": 29037872,
               "count": 0
             },
             {
-              "minute_bucket": 29022033,
+              "minute_bucket": 29037873,
               "count": 0
             },
             {
-              "minute_bucket": 29022034,
+              "minute_bucket": 29037874,
               "count": 0
             },
             {
-              "minute_bucket": 29022035,
+              "minute_bucket": 29037875,
               "count": 0
             },
             {
-              "minute_bucket": 29022036,
+              "minute_bucket": 29037876,
               "count": 0
             },
             {
-              "minute_bucket": 29022037,
+              "minute_bucket": 29037877,
               "count": 0
             },
             {
-              "minute_bucket": 29022038,
+              "minute_bucket": 29037878,
               "count": 0
             },
             {
-              "minute_bucket": 29022039,
+              "minute_bucket": 29037879,
               "count": 0
             },
             {
-              "minute_bucket": 29022040,
+              "minute_bucket": 29037880,
               "count": 0
             },
             {
-              "minute_bucket": 29022041,
+              "minute_bucket": 29037881,
               "count": 0
             },
             {
-              "minute_bucket": 29022042,
+              "minute_bucket": 29037882,
               "count": 0
             },
             {
-              "minute_bucket": 29022043,
+              "minute_bucket": 29037883,
               "count": 0
             },
             {
-              "minute_bucket": 29022044,
+              "minute_bucket": 29037884,
               "count": 0
             },
             {
-              "minute_bucket": 29022045,
+              "minute_bucket": 29037885,
               "count": 0
             },
             {
-              "minute_bucket": 29022046,
+              "minute_bucket": 29037886,
               "count": 0
             },
             {
-              "minute_bucket": 29022047,
+              "minute_bucket": 29037887,
               "count": 0
             },
             {
-              "minute_bucket": 29022048,
+              "minute_bucket": 29037888,
               "count": 0
             },
             {
-              "minute_bucket": 29022049,
+              "minute_bucket": 29037889,
               "count": 0
             },
             {
-              "minute_bucket": 29022050,
+              "minute_bucket": 29037890,
               "count": 0
             },
             {
-              "minute_bucket": 29022051,
+              "minute_bucket": 29037891,
               "count": 0
             },
             {
-              "minute_bucket": 29022052,
+              "minute_bucket": 29037892,
               "count": 0
             },
             {
-              "minute_bucket": 29022053,
+              "minute_bucket": 29037893,
               "count": 0
             },
             {
-              "minute_bucket": 29022054,
+              "minute_bucket": 29037894,
               "count": 0
             },
             {
-              "minute_bucket": 29022055,
+              "minute_bucket": 29037895,
               "count": 0
             },
             {
-              "minute_bucket": 29022056,
+              "minute_bucket": 29037896,
               "count": 0
             },
             {
-              "minute_bucket": 29022057,
+              "minute_bucket": 29037897,
               "count": 0
             },
             {
-              "minute_bucket": 29022058,
+              "minute_bucket": 29037898,
               "count": 0
             },
             {
-              "minute_bucket": 29022059,
+              "minute_bucket": 29037899,
               "count": 0
             },
             {
-              "minute_bucket": 29022060,
+              "minute_bucket": 29037900,
               "count": 1
             },
             {
-              "minute_bucket": 29022061,
+              "minute_bucket": 29037901,
               "count": 0
             },
             {
-              "minute_bucket": 29022062,
+              "minute_bucket": 29037902,
               "count": 0
             },
             {
-              "minute_bucket": 29022063,
+              "minute_bucket": 29037903,
               "count": 0
             },
             {
-              "minute_bucket": 29022064,
+              "minute_bucket": 29037904,
               "count": 0
             },
             {
-              "minute_bucket": 29022065,
+              "minute_bucket": 29037905,
               "count": 0
             },
             {
-              "minute_bucket": 29022066,
+              "minute_bucket": 29037906,
               "count": 0
             },
             {
-              "minute_bucket": 29022067,
+              "minute_bucket": 29037907,
               "count": 0
             },
             {
-              "minute_bucket": 29022068,
+              "minute_bucket": 29037908,
               "count": 0
             },
             {
-              "minute_bucket": 29022069,
+              "minute_bucket": 29037909,
               "count": 0
             },
             {
-              "minute_bucket": 29022070,
+              "minute_bucket": 29037910,
               "count": 0
             },
             {
-              "minute_bucket": 29022071,
+              "minute_bucket": 29037911,
               "count": 0
             },
             {
-              "minute_bucket": 29022072,
+              "minute_bucket": 29037912,
               "count": 0
             },
             {
-              "minute_bucket": 29022073,
+              "minute_bucket": 29037913,
               "count": 0
             },
             {
-              "minute_bucket": 29022074,
+              "minute_bucket": 29037914,
               "count": 0
             },
             {
-              "minute_bucket": 29022075,
+              "minute_bucket": 29037915,
               "count": 0
             },
             {
-              "minute_bucket": 29022076,
+              "minute_bucket": 29037916,
               "count": 0
             },
             {
-              "minute_bucket": 29022077,
+              "minute_bucket": 29037917,
               "count": 0
             },
             {
-              "minute_bucket": 29022078,
+              "minute_bucket": 29037918,
               "count": 0
             },
             {
-              "minute_bucket": 29022079,
+              "minute_bucket": 29037919,
               "count": 0
             },
             {
-              "minute_bucket": 29022080,
+              "minute_bucket": 29037920,
               "count": 0
             },
             {
-              "minute_bucket": 29022081,
+              "minute_bucket": 29037921,
               "count": 0
             },
             {
-              "minute_bucket": 29022082,
+              "minute_bucket": 29037922,
               "count": 0
             },
             {
-              "minute_bucket": 29022083,
+              "minute_bucket": 29037923,
               "count": 0
             },
             {
-              "minute_bucket": 29022084,
+              "minute_bucket": 29037924,
               "count": 0
             },
             {
-              "minute_bucket": 29022085,
+              "minute_bucket": 29037925,
               "count": 0
             },
             {
-              "minute_bucket": 29022086,
+              "minute_bucket": 29037926,
               "count": 0
             },
             {
-              "minute_bucket": 29022087,
+              "minute_bucket": 29037927,
               "count": 0
             },
             {
-              "minute_bucket": 29022088,
+              "minute_bucket": 29037928,
               "count": 0
             },
             {
-              "minute_bucket": 29022089,
+              "minute_bucket": 29037929,
               "count": 0
             },
             {
-              "minute_bucket": 29022090,
+              "minute_bucket": 29037930,
               "count": 0
             },
             {
-              "minute_bucket": 29022091,
+              "minute_bucket": 29037931,
               "count": 0
             },
             {
-              "minute_bucket": 29022092,
+              "minute_bucket": 29037932,
               "count": 0
             },
             {
-              "minute_bucket": 29022093,
+              "minute_bucket": 29037933,
               "count": 0
             },
             {
-              "minute_bucket": 29022094,
+              "minute_bucket": 29037934,
               "count": 0
             },
             {
-              "minute_bucket": 29022095,
+              "minute_bucket": 29037935,
               "count": 0
             },
             {
-              "minute_bucket": 29022096,
+              "minute_bucket": 29037936,
               "count": 0
             },
             {
-              "minute_bucket": 29022097,
+              "minute_bucket": 29037937,
               "count": 0
             },
             {
-              "minute_bucket": 29022098,
+              "minute_bucket": 29037938,
               "count": 0
             },
             {
-              "minute_bucket": 29022099,
+              "minute_bucket": 29037939,
               "count": 0
             },
             {
-              "minute_bucket": 29022100,
+              "minute_bucket": 29037940,
               "count": 0
             },
             {
-              "minute_bucket": 29022101,
+              "minute_bucket": 29037941,
               "count": 0
             },
             {
-              "minute_bucket": 29022102,
+              "minute_bucket": 29037942,
               "count": 0
             },
             {
-              "minute_bucket": 29022103,
+              "minute_bucket": 29037943,
               "count": 0
             },
             {
-              "minute_bucket": 29022104,
+              "minute_bucket": 29037944,
               "count": 0
             },
             {
-              "minute_bucket": 29022105,
+              "minute_bucket": 29037945,
               "count": 0
             },
             {
-              "minute_bucket": 29022106,
+              "minute_bucket": 29037946,
               "count": 0
             },
             {
-              "minute_bucket": 29022107,
+              "minute_bucket": 29037947,
               "count": 0
             },
             {
-              "minute_bucket": 29022108,
+              "minute_bucket": 29037948,
               "count": 0
             },
             {
-              "minute_bucket": 29022109,
+              "minute_bucket": 29037949,
               "count": 0
             },
             {
-              "minute_bucket": 29022110,
+              "minute_bucket": 29037950,
               "count": 0
             },
             {
-              "minute_bucket": 29022111,
+              "minute_bucket": 29037951,
               "count": 0
             },
             {
-              "minute_bucket": 29022112,
+              "minute_bucket": 29037952,
               "count": 0
             },
             {
-              "minute_bucket": 29022113,
+              "minute_bucket": 29037953,
               "count": 0
             },
             {
-              "minute_bucket": 29022114,
+              "minute_bucket": 29037954,
               "count": 0
             },
             {
-              "minute_bucket": 29022115,
+              "minute_bucket": 29037955,
               "count": 0
             },
             {
-              "minute_bucket": 29022116,
+              "minute_bucket": 29037956,
               "count": 0
             },
             {
-              "minute_bucket": 29022117,
+              "minute_bucket": 29037957,
               "count": 0
             },
             {
-              "minute_bucket": 29022118,
+              "minute_bucket": 29037958,
               "count": 0
             },
             {
-              "minute_bucket": 29022119,
+              "minute_bucket": 29037959,
               "count": 0
             },
             {
-              "minute_bucket": 29022120,
+              "minute_bucket": 29037960,
               "count": 1
             },
             {
-              "minute_bucket": 29022121,
+              "minute_bucket": 29037961,
               "count": 0
             },
             {
-              "minute_bucket": 29022122,
+              "minute_bucket": 29037962,
               "count": 0
             },
             {
-              "minute_bucket": 29022123,
+              "minute_bucket": 29037963,
               "count": 0
             },
             {
-              "minute_bucket": 29022124,
+              "minute_bucket": 29037964,
               "count": 0
             },
             {
-              "minute_bucket": 29022125,
+              "minute_bucket": 29037965,
               "count": 0
             },
             {
-              "minute_bucket": 29022126,
+              "minute_bucket": 29037966,
               "count": 0
             },
             {
-              "minute_bucket": 29022127,
+              "minute_bucket": 29037967,
               "count": 0
             },
             {
-              "minute_bucket": 29022128,
+              "minute_bucket": 29037968,
               "count": 0
             },
             {
-              "minute_bucket": 29022129,
+              "minute_bucket": 29037969,
               "count": 0
             },
             {
-              "minute_bucket": 29022130,
+              "minute_bucket": 29037970,
               "count": 0
             },
             {
-              "minute_bucket": 29022131,
+              "minute_bucket": 29037971,
               "count": 0
             },
             {
-              "minute_bucket": 29022132,
+              "minute_bucket": 29037972,
               "count": 0
             },
             {
-              "minute_bucket": 29022133,
+              "minute_bucket": 29037973,
               "count": 0
             },
             {
-              "minute_bucket": 29022134,
+              "minute_bucket": 29037974,
               "count": 0
             },
             {
-              "minute_bucket": 29022135,
+              "minute_bucket": 29037975,
               "count": 0
             },
             {
-              "minute_bucket": 29022136,
+              "minute_bucket": 29037976,
               "count": 0
             },
             {
-              "minute_bucket": 29022137,
+              "minute_bucket": 29037977,
               "count": 0
             },
             {
-              "minute_bucket": 29022138,
+              "minute_bucket": 29037978,
               "count": 0
             },
             {
-              "minute_bucket": 29022139,
+              "minute_bucket": 29037979,
               "count": 0
             },
             {
-              "minute_bucket": 29022140,
+              "minute_bucket": 29037980,
               "count": 0
             },
             {
-              "minute_bucket": 29022141,
+              "minute_bucket": 29037981,
               "count": 0
             },
             {
-              "minute_bucket": 29022142,
+              "minute_bucket": 29037982,
               "count": 0
             },
             {
-              "minute_bucket": 29022143,
+              "minute_bucket": 29037983,
               "count": 0
             },
             {
-              "minute_bucket": 29022144,
+              "minute_bucket": 29037984,
               "count": 0
             },
             {
-              "minute_bucket": 29022145,
+              "minute_bucket": 29037985,
               "count": 0
             },
             {
-              "minute_bucket": 29022146,
+              "minute_bucket": 29037986,
               "count": 0
             },
             {
-              "minute_bucket": 29022147,
+              "minute_bucket": 29037987,
               "count": 0
             },
             {
-              "minute_bucket": 29022148,
+              "minute_bucket": 29037988,
               "count": 0
             },
             {
-              "minute_bucket": 29022149,
+              "minute_bucket": 29037989,
               "count": 0
             },
             {
-              "minute_bucket": 29022150,
+              "minute_bucket": 29037990,
               "count": 0
             },
             {
-              "minute_bucket": 29022151,
+              "minute_bucket": 29037991,
               "count": 0
             },
             {
-              "minute_bucket": 29022152,
+              "minute_bucket": 29037992,
               "count": 0
             },
             {
-              "minute_bucket": 29022153,
+              "minute_bucket": 29037993,
               "count": 0
             },
             {
-              "minute_bucket": 29022154,
+              "minute_bucket": 29037994,
               "count": 0
             },
             {
-              "minute_bucket": 29022155,
+              "minute_bucket": 29037995,
               "count": 0
             },
             {
-              "minute_bucket": 29022156,
+              "minute_bucket": 29037996,
               "count": 0
             },
             {
-              "minute_bucket": 29022157,
+              "minute_bucket": 29037997,
               "count": 0
             },
             {
-              "minute_bucket": 29022158,
+              "minute_bucket": 29037998,
               "count": 0
             },
             {
-              "minute_bucket": 29022159,
+              "minute_bucket": 29037999,
               "count": 0
             },
             {
-              "minute_bucket": 29022160,
+              "minute_bucket": 29038000,
               "count": 0
             },
             {
-              "minute_bucket": 29022161,
+              "minute_bucket": 29038001,
               "count": 0
             },
             {
-              "minute_bucket": 29022162,
+              "minute_bucket": 29038002,
               "count": 0
             },
             {
-              "minute_bucket": 29022163,
+              "minute_bucket": 29038003,
               "count": 0
             },
             {
-              "minute_bucket": 29022164,
+              "minute_bucket": 29038004,
               "count": 0
             },
             {
-              "minute_bucket": 29022165,
+              "minute_bucket": 29038005,
               "count": 0
             },
             {
-              "minute_bucket": 29022166,
+              "minute_bucket": 29038006,
               "count": 0
             },
             {
-              "minute_bucket": 29022167,
+              "minute_bucket": 29038007,
               "count": 0
             },
             {
-              "minute_bucket": 29022168,
+              "minute_bucket": 29038008,
               "count": 0
             },
             {
-              "minute_bucket": 29022169,
+              "minute_bucket": 29038009,
               "count": 0
             },
             {
-              "minute_bucket": 29022170,
+              "minute_bucket": 29038010,
               "count": 0
             },
             {
-              "minute_bucket": 29022171,
+              "minute_bucket": 29038011,
               "count": 0
             },
             {
-              "minute_bucket": 29022172,
+              "minute_bucket": 29038012,
               "count": 0
             },
             {
-              "minute_bucket": 29022173,
+              "minute_bucket": 29038013,
               "count": 0
             },
             {
-              "minute_bucket": 29022174,
+              "minute_bucket": 29038014,
               "count": 0
             },
             {
-              "minute_bucket": 29022175,
+              "minute_bucket": 29038015,
               "count": 0
             },
             {
-              "minute_bucket": 29022176,
+              "minute_bucket": 29038016,
               "count": 0
             },
             {
-              "minute_bucket": 29022177,
+              "minute_bucket": 29038017,
               "count": 0
             },
             {
-              "minute_bucket": 29022178,
+              "minute_bucket": 29038018,
               "count": 0
             },
             {
-              "minute_bucket": 29022179,
+              "minute_bucket": 29038019,
               "count": 0
             },
             {
-              "minute_bucket": 29022180,
+              "minute_bucket": 29038020,
               "count": 1
             },
             {
-              "minute_bucket": 29022181,
+              "minute_bucket": 29038021,
               "count": 0
             },
             {
-              "minute_bucket": 29022182,
+              "minute_bucket": 29038022,
               "count": 0
             },
             {
-              "minute_bucket": 29022183,
+              "minute_bucket": 29038023,
               "count": 0
             },
             {
-              "minute_bucket": 29022184,
+              "minute_bucket": 29038024,
               "count": 0
             },
             {
-              "minute_bucket": 29022185,
+              "minute_bucket": 29038025,
               "count": 0
             },
             {
-              "minute_bucket": 29022186,
+              "minute_bucket": 29038026,
               "count": 0
             },
             {
-              "minute_bucket": 29022187,
+              "minute_bucket": 29038027,
               "count": 0
             },
             {
-              "minute_bucket": 29022188,
+              "minute_bucket": 29038028,
               "count": 0
             },
             {
-              "minute_bucket": 29022189,
+              "minute_bucket": 29038029,
               "count": 0
             },
             {
-              "minute_bucket": 29022190,
+              "minute_bucket": 29038030,
               "count": 0
             },
             {
-              "minute_bucket": 29022191,
+              "minute_bucket": 29038031,
               "count": 0
             },
             {
-              "minute_bucket": 29022192,
+              "minute_bucket": 29038032,
               "count": 0
             },
             {
-              "minute_bucket": 29022193,
+              "minute_bucket": 29038033,
               "count": 0
             },
             {
-              "minute_bucket": 29022194,
+              "minute_bucket": 29038034,
               "count": 0
             },
             {
-              "minute_bucket": 29022195,
+              "minute_bucket": 29038035,
               "count": 0
             },
             {
-              "minute_bucket": 29022196,
+              "minute_bucket": 29038036,
               "count": 0
             },
             {
-              "minute_bucket": 29022197,
+              "minute_bucket": 29038037,
               "count": 0
             },
             {
-              "minute_bucket": 29022198,
+              "minute_bucket": 29038038,
               "count": 0
             },
             {
-              "minute_bucket": 29022199,
+              "minute_bucket": 29038039,
               "count": 0
             },
             {
-              "minute_bucket": 29022200,
+              "minute_bucket": 29038040,
               "count": 0
             },
             {
-              "minute_bucket": 29022201,
+              "minute_bucket": 29038041,
               "count": 0
             },
             {
-              "minute_bucket": 29022202,
+              "minute_bucket": 29038042,
               "count": 0
             },
             {
-              "minute_bucket": 29022203,
+              "minute_bucket": 29038043,
               "count": 0
             },
             {
-              "minute_bucket": 29022204,
+              "minute_bucket": 29038044,
               "count": 0
             },
             {
-              "minute_bucket": 29022205,
+              "minute_bucket": 29038045,
               "count": 0
             },
             {
-              "minute_bucket": 29022206,
+              "minute_bucket": 29038046,
               "count": 0
             },
             {
-              "minute_bucket": 29022207,
+              "minute_bucket": 29038047,
               "count": 0
             },
             {
-              "minute_bucket": 29022208,
+              "minute_bucket": 29038048,
               "count": 0
             },
             {
-              "minute_bucket": 29022209,
+              "minute_bucket": 29038049,
               "count": 0
             },
             {
-              "minute_bucket": 29022210,
+              "minute_bucket": 29038050,
               "count": 0
             },
             {
-              "minute_bucket": 29022211,
+              "minute_bucket": 29038051,
               "count": 0
             },
             {
-              "minute_bucket": 29022212,
+              "minute_bucket": 29038052,
               "count": 0
             },
             {
-              "minute_bucket": 29022213,
+              "minute_bucket": 29038053,
               "count": 0
             },
             {
-              "minute_bucket": 29022214,
+              "minute_bucket": 29038054,
               "count": 0
             },
             {
-              "minute_bucket": 29022215,
+              "minute_bucket": 29038055,
               "count": 0
             },
             {
-              "minute_bucket": 29022216,
+              "minute_bucket": 29038056,
               "count": 0
             },
             {
-              "minute_bucket": 29022217,
+              "minute_bucket": 29038057,
               "count": 0
             },
             {
-              "minute_bucket": 29022218,
+              "minute_bucket": 29038058,
               "count": 0
             },
             {
-              "minute_bucket": 29022219,
+              "minute_bucket": 29038059,
               "count": 0
             },
             {
-              "minute_bucket": 29022220,
+              "minute_bucket": 29038060,
               "count": 0
             },
             {
-              "minute_bucket": 29022221,
+              "minute_bucket": 29038061,
               "count": 0
             },
             {
-              "minute_bucket": 29022222,
+              "minute_bucket": 29038062,
               "count": 0
             },
             {
-              "minute_bucket": 29022223,
+              "minute_bucket": 29038063,
               "count": 0
             },
             {
-              "minute_bucket": 29022224,
+              "minute_bucket": 29038064,
               "count": 0
             },
             {
-              "minute_bucket": 29022225,
+              "minute_bucket": 29038065,
               "count": 0
             },
             {
-              "minute_bucket": 29022226,
+              "minute_bucket": 29038066,
               "count": 0
             },
             {
-              "minute_bucket": 29022227,
+              "minute_bucket": 29038067,
               "count": 0
             },
             {
-              "minute_bucket": 29022228,
-              "count": 6
+              "minute_bucket": 29038068,
+              "count": 0
             },
             {
-              "minute_bucket": 29022229,
-              "count": 8
+              "minute_bucket": 29038069,
+              "count": 0
             },
             {
-              "minute_bucket": 29022230,
-              "count": 123
+              "minute_bucket": 29038070,
+              "count": 0
             },
             {
-              "minute_bucket": 29022231,
-              "count": 7
+              "minute_bucket": 29038071,
+              "count": 0
             },
             {
-              "minute_bucket": 29022232,
-              "count": 39
+              "minute_bucket": 29038072,
+              "count": 0
             },
             {
-              "minute_bucket": 29022233,
+              "minute_bucket": 29038073,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038074,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038075,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038076,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038077,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038078,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038079,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038080,
               "count": 1
             },
             {
-              "minute_bucket": 29022234,
+              "minute_bucket": 29038081,
               "count": 0
             },
             {
-              "minute_bucket": 29022235,
+              "minute_bucket": 29038082,
               "count": 0
             },
             {
-              "minute_bucket": 29022236,
+              "minute_bucket": 29038083,
               "count": 0
             },
             {
-              "minute_bucket": 29022237,
+              "minute_bucket": 29038084,
               "count": 0
             },
             {
-              "minute_bucket": 29022238,
+              "minute_bucket": 29038085,
               "count": 0
             },
             {
-              "minute_bucket": 29022239,
+              "minute_bucket": 29038086,
               "count": 0
             },
             {
-              "minute_bucket": 29022240,
+              "minute_bucket": 29038087,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038088,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038089,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038090,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038091,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038092,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038093,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038094,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038095,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038096,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038097,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038098,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038099,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038100,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038101,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038102,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038103,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038104,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038105,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038106,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038107,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038108,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038109,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038110,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038111,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038112,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038113,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038114,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038115,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038116,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038117,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038118,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038119,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038120,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038121,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038122,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038123,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038124,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038125,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038126,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038127,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038128,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038129,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038130,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038131,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038132,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038133,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038134,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038135,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038136,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038137,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038138,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038139,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038140,
               "count": 1
             },
             {
-              "minute_bucket": 29022241,
+              "minute_bucket": 29038141,
               "count": 0
             },
             {
-              "minute_bucket": 29022242,
+              "minute_bucket": 29038142,
               "count": 0
             },
             {
-              "minute_bucket": 29022243,
+              "minute_bucket": 29038143,
               "count": 0
             },
             {
-              "minute_bucket": 29022244,
+              "minute_bucket": 29038144,
               "count": 0
             },
             {
-              "minute_bucket": 29022245,
+              "minute_bucket": 29038145,
               "count": 0
             },
             {
-              "minute_bucket": 29022246,
+              "minute_bucket": 29038146,
               "count": 0
             },
             {
-              "minute_bucket": 29022247,
+              "minute_bucket": 29038147,
               "count": 0
             },
             {
-              "minute_bucket": 29022248,
+              "minute_bucket": 29038148,
               "count": 0
             },
             {
-              "minute_bucket": 29022249,
+              "minute_bucket": 29038149,
               "count": 0
             },
             {
-              "minute_bucket": 29022250,
+              "minute_bucket": 29038150,
               "count": 0
             },
             {
-              "minute_bucket": 29022251,
+              "minute_bucket": 29038151,
               "count": 0
             },
             {
-              "minute_bucket": 29022252,
+              "minute_bucket": 29038152,
               "count": 0
             },
             {
-              "minute_bucket": 29022253,
+              "minute_bucket": 29038153,
               "count": 0
             },
             {
-              "minute_bucket": 29022254,
+              "minute_bucket": 29038154,
               "count": 0
             },
             {
-              "minute_bucket": 29022255,
+              "minute_bucket": 29038155,
               "count": 0
             },
             {
-              "minute_bucket": 29022256,
+              "minute_bucket": 29038156,
               "count": 0
             },
             {
-              "minute_bucket": 29022257,
+              "minute_bucket": 29038157,
               "count": 0
             },
             {
-              "minute_bucket": 29022258,
+              "minute_bucket": 29038158,
               "count": 0
             },
             {
-              "minute_bucket": 29022259,
+              "minute_bucket": 29038159,
               "count": 0
             },
             {
-              "minute_bucket": 29022260,
+              "minute_bucket": 29038160,
               "count": 0
             },
             {
-              "minute_bucket": 29022261,
+              "minute_bucket": 29038161,
               "count": 0
             },
             {
-              "minute_bucket": 29022262,
+              "minute_bucket": 29038162,
               "count": 0
             },
             {
-              "minute_bucket": 29022263,
-              "count": 10
-            },
-            {
-              "minute_bucket": 29022264,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022265,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022266,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022267,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022268,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022269,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022270,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022271,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022272,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022273,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022274,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022275,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022276,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022277,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022278,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022279,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022280,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022281,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022282,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022283,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022284,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022285,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022286,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022287,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022288,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022289,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022290,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022291,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022292,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022293,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022294,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022295,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022296,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022297,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022298,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022299,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022300,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022301,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022302,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022303,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022304,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022305,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022306,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022307,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022308,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022309,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022310,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022311,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022312,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022313,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022314,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022315,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022316,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022317,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022318,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022319,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022320,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022321,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022322,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022323,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022324,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022325,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022326,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022327,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022328,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022329,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022330,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022331,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022332,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022333,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022334,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022335,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022336,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022337,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022338,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022339,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022340,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022341,
-              "count": 11
-            },
-            {
-              "minute_bucket": 29022342,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022343,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022344,
-              "count": 3
-            },
-            {
-              "minute_bucket": 29022345,
-              "count": 2
-            },
-            {
-              "minute_bucket": 29022346,
-              "count": 6
-            },
-            {
-              "minute_bucket": 29022347,
-              "count": 6
-            },
-            {
-              "minute_bucket": 29022348,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022349,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022350,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022351,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022352,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022353,
-              "count": 129
-            },
-            {
-              "minute_bucket": 29022354,
-              "count": 15
-            },
-            {
-              "minute_bucket": 29022355,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022356,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022357,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022358,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022359,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022360,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022361,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022362,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022363,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022364,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022365,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022366,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022367,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022368,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022369,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022370,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022371,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022372,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022373,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022374,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022375,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022376,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022377,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022378,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022379,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022380,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022381,
-              "count": 28
-            },
-            {
-              "minute_bucket": 29022382,
-              "count": 3
-            },
-            {
-              "minute_bucket": 29022383,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022384,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022385,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022386,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022387,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022388,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022389,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022390,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022391,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022392,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022393,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022394,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022395,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022396,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022397,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022398,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022399,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022400,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022401,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022402,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022403,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022404,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022405,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022406,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022407,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022408,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022409,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022410,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022411,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022412,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022413,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022414,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022415,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022416,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022417,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022418,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022419,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022420,
-              "count": 37
-            },
-            {
-              "minute_bucket": 29022421,
-              "count": 27
-            },
-            {
-              "minute_bucket": 29022422,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022423,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022424,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022425,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022426,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022427,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022428,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022429,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022430,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022431,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022432,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022433,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022434,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022435,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022436,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022437,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022438,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022439,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022440,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022441,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022442,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022443,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022444,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022445,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022446,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022447,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022448,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022449,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022450,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022451,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022452,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022453,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022454,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022455,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022456,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022457,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022458,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022459,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022460,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022461,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022462,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022463,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022464,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022465,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022466,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022467,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022468,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022469,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022470,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022471,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022472,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022473,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022474,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022475,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022476,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022477,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022478,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022479,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022480,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022481,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022482,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022483,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022484,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022485,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022486,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022487,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022488,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022489,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022490,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022491,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022492,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022493,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022494,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022495,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022496,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022497,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022498,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022499,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022500,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022501,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022502,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022503,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022504,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022505,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022506,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022507,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022508,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022509,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022510,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022511,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022512,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022513,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022514,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022515,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022516,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022517,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022518,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022519,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022520,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022521,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022522,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022523,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022524,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022525,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022526,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022527,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022528,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022529,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022530,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022531,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022532,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022533,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022534,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022535,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022536,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022537,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022538,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022539,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022540,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022541,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022542,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022543,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022544,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022545,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022546,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022547,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022548,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022549,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022550,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022551,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022552,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022553,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022554,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022555,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022556,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022557,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022558,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022559,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022560,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022561,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022562,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022563,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022564,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022565,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022566,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022567,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022568,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022569,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022570,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022571,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022572,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022573,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022574,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022575,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022576,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022577,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022578,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022579,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022580,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022581,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022582,
-              "count": 24
-            },
-            {
-              "minute_bucket": 29022583,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022584,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022585,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022586,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022587,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022588,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022589,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022590,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022591,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022592,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022593,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022594,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022595,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022596,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022597,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022598,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022599,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022600,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022601,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022602,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022603,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022604,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022605,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022606,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022607,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022608,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022609,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022610,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022611,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022612,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022613,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022614,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022615,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022616,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022617,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022618,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022619,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022620,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022621,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022622,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022623,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022624,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022625,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022626,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022627,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022628,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022629,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022630,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022631,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022632,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022633,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022634,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022635,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022636,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022637,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022638,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022639,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022640,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022641,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022642,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022643,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022644,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022645,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022646,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022647,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022648,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022649,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022650,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022651,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022652,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022653,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022654,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022655,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022656,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022657,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022658,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022659,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022660,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022661,
-              "count": 75
-            },
-            {
-              "minute_bucket": 29022662,
-              "count": 87
-            },
-            {
-              "minute_bucket": 29022663,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022664,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022665,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022666,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022667,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022668,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022669,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022670,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022671,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022672,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022673,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022674,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022675,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022676,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022677,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022678,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022679,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022680,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022681,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022682,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022683,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022684,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022685,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022686,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022687,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022688,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022689,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022690,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022691,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022692,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022693,
+              "minute_bucket": 29038163,
               "count": 0
             },
             {
-              "minute_bucket": 29022694,
+              "minute_bucket": 29038164,
               "count": 0
             },
             {
-              "minute_bucket": 29022695,
+              "minute_bucket": 29038165,
               "count": 0
             },
             {
-              "minute_bucket": 29022696,
+              "minute_bucket": 29038166,
               "count": 0
             },
             {
-              "minute_bucket": 29022697,
+              "minute_bucket": 29038167,
               "count": 0
             },
             {
-              "minute_bucket": 29022698,
+              "minute_bucket": 29038168,
               "count": 0
             },
             {
-              "minute_bucket": 29022699,
+              "minute_bucket": 29038169,
               "count": 0
             },
             {
-              "minute_bucket": 29022700,
+              "minute_bucket": 29038170,
               "count": 0
             },
             {
-              "minute_bucket": 29022701,
+              "minute_bucket": 29038171,
               "count": 0
             },
             {
-              "minute_bucket": 29022702,
+              "minute_bucket": 29038172,
               "count": 0
             },
             {
-              "minute_bucket": 29022703,
+              "minute_bucket": 29038173,
               "count": 0
             },
             {
-              "minute_bucket": 29022704,
+              "minute_bucket": 29038174,
               "count": 0
-            },
-            {
-              "minute_bucket": 29022705,
-              "count": 56
-            },
-            {
-              "minute_bucket": 29022706,
-              "count": 149
             },
             {
-              "minute_bucket": 29022707,
+              "minute_bucket": 29038175,
               "count": 0
             },
             {
-              "minute_bucket": 29022708,
+              "minute_bucket": 29038176,
               "count": 0
             },
             {
-              "minute_bucket": 29022709,
+              "minute_bucket": 29038177,
               "count": 0
             },
             {
-              "minute_bucket": 29022710,
+              "minute_bucket": 29038178,
               "count": 0
             },
             {
-              "minute_bucket": 29022711,
+              "minute_bucket": 29038179,
               "count": 5
             },
             {
-              "minute_bucket": 29022712,
+              "minute_bucket": 29038180,
+              "count": 74
+            },
+            {
+              "minute_bucket": 29038181,
+              "count": 8
+            },
+            {
+              "minute_bucket": 29038182,
               "count": 0
             },
             {
-              "minute_bucket": 29022713,
-              "count": 52
-            },
-            {
-              "minute_bucket": 29022714,
+              "minute_bucket": 29038183,
               "count": 0
             },
             {
-              "minute_bucket": 29022715,
+              "minute_bucket": 29038184,
               "count": 0
             },
             {
-              "minute_bucket": 29022716,
+              "minute_bucket": 29038185,
               "count": 0
             },
             {
-              "minute_bucket": 29022717,
+              "minute_bucket": 29038186,
               "count": 0
             },
             {
-              "minute_bucket": 29022718,
+              "minute_bucket": 29038187,
               "count": 0
             },
             {
-              "minute_bucket": 29022719,
+              "minute_bucket": 29038188,
               "count": 0
             },
             {
-              "minute_bucket": 29022720,
+              "minute_bucket": 29038189,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038190,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038191,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038192,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038193,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038194,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038195,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038196,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038197,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038198,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038199,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038200,
               "count": 1
             },
             {
-              "minute_bucket": 29022721,
+              "minute_bucket": 29038201,
               "count": 0
             },
             {
-              "minute_bucket": 29022722,
+              "minute_bucket": 29038202,
               "count": 0
             },
             {
-              "minute_bucket": 29022723,
+              "minute_bucket": 29038203,
               "count": 0
             },
             {
-              "minute_bucket": 29022724,
+              "minute_bucket": 29038204,
               "count": 0
             },
             {
-              "minute_bucket": 29022725,
+              "minute_bucket": 29038205,
               "count": 0
             },
             {
-              "minute_bucket": 29022726,
+              "minute_bucket": 29038206,
               "count": 0
             },
             {
-              "minute_bucket": 29022727,
+              "minute_bucket": 29038207,
               "count": 0
             },
             {
-              "minute_bucket": 29022728,
+              "minute_bucket": 29038208,
               "count": 0
             },
             {
-              "minute_bucket": 29022729,
+              "minute_bucket": 29038209,
               "count": 0
             },
             {
-              "minute_bucket": 29022730,
+              "minute_bucket": 29038210,
               "count": 0
             },
             {
-              "minute_bucket": 29022731,
+              "minute_bucket": 29038211,
               "count": 0
             },
             {
-              "minute_bucket": 29022732,
+              "minute_bucket": 29038212,
               "count": 0
             },
             {
-              "minute_bucket": 29022733,
+              "minute_bucket": 29038213,
               "count": 0
             },
             {
-              "minute_bucket": 29022734,
+              "minute_bucket": 29038214,
               "count": 0
             },
             {
-              "minute_bucket": 29022735,
+              "minute_bucket": 29038215,
               "count": 0
             },
             {
-              "minute_bucket": 29022736,
+              "minute_bucket": 29038216,
               "count": 0
             },
             {
-              "minute_bucket": 29022737,
+              "minute_bucket": 29038217,
               "count": 0
             },
             {
-              "minute_bucket": 29022738,
+              "minute_bucket": 29038218,
               "count": 0
             },
             {
-              "minute_bucket": 29022739,
+              "minute_bucket": 29038219,
               "count": 0
             },
             {
-              "minute_bucket": 29022740,
+              "minute_bucket": 29038220,
               "count": 0
             },
             {
-              "minute_bucket": 29022741,
+              "minute_bucket": 29038221,
               "count": 0
             },
             {
-              "minute_bucket": 29022742,
+              "minute_bucket": 29038222,
               "count": 0
             },
             {
-              "minute_bucket": 29022743,
+              "minute_bucket": 29038223,
               "count": 0
             },
             {
-              "minute_bucket": 29022744,
+              "minute_bucket": 29038224,
               "count": 0
             },
             {
-              "minute_bucket": 29022745,
+              "minute_bucket": 29038225,
               "count": 0
             },
             {
-              "minute_bucket": 29022746,
+              "minute_bucket": 29038226,
               "count": 0
             },
             {
-              "minute_bucket": 29022747,
+              "minute_bucket": 29038227,
               "count": 0
             },
             {
-              "minute_bucket": 29022748,
+              "minute_bucket": 29038228,
               "count": 0
             },
             {
-              "minute_bucket": 29022749,
+              "minute_bucket": 29038229,
               "count": 0
             },
             {
-              "minute_bucket": 29022750,
+              "minute_bucket": 29038230,
+              "count": 131
+            },
+            {
+              "minute_bucket": 29038231,
               "count": 0
             },
             {
-              "minute_bucket": 29022751,
+              "minute_bucket": 29038232,
               "count": 0
             },
             {
-              "minute_bucket": 29022752,
+              "minute_bucket": 29038233,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038234,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038235,
               "count": 0
             },
             {
-              "minute_bucket": 29022753,
-              "count": 52
+              "minute_bucket": 29038236,
+              "count": 0
             },
             {
-              "minute_bucket": 29022754,
-              "count": 26
+              "minute_bucket": 29038237,
+              "count": 0
             },
             {
-              "minute_bucket": 29022755,
+              "minute_bucket": 29038238,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038239,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038240,
+              "count": 63
+            },
+            {
+              "minute_bucket": 29038241,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038242,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038243,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038244,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038245,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038246,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038247,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038248,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038249,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038250,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038251,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038252,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038253,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038254,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038255,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038256,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038257,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038258,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038259,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038260,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038261,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038262,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038263,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038264,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038265,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038266,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038267,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038268,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038269,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038270,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038271,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038272,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038273,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038274,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038275,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038276,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038277,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038278,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038279,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038280,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038281,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038282,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038283,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038284,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038285,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038286,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038287,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038288,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038289,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038290,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038291,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038292,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038293,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038294,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038295,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038296,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038297,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038298,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038299,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038300,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038301,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038302,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038303,
+              "count": 10
+            },
+            {
+              "minute_bucket": 29038304,
+              "count": 14
+            },
+            {
+              "minute_bucket": 29038305,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038306,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038307,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038308,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038309,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038310,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038311,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038312,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038313,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038314,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038315,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038316,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038317,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038318,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038319,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038320,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038321,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038322,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038323,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038324,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038325,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038326,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038327,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038328,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038329,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038330,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038331,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038332,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038333,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038334,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038335,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038336,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038337,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038338,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038339,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038340,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038341,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038342,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038343,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038344,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038345,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038346,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038347,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038348,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038349,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038350,
               "count": 12
             },
             {
-              "minute_bucket": 29022756,
+              "minute_bucket": 29038351,
               "count": 0
             },
             {
-              "minute_bucket": 29022757,
+              "minute_bucket": 29038352,
               "count": 0
             },
             {
-              "minute_bucket": 29022758,
-              "count": 54
-            },
-            {
-              "minute_bucket": 29022759,
+              "minute_bucket": 29038353,
               "count": 0
             },
             {
-              "minute_bucket": 29022760,
+              "minute_bucket": 29038354,
               "count": 0
             },
             {
-              "minute_bucket": 29022761,
-              "count": 61
-            },
-            {
-              "minute_bucket": 29022762,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022763,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022764,
+              "minute_bucket": 29038355,
               "count": 0
             },
             {
-              "minute_bucket": 29022765,
+              "minute_bucket": 29038356,
               "count": 0
             },
             {
-              "minute_bucket": 29022766,
+              "minute_bucket": 29038357,
               "count": 0
             },
             {
-              "minute_bucket": 29022767,
+              "minute_bucket": 29038358,
               "count": 0
             },
             {
-              "minute_bucket": 29022768,
+              "minute_bucket": 29038359,
               "count": 0
             },
             {
-              "minute_bucket": 29022769,
+              "minute_bucket": 29038360,
               "count": 0
             },
             {
-              "minute_bucket": 29022770,
+              "minute_bucket": 29038361,
               "count": 0
             },
             {
-              "minute_bucket": 29022771,
+              "minute_bucket": 29038362,
               "count": 0
             },
             {
-              "minute_bucket": 29022772,
+              "minute_bucket": 29038363,
               "count": 0
             },
             {
-              "minute_bucket": 29022773,
+              "minute_bucket": 29038364,
               "count": 0
             },
             {
-              "minute_bucket": 29022774,
+              "minute_bucket": 29038365,
               "count": 0
             },
             {
-              "minute_bucket": 29022775,
-              "count": 25
-            },
-            {
-              "minute_bucket": 29022776,
-              "count": 27
-            },
-            {
-              "minute_bucket": 29022777,
+              "minute_bucket": 29038366,
               "count": 0
             },
             {
-              "minute_bucket": 29022778,
+              "minute_bucket": 29038367,
               "count": 0
             },
             {
-              "minute_bucket": 29022779,
-              "count": 0
+              "minute_bucket": 29038368,
+              "count": 44
             },
             {
-              "minute_bucket": 29022780,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022781,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022782,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022783,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022784,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022785,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022786,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022787,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022788,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022789,
-              "count": 59
-            },
-            {
-              "minute_bucket": 29022790,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022791,
-              "count": 61
-            },
-            {
-              "minute_bucket": 29022792,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022793,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022794,
+              "minute_bucket": 29038369,
               "count": 4
             },
             {
-              "minute_bucket": 29022795,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022796,
+              "minute_bucket": 29038370,
               "count": 4
             },
             {
-              "minute_bucket": 29022797,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022798,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022799,
+              "minute_bucket": 29038371,
               "count": 0
             },
             {
-              "minute_bucket": 29022800,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022801,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022802,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022803,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022804,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022805,
-              "count": 43
-            },
-            {
-              "minute_bucket": 29022806,
-              "count": 27
-            },
-            {
-              "minute_bucket": 29022807,
-              "count": 126
-            },
-            {
-              "minute_bucket": 29022808,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022809,
-              "count": 35
-            },
-            {
-              "minute_bucket": 29022810,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022811,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022812,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022813,
-              "count": 49
-            },
-            {
-              "minute_bucket": 29022814,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022815,
-              "count": 37
-            },
-            {
-              "minute_bucket": 29022816,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022817,
-              "count": 60
-            },
-            {
-              "minute_bucket": 29022818,
-              "count": 27
-            },
-            {
-              "minute_bucket": 29022819,
-              "count": 41
-            },
-            {
-              "minute_bucket": 29022820,
-              "count": 11
-            },
-            {
-              "minute_bucket": 29022821,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022822,
+              "minute_bucket": 29038372,
               "count": 2
             },
             {
-              "minute_bucket": 29022823,
+              "minute_bucket": 29038373,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038374,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038375,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038376,
               "count": 37
             },
             {
-              "minute_bucket": 29022824,
-              "count": 91
+              "minute_bucket": 29038377,
+              "count": 0
             },
             {
-              "minute_bucket": 29022825,
+              "minute_bucket": 29038378,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038379,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038380,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038381,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038382,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038383,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038384,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038385,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038386,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038387,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038388,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038389,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038390,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038391,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038392,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038393,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038394,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038395,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038396,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038397,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038398,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038399,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038400,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038401,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038402,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038403,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038404,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038405,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038406,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038407,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038408,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038409,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038410,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038411,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038412,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038413,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038414,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038415,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038416,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038417,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038418,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038419,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038420,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038421,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038422,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038423,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038424,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038425,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038426,
+              "count": 10
+            },
+            {
+              "minute_bucket": 29038427,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038428,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038429,
+              "count": 11
+            },
+            {
+              "minute_bucket": 29038430,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038431,
+              "count": 14
+            },
+            {
+              "minute_bucket": 29038432,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038433,
+              "count": 14
+            },
+            {
+              "minute_bucket": 29038434,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038435,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038436,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038437,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038438,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038439,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038440,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038441,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038442,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038443,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038444,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038445,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038446,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038447,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038448,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038449,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038450,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038451,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038452,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038453,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038454,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038455,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038456,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038457,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038458,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038459,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038460,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038461,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038462,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038463,
+              "count": 24
+            },
+            {
+              "minute_bucket": 29038464,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038465,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038466,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038467,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038468,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038469,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038470,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038471,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038472,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038473,
+              "count": 9
+            },
+            {
+              "minute_bucket": 29038474,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038475,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038476,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038477,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038478,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038479,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038480,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038481,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038482,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038483,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038484,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038485,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038486,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038487,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038488,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038489,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038490,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038491,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038492,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038493,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038494,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038495,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038496,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038497,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038498,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038499,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038500,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038501,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038502,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038503,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038504,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038505,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038506,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038507,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038508,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038509,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038510,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038511,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038512,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038513,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038514,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038515,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038516,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038517,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038518,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038519,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038520,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038521,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038522,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038523,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038524,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038525,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038526,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038527,
+              "count": 11
+            },
+            {
+              "minute_bucket": 29038528,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038529,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038530,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038531,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038532,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038533,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038534,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038535,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038536,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038537,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038538,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038539,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038540,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038541,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038542,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038543,
+              "count": 8
+            },
+            {
+              "minute_bucket": 29038544,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038545,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038546,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038547,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038548,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038549,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038550,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038551,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038552,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038553,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038554,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038555,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038556,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038557,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038558,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038559,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038560,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038561,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038562,
+              "count": 10
+            },
+            {
+              "minute_bucket": 29038563,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038564,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038565,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038566,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038567,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038568,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038569,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038570,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038571,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038572,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038573,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038574,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038575,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038576,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038577,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038578,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038579,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038580,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038581,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038582,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038583,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038584,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038585,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038586,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038587,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038588,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038589,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038590,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038591,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038592,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038593,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038594,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038595,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038596,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038597,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038598,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038599,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038600,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038601,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038602,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038603,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038604,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038605,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038606,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038607,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038608,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038609,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038610,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038611,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038612,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038613,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038614,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038615,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038616,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038617,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038618,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038619,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038620,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038621,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038622,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038623,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038624,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038625,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038626,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038627,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038628,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038629,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038630,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038631,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038632,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038633,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038634,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038635,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038636,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038637,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038638,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038639,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038640,
+              "count": 7
+            },
+            {
+              "minute_bucket": 29038641,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038642,
               "count": 30
             },
             {
-              "minute_bucket": 29022826,
-              "count": 12
-            },
-            {
-              "minute_bucket": 29022827,
-              "count": 35
-            },
-            {
-              "minute_bucket": 29022828,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022829,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022830,
-              "count": 28
-            },
-            {
-              "minute_bucket": 29022831,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022832,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022833,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022834,
-              "count": 14
-            },
-            {
-              "minute_bucket": 29022835,
-              "count": 24
-            },
-            {
-              "minute_bucket": 29022836,
-              "count": 32
-            },
-            {
-              "minute_bucket": 29022837,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022838,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022839,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022840,
+              "minute_bucket": 29038643,
               "count": 1
             },
             {
-              "minute_bucket": 29022841,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022842,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022843,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022844,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022845,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022846,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022847,
-              "count": 16
-            },
-            {
-              "minute_bucket": 29022848,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022849,
-              "count": 13
-            },
-            {
-              "minute_bucket": 29022850,
-              "count": 22
-            },
-            {
-              "minute_bucket": 29022851,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022852,
+              "minute_bucket": 29038644,
               "count": 2
             },
             {
-              "minute_bucket": 29022853,
-              "count": 9
+              "minute_bucket": 29038645,
+              "count": 0
             },
             {
-              "minute_bucket": 29022854,
+              "minute_bucket": 29038646,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038647,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038648,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038649,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038650,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038651,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038652,
               "count": 3
             },
             {
-              "minute_bucket": 29022855,
-              "count": 18
-            },
-            {
-              "minute_bucket": 29022856,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022857,
-              "count": 34
-            },
-            {
-              "minute_bucket": 29022858,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022859,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022860,
-              "count": 25
-            },
-            {
-              "minute_bucket": 29022861,
-              "count": 10
-            },
-            {
-              "minute_bucket": 29022862,
-              "count": 4
-            },
-            {
-              "minute_bucket": 29022863,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022864,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022865,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022866,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022867,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022868,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022869,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022870,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022871,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022872,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022873,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022874,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022875,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022876,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022877,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022878,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022879,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022880,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022881,
-              "count": 40
-            },
-            {
-              "minute_bucket": 29022882,
-              "count": 28
-            },
-            {
-              "minute_bucket": 29022883,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022884,
-              "count": 96
-            },
-            {
-              "minute_bucket": 29022885,
-              "count": 35
-            },
-            {
-              "minute_bucket": 29022886,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022887,
-              "count": 6
-            },
-            {
-              "minute_bucket": 29022888,
-              "count": 13
-            },
-            {
-              "minute_bucket": 29022889,
-              "count": 36
-            },
-            {
-              "minute_bucket": 29022890,
-              "count": 110
-            },
-            {
-              "minute_bucket": 29022891,
-              "count": 12
-            },
-            {
-              "minute_bucket": 29022892,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022893,
-              "count": 7
-            },
-            {
-              "minute_bucket": 29022894,
-              "count": 82
-            },
-            {
-              "minute_bucket": 29022895,
-              "count": 23
-            },
-            {
-              "minute_bucket": 29022896,
-              "count": 57
-            },
-            {
-              "minute_bucket": 29022897,
+              "minute_bucket": 29038653,
               "count": 19
             },
             {
-              "minute_bucket": 29022898,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022899,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022900,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022901,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022902,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022903,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022904,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022905,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022906,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022907,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022908,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022909,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022910,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022911,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022912,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022913,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022914,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022915,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022916,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022917,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022918,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022919,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022920,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022921,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022922,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022923,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022924,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022925,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022926,
-              "count": 39
-            },
-            {
-              "minute_bucket": 29022927,
-              "count": 5
-            },
-            {
-              "minute_bucket": 29022928,
-              "count": 23
-            },
-            {
-              "minute_bucket": 29022929,
-              "count": 36
-            },
-            {
-              "minute_bucket": 29022930,
+              "minute_bucket": 29038654,
               "count": 9
             },
             {
-              "minute_bucket": 29022931,
-              "count": 21
-            },
-            {
-              "minute_bucket": 29022932,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022933,
-              "count": 4
-            },
-            {
-              "minute_bucket": 29022934,
-              "count": 12
-            },
-            {
-              "minute_bucket": 29022935,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022936,
-              "count": 42
-            },
-            {
-              "minute_bucket": 29022937,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022938,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022939,
-              "count": 20
-            },
-            {
-              "minute_bucket": 29022940,
-              "count": 8
-            },
-            {
-              "minute_bucket": 29022941,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022942,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022943,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022944,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022945,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022946,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022947,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022948,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022949,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022950,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022951,
-              "count": 49
-            },
-            {
-              "minute_bucket": 29022952,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022953,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022954,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022955,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022956,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022957,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022958,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022959,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022960,
-              "count": 1
-            },
-            {
-              "minute_bucket": 29022961,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022962,
-              "count": 18
-            },
-            {
-              "minute_bucket": 29022963,
-              "count": 4
-            },
-            {
-              "minute_bucket": 29022964,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022965,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022966,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022967,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022968,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022969,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022970,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022971,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022972,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022973,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022974,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022975,
-              "count": 0
-            },
-            {
-              "minute_bucket": 29022976,
-              "count": 12
-            },
-            {
-              "minute_bucket": 29022977,
-              "count": 12
-            },
-            {
-              "minute_bucket": 29022978,
-              "count": 27
-            },
-            {
-              "minute_bucket": 29022979,
+              "minute_bucket": 29038655,
               "count": 25
             },
             {
-              "minute_bucket": 29022980,
-              "count": 0
+              "minute_bucket": 29038656,
+              "count": 7
             },
             {
-              "minute_bucket": 29022981,
-              "count": 16
+              "minute_bucket": 29038657,
+              "count": 5
             },
             {
-              "minute_bucket": 29022982,
-              "count": 24
+              "minute_bucket": 29038658,
+              "count": 3
             },
             {
-              "minute_bucket": 29022983,
-              "count": 24
-            },
-            {
-              "minute_bucket": 29022984,
+              "minute_bucket": 29038659,
               "count": 4
             },
             {
-              "minute_bucket": 29022985,
+              "minute_bucket": 29038660,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038661,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038662,
+              "count": 22
+            },
+            {
+              "minute_bucket": 29038663,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038664,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038665,
               "count": 0
             },
             {
-              "minute_bucket": 29022986,
+              "minute_bucket": 29038666,
               "count": 0
             },
             {
-              "minute_bucket": 29022987,
+              "minute_bucket": 29038667,
+              "count": 8
+            },
+            {
+              "minute_bucket": 29038668,
               "count": 12
             },
             {
-              "minute_bucket": 29022988,
+              "minute_bucket": 29038669,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038670,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038671,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038672,
+              "count": 10
+            },
+            {
+              "minute_bucket": 29038673,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038674,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038675,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038676,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038677,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038678,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038679,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038680,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038681,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038682,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038683,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038684,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038685,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038686,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038687,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038688,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038689,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038690,
+              "count": 7
+            },
+            {
+              "minute_bucket": 29038691,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038692,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038693,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038694,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038695,
+              "count": 75
+            },
+            {
+              "minute_bucket": 29038696,
+              "count": 97
+            },
+            {
+              "minute_bucket": 29038697,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038698,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038699,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038700,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038701,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038702,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038703,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038704,
+              "count": 18
+            },
+            {
+              "minute_bucket": 29038705,
+              "count": 8
+            },
+            {
+              "minute_bucket": 29038706,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038707,
+              "count": 27
+            },
+            {
+              "minute_bucket": 29038708,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038709,
+              "count": 11
+            },
+            {
+              "minute_bucket": 29038710,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038711,
+              "count": 118
+            },
+            {
+              "minute_bucket": 29038712,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038713,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038714,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038715,
+              "count": 42
+            },
+            {
+              "minute_bucket": 29038716,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038717,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038718,
+              "count": 96
+            },
+            {
+              "minute_bucket": 29038719,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038720,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038721,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038722,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038723,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038724,
+              "count": 38
+            },
+            {
+              "minute_bucket": 29038725,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038726,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038727,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038728,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038729,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038730,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038731,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038732,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038733,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038734,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038735,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038736,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038737,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038738,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038739,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038740,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038741,
+              "count": 9
+            },
+            {
+              "minute_bucket": 29038742,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038743,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038744,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038745,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038746,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038747,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038748,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038749,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038750,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038751,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038752,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038753,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038754,
+              "count": 36
+            },
+            {
+              "minute_bucket": 29038755,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038756,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038757,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038758,
+              "count": 5
+            },
+            {
+              "minute_bucket": 29038759,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038760,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038761,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038762,
+              "count": 18
+            },
+            {
+              "minute_bucket": 29038763,
+              "count": 8
+            },
+            {
+              "minute_bucket": 29038764,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038765,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038766,
+              "count": 39
+            },
+            {
+              "minute_bucket": 29038767,
+              "count": 94
+            },
+            {
+              "minute_bucket": 29038768,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038769,
+              "count": 38
+            },
+            {
+              "minute_bucket": 29038770,
+              "count": 67
+            },
+            {
+              "minute_bucket": 29038771,
+              "count": 24
+            },
+            {
+              "minute_bucket": 29038772,
+              "count": 42
+            },
+            {
+              "minute_bucket": 29038773,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038774,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038775,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038776,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038777,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038778,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038779,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038780,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038781,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038782,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038783,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038784,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038785,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038786,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038787,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038788,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038789,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038790,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038791,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038792,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038793,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038794,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038795,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038796,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038797,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038798,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038799,
+              "count": 30
+            },
+            {
+              "minute_bucket": 29038800,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038801,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038802,
+              "count": 60
+            },
+            {
+              "minute_bucket": 29038803,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038804,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038805,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038806,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038807,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038808,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038809,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038810,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038811,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038812,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038813,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038814,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038815,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038816,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038817,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038818,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038819,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038820,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038821,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038822,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038823,
+              "count": 7
+            },
+            {
+              "minute_bucket": 29038824,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038825,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038826,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038827,
+              "count": 33
+            },
+            {
+              "minute_bucket": 29038828,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038829,
+              "count": 43
+            },
+            {
+              "minute_bucket": 29038830,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038831,
+              "count": 97
+            },
+            {
+              "minute_bucket": 29038832,
+              "count": 10
+            },
+            {
+              "minute_bucket": 29038833,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038834,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038835,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038836,
+              "count": 28
+            },
+            {
+              "minute_bucket": 29038837,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038838,
+              "count": 52
+            },
+            {
+              "minute_bucket": 29038839,
+              "count": 11
+            },
+            {
+              "minute_bucket": 29038840,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038841,
+              "count": 15
+            },
+            {
+              "minute_bucket": 29038842,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038843,
+              "count": 35
+            },
+            {
+              "minute_bucket": 29038844,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038845,
+              "count": 51
+            },
+            {
+              "minute_bucket": 29038846,
+              "count": 57
+            },
+            {
+              "minute_bucket": 29038847,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038848,
+              "count": 42
+            },
+            {
+              "minute_bucket": 29038849,
+              "count": 48
+            },
+            {
+              "minute_bucket": 29038850,
+              "count": 34
+            },
+            {
+              "minute_bucket": 29038851,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038852,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038853,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038854,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038855,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038856,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038857,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038858,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038859,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038860,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038861,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038862,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038863,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038864,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038865,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038866,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038867,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038868,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038869,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038870,
+              "count": 42
+            },
+            {
+              "minute_bucket": 29038871,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038872,
+              "count": 35
+            },
+            {
+              "minute_bucket": 29038873,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038874,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038875,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038876,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038877,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038878,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038879,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038880,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038881,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038882,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038883,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038884,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038885,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038886,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038887,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038888,
+              "count": 3
+            },
+            {
+              "minute_bucket": 29038889,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038890,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038891,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038892,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038893,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038894,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038895,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038896,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038897,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038898,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038899,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038900,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038901,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038902,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038903,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038904,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038905,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038906,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038907,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038908,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038909,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038910,
+              "count": 70
+            },
+            {
+              "minute_bucket": 29038911,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038912,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038913,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038914,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038915,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038916,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038917,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038918,
+              "count": 94
+            },
+            {
+              "minute_bucket": 29038919,
+              "count": 20
+            },
+            {
+              "minute_bucket": 29038920,
+              "count": 1
+            },
+            {
+              "minute_bucket": 29038921,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038922,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038923,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038924,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038925,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038926,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038927,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038928,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038929,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038930,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038931,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038932,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038933,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038934,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038935,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038936,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038937,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038938,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038939,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038940,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038941,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038942,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038943,
+              "count": 7
+            },
+            {
+              "minute_bucket": 29038944,
+              "count": 8
+            },
+            {
+              "minute_bucket": 29038945,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038946,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038947,
+              "count": 4
+            },
+            {
+              "minute_bucket": 29038948,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038949,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038950,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038951,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038952,
+              "count": 7
+            },
+            {
+              "minute_bucket": 29038953,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038954,
+              "count": 11
+            },
+            {
+              "minute_bucket": 29038955,
               "count": 12
             },
             {
-              "minute_bucket": 29022989,
+              "minute_bucket": 29038956,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038957,
+              "count": 10
+            },
+            {
+              "minute_bucket": 29038958,
+              "count": 20
+            },
+            {
+              "minute_bucket": 29038959,
+              "count": 18
+            },
+            {
+              "minute_bucket": 29038960,
+              "count": 14
+            },
+            {
+              "minute_bucket": 29038961,
+              "count": 2
+            },
+            {
+              "minute_bucket": 29038962,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038963,
+              "count": 0
+            },
+            {
+              "minute_bucket": 29038964,
+              "count": 6
+            },
+            {
+              "minute_bucket": 29038965,
               "count": 7
             }
           ],
           "backend_time_histogram": [
             {
-              "time_range": "0ms - 50ms",
-              "count": 1375
+              "time_range": "0ms - 99ms",
+              "count": 1185
             },
             {
-              "time_range": "50ms - 100ms",
-              "count": 9
+              "time_range": "100ms - 199ms",
+              "count": 525
             },
             {
-              "time_range": "100ms - 150ms",
-              "count": 311
+              "time_range": "200ms - 299ms",
+              "count": 395
             },
             {
-              "time_range": "150ms - 200ms",
-              "count": 323
+              "time_range": "300ms - 399ms",
+              "count": 267
             },
             {
-              "time_range": "200ms - 250ms",
-              "count": 230
+              "time_range": "400ms - 499ms",
+              "count": 259
             },
             {
-              "time_range": "250ms - 300ms",
-              "count": 220
+              "time_range": "500ms - 599ms",
+              "count": 133
             },
             {
-              "time_range": "300ms - 350ms",
-              "count": 190
+              "time_range": "600ms - 699ms",
+              "count": 50
             },
             {
-              "time_range": "350ms - 400ms",
-              "count": 158
+              "time_range": "700ms - 799ms",
+              "count": 40
             },
             {
-              "time_range": "400ms - 450ms",
-              "count": 283
+              "time_range": "800ms - 899ms",
+              "count": 20
             },
             {
-              "time_range": "450ms - 500ms",
-              "count": 217
-            },
-            {
-              "time_range": "500ms - 550ms",
-              "count": 188
-            },
-            {
-              "time_range": "550ms - 600ms",
-              "count": 198
-            },
-            {
-              "time_range": "600ms - 650ms",
-              "count": 185
-            },
-            {
-              "time_range": "650ms - 700ms",
-              "count": 144
-            },
-            {
-              "time_range": "700ms - 750ms",
-              "count": 143
-            },
-            {
-              "time_range": "750ms - 800ms",
-              "count": 76
-            },
-            {
-              "time_range": "800ms - 850ms",
-              "count": 42
-            },
-            {
-              "time_range": "850ms - 900ms",
-              "count": 24
-            },
-            {
-              "time_range": "900ms - 950ms",
-              "count": 15
-            },
-            {
-              "time_range": "950ms - 1000ms",
-              "count": 18
+              "time_range": "900ms - 999ms",
+              "count": 6
             },
             {
               "time_range": "1000ms and up",
-              "count": 71
+              "count": 77
             }
           ],
           "endpoint_error_summary": [
             {
-              "endpoint": "/image/24/poster.jpg",
+              "endpoint": "/watch_list/update_title",
+              "errors": [
+                {
+                  "status_code": 500,
+                  "count": 20
+                },
+                {
+                  "status_code": 404,
+                  "count": 2
+                }
+              ]
+            },
+            {
+              "endpoint": "/image/20/logo.png",
               "errors": [
                 {
                   "status_code": 404,
-                  "count": 33
+                  "count": 17
                 }
               ]
             },
             {
-              "endpoint": "/watch_list/list_titles",
-              "errors": [
-                {
-                  "status_code": 422,
-                  "count": 6
-                }
-              ]
-            },
-            {
-              "endpoint": "/image/39/poster.jpg",
+              "endpoint": "/image/273/logo.png",
               "errors": [
                 {
                   "status_code": 404,
-                  "count": 5
+                  "count": 4
                 }
               ]
             },
             {
-              "endpoint": "/image/23/season2/episode10.jpg",
+              "endpoint": "/watch_list/update_title_info",
+              "errors": [
+                {
+                  "status_code": 500,
+                  "count": 2
+                },
+                {
+                  "status_code": 404,
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "endpoint": "/watch_list/modify_title_watch_count",
+              "errors": [
+                {
+                  "status_code": 405,
+                  "count": 3
+                }
+              ]
+            },
+            {
+              "endpoint": "/image/160/logo.svg",
               "errors": [
                 {
                   "status_code": 404,
@@ -20023,7 +10774,7 @@ export const STATIC_CONTENT = {
               ]
             },
             {
-              "endpoint": "/image/undefined/poster.jpg",
+              "endpoint": "/image/undefined/logo.png",
               "errors": [
                 {
                   "status_code": 404,
@@ -20032,16 +10783,25 @@ export const STATIC_CONTENT = {
               ]
             },
             {
-              "endpoint": "/image/23/season2/episode8.jpg",
+              "endpoint": "/watch_list/add_user_title",
               "errors": [
                 {
-                  "status_code": 404,
+                  "status_code": 405,
                   "count": 1
                 }
               ]
             },
             {
-              "endpoint": "/image/23/season2/episode9.jpg",
+              "endpoint": "/watch_list/toggle_title_favourite",
+              "errors": [
+                {
+                  "status_code": 405,
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "endpoint": "/image/undefined/logo.jpg",
               "errors": [
                 {
                   "status_code": 404,
@@ -20059,7 +10819,34 @@ export const STATIC_CONTENT = {
               ]
             },
             {
-              "endpoint": "/image/269/poster.jpg",
+              "endpoint": "/image/273/logo.jpg",
+              "errors": [
+                {
+                  "status_code": 404,
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "endpoint": "/image/273/logo",
+              "errors": [
+                {
+                  "status_code": 404,
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "endpoint": "/image/225/logo.svg",
+              "errors": [
+                {
+                  "status_code": 404,
+                  "count": 1
+                }
+              ]
+            },
+            {
+              "endpoint": "/image/240/logo.svg",
               "errors": [
                 {
                   "status_code": 404,
