@@ -71,6 +71,7 @@ export default {
     margin-bottom: var(--spacing-xs);
     display: flex;
     flex-direction: row;
+    z-index: var(--z-tooltip);
     
     color: var(--color-text-light);
     /* white-space: nowrap; */

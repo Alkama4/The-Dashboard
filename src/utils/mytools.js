@@ -24,6 +24,18 @@ export const convert = {
         return value.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
     },
 
+    toLargeUsd(amount) {
+        if (!amount) {
+            return amount;
+        } else if (amount >= 1_000_000_000) {
+            let formatted = (amount / 1_000_000_000).toLocaleString("fi-FI", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return formatted.replace(".", ",") + " mrd. $";
+        } else {
+            let formatted = (amount / 1_000_000).toLocaleString("fi-FI", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+            return formatted.replace(".", ",") + " milj. $";
+        }
+    },
+
     toFiDate(value, formatType = 'date') {
         if (value == null) return null; // Handle null/undefined values
         if (formatType == 'none') return value;

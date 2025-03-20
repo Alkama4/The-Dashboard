@@ -72,16 +72,33 @@
                             <span class="all-pointer-events" :title="titleInfo.name">
                                 {{ titleInfo.name }} 
                             </span>
-                            <span class="all-pointer-events original-title" :title="titleInfo.original_name" v-if="titleInfo.name !== titleInfo.original_name">
-                                ({{ titleInfo.original_name }})
+                            <span class="all-pointer-events original-title" :title="titleInfo.name_original" v-if="titleInfo.name_original && titleInfo.name !== titleInfo.name_original">
+                                ({{ titleInfo.name_original }})
                             </span>
                         </h1>
                         <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
                     </div>
 
+                    <div class="tags">
+                        <div class="tag tag-positive" v-if="titleInfo.watch_count >= 1">
+                            Watched
+                        </div>
+                        <div class="tag tag-primary" v-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
+                            Just released
+                        </div>
+                        <div class="tag tag-upcoming" v-if="new Date(titleInfo.release_date) > new Date()">
+                            Upcoming
+                        </div>
+                        <div class="tag tag-secondary" v-if="titleInfo.favourite == 1">
+                            Favourite
+                        </div>
+
+                        <div class="tag" v-for="genre in titleInfo.genres" :key="genre">{{ genre }}</div>
+                    </div>
+
                     <div class="control-button-array combined-buttons">
                         <button 
-                            v-if="titleInfo.user_title_favourite == null || titleInfo.user_title_favourite == false"
+                            v-if="titleInfo.favourite == null || titleInfo.favourite == false"
                             class="button-primary left-button flex-1" 
                             @click="handleFavouriteToggle"
                             :disabled="waitingForResult.length != 0"
@@ -101,7 +118,7 @@
 
                         <!-- Watched buttons -->
                         <button 
-                            v-if="titleInfo.user_title_watch_count <= 0"
+                            v-if="titleInfo.watch_count == null || titleInfo.watch_count <= 0"
                             class="button-primary middle-button flex-2" 
                             @click="handleTitleWatchClick('title', 'watched')"
                             :disabled="waitingForResult.length != 0"
@@ -121,7 +138,7 @@
 
                         <!-- Watch list buttons -->
                         <button 
-                            v-if="titleInfo.user_title_watch_count <= -1"
+                            v-if="titleInfo.watch_count == null || titleInfo.watch_count <= -1"
                             class="button-primary right-button flex-1" 
                             @click="handleWatchListModification('add')"
                             :disabled="waitingForResult.length != 0"
@@ -144,26 +161,34 @@
                 </div>
             </div>
 
-            <h2 style="margin-top: var(--spacing-md);">Tags</h2>
-            <div class="tags flex">
-                <div class="tag tag-positive" v-if="titleInfo.user_title_watch_count >= 1">
-                    Watched
+            <div class="ratings card">
+                <div>
+                    <span class="value icon-align">
+                        <IconIMDBColorful size="40px" class="imdb-icon"/>
+                        {{ titleInfo?.imdb_vote_average ?? 'N/A' }} 
+                    </span>
+                    <span class="text-lighter">
+                        {{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
+                    </span>
                 </div>
-                <div class="tag tag-primary" v-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
-                    Just released
+                <div></div>
+                <div>
+                    <span class="value icon-align">
+                        <IconTMDBColorful size="40px" class="tmdb-icon"/>
+                        {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
+                    </span>
+                    <span class="text-lighter">
+                        {{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
+                    </span>
                 </div>
-                <div class="tag tag-upcoming" v-if="new Date(titleInfo.release_date) > new Date()">
-                    Upcoming
-                </div>
-                <div class="tag tag-secondary" v-if="titleInfo.user_title_favourite == 1">
-                    Favourite
-                </div>
-
-                <div class="tag" v-for="genre in titleInfo.title_genres" :key="genre">{{ genre }}</div>
             </div>
+            
 
-           <h2>Overview</h2>
+            <h2>Overview</h2>
             <p>{{ titleInfo.overview }}</p>
+
+            <h2>Awards</h2>
+            <div>{{ titleInfo.awards ?? '-' }}</div>
 
             <div class="trailer-details-flex">
                 <div class="details-container">
@@ -183,12 +208,6 @@
                         <!-- <button @click="handleTitleUpdate('fullUpdate')">Full update</button> -->
                     </h2>
                     <div class="details-grid">
-                        <div>Progress</div>
-                        <div class="value">
-                            <template v-if="titleInfo.user_title_watch_count >= 1">Watched</template>
-                            <template v-else-if="titleInfo.type == 'tv' && titleInfo.user_title_watch_count == 0">{{ getWatchedStats() }}</template>
-                            <template v-else>Unwatched</template>
-                        </div>
 
                         <div v-if="titleInfo.type == 'movie'">
                             Movie length
@@ -208,19 +227,6 @@
                         </div>
                         <div v-if="titleInfo.type == 'tv'" class="value">
                             {{ titleEpisodeCount }} episode<template v-if="titleEpisodeCount > 1">s</template>
-                        </div>
-
-
-                        <div>IMDB average score</div>
-                        <div class="value">
-                            <IconIMDB style="margin-left: -3px;"/>
-                            {{ titleInfo?.imdb_vote_average ?? 'N/A' }} ({{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
-                        </div>
-                        <div>TMDB average score</div>
-                        <div class="value">
-                            <IconTMDB style="margin-left: -3px;"/>
-                            {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
-                            ({{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
                         </div>
 
                         <div>
@@ -247,35 +253,69 @@
                             {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
                         </div>
 
+                        <!-- Get the last episode date as "date - end date" -->
                         <div>Release date</div>
                         <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
                     </div>
-                    <h3>Production</h3>
+                    <h3>Success</h3>
                     <div class="details-grid">
-                        <div>Production country</div>
-                        <div class="value">{{ titleInfo.production_country }}</div>
 
-                        <div>Director</div>
-                        <div class="value">{{ titleInfo.director }}</div>
-                        
-                        <div>Writer</div>
-                        <div class="value">{{ titleInfo.writer }}</div>
-                        
-                        <div>Box-office</div>
-                        <!-- Without ,00 and use "miljoonaa" and "miljardia" -->
-                        <div class="value">{{ formatEur(titleInfo.box_office) }}</div>
+                        <div>IMDB average score</div>
+                        <div class="value">
+                            <IconIMDB style="margin-left: -3px;"/>
+                            {{ titleInfo?.imdb_vote_average ?? 'N/A' }} 
+                            ({{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
+                        </div>
 
-                        <div>Awards</div>
-                        <div class="value">{{ titleInfo.awards }}</div>
+                        <div>TMDB average score</div>
+                        <div class="value">
+                            <IconTMDB style="margin-left: -3px;"/>
+                            {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
+                            ({{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
+                        </div>
+
+                        <div>Revenue</div>
+                        <div 
+                            class="value" 
+                            :title="titleInfo?.revenue?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
+                        >
+                            {{ formatToMillions(titleInfo.revenue) ?? '-' }}
+                        </div>
+                        <div>Budget</div>
+                        <div 
+                            class="value" 
+                            :title="titleInfo?.budget?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
+                        >
+                            {{ formatToMillions(titleInfo.budget) ?? '-' }}
+                        </div>
+
+
+                        <!-- <div>Awards</div>
+                        <div class="value">{{ titleInfo.awards ?? '-' }}</div> -->
 
                     </div>
                     <h3>Metadata</h3>
                     <div class="details-grid">
+
+                        <div>Progress</div>
+                        <div class="value">
+                            <template v-if="titleInfo.watch_count >= 1">Watched</template>
+                            <template v-else-if="titleInfo.type == 'tv' && titleInfo.watch_count == 0">{{ getWatchedStats() }}</template>
+                            <template v-else>Unwatched</template>
+                        </div>
+
                         <div>Title type</div>
                         <div class="value">{{ titleInfo.type }}</div>
 
                         <div>Original language</div>
                         <div class="value">{{ titleInfo.original_language }}</div>
+
+                        <div>Origin country</div>
+                        <div class="value">{{ titleInfo.production_countries ?? '-'}}</div>
+
+                    </div>
+                    <h3>Boring</h3>
+                    <div class="details-grid">
                         
                         <div>IMDB id</div>
                         <div class="value">{{ titleInfo.imdb_id }}<a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
@@ -283,11 +323,12 @@
                         <div>TMDB id</div>
                         <div class="value">{{ titleInfo.tmdb_id }}<a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
 
-                        <div>Title details updated <InfoTooltip text="Title information is updated only when the title is first added to your watch list or when you manually refresh its data using the button above. Please note that refreshing only fetches missing images and does not overwrite existing ones." position="right"/></div>
-                        <div class="value">{{ new Date(titleInfo.title_info_last_updated).toLocaleDateString("fi-FI") }}</div>
+                        <div>Title details updated <InfoTooltip text="Title information is updated with the button above. This is only the title and does not include episodes or seasons." position="right"/></div>
+                        <div class="value">{{ new Date(titleInfo.last_updated).toLocaleDateString("fi-FI") }}</div>
 
-                        <div>User data updated <InfoTooltip text="User-related information updates when you mark the title (or any of its episodes or seasons for TV shows) as watched, edit notes, or add it to favourites." position="right"/></div>
+                        <div>User data updated <InfoTooltip text="User-related information is updated when you mark the title (or any of its episodes or seasons) as watched, edit its notes, or add it to favourites." position="right"/></div>
                         <div class="value">{{ new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI') }}</div>
+
                     </div>
                 </div>
 
@@ -303,9 +344,9 @@
                 </div>
             </div>
                 
-            <div v-if="titleInfo.user_title_watch_count >= 0">
+            <div v-if="titleInfo.watch_count >= 0">
                 <h2 class="header-margin-fix">Notes</h2>
-                <textarea class="notes-text-area" v-model="this.titleInfo.user_title_notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
+                <textarea class="notes-text-area" v-model="this.titleInfo.notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
                     @click="handleNotesSave"
                     :disabled="waitingForResult.includes('saveNotes')"
@@ -401,7 +442,7 @@
                             <IconRefresh 
                                 size="28px"
                                 left="6px"
-                                @click="handleTitleUpdate('titleInfo')"
+                                @click.stop="handleTitleUpdate('titleInfo')"
                                 :class="{
                                     'loading': waitingForResult.includes('titleUpdate'),
                                     'spin-refresh-icon': waitingForResult.includes('titleUpdate')
@@ -409,6 +450,8 @@
                                 class="icon-button"
                             />
                         </h2>
+                        <!-- ONLY SPIN THE ICON FOR THE THING THAT WE ARE UPDATING -->
+                        <!-- ONLY SPIN THE ICON FOR THE THING THAT WE ARE UPDATING -->
                         <!-- <button @click.stop="handleTitleUpdate('seasonInfo', season.season_number)">Season info</button>
                         <button @click.stop="handleTitleUpdate('seasonImages', season.season_number)">Season images</button> -->
                         <div class="details">
@@ -489,7 +532,7 @@
                                 <div class="details">
                                     <span class="icon-align" >
                                         <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                        <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.vote_count }} votes)</span>
+                                        <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.tmdb_vote_count ?? '0'}} votes)</span>
                                     </span>
                                     <div>
                                         {{ 
@@ -551,6 +594,8 @@ import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
+import IconTMDBColorful from '@/components/icons/IconTMDBColorful.vue';
+import IconIMDBColorful from '@/components/icons/IconIMDBColorful.vue';
 
 export default {
     data() {
@@ -577,7 +622,9 @@ export default {
         InfoTooltip,
         IndicatorDots,
         IconTMDB,
+        IconTMDBColorful,
         IconIMDB,
+        IconIMDBColorful,
         IconChevronDown,
         IconListRemove,
         IconListAdd,
@@ -591,8 +638,8 @@ export default {
         formatRuntime(runtime) {
             return convert.runtime(runtime);
         },
-        formatEur(amount) {
-            return convert.toEur(amount);
+        formatToMillions(amount) {
+            return convert.toLargeUsd(amount);
         },
         toggleHeight(refKey) {
             // Mark the season as opened to load to dom with v-if to start loading images
@@ -657,7 +704,7 @@ export default {
             if (response) {
                 console.debug(response)
                 // Update titles state on page
-                this.titleInfo.user_title_watch_count = response.updated_data.watch_count;
+                this.titleInfo.watch_count = response.updated_data.watch_count;
                 // Update each episodes state on page by mathcing the episode_id
                 if (response.updated_data.episodes) {
                     console.debug(response.updated_data.episodes)
@@ -684,7 +731,7 @@ export default {
         async handleNotesSave() {
             this.waitingForResult.push("saveNotes");
 
-            const response = await api.saveTitleNotes(this.titleInfo.title_id, this.titleInfo.user_title_notes)
+            const response = await api.saveTitleNotes(this.titleInfo.title_id, this.titleInfo.notes)
             if (response) {
                 console.log(response);
                 notify(response.message, "success");
@@ -738,9 +785,9 @@ export default {
             const response = await api.toggleTitleFavourite(this.titleInfo.title_id)
             if (response) {
                 console.log(response);
-                this.titleInfo.user_title_favourite = !this.titleInfo.user_title_favourite;
-                if (this.titleInfo.user_title_watch_count <= -1) {
-                    this.titleInfo.user_title_watch_count = 0;
+                this.titleInfo.favourite = !this.titleInfo.favourite;
+                if (this.titleInfo.watch_count <= -1) {
+                    this.titleInfo.watch_count = 0;
                 }
             }
             this.removeItemFromWaitingArray("favourite");
@@ -857,12 +904,13 @@ export default {
             }
         },
         seasonVotes(season) {
-            let runningSum = 0
-            if (season && season.episodes)
-            season.episodes.forEach((episode) => {
-                runningSum += episode.vote_count;
-            });
-            return runningSum;
+            let runningSum = 0;
+            if (season && season.episodes) {
+                season.episodes.forEach((episode) => {
+                    runningSum += episode.tmdb_vote_count || 0;
+                });
+            }
+            return isNaN(runningSum) ? '0' : runningSum;
         },
         openCorrectSeason(hash) {
             return new Promise((resolve) => {
@@ -1106,40 +1154,40 @@ export default {
 .backdrop-container .button-holder button {
     color: var(--color-text-white);
     margin: 0;
-    padding: 0;
-    background-color: transparent;
+    padding: var(--spacing-xs);
+    background-color: hsla(0, 0%, 0%, 0.2);
+    backdrop-filter: blur(6px);
     border-radius: 50%;
     position: relative; 
     z-index: var(--z-backdrop-arrow-buttons);
     box-shadow: none;
+    transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
+.backdrop-container .button-holder button:hover {
+    transform: scale(1.25);
+}
+.backdrop-container .button-holder button:active {
+    transform: scale(1.15);
+}
+
 .backdrop-container .button-holder button svg {
-    fill: var(--color-text-white);
-}
-.backdrop-container .button-holder button::after {
-    content: "";
-    background-color: rgba(0, 0, 0, 0.25);
-    filter: blur(20px);
-    width: 80px;
-    aspect-ratio: 1;
-    position: absolute;
     border-radius: 50%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%); 
-    z-index: -5;
+    fill: var(--color-text-white);
+    transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
 .backdrop-container button.left svg {
     transform: rotate(90deg);
-    transition: transform 0.2s var(--cubic-bounce-soft-out);
-}.backdrop-container button.left:hover svg {
-    transform: rotate(90deg) scale(1.5);
+}
+.backdrop-container button.left:hover svg,
+.backdrop-container button.left:active svg {
+    transform: rotate(90deg) scale(0.9);
 }
 .backdrop-container button.right svg {
     transform: rotate(-90deg);
-    transition: transform 0.2s var(--cubic-bounce-soft-out);
-}.backdrop-container button.right:hover svg {
-    transform: rotate(-90deg) scale(1.5);
+}
+.backdrop-container button.right:hover svg,
+.backdrop-container button.right:active svg {
+    transform: rotate(-90deg) scale(0.9);
 }
 /* @media (max-width: 666px) {
     .backdrop-container .button-holder button svg {
@@ -1166,7 +1214,7 @@ export default {
 .poster-next-to-stuff .name-and-stuff {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
     margin-top: var(--spacing-sm);
 }
 .name-and-tagline {
@@ -1174,7 +1222,7 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: end;
-    height: 100%;
+    /* height: 100%; */
 }
 
 /* .name-and-tagline .logo {
@@ -1210,6 +1258,29 @@ export default {
     }
 }
 
+.ratings {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+}
+.ratings > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.ratings svg {
+    /* Compensate for the icons having some empty space unlike text */
+    margin-left: -4px !important;
+}
+.ratings .value {
+    gap: var(--spacing-xs);
+    white-space: nowrap;
+    font-weight: 700;
+    font-size: var(--font-size-large);
+}
+
 
 /* - - - - - VALUES AND DETAILS - - - - -  */
 
@@ -1222,7 +1293,7 @@ export default {
     gap: 20px;
     row-gap: 0;
     grid-template-columns: auto 1fr;
-    min-height: 200px;
+    /* min-height: 200px; */
 }
 
 .poster-next-to-stuff .poster-holder {
@@ -1248,9 +1319,11 @@ export default {
 }
 
 .title-details .tags {
-    gap: var(--spacing-xs);
-    flex-wrap: wrap;
+    gap: 6px;
     overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     /* height: 32px; */
     /* margin:  0; */
     /* margin-top: var(--spacing-md); */
@@ -1258,6 +1331,7 @@ export default {
 .title-details .tags .tag {
     font-weight: 500;
     background-color: var(--color-background-card);
+    box-sizing: border-box;
 }
 
 .title-details .tags .tag.tag-upcoming {
@@ -1321,6 +1395,7 @@ iframe {
     width: 600px;
     max-width: 100%;
     margin-inline: auto;
+    border-radius: var(--border-radius-medium);
 }
 @media(max-width: 900px) {
     .trailer-details-flex {
@@ -1337,7 +1412,7 @@ iframe {
     }
 }
 
-.title-details .spin-refresh-icon {
+.spin-refresh-icon {
     animation: spin 1s linear infinite;
 }
 
