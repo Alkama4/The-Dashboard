@@ -55,7 +55,6 @@
         </div>
 
         <div class="content-width-medium title-details">
-
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
                     <div class="poster-placholder">
@@ -161,39 +160,68 @@
                 </div>
             </div>
 
-            <div class="ratings card">
-                <div>
-                    <span class="value icon-align">
-                        <IconIMDBColorful size="40px" class="imdb-icon"/>
-                        {{ titleInfo?.imdb_vote_average ?? 'N/A' }} 
-                    </span>
-                    <span class="text-lighter">
-                        {{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
-                    </span>
+            <div class="at-a-glance">
+
+                <div class="ratings">
+                    <div class="short-value">
+                        <span class="value icon-align">
+                            <IconIMDBColorful size="40px" class="imdb-icon"/>
+                            {{ titleInfo?.imdb_vote_average ?? 'N/A' }} 
+                        </span>
+                        <span class="text-lighter">
+                            {{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
+                        </span>
+                    </div>
+                    <div class="short-value">
+                        <span class="value icon-align">
+                            <IconTMDBColorful size="40px" class="tmdb-icon"/>
+                            {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
+                        </span>
+                        <span class="text-lighter">
+                            {{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
+                        </span>
+                    </div>
+        
+                    <div class="seperator"></div>
+    
+                    <div class="short-value">
+                        <span class="value">
+                            {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
+                        </span>
+                        <span class="text-lighter">
+                            Age rating
+                            <InfoTooltip 
+                                text="
+                                    By default age ratings are Finnish and US ratings are used as a backup. The US ratings convertion table:<br>
+                                    &bullet; G (S) General Audience<br>
+                                    &bullet; PG (K-7) Parental Guidance Suggested<br>
+                                    &bullet; PG-13 (K-12) Parents Strongly Cautioned, Suitable for 13+<br>
+                                    &bullet; R (K-18) Restricted, for Adults Only<br>
+                                    &bullet; NC-17 (K-18) No One 17 and Under Admitted"
+                                position="right"
+                                max-width="60vw"
+                                align-offset="0"
+                            >
+                            </InfoTooltip>
+                        </span>
+                    </div>
                 </div>
-                <div></div>
-                <div>
-                    <span class="value icon-align">
-                        <IconTMDBColorful size="40px" class="tmdb-icon"/>
-                        {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
-                    </span>
-                    <span class="text-lighter">
-                        {{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
-                    </span>
+
+                <div class="seperator hide-on-mobile"></div>
+
+                <div class="awards hide-on-mobile">
+                    <span class="value">{{ titleInfo.awards ?? '-' }}</span>
+                    <span class="text-lighter">Awards & Nominations</span>
                 </div>
             </div>
+
+            <h3>Overview</h3>
+            <p style="margin: 0;">{{ titleInfo.overview }}</p>
             
-
-            <h2>Overview</h2>
-            <p>{{ titleInfo.overview }}</p>
-
-            <h2>Awards</h2>
-            <div>{{ titleInfo.awards ?? '-' }}</div>
-
             <div class="trailer-details-flex">
                 <div class="details-container">
-                    <h2 class="icon-align header-margin-fix" title="Fetches and updates all non-user related data for the title, such as details, images, season, and episode information.">
-                        Details
+                    <h3 class="icon-align">
+                        General info
                         <IconRefresh
                             size="28px"
                             left="6px"
@@ -206,7 +234,8 @@
                         />
                         <!-- <button @click="handleTitleUpdate('titleImages')">Title images</button> -->
                         <!-- <button @click="handleTitleUpdate('fullUpdate')">Full update</button> -->
-                    </h2>
+                    </h3>
+
                     <div class="details-grid">
 
                         <div v-if="titleInfo.type == 'movie'">
@@ -214,6 +243,11 @@
                         </div>
                         <div v-if="titleInfo.type == 'movie'" class="value">
                             {{ formatRuntime(titleInfo.movie_runtime) }}
+                        </div>
+
+                        <div v-if="titleInfo.type == 'tv'">Progress</div>
+                        <div v-if="titleInfo.type == 'tv'" class="value">
+                            {{ getWatchedStats() }}
                         </div>
 
                         <div v-if="titleInfo.type == 'tv'">
@@ -229,94 +263,53 @@
                             {{ titleEpisodeCount }} episode<template v-if="titleEpisodeCount > 1">s</template>
                         </div>
 
-                        <div>
-                            Age rating 
-                            <InfoTooltip 
-                                text="
-                                    By default age ratings are Finnish and US ratings are used as a backup. The US ratings convertion table:<br>
-                                    &bullet; G (S) General Audience<br>
-                                    &bullet; PG (K-7) Parental Guidance Suggested<br>
-                                    &bullet; PG-13 (K-12) Parents Strongly Cautioned, Suitable for 13+<br>
-                                    &bullet; R (K-18) Restricted, for Adults Only<br>
-                                    &bullet; NC-17 (K-18) No One 17 and Under Admitted"
-                                position="right"
-                                max-width="60vw"
-                            >
-                            </InfoTooltip>
-                        </div>
-                        <div class="value" 
-                            :title="titleInfo.age_rating === 'G' ? 'General Audience (S)' : 
-                                    titleInfo.age_rating === 'PG' ? 'Parental Guidance Suggested (K-7)' : 
-                                    titleInfo.age_rating === 'PG-13' ? 'Parents Strongly Cautioned, Suitable for 13+ (K-12)' : 
-                                    titleInfo.age_rating === 'R' ? 'Restricted, for Adults Only (K-18)' : 
-                                    titleInfo.age_rating === 'NC-17' ? 'No One 17 and Under Admitted (K-18)' : ''">
-                            {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
-                        </div>
-
                         <!-- Get the last episode date as "date - end date" -->
-                        <div>Release date</div>
-                        <div class="value">{{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}</div>
-                    </div>
-                    <h3>Success</h3>
-                    <div class="details-grid">
-
-                        <div>IMDB average score</div>
+                        <div>
+                            <template v-if="titleInfo.type == 'tv'">First air date</template>
+                            <template v-else>Release date</template>
+                        </div>
                         <div class="value">
-                            <IconIMDB style="margin-left: -3px;"/>
-                            {{ titleInfo?.imdb_vote_average ?? 'N/A' }} 
-                            ({{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
+                            {{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}
                         </div>
 
-                        <div>TMDB average score</div>
-                        <div class="value">
-                            <IconTMDB style="margin-left: -3px;"/>
-                            {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
-                            ({{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes)
+                        <div v-if="titleInfo.type == 'tv'">
+                            last air date
+                        </div>
+                        <div v-if="titleInfo.type == 'tv'" class="value">
+                            {{ new Date(titleLastAirDate).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}
                         </div>
 
-                        <div>Revenue</div>
+                        <div v-if="titleInfo.type == 'movie'">Revenue</div>
                         <div 
+                            v-if="titleInfo.type == 'movie'" 
                             class="value" 
                             :title="titleInfo?.revenue?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
                         >
                             {{ formatToMillions(titleInfo.revenue) ?? '-' }}
                         </div>
-                        <div>Budget</div>
+                        <div v-if="titleInfo.type == 'movie'">Budget</div>
                         <div 
+                            v-if="titleInfo.type == 'movie'"
                             class="value" 
                             :title="titleInfo?.budget?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
                         >
                             {{ formatToMillions(titleInfo.budget) ?? '-' }}
                         </div>
 
-
-                        <!-- <div>Awards</div>
-                        <div class="value">{{ titleInfo.awards ?? '-' }}</div> -->
-
-                    </div>
-                    <h3>Metadata</h3>
-                    <div class="details-grid">
-
-                        <div>Progress</div>
-                        <div class="value">
-                            <template v-if="titleInfo.watch_count >= 1">Watched</template>
-                            <template v-else-if="titleInfo.type == 'tv' && titleInfo.watch_count == 0">{{ getWatchedStats() }}</template>
-                            <template v-else>Unwatched</template>
-                        </div>
-
-                        <div>Title type</div>
-                        <div class="value">{{ titleInfo.type }}</div>
-
                         <div>Original language</div>
                         <div class="value">{{ titleInfo.original_language }}</div>
 
-                        <div>Origin country</div>
-                        <div class="value">{{ titleInfo.production_countries ?? '-'}}</div>
+                        <div>
+                            Production countr<template v-if="titleInfo?.production_countries?.includes(',')">ies</template><template v-else>y</template>
+                        </div>
+                        <div class="value">{{ titleInfo?.production_countries ?? '-'}}</div>
 
-                    </div>
-                    <h3>Boring</h3>
-                    <div class="details-grid">
-                        
+                        <h4>Metadata</h4>
+                        <div></div>
+
+                        <!-- <div>Title type</div>
+                        <div class="value">{{ titleInfo.type }}</div> -->
+
                         <div>IMDB id</div>
                         <div class="value">{{ titleInfo.imdb_id }}<a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
 
@@ -333,7 +326,7 @@
                 </div>
 
                 <div v-if="titleInfo.trailer_key != null" class="trailer-container">
-                    <h2 class="header-margin-fix">Trailer</h2>
+                    <h3>Trailer</h3>
                     <div class="iframe-container">
                         <iframe
                             :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`"
@@ -345,7 +338,7 @@
             </div>
                 
             <div v-if="titleInfo.watch_count >= 0">
-                <h2 class="header-margin-fix">Notes</h2>
+                <h3>Notes</h3>
                 <textarea class="notes-text-area" v-model="this.titleInfo.notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
                     @click="handleNotesSave"
@@ -586,7 +579,8 @@ import notFoundPage from '@/views/404Page.vue';
 
 // Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
-import IconIMDB from '@/components/icons/IconIMDB.vue';
+import IconTMDBColorful from '@/components/icons/IconTMDBColorful.vue';
+import IconIMDBColorful from '@/components/icons/IconIMDBColorful.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
@@ -594,8 +588,6 @@ import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
-import IconTMDBColorful from '@/components/icons/IconTMDBColorful.vue';
-import IconIMDBColorful from '@/components/icons/IconIMDBColorful.vue';
 
 export default {
     data() {
@@ -623,7 +615,6 @@ export default {
         IndicatorDots,
         IconTMDB,
         IconTMDBColorful,
-        IconIMDB,
         IconIMDBColorful,
         IconChevronDown,
         IconListRemove,
@@ -978,6 +969,14 @@ export default {
                 count += season.episode_count;
             });
             return count;
+        },
+        titleLastAirDate() {
+            if (this.titleInfo && this.titleInfo.type == 'tv' && this.titleInfo.seasons?.length) {
+                let lastSeason = this.titleInfo.seasons[this.titleInfo.seasons.length - 1];
+                let lastAirDate = lastSeason?.episodes?.[lastSeason.episodes.length - 1]?.air_date || null;
+                return lastAirDate;
+            }
+            return null;
         }
     },
     async beforeRouteUpdate(to) {
@@ -1155,8 +1154,9 @@ export default {
     color: var(--color-text-white);
     margin: 0;
     padding: var(--spacing-xs);
-    background-color: hsla(0, 0%, 0%, 0.2);
-    backdrop-filter: blur(6px);
+    background-color: transparent;
+    /* background-color: hsla(0, 0%, 0%, 0.2); */
+    /* backdrop-filter: blur(6px); */
     border-radius: 50%;
     position: relative; 
     z-index: var(--z-backdrop-arrow-buttons);
@@ -1164,10 +1164,7 @@ export default {
     transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
 .backdrop-container .button-holder button:hover {
-    transform: scale(1.25);
-}
-.backdrop-container .button-holder button:active {
-    transform: scale(1.15);
+    transform: scale(1.2);
 }
 
 .backdrop-container .button-holder button svg {
@@ -1178,16 +1175,8 @@ export default {
 .backdrop-container button.left svg {
     transform: rotate(90deg);
 }
-.backdrop-container button.left:hover svg,
-.backdrop-container button.left:active svg {
-    transform: rotate(90deg) scale(0.9);
-}
 .backdrop-container button.right svg {
     transform: rotate(-90deg);
-}
-.backdrop-container button.right:hover svg,
-.backdrop-container button.right:active svg {
-    transform: rotate(-90deg) scale(0.9);
 }
 /* @media (max-width: 666px) {
     .backdrop-container .button-holder button svg {
@@ -1258,27 +1247,81 @@ export default {
     }
 }
 
-.ratings {
+.at-a-glance {
     display: flex;
     flex-direction: row;
     gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
 }
-.ratings > div {
+
+.at-a-glance .seperator {
+    background-color: var(--color-border);
+    min-width: 2px;
+    min-height: 2px;
+    border-radius: 100px;
+}
+
+.at-a-glance .text-lighter {
+    font-weight: 500;
+}
+
+.at-a-glance .ratings {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-md);
+    justify-content: space-evenly;
+}
+.at-a-glance .short-value {
+    padding-inline: var(--spacing-sm);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
 }
-.ratings svg {
-    /* Compensate for the icons having some empty space unlike text */
-    margin-left: -4px !important;
-}
-.ratings .value {
+.at-a-glance .short-value .value {
     gap: var(--spacing-xs);
+    flex: 1;
+    align-content: center;
     white-space: nowrap;
     font-weight: 700;
     font-size: var(--font-size-large);
+}
+
+.at-a-glance .awards {
+    min-width: 200px;
+    padding-inline: var(--spacing-sm);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.at-a-glance .awards .value {
+    font-weight: 600;
+}
+
+.at-a-glance svg {
+    /* Compensate for the icons having some empty space unlike text */
+    margin-left: -4px !important;
+}
+
+
+@media(max-width: 600px) {
+    .at-a-glance {
+        flex-direction: column;
+    }
+    .at-a-glance .rating {
+        padding-inline: unset;
+    }
+    .at-a-glance .awards {
+        padding-inline: unset;
+        width: fit-content;
+        margin-inline: auto;
+        text-align: center;
+    }
+    .at-a-glance .hide-on-mobile {
+        display: none;
+    }
 }
 
 
@@ -1379,12 +1422,7 @@ export default {
 .trailer-details-flex {
     display: grid;
     grid-template-columns: auto 1fr;
-    gap: var(--spacing-lg);
-}
-
-h2.header-margin-fix {
-    /* Smaller margin, because its inside a div causing margins not to overlap */
-    margin-top: 16px !important;
+    column-gap: var(--spacing-md);
 }
 
 .trailer-container {
@@ -1392,17 +1430,19 @@ h2.header-margin-fix {
 }
 iframe {
     aspect-ratio: 16/9;
-    width: 600px;
+    width: 550px;
     max-width: 100%;
     margin-inline: auto;
     border-radius: var(--border-radius-medium);
+}
+.iframe-container {
+    display: flex;
 }
 @media(max-width: 900px) {
     .trailer-details-flex {
         grid-template-columns: none;
     }
     .iframe-container {
-        display: flex;
         flex-direction: row;
         justify-content: center;
         width: 100%;
@@ -1431,8 +1471,12 @@ iframe {
     margin-bottom: var(--spacing-sm);
 }
 .title-details h3 {
-    margin-top: var(--spacing-sm);
-    margin-bottom: 0;
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
+}
+.title-details h4 {
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
 }
 .title-details .details-grid {
     color: var(--color-text-light);
@@ -1445,7 +1489,7 @@ iframe {
     display: flex;
     flex-direction: row;
     align-items: center;
-    max-width: 200px;
+    max-width: 250px;
     gap: var(--spacing-xs);
 }
 

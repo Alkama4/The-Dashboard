@@ -12,19 +12,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Title details
     - On update button click open MODAL
         - Impelement once modal remade
-    - Add a season progress like for title. Maybe even a bar
-    - Arrow buttons circles instead of a shadow
-    - Figure out the layout for the details
-        - Add N/A or alternative on missing values
-
-    - Writers, directors, creators
-    - Writers, directors, creators
-    - Writers, directors, creators
-    - Writers, directors, creators
-    - Writers, directors, creators
-    - Writers, directors, creators
-    - Writers, directors, creators
-    - Writers, directors, creators
+    - On metadata have the "user data updated" to reflect latest update to title or episode.    
 
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
@@ -123,6 +111,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Title space taken
     - Seperate images and data?
     - How do I get the data amount?
+- Titledetails add a season progress like for title. Maybe even a bar
 
 
 ### Feature ideas that might never see the light of day

@@ -1,6 +1,6 @@
 <template>
     <span class="tooltip-container">
-        <IconInfo size="20px" class="info-icon" @mouseover="showTooltip" @mouseleave="hideTooltip"/>
+        <IconInfo size="20px" :style="{'margin-bottom': alignOffset}" class="info-icon" @mouseover="showTooltip" @mouseleave="hideTooltip"/>
         <!-- v-html to make pagebreaks work -->
         <div 
             v-if="isTooltipVisible" 
@@ -33,6 +33,10 @@ export default {
         maxWidth: {
             type: String,
             default: "25ch",
+        },
+        alignOffset: {
+            type: String,
+            default: "4px",
         }
     },
     methods: {
@@ -56,7 +60,6 @@ export default {
     cursor: pointer;
     display: inline;
     vertical-align: middle; /* Extra precaution if other alignment is applied */
-    margin-bottom: var(--spacing-xs);     /* Cant add align or justify to parent, since parent isn't flex or grid */
 }
 
 .tooltip {
