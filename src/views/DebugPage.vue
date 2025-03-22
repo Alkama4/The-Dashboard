@@ -43,7 +43,28 @@
             </div>
         </div>
 
-        <ChartComponent :chartOptionsGenerator="exampleChartOptions"/>
+        <ConfirmationModal ref="testConfirmationModalRef"/>
+        <button @click="openConfirmationModal">Confirmation modal</button>
+
+        <GenericModal ref="testModalRef">
+            Some example text to describe something and fill this up so that I can test different test cases.
+            <h3>A sub header</h3>
+            Some example text to describe something and fill this up so that I can test different test cases.
+            Some example text to describe something and fill this up so that I can test different test cases.
+            Some example text to describe something and fill this up so that I can test different test cases.
+            Some example text to describe something and fill this up so that I can test different test cases.
+            Some example text to describe something and fill this up so that I can test different test cases.
+            Some example text to describe something and fill this up so that I can test different test cases.
+            Some example text to describe something and fill this up so that I can test different test cases.
+        </GenericModal>
+        <button @click="openTestModal">Generic test modal</button>
+
+        <div class="card content-width-small">
+            <ChartComponent 
+                :chartOptionsGenerator="exampleChartOptions"
+                alternateOption="Maybe..."
+            />
+        </div>
     </div>
 </template>
 
@@ -54,15 +75,19 @@ import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
 import { initialEchartSetup, commonChartValues, generateTooltipSingleValue } from '@/utils/chartTools';
 import api from '@/utils/dataQuery';
 import ChartComponent from '@/components/ChartComponent.vue';
+import ConfirmationModal from '@/components/ConfirmationModal.vue';
+import GenericModal from '@/components/GenericModal.vue';
 
 export default {
     name: 'DebugPage',
     components: {
         ChartComponent,
+        ConfirmationModal,
+        GenericModal,
     },  
     data() {
         return {
-            exampleChartOptions: null
+            exampleChartOptions: null,
         }
     },
     methods: {
@@ -83,6 +108,12 @@ export default {
             const ratingColor = getCssVar("color-primary");
             const position = Math.pow(rating / 10, 2);
             return interpolateBetweenColors(baseColor, ratingColor, position)
+        },
+        openConfirmationModal() {
+            this.$refs.testConfirmationModalRef.open()
+        },
+        openTestModal() {
+            this.$refs.testModalRef.open()
         }
     },
     async mounted() {
@@ -161,6 +192,7 @@ export default {
 .tile {
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--border-radius-small);
+    color: var(--color-text-white);
     margin: 0;
 }
 

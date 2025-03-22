@@ -166,7 +166,7 @@
                     <div class="short-value">
                         <span class="value icon-align">
                             <IconIMDBColorful size="40px" class="imdb-icon"/>
-                            {{ titleInfo?.imdb_vote_average ?? 'N/A' }} 
+                            {{ titleInfo?.imdb_vote_average ?? '-' }} 
                         </span>
                         <span class="text-lighter">
                             {{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
@@ -175,7 +175,7 @@
                     <div class="short-value">
                         <span class="value icon-align">
                             <IconTMDBColorful size="40px" class="tmdb-icon"/>
-                            {{ titleInfo?.tmdb_vote_average ?? 'N/A' }} 
+                            {{ titleInfo?.tmdb_vote_average ?? '-' }} 
                         </span>
                         <span class="text-lighter">
                             {{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
@@ -221,7 +221,7 @@
             <div class="trailer-details-flex">
                 <div class="details-container">
                     <h3 class="icon-align">
-                        General info
+                        Title details
                         <IconRefresh
                             size="28px"
                             left="6px"
@@ -297,7 +297,7 @@
                         </div>
 
                         <div>Original language</div>
-                        <div class="value">{{ titleInfo.original_language }}</div>
+                        <div class="value">{{ titleInfo.original_language ?? '-' }}</div>
 
                         <div>
                             Production countr<template v-if="titleInfo?.production_countries?.includes(',')">ies</template><template v-else>y</template>
@@ -1475,7 +1475,7 @@ iframe {
     margin-bottom: var(--spacing-sm);
 }
 .title-details h4 {
-    margin-top: var(--spacing-md);
+    margin-top: var(--spacing-sm);
     margin-bottom: var(--spacing-xs);
 }
 .title-details .details-grid {

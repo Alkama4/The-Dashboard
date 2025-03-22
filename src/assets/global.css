@@ -731,7 +731,7 @@ input[type="radio"] {
     background: var(--color-background-backdrop);
     backdrop-filter: blur(8px);
     cursor: pointer;
-    animation: fadeIn 0.2s ease-out;
+    /* animation: fadeIn 0.2s ease-out; */
 }
 
 .spacer-line {
