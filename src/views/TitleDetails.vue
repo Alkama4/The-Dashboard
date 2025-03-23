@@ -788,12 +788,12 @@ export default {
             if (action == "remove") {
                 const response = await api.removeTitleFromUserList(this.titleInfo.tmdb_id);
                 if (response) {
-                    console.debug("Title removed successfully", "success")
+                    console.debug("Title removed successfully")
                 }
             } else if (action == "add") {
                 const response = await api.addTitleToUserList(this.titleInfo.tmdb_id, this.titleInfo.type);
                 if (response) {
-                    console.debug("Title added successfully!", "success")
+                    console.debug("Title added successfully!")
                 }
             }            
             await this.queryTitleData()

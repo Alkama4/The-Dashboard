@@ -37,7 +37,7 @@
                     :class="{
                         'transaction-items-summary': index === 0,
                         'transaction-item': index === 1,
-                        'discount': amount < 0
+                        'inverse-amount': amount < 0
                     }"
                 >
                     {{ formatAmount(amount) }}
@@ -306,21 +306,21 @@
     border-color: var(--color-border);
 }
 
-.column-amount.expense .item {
+.column-amount.expense .item,
+.column-amount.income .item.inverse-amount {
     color: var(--color-negative);
-} .column-amount.expense .item::before {
+} 
+.column-amount.expense .item::before,
+.column-amount.income .item.inverse-amount::before {
     content: "-";
 }
 
-.column-amount.income .item {
+.column-amount.income .item,
+.column-amount.expense .item.inverse-amount {
     color: var(--color-positive);
-} .column-amount.income .item::before {
-    content: "+";
-}
-
-.column-amount.expense .item.discount {
-    color: var(--color-positive) !important;
-} .column-amount.expense .item.discount::before {
+} 
+.column-amount.income .item::before,
+.column-amount.expense .item.inverse-amount::before {
     content: "+";
 }
 

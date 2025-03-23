@@ -33,6 +33,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Last 1h (real-time monitoring)
             - Last 30m (quick diagnostics)
             - Last 15m (very short-term issues)
+- watch list
+    - Add secondary sorting
+        - "In progress" should be new episodes -> season in progress -> last modified
+    - season(s) and episodes(s) but automated
 
 - watch list finish the all titles list
     - add sort by
@@ -41,10 +45,12 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - watched, unwatched, don't care
         - favourite, not favourite, don't care
         - tv, movie, don't care
-        - Released, started...?
+        - released, not released
+        - started...?
     - Whole title act as a link should be modified to be different
         - Current implementation confusing for user since similar just expands in spendings
     - mobile compability non existant
+    - The un released tag should be different from the genres
     - Remake sidebar filter thingy so that it can be used here
         - And fix the instant hide at the same time.
 
@@ -112,6 +118,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Seperate images and data?
     - How do I get the data amount?
 - Titledetails add a season progress like for title. Maybe even a bar
+- Custom select tab select and arrow keys select value
 
 
 ### Feature ideas that might never see the light of day

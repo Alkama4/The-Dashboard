@@ -47,20 +47,37 @@ export default {
     },
     methods: {
         open() {
+            if (this.closeTimeout) {
+                clearTimeout(this.closeTimeout);
+                this.closeTimeout = null;
+            }
+
             document.documentElement.classList.add('no-scroll');
+            document.addEventListener('keydown', this.closeWithKeypress);
             this.isVisible = true;
+
             setTimeout(() => {
-                this.isDisplayed = true
-            }, 1);
+                this.isDisplayed = true;
+            }, 10);
         },
         close() {
             document.documentElement.classList.remove('no-scroll');
+            document.removeEventListener('keydown', this.closeWithKeypress);
             this.isDisplayed = false;
-            setTimeout(() => {
-                this.isVisible = false;
+
+            this.closeTimeout = setTimeout(() => {
+                if (!this.isDisplayed) {
+                    this.isVisible = false;
+                }
+                this.closeTimeout = null;
             }, 200);
         },
-    },
+        closeWithKeypress(event) {
+            if (event.key === 'Escape') {
+                this.close();
+            }
+        }
+    }
 };
 </script>
 
