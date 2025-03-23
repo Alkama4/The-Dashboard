@@ -20,14 +20,15 @@
                 >
                     <swiper-slide 
                         v-for="title in titleList.titles" 
-                        :key="title.id" 
-                        @click="openDetailsPageFor(title.id)"
+                        :key="title.title_id" 
+                        @click="openDetailsPageFor(title.title_id)"
                         tabindex="0"
-                        @keydown.enter="openDetailsPageFor(title.id)"
-                        @keydown.space.prevent="openDetailsPageFor(title.id)"
+                        @keydown.enter="openDetailsPageFor(title.title_id)"
+                        @keydown.space.prevent="openDetailsPageFor(title.title_id)"
+                        @mousedown.middle.prevent="openDetailsPageOnNewTabFor(title.title_id)"
                     >
                         <img 
-                            :src="posterUrl(title.id, 600, title.backup_poster_url)" 
+                            :src="posterUrl(title.title_id, 600, title.backup_poster_url)" 
                             class="thumbnail"
                             @load="(event) => event.target.classList.add('loaded')" 
                         />
@@ -61,7 +62,7 @@
                         </div>
                         
                         <button 
-                            v-if="title.is_favourite"
+                            v-if="title.favourite"
                             class="tag favourite-button button-transparent icon-align" 
                             @click.stop="handleFavouriteToggle(title)"
                             :disabled="waitingForResult.length != 0"
@@ -106,9 +107,10 @@
              </div>
         </div>
 
-        <div class="content-width-medium">
+        <div class="content-width-large">
             <h2 id="titles_listed">Titles listed <span class="text-lighter">(Under construction)</span></h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
+        
             <div class="all-titles-list-controls">
                 <div>
                     <div class="combined-buttons">
@@ -139,6 +141,22 @@
                             Unwatched
                         </button>
                     </div>
+                    <button 
+                        style="padding-inline: var(--spacing-md); white-space: nowrap;" 
+                        :class="{'button-primary': allTitlesListOptions.getAllTitles}"
+                        @click="allTitlesListOptions.getAllTitles = !allTitlesListOptions.getAllTitles"
+                    >
+                        All titles
+                    </button>
+                    <div class="button-in-text-field">
+                        <input 
+                            v-model="allTitlesListNonAutoOptions.searchTerm" 
+                            type="text" 
+                            placeholder="Search titles"
+                            @keydown.enter="inputTriggeredFetchAllTitles"
+                        >
+                        <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
+                    </div>
                 </div>
                 <div>
                     <!-- <label for="">Sort by</label> -->
@@ -156,22 +174,21 @@
                         </button>
                     </div>
                 </div>
-
             </div>
         </div>
 
         <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1">
-            <router-link v-for="title in allTitlesList" :key="title.id" :to="`/watch_list/title/${title.id}`" class="title-element no-decoration">
+            <router-link v-for="title in allTitlesList" :key="title.title_id" :to="`/watch_list/title/${title.title_id}`" class="title-element no-decoration">
                 <div class="poster-holder">
                     <img 
-                        :src="posterUrl(title.id, 300, title.backup_poster_url)" 
+                        :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
                         @load="(event) => event.target.classList.add('loaded')" 
                         class="poster"
                     >
                 </div>
 
                 <div class="content">
-                    <span class="title-name" :to="`/watch_list/title/${title.id}`">
+                    <span class="title-name" :to="`/watch_list/title/${title.title_id}`">
                         <span>{{ title.name }}</span>
                         &MediumSpace;
                         <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
@@ -180,7 +197,7 @@
                         <div class="tag tag-positive" v-if="title.watch_count >= 1">
                             Watched
                         </div>
-                        <div class="tag tag-secondary" v-if="title.is_favourite">
+                        <div class="tag tag-secondary" v-if="title.favourite">
                             Favourite
                         </div>
                         <div class="tag tag-primary" v-if="title.new_episodes">
@@ -200,8 +217,8 @@
                         <div class="detail-list">
                             <span class="icon-align">
                                 <IconTMDB style="margin-right: 4px;"/>
-                                {{ title.vote_average }}
-                                ({{ title.vote_count }})
+                                {{ title.tmdb_vote_average }}
+                                ({{ title.tmdb_vote_count }})
                             </span>
                             <span>
                                 {{ convertToDate(title.release_date) }}
@@ -220,6 +237,20 @@
                             <p>{{ title.overview }}</p>
                         </div>
                     </div>
+                </div>
+                <div class="appearing-buttons">
+                    <IconHeart 
+                        size="28px"
+                        :class="{'is-set': title.favourite}" 
+                        class="icon-button favourite"
+                        @click.prevent="handleFavouriteToggle(title)"
+                    />
+                    <component 
+                        size="28px"
+                        :is="title.is_in_watchlist ? 'IconListRemove' : 'IconListAdd'" 
+                        class="icon-button watch-list"
+                        @click.prevent="title.is_in_watchlist ? handleRemoveTitleFromUserList(title) : handleAddTitleToUserList(title)"
+                    />
                 </div>
             </router-link>
             <div class="flex-row">
@@ -285,6 +316,9 @@ import CustomSelect from '@/components/CustomSelect.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+import IconSearch from '@/components/icons/IconSearch.vue';
+import IconListAdd from '@/components/icons/IconListAdd.vue';
+import IconListRemove from '@/components/icons/IconListRemove.vue';
 
 export default {
     name: 'HomePage',
@@ -299,6 +333,9 @@ export default {
         IconSortDown,
         IconSortUp,
         IconChevronDown,
+        IconSearch,
+        IconListAdd,
+        IconListRemove
     },
     data() {
         return {
@@ -384,14 +421,18 @@ export default {
                     }
                 },
             ],
-            allTitlesList: null,
+            allTitlesList: [],
             allTitlesListHasMore: false,
             allTitlesListOffset: 0,
+            allTitlesListNonAutoOptions: {
+                searchTerm: '',
+            },
             allTitlesListOptions: {
                 sortBy: 'TMDB rating',
                 direction: "desc",
                 titleType: "",
                 titleProgress: "",
+                getAllTitles: false,
             },
             allTitlesListSortByOptions: ['TMDB rating', 'Release date', 'Modified'],
             scrolledPastTitlesListed: false,    // A tracker to hide and show the scroll back button
@@ -400,6 +441,10 @@ export default {
     methods: {
         openDetailsPageFor(titleID) {
             router.push(`/watch_list/title/${titleID}`);
+        },
+        openDetailsPageOnNewTabFor(titleID) {
+            const url = this.$router.resolve(`/watch_list/title/${titleID}`).href;
+            window.open(url, "_blank");
         },
         formatRuntime(runtime) {
             return convert.runtime(runtime);
@@ -438,13 +483,20 @@ export default {
             const options = {
                 sort_by: customSortBy,
                 direction: this.allTitlesListOptions.direction,
-                offset: this.allTitlesListOffset
+                offset: this.allTitlesListOffset,
+                all_titles: this.allTitlesListOptions.getAllTitles
             };
+
             if (this.allTitlesListOptions.titleType)
                 options.title_type = this.allTitlesListOptions.titleType;
+
             if (this.allTitlesListOptions.titleProgress)
                 options.watched = this.allTitlesListOptions.titleProgress === 'watched';
+
+            if (this.allTitlesListNonAutoOptions.searchTerm)
+                options.search_term = this.allTitlesListNonAutoOptions.searchTerm;
             
+            // console.debug("[fetchAlltitlesList] options:", options)
             const titlesListedResponse = await api.listTitles(options);
 
             if (titlesListedResponse) {
@@ -468,13 +520,15 @@ export default {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
         },
         async handleFavouriteToggle(title) {
-            this.waitingForResult.push(`${title.id}Favourite`);
-            const response = await api.toggleTitleFavourite(title.id)
+            this.waitingForResult.push(`${title.title_id}Favourite`);
+            const response = await api.toggleTitleFavourite(title.title_id)
             if (response) {
                 console.log(response);
-                title.is_favourite = !title.is_favourite;
+                title.favourite = !title.favourite;
+                if (title.is_in_watchlist != null) 
+                    title.is_in_watchlist = true;
             }
-            this.removeItemFromWaitingArray(`${title.id}Favourite`);
+            this.removeItemFromWaitingArray(`${title.title_id}Favourite`);
         },
         convertToDate(date) {
             return convert.toFiDate(date, "default");
@@ -492,6 +546,50 @@ export default {
                 return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
             } else {
                 return `${this.apiUrl}/image/${titleId}/poster.jpg?width=${width}`;
+            }
+        },
+        async inputTriggeredFetchAllTitles() {
+
+            console.log("Ran")
+            let sortByTranslated;
+            switch (this.allTitlesListOptions.sortBy) {
+                case 'TMDB rating':
+                    sortByTranslated = 'vote_average';
+                    break;
+                case 'Release date':
+                    sortByTranslated = 'release_date';
+                    break;
+                case 'Modified':
+                    sortByTranslated = 'latest_updated'
+                    break;
+                // case 'Name':
+                //     sortByTranslated = 'name'
+                //     break;
+
+                // This could be the sum of minutes of all episodes. That way it would be logical?
+                // case 'Length/Episode count': HOW TO HANDLE TV AND MOVIE DIFFERENCE?
+                //     sortByTranslated = 'length'
+                //     break;
+                default:
+                    return;
+            }
+
+            // console.debug("New sorting values detected:", sortByTranslated, value.direction);
+            this.allTitlesListOffset = 0;
+            await this.fetchAllTitlesList(sortByTranslated);
+        },
+        async handleAddTitleToUserList(title) {
+            const response = await api.addTitleToUserList(title.tmdb_id)
+            if (response) {
+                title.is_in_watchlist = true;
+            }
+        },
+        async handleRemoveTitleFromUserList(title) {
+            const response = await api.removeTitleFromUserList(title.tmdb_id)
+            if (response) {
+                title.is_in_watchlist = false;
+                title.watch_count = 0;
+                title.favourite = false;
             }
         }
     },
@@ -513,34 +611,8 @@ export default {
     watch: {
         allTitlesListOptions: {
             deep: true,
-            async handler(value) {
-                let sortByTranslated;
-
-                switch (value.sortBy) {
-                    case 'TMDB rating':
-                        sortByTranslated = 'vote_average';
-                        break;
-                    case 'Release date':
-                        sortByTranslated = 'release_date';
-                        break;
-                    case 'Modified':
-                        sortByTranslated = 'latest_updated'
-                        break;
-                    // case 'Name':
-                    //     sortByTranslated = 'name'
-                    //     break;
-
-                    // This could be the sum of minutes of all episodes. That way it would be logical?
-                    // case 'Length/Episode count': HOW TO HANDLE TV AND MOVIE DIFFERENCE?
-                    //     sortByTranslated = 'length'
-                    //     break;
-                    default:
-                        return;
-                }
-
-                // console.debug("New sorting values detected:", sortByTranslated, value.direction);
-                this.allTitlesListOffset = 0;
-                await this.fetchAllTitlesList(sortByTranslated);
+            async handler() {
+                await this.inputTriggeredFetchAllTitles();
             }
         }
     }
@@ -754,6 +826,7 @@ export default {
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
     font-weight: 500;
+    box-sizing: border-box;
 }
 
 .all-titles-list {
@@ -768,6 +841,8 @@ export default {
     align-items: center;
     gap: var(--spacing-sm);
     margin: var(--spacing-sm) 0;
+    /* overflow-x: scroll;
+    overflow-y: visible; */
 }
 .all-titles-list-controls > div {
     display: flex;
@@ -807,6 +882,7 @@ export default {
     padding: var(--padding);
     gap: var(--spacing-md);
     display: flex;
+    position: relative;
     width: 100%;
     flex-direction: row;
     max-height: calc(var(--title-height) + 2 * var(--padding));
@@ -819,6 +895,9 @@ export default {
 
 .all-titles-list .title-element:hover {
     background-color: var(--color-background-tr-hover);
+}
+.all-titles-list .title-element:hover .title-name {
+    text-decoration: underline;
 }
 
 .all-titles-list .poster-holder {
@@ -834,13 +913,24 @@ export default {
     object-fit: cover;
 }
 
-.all-titles-list .content {
+.button-in-text-field {
+    position: relative;
+}
+
+.button-in-text-field .icon-button {
+    position: absolute;
+    right: var(--spacing-sm);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.title-element .content {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.all-titles-list .title-name {
+.title-element .title-name {
     color: var(--color-text);
     font-weight: 700;
     font-size: var(--font-size-large);
@@ -850,7 +940,7 @@ export default {
     display: flex;
 }
 
-.all-titles-list .tags {
+.title-element .tags {
     display: flex;
     gap: var(--spacing-sm);
     margin: 0;
@@ -858,26 +948,26 @@ export default {
     margin-bottom: 12px;
 }
 
-.all-titles-list .tags .tag {
+.title-element .tags .tag {
     font-size: var(--font-size-small);
     padding: 2px 6px;
 }
 
 
-.all-titles-list .details {
+.title-element .details {
     height: 100%;
     display: grid;
     grid-template-columns: auto 1fr;
     gap: var(--spacing-md);
 }
 
-.all-titles-list .detail-list {
+.title-element .detail-list {
     display: flex;
     flex-direction: column;
     min-width: 125px;
 }
 
-.all-titles-list p {
+.title-element p {
     color: var(--color-text-light);
     margin: 0;
     display: -webkit-box;
@@ -889,9 +979,37 @@ export default {
 
 /* Optimize for mobile. Curren't setup not anywhere near */
 @media (max-width: 600px) {
-    .all-titles-list p {
+    .title-element p {
         display: none;
     }
+}
+
+.title-element .appearing-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    margin: var(--spacing-md);
+    gap: var(--spacing-sm);
+    opacity: 0;
+    transform: translateX(4px);
+    transition: opacity 0.2s var(--cubic-1),
+                transform 0.2s var(--cubic-1);
+}
+.title-element:hover .appearing-buttons {
+    opacity: 1;
+    transform: translateX(0px);
+}
+
+.title-element .icon-button.favourite.is-set {
+    color: var(--color-secondary);
+}
+.title-element .icon-button.favourite.is-set:hover {
+    color: var(--color-secondary-hover);
+}
+.title-element .icon-button.favourite.is-set:active {
+    color: var(--color-secondary-active);
 }
 
 </style>
