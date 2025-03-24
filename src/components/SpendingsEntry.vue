@@ -256,17 +256,6 @@
     filter: opacity(0.5);
 }
 
-.transaction-row {
-    display: flex;
-}
-
-.transaction-cell  {
-    white-space: nowrap;
-    padding: 8px var(--spacing-sm);
-    vertical-align: top;
-    color: var(--color-text-light);
-}
-
 .column-amount, .column-category {
     display: flex;
     flex-direction: column;

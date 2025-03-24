@@ -56,11 +56,11 @@
                 />
                 <div v-if="waitingForResponse && apiFilters.offset === 0">
                     <div class="transaction-row" v-for="i in 15" :key="i">
-                        <div class="loading-placeholder transaction-cell column-date"></div>
-                        <div class="loading-placeholder transaction-cell column-counterparty"></div>
-                        <div class="loading-placeholder transaction-cell column-category"></div>
-                        <div class="loading-placeholder transaction-cell column-amount"></div>
-                        <div class="loading-placeholder transaction-cell column-notes"></div>
+                        <div class="transaction-cell column-date"><div class="loading-placeholder"></div></div>
+                        <div class="transaction-cell column-counterparty"><div class="loading-placeholder"></div></div>
+                        <div class="transaction-cell column-category"><div class="loading-placeholder"></div></div>
+                        <div class="transaction-cell column-amount"><div class="loading-placeholder"></div></div>
+                        <div class="transaction-cell column-notes"><div class="loading-placeholder"></div></div>
                     </div>
                 </div>
                 <div v-else-if="transactions.length == 0">
@@ -298,12 +298,14 @@
 /* } */
 
 .transaction-row {
-    /* display: flex;
-    flex-direction: row; */
     display: flex;
 }
-.loading-placeholder.transaction-cell {
-    height: 25px;
+
+.transaction-cell  {
+    white-space: nowrap;
+    padding: 8px var(--spacing-sm);
+    vertical-align: top;
+    color: var(--color-text-light);
 }
 
 /* - - - - Different columns - - - - - */
@@ -392,22 +394,11 @@
 }
 
 .loading-placeholder {
-    background: linear-gradient(
-        90deg,
-        var(--color-background-tr-active) 20%,
-        var(--color-background-tr-hover) 50%,
-        var(--color-background-tr-active) 80%
-    );
-    background-size: 200% 100%;
-    animation: loading-wave 2s infinite linear;
+    height: 25px;
     border-radius: var(--border-radius-small);
-    margin: calc(var(--spacing-sm) + 1px);  /* 2px for border */
 }
-.loading-placeholder.column-date {
-    margin-left: 0;
-}
-.loading-placeholder.column-notes {
-    margin-right: 0;
+.column-category .loading-placeholder {
+    margin-right: var(--spacing-md) !important;
 }
 @keyframes loading-wave {
     0% {

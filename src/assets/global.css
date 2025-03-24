@@ -982,6 +982,8 @@ input[type="radio"] {
     background-size: 200% 100%;
     animation: highlight-wave 2s infinite linear;
     box-shadow: none !important;
+    display: flex;
+    margin: 0;
 }
 @keyframes highlight-wave {
     0% {
