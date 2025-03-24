@@ -147,7 +147,7 @@
                         </button>
                         <button 
                             v-else
-                            class=" right-button flex-1"
+                            class="right-button flex-1"
                             @click="handleWatchListModification('remove')" 
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
@@ -210,7 +210,12 @@
                 <div class="seperator hide-on-mobile"></div>
 
                 <div class="awards hide-on-mobile">
-                    <span class="value">{{ titleInfo.awards ?? '-' }}</span>
+                    <a 
+                        :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}/awards`" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        class="value no-decoration">{{ titleInfo.awards ?? '-' }}
+                    </a>
                     <span class="text-lighter">Awards & Nominations</span>
                 </div>
             </div>
@@ -311,10 +316,30 @@
                         <div class="value">{{ titleInfo.type }}</div> -->
 
                         <div>IMDB id</div>
-                        <div class="value">{{ titleInfo.imdb_id }}<a :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
+                        <div class="value">
+                            {{ titleInfo.imdb_id }}
+                            <a 
+                                class="flex"
+                                :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`"
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                            >
+                                <IconLinkExternal size="20px"/>
+                            </a>
+                        </div>
 
                         <div>TMDB id</div>
-                        <div class="value">{{ titleInfo.tmdb_id }}<a :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" class="flex"><IconLinkExternal size="20px"/></a></div>
+                        <div class="value">
+                            {{ titleInfo.tmdb_id }}
+                            <a 
+                                class="flex"
+                                :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" 
+                                target="_blank" 
+                                rel="noopener noreferrer" 
+                            >
+                                <IconLinkExternal size="20px"/>
+                            </a>
+                        </div>
 
                         <div>Title details updated <InfoTooltip text="Title information is updated with the button above. This is only the title and does not include episodes or seasons." position="right"/></div>
                         <div class="value">{{ new Date(titleInfo.last_updated).toLocaleDateString("fi-FI") }}</div>
@@ -435,7 +460,7 @@
                             <IconRefresh 
                                 size="28px"
                                 left="6px"
-                                @click.stop="handleTitleUpdate('titleInfo')"
+                                @click.stop="handleTitleUpdate('seasonInfo', season.season_number)"
                                 :class="{
                                     'loading': waitingForResult.includes('titleUpdate'),
                                     'spin-refresh-icon': waitingForResult.includes('titleUpdate')
@@ -739,6 +764,7 @@ export default {
             } else if (whatIsUpdated == "titleImages") {
                 response = await api.updateTitleImages(this.titleInfo.tmdb_id, this.titleInfo.type);
             } else if (whatIsUpdated == "seasonInfo") {
+                console.log(seasonNumber);
                 response = await api.updateSeasonInfo(this.titleInfo.tmdb_id, this.titleInfo.type, seasonNumber);
             } else if (whatIsUpdated == "seasonImages") {
                 response = await api.updateSeasonImages(this.titleInfo.tmdb_id, this.titleInfo.type, seasonNumber);

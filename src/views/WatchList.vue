@@ -25,7 +25,8 @@
                         tabindex="0"
                         @keydown.enter="openDetailsPageFor(title.title_id)"
                         @keydown.space.prevent="openDetailsPageFor(title.title_id)"
-                        @mousedown.middle.prevent="openDetailsPageOnNewTabFor(title.title_id)"
+                        @mousedown.middle.prevent=""
+                        @mouseup.middle.prevent="openDetailsPageOnNewTabFor(title.title_id)"
                     >
                         <img 
                             :src="posterUrl(title.title_id, 600, title.backup_poster_url)" 
@@ -141,13 +142,22 @@
                             Unwatched
                         </button>
                     </div>
-                    <button 
-                        style="padding-inline: var(--spacing-md); white-space: nowrap;" 
-                        :class="{'button-primary': allTitlesListOptions.getAllTitles}"
-                        @click="allTitlesListOptions.getAllTitles = !allTitlesListOptions.getAllTitles"
-                    >
-                        All titles
-                    </button>
+                    <div class="combined-buttons">
+                        <button 
+                            class="left-button"
+                            :class="{'button-primary': allTitlesListOptions.getAllTitles == 'all_titles'}"
+                            @click="allTitlesListOptions.getAllTitles = allTitlesListOptions.getAllTitles == 'all_titles' ? '' : 'all_titles'"
+                        >
+                            All titles
+                        </button>
+                        <button 
+                            class="right-button"
+                            :class="{'button-primary': allTitlesListOptions.getAllTitles == 'not_added'}"
+                            @click="allTitlesListOptions.getAllTitles = allTitlesListOptions.getAllTitles == 'not_added' ? '' : 'not_added'"
+                        >
+                            Not added
+                        </button>
+                    </div>
                     <div class="button-in-text-field">
                         <input 
                             v-model="allTitlesListNonAutoOptions.searchTerm" 
@@ -246,8 +256,8 @@
                         @click.prevent="handleFavouriteToggle(title)"
                     />
                     <component 
-                        size="28px"
                         :is="title.is_in_watchlist ? 'IconListRemove' : 'IconListAdd'" 
+                        size="28px"
                         class="icon-button watch-list"
                         @click.prevent="title.is_in_watchlist ? handleRemoveTitleFromUserList(title) : handleAddTitleToUserList(title)"
                     />
@@ -265,14 +275,17 @@
             </div>
         </div>
 
-        <div
-            class="content-width-medium all-titles-list-placeholder loading-placeholder" 
-            v-else-if="waitingForResult.includes('allTitlesList')"
-        ></div>
+        <div v-else-if="waitingForResult.includes('allTitlesList')" class="content-width-medium">
+            <div
+                class="all-titles-list-placeholder loading-placeholder" 
+            ></div>
+        </div>
 
-        <div class="content-width-medium all-titles-list-placeholder content-not-found" v-else>
-            Looks like there's nothing here.<br>
-            <span class="text-hidden">Try adding titles to your watch list</span>
+        <div v-else class="content-width-medium">
+            <div class="all-titles-list-placeholder content-not-found" >
+                Looks like there's nothing here.<br>
+                <span class="text-hidden">Try adding titles to your watch list</span>
+            </div>
         </div>
 
         <!-- Corner buttons -->

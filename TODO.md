@@ -119,6 +119,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - How do I get the data amount?
 - Titledetails add a season progress like for title. Maybe even a bar
 - Custom select tab select and arrow keys select value
+- Watch list marked watched and unwatched along with favourite and add/remove from watch list. Add to cards and all titles list.
 
 
 ### Feature ideas that might never see the light of day
