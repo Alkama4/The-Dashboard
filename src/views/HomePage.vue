@@ -1242,6 +1242,7 @@ export default {
 	top: var(--spacing-md);
 	width: 80px;
 	height: 80px;
+	object-fit: contain;
 	aspect-ratio: 1;
 	color: var(--color-text-light);
 }

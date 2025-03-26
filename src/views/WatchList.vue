@@ -440,14 +440,18 @@ export default {
             allTitlesListNonAutoOptions: {
                 searchTerm: '',
             },
+            allTitlesListSortByOptions: [
+                {label: 'TMDB rating', value: 'vote_average'},
+                {label: 'Release date', value: 'release_date'},
+                {label: 'Modified', value: 'latest_updated'},
+            ],
             allTitlesListOptions: {
-                sortBy: 'TMDB rating',
+                sortBy: 'vote_average',
                 direction: "desc",
                 titleType: "",
                 titleProgress: "",
                 getAllTitles: false,
             },
-            allTitlesListSortByOptions: ['TMDB rating', 'Release date', 'Modified'],
             scrolledPastTitlesListed: false,    // A tracker to hide and show the scroll back button
         };
     },
@@ -490,11 +494,11 @@ export default {
                 console.error("Error fetching title lists:", error);
             }
         },
-        async fetchAllTitlesList(customSortBy = this.allTitlesListOptions.sortBy) {
+        async fetchAllTitlesList() {
             this.waitingForResult.push("allTitlesList");
 
             const options = {
-                sort_by: customSortBy,
+                sort_by: this.allTitlesListOptions.sortBy,
                 direction: this.allTitlesListOptions.direction,
                 offset: this.allTitlesListOffset,
                 all_titles: this.allTitlesListOptions.getAllTitles
@@ -562,34 +566,8 @@ export default {
             }
         },
         async inputTriggeredFetchAllTitles() {
-
-            console.log("Ran")
-            let sortByTranslated;
-            switch (this.allTitlesListOptions.sortBy) {
-                case 'TMDB rating':
-                    sortByTranslated = 'vote_average';
-                    break;
-                case 'Release date':
-                    sortByTranslated = 'release_date';
-                    break;
-                case 'Modified':
-                    sortByTranslated = 'latest_updated'
-                    break;
-                // case 'Name':
-                //     sortByTranslated = 'name'
-                //     break;
-
-                // This could be the sum of minutes of all episodes. That way it would be logical?
-                // case 'Length/Episode count': HOW TO HANDLE TV AND MOVIE DIFFERENCE?
-                //     sortByTranslated = 'length'
-                //     break;
-                default:
-                    return;
-            }
-
-            // console.debug("New sorting values detected:", sortByTranslated, value.direction);
             this.allTitlesListOffset = 0;
-            await this.fetchAllTitlesList(sortByTranslated);
+            await this.fetchAllTitlesList();
         },
         async handleAddTitleToUserList(title) {
             const response = await api.addTitleToUserList(title.tmdb_id)

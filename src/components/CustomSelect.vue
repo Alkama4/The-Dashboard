@@ -4,16 +4,16 @@
             class="selected-option icon-align" 
             @click="toggleDropdown"
         >
-            <span>{{ selectedOption || 'Select an option' }}</span>
-            <IconChevronDown/>
+            <span>{{ selectedOption?.label || 'Select an option' }}</span>
+        <IconChevronDown/>
         </div>
         <ul 
             v-if="isLogicalOpen" 
             class="options-list"
             :class="{'hidden': !isStylingOpen}"
         >
-            <li v-for="option in options" :key="option" @click="selectOption(option)">
-                {{ option }}
+            <li v-for="option in options" :key="option.value" @click="selectOption(option)">
+                {{ option.label }}
             </li>
         </ul>
     </div>
@@ -71,7 +71,7 @@ export default {
             }
         },
         selectOption(option) {
-            this.$emit('update:modelValue', option);
+            this.$emit('update:modelValue', option.value);
             this.close();
         }
     },
@@ -79,10 +79,10 @@ export default {
         modelValue: {
             immediate: true,
             handler(value) {
-                this.selectedOption = value;
+                this.selectedOption = this.options.find(opt => opt.value === value) || null;
             }
         }
-    },
+    }
 };
 </script>
 

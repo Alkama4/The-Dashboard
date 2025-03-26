@@ -22,17 +22,6 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Add:
             - disks
             - uptime
-        - More frequent logs?
-            - every 10s?
-        - Change to 24h of logs stored
-        - Allowed time frames
-            - Last 24h (full dataset)
-            - Last 12h (half-day trends)
-            - Last 6h (short-term trends)
-            - Last 3h (medium-term insights)
-            - Last 1h (real-time monitoring)
-            - Last 30m (quick diagnostics)
-            - Last 15m (very short-term issues)
 - watch list
     - Add secondary sorting
         - "In progress" should be new episodes -> season in progress -> last modified
@@ -120,6 +109,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Titledetails add a season progress like for title. Maybe even a bar
 - Custom select tab select and arrow keys select value
 - Watch list marked watched and unwatched along with favourite and add/remove from watch list. Add to cards and all titles list.
+- Spoiler mode
+    - Blank the details and blur the image for titles that aren't watched. 
+    - Add the option to the top of page.
 
 
 ### Feature ideas that might never see the light of day
