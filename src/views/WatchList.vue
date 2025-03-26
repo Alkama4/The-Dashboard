@@ -108,12 +108,12 @@
              </div>
         </div>
 
-        <div class="content-width-large">
+        <div class="content-width-medium">
             <h2 id="titles_listed">Titles listed <span class="text-lighter">(Under construction)</span></h2>
             <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
         
             <div class="all-titles-list-controls">
-                <div>
+                <div class="filter-buttons">
                     <div class="combined-buttons">
                         <button 
                             class="left-button" :class="{'button-primary': allTitlesListOptions.titleType == 'tv'}"
@@ -158,6 +158,8 @@
                             Not added
                         </button>
                     </div>
+                </div>
+                <div class="search-and-sort">
                     <div class="button-in-text-field">
                         <input 
                             v-model="allTitlesListNonAutoOptions.searchTerm" 
@@ -167,9 +169,6 @@
                         >
                         <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
                     </div>
-                </div>
-                <div>
-                    <!-- <label for="">Sort by</label> -->
                     <div class="flex icon-align">
                         <CustomSelect 
                             v-model="allTitlesListOptions.sortBy" 
@@ -275,13 +274,11 @@
             </div>
         </div>
 
-        <div v-else-if="waitingForResult.includes('allTitlesList')" class="content-width-medium">
-            <div
-                class="all-titles-list-placeholder loading-placeholder" 
-            ></div>
+        <div v-if="waitingForResult.includes('allTitlesList')" class="content-width-medium">
+            <div v-for="i in Math.max(3 - allTitlesList?.length, 0)" :key="'placeholder-' + i" class="all-titles-list-placeholder title-element loading-placeholder"></div>
         </div>
 
-        <div v-else class="content-width-medium">
+        <div v-else-if="allTitlesList?.length == 0" class="content-width-medium">
             <div class="all-titles-list-placeholder content-not-found" >
                 Looks like there's nothing here.<br>
                 <span class="text-hidden">Try adding titles to your watch list</span>
@@ -775,6 +772,11 @@ export default {
         height: auto;
         aspect-ratio: 2/3;
     }
+    .all-titles-list .progress-details {
+        display: flex;
+        flex-direction: row;
+        gap: 3px;
+    }
     .season-after::after {
         content: "S, ";
     }
@@ -818,6 +820,7 @@ export default {
     border-radius: var(--border-radius-medium);
     font-weight: 500;
     box-sizing: border-box;
+    margin-bottom: 5px;
 }
 
 .all-titles-list {
@@ -827,27 +830,39 @@ export default {
 
 .all-titles-list-controls {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
-    gap: var(--spacing-sm);
+    row-gap: var(--spacing-sm);
     margin: var(--spacing-sm) 0;
-    /* overflow-x: scroll;
-    overflow-y: visible; */
 }
-.all-titles-list-controls > div {
+.all-titles-list-controls .filter-buttons {
+    width: 100%;
+    column-gap: var(--spacing-sm);
     display: flex;
     flex-direction: row;
-    align-items: center;
-    gap: var(--spacing-sm);
+    overflow-x: scroll;
+}
+.filter-buttons .combined-buttons {
+    flex: 1;
+    white-space: nowrap;
+}
+.filter-buttons button {
+    padding-inline: calc(var(--spacing-md) + var(--spacing-sm));
 }
 
-
-.all-titles-list-controls .combined-buttons {
-    width: 200px;
+.all-titles-list-controls .search-and-sort {
+    width: 100%;
+    display: flex;
+    column-gap: var(--spacing-sm);
 }
-.all-titles-list-controls .combined-buttons.title-progress {
-    width: 250px;
+.search-and-sort .button-in-text-field {
+    flex: 3;
+}
+.search-and-sort .icon-align {
+    flex: 2;
+}
+.search-and-sort .custom-select {
+    width: 100%;
 }
 
 .all-titles-list-controls .sort-direction {

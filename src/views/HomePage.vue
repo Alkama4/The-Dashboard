@@ -265,8 +265,15 @@ export default {
 				fastapiData: {},
 			},
 			serverLogsTimespan: "1h",
-			serverLogsTimespans: ["15m", "30m", "1h", "3h", "6h", "12h", "24h"]
-			,
+			serverLogsTimespans: [
+				{label: "15m", value: "15m"},
+				{label: "30m", value: "30m"},
+				{label: "1h", value: "1h"},
+				{label: "3h", value: "3h"},
+				{label: "6h", value: "6h"},
+				{label: "12h", value: "12h"},
+				{label: "24h", value: "24h"},
+			],
 		};
 	},
 	methods: {

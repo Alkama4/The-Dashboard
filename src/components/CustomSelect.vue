@@ -4,7 +4,8 @@
             class="selected-option icon-align" 
             @click="toggleDropdown"
         >
-            <span>{{ selectedOption?.label || 'Select an option' }}</span>
+            <span class="longest-option">{{ longestOptionLabel }}</span>
+            <span class="visible-option">{{ selectedOption?.label || 'Select an option' }}</span>
         <IconChevronDown/>
         </div>
         <ul 
@@ -75,6 +76,14 @@ export default {
             this.close();
         }
     },
+    computed: {
+        longestOptionLabel() {
+            const longestOption = this.options.reduce((longest, option) => {
+                return option.label.length > longest.label.length ? option : longest;
+            }, { label: '' });
+            return longestOption.label;
+        }
+    },
     watch: {
         modelValue: {
             immediate: true,
@@ -90,7 +99,6 @@ export default {
 <style scoped>
 .custom-select {
     position: relative;
-    width: 200px;
     height: 41px;
     --selected-option-border-radius: var(--border-radius-small);
 }
@@ -107,6 +115,7 @@ export default {
     padding-left: var(--spacing-sm);
 
     font-family: 'Poppins', sans-serif;
+    white-space: nowrap;
     color: var(--color-text-light);
     background-color: var(--color-background-input);
     cursor: pointer;
@@ -125,6 +134,14 @@ export default {
 }
 .custom-select.is-open svg {
     transform: rotate(180deg);
+}
+
+.selected-option .longest-option {
+    opacity: 0;
+    padding-right: var(--spacing-sm);
+}
+.selected-option .visible-option {
+    position: absolute;
 }
 
 .options-list {
