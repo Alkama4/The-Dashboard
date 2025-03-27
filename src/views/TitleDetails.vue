@@ -228,15 +228,13 @@
                         <IconRefresh
                             size="28px"
                             left="6px"
-                            @click="handleTitleUpdate('titleInfo')"
+                            @click="openTitleUpdateModal()"
                             :class="{
-                                'loading': waitingForResult.includes('titleUpdate'),
-                                'spin-refresh-icon': waitingForResult.includes('titleUpdate')
+                                'loading': waitingForResult.includes('titleUpdate' + 0),
+                                'spin-refresh-icon': waitingForResult.includes('titleUpdate' + 0)
                             }"
                             class="icon-button"
                         />
-                        <!-- <button @click="handleTitleUpdate('titleImages')">Title images</button> -->
-                        <!-- <button @click="handleTitleUpdate('fullUpdate')">Full update</button> -->
                     </h3>
 
                     <div class="details-grid">
@@ -455,21 +453,20 @@
                     <div class="text">
                         <h2 class="icon-align">
                             {{ season.season_name }}
+                            <!-- @click.stop="handleTitleUpdate('seasonInfo', season.season_number)" -->
                             <IconRefresh 
                                 size="28px"
                                 left="6px"
-                                @click.stop="handleTitleUpdate('seasonInfo', season.season_number)"
+                                @click.stop="openSeasonUpdateModal(season.season_number)"
                                 :class="{
-                                    'loading': waitingForResult.includes('titleUpdate'),
-                                    'spin-refresh-icon': waitingForResult.includes('titleUpdate')
+                                    'loading': waitingForResult.includes('titleUpdate' + season.season_number),
+                                    'spin-refresh-icon': waitingForResult.includes('titleUpdate' + season.season_number)
                                 }"
                                 class="icon-button"
                             />
                         </h2>
                         <!-- ONLY SPIN THE ICON FOR THE THING THAT WE ARE UPDATING -->
                         <!-- ONLY SPIN THE ICON FOR THE THING THAT WE ARE UPDATING -->
-                        <!-- <button @click.stop="handleTitleUpdate('seasonInfo', season.season_number)">Season info</button>
-                        <button @click.stop="handleTitleUpdate('seasonImages', season.season_number)">Season images</button> -->
                         <div class="details">
                             <div class="icon-align single-line">
                                 <span>{{ season.episode_count }} episodes</span>
@@ -626,6 +623,32 @@
             affirmative-option="Reset status"
         />
 
+        <!-- Title refresh data -->
+        <GenericModal ref="refreshTitleDataGM" header="Refresh Title Data">
+            <div class="choice-modal">
+                <p>Which part of the title would you like to refresh?</p>
+                <div class="choice-buttons">
+                    <button @click="handleTitleUpdate('titleInfo')">Title & Season Info</button>
+                    <button @click="handleTitleUpdate('titleImages')">Title & Season Images</button>
+                    <button @click="handleTitleUpdate('fullUpdate')">Full Refresh (All Data & Images)</button>
+                </div>
+                <p v-if="titleInfo.type == 'tv'" class="text-hidden icon-align">
+                    Hint: You can update seasons separately through their own menu.
+                </p>
+            </div>
+        </GenericModal>
+
+        <!-- Season refresh data -->
+        <GenericModal ref="refreshSeasonDataGM" header="Refresh Season Data">
+            <div class="choice-modal">
+                <p>Which part of the season would you like to refresh?</p>
+                <div class="choice-buttons">
+                    <button @click="handleTitleUpdate('seasonInfo')">Episode Info</button>
+                    <button @click="handleTitleUpdate('seasonImages')">Episode Images</button>
+                    <!-- <button @click="handleSeasonUpdate('fullUpdate')">Full Refresh (All Episodes & Images)</button> -->
+                </div>
+            </div>
+        </GenericModal>
     </div>
 
     <div v-else-if="!waitingForResult.includes('titleInfo')">
@@ -656,6 +679,7 @@ import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
 import ConfirmationModal from '@/components/ConfirmationModal.vue';
+import GenericModal from '@/components/GenericModal.vue';
 
 export default {
     data() {
@@ -676,12 +700,14 @@ export default {
             scrolledPastEpisodeMap: false,
             standAloneBuild: process.env.VUE_APP_STANDALONE_BUILD == "true",
             isTouchDevice: false,
+            selectedSeasonToUpdate: null,
         };
     },
     components: {
         InfoTooltip,
         IndicatorDots,
         ConfirmationModal,
+        GenericModal,
         notFoundPage,
 
         IconTMDB,
@@ -807,7 +833,6 @@ export default {
                     }
                     });
                 }
-
             }
 
             this.removeItemFromWaitingArray(`${titleOrSeasonOrEpisode}${watchedOrUnwatched}${customID}`);
@@ -823,19 +848,36 @@ export default {
             
             this.removeItemFromWaitingArray("saveNotes");
         },
-        async handleTitleUpdate(whatIsUpdated, seasonNumber = 0) {
-            this.waitingForResult.push("titleUpdate");
+        openTitleUpdateModal() {
+            // Set to 0 incase user chooses to update everything and the user has already updated/opened a season
+            // Also acts as a useful identifier for the spinning animation
+            this.selectedSeasonToUpdate = 0;    
+            this.$refs.refreshTitleDataGM.open();
+        },
+        openSeasonUpdateModal(seasonNumber) {
+            this.selectedSeasonToUpdate = seasonNumber;
+            this.$refs.refreshSeasonDataGM.open();
+        },
+        async handleTitleUpdate(whatIsUpdated) {
+            const updatingNumber = this.selectedSeasonToUpdate;
+            this.waitingForResult.push("titleUpdate" + updatingNumber);
             let response = null;
+
+            if (whatIsUpdated.includes("season")) {
+                this.$refs.refreshSeasonDataGM.close();
+            } else {
+                this.$refs.refreshTitleDataGM.close();
+            }
             
             if (whatIsUpdated == "titleInfo") {
                 response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type);
             } else if (whatIsUpdated == "titleImages") {
                 response = await api.updateTitleImages(this.titleInfo.tmdb_id, this.titleInfo.type);
             } else if (whatIsUpdated == "seasonInfo") {
-                console.log(seasonNumber);
-                response = await api.updateSeasonInfo(this.titleInfo.tmdb_id, this.titleInfo.type, seasonNumber);
+                console.log(updatingNumber);
+                response = await api.updateSeasonInfo(this.titleInfo.tmdb_id, this.titleInfo.type, updatingNumber);
             } else if (whatIsUpdated == "seasonImages") {
-                response = await api.updateSeasonImages(this.titleInfo.tmdb_id, this.titleInfo.type, seasonNumber);
+                response = await api.updateSeasonImages(this.titleInfo.tmdb_id, this.titleInfo.type, updatingNumber);
             } else if (whatIsUpdated == "fullUpdate") {
                 response = await api.updateTitleFully(this.titleInfo.tmdb_id, this.titleInfo.type);
             }
@@ -848,9 +890,9 @@ export default {
                 } else if (whatIsUpdated === "titleImages") {
                     updateMessage = `"${this.titleInfo.name}" title images are now updating in the background.`;
                 } else if (whatIsUpdated === "seasonInfo") {
-                    updateMessage = `Season ${seasonNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`;
+                    updateMessage = `Season ${updatingNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`;
                 } else if (whatIsUpdated === "seasonImages") {
-                    updateMessage = `Season ${seasonNumber} images for "${this.titleInfo.name}" are now updating in the background.`;
+                    updateMessage = `Season ${updatingNumber} images for "${this.titleInfo.name}" are now updating in the background.`;
                 } else if (whatIsUpdated === "fullUpdate") {
                     updateMessage = `All the data for "${this.titleInfo.name}" has been replaced. Images are also now updating in the background.`;
                 }
@@ -863,7 +905,7 @@ export default {
                 this.episodeMapTileBackgroundColors();
             }
 
-            this.removeItemFromWaitingArray("titleUpdate");
+            this.removeItemFromWaitingArray("titleUpdate" + updatingNumber);
         },
         async handleFavouriteToggle() {
             this.waitingForResult.push("favourite");
@@ -1939,10 +1981,18 @@ iframe {
     }
 }
 
-/* .loading {
-    cursor: wait;
-    pointer-events: none;
-} */
 
+.choice-modal .choice-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    row-gap: var(--spacing-sm);
+}
+.choice-modal .choice-buttons button {
+    margin: 0;
+}
+
+.choice-modal .text-hidden {
+    margin-bottom: 0;
+}
 </style>
   
