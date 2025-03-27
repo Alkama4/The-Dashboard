@@ -254,11 +254,18 @@
                         class="icon-button favourite"
                         @click.prevent="handleFavouriteToggle(title)"
                     />
-                    <component 
-                        :is="title.is_in_watchlist ? 'IconListRemove' : 'IconListAdd'" 
-                        size="28px"
-                        class="icon-button watch-list"
-                        @click.prevent="title.is_in_watchlist ? handleRemoveTitleFromUserList(title) : handleAddTitleToUserList(title)"
+
+                    <IconListRemove 
+                        v-if="title.is_in_watchlist" 
+                        size="28px" 
+                        class="icon-button watch-list" 
+                        @click.prevent="handleRemoveTitleFromUserList(title)" 
+                    />
+                    <IconListAdd 
+                        v-else 
+                        size="28px" 
+                        class="icon-button watch-list" 
+                        @click.prevent="handleAddTitleToUserList(title)" 
                     />
                 </div>
             </router-link>
@@ -304,6 +311,15 @@
         >
             <IconAdd size="28px"/>
         </router-link>
+
+        <!-- Modals -->
+        <ConfirmationModal 
+            ref="removeTitleConfirmationModal"
+            header="Remove from watchlist"
+            text="Are you sure you wan't to remove the title from your watchlist?
+            This gets rid of all your data on the title like your watched episodes and notes."
+            affirmative-option="Remove title"
+        />
         
     </div>
 </template>
@@ -329,6 +345,7 @@ import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
+import ConfirmationModal from '@/components/ConfirmationModal.vue';
 
 export default {
     name: 'HomePage',
@@ -337,6 +354,7 @@ export default {
         SwiperSlide,
         CustomSelect,
         IndicatorDots,
+        ConfirmationModal,
         IconAdd,
         IconTMDB,
         IconHeart,
@@ -567,17 +585,20 @@ export default {
             await this.fetchAllTitlesList();
         },
         async handleAddTitleToUserList(title) {
-            const response = await api.addTitleToUserList(title.tmdb_id)
+            const response = await api.addTitleToUserList(title.tmdb_id);
             if (response) {
                 title.is_in_watchlist = true;
             }
         },
         async handleRemoveTitleFromUserList(title) {
-            const response = await api.removeTitleFromUserList(title.tmdb_id)
-            if (response) {
-                title.is_in_watchlist = false;
-                title.watch_count = 0;
-                title.favourite = false;
+            const confirmation = await this.$refs.removeTitleConfirmationModal.prompt();
+            if (confirmation) {
+                const response = await api.removeTitleFromUserList(title.tmdb_id);
+                if (response) {
+                    title.is_in_watchlist = false;
+                    title.watch_count = 0;
+                    title.favourite = false;
+                }
             }
         }
     },

@@ -18,6 +18,14 @@
             :filterOptions="filterOptions"
         />
 
+        <!-- Need to figure out a way to have a single one of these and not inside each spendings entry -->
+        <ConfirmationModal 
+            ref="deleteTransactionCM"
+            header="Delete transaction"
+            text="Are you sure you want to delete the transaction? This cannot be undone"
+            affirmative-option="Delete transaction"
+        />
+
         <!-- The transactions table -->
         <div class="transactions-holder content-width-large">
             <div class="transaction-headers transaction-row">
@@ -103,192 +111,194 @@
 
 
 <script>
-    import IconFilter from '@/components/icons/IconFilter.vue';
-    import SpendingsEntry from '../components/SpendingsEntry.vue';
-    import IconSortBoth from '../components/icons/IconSortBoth.vue';
-    import IconSortDown from '../components/icons/IconSortDown.vue';
-    import IconSortUp from '../components/icons/IconSortUp.vue';
-    import IconAdd from '@/components/icons/IconAdd.vue';
-	import api from '@/utils/dataQuery';
-    import FilterSettings from '@/components/FilterSettings.vue';
-    // import { notify } from '@/utils/notification';
-    
-    export default {
-        name: 'SpendingsPage',
-        components: {
-            SpendingsEntry,
-            FilterSettings,
-            IconSortBoth,
-            IconSortDown,
-            IconSortUp,
-            IconFilter,
-            IconAdd,
-        },
-        data() {
-            return {
-                // Need to set seperately, leave this empty []
-                columns: [
-                    { key: 'date', label: 'Date', class: 'column-date' },
-                    { key: 'counterparty', label: 'Counterparty', class: 'column-counterparty' },
-                    { key: 'category', label: 'Category', class: 'column-category' },
-                    { key: 'amount', label: 'Amount', class: 'column-amount' },
-                    { key: 'notes', label: 'Notes', class: 'column-notes' },
-                ],
-                transactions: [],
-                showFilters: false,
-                inactiveColor: 'var(--color-text-lighter)',
-                inactiveHoverColor: 'var(--color-text-bold)',
-                activeColor: 'var(--color-primary)',
-                activeHoverColor: 'var(--color-primary-hover)',
-                expandedIndex: null, // Track which transaction is expanded
-                apiFilters: {
-                    sort_by: 'date',
-                    sort_order: 'desc',
-                    offset: 0,
-                    // Filter values
-                    start_date: 946684800000,
-                    end_date: 2208988800000,
-                    min_amount: -999999,
-                    max_amount: 999999,
-                    counterparties: [],
-                    counterparty_inclusion_mode: true,
-                    categories: [],
-                    category_inclusion_mode: true,
+import IconFilter from '@/components/icons/IconFilter.vue';
+import SpendingsEntry from '../components/SpendingsEntry.vue';
+import IconSortBoth from '../components/icons/IconSortBoth.vue';
+import IconSortDown from '../components/icons/IconSortDown.vue';
+import IconSortUp from '../components/icons/IconSortUp.vue';
+import IconAdd from '@/components/icons/IconAdd.vue';
+import api from '@/utils/dataQuery';
+import FilterSettings from '@/components/FilterSettings.vue';
+import ConfirmationModal from '@/components/ConfirmationModal.vue';
+// import { notify } from '@/utils/notification';
+
+export default {
+    name: 'SpendingsPage',
+    components: {
+        SpendingsEntry,
+        FilterSettings,
+        ConfirmationModal,
+        IconSortBoth,
+        IconSortDown,
+        IconSortUp,
+        IconFilter,
+        IconAdd,
+    },
+    data() {
+        return {
+            // Need to set seperately, leave this empty []
+            columns: [
+                { key: 'date', label: 'Date', class: 'column-date' },
+                { key: 'counterparty', label: 'Counterparty', class: 'column-counterparty' },
+                { key: 'category', label: 'Category', class: 'column-category' },
+                { key: 'amount', label: 'Amount', class: 'column-amount' },
+                { key: 'notes', label: 'Notes', class: 'column-notes' },
+            ],
+            transactions: [],
+            showFilters: false,
+            inactiveColor: 'var(--color-text-lighter)',
+            inactiveHoverColor: 'var(--color-text-bold)',
+            activeColor: 'var(--color-primary)',
+            activeHoverColor: 'var(--color-primary-hover)',
+            expandedIndex: null, // Track which transaction is expanded
+            apiFilters: {
+                sort_by: 'date',
+                sort_order: 'desc',
+                offset: 0,
+                // Filter values
+                start_date: 946684800000,
+                end_date: 2208988800000,
+                min_amount: -999999,
+                max_amount: 999999,
+                counterparties: [],
+                counterparty_inclusion_mode: true,
+                categories: [],
+                category_inclusion_mode: true,
+            },
+            filterData: {
+                amount: {
+                    lowerLimit: -999999,
+                    upperLimit: 999999,
                 },
-                filterData: {
-                    amount: {
-                        lowerLimit: -999999,
-                        upperLimit: 999999,
-                    },
-                    date: {
-                        lowerLimit: 946684800000,
-                        upperLimit: 2208988800000,
-                    },
-                    counterparty: {
-                        mode: 'include',
-                        selected: [],  // Track selected counterparties
-                    },
-                    category: {
-                        mode: 'include',
-                        selected: [],  // Track selected categories
-                    }
+                date: {
+                    lowerLimit: 946684800000,
+                    upperLimit: 2208988800000,
                 },
-                filterOptions: {
-                    amount: {},
-                    date: {},
-                    counterparty: {},
-                    category: {}
+                counterparty: {
+                    mode: 'include',
+                    selected: [],  // Track selected counterparties
                 },
-                waitingForResponse: true,
-                loadMoreButtonVisible: false,
+                category: {
+                    mode: 'include',
+                    selected: [],  // Track selected categories
+                }
+            },
+            filterOptions: {
+                amount: {},
+                date: {},
+                counterparty: {},
+                category: {}
+            },
+            waitingForResponse: true,
+            loadMoreButtonVisible: false,
+        };
+    },
+    computed: {
+        getSortIcon() {
+            return (column) => {
+                if (this.apiFilters.sort_by === column) {
+                    return this.apiFilters.sort_order === 'asc' ? IconSortUp : IconSortDown;
+                }
+                return IconSortBoth;
             };
         },
-        computed: {
-            getSortIcon() {
-                return (column) => {
-                    if (this.apiFilters.sort_by === column) {
-                        return this.apiFilters.sort_order === 'asc' ? IconSortUp : IconSortDown;
-                    }
-                    return IconSortBoth;
-                };
-            },
+    },
+    methods: {
+        toggleEntry(index) {
+            // Select or switch to a different transaction to be highlighted
+            this.expandedIndex = this.expandedIndex === index ? null : index;
         },
-        methods: {
-            toggleEntry(index) {
-                // Select or switch to a different transaction to be highlighted
-                this.expandedIndex = this.expandedIndex === index ? null : index;
-            },
-            async fetchTransactions() {
-                this.waitingForResponse = true;
+        async fetchTransactions() {
+            this.waitingForResponse = true;
 
-                // Use {standalone: true} as filter's when in a standalone build to avoid the query from
-                // changing when the user plays with filters and not displaying anything.
-                const standalone = process.env.VUE_APP_STANDALONE_BUILD == "true";
-                const response = await api.getTransactions(standalone ? {standalone: true} : this.apiFilters);
-                if (response && response.transactions) {
-                    if (this.apiFilters.offset === 0) {
-                        this.transactions = [...response.transactions];  // First page, reset
-                    } else {
-                        this.transactions = [...this.transactions, ...response.transactions]; // Append new data
-                    }
-
-                    // If there are more entries, keep showing "Load More" button
-                    this.loadMoreButtonVisible = response.hasMore;
+            // Use {standalone: true} as filter's when in a standalone build to avoid the query from
+            // changing when the user plays with filters and not displaying anything.
+            const standalone = process.env.VUE_APP_STANDALONE_BUILD == "true";
+            const response = await api.getTransactions(standalone ? {standalone: true} : this.apiFilters);
+            if (response && response.transactions) {
+                if (this.apiFilters.offset === 0) {
+                    this.transactions = [...response.transactions];  // First page, reset
                 } else {
-                    console.error("[SpendingsPage] Failed to retrieve transactions.");
+                    this.transactions = [...this.transactions, ...response.transactions]; // Append new data
                 }
-                this.waitingForResponse = false;
-            },
-            async fetchFilters() {
-                // Get filters and pass them to the FilterSettings component
-                const filterResponse = await api.getFilters();
-                if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
-                    this.filterOptions = filterResponse;
+
+                // If there are more entries, keep showing "Load More" button
+                this.loadMoreButtonVisible = response.hasMore;
+            } else {
+                console.error("[SpendingsPage] Failed to retrieve transactions.");
+            }
+            this.waitingForResponse = false;
+        },
+        async fetchFilters() {
+            // Get filters and pass them to the FilterSettings component
+            const filterResponse = await api.getFilters();
+            if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
+                this.filterOptions = filterResponse;
+            } else {
+                // notify("Failed to retrieve filters.", "error");
+                console.error("[SpendingsPage] filters failed", filterResponse);
+            }
+        },  
+        sortBy(column) {
+            if (!this.waitingForResponse) {
+                this.expandedIndex = null;
+                if (this.apiFilters.sort_by === column) {
+                    this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
                 } else {
-                    // notify("Failed to retrieve filters.", "error");
-                    console.error("[SpendingsPage] filters failed", filterResponse);
+                    this.apiFilters.sort_by = column;
+                    this.apiFilters.sort_order = 'desc';
                 }
-            },  
-            sortBy(column) {
-                if (!this.waitingForResponse) {
-                    this.expandedIndex = null;
-                    if (this.apiFilters.sort_by === column) {
-                        this.apiFilters.sort_order = this.apiFilters.sort_order === 'asc' ? 'desc' : 'asc';
-                    } else {
-                        this.apiFilters.sort_by = column;
-                        this.apiFilters.sort_order = 'desc';
-                    }
-                    this.apiFilters.offset = 0;
-                    this.transactions = [];
-                    this.fetchTransactions();
-                }
-            },
-            loadMore() {
-                if (!this.waitingForResponse) {
-                    this.apiFilters.offset += 1;  // Increment by 1 instead of by `limit`
-                    this.fetchTransactions();
-                }
-            },
-            applyFilters(newFilterData) {
-                this.expandedIndex = null;
-                this.filterData = newFilterData;
-                this.apiFilters.offset = 0;
-                this.transactions = [];
-
-                console.debug("[applyFilters] filterdata before to api", this.filterData);
-
-                // Set the filters values to the API filters
-                // Sliders
-                this.apiFilters.start_date = this.filterData.date.lowerLimit;
-                this.apiFilters.end_date = this.filterData.date.upperLimit;
-                this.apiFilters.min_amount = this.filterData.amount.lowerLimit;
-                this.apiFilters.max_amount = this.filterData.amount.upperLimit;
-                // Checkboxes
-                this.apiFilters.counterparties = this.filterData.counterparty.selected;
-                this.apiFilters.counterparty_inclusion_mode = this.filterData.counterparty.mode === 'include';
-                this.apiFilters.categories = this.filterData.category.selected;
-                this.apiFilters.category_inclusion_mode = this.filterData.category.mode === 'include';
-
-                console.log("[applyFilters] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
-                
-                this.fetchTransactions();
-            },
-            refreshTable() {
-                this.expandedIndex = null;
                 this.apiFilters.offset = 0;
                 this.transactions = [];
                 this.fetchTransactions();
-                this.fetchFilters();
             }
         },
-        async mounted() {
-            const loadingLimit = localStorage.getItem("transactions_load_limit");
-            if (loadingLimit) {
-                this.apiFilters.limit = Number(loadingLimit);
+        loadMore() {
+            if (!this.waitingForResponse) {
+                this.apiFilters.offset += 1;  // Increment by 1 instead of by `limit`
+                this.fetchTransactions();
             }
-            this.refreshTable();
         },
-    };
+        applyFilters(newFilterData) {
+            this.expandedIndex = null;
+            this.filterData = newFilterData;
+            this.apiFilters.offset = 0;
+            this.transactions = [];
+
+            console.debug("[applyFilters] filterdata before to api", this.filterData);
+
+            // Set the filters values to the API filters
+            // Sliders
+            this.apiFilters.start_date = this.filterData.date.lowerLimit;
+            this.apiFilters.end_date = this.filterData.date.upperLimit;
+            this.apiFilters.min_amount = this.filterData.amount.lowerLimit;
+            this.apiFilters.max_amount = this.filterData.amount.upperLimit;
+            // Checkboxes
+            this.apiFilters.counterparties = this.filterData.counterparty.selected;
+            this.apiFilters.counterparty_inclusion_mode = this.filterData.counterparty.mode === 'include';
+            this.apiFilters.categories = this.filterData.category.selected;
+            this.apiFilters.category_inclusion_mode = this.filterData.category.mode === 'include';
+
+            console.log("[applyFilters] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
+            
+            this.fetchTransactions();
+        },
+        refreshTable() {
+            this.expandedIndex = null;
+            this.apiFilters.offset = 0;
+            this.transactions = [];
+            this.fetchTransactions();
+            this.fetchFilters();
+        }
+    },
+    async mounted() {
+        const loadingLimit = localStorage.getItem("transactions_load_limit");
+        if (loadingLimit) {
+            this.apiFilters.limit = Number(loadingLimit);
+        }
+        this.refreshTable();
+    },
+};
 </script>
 
   

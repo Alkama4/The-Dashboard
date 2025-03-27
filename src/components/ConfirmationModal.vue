@@ -68,6 +68,7 @@ export default {
 <style scoped>
 p {
     margin-top: 0;
+    max-width: 40ch;
 }
 
 .buttons {
@@ -78,5 +79,6 @@ p {
 .buttons button {
     margin: 0;
     flex: 1;
+    white-space: nowrap;
 }
 </style>

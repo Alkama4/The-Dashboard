@@ -6,13 +6,7 @@
         <div class="flex-column loggedInAs card content-width-extra-small">
             <h2>Current account</h2>
             <div>You are currently logged in as <span class="username">{{ username }}</span></div>
-            <button class="" @click="showLogOutModal">Log out</button>
-            <ModalWindow 
-                v-if="showModal" 
-                @close="showModal = false" 
-                @logout="callApiToLogOut"    
-                modalType="logout"
-            />
+            <button @click="callApiToLogOut">Log out</button>
         </div>
 
         <div class="content-width-small">
@@ -65,7 +59,7 @@
             </div>
         </div>
 
-        <div class="content-width-small card">
+        <div class="content-width-small card danger-zone">
             <h2>
                 <span class="icon-align">
                     <IconWarningTriangle size="24" right="var(--spacing-xs)"/>
@@ -73,35 +67,60 @@
                 </span>
             </h2>
             <p>Pay extra attention and be careful with these buttons, as they have significant consequences and are not reversible.</p>
-            <div>
+            <div class="flex-row">
                 <button 
-                    class="color-warning"
+                    class="button-danger"
                     @click="handleAccountDelete"
                 >
                     Delete account permanently
+                </button>
+                <button 
+                    class="button-danger"
+                    @click="handleDataReset"
+                >
+                    Reset user data
                 </button>
             </div>
 
             <!-- What was the other thing that I could add here? -->
              
         </div>
+        <ConfirmationModal 
+            ref="logOutCM"
+            header="Log out"
+            text="Are you sure you want to log out?"
+            affirmative-option="Log out"
+        />
 
+        <ConfirmationModal 
+            ref="deleteAccountCM"
+            header="Delete Account"
+            text="Are you sure you want to delete your account? All data will be permanently lost and cannot be recovered."
+            affirmative-option="Delete account"
+        />
+        <ConfirmationModal 
+            ref="deleteAccountConfirmCM"
+            header="Are you sure?"
+            text="Are you absolutely sure? This action is permanent and cannot be undone. This is your last warning!"
+            affirmative-option="Delete account permanently"
+            negativeOption="Back to safety"
+        />
     </div>
 </template>
 
 <script>
 import api from '@/utils/dataQuery';
-import ModalWindow from '@/components/ModalWindow.vue';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconWarningTriangle from '@/components/icons/IconWarningTriangle.vue';
+import ConfirmationModal from '@/components/ConfirmationModal.vue';
 
 export default {
     components: {
-        ModalWindow,
         InfoTooltip,
         IconWarningTriangle,
+        ConfirmationModal,
     },
     data() {
         return {
@@ -119,6 +138,10 @@ export default {
     },
     methods: {
         async callApiToLogOut() {
+            // Confirm before logging out
+            if (!await this.$refs.logOutCM.prompt()) { return }
+            
+            // Actually log out
             const logOutSuccess = await api.logOut();
             if (logOutSuccess) {
                 this.isLoggedIn = "no";
@@ -128,12 +151,14 @@ export default {
             }
         },
         async handleAccountDelete() {
-            // Launch a modal that asks for password to confirm
-            notify("To be implemented")
+            // Confirmations before deleting
+            if (!await this.$refs.deleteAccountCM.prompt()) { return }
+            if (!await this.$refs.deleteAccountConfirmCM.prompt()) { return }
+            
+            notify("Account NOT deleted. Feature is yet to be implemented.");
         },
-        // This should be replaced when the modal is remade
-        showLogOutModal() {
-            this.showModal = true;
+        handleDataReset() {
+            notify("Not yet implemented.")
         },
         async saveSettings() {
             // Check that the values are proper numbers
@@ -249,5 +274,8 @@ export default {
     max-width: 150px;
 }
 
+.danger-zone button {
+    margin: 0;
+}
 
 </style>

@@ -111,6 +111,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
 - Spoiler mode
     - Blank the details and blur the image for titles that aren't watched. 
     - Add the option to the top of page.
+- Add a class to app or whatever the dark mode is added to for if the device is using touch.
+    - With it we can have buttons be always be visible when on touch that would appear when hovering over.
+        - Watch list has a couple
 
 
 ### Feature ideas that might never see the light of day

@@ -155,8 +155,6 @@
                             <IconListRemove/>
                         </button>
                     </div>
-
-                    
                 </div>
             </div>
 
@@ -584,6 +582,50 @@
                 </div>
             </div>
         </div>
+
+        <!-- ========== MODALS ========== -->
+
+        <!-- Watch list modification -->
+        <ConfirmationModal 
+            ref="removeTitleCM"
+            header="Remove from watchlist"
+            text="Are you sure you wan't to remove the title from your watchlist?
+            This gets rid of all your data on the title like your watched episodes and notes."
+            affirmative-option="Remove title"
+        />
+
+        <!-- Titles watch/unwatch -->
+        <ConfirmationModal 
+            ref="markTitleWatchedCM"
+            header="Mark watched"
+            text="Are you sure you want to mark the entire TV show as watched?
+            This will mark all episodes as watched, effectively erasing your progress."
+            affirmative-option="Mark as Watched"
+        />
+        <ConfirmationModal 
+            ref="markTitleUnwatchedCM"
+            header="Reset watch status"
+            text="Are you sure you want to reset the title's watch status?
+            This will mark all episodes as unwatched, effectively erasing your progress."
+            affirmative-option="Reset status"
+        />
+
+        <!-- Seasons watch/unwatch -->
+        <ConfirmationModal 
+            ref="markSeasonWatchedCM"
+            header="Mark watched"
+            text="Are you sure you want to mark the entire season as watched?
+            This will mark all episodes in the season as watched, effectively erasing your progress."
+            affirmative-option="Mark as Watched"
+        />
+        <ConfirmationModal 
+            ref="markSeasonUnwatchedCM"
+            header="Reset watch status"
+            text="Are you sure you want to reset the season's watch status?
+            This will mark all episodes in the season as unwatched, effectively erasing your progress."
+            affirmative-option="Reset status"
+        />
+
     </div>
 
     <div v-else-if="!waitingForResult.includes('titleInfo')">
@@ -613,6 +655,7 @@ import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
+import ConfirmationModal from '@/components/ConfirmationModal.vue';
 
 export default {
     data() {
@@ -638,6 +681,9 @@ export default {
     components: {
         InfoTooltip,
         IndicatorDots,
+        ConfirmationModal,
+        notFoundPage,
+
         IconTMDB,
         IconTMDBColorful,
         IconIMDBColorful,
@@ -648,7 +694,6 @@ export default {
         IconHeart,
         IconLinkExternal,
         IconRefresh,
-        notFoundPage,
     },
     methods: {
         formatRuntime(runtime) {
@@ -698,6 +743,29 @@ export default {
         },
         // make this go through a MODAL?
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
+            // Initially get a confirmation from the user before going through
+            if (
+                this.titleInfo.type == "tv" && 
+                titleOrSeasonOrEpisode == "title" && 
+                watchedOrUnwatched == "watched" && 
+                !await this.$refs.markTitleWatchedCM.prompt()
+            ) { return } else if (
+                this.titleInfo.type == "tv" && 
+                titleOrSeasonOrEpisode == "title" && 
+                watchedOrUnwatched == "unwatched" && 
+                !await this.$refs.markTitleUnwatchedCM.prompt()
+            ) { return } else if (
+                this.titleInfo.type == "tv" && 
+                titleOrSeasonOrEpisode == "season" && 
+                watchedOrUnwatched == "watched" && 
+                !await this.$refs.markSeasonWatchedCM.prompt()
+            ) { return } else if (
+                this.titleInfo.type == "tv" && 
+                titleOrSeasonOrEpisode == "season" && 
+                watchedOrUnwatched == "unwatched" && 
+                !await this.$refs.markSeasonUnwatchedCM.prompt()
+            ) { return }
+
             this.waitingForResult.push(`${titleOrSeasonOrEpisode}${watchedOrUnwatched}${customID}`);
                 
             // A funny little if else where it gets whether we are getting tv, movie, season or episode
@@ -810,6 +878,9 @@ export default {
             this.removeItemFromWaitingArray("favourite");
         },
         async handleWatchListModification(action) {
+            // Get confirmation before initiaing if removing
+            if (action == "remove" && !await this.$refs.removeTitleCM.prompt()) { return }
+
             this.waitingForResult.push("titleWatched");
             if (action == "remove") {
                 const response = await api.removeTitleFromUserList(this.titleInfo.tmdb_id);
