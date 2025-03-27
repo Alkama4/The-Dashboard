@@ -18,10 +18,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
     - Backups kind of dull, give it some life and readability
-    - Backend:
-        - Add:
-            - disks
-            - uptime
+    - Backend add:
+        - disks
+        - uptime
 - watch list
     - Add secondary sorting
         - "In progress" should be new episodes -> season in progress -> last modified

@@ -63,6 +63,7 @@ export default {
         close() {
             document.documentElement.classList.remove('no-scroll');
             document.removeEventListener('keydown', this.closeWithKeypress);
+            this.$emit("closed");
             this.isDisplayed = false;
 
             this.closeTimeout = setTimeout(() => {

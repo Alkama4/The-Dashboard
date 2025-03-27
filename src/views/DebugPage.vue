@@ -43,21 +43,24 @@
             </div>
         </div>
 
-        <ConfirmationModal ref="testConfirmationModalRef"/>
-        <button @click="openConfirmationModal">Confirmation modal</button>
-
-        <GenericModal ref="testModalRef">
-            Some example text to describe something and fill this up so that I can test different test cases.
-            <h3>A sub header</h3>
-            Some example text to describe something and fill this up so that I can test different test cases.
-            Some example text to describe something and fill this up so that I can test different test cases.
-            Some example text to describe something and fill this up so that I can test different test cases.
-            Some example text to describe something and fill this up so that I can test different test cases.
-            Some example text to describe something and fill this up so that I can test different test cases.
-            Some example text to describe something and fill this up so that I can test different test cases.
-            Some example text to describe something and fill this up so that I can test different test cases.
-        </GenericModal>
-        <button @click="openTestModal">Generic test modal</button>
+        <div class="flex-row">
+            <ConfirmationModal ref="testConfirmationModalRef"/>
+            <button @click="testConfirmationModal">Confirmation modal</button>
+    
+            <GenericModal ref="testModalRef">
+                Some example text to describe something and fill this up so that I can test different test cases.
+                <h3>A sub header</h3>
+                Some example text to describe something and fill this up so that I can test different test cases.
+                Some example text to describe something and fill this up so that I can test different test cases.
+                Some example text to describe something and fill this up so that I can test different test cases.
+                Some example text to describe something and fill this up so that I can test different test cases.
+                <h4>A sub sub header</h4>
+                Some example text to describe something and fill this up so that I can test different test cases.
+                Some example text to describe something and fill this up so that I can test different test cases.
+                Some example text to describe something and fill this up so that I can test different test cases.
+            </GenericModal>
+            <button @click="openTestModal">Generic test modal</button>
+        </div>
 
         <div class="card content-width-small">
             <ChartComponent 
@@ -109,8 +112,8 @@ export default {
             const position = Math.pow(rating / 10, 2);
             return interpolateBetweenColors(baseColor, ratingColor, position)
         },
-        openConfirmationModal() {
-            this.$refs.testConfirmationModalRef.open()
+        async testConfirmationModal() {
+            notify(await this.$refs.testConfirmationModalRef.prompt());
         },
         openTestModal() {
             this.$refs.testModalRef.open()
