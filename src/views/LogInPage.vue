@@ -3,7 +3,7 @@
         <h1>Login</h1>
         <p>Log in in order to access the data that is linked to your account. You can browse the website without logging in, but you can only view the example data and can not edit it.</p>
 
-        <p>Use the form below to log in by filling in the details. Don't have an account? Create one <a href="/create_account">here.</a> If you have forgotten your username or password please contanct the server admin.</p>
+        <p>Use the form below to log in by filling in the details. Don't have an account? Create one <router-link to="/create_account">here.</router-link> If you have forgotten your username or password please contanct the server admin.</p>
 
         <form @submit.prevent="handleLogin">
             <div>

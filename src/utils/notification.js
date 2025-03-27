@@ -4,7 +4,7 @@ import Notification from "../components/NotificationPopup.vue";
 let activeNotification = null; // Global reference to the active notification
 
 export function notify(message, messageType = "info", duration = 5000) {
-    console.log(`[notify] {${messageType}}`, message)
+    console.debug(`[notify] {${messageType}}`, message)
     if (activeNotification) {
         // Remove the previous notification
         activeNotification.unmount();

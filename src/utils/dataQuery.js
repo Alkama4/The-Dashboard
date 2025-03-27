@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'qs';
 import { notify } from './notification';
 import router from '@/router';
-import { STATIC_CONTENT } from '@/data/staticData.js';
+import { STATIC_CONTENT } from '@/data/staticData';
 
 const standAloneBuild = process.env.VUE_APP_STANDALONE_BUILD == "true";
 if (standAloneBuild) {
@@ -12,9 +12,8 @@ if (standAloneBuild) {
 }
 
 const apiClient = axios.create({
-    baseURL: process.env.VUE_APP_API_URL, // Your FastAPI base URL
-    // Times out anyway at 5000 when it doesn't hear from the api
-    timeout: 0,
+    baseURL: process.env.VUE_APP_API_URL, // FastAPI base URL
+    timeout: 0, // Time outs anyway at 5000 if api is not reachable, but if it just takes a long time do not time out
     headers: {
         'Content-Type': 'application/json',
     },
@@ -86,11 +85,16 @@ const api = {
                     const endTime = performance.now();
                     const duration = endTime - startTime;
                     console.info(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
-        
-                    const requestKey = endpoint + JSON.stringify(params || {});
-                    console.debug("[getData] Fake requests key: ", requestKey);
+            
+                    // Construct request key with full URL format
+                    const url = new URL(endpoint, process.env.VUE_APP_API_URL);
+                    if (params) {
+                        Object.keys(params).forEach((key) => url.searchParams.append(key, params[key]));
+                    }
+                    const requestKey = url.pathname + url.search;
+            
+                    console.debug("[getData] Request key:", requestKey);
                     if (STATIC_CONTENT[requestKey]) {
-                        // console.debug("[getData] Returning fake response:", STATIC_CONTENT[requestKey]);
                         resolve(STATIC_CONTENT[requestKey]);
                     } else {
                         console.warn("[getData] Missing endpoint in STATIC_CONTENT:", requestKey);
@@ -99,7 +103,6 @@ const api = {
                 }, 400);
             });
         }
-        
     },
 
     async postData(endpoint, data, config = {}) {

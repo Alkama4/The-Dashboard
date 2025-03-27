@@ -1149,7 +1149,8 @@ export default {
 
         // Scroll to the hash on the url if there is one.
         // Need to do this here instead of "beforeRouteEnter" because we need access to this and the titles info.
-        const hash = window.location.hash;
+        // Need to also have a different method of getting the hash for standalone build
+        const hash = process.env.VUE_APP_STANDALONE_BUILD == "true" ? "#" + window.location.hash.split("#")[2] : window.location.hash;
         if (hash) {
             // Open season based on hash
             this.openCorrectSeason(hash);

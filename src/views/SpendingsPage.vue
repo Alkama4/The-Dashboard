@@ -212,7 +212,7 @@ export default {
             // Use {standalone: true} as filter's when in a standalone build to avoid the query from
             // changing when the user plays with filters and not displaying anything.
             const standalone = process.env.VUE_APP_STANDALONE_BUILD == "true";
-            const response = await api.getTransactions(standalone ? {standalone: true} : this.apiFilters);
+            const response = await api.getTransactions(standalone ? {} : this.apiFilters);
             if (response && response.transactions) {
                 if (this.apiFilters.offset === 0) {
                     this.transactions = [...response.transactions];  // First page, reset
