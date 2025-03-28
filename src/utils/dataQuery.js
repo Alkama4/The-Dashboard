@@ -327,7 +327,7 @@ const api = {
     async deleteTransaction(transactionId) {
         const sessionKey = localStorage.getItem('sessionKey');
         console.log('[deleteTransaction] Deleting transaction with ID:', transactionId);
-        const response = await this.postData('/transactions/delete_transaction', { session_key: sessionKey, transactionID: transactionId }, null);
+        const response = await this.postData('/transactions/delete_transaction', { session_key: sessionKey, transaction_id: transactionId }, null);
         if (response) {
             if (response.deleteTransactionSuccess) {
                 notify("Transaction deleted successfully!", "success");

@@ -247,17 +247,34 @@ export default {
             this.expandedIndex = this.expandedIndex === index ? null : index;
         },
         async handleDeleteTransaction(transaction) {
-            // Confirm before going through
+            // Confirm before proceeding
             if (await this.$refs.deleteTransactionMC.prompt()) { 
-                // Send the request, notifications handled on the dataQuery.js's end
-                await api.deleteTransaction(transaction.transaction_id);
+                // Send the delete request
+                const response = await api.deleteTransaction(transaction.transaction_id);
+                if (response) {
+                    // Close the transaction becuase otherwise the one below it would be expanded which doesn't make sense
+                    this.expandedIndex = null;
+                    // Have to add a small delay or the watch on the transaction below would be triggered to expand
+                    setTimeout(() => {
+                        // Remove the transaction from the list
+                        this.transactions = this.transactions.filter(t => t.transaction_id != transaction.transaction_id);
+                    }, 1)
+                }
             }
         },
         async handleEditTransaction(transaction) {
-            const receivedTransaction = await this.$refs.editTransactionMT.prompt(transaction);
-            console.log(receivedTransaction)
-            if (receivedTransaction) {
-                await api.editTransaction(receivedTransaction);
+            const modifiedTransaction = await this.$refs.editTransactionMT.prompt(transaction);
+            console.log(modifiedTransaction);
+            
+            if (modifiedTransaction) {
+                const response = await api.editTransaction(modifiedTransaction);
+                if (response) {
+                    // Find the transaction and update its values
+                    const index = this.transactions.findIndex(t => t.transaction_id === modifiedTransaction.transaction_id);
+                    if (index !== -1) {
+                        this.transactions[index] = { ...this.transactions[index], ...modifiedTransaction };
+                    }
+                }
             }
         },
         handleShowTransaction(transaction) {
@@ -322,7 +339,7 @@ export default {
             this.apiFilters.offset = 0;
             this.transactions = [];
 
-            console.debug("[applyFilters] filterdata before to api", this.filterData);
+            console.debug("[applyFilters] filterdata before going to api", this.filterData);
 
             // Set the filters values to the API filters
             // Sliders
@@ -336,7 +353,7 @@ export default {
             this.apiFilters.categories = this.filterData.category.selected;
             this.apiFilters.category_inclusion_mode = this.filterData.category.mode === 'include';
 
-            console.log("[applyFilters] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
+            console.debug("[applyFilters] individual values", this.apiFilters.start_date, this.apiFilters.end_date, this.apiFilters.min_amount, this.apiFilters.max_amount);
             
             this.fetchTransactions();
         },
