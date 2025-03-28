@@ -5,11 +5,11 @@
             'expanded': isExpanded,
             'in-future': new Date(transaction.date) > new Date()
         }"
-        @click="toggleEntry" f
+        @click="$emit('toggle')"
         :ref="`transaction${transaction.transaction_id}`"
         tabindex="0"
-        @keydown.enter="toggleEntry"
-        @keydown.space.prevent="toggleEntry"
+        @keydown.enter="$emit('toggle')"
+        @keydown.space.prevent="$emit('toggle')"
     >
 
         <div class="transaction-row">
@@ -52,7 +52,7 @@
         <div class="control-buttons">
             <button 
                 class="button-delete button-danger" 
-                @click.stop="deleteTransaction"
+                @click.stop="$emit('deleteTransaction')"
                 :tabindex="isExpanded ? 0 : -1"
             >
                 <IconTrash size="18px"/>
@@ -61,38 +61,27 @@
                 disabled="true" 
                 title="Coming soon!" 
                 class="button-duplicate" 
-                @click.stop="duplicateTransaction"
+                @click.stop=""
                 :tabindex="isExpanded ? 0 : -1"
             >
                 <IconCopy size="18px"/>
             </button>
             <button 
                 class="button-edit" 
-                @click.stop="editTransaction"
+                @click.stop="$emit('editTransaction')"
                 :tabindex="isExpanded ? 0 : -1"
             >
                 <IconEdit size="18px"/>
             </button>
             <button 
                 class="button-details button-primary" 
-                @click.stop="showDetails"
+                @click.stop="$emit('showTransaction')"
                 :tabindex="isExpanded ? 0 : -1"
             >
                 <IconDetails size="18px"/>Details
             </button>
         </div>
     </div>
-
-    <ModalWindow
-        v-if="showModal"
-        :modalType="modalCategory"
-        :modalData="this.transaction"
-        :header="modalHeader"
-        @close="showModal = false"
-        @refreshTable="refreshTable"
-        @click.stop
-        @keydown.stop
-    />
 </template>
 
 <script>
@@ -100,7 +89,6 @@
     import IconEdit from './icons/IconEdit.vue';
     import IconDetails from './icons/IconDetails.vue';
     import IconTrash from './icons/IconTrash.vue';
-    import { defineAsyncComponent } from 'vue';
 
     export default {
         name: "SpendingsEntry",
@@ -109,7 +97,6 @@
             IconCopy,
             IconEdit,
             IconTrash,
-            ModalWindow: defineAsyncComponent(() => import('./ModalWindow.vue')),
         },
         emits: ['toggle', 'refreshTable'],
         props: {
@@ -125,25 +112,6 @@
             };
         },
         methods: {
-            toggleEntry() {
-                this.$emit('toggle');
-            },
-            showDetails() {
-                this.modalCategory = 'details';
-                this.showModal = true;
-            },
-            editTransaction() {
-                this.modalCategory = 'edit';
-                this.showModal = true;
-            },
-            duplicateTransaction() {
-                this.modalCategory = 'duplicate';
-                this.showModal = true;
-            },
-            deleteTransaction() {
-                this.modalCategory = 'delete';
-                this.showModal = true;
-            },
             formatAmount(amount) {
                 try {
                     let numericAmount = Number(amount);
@@ -225,7 +193,6 @@
         }
     };
 </script>
-
 
 <style scoped>
 /* Styles for the whole thing */

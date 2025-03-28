@@ -158,6 +158,15 @@
                             Not added
                         </button>
                     </div>
+
+                    <!-- Possible GUI components -->
+                    <!-- 
+                        (Current three button thing)
+                        Tri-state Toggle Button
+                        Three-way Radio Button Group
+                        Tri-state Checkbox
+                        Slider with Three Positions
+                    -->
                 </div>
                 <div class="search-and-sort">
                     <div class="button-in-text-field">
@@ -345,7 +354,7 @@ import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
-import ConfirmationModal from '@/components/ConfirmationModal.vue';
+import ConfirmationModal from '@/components/ModalConfirmation.vue';
 
 export default {
     name: 'HomePage',

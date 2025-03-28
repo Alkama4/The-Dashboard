@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import GenericModal from "./GenericModal.vue";
+import GenericModal from "./ModalGeneric.vue";
 
 export default {
     name: "ConfirmationModal",

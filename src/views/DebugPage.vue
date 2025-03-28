@@ -78,8 +78,8 @@ import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
 import { initialEchartSetup, commonChartValues, generateTooltipSingleValue } from '@/utils/chartTools';
 import api from '@/utils/dataQuery';
 import ChartComponent from '@/components/ChartComponent.vue';
-import ConfirmationModal from '@/components/ConfirmationModal.vue';
-import GenericModal from '@/components/GenericModal.vue';
+import ConfirmationModal from '@/components/ModalConfirmation.vue';
+import GenericModal from '@/components/ModalGeneric.vue';
 
 export default {
     name: 'DebugPage',

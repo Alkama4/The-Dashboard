@@ -17,12 +17,47 @@
         />
 
         <!-- Need to figure out a way to have a single one of these and not inside each spendings entry -->
-        <ConfirmationModal 
-            ref="deleteTransactionCM"
+        <ModalConfirmation 
+            ref="deleteTransactionMC"
             header="Delete transaction"
             text="Are you sure you want to delete the transaction? This cannot be undone"
             affirmative-option="Delete transaction"
         />
+
+        <!-- For editing the transaction, and maybe for future duplication? -->
+        <ModalTransaction ref="editTransactionMT"/>
+
+        <!-- Transaction details -->
+        <ModalGeneric ref="showTransactionMG">
+            <div class="details-modal-content">
+                <div style="grid-area: a; max-width: 25ch;">
+                    <h4>ID</h4>
+                    <span>{{ transactionToShow.transaction_id }}</span>
+                    <h4>Direction</h4>
+                    <span>{{ transactionToShow.direction }}</span>
+                    <h4>Date</h4> 
+                    <span>{{ convertToFiDate(transactionToShow.date, "fullWithWeek") }}</span>
+                </div>
+                <div style="grid-area: b; max-width: 25ch;">
+                    <h4>Counterparty</h4> 
+                    <span>{{ transactionToShow.counterparty }}</span>
+                    <h4>Amount breakdown</h4>
+                    <ul>
+                        <li v-for="(category, index) in transactionToShow.categories" :key="index">
+                            {{ category.category }}: {{ convertToEur(category.amount) }}
+                        </li>
+                    </ul>
+                    <span>
+                        Total amount: 
+                        <b>{{ convertToEur(transactionToShow.categories.reduce((sum, category) => sum + category.amount, 0)) }}</b> 
+                    </span>
+                </div>
+                <div style="grid-area: c; max-width: 50ch;">
+                    <h4>Notes</h4> 
+                    <span :style="transactionToShow.notes ? '' : 'color: var(--color-text-hidden);'">{{ transactionToShow.notes || "(This entry doesn't have notes)" }}</span>
+                </div>
+            </div>
+        </ModalGeneric>
 
         <!-- The transactions table -->
         <div class="transactions-holder content-width-large">
@@ -59,6 +94,10 @@
                     :is-expanded="expandedIndex === index"
                     @toggle="toggleEntry(index)"
                     @refreshTable="refreshTable"
+
+                    @deleteTransaction="handleDeleteTransaction(transaction)"
+                    @editTransaction="handleEditTransaction(transaction)"
+                    @showTransaction="handleShowTransaction(transaction)"
                 />
                 <div v-if="waitingForResponse && apiFilters.offset === 0">
                     <div class="transaction-row" v-for="i in 15" :key="i">
@@ -97,35 +136,39 @@
         >
             <IconFilter size="28px"/> 
         </button>
+
         <router-link to="/spendings/new_entry" tabindex="-1">
             <button class="button-primary sticky-corner-button"> 
                 <IconAdd size="28px"/> 
             </button>
         </router-link>
-
-
     </div>
 </template>
 
 
 <script>
-import IconFilter from '@/components/icons/IconFilter.vue';
+import api from '@/utils/dataQuery';
 import SpendingsEntry from '../components/SpendingsEntry.vue';
+import FilterSettings from '@/components/FilterSettings.vue';
+import ModalConfirmation from '@/components/ModalConfirmation.vue';
+import ModalTransaction from '@/components/ModalTransaction.vue';
+import ModalGeneric from '@/components/ModalGeneric.vue';
+import { convert } from '@/utils/mytools';
+
+import IconFilter from '@/components/icons/IconFilter.vue';
 import IconSortBoth from '../components/icons/IconSortBoth.vue';
 import IconSortDown from '../components/icons/IconSortDown.vue';
 import IconSortUp from '../components/icons/IconSortUp.vue';
 import IconAdd from '@/components/icons/IconAdd.vue';
-import api from '@/utils/dataQuery';
-import FilterSettings from '@/components/FilterSettings.vue';
-import ConfirmationModal from '@/components/ConfirmationModal.vue';
-// import { notify } from '@/utils/notification';
 
 export default {
     name: 'SpendingsPage',
     components: {
         SpendingsEntry,
         FilterSettings,
-        ConfirmationModal,
+        ModalConfirmation,
+        ModalTransaction,
+        ModalGeneric,
         IconSortBoth,
         IconSortDown,
         IconSortUp,
@@ -144,10 +187,6 @@ export default {
             ],
             transactions: [],
             showFilters: false,
-            inactiveColor: 'var(--color-text-lighter)',
-            inactiveHoverColor: 'var(--color-text-bold)',
-            activeColor: 'var(--color-primary)',
-            activeHoverColor: 'var(--color-primary-hover)',
             expandedIndex: null, // Track which transaction is expanded
             apiFilters: {
                 sort_by: 'date',
@@ -189,6 +228,7 @@ export default {
             },
             waitingForResponse: true,
             loadMoreButtonVisible: false,
+            transactionToShow: null,
         };
     },
     computed: {
@@ -205,6 +245,25 @@ export default {
         toggleEntry(index) {
             // Select or switch to a different transaction to be highlighted
             this.expandedIndex = this.expandedIndex === index ? null : index;
+        },
+        async handleDeleteTransaction(transaction) {
+            // Confirm before going through
+            if (await this.$refs.deleteTransactionMC.prompt()) { 
+                // Send the request, notifications handled on the dataQuery.js's end
+                await api.deleteTransaction(transaction.transaction_id);
+            }
+        },
+        async handleEditTransaction(transaction) {
+            const receivedTransaction = await this.$refs.editTransactionMT.prompt(transaction);
+            console.log(receivedTransaction)
+            if (receivedTransaction) {
+                await api.editTransaction(receivedTransaction);
+            }
+        },
+        handleShowTransaction(transaction) {
+            this.transactionToShow = transaction;
+            console.log(transaction);
+            this.$refs.showTransactionMG.open();
         },
         async fetchTransactions() {
             this.waitingForResponse = true;
@@ -287,6 +346,12 @@ export default {
             this.transactions = [];
             this.fetchTransactions();
             this.fetchFilters();
+        },
+        convertToEur(amount) {
+            return convert.toEur(amount);
+        },
+        convertToFiDate(date, format) {
+            return convert.toFiDate(date, format);
         }
     },
     async mounted() {
@@ -425,5 +490,28 @@ export default {
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
 }
+
+
+/* TEMPORARY REMAKE THESE ONE DAY */
+.details-modal-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template: 
+        "a b"
+        "c c";
+    gap: 0 20px;
+}
+.details-modal-content h4 {
+    margin-bottom: 0;
+}
+.details-modal-content span {
+    font-weight: 400;
+    color: var(--color-text-light);
+}
+.details-modal-content ul {
+    padding-left: var(--spacing-lg);
+    margin: var(--spacing-sm) 0;
+}
+
 
 </style>

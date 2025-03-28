@@ -105,13 +105,6 @@
                 </div>
             </div>
         </div>
-
-        <ModalWindow 
-            v-if="showConfirmationModal" 
-            @close="showConfirmationModal = false" 
-            @removeTitle="callApiToRemoveTitle"    
-            modalType="removeTitle"
-        />
     </div>
 </template>
 
@@ -121,7 +114,6 @@ import IconAdd from '@/components/icons/IconAdd.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
-import ModalWindow from '@/components/ModalWindow.vue';
 import SliderToggle from '@/components/SliderToggle.vue';
 import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
@@ -129,7 +121,6 @@ import { notify } from '@/utils/notification';
 export default {
     components: {
         SliderToggle,
-        ModalWindow,
         IconTMDB,
         IconAdd,
         IconTrash,

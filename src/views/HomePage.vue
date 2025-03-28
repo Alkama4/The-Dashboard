@@ -46,7 +46,7 @@
 		</div>
 
 		<div class="flex-column content-width-medium">
-			<h2>Backups</h2>
+			<h2>Backups <span class="text-lighter">(Under construction)</span></h2>
 			<div class="backups">
 				<div v-for="(backupCategory, categoryName) in backups" :key="categoryName" class="card backup-card">
 					<div class="flex header">

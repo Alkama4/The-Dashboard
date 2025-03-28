@@ -633,7 +633,7 @@
                     <button @click="handleTitleUpdate('fullUpdate')">Full Refresh (All Data & Images)</button>
                 </div>
                 <p v-if="titleInfo.type == 'tv'" class="text-hidden icon-align">
-                    Hint: You can update seasons separately through their own menu.
+                    Hint: To update episodes you can use the season menu instead of using the Full Refresh.
                 </p>
             </div>
         </GenericModal>
@@ -678,8 +678,8 @@ import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
-import ConfirmationModal from '@/components/ConfirmationModal.vue';
-import GenericModal from '@/components/GenericModal.vue';
+import ConfirmationModal from '@/components/ModalConfirmation.vue';
+import GenericModal from '@/components/ModalGeneric.vue';
 
 export default {
     data() {

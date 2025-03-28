@@ -114,7 +114,7 @@ import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconWarningTriangle from '@/components/icons/IconWarningTriangle.vue';
-import ConfirmationModal from '@/components/ConfirmationModal.vue';
+import ConfirmationModal from '@/components/ModalConfirmation.vue';
 
 export default {
     components: {

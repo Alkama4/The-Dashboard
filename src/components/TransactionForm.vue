@@ -64,7 +64,7 @@ export default {
         IconCross,
     },
     props: {
-        initialData: {
+        initialTransaction: {
             category: Object,
             default: () => ({
                 entryId: '',
@@ -80,7 +80,7 @@ export default {
     data() {
         return {
             // Stringify and parse so that the data isn't linked causing problems
-            formData: JSON.parse(JSON.stringify(this.initialData)),
+            formData: JSON.parse(JSON.stringify(this.initialTransaction)),
             counterpartyOptions: [],
             categoryOptions: [],
             allOptions: {}
@@ -163,7 +163,6 @@ export default {
 };
 </script>
 
-
 <style>
 form {
     display: grid;
@@ -177,7 +176,8 @@ form {
         "submit submit";
     gap: 0 var(--spacing-md);
     margin-inline: auto;
-    max-width: 60ch;
+    /* max-width: 60ch; */
+    width: 60ch;
 }
 
 form > * {
@@ -185,9 +185,11 @@ form > * {
 }
 
 .grid-direction {
+    margin-top: 0;
     grid-area: direction;
 }
 .grid-date {
+    margin-top: 0;
     grid-area: date;
 }
 .grid-counterparty {
@@ -263,7 +265,7 @@ form > * {
 }
 
 .submit-button {
-    margin-top: var(--spacing-md);
+    margin-bottom: 0;
 }
 
 @media (max-width: 666px) {

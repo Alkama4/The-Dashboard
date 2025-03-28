@@ -11,6 +11,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
 
 - Title details
     - On update button click open MODAL
+    - Backdrop doesn't fade in on standalone build
         - Impelement once modal remade
     - On metadata have the "user data updated" to reflect latest update to title or episode.    
 
@@ -25,6 +26,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Add secondary sorting
         - "In progress" should be new episodes -> season in progress -> last modified
     - season(s) and episodes(s) but automated
+    - "start year - end year" for tv-shows instead of just "start year"
+    - smart image loading
+        - by scroll and visible in carousel
+        - carousel might already be implemented but confirm
 
 - watch list finish the all titles list
     - add sort by
@@ -42,7 +47,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Remake sidebar filter thingy so that it can be used here
         - And fix the instant hide at the same time.
 
-- Incorporate rest of the info from OMDb to titles table and change naming for vote_average to tmdb_vote_average on the rest of the page.
+- Transaction form rework
+    - Make it so that it always tries to be a set width, but is max-width 100% or similarly
 
 ## Features
 ### Feature ideas

@@ -24,7 +24,6 @@
     </div>
 </template>
 
-
 <script>
 import IconCross from './icons/IconCross.vue';
 
@@ -82,7 +81,6 @@ export default {
 };
 </script>
 
-
 <style scoped>
 .modal-backdrop {
     position: fixed;
@@ -106,20 +104,27 @@ export default {
 .modal {
     max-width: 90vw;
     max-height: 80vh;
+    width: fit-content;
+    height: fit-content;
     box-sizing: border-box;
     border-radius: var(--border-radius-medium);
     padding: var(--spacing-lg);
-    background-color: var(--color-background-card);
+    background-color: var(--color-background);
     
     display: flex;
     flex-direction: column;
 
-    position: absolute;
-    /* top: 50%; */
-    /* left: 50%; */
-    transform: translate(calc(50vw - 50%), calc(50vh - 50%));
+    position: fixed;
+    inset: 0; /* Centers it */
+    margin: auto; /* Works with inset */
     
+    transform: translateY(8px);
+    transition: transform 0.2s ease-out;
     cursor: auto;
+}
+
+.is-displayed .modal {
+    transform: translateY(0px);
 }
 
 .default-content {

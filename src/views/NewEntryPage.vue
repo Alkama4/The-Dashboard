@@ -8,7 +8,7 @@
 
   
 <script>
-import EntryForm from '@/components/EntryForm.vue';
+import EntryForm from '@/components/TransactionForm.vue';
 import api from '@/utils/dataQuery';
 
 export default {

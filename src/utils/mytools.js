@@ -44,16 +44,27 @@ export const convert = {
 
         const dateOptions = {
             full: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
+            fullWithWeek: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
             date: { day: 'numeric', month: 'short', year: '2-digit' },
             month: { month: 'short', year: '2-digit' },
             timetimeInMinutes: { weekday: 'short', minute: '2-digit', hour: '2-digit'},
             titimeInSecondsme: { weekday: 'short', second: '2-digit', minute: '2-digit', hour: '2-digit'},
         };
 
+        const getWeekNumber = (date) => {
+            const startDate = new Date(date.getFullYear(), 0, 1);
+            const days = Math.floor((date - startDate) / (24 * 60 * 60 * 1000));
+            return Math.ceil((days + 1) / 7);
+        };
+
         if (['timetimeInMinutes', 'timeInSeconds'].includes(formatType)) {
             result = date.toLocaleTimeString('fi-FI', dateOptions[formatType]);
         } else {
             result = date.toLocaleDateString('fi-FI', dateOptions[formatType]);
+        }
+
+        if (formatType == 'fullWithWeek') {
+            result += ", viikko " + getWeekNumber(date);
         }
 
         return result;
