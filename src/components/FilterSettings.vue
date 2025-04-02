@@ -34,9 +34,9 @@
 
             <!-- Counterparties -->
             <div class="drop-down drop-down-wrapper">
-                <h4 class="drop-down-header" @click="toggleDropdown('counterparty')">
+                <h4 class="drop-down-header" @click.self="toggleDropdown('counterparty')">
                     Counterparties
-                    <span @click.stop="localFilterData.counterparty.mode = localFilterData.counterparty.mode === 'include' ? 'exclude' : 'include'" 
+                    <span @click="localFilterData.counterparty.mode = localFilterData.counterparty.mode === 'include' ? 'exclude' : 'include'" 
                         title="[Include only selected] / [Exclude selected]"
                         class="mode-flipper-in-header"
                         :class="{
@@ -91,9 +91,9 @@
 
             <!-- Categories -->
             <div class="drop-down drop-down-wrapper categories-header">
-                <h4 class="drop-down-header" @click="toggleDropdown('category')">
+                <h4 class="drop-down-header" @click.self="toggleDropdown('category')">
                     Categories
-                    <span @click.stop="localFilterData.category.mode = localFilterData.category.mode === 'include' ? 'exclude' : 'include'" 
+                    <span @click="localFilterData.category.mode = localFilterData.category.mode === 'include' ? 'exclude' : 'include'" 
                         title="[Include only selected] / [Exclude selected]"
                         class="mode-flipper-in-header"
                         :class="{

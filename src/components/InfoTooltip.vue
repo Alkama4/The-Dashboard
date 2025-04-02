@@ -1,11 +1,16 @@
 <template>
     <span class="tooltip-container">
-        <IconInfo size="20px" :style="{'margin-bottom': alignOffset}" class="info-icon" @mouseover="showTooltip" @mouseleave="hideTooltip"/>
+        <IconInfo 
+            size="20px" 
+            :style="{'margin-bottom': alignOffset}" 
+            class="info-icon icon-button" 
+            @click="toggleTooltip"
+        />
         <!-- v-html to make pagebreaks work -->
         <div 
-            v-if="isTooltipVisible" 
+            v-if="isVisible" 
             class="tooltip" 
-            :class="position" 
+            :class="{position, isShown}" 
             v-html="this.text"
             :style="{'max-width': maxWidth}"
         ></div>
@@ -18,7 +23,8 @@ import IconInfo from './icons/IconInfo.vue';
 export default {
     data() {
         return {
-            isTooltipVisible: false
+            isVisible: false,
+            isShown: false
         };
     },
     components: {
@@ -41,10 +47,34 @@ export default {
     },
     methods: {
         showTooltip() {
-            this.isTooltipVisible = true;
+            this.isVisible = true;
+            setTimeout(() => {
+                this.isShown = true;
+            }, 1);
+            document.addEventListener("click", this.handleClickOutside);
         },
         hideTooltip() {
-            this.isTooltipVisible = false;
+            if (!this.isClicked) {
+                this.isShown = false;
+                setTimeout(() => {
+                    this.isVisible = false;
+                }, 200);
+                document.removeEventListener("click", this.handleClickOutside);
+            }
+        },
+        toggleTooltip() {
+            this.isClicked = !this.isClicked;
+            if (this.isClicked) {
+                this.showTooltip();
+            } else {
+                this.hideTooltip();
+            }
+        },
+        handleClickOutside(event) {
+            if (!this.$el.contains(event.target)) {
+                this.isClicked = false;
+                this.hideTooltip();
+            }
         }
     }
 };
@@ -83,7 +113,11 @@ export default {
     box-shadow: var(--shadow-card);
     text-align: left;
 
-    animation: fadeIn 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
+}
+.tooltip.isShown {
+    opacity: 1;
 }
 .tooltip.right {
     left: calc(var(--spacing-sm) * -1);
@@ -91,4 +125,9 @@ export default {
 .tooltip.left {
     right: calc(var(--spacing-sm) * -1);
 }
+.tooltip.middle, .tooltip.center {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
 </style>

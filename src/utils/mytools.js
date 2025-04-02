@@ -58,7 +58,7 @@ export const convert = {
         };
 
         if (['timetimeInMinutes', 'timeInSeconds'].includes(formatType)) {
-            result = date.toLocaleTimeString('fi-FI', dateOptions[formatType]);
+            result = "klo " + date.toLocaleTimeString('fi-FI', dateOptions[formatType]);
         } else {
             result = date.toLocaleDateString('fi-FI', dateOptions[formatType]);
         }
@@ -73,6 +73,14 @@ export const convert = {
     toBytes(bytes, decimal = 2) {
         const sizes = ['t', 'Kt', 'Mt', 'Gt', 'Tt'];
         if (bytes === 0) return '0 t';
+        const i = Math.floor(Math.log10(Math.abs(bytes)) / 3);
+        const value = (bytes / Math.pow(1000, i)).toFixed(decimal);
+        return (parseFloat(value) === parseInt(value) ? parseInt(value) : value) + ' ' + sizes[i];
+    },
+
+    toBytesPerSecond(bytes, decimal = 2) {
+        const sizes = ['t/s', 'Kt/s', 'Mt/s', 'Gt/s', 'Tt/s'];
+        if (bytes === 0) return '0 t/s';
         const i = Math.floor(Math.log10(Math.abs(bytes)) / 3);
         const value = (bytes / Math.pow(1000, i)).toFixed(decimal);
         return (parseFloat(value) === parseInt(value) ? parseInt(value) : value) + ' ' + sizes[i];

@@ -23,6 +23,7 @@
 					:href="service.url"
 					class="tile-button link-button"
 					:key="index"
+					rel="noreferrer"
 				>
 					<img 
 						:src="service.iconUrl" 
@@ -380,12 +381,12 @@ export default {
 				const chart5YaxisValues = resourceLogsResponse.data.map(log => log.system_load);
 				const chartNetRecv = resourceLogsResponse.data.map((log, index, array) => {
 					if (index === 0) return 0;	// The first one can't have a differnce
-					const difference = log.network_recv_bytes - array[index - 1].network_recv_bytes;	// Calculate
+					const difference = (log.network_recv_bytes - array[index - 1].network_recv_bytes) / 10;		// Calculate
 					return difference > 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
 				});
 				const chartNetSent = resourceLogsResponse.data.map((log, index, array) => {
 					if (index === 0) return 0;	// The first one can't have a differnce
-					const difference = -log.network_sent_bytes + array[index - 1].network_sent_bytes;	// Calculate
+					const difference = (-log.network_sent_bytes + array[index - 1].network_sent_bytes) / 10;	// Calculate
 					return difference < 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
 				});
 
@@ -408,10 +409,10 @@ export default {
 						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toCelcius, false)
 					},
 					grid: {
-						left: 40,
+						left: 56,
 						right: 8,
 						top: 80,
-						bottom: 48,
+						bottom: 64,
 					},
 					xAxis: {
 						type: 'category',
@@ -476,10 +477,10 @@ export default {
 						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
 					},
 					grid: {
-						left: 40,
+						left: 56,
 						right: 8,
 						top: 80,
-						bottom: 48,
+						bottom: 64,
 					},
 					xAxis: {
 						type: 'category',
@@ -533,10 +534,10 @@ export default {
 						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
 					},
 					grid: {
-						left: 40,
+						left: 56,
 						right: 8,
 						top: 80,
-						bottom: 48,
+						bottom: 64,
 					},
 					xAxis: {
 						type: 'category',
@@ -590,10 +591,10 @@ export default {
 						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
 					},
 					grid: {
-						left: 40,
+						left: 56,
 						right: 8,
 						top: 80,
-						bottom: 48,
+						bottom: 64,
 					},
 					xAxis: {
 						type: 'category',
@@ -628,7 +629,7 @@ export default {
 				// Set the value generator for the chart
 				this.chartValueGenerators.chart5 = chart5Options;
 
-				// Chart 6 - Network upload
+				// Chart 6 - Network up/down
 				const chart6Options = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
@@ -644,13 +645,13 @@ export default {
 						backgroundColor: getCssVar('color-background-card'),
 						borderWidth: 1,
 						borderColor: getCssVar("color-border"),
-						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toBytes, false)
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toBytesPerSecond, false)
 					},
 					grid: {
-						left: 64,
+						left: 56,
 						right: 8,
 						top: 80,
-						bottom: 48,
+						bottom: 64,
 					},
 					xAxis: {
 						type: 'category',
@@ -665,9 +666,9 @@ export default {
 					},
 					yAxis: { 
 						type: 'value',      
-						name: 'Data (t/min)',  // Y-akselin nimi
+						name: 'Data (Mt/s)',  // Y-akselin nimi
 						axisLabel: {        // Y-akselin arvojen muotoilu
-							formatter: value => convert.toBytes(value)
+							formatter: value => convert.toFiNumber(value / 1_000_000)
 						}
 					},
 					series: [
@@ -897,7 +898,7 @@ export default {
 						left: 48,
 						right: 8,
 						top: 80,
-						bottom: 48,
+						bottom: 64,
 					},
 					xAxis: {
 						type: 'category',

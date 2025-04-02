@@ -3,9 +3,9 @@
         v-if="isVisible"
         class="modal-backdrop" 
         :class="{'is-displayed': isDisplayed}"
-        @click="close"
+        @click.self="close"
     >
-        <div @click.stop class="modal">
+        <div class="modal">
 
             <div class="default-content">
                 <h2 class="title">{{ header }}</h2>
