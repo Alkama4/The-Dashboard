@@ -498,80 +498,21 @@ const api = {
         }
     },
 
-    async updateTitleInfo(tmdbId, type) {
-        const response = await this.postData('/watch_list/update_title', { 
-            title_tmdb_id: tmdbId, 
-            title_type: type, 
-        }, null);
-        if (response) {
-            return response;
-        } else {
-            console.error("[updateTitleInfo] response failed:", response);
-            return null;
-        }
-    },
-    async updateTitleImages(tmdbId, type) {
+    async updateTitle(tmdbId, type, { updateInfo = false, updateImages = false, updateSeasonInfo = false, updateSeasonImages = false, seasonNumber = 0 } = {}) {
         const response = await this.postData('/watch_list/update_title', { 
             title_tmdb_id: tmdbId, 
             title_type: type,
-            update_title_info: false,
-            update_title_images: true
-        }, null);
-        if (response) {
-            return response;
-        } else {
-            console.error("[updateTitleInfo] response failed:", response);
-            return null;
-        }
-    },
-    async updateSeasonInfo(tmdbId, type, seasonNumber) {
-        const response = await this.postData('/watch_list/update_title', { 
-            title_tmdb_id: tmdbId, 
-            title_type: type,
-            update_title_info: false,
-            update_title_images: false,
+            update_title_info: updateInfo,
+            update_title_images: updateImages,
             update_season_number: seasonNumber,
-            update_season_info: true, 
-            update_season_images: false
+            update_season_info: updateSeasonInfo,
+            update_season_images: updateSeasonImages
         }, null);
+    
         if (response) {
             return response;
         } else {
-            console.error("[updateTitleInfo] response failed:", response);
-            return null;
-        }
-    },
-    async updateSeasonImages(tmdbId, type, seasonNumber) {
-        const response = await this.postData('/watch_list/update_title', { 
-            title_tmdb_id: tmdbId, 
-            title_type: type,
-            update_title_info: false,
-            update_title_images: false,
-            update_season_number: seasonNumber,
-            update_season_info: false, 
-            update_season_images: true
-        }, null);
-        if (response) {
-            return response;
-        } else {
-            console.error("[updateTitleInfo] response failed:", response);
-            return null;
-        }
-    },
-    async updateTitleFully(tmdbId, type) {
-        const response = await this.postData('/watch_list/update_title', { 
-            title_tmdb_id: tmdbId, 
-            title_type: type,
-            update_title_info: true,
-            update_title_images: true,
-            update_season_number: 0,
-            update_season_info: true, 
-            update_season_images: true
-        }, null);
-        if (response) {
-            return response;
-        } else {
-            console.error("[updateTitleInfo] response failed:", response);
+            console.error("[updateTitle] response failed:", response);
             return null;
         }
     },

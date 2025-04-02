@@ -1007,6 +1007,13 @@ input[type="radio"] {
     padding-inline: calc(22% - var(--spacing-lg));
 }
 
+.seperator {
+    background-color: var(--color-border);
+    min-width: 2px;
+    min-height: 2px;
+    border-radius: 100px;
+}
+
 /* 
 LINE CLAMP SETUP
 

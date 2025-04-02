@@ -624,28 +624,56 @@
         />
 
         <!-- Title refresh data -->
-        <GenericModal ref="refreshTitleDataGM" header="Refresh Title Data">
+        <GenericModal ref="refreshTitleDataGM" header="Requery Title Data">
             <div class="choice-modal">
-                <p>Which part of the title would you like to refresh?</p>
-                <div class="choice-buttons">
-                    <button @click="handleTitleUpdate('titleInfo')">Title & Season Info</button>
-                    <button @click="handleTitleUpdate('titleImages')">Title & Season Images</button>
-                    <button @click="handleTitleUpdate('fullUpdate')">Full Refresh (All Data & Images)</button>
+                <p>What data would you like to requery?</p>
+                <ul>
+                    <li><strong>Info:</strong> Replaces the data and downloads any missing images.</li>
+                    <li><strong>Images:</strong> Deletes and redownloads all current images.</li>
+                    <li><strong>Full Update:</strong> Does both info and images.</li>
+                </ul>
+                <div v-if="titleInfo.type == 'tv'">
+                    <h3>Title & Seasons <InfoTooltip text="Doesn't include the episodes." position="broken"/></h3>
+                    <div class="choice-buttons">
+                        <button @click="handleTitleUpdate('title', 'info')" class="button-primary">Info</button>
+                        <button @click="handleTitleUpdate('title', 'images')">Images</button>
+                        <button @click="handleTitleUpdate('title', 'full')">Full Update</button>
+                    </div>
+                    <h3>Title, Seasons & Episodes <InfoTooltip text="Includes the whole thing." position="center"/></h3>
+                    <div class="choice-buttons">
+                        <button @click="handleTitleUpdate('all', 'info')" class="button-primary">Info</button>
+                        <button @click="handleTitleUpdate('all', 'images')">Images</button>
+                        <button @click="handleTitleUpdate('all', 'full')">Full Update</button>
+                    </div>
+                    <p class="text-hidden icon-align">
+                        Tip: For episodes you should use the seperate season specific menu.
+                    </p>
                 </div>
-                <p v-if="titleInfo.type == 'tv'" class="text-hidden icon-align">
-                    Hint: To update episodes you can use the season menu instead of using the Full Refresh.
-                </p>
+                <div v-else>
+                    <h3></h3>
+                    <div class="choice-buttons">
+                        <button @click="handleTitleUpdate('title', 'info')" class="button-primary">Title Info</button>
+                        <button @click="handleTitleUpdate('title', 'images')">Title Images</button>
+                        <button @click="handleTitleUpdate('title', 'full')">Full Update</button>
+                    </div>
+                </div>
             </div>
         </GenericModal>
 
         <!-- Season refresh data -->
-        <GenericModal ref="refreshSeasonDataGM" header="Refresh Season Data">
+        <GenericModal ref="refreshSeasonDataGM" header="Requery Season Data">
             <div class="choice-modal">
-                <p>Which part of the season would you like to refresh?</p>
+                <p>What data would you like to requery?</p>
+                <ul>
+                    <li><strong>Info:</strong> Replaces the data and downloads any missing images.</li>
+                    <li><strong>Images:</strong> Deletes and redownloads all current images.</li>
+                    <li><strong>Full Update:</strong> Does both info and images.</li>
+                </ul>
+                <h3>Season Episodes</h3>
                 <div class="choice-buttons">
-                    <button @click="handleTitleUpdate('seasonInfo')">Episode Info</button>
-                    <button @click="handleTitleUpdate('seasonImages')">Episode Images</button>
-                    <!-- <button @click="handleSeasonUpdate('fullUpdate')">Full Refresh (All Episodes & Images)</button> -->
+                    <button @click="handleTitleUpdate('season', 'info')" class="button-primary">Info</button>
+                    <button @click="handleTitleUpdate('season', 'images')">Images</button>
+                    <button @click="handleTitleUpdate('season', 'full')">Full Update</button>
                 </div>
             </div>
         </GenericModal>
@@ -858,54 +886,67 @@ export default {
             this.selectedSeasonToUpdate = seasonNumber;
             this.$refs.refreshSeasonDataGM.open();
         },
-        async handleTitleUpdate(whatIsUpdated) {
+        async handleTitleUpdate(type, action) {
             const updatingNumber = this.selectedSeasonToUpdate;
-            this.waitingForResult.push("titleUpdate" + updatingNumber);
-            let response = null;
+            const isAll = type === "all";
+            const isSeason = type === "season";
+            const isTitle = type === "title";
 
-            if (whatIsUpdated.includes("season")) {
+            this.waitingForResult.push(`${type}Update` + updatingNumber);
+
+            if (isSeason) {
                 this.$refs.refreshSeasonDataGM.close();
             } else {
                 this.$refs.refreshTitleDataGM.close();
             }
-            
-            if (whatIsUpdated == "titleInfo") {
-                response = await api.updateTitleInfo(this.titleInfo.tmdb_id, this.titleInfo.type);
-            } else if (whatIsUpdated == "titleImages") {
-                response = await api.updateTitleImages(this.titleInfo.tmdb_id, this.titleInfo.type);
-            } else if (whatIsUpdated == "seasonInfo") {
-                console.log(updatingNumber);
-                response = await api.updateSeasonInfo(this.titleInfo.tmdb_id, this.titleInfo.type, updatingNumber);
-            } else if (whatIsUpdated == "seasonImages") {
-                response = await api.updateSeasonImages(this.titleInfo.tmdb_id, this.titleInfo.type, updatingNumber);
-            } else if (whatIsUpdated == "fullUpdate") {
-                response = await api.updateTitleFully(this.titleInfo.tmdb_id, this.titleInfo.type);
-            }
-            
-            if (response) {
-                let updateMessage = `"${this.titleInfo.name}" info updated!`;
-                
-                if (whatIsUpdated === "titleInfo") {
-                    updateMessage = `"${this.titleInfo.name}" title information has been updated. Missing images might still be loading in the background.`;
-                } else if (whatIsUpdated === "titleImages") {
-                    updateMessage = `"${this.titleInfo.name}" title images are now updating in the background.`;
-                } else if (whatIsUpdated === "seasonInfo") {
-                    updateMessage = `Season ${updatingNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`;
-                } else if (whatIsUpdated === "seasonImages") {
-                    updateMessage = `Season ${updatingNumber} images for "${this.titleInfo.name}" are now updating in the background.`;
-                } else if (whatIsUpdated === "fullUpdate") {
-                    updateMessage = `All the data for "${this.titleInfo.name}" has been replaced. Images are also now updating in the background.`;
-                }
-                
-                // Notify with the appropriate message
-                notify(updateMessage, "success");
 
-                // Update data without refreshing
+            let response = null;
+            let updateMessage = `"${this.titleInfo.name}" info updated!`;
+
+            switch (action) {
+                case "info":
+                    response = await api.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
+                        updateInfo: isTitle || isAll, 
+                        updateSeasonInfo: isSeason || isAll, 
+                        seasonNumber: updatingNumber 
+                    });
+                    updateMessage = updatingNumber != 0
+                        ? `Season ${updatingNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`
+                        : `"${this.titleInfo.name}" title information has been updated. Missing images might still be loading in the background.`;
+                    break;
+
+                case "images":
+                    response = await api.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
+                        updateImages: isTitle || isAll, 
+                        updateSeasonImages: isSeason || isAll, 
+                        seasonNumber: updatingNumber 
+                    });
+                    updateMessage = updatingNumber != 0
+                        ? `Season ${updatingNumber} images for "${this.titleInfo.name}" are now updating in the background.`
+                        : `"${this.titleInfo.name}" title images are now updating in the background.`;
+                    break;
+
+                case "full":
+                    response = await api.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
+                        updateInfo: isTitle || isAll, 
+                        updateImages: isTitle || isAll, 
+                        updateSeasonInfo: isSeason || isAll, 
+                        updateSeasonImages: isSeason || isAll, 
+                        seasonNumber: updatingNumber 
+                    });
+                    updateMessage = updatingNumber != 0
+                        ? `Season ${updatingNumber} full update for "${this.titleInfo.name}" is now in progress.`
+                        : `All the data for "${this.titleInfo.name}" has been replaced. Images are also now updating in the background.`;
+                    break;
+            }
+
+            if (response) {
+                notify(updateMessage, "success");
                 await this.queryTitleData();
                 this.episodeMapTileBackgroundColors();
             }
 
-            this.removeItemFromWaitingArray("titleUpdate" + updatingNumber);
+            this.removeItemFromWaitingArray(`${type}Update` + updatingNumber);
         },
         async handleFavouriteToggle() {
             this.waitingForResult.push("favourite");
@@ -1394,12 +1435,12 @@ export default {
     margin-top: var(--spacing-lg);
 }
 
-.at-a-glance .seperator {
+/* .seperator {
     background-color: var(--color-border);
     min-width: 2px;
     min-height: 2px;
     border-radius: 100px;
-}
+} */
 
 .at-a-glance .text-lighter {
     font-weight: 500;
@@ -1982,11 +2023,32 @@ iframe {
     }
 }
 
-
+.choice-modal {
+    display: flex;
+    flex-direction: column;
+    /* row-gap: var(--spacing-md); */
+}
+.choice-modal p {
+    margin-bottom: 0;
+}
+.choice-modal ul {
+    margin-top: var(--spacing-sm);
+    margin-bottom: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-xs);
+}
 .choice-modal .choice-buttons {
     display: grid;
     grid-template-columns: 1fr;
     row-gap: var(--spacing-sm);
+}
+.choice-modal .seperator {
+    margin: var(--spacing-lg) 0;
+}
+.choice-modal h3 {
+    margin-top: var(--spacing-lg);
+    margin-bottom: var(--spacing-sm);
 }
 .choice-modal .choice-buttons button {
     margin: 0;
