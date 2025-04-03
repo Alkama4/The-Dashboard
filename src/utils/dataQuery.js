@@ -2,7 +2,6 @@ import axios from 'axios';
 import qs from 'qs';
 import { notify } from './notification';
 import router from '@/router';
-import { STATIC_CONTENT } from '@/data/staticData';
 
 const standAloneBuild = process.env.VUE_APP_STANDALONE_BUILD == "true";
 if (standAloneBuild) {
@@ -85,7 +84,7 @@ const api = {
                     const endTime = performance.now();
                     const duration = endTime - startTime;
                     console.info(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
-            
+              
                     // Construct request key with full URL format
                     const url = new URL(endpoint, process.env.VUE_APP_API_URL);
                     if (params) {
@@ -94,13 +93,23 @@ const api = {
                     const requestKey = url.pathname + url.search;
             
                     console.debug("[getData] Request key:", requestKey);
-                    if (STATIC_CONTENT[requestKey]) {
-                        resolve(STATIC_CONTENT[requestKey]);
-                    } else {
-                        console.warn("[getData] Missing endpoint in STATIC_CONTENT:", requestKey);
-                        resolve(null);
-                    }
-                }, 400);
+            
+                    // Fetch static data from the public folder
+                    fetch('/apiCache.json')
+                        .then(response => response.json())
+                        .then(STATIC_CONTENT => {
+                            if (STATIC_CONTENT[requestKey]) {
+                                resolve(STATIC_CONTENT[requestKey]);
+                            } else {
+                                console.warn("[getData] Missing endpoint in STATIC_CONTENT:", requestKey);
+                                resolve(null);
+                            }
+                        })
+                        .catch(err => {
+                            console.error("[getData] Error loading static data:", err);
+                            resolve(null);
+                        });
+                }, 250);
             });
         }
     },

@@ -112,7 +112,6 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Add info of how much space the data for a tile takes up
             - Separate images and data?
             - How do I get the data amount?  
-        - Backdrop doesn't fade in on standalone build
         - Have the "user data updated" reflect latest update to title or episode.
             - Did already? 
 

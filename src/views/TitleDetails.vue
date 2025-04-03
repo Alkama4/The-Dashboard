@@ -2,8 +2,8 @@
     <div v-if="titleInfo" class="title-info">
         <div class="background backdrop-image-container" v-if="standAloneBuild">
             <img
-                @load="(event) => event.target.classList.add('loaded')"
-                class="visible" 
+                @load="(event) => event.target.classList.add('visible')"
+                class="" 
                 :src="`https://image.tmdb.org/t/p/original${titleInfo.backup_backdrop_url}`" 
             />
         </div>
@@ -23,8 +23,8 @@
             <div class="content-inside">
                 <div class="main backdrop-image-container" v-if="standAloneBuild">
                     <img
-                        @load="(event) => event.target.classList.add('loaded')"
-                        class="visible" 
+                        @load="(event) => event.target.classList.add('visible')"
+                        class="" 
                         :src="`https://image.tmdb.org/t/p/original${titleInfo.backup_backdrop_url}`" 
                     />
                 </div>

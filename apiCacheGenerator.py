@@ -3,7 +3,7 @@ import json
 import os
 from dotenv import load_dotenv
 
-# Load local enviroment values and get the api url
+# Load local environment values and get the API URL
 load_dotenv(".env.local")
 BASE_URL = os.getenv("VUE_APP_API_URL")
 
@@ -95,8 +95,7 @@ PRESET_DATA = {
     ]
 }
 
-
-# Here we can list the api endpoints requests that we want to cache
+# The endpoints that I want to store the responses from
 ENDPOINTS = [
     "/get_backups",
     "/get_server_drives_info",
@@ -133,14 +132,15 @@ ENDPOINTS = [
     "/watch_list/get_title_info?session_key=null&title_id=274",
 ]
 
-# Run through the endpoints and fetch the data
 data = {}
+
+# Go through the endpoints and fetch the data
 for endpoint in ENDPOINTS:
     if endpoint in PRESET_DATA:
         data[endpoint] = PRESET_DATA[endpoint]  # Use preset data
     else:
         url = f"{BASE_URL}{endpoint}"
-        print(f"Fetching url: {url}")
+        print(f"Fetching URL: {url}")
         try:
             response = requests.get(url)
             response.raise_for_status()
@@ -148,7 +148,8 @@ for endpoint in ENDPOINTS:
         except requests.RequestException:
             data[endpoint] = None  # Handle failed requests gracefully
 
-# Write the JavaScript file into src/data/
-with open("src/data/staticData.js", "w", encoding="utf-8") as js_file:
-    js_file.write("export const STATIC_CONTENT = ")
-    json.dump(data, js_file, indent=4)
+# Write to a JSON file in src/data/
+with open("public/apiCache.json", "w", encoding="utf-8") as json_file:
+    json.dump(data, json_file, indent=4)
+
+print("File created successfully!")
