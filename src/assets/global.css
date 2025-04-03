@@ -893,6 +893,10 @@ input[type="radio"] {
     color: var(--color-text);
     /* transform: scale(1.15); */
 }
+.icon-button:active {
+    color: var(--color-text-bold);
+    /* transform: scale(1.15); */
+}
 
 .loading {
     cursor: wait !important;

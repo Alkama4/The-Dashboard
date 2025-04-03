@@ -3,18 +3,6 @@ This file is a collection of notes for things that need to be done or fixed. It 
 
 
 ### Working on right now
-- Modal remake
-    - Think of a better way to implement the modal. 
-    - Way too manual and inconvenient. 
-    - Should work more like the native popup where it stops progress and returns a value.
-    - Split into two. One for simple confimations with customaizeable texts and one for just slotting stuff into
-
-- Title details
-    - On update button click open MODAL
-    - Backdrop doesn't fade in on standalone build
-        - Impelement once modal remade
-    - On metadata have the "user data updated" to reflect latest update to title or episode.    
-
 - Home screen combine the backups, charts and drives to a nice big thing
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
@@ -22,174 +10,195 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Backend add:
         - disks
         - uptime
-- watch list
-    - Add secondary sorting
-        - "In progress" should be new episodes -> season in progress -> last modified
-    - season(s) and episodes(s) but automated
-    - "start year - end year" for tv-shows instead of just "start year"
-    - smart image loading
-        - by scroll and visible in carousel
-        - carousel might already be implemented but confirm
-
-- watch list finish the all titles list
-    - add sort by
-        - Use the list in fastapi's end
-    - super basic filters
-        - watched, unwatched, don't care
-        - favourite, not favourite, don't care
-        - tv, movie, don't care
-        - released, not released
-        - started...?
-    - Whole title act as a link should be modified to be different
-        - Current implementation confusing for user since similar just expands in spendings
-    - mobile compability non existant
-    - The un released tag should be different from the genres
-    - Remake sidebar filter thingy so that it can be used here
-        - And fix the instant hide at the same time.
 
 - Transaction form rework
     - Make it so that it always tries to be a set width, but is max-width 100% or similarly
+    - Make custom v-select
+    - unify inputs like buttons and text inputs
+
 
 ## Features
 ### Feature ideas
-- Navigation
-    - link highlight when page open to show where we are.
-        - Don't know. Kind of like it as is but it wouldn't hurt.
-- Finish the modal windows:
-    - Edit and duplicate
-    - Custom submit text in form: eg. "Create a dubplicate", "Confirm edits"
-    - Revamp the details modal
-        - Long and number date, week
-        - table like category spread out.
-    - Simple modal confirms shouldn't connect to display edge if mobile
-- New entry QOL
-    - autofill buttons or drop down or what ever...
-- Filters:
-    - Drop down drag click multiple? To much effort?
-    - when screen wide enough display the filters always
-    - Headers, spacing, drop down for sliders as a solution? Don't like it...
-    - Needs a rewamp
-    - haitari mini toggleen yhen sijaan jotta sais animoitua
-- Analytics:
-    - A list of the total amounts in the old style nex to the new pie chart?
-    - Incomes seperated full chart by month
-- Watch list:
-    - Start working
-    - Layout
-    - getting data and storing it myself
-        - Make api handle all the querying of data
-        - this way it's automatically stored in the db
-    - Age rating
-        - Exists for tv, but not for movies!?
-- Sources?
-    - TMDB
-    - Boxicon
-- Tab navigation now that you know how easy it is. Fix button links by making global.css button-link style.
-- Season and episode images larger. More bold. Small images never look as good.
-- Title info rating map 
-- BLOB cache?
-    - What if I need updated info?
-    - Only case would be if there are new titles. 
-    - How long expiry?
-        - Month? Day? Max count? 50?
-- If input method touch fullscreen button should enable f11 mode fullscreen also. 
-    - And make the fullscreen functionality work on homepage to.
-- Custom password field
-    - Nothing fancy, maybe not even a component
-    - Change input type when clicking on a button with icon hovering on right side
-    - password <-> text
-- Possible color palette:
-    - #f99e1c
-    - #e56528
-    - #425d94
-    - #2c3361
-    - #3d3e40
-- Nice colors:
-    - #601020
-- Wathced tag looks bad
-    - Add the same tag to seasons and even episodes?
-- Title space taken
-    - Seperate images and data?
-    - How do I get the data amount?
-- Titledetails add a season progress like for title. Maybe even a bar
-- Custom select tab select and arrow keys select value
-- Watch list marked watched and unwatched along with favourite and add/remove from watch list. Add to cards and all titles list.
-- Spoiler mode
-    - Blank the details and blur the image for titles that aren't watched. 
-    - Add the option to the top of page.
-- Add a class to app or whatever the dark mode is added to for if the device is using touch.
-    - With it we can have buttons be always be visible when on touch that would appear when hovering over.
-        - Watch list has a couple
+- General UI
+    - Navigation  
+        - Highlight link when page is open to show location  
+            - Not sure if needed, but could be improved  
+    - Forms and inputs
+        - Custom Password Field  
+            - Nothing fancy, maybe not even a component  
+            - Change input type when clicking on a button with icon on the right  
+            - Toggle between password <-> text  
+        - Custome type-select
+        - Custom Select  
+            - Tab select and arrow keys select value  
+    - Modals  
+        - Finish the modal windows:  
+            - Duplicate  
+            - Revamp details modal:  
+                - Long and number date, week  
+                - Table-like category spread out  
+    - Add a class to app device is touch similar to dark mode
+        - Make similar with dark mode
+        - Useful to keep buttons always visible on touch  
+        - At least watch list has a cards and "all title list" which need this
+        - Also hover effects could be removed with it?
+    - Notification
+        - Add the capability to have multiple notifications
+    - Colors
+        - The positive green and warning yellow could be toned down to make readability with white text better
+        - Stolen color palette that looks nice
+            - #f99e1c  
+            - #e56528  
+            - #425d94  
+            - #2c3361  
+            - #3d3e40  
+        - Nice Colors  
+            - #601020  
+
+- Page specifics
+    - Spendings page
+        - Filters  
+            - Dropdown drag-click multiple? Too much effort?  
+            - When screen wide enough, always display filters  
+            - Headers, spacing, dropdown for sliders? (Not a fan)  
+            - Needs a revamp  
+            - Accordion (Haitari) mini toggle instead → allows animation  
+
+    - Analytics  
+        - List of total amounts (old style) next to new pie chart
+        - Do no like how it shows the totals immidiately with colors making it the first thing that is shown
+        - Could be revamped so that month and year are side by side and change with arrows when screen small
+            - Or drop down select range
+        - Could be compacted quite a bit
+
+    - Watch List  
+        - Add secondary sorting
+            - "In progress" should be new episodes -> season in progress -> last modified
+        - season(s) and episodes(s) but automated
+        - "start year - end year" for tv-shows instead of just "start year"
+        - smart image loading
+            - by scroll and visible in carousel
+            - carousel might already be implemented but confirm
+        - Spoiler Mode  
+            - Blank details & blur image for unwatched titles  
+            - Option at top of page  
+        - Watch List functionality to the cards and list  
+            - Mark watched & unwatched  
+            - Add/remove from favorites  
+        - Cards implement a natice router-link element instead of the hacky @something
+        - all titles list
+            - add sort by options
+                - Use the list in fastapi's end
+            - Finish filers
+                - watched, unwatched, don't care
+                - favourite, not favourite, don't care
+                - tv, movie, don't care
+                - released, not released
+                - started...?
+            - mobile compability still bad?
+            - The un released tag should be different from the genres
+            - Remake sidebar filter thingy so that it can be used here
+                - And fix the instant hide at the same time.
+
+    - Title Details  
+        - Add link to a site that shows where to watch
+        - Add a season progress bar?
+            - Title also
+            - Not necessarily a bar but a clear visualiser
+        - Better season and episode handling?
+            - Seasons side by side with arrows to scroll trhough them?
+        - Season & episode images larger, more bold  
+            - Small images never look as good  
+        - Add info of how much space the data for a tile takes up
+            - Separate images and data?
+            - How do I get the data amount?  
+        - Backdrop doesn't fade in on standalone build
+        - Have the "user data updated" reflect latest update to title or episode.
+            - Did already? 
+
+    - New Entry 
+        - Add QOL
+            - Autofill buttons, dropdown, or similar  
+
+    - Sources and about page?
+        - Sources
+            - TMDB  
+            - OMDB
+            - Boxicon  
+
+- Backend
+    - BLOB Cache for tmdb queries
+        - What if I need updated info?  
+        - Only case would be if there are new titles  
+        - How long expiry?  
+            - Month? Day? Max count? 50?  
+
 
 
 ### Feature ideas that might never see the light of day
 - Swiper add horizontal scrolling
+    - Would make usage with trackpad work. Now awkward.
     - "Swiper" doesn't seem to support it in the way that I hoped it would
     - Might have to can this one for now and if I later wish to I can make my own slider component
     - https://codesandbox.io/p/sandbox/54f29d?file=%2Fsrc%2FApp.vue
     - https://swiperjs.com/demos#scroll-container
 - Title details poster also show on mobile layout?
     - Doesn't really fit and doesn't really work with the current layout :/
+    - If I figure out how to do it one day will do.
+    - Now that we push it over backdrop could be possible?
 
 
 ## Issues
 ### Waiting to be fixed
+- Front end
+    - General pile
+        - Filterdropdowns not updating when resizing vertically
+            - window.eventlistener to update value
+        - Ensure everything has a active color in addition to hover. Some improvement made but haven't gone through everything yet.
+        - Notification remove the root thingy and just import it
+            - Also vue select?
+        - When in mobile nav page scrolling isn't disabled
+        - Make sure everything has a smooth fade out. 
+            - Modal done was major, but the side bar is still atleast missing
+            - Go through to find all
+        - Filter date slider labels only every 3 months so with transactions on a short timespan it looks odd/broken.
+        - v-select width changes when activating causing modal to resize
+            - Making my own is on the works.
+        - Cannot set 0 as a value for a transaction
+            - If I remove check in js and send the 0 as a value mysql throws an error and deletes the transaction items.
+            - Be careful when working with this
+        - Title details user data updated isn't updated when saving notes on the client side. Need to refresh for it to display.
+            - Do not always just set the current date. If the value is the same that it was in the db it doesn't actually update anything.
+        
+    - Light mode 
+        - bg, text, modal, generic button etc. colors need a restructuring. 
+            - Try out mirroring what dark mode does instead of brining some stuff to lighter like buttons
+            - Light mode colors and hovers suck. Try turning going darker when hovering in light and opposite in dark.
+        - Needs quite the overhaul
+
+- Backend and backend related
+    - User episodes in mysql might not get deleted on title deletion
+    - The api calls aren't cancelled when changing page. Research if they can be cancelled on unmount
+    - Delete transaction doesn't use DELETE (not proper REST)
+
+
+### Delayed to be fixed on a day that might never come
 - InfoTooltips positioning is stupid and doesn't detect window borders
     - Make it position itself smartly
-- pie chart fullscren button not aligned properly in either fullscreen or normal view
-- Tooltips on chart and component not visible enough without border, but with border inconsistant
-    - Just add the border, you cant mouse over them so its fine
-- Settings apge not accessicble without account but settings are in localstorage.
-    - Move to mysql.
-- Filterdropdowns not updating when resizing vertically
-    - window.eventlistener to update value
-- Go through evertyhing to check the they have a click color in addition to hover.
-- Modals header and close X shouldn't scroll with content
-- Notification remove the root thingy and just import it
-    - Also vue select?
-- When in mobile nav page scrolling isn't disabled
-- Only mobile nav has smooth fadeout
-- Doesn't use the internal fastapi address but the external which is not optimal. 
-    - The requests seem to be coming from the client ip and not the webserver so can't do that?
-- Filter date slider labels only every 3 months so with transactions on a short timespan it looks odd/broken.
-- Light mode bg, text, modal, generic button etc. colors need a restructuring. 
-    - Try out mirroring what dark mode does instead of brining some stuff to lighter like buttons
-    - Light mode colors and hovers suck. Try turning going darker when hovering in light and opposite in dark.
-- v-select width changes when activating causing modal to resize
-- Turn link buttons so that the buttons act as the link and don't wrap
-    - @click="genericLinkFunctionThatICanImport"
-    - One for router and one for a
-- Cannot set 0 as a value
-    - If I remove check in js and send the 0 as a value mysql throws an error and deletes the transaction items.
-    - Be carefule when working with this
-- User episodes in mysql might not get deleted on title deletion
-- The api calls aren't cancelled when changing page. Research if they can be cancelled on unmount
-- Delete transaction doesn't use DELETE (not proper REST)
-- Transactions load never ends. 
-    - Simple state change when reponse fails and an another v-if element.
-- Setting episode wathced/unwatched updates all episodes in the season to be watched on the dom incorrectly even though data on db is correct. Refresh fixes. Check how the data is updated on confirmation.
-- Title details user data updated isn't updated when saving notes on the client side. Need to refresh for it to display.
-    - Do not always just set the current date. If the value is the same that it was in the db it doesn't actually update anything.
-- The all titles listed title-element can't be just a click to the page
-    - Mixed signals to the user since the spendings entry doesn't do that.
-    - And the user is punished by resetting their filters by opening the page in current tab.
-        - Laxy fix by always opening in new tab before proper fix?
-- Primary buttons go to normal button when disabled
-- Load more button visible when we don't get an aswer from api after the first batch of transactions has been loaded and the "looks like htere's nothing here" shows up
+    - Currently just left, right and center
+    - Would require js and might be a fun project
 
 
 ### Feature or a bug?
 - Total log amount is transaction items and not transactions
-- The amount drop down shows without the types when media under 777px wide.
+- In spendings page on a transaction when expanded on mobile it only showws the amounts without the category
     - Or in other words the values are seperated without any labels of what the values mean.
     - Disable when under 777px or just leave it?
-- v-select causes scrolling on modals when opening
-    - (Propably no can do?)
-- Some cases of improper "post" usage that should be "get"
-    - Propably should go through api and unify it with some optimisation at the same time.
-- Kun input aktiivinen harkitte sen ihmeen ympärillä jutun takas käyttöön ottoa. Toi et borderista tulee vaan vahvempi näyttää vähän hoopolta.
-    - Korjattu ehkä siten että pitää sen border värin sillon kun aktiivinen
-    - Jos tabilla ettii muita juttuja niin pitäs muuttaa sillee et tulis sama border kun input fieldeissä?
 - Values aren't cached and are instead queried all the time. For example the options should at the very least be stored?
     - Good placeholders have kind of fixed this, but still worth considerng.
-    - Downside of doing this it that its not clear when data is up to date and suddenly updates. Now it always shows that it queries.
+    - Downside of doing this it that the user might be shown data that is not up to date
+        - And to fix that we would have to just query the data anyway
+        - Is it better to immidiately show old data and change it when the udpated arrives or always show a placeholder?
+- Doesn't use the internal fastapi address but the external which is not optimal. 
+    - The requests seem to be coming from the client ip and not the webserver so can't do that?
+    - Figure out how the requests work

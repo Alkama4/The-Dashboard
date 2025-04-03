@@ -69,7 +69,7 @@
                     <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageWeek) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Spending This Month <InfoTooltip text="Since the average and the time period are both the same it doesn't make sence to call it average."/></div>
+                    <div class="label">Spendings Last Month <InfoTooltip text="Since the average and the time period are both the same it doesn't make sence to call it average."/></div>
                     <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageMonth) || '-' }}</div>
                 </div>
             </div>
