@@ -95,7 +95,8 @@ const api = {
                     console.debug("[getData] Request key:", requestKey);
             
                     // Fetch static data from the public folder
-                    fetch('/apiCache.json')
+                    // Need to add "/The-Dashboard" seperately for github pages to find it
+                    fetch('/The-Dashboard/apiCache.json')
                         .then(response => response.json())
                         .then(STATIC_CONTENT => {
                             if (STATIC_CONTENT[requestKey]) {
