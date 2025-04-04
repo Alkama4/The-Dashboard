@@ -16,7 +16,7 @@
                 @keydown.enter.prevent="handleKeyDown('enter')"
             >
             <span class="longest-option">{{ longestOption }}</span>
-            <span v-if="!selectedOption || selectedOption == ''" class="placeholder">Select an option</span>
+            <span v-if="!selectedOption || selectedOption == ''" class="placeholder">{{ placeholder }}</span>
             <IconChevronDown size="28px"/>
         </div>
         <ul 
@@ -32,6 +32,9 @@
                 :class="{ 'highlighted': index === highlightedIndex }"
             >
                 {{ option }}
+            </li>
+            <li v-if="filteredOptions.length == 0" class="not-found" @click.prevent>
+                No matches found, using input as is.
             </li>
         </ul>
     </div>
@@ -52,6 +55,10 @@ export default {
         modelValue: {
             type: String,
             default: ""
+        },
+        placeholder: {
+            type: String,
+            default: "Select an option"
         },
         disabled: {
             type: Boolean,
@@ -113,10 +120,10 @@ export default {
 
             if (direction === 'down') {
                 this.highlightedIndex = 
-                    (this.highlightedIndex + 1) % this.filteredOptions.length;
+                    (this.highlightedIndex + 1) % (this.filteredOptions.length + 1);
             } else if (direction === 'up') {
                 this.highlightedIndex = 
-                    (this.highlightedIndex - 1 + this.filteredOptions.length) % this.filteredOptions.length;
+                    (this.highlightedIndex - 1 + (this.filteredOptions.length + 1)) % (this.filteredOptions.length + 1);
             } else if (direction === 'enter') {
                 if (this.filteredOptions[this.highlightedIndex]) {
                     this.selectOption(this.filteredOptions[this.highlightedIndex]);
@@ -254,5 +261,9 @@ export default {
 }
 .options-list.hidden {
     opacity: 0;
+}
+.options-list .not-found {
+    color: var(--color-text-lighter) !important;
+    cursor: auto;
 }
 </style>

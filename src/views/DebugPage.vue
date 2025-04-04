@@ -69,6 +69,8 @@
             />
         </div>
 
+        <CustomPasswordInput/>
+
         <div class="card">
             <FormTransaction/>
         </div>
@@ -85,6 +87,7 @@ import ChartComponent from '@/components/ChartComponent.vue';
 import ConfirmationModal from '@/components/ModalConfirmation.vue';
 import GenericModal from '@/components/ModalGeneric.vue';
 import FormTransaction from '@/components/FormTransaction.vue';
+import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
 
 export default {
     name: 'DebugPage',
@@ -93,6 +96,7 @@ export default {
         ConfirmationModal,
         GenericModal,
         FormTransaction,
+        CustomPasswordInput,
     },  
     data() {
         return {

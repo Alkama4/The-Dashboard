@@ -8,11 +8,11 @@
         <form @submit.prevent="handleLogin">
             <div>
                 <label for="username">Username:</label>
-                <input type="username" v-model="username" required />
+                <CustomGenericInput v-model="username" ref="usernameRef"/>
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input type="password" v-model="password" required />
+                <CustomPasswordInput v-model="password" ref="passwordRef"/>
             </div>
             <button class="button-primary center" type="submit">Log in</button>
         </form>
@@ -22,6 +22,9 @@
 <script>
 import api from '@/utils/dataQuery';
 import router from '@/router';
+import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
+import CustomGenericInput from '@/components/CustomGenericInput.vue';
+import { notify } from '@/utils/notification';
 
 export default {
     data() {
@@ -30,8 +33,20 @@ export default {
             password: ''
         };
     },
+    components: {
+        CustomPasswordInput,
+        CustomGenericInput,
+    },
     methods: {
         async handleLogin() {
+            let failed;
+            if (this.username.length == 0) {this.$refs.usernameRef.markInvalid(); failed = true; }
+            if (this.password.length == 0) {this.$refs.passwordRef.markInvalid(); failed = true; }
+            if (failed) { 
+                notify("A value is required!", "error");
+                return;
+            }
+
             const responseSuccess = await api.logIn({
                 username: this.username,
                 password: this.password
