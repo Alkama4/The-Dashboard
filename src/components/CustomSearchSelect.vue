@@ -2,6 +2,7 @@
     <div class="custom-search-select" :class="{'is-open': isLogicalOpen && isStylingOpen}">
         <div 
             class="selected-option icon-align" 
+            :class="{'invalid-input': invalidState}"
             tabindex="-1"
         >
             <input 
@@ -70,7 +71,8 @@ export default {
             isStylingOpen: false,
             isLogicalOpen: false,
             selectedOption: null,
-            highlightedIndex: -1
+            highlightedIndex: -1,
+            invalidState: false,
         };
     },
     mounted() {
@@ -108,11 +110,13 @@ export default {
         },
         updateInput(event) {
             this.$emit('update:modelValue', event.target.value);
+            this.invalidState = false;
             this.open();
         },
         selectOption(option) {
             this.selectedOption = option;
             this.$emit('update:modelValue', option);
+            this.invalidState = false;
             this.close();
         },
         handleKeyDown(direction) {
@@ -129,6 +133,9 @@ export default {
                     this.selectOption(this.filteredOptions[this.highlightedIndex]);
                 }
             }
+        },
+        markInvalid() {
+            this.invalidState = true;
         },
     },
     computed: {

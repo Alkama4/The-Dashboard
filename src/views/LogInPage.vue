@@ -1,6 +1,6 @@
 <template>
     <div class="login-page content-width-small">
-        <h1>Login</h1>
+        <h1>Log in</h1>
         <p>Log in in order to access the data that is linked to your account. You can browse the website without logging in, but you can only view the example data and can not edit it.</p>
 
         <p>Use the form below to log in by filling in the details. Don't have an account? Create one <router-link to="/create_account">here.</router-link> If you have forgotten your username or password please contanct the server admin.</p>
@@ -14,7 +14,7 @@
                 <label for="password">Password:</label>
                 <CustomPasswordInput v-model="password" ref="passwordRef"/>
             </div>
-            <button class="button-primary center" type="submit">Log in</button>
+            <button class="button-primary" type="submit">Log in</button>
         </form>
     </div>
 </template>
@@ -69,6 +69,6 @@ export default {
     form {
         display: flex;
         flex-direction: column;
-        max-width: 350px;
+        max-width: 400px;
     }
 </style>

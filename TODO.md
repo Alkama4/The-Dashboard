@@ -63,6 +63,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Headers, spacing, dropdown for sliders? (Not a fan)  
             - Needs a revamp  
             - Accordion (Haitari) mini toggle instead → allows animation  
+        - Loading placeholders on mobile have uneven spacing
 
     - Analytics  
         - List of total amounts (old style) next to new pie chart
@@ -99,6 +100,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - The un released tag should be different from the genres
             - Remake sidebar filter thingy so that it can be used here
                 - And fix the instant hide at the same time.
+            - Placeholder like two pixels two small
 
     - Title Details  
         - Add link to a site that shows where to watch
@@ -114,10 +116,28 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - How do I get the data amount?  
         - Have the "user data updated" reflect latest update to title or episode.
             - Did already? 
+        - Backdrop base color black so that the gradient is always visible?
+
+    - Search title
+        - Looks generally bad
+        - Loading placheholder
+            - jumps up a bit
+            - could have multiple
 
     - New Entry 
         - Add QOL
             - Autofill buttons, dropdown, or similar  
+
+    - Account page
+        - Change password
+            - Reset all current sessions
+        - Show current password?
+        - Danger zone icon spacing
+
+    - Admin tools
+        - Wipe all
+        - Get backup file of data
+        - Manage other users
 
     - Sources and about page?
         - Sources

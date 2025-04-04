@@ -4,6 +4,7 @@
             :type="showPassword ? 'text' : 'password'" 
             :value="modelValue" 
             :class="{'invalid-input': invalidState}"
+            :placeholder="placeholder"
             @input="onInput($event)"
         >
         <component 
@@ -23,6 +24,10 @@ export default {
     components: { IconShow, IconHide },
     props: {
         modelValue: {
+            type: String,
+            default: ""
+        },
+        placeholder: {
             type: String,
             default: ""
         }

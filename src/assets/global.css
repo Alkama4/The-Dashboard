@@ -529,10 +529,10 @@ input[type="radio"] {
 }
 
 .invalid-input {
-    border-color: var(--color-negative);
+    border-color: var(--color-negative) !important;
 }
 .invalid-input:hover {
-    border-color: var(--color-negative-hover);
+    border-color: var(--color-negative-hover) !important;
 }
 
 ::placeholder {

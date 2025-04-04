@@ -1,13 +1,14 @@
 <template>
-    <div class="form-transaction">
-        <input type="text" v-model="formValues.name" />
-        <input type="number" v-model="formValues.amount" />
-        <CustomSearchSelect v-model="selectedClass" :options="['teST','test1','test2']"/>
+    <form @submit.prevent="handleSubmit" class="form-transaction">
+        <CustomGenericInput type="text" v-model="formValues.name" ref="textRef"/>
+        <CustomGenericInput type="number" v-model="formValues.amount" ref="numberRef"/>
+        <CustomSearchSelect v-model="selectedClass" :options="['teST','test1','test2']" ref="searchRef"/>
         <button type="submit">Submit</button>
-    </div>
+    </form>
 </template>
 
 <script>
+import CustomGenericInput from './CustomGenericInput.vue';
 import CustomSearchSelect from './CustomSearchSelect.vue';
 
 export default {
@@ -24,10 +25,13 @@ export default {
     },
     components: {
         CustomSearchSelect,
+        CustomGenericInput,
     },
     methods: {
         handleSubmit() {
-            console.log("Form submitted:", this.formValues);
+            this.$refs.textRef.markInvalid();
+            this.$refs.numberRef.markInvalid();
+            this.$refs.searchRef.markInvalid();
             // Add your form submission logic here
         },
     },

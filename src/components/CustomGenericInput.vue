@@ -4,6 +4,7 @@
             :type="type" 
             :value="modelValue" 
             :class="{'invalid-input': invalidState}"
+            :placeholder="placeholder"
             @input="onInput($event)"
         >
     </div>
@@ -19,7 +20,11 @@ export default {
         type: {
             type: String,
             default: "text"
-        }
+        },
+        placeholder: {
+            type: String,
+            default: ""
+        },
     },
     data() {
         return {

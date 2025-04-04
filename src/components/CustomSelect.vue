@@ -4,7 +4,7 @@
     >
         <div 
             class="selected-option icon-align" 
-            tabindex="0" 
+            :class="{'invalid-input': invalidState}"
             @keydown.down.prevent="handleKeyDown('down')" 
             @keydown.up.prevent="handleKeyDown('up')" 
             @keydown.enter.prevent="handleKeyDown('enter')"
@@ -49,6 +49,7 @@ export default {
             isLogicalOpen: false,
             selectedOption: null,
             highlightedIndex: 0,
+            invalidState: false,
         };
     },
     mounted() {
@@ -86,6 +87,7 @@ export default {
             this.close();
             this.$emit('update:modelValue', option.value);
             this.selectedOption = option;
+            this.invalidState = false;
         },
         handleKeyDown(direction) {
             if (!this.isStylingOpen) this.open();
@@ -104,7 +106,10 @@ export default {
             } else if (direction === 'esc') {
                 this.close();
             }
-        }
+        },
+        markInvalid() {
+            this.invalidState = true;
+        },
     },
     computed: {
         longestOptionLabel() {

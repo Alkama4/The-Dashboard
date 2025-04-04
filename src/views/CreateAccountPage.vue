@@ -1,22 +1,22 @@
 <template>
     <div class="login-page content-width-small">
         <h1>Create account</h1>
-        <p>Use the form below to create an account.</p>
+        <p>Create your account by filling in the form below.</p>
 
         <form @submit.prevent="handleLogin">
             <div>
-                <label for="username">Username:</label>
-                <input type="username"  minlength="4" v-model="username" required />
+                <label for="username">Choose a username:</label>
+                <CustomGenericInput v-model="username" ref="usernameRef" placeholder="Enter the username"/>
             </div>
             <div>
                 <label for="password">Password:</label>
-                <input type="password" minlength="4" v-model="password" required />
+                <CustomPasswordInput v-model="password" ref="passwordRef" placeholder="Enter a password"/>
             </div>
             <div>
                 <label for="password">Repeat password:</label>
-                <input type="password" minlength="4" v-model="passwordRepeat" required />
+                <CustomPasswordInput v-model="passwordRepeat" ref="passwordRepeatRef" placeholder="Confirm the password"/>
             </div>
-            <button class="button-primary center" type="submit">Log in</button>
+            <button class="button-primary" type="submit">Create account</button>
         </form>
     </div>
 </template>
@@ -25,6 +25,8 @@
 import api from '@/utils/dataQuery';
 import router from '@/router';
 import { notify } from '@/utils/notification';
+import CustomGenericInput from '@/components/CustomGenericInput.vue';
+import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
 
 export default {
     data() {
@@ -34,17 +36,45 @@ export default {
             passwordRepeat: ''
         };
     },
+    components: {
+        CustomGenericInput,
+        CustomPasswordInput,
+    },
     methods: {
         async handleLogin() {
-            if (this.password === this.passwordRepeat) {
-                const response = await api.createAccount(this.username, this.password);
-                if (response) {
-                    console.log(response);
-                    notify(response.message, "success");
-                    router.push("/login");
-                }
-            } else {
-                notify("The passwords do no match!", "error")
+            let failed = [];
+
+            if (this.username.length < 4) {
+                failed.push("lengthUsername");
+                this.$refs.username?.markInvalid();
+            }
+
+            if (this.password.length < 4) {
+                failed.push("lengthPassword");
+                this.$refs.password?.markInvalid();
+            }
+
+            if (this.password !== this.passwordRepeat) {
+                this.$refs.passwordRepeatRef.markInvalid();
+                failed.push("match");
+            }
+
+            if (/\s/.test(this.username)) {
+                this.$refs.usernameRef?.markInvalid();
+                failed.push("spaces");
+            }
+            
+            if (failed.includes("lengthUsername")) notify("The username should be atleast four charachters long.", "error");
+            if (failed.includes("lengthPassword")) notify("The password should be atleast four charachters long.", "error");
+            if (failed.includes("match")) notify("The passwords do no match. Please try again.", "error");
+            if (failed.includes("spaces")) notify("Username cannot contain spaces.", "error");
+            if (failed.length > 0) return;
+
+            const response = await api.createAccount(this.username, this.password);
+            if (response) {
+                console.log(response);
+                notify(response.message, "success");
+                router.push("/login");
             }
         }
     },
@@ -61,6 +91,6 @@ export default {
     form {
         display: flex;
         flex-direction: column;
-        max-width: 350px;
+        max-width: 400px;
     }
 </style>
