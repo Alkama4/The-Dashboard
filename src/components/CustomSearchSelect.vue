@@ -1,35 +1,41 @@
 <template>
-    <div class="custom-select" 
-        :class="{'is-open': isLogicalOpen && isStylingOpen}" 
-    >
+    <div class="custom-search-select" :class="{'is-open': isLogicalOpen && isStylingOpen}">
         <div 
             class="selected-option icon-align" 
-            tabindex="0" 
-            @keydown.down.prevent="handleKeyDown('down')" 
-            @keydown.up.prevent="handleKeyDown('up')" 
-            @keydown.enter.prevent="handleKeyDown('enter')"
-            @keydown.esc.prevent="handleKeyDown('esc')"
-            @focus="open"
-            @blur="close"
+            tabindex="-1"
         >
-            <span class="longest-option">{{ longestOptionLabel }}</span>
-            <span v-if="selectedOption?.label" class="visible-option">{{ selectedOption.label }}</span>
-            <span v-else class="visible-option text-lighter">Select an option</span>
+            <input 
+                class="input-field" 
+                type="text" 
+                v-model="selectedOption" 
+                @input="updateInput"
+                @focusin="open"
+                @focusout="close"
+                @keydown.down.prevent="handleKeyDown('down')"
+                @keydown.up.prevent="handleKeyDown('up')"
+                @keydown.enter.prevent="handleKeyDown('enter')"
+            >
+            <span class="longest-option">{{ longestOption }}</span>
+            <span v-if="!selectedOption || selectedOption == ''" class="placeholder">Select an option</span>
             <IconChevronDown size="28px"/>
         </div>
-        <ul v-if="isLogicalOpen" class="options-list" :class="{'hidden': !isStylingOpen}">
-            <li v-for="(option, index) in options" 
-                :key="option.value" 
-                @click="selectOption(option)" 
+        <ul 
+            v-if="isLogicalOpen" 
+            class="options-list"
+            :class="{'hidden': !isStylingOpen}"
+        >
+            <li 
+                v-for="(option, index) in filteredOptions" 
+                :key="option" 
+                @click="selectOption(option)"
                 @mouseenter="highlightedIndex = index"
                 :class="{ 'highlighted': index === highlightedIndex }"
             >
-                {{ option.label }}
+                {{ option }}
             </li>
         </ul>
     </div>
 </template>
-
 
 <script>
 import IconChevronDown from './icons/IconChevronDown.vue';
@@ -39,16 +45,25 @@ export default {
         IconChevronDown,
     },
     props: {
-        options: Array,
-        modelValue: String,
-        disabled: Boolean,
+        options: {
+            type: Array,
+            default: () => []
+        },
+        modelValue: {
+            type: String,
+            default: ""
+        },
+        disabled: {
+            type: Boolean,
+            default: false
+        },
     },
     data() {
         return {
             isStylingOpen: false,
             isLogicalOpen: false,
             selectedOption: null,
-            highlightedIndex: 0,
+            highlightedIndex: -1
         };
     },
     mounted() {
@@ -61,8 +76,10 @@ export default {
         open() {
             if (!this.disabled) {
                 this.isLogicalOpen = true;
+                // On purpose do not allow animation and set without miniscule delay
+                // More inline with the inputs white focus border
                 this.isStylingOpen = true;
-                this.highlightedIndex = this.options.findIndex(opt => opt.value === this.modelValue);
+                this.highlightedIndex = -1; // Reset selection
             }
         },
         close() {
@@ -74,7 +91,7 @@ export default {
         toggleDropdown(event) {
             if (!this.disabled) {
                 event.stopPropagation();
-                this.isLogicalOpen ? this.close() : this.open();
+                this.isLogicalOpen ? this.close() : this.open(); // Toggle between open and close
             }
         },
         handleClickOutside(event) {
@@ -82,44 +99,50 @@ export default {
                 this.close();
             }
         },
+        updateInput(event) {
+            this.$emit('update:modelValue', event.target.value);
+            this.open();
+        },
         selectOption(option) {
-            this.close();
-            this.$emit('update:modelValue', option.value);
             this.selectedOption = option;
+            this.$emit('update:modelValue', option);
+            this.close();
         },
         handleKeyDown(direction) {
-            if (!this.isStylingOpen) this.open();
-            if (!this.isLogicalOpen) this.open();
+            if (!this.isLogicalOpen) return;
 
             if (direction === 'down') {
-                this.highlightedIndex = (this.highlightedIndex + 1) % this.options.length;
+                this.highlightedIndex = 
+                    (this.highlightedIndex + 1) % this.filteredOptions.length;
             } else if (direction === 'up') {
-                this.highlightedIndex = (this.highlightedIndex - 1 + this.options.length) % this.options.length;
+                this.highlightedIndex = 
+                    (this.highlightedIndex - 1 + this.filteredOptions.length) % this.filteredOptions.length;
             } else if (direction === 'enter') {
-                if (!this.isStylingOpen) {
-                    this.open();
-                } else if (this.options[this.highlightedIndex]) {
-                    this.selectOption(this.options[this.highlightedIndex]);
+                if (this.filteredOptions[this.highlightedIndex]) {
+                    this.selectOption(this.filteredOptions[this.highlightedIndex]);
                 }
-            } else if (direction === 'esc') {
-                this.close();
             }
-        }
+        },
     },
     computed: {
-        longestOptionLabel() {
-            const longestOption = this.options.reduce((longest, option) => 
-                option.label.length > longest.label.length ? option : longest, 
-                { label: '' }
+        longestOption() {
+            const longestOption = this.options.reduce((longest, option) => {
+                return option.length > longest.length ? option : longest;
+            }, 'Select an option');
+            return longestOption;
+        },
+        filteredOptions() {
+            if (!this.selectedOption) return this.options;
+            return this.options.filter(option => 
+                option.toLowerCase().includes(this.selectedOption.toLowerCase())
             );
-            return longestOption.label;
         }
     },
     watch: {
         modelValue: {
             immediate: true,
             handler(value) {
-                this.selectedOption = this.options.find(opt => opt.value === value) || null;
+                this.selectedOption = this.options.find(opt => opt === value) || null;
             }
         }
     }
@@ -127,14 +150,13 @@ export default {
 </script>
 
 
-
 <style scoped>
-.custom-select {
+.custom-search-select {
     position: relative;
     height: 40px;
     --selected-option-border-radius: var(--border-radius-small);
 }
-.loading.custom-select .selected-option {
+.loading.custom-search-select .selected-option {
     cursor: wait;
 }
 
@@ -158,18 +180,13 @@ export default {
     transition: border 0.1s ease-out;
 }
 .selected-option:hover, 
-.custom-select.is-open .selected-option {
+.custom-search-select.is-open .selected-option {
     border-color: var(--color-border-hover);
 }
-.custom-select.is-open .selected-option {
-    outline-style: solid;
-    outline-width: 2px;
-    outline-color: var(--color-text);
-}
-.custom-select svg {
+.custom-search-select svg {
     transition: transform 0.1s ease-out;
 }
-.custom-select.is-open svg {
+.custom-search-select.is-open svg {
     transform: rotate(180deg);
 }
 
@@ -183,6 +200,25 @@ export default {
 .selected-option svg {
     position: absolute;
     right: 6px;
+}
+.selected-option .placeholder {
+    color: var(--color-text-lighter);
+
+    position: absolute;
+    left: var(--spacing-sm);
+
+    user-select: none;
+    pointer-events: none;
+}
+.selected-option .input-field {
+    border: 0;
+    background-color: transparent;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
 }
 
 .options-list {

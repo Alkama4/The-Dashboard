@@ -68,6 +68,10 @@
                 alternateOption="Maybe..."
             />
         </div>
+
+        <div class="card">
+            <FormTransaction/>
+        </div>
     </div>
 </template>
 
@@ -80,6 +84,7 @@ import api from '@/utils/dataQuery';
 import ChartComponent from '@/components/ChartComponent.vue';
 import ConfirmationModal from '@/components/ModalConfirmation.vue';
 import GenericModal from '@/components/ModalGeneric.vue';
+import FormTransaction from '@/components/FormTransaction.vue';
 
 export default {
     name: 'DebugPage',
@@ -87,6 +92,7 @@ export default {
         ChartComponent,
         ConfirmationModal,
         GenericModal,
+        FormTransaction,
     },  
     data() {
         return {
