@@ -10,7 +10,7 @@
         <component 
             :is="showPassword ? 'IconShow' : 'IconHide'"
             class="icon-button"
-            tabindex="1"
+            tabindex="0"
             @click="showPassword = !showPassword"
         />
     </div>

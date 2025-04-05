@@ -46,7 +46,8 @@
     /* To hard to change it,
        cannot add spaces or markers between thousands in css */
     --z-tooltip: 200;
-    --z-focus: 100;
+    --z-above-input: 101;
+    --z-input-focus: 100;
     --z-app: 0;
 
     /* Media break off points */
@@ -388,6 +389,9 @@ button:disabled {
     box-shadow: 0 0 0 transparent;
     color: var(--color-text);
 }
+button:focus {
+    z-index: var(--z-input-focus);
+}
 
 /* Button primary */
 .button-primary {
@@ -499,7 +503,7 @@ input:hover, textarea:hover {
     border-color: var(--color-border-hover);
 }
 input:focus-visible, textarea:focus-visible {
-    z-index: var(--z-focus);
+    z-index: var(--z-input-focus);
 }
 
 textarea {

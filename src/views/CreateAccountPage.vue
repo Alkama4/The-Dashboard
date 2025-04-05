@@ -92,5 +92,7 @@ export default {
         display: flex;
         flex-direction: column;
         max-width: 400px;
+        row-gap: var(--spacing-md);
+        margin-inline: auto;
     }
 </style>

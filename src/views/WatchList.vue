@@ -888,6 +888,9 @@ export default {
 .search-and-sort .button-in-text-field {
     flex: 3;
 }
+.search-and-sort .button-in-text-field .icon-button {
+    z-index: var(--z-above-input);
+}
 .search-and-sort .icon-align {
     flex: 2;
 }

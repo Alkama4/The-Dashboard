@@ -3,7 +3,6 @@
         <div 
             class="selected-option icon-align" 
             :class="{'invalid-input': invalidState}"
-            tabindex="-1"
         >
             <input 
                 class="input-field" 

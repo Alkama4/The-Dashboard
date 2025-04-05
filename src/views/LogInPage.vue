@@ -70,5 +70,7 @@ export default {
         display: flex;
         flex-direction: column;
         max-width: 400px;
+        margin-inline: auto;
+        row-gap: var(--spacing-md);
     }
 </style>

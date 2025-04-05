@@ -84,9 +84,10 @@ export default {
 
 <style scoped>
 .slider-toggle {
-    width: 100%;
-    max-width: 200px;
-    height: calc(41px - 1px * 2);
+    width: 200px;
+    max-width: 100%;
+    height: 40px;
+    box-sizing: border-box;
     border-radius: var(--border-radius-small);
     background-color: var(--color-background-input);
     display: flex;

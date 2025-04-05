@@ -163,7 +163,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 form {
     display: grid;
     grid-template-columns: 204px 1fr;

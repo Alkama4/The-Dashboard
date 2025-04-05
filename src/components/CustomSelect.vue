@@ -5,6 +5,7 @@
         <div 
             class="selected-option icon-align" 
             :class="{'invalid-input': invalidState}"
+            tabindex="0"
             @keydown.down.prevent="handleKeyDown('down')" 
             @keydown.up.prevent="handleKeyDown('up')" 
             @keydown.enter.prevent="handleKeyDown('enter')"
