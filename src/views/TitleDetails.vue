@@ -57,11 +57,19 @@
         <div class="content-width-medium title-details">
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
-                    <div class="poster-placholder">
+                    <a v-if="!standAloneBuild" :href="watchNowLink" target="_blank" class="poster-placholder">
                         <img 
                             :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         >
+                        <IconLinkExternal class="icon-link" size="38px"/>
+                    </a>
+                    <div v-else class="poster-placholder" @click="standAloneBlocked">
+                        <img 
+                            :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
+                            @load="(event) => event.target.classList.add('loaded')"
+                        >
+                        <IconLinkExternal class="icon-link" size="38px"/>
                     </div>
                 </div>
 
@@ -1141,6 +1149,9 @@ export default {
                 }
             }
         },
+        standAloneBlocked() {
+            notify("Action not available! This feature requires a backend server to find a streaming service for the title.");
+        }
     },
     computed: {
         titleEpisodeCount() {
@@ -1157,6 +1168,10 @@ export default {
                 return lastAirDate;
             }
             return null;
+        },
+        watchNowLink() {
+            // Send to fastapi to redirect to the correct "Just watch" url
+            return process.env.VUE_APP_API_URL + '/watch_now/' + this.titleInfo.title_id;
         }
     },
     async beforeRouteUpdate(to) {
@@ -1533,6 +1548,7 @@ export default {
     border-radius: var(--border-radius-medium);
     height: 316px;
     display: flex;
+    cursor: pointer;
     /* Causes issues with gap. Don't use. */
     /* aspect-ratio: 2/3; */
 }
@@ -1540,6 +1556,21 @@ export default {
     border-radius: var(--border-radius-medium);
     height: 100%;
     aspect-ratio: 2/3;
+    transition: filter 0.1s ease-out;
+}
+.poster-next-to-stuff .poster-placholder:hover img {
+    filter: brightness(0.75);
+}
+.poster-next-to-stuff .poster-placholder .icon-link {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: filter 0.1s !important;
+    filter: opacity(0);
+}
+.poster-next-to-stuff .poster-placholder:hover .icon-link {
+    filter: opacity(1);
 }
 
 .title-details .tags {
