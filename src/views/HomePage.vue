@@ -326,22 +326,28 @@ export default {
 		getServiceUrls() {
 			if (process.env.VUE_APP_STANDALONE_BUILD == "false") {
 				const serviceUrls = [];
+				// Check if the current hostname is an IPv4 so that we later try the correct one first
+				const isIpv4 = /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(location.hostname);
 				let i = 1;
-				
+
+				// Loop through envs until at least one is missing
 				while (
-					process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`] 
-					&& process.env[`VUE_APP_OTHER_SERVICE_${i}_URL`]
+					process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`]
 					&& process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`]
+					&& (process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_IP`]
+					|| process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_HOSTNAME`])
 				) {
+					const urlIp = process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_IP`];
+					const urlHostname = process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_HOSTNAME`];
 					serviceUrls.push({
 						name: process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`],
-						url: process.env[`VUE_APP_OTHER_SERVICE_${i}_URL`],
-						iconUrl: process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`]
+						iconUrl: process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`],
+						url: isIpv4 ? (urlIp || urlHostname) : (urlHostname || urlIp) // Choose IP or hostname based on IPv4 check
 					});
+					
 					i++;
 				}
-	
-				console.debug("[getServiceUrls] Service urls:", serviceUrls);
+
 				this.serviceUrls = serviceUrls;
 			} else {
 				this.serviceUrls = [{

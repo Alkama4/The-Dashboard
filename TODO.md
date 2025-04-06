@@ -65,6 +65,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Accordion (Haitari) mini toggle instead → allows animation  
         - Loading placeholders on mobile have uneven spacing
 
+    - Home page
+        - The text-area div is offset as I wan't it, but it partially covers the content below.
+            - Make not as tall and set position differently
+
     - Analytics  
         - List of total amounts (old style) next to new pie chart
         - Do no like how it shows the totals immidiately with colors making it the first thing that is shown
@@ -151,7 +155,22 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Only case would be if there are new titles  
         - How long expiry?  
             - Month? Day? Max count? 50?  
-
+    - Collections for titles
+        - Seperate table that has the following columns
+            - collection id
+            - User id
+            - collection name
+            - Collection description, if the user wants to have a short description, notes, links
+            - Collection color, since would be implemented visually as a tag (clickable?)
+        - Join table collection_title
+            - Collection id
+            - title id
+        - How are they implemented on ui?
+            - plus icon after tags?
+            - can click existing collection tags.
+            - click always opens a modal
+                - Make own components for show/edit, add
+            - Seperate page for creating a collection
 
 
 ### Feature ideas that might never see the light of day
