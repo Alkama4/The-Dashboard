@@ -20,6 +20,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
 ## Features
 ### Feature ideas
 - General UI
+    - Placeholers
+        - Make them 100vh. It feels better when its overkill because it allows to scroll and is clearer for the user?
     - Navigation  
         - Highlight link when page is open to show location  
             - Not sure if needed, but could be improved  
@@ -171,6 +173,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - click always opens a modal
                 - Make own components for show/edit, add
             - Seperate page for creating a collection
+    - When adding a tv-show the seasons aren't added because it errors out.
 
 
 ### Feature ideas that might never see the light of day

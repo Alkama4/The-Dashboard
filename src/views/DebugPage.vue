@@ -69,7 +69,9 @@
             />
         </div>
 
-        <FormTransaction/>
+        <div class="card fit-content">
+            <FormTransaction :initialFormValues="{date: '2022-01-01', categories: [{name: 'Example', amount: 987.65}, {name: 'Example 2', amount: 123}]}"/>
+        </div>
 
     </div>
 </template>
@@ -204,9 +206,9 @@ export default {
     margin: 0;
 }
 
-.debug-page {
+/* .debug-page {
     padding: 20px;
-}
+} */
 .color-palette {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -219,4 +221,12 @@ export default {
 .color-palette div {
     height: 200px;
 }
+
+.fit-content {
+    width: fit-content;
+    box-sizing: border-box;
+    max-width: 100%;
+    margin-inline: auto;
+}
+
 </style>

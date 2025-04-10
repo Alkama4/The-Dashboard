@@ -1,12 +1,20 @@
 <template>
     <div class="custom-input-text custom-input">
         <input 
+            v-if="type !== 'textarea'" 
             :type="type" 
             :value="modelValue" 
             :class="{'invalid-input': invalidState}"
             :placeholder="placeholder"
             @input="onInput($event)"
         >
+        <textarea 
+            v-else 
+            :value="modelValue" 
+            :class="{'invalid-input': invalidState}"
+            :placeholder="placeholder"
+            @input="onInput($event)"
+        ></textarea>
     </div>
 </template>
 
@@ -25,6 +33,10 @@ export default {
             type: String,
             default: ""
         },
+        mandatory: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
@@ -36,8 +48,12 @@ export default {
             this.invalidState = true;
         },
         onInput(event) {
+            if (event.target.validity.badInput) {
+                this.markInvalid();
+            } else {
+                this.invalidState = false;
+            }
             this.$emit('update:modelValue', event.target.value);
-            this.invalidState = false;
         }
     }
 };

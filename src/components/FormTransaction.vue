@@ -1,114 +1,463 @@
 <template>
-    <form @submit.prevent="handleSubmit" class="form-transaction">
-        <div class="form-row">
+    <div class="form-transaction">
+        <div class="form-row tool-row">
+            <div class="presets-carousel">
+                <button v-for="(preset, index) in presets" :key="index" @click="$refs.comingSoonGM.open()">
+                    <IconPaste size="20px" class="icon-button"/>
+                    {{ preset.name }}
+                </button>
+            </div>
+            <div class="tools">
+                <IconSave class="icon-button" @click="$refs.comingSoonGM.open()"/>
+                <IconReset class="icon-button" v-if="initialFormValues != null" @click="handleResetInitialValues()"/>
+                <IconTrash class="icon-button" @click="handleResetFormValues()"/>
+            </div>
+        </div>
+        <div class="seperator"></div>
+        <div class="form-row mobile-column">
             <div class="label-wrapper">
                 <label>Direction</label>
-                <SliderToggle v-model="formValues.direction" :options="['Expense', 'Income']" label="Direction"/>
+                <SliderToggle 
+                    v-model="currentFormValues.direction" 
+                    :options="['Expense', 'Income']" 
+                    label="Direction"
+                />
             </div>
             <div class="label-wrapper">
                 <label>Date</label>
-                <CustomGenericInput type="date" v-model="formValues.name" ref="textRef"/>
+                <CustomGenericInput 
+                    type="date" 
+                    v-model="currentFormValues.date" 
+                    ref="dateRef"
+                />
             </div>
         </div>
         <div class="form-row">
             <div class="label-wrapper">
                 <label>Counterparty</label>
                 <CustomSearchSelect 
-                    v-model="selectedCounterparty" 
+                    v-model="currentFormValues.counterparty" 
                     :options="options.counterparties" 
                     ref="counterpartyRef"
                 />
             </div>
         </div>
+        <div class="categories">
+            <div class="category-row">
+                <div class="category-column column">
+                    <div v-if="currentFormValues.categories.length > 1" class="left-mod-button"></div>
+                    <label>Category</label>
+                </div>
+                <div class="amount-column column">
+                    <label>Amount</label>
+                    <div v-if="currentFormValues.categories.length > 1" class="right-mod-button"></div>
+                </div>
+            </div>
+            <div class="category-rows">
+                <div class="category-row" v-for="(category, index) in currentFormValues.categories" :key="index">
+                    <div class="category-column column">
+                        <div v-if="currentFormValues.categories.length > 1" class="left-mod-button">
+                            <div
+                                class="move-up move-button icon-button"
+                                :class="{
+                                    'move-button-center': index == currentFormValues.categories.length - 1,
+                                    'move-button-hide': index == 0
+                                }"
+                                @click="moveCategory('up', index)"
+                            >
+                                <IconChevronDown size="20px"/>
+                            </div>
+                            <div
+                                class="move-down move-button icon-button"
+                                :class="{
+                                    'move-button-center': index == 0,
+                                    'move-button-hide': index == currentFormValues.categories.length - 1
+                                }"
+                                @click="moveCategory('down', index)"
+                            >
+                                <IconChevronDown size="20px"/>
+                            </div>
+                        </div>
+                        <CustomSearchSelect 
+                            v-model="category.name" 
+                            :options="options.categories" 
+                            :ref="`categorySelect${index}Ref`"
+                            placeholder="Select or type"
+                        />
+                    </div>
+                    <div class="amount-column column">
+                        <CustomGenericInput 
+                            type="number" 
+                            v-model="category.amount" 
+                            :ref="`categoryAmount${index}Ref`"
+                            placeholder="Number"
+                        />
+                        <IconCross 
+                            v-if="currentFormValues.categories.length > 1"
+                            class="icon-button right-mod-button"
+                            @click="currentFormValues.categories.splice(index, 1)"
+                            size="32px"
+                        />
+                    </div>
+                </div>
+            </div>
+            <div class="category-row">
+                <!-- <div v-if="currentFormValues.categories.length > 1" class="left-mod-button"></div> -->
+                <button class="category-column" @click="currentFormValues.categories.push({name: '', amount: null})">Add category</button>
+                <div v-if="currentFormValues.categories.length > 1" class="amount-column total-amount">
+                    <span class="label">Total: </span>
+                    <span class="value">{{ totalAmount }}</span>
+                </div>
+                <!-- <div v-if="currentFormValues.categories.length > 1" class="right-mod-button"></div> -->
+            </div>
+        </div>
         <div class="form-row">
             <div class="label-wrapper">
-                <label>Amount</label>
+                <label>Counterparty</label>
                 <CustomGenericInput 
-                    v-for="(category, index) in formValues.categories" 
-                    :key="index" 
-                    type="number" 
-                    v-model="category.amount" 
-                    :ref="`amount${index}`"
-                />
-            </div>
-            <div class="label-wrapper">
-                <label>Category</label>
-                <CustomSearchSelect 
-                    v-for="(category, index) in formValues.categories"
-                    :key="index" 
-                    v-model="category.name" 
-                    :options="options.categories" 
-                    :ref="`categorySelect${index}`"
+                    type="textarea" 
+                    v-model="currentFormValues.notes" 
+                    ref="notesRef"
                 />
             </div>
         </div>
-        <button class="button-primary" type="submit">{{ submitText }}</button>
-    </form>
+        <button @click="handleSubmit" class="button-primary" type="submit">{{ submitText }}</button>
+        
+        <!-- Modals -->
+        <ModalConfirmation 
+            ref="resetFormDataMC"
+            header="Reset Form Data"
+            text="Are you sure you want to reset the form? All current values will be cleared. 
+                (This will not affect any transaction, only the form data.)"
+            affirmative-option="Reset"
+        />
+
+        <ModalConfirmation 
+            ref="initialFormDataMC"
+            header="Revert to Initial Data"
+            text="Are you sure you want to revert the form to its original state? 
+                All current values will be cleared and replaced with the initial data. 
+                (This will not affect any transaction, only the form data.)"
+            affirmative-option="Revert"
+        />
+
+        <ModalGeneric ref="comingSoonGM" header="Coming Soon!"> 
+            <p>This feature is on its way and will be available soon. Stay tuned!</p>
+            <button class="button-primary" @click="$refs.comingSoonGM.close()">Got it!</button>
+        </ModalGeneric>
+    </div>
 </template>
 
 <script>
+import { notify } from '@/utils/notification';
 import CustomGenericInput from './CustomGenericInput.vue';
 import CustomSearchSelect from './CustomSearchSelect.vue';
+import IconChevronDown from './icons/IconChevronDown.vue';
+import IconCross from './icons/IconCross.vue';
 import SliderToggle from './SliderToggle.vue';
+import { convert } from '@/utils/mytools';
+import IconReset from './icons/IconReset.vue';
+import IconTrash from './icons/IconTrash.vue';
+import IconSave from './icons/IconSave.vue';
+import IconPaste from './icons/IconPaste.vue';
+import ModalConfirmation from './ModalConfirmation.vue';
+import ModalGeneric from './ModalGeneric.vue';
 
 export default {
     name: "FormTransaction",
     data() {
         return {
-            formValues: {
+            defaultFormValues: {
                 direction: 'Expense',
-                name: "",
+                date: new Date().toISOString().slice(0, 10),
+                counterparty: '',
                 categories: [
-                    { name: '', amount: 0 }
+                    { name: '', amount: null }
                 ],
+                notes: '',
             },
+            currentFormValues: {},
             options: {
                 categories: ["category 1", "category 2", "category 3"],
                 counterparties: ["counterparty 1", "counterparty 2", "counterparty 3"]
             },
-            selectedCounterparty: ''
+            presets: [
+                {
+                    name: 'Preset name',
+                    presetValues: {
+                        direction: 'Expense',
+                        counterparty: 'Counterparty 1',
+                        categories: [
+                            { name: 'Category 1', amount: 1.23 }
+                        ],
+                    }
+                },
+                {
+                    name: 'Example',
+                    presetValues: {
+                        direction: 'Income',
+                        counterparty: 'Counterparty 2',
+                        categories: [
+                            { name: 'Category 2', amount: 1.23 },
+                            { name: 'Category 3', amount: -12.34 }
+                        ],
+                    }
+                }
+                ,
+                {
+                    name: 'Example 2',
+                    presetValues: {
+                        direction: 'Income',
+                        counterparty: 'Counterparty 2',
+                        categories: [
+                            { name: 'Category 2', amount: 1.23 },
+                            { name: 'Category 3', amount: -12.34 }
+                        ],
+                    }
+                }
+            ]
         };
     },
     components: {
         CustomSearchSelect,
         CustomGenericInput,
         SliderToggle,
+        ModalConfirmation,
+        ModalGeneric,
+        IconCross,
+        IconChevronDown,
+        IconReset,
+        IconTrash,
+        IconSave,
+        IconPaste,
     },
     props: {
+        initialFormValues: {
+            type: Object,
+            default: null
+        },
         submitText: {
             type: String,
             default: "Submit"
-        }
+        },
     },
     methods: {
         handleSubmit() {
+            notify("Submitting...");
+            console.log(this.currentFormValues)
+
             this.$refs.textRef.markInvalid();
-            this.$refs.numberRef.markInvalid();
-            this.$refs.searchRef.markInvalid();
+            // this.$refs.numberRef.markInvalid();
+            // this.$refs.searchRef.markInvalid();
             // Add your form submission logic here
         },
+        moveCategory(direction, index) {
+            const chosenValues = this.currentFormValues.categories[index];
+            let targetIndex;
+
+            if (direction === 'up') {
+                targetIndex = Math.max(index - 1, 0);
+            } else if (direction === 'down') {
+                targetIndex = Math.min(index + 1, this.currentFormValues.categories.length - 1);
+            } else {
+                return;
+            }
+
+            const targetValues = this.currentFormValues.categories[targetIndex];
+
+            // Swap the categories
+            this.currentFormValues.categories.splice(index, 1, targetValues);
+            this.currentFormValues.categories.splice(targetIndex, 1, chosenValues);
+        },
+        deepCloneObject(obj) {
+            return JSON.parse(JSON.stringify(obj));
+        },
+        async handleResetFormValues() {
+            if (!await this.$refs.resetFormDataMC.prompt()) return;
+            this.resetFormValues();
+        },
+        resetFormValues() {
+            this.currentFormValues = this.deepCloneObject(this.defaultFormValues);
+        },
+        async handleResetInitialValues() {
+            if (!await this.$refs.initialFormDataMC.prompt()) return;
+            if (!this.initialFormValues) {
+                console.warn("The initial values is somewhow empty!");
+                notify("There are no initial values to set!", "warning");
+                return;
+            }
+            this.currentFormValues = this.deepCloneObject(this.initialFormValues);
+        },
+        setInitialValues() {
+            this.currentFormValues = this.deepCloneObject(this.defaultFormValues);
+            if (this.initialFormValues) {
+                Object.assign(
+                    this.currentFormValues,
+                    this.deepCloneObject(this.initialFormValues)
+                );
+            }
+        }
     },
+    computed: {
+        totalAmount() {
+            return convert.toEur(this.currentFormValues.categories.reduce((acc, curr) => {
+                return acc + Number(curr && curr.amount ? curr.amount : 0);
+            }, 0));
+        }
+    },
+    created() {
+        this.setInitialValues();
+    }
 };
 </script>
 
 <style scoped>
-form {
+.form-transaction {
     display: grid;
+    width: 800px;
+    max-width: 100%;
     grid-template-columns: 1fr;
     grid-template-areas: none;
     row-gap: var(--spacing-md);
 }
 
-form .form-row {
+.form-transaction .form-row {
     display: flex;
     flex-direction: row;
-    gap: var(--spacing-md);
+    column-gap: var(--spacing-md);
+    align-items: center;
+}
+@media(max-width: 500px) {
+    .form-row.mobile-column {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    .form-row.mobile-column .label-wrapper {
+        width: 100%;
+    }
 }
 
-.form-row .label-wrapper {
+.tool-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+.tool-row .tools {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+.tool-row .presets-carousel {
+    overflow-x: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-sm);
+    max-width: 100%;
+    flex-wrap: nowrap;
+}
+
+.tool-row button {
+    padding: 4px 8px;
+    font-size: var(--font-size-small);
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.form-transaction .categories button {
+    width: 100%;
+    margin-top: var(--spacing-sm);
+    margin-bottom: 0;
+    padding-inline: 0;
+}
+
+.total-amount {
+    margin-top: var(--spacing-sm);
+    background-color: var(--color-background-input);
+    border-radius: var(--border-radius-small);
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.total-amount .label {
+    padding-left: var(--spacing-sm);
+    color: var(--color-text-lighter);
+    font-weight: 500;
+}
+.total-amount .value {
+    padding-left: var(--spacing-sm);
+    font-weight: 500;
+}
+
+.form-transaction .category-rows {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-sm);
+}
+.form-transaction .category-row {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing-sm);
+    align-items: center;
+}
+
+.form-transaction .label-wrapper {
     display: flex;
     flex-direction: column;
     flex: 1;
+}
+
+
+.move-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 0;
+}
+.move-button svg {
+    transform: scale(1.5) translateY(-1.5px);
+    pointer-events: none;
+}
+
+.move-button.move-button-hide {
+    display: none;
+}
+.move-button.move-button-center {
+    height: 32px;
+}
+
+.move-up {
+    transform: rotate(180deg);
+}
+
+.column {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.category-column {
+    flex: 2;
+}
+.amount-column {
+    flex: 1;
+    min-width: 125px;
+}
+
+.custom-search-select {
+    width: 100%;
+}
+
+.right-mod-button {
+    width: 32px;
+}
+.left-mod-button {
+    width: 32px;
 }
 
 .slider-toggle {

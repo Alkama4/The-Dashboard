@@ -34,7 +34,7 @@
                 {{ option }}
             </li>
             <li v-if="filteredOptions.length == 0" class="not-found" @click.prevent>
-                No matches found, using input as is.
+                No matches found, using the current value.
             </li>
         </ul>
     </div>
@@ -69,7 +69,7 @@ export default {
         return {
             isStylingOpen: false,
             isLogicalOpen: false,
-            selectedOption: null,
+            selectedOption: "",
             highlightedIndex: -1,
             invalidState: false,
         };
@@ -155,7 +155,7 @@ export default {
         modelValue: {
             immediate: true,
             handler(value) {
-                this.selectedOption = this.options.find(opt => opt === value) || null;
+                this.selectedOption = value || "";
             }
         }
     }

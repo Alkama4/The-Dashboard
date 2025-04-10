@@ -82,8 +82,8 @@
 								</div>
 								<div>
 									<div>{{ backup.peer_device }}</div>
-									<div class="path" title="Copy to clipboard" @click="copyToClipboard(backup.source_path, 'Path')">{{ backup.source_path }}</div>
-									<div class="path" title="Copy to clipboard" @click="copyToClipboard(backup.destination_path, 'Path')">{{ backup.destination_path }}</div>
+									<div class="path hover-decoration" title="Copy to clipboard" @click="copyToClipboard(backup.source_path, 'Path')">{{ backup.source_path }}</div>
+									<div class="path hover-decoration" title="Copy to clipboard" @click="copyToClipboard(backup.destination_path, 'Path')">{{ backup.destination_path }}</div>
 								</div>
 							</div>
 						</div>

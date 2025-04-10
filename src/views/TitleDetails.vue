@@ -591,7 +591,7 @@
         <!-- ========== MODALS ========== -->
 
         <!-- Watch list modification -->
-        <ConfirmationModal 
+        <ModalConfirmation 
             ref="removeTitleCM"
             header="Remove from watchlist"
             text="Are you sure you wan't to remove the title from your watchlist?
@@ -600,14 +600,14 @@
         />
 
         <!-- Titles watch/unwatch -->
-        <ConfirmationModal 
+        <ModalConfirmation 
             ref="markTitleWatchedCM"
             header="Mark watched"
             text="Are you sure you want to mark the entire TV show as watched?
             This will mark all episodes as watched, effectively erasing your progress."
             affirmative-option="Mark as Watched"
         />
-        <ConfirmationModal 
+        <ModalConfirmation 
             ref="markTitleUnwatchedCM"
             header="Reset watch status"
             text="Are you sure you want to reset the title's watch status?
@@ -616,14 +616,14 @@
         />
 
         <!-- Seasons watch/unwatch -->
-        <ConfirmationModal 
+        <ModalConfirmation 
             ref="markSeasonWatchedCM"
             header="Mark watched"
             text="Are you sure you want to mark the entire season as watched?
             This will mark all episodes in the season as watched, effectively erasing your progress."
             affirmative-option="Mark as Watched"
         />
-        <ConfirmationModal 
+        <ModalConfirmation 
             ref="markSeasonUnwatchedCM"
             header="Reset watch status"
             text="Are you sure you want to reset the season's watch status?
@@ -632,7 +632,7 @@
         />
 
         <!-- Title refresh data -->
-        <GenericModal ref="refreshTitleDataGM" header="Requery Title Data">
+        <ModalGeneric ref="refreshTitleDataGM" header="Requery Title Data">
             <div class="choice-modal">
                 <p>What data would you like to requery?</p>
                 <ul>
@@ -666,10 +666,10 @@
                     </div>
                 </div>
             </div>
-        </GenericModal>
+        </ModalGeneric>
 
         <!-- Season refresh data -->
-        <GenericModal ref="refreshSeasonDataGM" header="Requery Season Data">
+        <ModalGeneric ref="refreshSeasonDataGM" header="Requery Season Data">
             <div class="choice-modal">
                 <p>What data would you like to requery?</p>
                 <ul>
@@ -684,7 +684,7 @@
                     <button @click="handleTitleUpdate('season', 'full')">Full Update</button>
                 </div>
             </div>
-        </GenericModal>
+        </ModalGeneric>
     </div>
 
     <div v-else-if="!waitingForResult.includes('titleInfo')">
@@ -714,8 +714,8 @@ import IconFileImage from '@/components/icons/IconFileImage.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
-import ConfirmationModal from '@/components/ModalConfirmation.vue';
-import GenericModal from '@/components/ModalGeneric.vue';
+import ModalConfirmation from '@/components/ModalConfirmation.vue';
+import ModalGeneric from '@/components/ModalGeneric.vue';
 
 export default {
     data() {
@@ -742,8 +742,8 @@ export default {
     components: {
         InfoTooltip,
         IndicatorDots,
-        ConfirmationModal,
-        GenericModal,
+        ModalConfirmation,
+        ModalGeneric,
         notFoundPage,
 
         IconTMDB,
