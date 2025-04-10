@@ -216,14 +216,14 @@
     --color-border-light: hsla(0, 0%, 100%, 0.3);
     
     /* Backgrounds */
-    --color-background: #111;
-    --color-background-backdrop: rgba(0, 0, 0, 0.5);
+    --color-background: hsl(0, 0%, 6.3%);
+    --color-background-backdrop: hsla(0, 0%, 0%, 0.5);
     --color-background-backdrop-mobile-menu: rgba(0, 0, 0, 0.5);
-    --color-background-top-bar: #111;
+    --color-background-top-bar: var(--color-background);
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0.3);
     --color-background-modal: #111;
-    --color-background-card: hsl(0, 0%, 9.5%);
-    --color-background-card-section: #151515;
+    --color-background-card: hsl(0, 0%, 10%);
+    --color-background-card-section: hsl(0, 0%, 8%);
     --color-background-input: #262626;
     --color-background-input-light: #1a1a1a;
     --color-background-input-strong: #292929;
@@ -851,11 +851,29 @@ input[type="radio"] {
     padding: var(--spacing-md);
     margin: calc(var(--spacing-md) + var(--spacing-xs)) 0;
 }
-.card h2 {
+
+.card h2.card-header {
     margin-top: -2px;
     margin-bottom: var(--spacing-sm);
     margin-left: 5px;
     margin-right: 0;
+}
+
+form.simple-form {
+    padding: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    margin-inline: auto;
+    row-gap: var(--spacing-md);
+}
+form.simple-form h2 {
+    margin: 0;
+    margin-bottom: var(--spacing-md);
+}
+form.simple-form button {
+    margin: 0;
+    margin-top: var(--spacing-md);
 }
 
 .combined-buttons {

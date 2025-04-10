@@ -3,18 +3,19 @@
         <h1>Create account</h1>
         <p>Create your account by filling in the form below.</p>
 
-        <form @submit.prevent="handleLogin">
+        <form @submit.prevent="handleLogin" class="card simple-form">
+            <h2>Account Details</h2>
             <div>
-                <label for="username">Choose a username:</label>
-                <CustomGenericInput v-model="username" ref="usernameRef" placeholder="Enter the username"/>
+                <label for="username">Username</label>
+                <CustomGenericInput v-model="username" ref="usernameRef" placeholder="Choose a username"/>
             </div>
             <div>
-                <label for="password">Password:</label>
+                <label for="password">Password</label>
                 <CustomPasswordInput v-model="password" ref="passwordRef" placeholder="Enter a password"/>
             </div>
             <div>
-                <label for="password">Repeat password:</label>
-                <CustomPasswordInput v-model="passwordRepeat" ref="passwordRepeatRef" placeholder="Confirm the password"/>
+                <label for="password">Confirm password</label>
+                <CustomPasswordInput v-model="passwordRepeat" ref="passwordRepeatRef" placeholder="Confirm your password"/>
             </div>
             <button class="button-primary" type="submit">Create account</button>
         </form>
@@ -88,11 +89,5 @@ export default {
 </script>
 
 <style scoped>
-    form {
-        display: flex;
-        flex-direction: column;
-        max-width: 400px;
-        row-gap: var(--spacing-md);
-        margin-inline: auto;
-    }
+
 </style>

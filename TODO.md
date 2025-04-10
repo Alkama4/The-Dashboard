@@ -20,7 +20,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
 ## Features
 ### Feature ideas
 - General UI
-    - Placeholers
+    - Inputs
+        - Match the color of default placholder and the custom ones.
+        - Search input
+    - Loading placeholers
         - Make them 100vh. It feels better when its overkill because it allows to scroll and is clearer for the user?
     - Navigation  
         - Highlight link when page is open to show location  

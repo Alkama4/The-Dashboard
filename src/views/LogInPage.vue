@@ -5,14 +5,15 @@
 
         <p>Use the form below to log in by filling in the details. Don't have an account? Create one <router-link to="/create_account">here.</router-link> If you have forgotten your username or password please contanct the server admin.</p>
 
-        <form @submit.prevent="handleLogin">
+        <form @submit.prevent="handleLogin" class="card simple-form">
+            <h2>Enter Your Details</h2>
             <div>
-                <label for="username">Username:</label>
-                <CustomGenericInput v-model="username" ref="usernameRef"/>
+                <label for="username">Username</label>
+                <CustomGenericInput v-model="username" ref="usernameRef" placeholder="Your username"/>
             </div>
             <div>
-                <label for="password">Password:</label>
-                <CustomPasswordInput v-model="password" ref="passwordRef"/>
+                <label for="password">Password</label>
+                <CustomPasswordInput v-model="password" ref="passwordRef" placeholder="Your password"/>
             </div>
             <button class="button-primary" type="submit">Log in</button>
         </form>
@@ -66,11 +67,5 @@ export default {
 </script>
 
 <style scoped>
-    form {
-        display: flex;
-        flex-direction: column;
-        max-width: 400px;
-        margin-inline: auto;
-        row-gap: var(--spacing-md);
-    }
+
 </style>

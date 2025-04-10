@@ -158,13 +158,14 @@
 
 		<div class="content-width-large">
 			<h2>Server resource usages <span class="text-lighter">(Under construction)</span></h2>
-			<CustomSelect 
-				v-model="serverLogsTimespan" 
-				:options="serverLogsTimespans"
-				:disabled="waitingFor.length != 0"
-				:class="{loading: waitingFor.length != 0}"
-			/>
 			<div class="card server-resources content-width-large">
+				<CustomSelect 
+					v-model="serverLogsTimespan" 
+					:options="serverLogsTimespans"
+					:disabled="waitingFor.length != 0"
+					:class="{loading: waitingFor.length != 0}"
+					style="width: 100%; margin-bottom: var(--spacing-md);"
+				/>
 				<!-- Chart 1 - CPU temp -->
 				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
 

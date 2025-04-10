@@ -109,7 +109,7 @@ export default {
     box-sizing: border-box;
     border-radius: var(--border-radius-medium);
     padding: var(--spacing-lg);
-    background-color: var(--color-background);
+    background-color: var(--color-background-card);
     
     display: flex;
     flex-direction: column;

@@ -27,7 +27,7 @@
         -->
 
         <div class="card content-width-medium">
-            <h2>Overall Statistics</h2>
+            <h2 class="card-header">Overall Statistics</h2>
             <div class="info-grid">
                 <div class="cell">
                     <div class="label">Total Transactions Logged</div>
@@ -58,7 +58,7 @@
         </div>
 
         <div class="card content-width-medium">
-            <h2>Last Month</h2>
+            <h2 class="card-header">Last Month</h2>
             <div class="info-grid">
                 <div class="cell">
                     <div class="label">Daily Average Spending</div>
@@ -99,7 +99,7 @@
         </div>
 
         <div class="card content-width-medium">
-            <h2>Last Year</h2>
+            <h2 class="card-header">Last Year</h2>
             <div class="info-grid">
                 <div class="cell">
                     <div class="label">Daily Average Spending</div>
