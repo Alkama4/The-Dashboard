@@ -111,6 +111,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Remake sidebar filter thingy so that it can be used here
                 - And fix the instant hide at the same time.
             - Placeholder like two pixels two small
+        - Search should be more available.
+            - Add a button next to "+"?
+            - Search bar to top bar or on the start?
+            - Seperate page for all titles list as a search page?
 
     - Title Details  
         - Add link to a site that shows where to watch

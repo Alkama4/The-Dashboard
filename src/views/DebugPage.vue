@@ -70,7 +70,45 @@
         </div>
 
         <div class="card fit-content">
-            <FormTransaction :initialFormValues="{date: '2022-01-01', categories: [{name: 'Example', amount: 987.65}, {name: 'Example 2', amount: 123}]}"/>
+            <FormTransaction :initialFormValues="{date: '2022-01-01', categories: [{name: 'Example', amount: '987.65'}, {name: 'Example 2', amount: '123'}]}"/>
+        </div>
+
+        <div v-for="(item, index) in items" :key="item.id">
+            <div
+                class="drop-zone"
+                :class="{ active: hoveredDropZone === index }"
+            >
+                <div
+                    v-show="draggedIndex != null"
+                    class="drop-zone-area"
+                    @dragover.prevent="hoveredDropZone = index"
+                    @dragleave="hoveredDropZone = null"
+                    @drop="drop(index)"
+                ></div>
+            </div>
+
+            <div class="draggable-item">
+                <span
+                    class="drag-handle"
+                    draggable="true"
+                    @dragstart="draggedIndex = index;"
+                >
+                    ⠿
+                </span>
+                {{ item.name }}
+            </div>
+        </div>
+        <div
+            class="drop-zone"
+            :class="{ active: hoveredDropZone === items.length }"
+        >
+            <div
+                v-show="draggedIndex != null"
+                class="drop-zone-area"
+                @dragover.prevent="hoveredDropZone = items.length"
+                @dragleave="hoveredDropZone = null"
+                @drop="drop(items.length)"
+            ></div>
         </div>
 
     </div>
@@ -97,7 +135,15 @@ export default {
     },  
     data() {
         return {
+            items: [
+                { id: 1, name: 'Item 1' },
+                { id: 2, name: 'Item 2' },
+                { id: 3, name: 'Item 3' },
+                { id: 4, name: 'Item 4' },
+            ],
             exampleChartOptions: null,
+            draggedIndex: null,
+            hoveredDropZone: null
         }
     },
     methods: {
@@ -124,6 +170,14 @@ export default {
         },
         openTestModal() {
             this.$refs.testModalRef.open()
+        },
+        // DRAGGING
+        drop(dropIndex) {
+            const draggedItem = this.items[this.draggedIndex];
+            this.items.splice(this.draggedIndex, 1);
+            this.items.splice(dropIndex > this.draggedIndex ? dropIndex - 1 : dropIndex, 0, draggedItem);
+            this.hoveredDropZone = null;
+            this.draggedIndex = null;
         }
     },
     async mounted() {
@@ -227,6 +281,38 @@ export default {
     box-sizing: border-box;
     max-width: 100%;
     margin-inline: auto;
+}
+
+/* DRAG TEST */
+.drop-zone {
+    height: 10px;
+    background: transparent;
+
+    position: relative;
+    height: 2px;
+    background: transparent;
+    transition: background 0.2s;
+}
+.drop-zone.active {
+    background: var(--color-primary); /* highlight color */
+}
+
+.draggable-item {
+    /* padding: 10px; */
+    height: 40px;
+    background: var(--color-background-card);
+}
+
+.drag-handle {
+    cursor: grab;
+    user-select: none;
+}
+
+.drop-zone-area {
+    height: 42px; /* invisible but still gets mouse events */
+    position: absolute;
+    width: 100%;
+    transform: translateY(-21px); /* Height / 2  */
 }
 
 </style>

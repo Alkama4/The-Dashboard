@@ -43,72 +43,106 @@
             </div>
         </div>
         <div class="categories">
-            <div class="category-row">
+            <div class="category-row drop-zone-compensation">
                 <div class="category-column column">
-                    <div v-if="currentFormValues.categories.length > 1" class="left-mod-button"></div>
+                    <div v-if="currentFormValues.categories.length > 1" class="left-mod-area"></div>
                     <label>Category</label>
                 </div>
                 <div class="amount-column column">
                     <label>Amount</label>
-                    <div v-if="currentFormValues.categories.length > 1" class="right-mod-button"></div>
+                    <div v-if="currentFormValues.categories.length > 1" class="right-mod-area"></div>
                 </div>
             </div>
             <div class="category-rows">
-                <div class="category-row" v-for="(category, index) in currentFormValues.categories" :key="index">
-                    <div class="category-column column">
-                        <div v-if="currentFormValues.categories.length > 1" class="left-mod-button">
-                            <div
-                                class="move-up move-button icon-button"
-                                :class="{
-                                    'move-button-center': index == currentFormValues.categories.length - 1,
-                                    'move-button-hide': index == 0
-                                }"
-                                @click="moveCategory('up', index)"
+                <div v-for="(category, index) in currentFormValues.categories" :key="index">
+                    <div
+                        class="category-drop-zone"
+                        :class="{ active: dropping.hoveredZoneIndex == index }"
+                    >
+                        <div
+                            v-show="dropping.draggedIndex != null"
+                            class="drop-zone-area"
+                            @dragover.prevent="dropping.hoveredZoneIndex = index"
+                            @dragleave="dropping.hoveredZoneIndex = null"
+                            @drop="categoryHoverDrop(index)"
+                        ></div>
+                    </div>
+
+                    <div class="category-row">
+                        <div class="category-column column">
+                            <!-- <div v-if="currentFormValues.categories.length > 1" class="left-mod-area">
+                                <div
+                                    class="move-up move-button icon-button"
+                                    :class="{
+                                        'move-button-center': index == currentFormValues.categories.length - 1,
+                                        'move-button-hide': index == 0
+                                    }"
+                                    @click="moveCategory('up', index)"
+                                >
+                                    <IconChevronDown size="20px"/>
+                                </div>
+                                <div
+                                    class="move-down move-button icon-button"
+                                    :class="{
+                                        'move-button-center': index == 0,
+                                        'move-button-hide': index == currentFormValues.categories.length - 1
+                                    }"
+                                    @click="moveCategory('down', index)"
+                                >
+                                    <IconChevronDown size="20px"/>
+                                </div>
+                            </div> -->
+                            <div 
+                                class="right-mod-area"
+                                draggable="true"
+                                @dragstart="dropping.draggedIndex = index;"
                             >
-                                <IconChevronDown size="20px"/>
+                                ⠿
                             </div>
-                            <div
-                                class="move-down move-button icon-button"
-                                :class="{
-                                    'move-button-center': index == 0,
-                                    'move-button-hide': index == currentFormValues.categories.length - 1
-                                }"
-                                @click="moveCategory('down', index)"
-                            >
-                                <IconChevronDown size="20px"/>
-                            </div>
+                            <CustomSearchSelect 
+                                v-model="category.name" 
+                                :options="options.categories" 
+                                :ref="`categorySelect${index}Ref`"
+                                placeholder="Select or type"
+                            />
                         </div>
-                        <CustomSearchSelect 
-                            v-model="category.name" 
-                            :options="options.categories" 
-                            :ref="`categorySelect${index}Ref`"
-                            placeholder="Select or type"
-                        />
+                        <div class="amount-column column">
+                            <CustomGenericInput 
+                                type="number" 
+                                v-model="category.amount" 
+                                :ref="`categoryAmount${index}Ref`"
+                                placeholder="Number"
+                            />
+                            <IconCross 
+                                v-if="currentFormValues.categories.length > 1"
+                                class="icon-button right-mod-area"
+                                @click="currentFormValues.categories.splice(index, 1)"
+                                size="32px"
+                            />
+                        </div>
                     </div>
-                    <div class="amount-column column">
-                        <CustomGenericInput 
-                            type="number" 
-                            v-model="category.amount" 
-                            :ref="`categoryAmount${index}Ref`"
-                            placeholder="Number"
-                        />
-                        <IconCross 
-                            v-if="currentFormValues.categories.length > 1"
-                            class="icon-button right-mod-button"
-                            @click="currentFormValues.categories.splice(index, 1)"
-                            size="32px"
-                        />
-                    </div>
+                </div>
+                <div
+                    class="category-drop-zone"
+                    :class="{ active: dropping.hoveredZoneIndex == currentFormValues.categories.length }"
+                >
+                    <div
+                        v-show="dropping.draggedIndex != null"
+                        class="drop-zone-area"
+                        @dragover.prevent="dropping.hoveredZoneIndex = currentFormValues.categories.length"
+                        @dragleave="dropping.hoveredZoneIndex = null"
+                        @drop="categoryHoverDrop(currentFormValues.categories.length)"
+                    ></div>
                 </div>
             </div>
             <div class="category-row">
-                <!-- <div v-if="currentFormValues.categories.length > 1" class="left-mod-button"></div> -->
+                <!-- <div v-if="currentFormValues.categories.length > 1" class="left-mod-area"></div> -->
                 <button class="category-column" @click="currentFormValues.categories.push({name: '', amount: null})">Add category</button>
                 <div v-if="currentFormValues.categories.length > 1" class="amount-column total-amount">
                     <span class="label">Total: </span>
                     <span class="value">{{ totalAmount }}</span>
                 </div>
-                <!-- <div v-if="currentFormValues.categories.length > 1" class="right-mod-button"></div> -->
+                <!-- <div v-if="currentFormValues.categories.length > 1" class="right-mod-area"></div> -->
             </div>
         </div>
         <div class="form-row">
@@ -152,7 +186,7 @@
 import { notify } from '@/utils/notification';
 import CustomGenericInput from './CustomGenericInput.vue';
 import CustomSearchSelect from './CustomSearchSelect.vue';
-import IconChevronDown from './icons/IconChevronDown.vue';
+// import IconChevronDown from './icons/IconChevronDown.vue';
 import IconCross from './icons/IconCross.vue';
 import SliderToggle from './SliderToggle.vue';
 import { convert } from '@/utils/mytools';
@@ -181,37 +215,40 @@ export default {
                 categories: ["category 1", "category 2", "category 3"],
                 counterparties: ["counterparty 1", "counterparty 2", "counterparty 3"]
             },
+            dropping: {
+                draggedIndex: null,
+                hoveredZoneIndex: null
+            },
             presets: [
                 {
-                    name: 'Preset name',
+                    name: 'Example preset',
                     presetValues: {
                         direction: 'Expense',
                         counterparty: 'Counterparty 1',
                         categories: [
-                            { name: 'Category 1', amount: 1.23 }
+                            { name: 'Category 1', amount: "1.23" }
                         ],
                     }
                 },
                 {
-                    name: 'Example',
+                    name: 'Example preset 2',
                     presetValues: {
                         direction: 'Income',
                         counterparty: 'Counterparty 2',
                         categories: [
-                            { name: 'Category 2', amount: 1.23 },
-                            { name: 'Category 3', amount: -12.34 }
+                            { name: 'Category 2', amount: "1.23" },
+                            { name: 'Category 3', amount: "-12.34" }
                         ],
                     }
-                }
-                ,
+                },
                 {
-                    name: 'Example 2',
+                    name: 'Example preset 3',
                     presetValues: {
                         direction: 'Income',
                         counterparty: 'Counterparty 2',
                         categories: [
-                            { name: 'Category 2', amount: 1.23 },
-                            { name: 'Category 3', amount: -12.34 }
+                            { name: 'Category 2', amount: "1.23" },
+                            { name: 'Category 3', amount: "-12.34" }
                         ],
                     }
                 }
@@ -225,7 +262,7 @@ export default {
         ModalConfirmation,
         ModalGeneric,
         IconCross,
-        IconChevronDown,
+        // IconChevronDown,
         IconReset,
         IconTrash,
         IconSave,
@@ -282,11 +319,11 @@ export default {
         async handleResetInitialValues() {
             if (!await this.$refs.initialFormDataMC.prompt()) return;
             if (!this.initialFormValues) {
-                console.warn("The initial values is somewhow empty!");
+                console.warn("The initial values is somewhow not set or is falsy!");
                 notify("There are no initial values to set!", "warning");
                 return;
             }
-            this.currentFormValues = this.deepCloneObject(this.initialFormValues);
+            this.setInitialValues();
         },
         setInitialValues() {
             this.currentFormValues = this.deepCloneObject(this.defaultFormValues);
@@ -296,6 +333,24 @@ export default {
                     this.deepCloneObject(this.initialFormValues)
                 );
             }
+        },
+        categoryHoverDrop(dropIndex) {
+            const categories = this.currentFormValues.categories;
+            const fromIndex = this.dropping.draggedIndex;
+            const draggedItem = categories[fromIndex];
+
+            // Remove the dragged item
+            categories.splice(fromIndex, 1);
+
+            // Adjust drop index if needed (account for item removal shifting indexes)
+            const insertIndex = dropIndex > fromIndex ? dropIndex - 1 : dropIndex;
+
+            // Insert at new position
+            categories.splice(insertIndex, 0, draggedItem);
+
+            // Reset state
+            this.dropping.hoveredZoneIndex = null;
+            this.dropping.draggedIndex = null;
         }
     },
     computed: {
@@ -371,13 +426,13 @@ export default {
 
 .form-transaction .categories button {
     width: 100%;
-    margin-top: var(--spacing-sm);
+    /* margin-top: var(--spacing-sm); */
     margin-bottom: 0;
     padding-inline: 0;
 }
 
 .total-amount {
-    margin-top: var(--spacing-sm);
+    /* margin-top: var(--spacing-sm); */
     background-color: var(--color-background-input);
     border-radius: var(--border-radius-small);
     height: 40px;
@@ -395,15 +450,19 @@ export default {
 }
 
 .form-transaction .category-rows {
-    display: flex;
+    display: flx;
     flex-direction: column;
-    row-gap: var(--spacing-sm);
+    /* row-gap: var(--spacing-sm); */
+    row-gap: 0;
 }
 .form-transaction .category-row {
     display: flex;
     flex-direction: row;
     gap: var(--spacing-sm);
     align-items: center;
+}
+.category-row.drop-zone-compensation {
+    margin-bottom: -6px;    /* Default on 2px, jollonka kun drop-zone on 8px tulos on tämä */
 }
 
 .form-transaction .label-wrapper {
@@ -440,6 +499,7 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+    column-gap: var(--spacing-sm);
 }
 .category-column {
     flex: 2;
@@ -453,14 +513,42 @@ export default {
     width: 100%;
 }
 
-.right-mod-button {
-    width: 32px;
+.right-mod-area {
+    width: 22px;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    user-select: none;
+    cursor: grab;
+    font-size: 22px;
+    color: var(--color-text-light);
 }
-.left-mod-button {
+.left-mod-area {
     width: 32px;
 }
 
 .slider-toggle {
     width: 100%;
 }
+
+
+.category-drop-zone {
+    background: transparent;
+    position: relative;
+    height: 2px;
+    margin: 3px 0;
+    background: transparent;
+    transition: background-color 0.2s ease-out;
+}
+.category-drop-zone.active {
+    background: var(--color-primary);
+}
+.category-drop-zone .drop-zone-area {
+    height: 42px;
+    position: absolute;
+    width: 100%;
+    transform: translateY(-21px); /* (Height / 2)  */
+    z-index: var(--z-above-input);
+}
+
 </style>

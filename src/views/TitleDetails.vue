@@ -1731,6 +1731,9 @@ iframe {
 .title-details .notes-text-area {
     margin-top: var(--spacing-sm);
 }
+.title-details .save-notes-button {
+    margin-top: var(--spacing-md);
+}
 
 .title-details .update-title-button {
     margin: var(--spacing-md) 0;

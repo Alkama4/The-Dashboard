@@ -47,12 +47,13 @@ export default {
 
             if (this.username.length < 4) {
                 failed.push("lengthUsername");
-                this.$refs.username?.markInvalid();
+                this.$refs.usernameRef?.markInvalid();
             }
 
             if (this.password.length < 4) {
                 failed.push("lengthPassword");
-                this.$refs.password?.markInvalid();
+                this.$refs.passwordRef?.markInvalid();
+                this.$refs.passwordRepeatRef.markInvalid();
             }
 
             if (this.password !== this.passwordRepeat) {
