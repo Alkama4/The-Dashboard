@@ -586,7 +586,7 @@ export default {
                 if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
                 return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
             } else {
-                return `${this.apiUrl}/image/${titleId}/poster.jpg?width=${width}`;
+                return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
             }
         },
         async inputTriggeredFetchAllTitles() {

@@ -13,7 +13,7 @@
                     v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                     @load="image.isLoaded = true" 
                     :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                    :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
+                    :src="`${apiUrl}/media/image/title/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
                 />
             </div>
         </div>
@@ -34,7 +34,7 @@
                             v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                             @load="image.isLoaded = true" 
                             :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                            :src="`${apiUrl}/image/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
+                            :src="`${apiUrl}/media/image/title/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
                             />
                     </div>
                 </div>
@@ -443,7 +443,6 @@
             >
                 <div class="about" @click="toggleHeight(`refSeason${season.season_number}`)">
                     <div class="poster-container">
-                        <!-- :src="`${apiUrl}/image/${titleInfo.title_id}/season${season.season_number}/poster.jpg`" -->
                         <img 
                             class="poster" 
                             :src="imageUrl(300, season.backup_poster_url, titleInfo.title_id, season.season_number)" 
@@ -1139,11 +1138,11 @@ export default {
                 return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
             } else {
                 if (!seasonNumber) {
-                    return `${this.apiUrl}/image/${titleId}/poster.jpg?width=${width}`;
+                    return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
                 } else if (!episodeNumber){
-                    return `${this.apiUrl}/image/${titleId}/season${seasonNumber}/poster.jpg?width=${width}`;
+                    return `${this.apiUrl}/media/image/title/${titleId}/season${seasonNumber}/poster.jpg?width=${width}`;
                 } else if (episodeNumber) {
-                    return `${this.apiUrl}/image/${titleId}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
+                    return `${this.apiUrl}/media/image/title/${titleId}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
                 } else {
                     return "";
                 }
@@ -1171,7 +1170,7 @@ export default {
         },
         watchNowLink() {
             // Send to fastapi to redirect to the correct "Just watch" url
-            return process.env.VUE_APP_API_URL + '/watch_now/' + this.titleInfo.title_id;
+            return process.env.VUE_APP_API_URL + '/redirect/watch_now/' + this.titleInfo.title_id;
         }
     },
     async beforeRouteUpdate(to) {

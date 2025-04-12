@@ -29,6 +29,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Highlight link when page is open to show location  
             - Not sure if needed, but could be improved  
     - Forms and inputs
+        - Custom placeholders (get rid of generic ones and add missing ones)
         - Custom Password Field  
             - Nothing fancy, maybe not even a component  
             - Change input type when clicking on a button with icon on the right  

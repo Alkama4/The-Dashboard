@@ -380,7 +380,7 @@ const api = {
     async getChartBalanceOverTime() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
-        const response = await this.getData('/get_chart/balance_over_time', params);
+        const response = await this.getData('/charts/balance_over_time', params);
         if (response) {
             return response;
         } else {
@@ -392,7 +392,7 @@ const api = {
     async getChartSumByMonth() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
-        const response = await this.getData('/get_chart/sum_by_month', params);
+        const response = await this.getData('/charts/sum_by_month', params);
         if (response) {
             return response;
         } else {
@@ -405,7 +405,7 @@ const api = {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
         params.direction = "expense";
-        const response = await this.getData('/get_chart/categories_monthly', params);
+        const response = await this.getData('/charts/categories_monthly', params);
         if (response) {
             return response;
         } else {
@@ -418,7 +418,7 @@ const api = {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
         params.direction = "income";
-        const response = await this.getData('/get_chart/categories_monthly', params);
+        const response = await this.getData('/charts/categories_monthly', params);
         if (response) {
             return response;
         } else {
@@ -454,8 +454,12 @@ const api = {
 
 
     // - - - - - - - - - - - - - BACKUPS AND SERVER INFO - - - - - - - - - - - - - 
+    async getBackups() {
+        return this.getData('/backups/get');
+    },
+
     async getServerDrivesInfo() {
-        const response = await this.getData('/get_server_drives_info', null, null);
+        const response = await this.getData('/server/drives_status', null, null);
         if (response) {
             return response;
         } else {
@@ -464,20 +468,16 @@ const api = {
         }
     },
 
-    async getBackups() {
-        return this.getData('/get_backups');
-    },
-
     async getServerResourceLogs(timeframe) {
         let params = {};
         params.timeframe = timeframe;
-        return this.getData('/get_server_resource_logs', params);
+        return this.getData('/server/logs/resources/get', params);
     },
 
     async getFastapiRequestLogData(timeframe) {
         let params = {};
         params.timeframe = timeframe;
-        return this.getData('/get_fastapi_request_log_data', params);
+        return this.getData('/server/logs/fastapi/get', params);
     },
 
     // - - - - - - - - - - - - - TV AND MOVIE WATCH LIST - - - - - - - - - - - - - 

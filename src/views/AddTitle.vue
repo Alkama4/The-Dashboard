@@ -87,7 +87,7 @@
                         <button 
                             v-if="title.in_watch_list" 
                             class="button-danger" 
-                            @click="handleTitleStoring('remove', title.id)"
+                            @click="removeTitle(title.id)"
                             :disabled="waitingForResult.includes(title.id)" 
                             :class="{ loading: waitingForResult.includes(title.id)}"
                         >
@@ -95,7 +95,7 @@
                         </button>
                         <button 
                             v-else class="button-primary" 
-                            @click="handleTitleStoring('add', title.id, title.title ? 'movie' : 'tv')"
+                            @click="addTitle(title.id, title.title ? 'movie' : 'tv')"
                             :disabled="waitingForResult.includes(title.id)" 
                             :class="{ loading: waitingForResult.includes(title.id)}"
                         >
@@ -105,6 +105,13 @@
                 </div>
             </div>
         </div>
+        <ModalConfirmation 
+            ref="removeTitleCM"
+            header="Remove from watchlist"
+            text="Are you sure you wan't to remove the title from your watchlist?
+            This gets rid of all your data on the title like your watched episodes and notes."
+            affirmative-option="Remove title"
+        />
     </div>
 </template>
 
@@ -114,6 +121,7 @@ import IconAdd from '@/components/icons/IconAdd.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
+import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import SliderToggle from '@/components/SliderToggle.vue';
 import api from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
@@ -121,6 +129,7 @@ import { notify } from '@/utils/notification';
 export default {
     components: {
         SliderToggle,
+        ModalConfirmation,
         IconTMDB,
         IconAdd,
         IconTrash,
@@ -168,56 +177,36 @@ export default {
                 });
             }
         },
-        async handleTitleStoring(addOrRemove, titleTmdbId, type) {
-            console.log("[handleTitleStoring]", addOrRemove, titleTmdbId);
-            
+        async removeTitle(titleTmdbId) {
+            // Confirm with the user
+            if (! await this.$refs.removeTitleCM.prompt()) return;
+
             // Disable click
             this.waitingForResult.push(titleTmdbId);
 
-            if (addOrRemove == "add") {
-                const response = await api.addTitleToUserList(titleTmdbId, type);
-                if (response && response.success) {
-                    console.log(response);
-                    // Find the title and update the in_watch_list to reflect the current state and set the title_id
-                    // to make the link update to the internal site.
-                    const result = this.searchResults.find(result => result.id === titleTmdbId);
-                    if (result) {
-                        result.in_watch_list = true;
-                        result.title_id = response.title_id;
-                    }
-                }
-                
-                // Allow click
-                this.removeItemFromWaitingArray(titleTmdbId);
-            } else if (addOrRemove == "remove") {
-                // This is clunky and the modal should be redone to allow better handling.
-                this.titleToBeRemoved = titleTmdbId;
-                
-                this.showConfirmationModal = true;
-                // const response = await api.removeTitleFromUserList(titleTmdbId);
-                // if (response && response.success) {
-                //     // Change the data on site for the title
-                //     this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = false;
-                // }
-            } else {
-                notify("Faild to interact with title.", "error");
-                
-                // Allow click
-                this.removeItemFromWaitingArray(titleTmdbId);
-            }
-
-            // ENABLE THIS AFTER MODAL HAS BEEN FIXED
-            // // Allow click
-            // this.removeItemFromWaitingArray(titleTmdbId);
-
-        },
-        async callApiToRemoveTitle() {
-            const titleTmdbId = this.titleToBeRemoved;
-            // Remove the title. This is clunky and the modal should be redone to allow better handling.
+            // Make the api call
             const response = await api.removeTitleFromUserList(titleTmdbId);
             if (response && response.success) {
                 // Change the data on site for the title
                 this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = false;
+            }
+
+            // Allow click
+            this.removeItemFromWaitingArray(titleTmdbId);
+        },
+        async addTitle(titleTmdbId, type) {
+            // Disable click
+            this.waitingForResult.push(titleTmdbId);
+
+            const response = await api.addTitleToUserList(titleTmdbId, type);
+            if (response && response.success) {
+                // Find the title and update the in_watch_list to reflect the current state and set the title_id
+                // to make the link update to the internal site.
+                const result = this.searchResults.find(result => result.id === titleTmdbId);
+                if (result) {
+                    result.in_watch_list = true;
+                    result.title_id = response.title_id;
+                }
             }
             
             // Allow click
