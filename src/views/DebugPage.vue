@@ -70,7 +70,8 @@
         </div>
 
         <div class="card fit-content">
-            <FormTransaction :initialFormValues="{date: '2022-01-01', categories: [{name: 'Example', amount: '987.65'}, {name: 'Example 2', amount: '123'}]}"/>
+            <h2>Example form</h2>
+            <FormTransaction :initialFormValues="{date: '2022-01-01', categories: [{category: 'Example', amount: '987.65'}, {category: 'Example 2', amount: '123'}]}"/>
         </div>
 
         <div v-for="(item, index) in items" :key="item.id">

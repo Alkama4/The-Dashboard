@@ -19,8 +19,7 @@
                 <label>Direction</label>
                 <SliderToggle 
                     v-model="currentFormValues.direction" 
-                    :options="['Expense', 'Income']" 
-                    label="Direction"
+                    :options="['expense', 'income']" 
                 />
             </div>
             <div class="label-wrapper">
@@ -37,7 +36,9 @@
                 <label>Counterparty</label>
                 <CustomSearchSelect 
                     v-model="currentFormValues.counterparty" 
-                    :options="options.counterparties" 
+                    :options="currentFormValues.direction == 'expense' ?
+                              options.counterparty.expense : 
+                              options.counterparty.income" 
                     ref="counterpartyRef"
                 />
             </div>
@@ -70,39 +71,20 @@
 
                     <div class="category-row">
                         <div class="category-column column">
-                            <!-- <div v-if="currentFormValues.categories.length > 1" class="left-mod-area">
-                                <div
-                                    class="move-up move-button icon-button"
-                                    :class="{
-                                        'move-button-center': index == currentFormValues.categories.length - 1,
-                                        'move-button-hide': index == 0
-                                    }"
-                                    @click="moveCategory('up', index)"
-                                >
-                                    <IconChevronDown size="20px"/>
-                                </div>
-                                <div
-                                    class="move-down move-button icon-button"
-                                    :class="{
-                                        'move-button-center': index == 0,
-                                        'move-button-hide': index == currentFormValues.categories.length - 1
-                                    }"
-                                    @click="moveCategory('down', index)"
-                                >
-                                    <IconChevronDown size="20px"/>
-                                </div>
-                            </div> -->
                             <div 
-                                class="right-mod-area"
+                                v-if="currentFormValues.categories.length > 1"
+                                class="left-mod-area"
                                 draggable="true"
                                 @dragstart="dropping.draggedIndex = index;"
                             >
                                 ⠿
                             </div>
                             <CustomSearchSelect 
-                                v-model="category.name" 
-                                :options="options.categories" 
-                                :ref="`categorySelect${index}Ref`"
+                                v-model="category.category" 
+                                :options="currentFormValues.direction == 'expense' ?
+                                          options.category.expense : 
+                                          options.category.income"  
+                                :ref="`categoryCategory${index}Ref`"
                                 placeholder="Select or type"
                             />
                         </div>
@@ -137,7 +119,7 @@
             </div>
             <div class="category-row">
                 <!-- <div v-if="currentFormValues.categories.length > 1" class="left-mod-area"></div> -->
-                <button class="category-column" @click="currentFormValues.categories.push({name: '', amount: null})">Add category</button>
+                <button class="category-column" @click="currentFormValues.categories.push({category: '', amount: null})">Add category</button>
                 <div v-if="currentFormValues.categories.length > 1" class="amount-column total-amount">
                     <span class="label">Total: </span>
                     <span class="value">{{ totalAmount }}</span>
@@ -147,9 +129,10 @@
         </div>
         <div class="form-row">
             <div class="label-wrapper">
-                <label>Counterparty</label>
+                <label>Notes</label>
                 <CustomGenericInput 
                     type="textarea" 
+                    placeholder="Optional notes or details"
                     v-model="currentFormValues.notes" 
                     ref="notesRef"
                 />
@@ -196,24 +179,32 @@ import IconSave from './icons/IconSave.vue';
 import IconPaste from './icons/IconPaste.vue';
 import ModalConfirmation from './ModalConfirmation.vue';
 import ModalGeneric from './ModalGeneric.vue';
+import api from '@/utils/dataQuery';
 
 export default {
     name: "FormTransaction",
     data() {
         return {
             defaultFormValues: {
-                direction: 'Expense',
+                entryId: '',
+                direction: 'expense',
                 date: new Date().toISOString().slice(0, 10),
                 counterparty: '',
                 categories: [
-                    { name: '', amount: null }
+                    { category: '', amount: null }
                 ],
                 notes: '',
             },
             currentFormValues: {},
             options: {
-                categories: ["category 1", "category 2", "category 3"],
-                counterparties: ["counterparty 1", "counterparty 2", "counterparty 3"]
+                category: {
+                    expense: [],
+                    income: []
+                },
+                counterparty: {
+                    expense: [],
+                    income: []
+                }
             },
             dropping: {
                 draggedIndex: null,
@@ -226,7 +217,7 @@ export default {
                         direction: 'Expense',
                         counterparty: 'Counterparty 1',
                         categories: [
-                            { name: 'Category 1', amount: "1.23" }
+                            { category: 'Category 1', amount: "1.23" }
                         ],
                     }
                 },
@@ -236,8 +227,8 @@ export default {
                         direction: 'Income',
                         counterparty: 'Counterparty 2',
                         categories: [
-                            { name: 'Category 2', amount: "1.23" },
-                            { name: 'Category 3', amount: "-12.34" }
+                            { category: 'Category 2', amount: "1.23" },
+                            { category: 'Category 3', amount: "-12.34" }
                         ],
                     }
                 },
@@ -247,8 +238,8 @@ export default {
                         direction: 'Income',
                         counterparty: 'Counterparty 2',
                         categories: [
-                            { name: 'Category 2', amount: "1.23" },
-                            { name: 'Category 3', amount: "-12.34" }
+                            { category: 'Category 2', amount: "1.23" },
+                            { category: 'Category 3', amount: "-12.34" }
                         ],
                     }
                 }
@@ -278,15 +269,49 @@ export default {
             default: "Submit"
         },
     },
+    emits: [
+        'submit'
+    ],
     methods: {
         handleSubmit() {
-            notify("Submitting...");
-            console.log(this.currentFormValues)
+            console.debug("[handleSubmit] Current form values:", this.currentFormValues)
 
-            this.$refs.textRef.markInvalid();
-            // this.$refs.numberRef.markInvalid();
-            // this.$refs.searchRef.markInvalid();
-            // Add your form submission logic here
+            let failed = [];
+
+            if (!this.currentFormValues.date) {
+                failed.push("dateMissing");
+                this.$refs.dateRef?.markInvalid();
+            }
+
+            if (!this.currentFormValues.counterparty) {
+                failed.push("counterpartyMissing");
+                this.$refs.counterpartyRef?.markInvalid();
+            }
+
+            this.currentFormValues.categories.forEach((category, index) => {
+                if (!category.category) {
+                    if (!failed.includes("categoryMissing")) failed.push("categoryMissing");
+                    this.$refs[`categoryCategory${index}Ref`][0]?.markInvalid();
+                }
+                if (!category.amount) {
+                    if (!failed.includes("amountMissing")) failed.push("amountMissing");
+                    this.$refs[`categoryAmount${index}Ref`][0]?.markInvalid();
+                }
+            });
+
+            if (failed.includes("dateMissing")) notify("The date is required.", "error");
+            if (failed.includes("counterpartyMissing")) notify("The counterparty is required.", "error");
+            if (failed.includes("categoryMissing")) notify("A category cannot be empty.", "error");
+            if (failed.includes("amountMissing")) notify("An amount cannot be empty.", "error");
+            if (failed.length > 0) return;
+
+            // notify("Submitting...");
+
+            // Emit the values
+            this.$emit('submit', {
+                ...this.currentFormValues,
+                categories: [...this.currentFormValues.categories]
+            });
         },
         moveCategory(direction, index) {
             const chosenValues = this.currentFormValues.categories[index];
@@ -351,7 +376,7 @@ export default {
             // Reset state
             this.dropping.hoveredZoneIndex = null;
             this.dropping.draggedIndex = null;
-        }
+        },
     },
     computed: {
         totalAmount() {
@@ -362,6 +387,13 @@ export default {
     },
     created() {
         this.setInitialValues();
+    },
+    async mounted() {
+        // Fetch the options
+        const optionsResponse = await api.getOptions();
+        if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
+            this.options = optionsResponse;
+        }
     }
 };
 </script>
@@ -513,17 +545,18 @@ export default {
     width: 100%;
 }
 
-.right-mod-area {
-    width: 22px;
+.left-mod-area {
+    width: 30px;
+    height: 100%;
     display: flex; 
     justify-content: center;
     align-items: center;
     user-select: none;
     cursor: grab;
-    font-size: 22px;
+    font-size: 24px;
     color: var(--color-text-light);
 }
-.left-mod-area {
+.right-mod-area {
     width: 32px;
 }
 
@@ -538,10 +571,10 @@ export default {
     height: 2px;
     margin: 3px 0;
     background: transparent;
-    transition: background-color 0.2s ease-out;
+    transition: background-color 0.1s ease-out;
 }
 .category-drop-zone.active {
-    background: var(--color-primary);
+    background: var(--color-primary-active);
 }
 .category-drop-zone .drop-zone-area {
     height: 42px;

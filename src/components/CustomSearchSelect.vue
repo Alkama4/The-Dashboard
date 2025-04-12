@@ -93,7 +93,9 @@ export default {
         close() {
             this.isStylingOpen = false;
             setTimeout(() => {
-                this.isLogicalOpen = false;
+                if (!this.isStylingOpen) {
+                    this.isLogicalOpen = false;
+                }
             }, 200);
         },
         toggleDropdown(event) {
@@ -240,8 +242,9 @@ export default {
     border-radius: var(--border-radius-small);
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    max-height: 30vh;
+    overflow-y: scroll;
 
-    overflow: hidden;
     list-style: none;
     top: calc(100% - var(--selected-option-border-radius));
     left: 0;

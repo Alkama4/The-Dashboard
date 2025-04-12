@@ -6,22 +6,22 @@
     >
         <!-- The submit sends data that it grabbed by the method
         resolve and can be sent with the promises resolve -->
-        <EntryForm 
-            :initialTransaction="initialTransaction"
+        <FormTransaction 
+            :initialFormValues="initialTransaction"
             @submit="resolve"
         />
     </GenericModal>
 </template>
 
 <script>
-import EntryForm from "./TransactionForm.vue";
+import FormTransaction from "./FormTransaction.vue";
 import GenericModal from "./ModalGeneric.vue";
 
 export default {
     name: "ConfirmationModal",
     components: { 
         GenericModal,
-        EntryForm,
+        FormTransaction,
     },
     data() {
         return { 
@@ -40,7 +40,6 @@ export default {
             if (this.resolvePromise) {
                 this.resolvePromise(value);
                 this.resolvePromise = null;
-                this.close();
             }
         },
         

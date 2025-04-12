@@ -269,6 +269,9 @@ export default {
             if (modifiedTransaction) {
                 const response = await api.editTransaction(modifiedTransaction);
                 if (response) {
+                    // Close the modal
+                    this.$refs.editTransactionMT.close();
+
                     // Find the transaction and update its values
                     const index = this.transactions.findIndex(t => t.transaction_id === modifiedTransaction.transaction_id);
                     if (index !== -1) {
