@@ -169,7 +169,6 @@ export default {
 .custom-search-select {
     position: relative;
     height: 40px;
-    --selected-option-border-radius: var(--border-radius-small);
 }
 .loading.custom-search-select .selected-option {
     cursor: wait;
@@ -191,7 +190,7 @@ export default {
     user-select: none;
     
     border: 1px solid var(--color-border);
-    border-radius: var(--selected-option-border-radius);
+    border-radius: var(--border-radius-small);
     transition: border 0.1s ease-out;
 }
 .selected-option:hover, 
@@ -236,43 +235,4 @@ export default {
     z-index: 1;
 }
 
-.options-list {
-    background-color: var(--color-background-input);
-    border: 1px solid var(--color-border-hover);
-    border-radius: var(--border-radius-small);
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    max-height: 30vh;
-    overflow-y: scroll;
-
-    list-style: none;
-    top: calc(100% - var(--selected-option-border-radius));
-    left: 0;
-    right: 0;
-    padding: 6px 0;
-    margin: 0;
-    position: absolute;
-    z-index: 10;
-    user-select: none;
-    
-    opacity: 1;
-    transition: opacity 0.2s ease-out;
-}
-.options-list li {
-    color: var(--color-text-light);
-    padding: var(--spacing-xs) var(--spacing-sm);
-    cursor: pointer;
-    /* transition: background-color 0.1s ease-out; */
-}
-.options-list li.highlighted {
-    color: var(--color-text);
-    background-color: var(--color-background-select-hover);
-}
-.options-list.hidden {
-    opacity: 0;
-}
-.options-list .not-found {
-    color: var(--color-text-lighter) !important;
-    cursor: auto;
-}
 </style>

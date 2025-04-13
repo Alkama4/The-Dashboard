@@ -64,6 +64,7 @@
     --color-text-white-light: #aaa;
     --color-text-black: #292929;
     --color-text-black-hover: black;
+    --color-text-black-light: #666666;
 
 
     /* Spesific fills */
@@ -109,7 +110,7 @@
     /* Text */
     --color-text: var(--color-text-black);
     --color-text-bold: var(--color-text-black-hover);
-    --color-text-light: #666666;
+    --color-text-light: var(--color-text-black-light);
     --color-text-lighter: #969696;
     --color-text-hidden: #c4c4c4;
     --color-text-placeholder: #aaa;
@@ -160,6 +161,7 @@
     --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.1);
     --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
     --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-option-list: 0 2px 4px rgba(0, 0, 0, 0.2);
     --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
@@ -258,6 +260,7 @@
     --shadow-button-hover: none;
     /* --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.5); */
     --shadow-button-active: none;
+    --shadow-option-list: 0 4px 8px rgba(0, 0, 0, 0.4);
     --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -1051,13 +1054,15 @@ form.simple-form button {
 
 .content-not-found {
     display: flex;
-    flex-direction: column;
+    flex-direction: column !important;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: var(--color-text-light);
+    color: var(--color-text-light) !important;
     font-weight: 500;
     user-select: none;
+    gap: 0 !important;
+    box-sizing: border-box !important;
 
     padding-inline: calc(22% - var(--spacing-lg));
 }
@@ -1105,6 +1110,49 @@ overflow: hidden;
 .content-width-large {
     margin-inline: auto;
     max-width: 140ch;
+}
+
+
+/* - - - - USED BETWEEN MULITPLE COMPONENTS - - - - */
+.options-list {
+    background-color: var(--color-background-input);
+    border: 1px solid var(--color-border-hover);
+    border-radius: var(--border-radius-small);
+    /* border-top-left-radius: 0; */
+    /* border-top-right-radius: 0; */
+    max-height: 30vh;
+    overflow-y: scroll;
+    box-shadow: var(--shadow-option-list);
+
+    list-style: none;
+    top: calc(100% + 2px);
+    left: 0;
+    right: 0;
+    padding: 6px 0;
+    margin: 0;
+    position: absolute;
+    z-index: 10;
+    user-select: none;
+    
+    opacity: 1;
+    transition: opacity 0.2s ease-out;
+}
+.options-list li {
+    color: var(--color-text-light);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    cursor: pointer;
+    /* transition: background-color 0.1s ease-out; */
+}
+.options-list li.highlighted {
+    color: var(--color-text);
+    background-color: var(--color-background-select-hover);
+}
+.options-list.hidden {
+    opacity: 0;
+}
+.options-list .not-found {
+    color: var(--color-text-lighter) !important;
+    cursor: auto;
 }
 
 

@@ -21,65 +21,61 @@
                     <swiper-slide 
                         v-for="title in titleList.titles" 
                         :key="title.title_id" 
-                        @click="openDetailsPageFor(title.title_id)"
-                        tabindex="0"
-                        @keydown.enter="openDetailsPageFor(title.title_id)"
-                        @keydown.space.prevent="openDetailsPageFor(title.title_id)"
-                        @mousedown.middle.prevent=""
-                        @mouseup.middle.prevent="openDetailsPageOnNewTabFor(title.title_id)"
                     >
-                        <img 
-                            :src="posterUrl(title.title_id, 600, title.backup_poster_url)" 
-                            class="thumbnail"
-                            @load="(event) => event.target.classList.add('loaded')" 
-                        />
-                        <div class="gradient"></div>
-                        <div class="details">
-                            <span class="title-name">{{ title.name }}</span>
-                            <div class="title-rating"><IconTMDB/>{{ title.vote_average }} &bullet; {{ new Date(title.release_date).getFullYear() }}</div>
-                            <div class="progress-details">
-                                <template v-if="title.type === 'tv'">
-                                    <span class="season-after">{{ title.season_count }}</span>
-                                    <span class="episode-after">{{ title.episode_count }}</span>
-                                </template>
-                                <template v-else>
-                                    {{ formatRuntime(title.movie_runtime) }}
-                                </template>
+                        <router-link :to="`/watch_list/title/${title.title_id}`" class="no-decoration">
+                            <img 
+                                :src="posterUrl(title.title_id, 600, title.backup_poster_url)" 
+                                class="thumbnail"
+                                @load="(event) => event.target.classList.add('loaded')" 
+                            />
+                            <div class="gradient"></div>
+                            <div class="details">
+                                <span class="title-name">{{ title.name }}</span>
+                                <div class="title-rating"><IconTMDB/>{{ title.vote_average }} &bullet; {{ new Date(title.release_date).getFullYear() }}</div>
+                                <div class="progress-details">
+                                    <template v-if="title.type === 'tv'">
+                                        <span class="season-after">{{ title.season_count }}</span>
+                                        <span class="episode-after">{{ title.episode_count }}</span>
+                                    </template>
+                                    <template v-else>
+                                        {{ formatRuntime(title.movie_runtime) }}
+                                    </template>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="tag tag-positive" v-if="title.watch_count >= 1">
-                            <!-- <IconCheck size="22px"/> -->
-                            Watched
-                        </div>
-                        <div class="tag tag-primary" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
-                            Just released
-                        </div>
-                        <div class="tag tag-primary" v-else-if="title.new_episodes >= 1">
-                            New episodes
-                        </div>
-                        <div class="tag" v-else-if="new Date(title.release_date) > new Date()">
-                            Upcoming
-                        </div>
-                        
-                        <button 
-                            v-if="title.favourite"
-                            class="tag favourite-button button-transparent icon-align" 
-                            @click.stop="handleFavouriteToggle(title)"
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            <IconHeart size="22"/>
-                        </button>
-                        <button 
-                            v-else
-                            class="tag favourite-button button-transparent not-favourite icon-align" 
-                            @click.stop="handleFavouriteToggle(title)"
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            <IconHeart size="22" color="var(--color-text)"/>
-                        </button>
+    
+                            <div class="tag tag-positive" v-if="title.watch_count >= 1">
+                                <!-- <IconCheck size="22px"/> -->
+                                Watched
+                            </div>
+                            <div class="tag tag-primary" v-else-if="new Date(title.release_date) < new Date() && new Date(title.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
+                                Just released
+                            </div>
+                            <div class="tag tag-primary" v-else-if="title.new_episodes >= 1">
+                                New episodes
+                            </div>
+                            <div class="tag" v-else-if="new Date(title.release_date) > new Date()">
+                                Upcoming
+                            </div>
+                            
+                            <button 
+                                v-if="title.favourite"
+                                class="tag favourite-button button-transparent icon-align" 
+                                @click.stop="handleFavouriteToggle(title)"
+                                :disabled="waitingForResult.length != 0"
+                                :class="{loading: waitingForResult.length != 0}"
+                            >
+                                <IconHeart size="22"/>
+                            </button>
+                            <button 
+                                v-else
+                                class="tag favourite-button button-transparent not-favourite icon-align" 
+                                @click.stop="handleFavouriteToggle(title)"
+                                :disabled="waitingForResult.length != 0"
+                                :class="{loading: waitingForResult.length != 0}"
+                            >
+                                <IconHeart size="22" color="var(--color-text)"/>
+                            </button>
+                        </router-link>
                     </swiper-slide>
 
                     <swiper-slide 
@@ -195,8 +191,22 @@
             </div>
         </div>
 
-        <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1">
-            <router-link v-for="title in allTitlesList" :key="title.title_id" :to="`/watch_list/title/${title.title_id}`" class="title-element no-decoration">
+        <!-- <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1"> -->
+        <div class="content-width-medium all-titles-list">
+            <router-link 
+                v-for="title in allTitlesList" 
+                :key="title.title_id" 
+                :to="`/watch_list/title/${title.title_id}`" 
+                class="title-element no-decoration"
+            >
+                <div class="backdrop-wrapper">
+                    <img 
+                        :src="backdropUrl(title.title_id)" 
+                        @load="(event) => event.target.classList.add('loaded')" 
+                        class="backdrop"
+                    >
+                </div>
+
                 <div class="poster-holder">
                     <img 
                         :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
@@ -206,7 +216,7 @@
                 </div>
 
                 <div class="content">
-                    <span class="title-name" :to="`/watch_list/title/${title.title_id}`">
+                    <span class="title-name">
                         <span>{{ title.name }}</span>
                         &MediumSpace;
                         <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
@@ -278,6 +288,19 @@
                     />
                 </div>
             </router-link>
+
+            <div 
+                v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - allTitlesList?.length, 0): 0" 
+                :key="'placeholder-' + i" 
+                class="title-element loading-placeholder"
+            >
+            </div>
+
+            <div v-if="allTitlesList?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
+                Looks like there's nothing here.<br>
+                <span class="text-hidden">Try adding titles to your watch list</span>
+            </div>
+
             <div class="flex-row">
                 <button 
                     v-if="allTitlesListHasMore"
@@ -290,16 +313,11 @@
             </div>
         </div>
 
-        <div v-if="waitingForResult.includes('allTitlesList')" class="content-width-medium">
+        <!-- <div v-if="waitingForResult.includes('allTitlesList')" class="content-width-medium">
             <div v-for="i in Math.max(3 - allTitlesList?.length, 0)" :key="'placeholder-' + i" class="all-titles-list-placeholder title-element loading-placeholder"></div>
-        </div>
+        </div> -->
 
-        <div v-else-if="allTitlesList?.length == 0" class="content-width-medium">
-            <div class="all-titles-list-placeholder content-not-found" >
-                Looks like there's nothing here.<br>
-                <span class="text-hidden">Try adding titles to your watch list</span>
-            </div>
-        </div>
+
 
         <!-- Corner buttons -->
         <router-link 
@@ -341,7 +359,6 @@ import 'swiper/swiper-bundle.css';
 
 // My imports
 import IconAdd from '@/components/icons/IconAdd.vue';
-import router from '@/router';
 import api from '@/utils/dataQuery.js';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
@@ -480,13 +497,6 @@ export default {
         };
     },
     methods: {
-        openDetailsPageFor(titleID) {
-            router.push(`/watch_list/title/${titleID}`);
-        },
-        openDetailsPageOnNewTabFor(titleID) {
-            const url = this.$router.resolve(`/watch_list/title/${titleID}`).href;
-            window.open(url, "_blank");
-        },
         formatRuntime(runtime) {
             return convert.runtime(runtime);
         },
@@ -588,6 +598,14 @@ export default {
             } else {
                 return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
             }
+        },
+        backdropUrl(titleId) {
+            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+            //     if (width == 600) width = 500; 
+            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
+            // } else {
+                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=1200`;
+            // }
         },
         async inputTriggeredFetchAllTitles() {
             this.allTitlesListOffset = 0;
@@ -844,18 +862,10 @@ export default {
 }
 
 
-.all-titles-list-placeholder {
-    height: 200px;
-    background-color: var(--color-background-card);
-    border-radius: var(--border-radius-medium);
-    font-weight: 500;
-    box-sizing: border-box;
-    margin-bottom: 5px;
-}
-
 .all-titles-list {
     display: flex;
     flex-direction: column;
+    gap: var(--spacing-md);
 }
 
 .all-titles-list-controls {
@@ -917,27 +927,64 @@ export default {
 .all-titles-list .title-element {
     --title-height: 175px;
     --padding: var(--spacing-md);
-    border-top: 2px solid var(--color-background-tr-hover);
     padding: var(--padding);
     gap: var(--spacing-md);
     display: flex;
     position: relative;
     width: 100%;
     flex-direction: row;
-    max-height: calc(var(--title-height) + 2 * var(--padding));
-    box-sizing: border-box;
+    height: var(--title-height);
+    /* box-sizing: border-box; */
     cursor: pointer;
     user-select: none;
-    transition: background-color 0.1s ease-out;
-    margin-bottom: -2px;
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    background-color: var(--color-background-card);
+    transition: transform 0.15s var(--cubic-1);
+    box-shadow: var(--shadow-card);
+    color: var(--color-text-white);
 }
-
-.all-titles-list .title-element:hover {
-    background-color: var(--color-background-tr-hover);
+.all-titles-list .title-element:hover, 
+.all-titles-list .title-element:focus-visible {
+    transform: scale(1.025);
 }
-.all-titles-list .title-element:hover .title-name {
+.all-titles-list .title-element:hover .title-name, 
+.all-titles-list .title-element:focus-visible .title-name {
     text-decoration: underline;
 }
+.all-titles-list .title-element * {
+    z-index: 10;
+}
+
+.all-titles-list .title-element.loading-placeholder:hover,
+.all-titles-list .title-element.loading-placeholder:focus-visible,
+.all-titles-list .title-element.content-not-found:hover,
+.all-titles-list .title-element.content-not-found:focus-visible {
+    transform: scale(1);
+}
+
+.backdrop-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(24, 24, 24); /* prevents light bleed */
+    overflow: hidden;
+    z-index: 0;
+}
+.title-element .backdrop {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(16px) brightness(0.4);
+    z-index: 1;
+}
+
 
 .all-titles-list .poster-holder {
     width: calc(var(--title-height) / 3 * 2);
@@ -970,7 +1017,7 @@ export default {
 }
 
 .title-element .title-name {
-    color: var(--color-text);
+    color: var(--color-text-white);
     font-weight: 700;
     font-size: var(--font-size-large);
     margin-top: 0;
@@ -989,6 +1036,7 @@ export default {
 
 .title-element .tags .tag {
     font-size: var(--font-size-small);
+    color: var(--color-text);
     padding: 2px 6px;
 }
 
@@ -1007,7 +1055,7 @@ export default {
 }
 
 .title-element p {
-    color: var(--color-text-light);
+    color: var(--color-text-white-light);
     margin: 0;
     display: -webkit-box;
     line-clamp: 4;

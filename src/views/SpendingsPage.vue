@@ -99,8 +99,9 @@
                     @editTransaction="handleEditTransaction(transaction)"
                     @showTransaction="handleShowTransaction(transaction)"
                 />
+                <!-- <div v-if="true"> -->
                 <div v-if="waitingForResponse && apiFilters.offset === 0">
-                    <div class="transaction-row" v-for="i in 15" :key="i">
+                    <div class="transaction-row" v-for="i in 25" :key="i">
                         <div class="transaction-cell column-date"><div class="loading-placeholder"></div></div>
                         <div class="transaction-cell column-counterparty"><div class="loading-placeholder"></div></div>
                         <div class="transaction-cell column-category"><div class="loading-placeholder"></div></div>
@@ -119,7 +120,7 @@
     
         <!-- Button to load more entries -->
         <button 
-            class="center" 
+            class="center load-more" 
             @click="loadMore"
             :disabled="waitingForResponse"
             :class="{loading: waitingForResponse}"
@@ -396,7 +397,7 @@ export default {
 
 .transaction-cell  {
     white-space: nowrap;
-    padding: 8px var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-sm);
     vertical-align: top;
     color: var(--color-text-light);
 }
@@ -452,6 +453,10 @@ export default {
     .transaction-row .column-category {
         display: none;
     }
+    .transaction-row .column-amount {
+        padding-left: var(--spacing-sm);
+    }
+
 }
 
 
@@ -487,7 +492,7 @@ export default {
 }
 
 .loading-placeholder {
-    height: 25px;
+    height: 27px;
     border-radius: var(--border-radius-small);
 }
 .column-category .loading-placeholder {
@@ -533,5 +538,8 @@ export default {
     margin: var(--spacing-sm) 0;
 }
 
+.load-more {
+    margin-top: var(--spacing-md);
+}
 
 </style>
