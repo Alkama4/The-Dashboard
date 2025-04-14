@@ -29,6 +29,12 @@ export default {
             initialTransaction: null,
         };
     },
+    props: {
+        header: {
+            type: String,
+            default: 'Edit transaction'
+        }
+    },
     methods: {
         open() {
             this.$refs.modal.open();
@@ -56,7 +62,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-    /* Styling not needed? */
-</style>

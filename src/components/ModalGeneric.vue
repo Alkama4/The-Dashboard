@@ -28,7 +28,7 @@
 import IconCross from './icons/IconCross.vue';
 
 export default {
-    name: 'GenericModal',
+    name: 'ModalGeneric',
     components: {
         IconCross,
     },

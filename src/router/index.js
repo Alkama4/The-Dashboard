@@ -11,6 +11,7 @@ import WatchList from '@/views/WatchList.vue';
 import AddTitle from '@/views/AddTitle.vue';
 import TitleDetails from '@/views/TitleDetails.vue';
 import CreateAccountPage from '@/views/CreateAccountPage.vue';
+import ListCollections from '@/views/ListCollections.vue';
 
 const routes = [
     {
@@ -78,6 +79,12 @@ const routes = [
         name: 'Title Details',
         component: TitleDetails,
         meta: { title: 'Title Details' }
+    },
+    {
+        path: '/watch_list/collections',
+        name: 'Collections',
+        component: ListCollections,
+        meta: { title: 'Collections' }
     },
     {
         path: '/:catchAll(.*)',

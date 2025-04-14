@@ -41,7 +41,7 @@ async function handleError(error, endpoint) {
         } else if (statusCode === 500) {
             notify("Internal server error: " + detail, "error");
         } else {
-            notify(`${statusCode}: ${detail}`, "error");
+            notify(`${statusCode}: ${typeof detail === 'object' ? JSON.stringify(detail) : detail}`, "error");
         }
 
     } else {
@@ -115,36 +115,42 @@ const api = {
         }
     },
 
-    async postData(endpoint, data, config = {}) {
-        const startTime = performance.now();  // Start the timer
-        // Actual api call
+    async handleModifyingRequest(method, endpoint, data = {}, config = {}) {
+        const startTime = performance.now();
+    
         if (!standAloneBuild) {
             try {
-                const response = await apiClient.post(endpoint, data, config);
-                const endTime = performance.now();  // End the timer
-                const duration = endTime - startTime;  // Calculate the duration
-                console.log(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
+                const response = await apiClient.request({
+                    method,
+                    url: endpoint,
+                    data,
+                    ...config
+                });
+                const endTime = performance.now();
+                console.log(`[Response time] "${endpoint}" | ${(endTime - startTime).toFixed(2)}ms`);
                 return response.data;
             } catch (error) {
                 return await handleError(error, endpoint);
             }
-        }
-        // API call simulation for a standalone usecase that just gets the values from a js file.
-        else {
-            return new Promise((resolve) => {
+        } else {
+            return new Promise(resolve => {
                 setTimeout(() => {
                     const endTime = performance.now();
-                    const duration = endTime - startTime;
-                    console.info(`[Response time] "${endpoint}" | ${duration.toFixed(2)}ms`);
-        
+                    console.info(`[Response time] "${endpoint}" | ${(endTime - startTime).toFixed(2)}ms`);
                     notify("Action not available! This is a preview site and has no functional features.", "info");
                     resolve(null);
-
                 }, 0);
             });
         }
     },
-
+    
+    async postData(endpoint, data, config = {}) {
+        return this.handleModifyingRequest('post', endpoint, data, config);
+    },
+    
+    async deleteData(endpoint, data, config = {}) {
+        return this.handleModifyingRequest('delete', endpoint, data, config);
+    },
 
     // - - - - - - - - - - - - - GENERAL LOGINS ETC. - - - - - - - - - - - - - 
     async logIn(params = {}) {
@@ -613,6 +619,54 @@ const api = {
         params.title_id = titleID;
         return this.getData('/watch_list/get_title_info', params);
     },
+
+    // - - - - - - - - - - - - - COLLECTIONS - - - - - - - - - - - - - 
+    async getCollectionsListed() {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        return this.getData('/watch_list/collection/list', params);
+    },
+
+    async deleteCollection(collection_id) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.collection_id = collection_id;
+        return this.deleteData('/watch_list/collection/delete', params);
+    },
+
+    async editCollection(collection_id, name, description) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.collection_id = collection_id;
+        params.name = name;
+        params.description = description;
+        return this.postData('/watch_list/collection/edit', params);
+    },
+
+    async createCollection(name, description) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.name = name;
+        params.description = description;
+        return this.postData('/watch_list/collection/create', params);
+    },
+
+    async addTitleToCollection(collection_id, title_id) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.collection_id = collection_id;
+        params.title_id = title_id;
+        return this.postData('/watch_list/collection/add_title', params);
+    },
+
+    async removeTitleFromCollection(collection_id, title_id) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.collection_id = collection_id;
+        params.title_id = title_id;
+        return this.postData('/watch_list/collection/remove_title', params);
+    },
+
 };
 
 export default api;
