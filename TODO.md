@@ -43,6 +43,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Revamp details modal:  
                 - Long and number date, week  
                 - Table-like category spread out  
+            - .init() or similar that setups a loading animation
+                - Cleared when .open()
     - Add a class to app device is touch similar to dark mode
         - Make similar with dark mode
         - Useful to keep buttons always visible on touch  
@@ -158,6 +160,11 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - TMDB  
             - OMDB
             - Boxicon  
+
+    - dataQuery.js
+        - Follow the same router style as fastapi
+            - For "/watch_list/collection/remove_title"
+            - Use fastapi.watch_list.collection.remove_title
 
 - Backend
     - BLOB Cache for tmdb queries

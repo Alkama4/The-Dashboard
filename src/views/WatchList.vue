@@ -199,14 +199,6 @@
                 :to="`/watch_list/title/${title.title_id}`" 
                 class="title-element no-decoration"
             >
-                <div class="backdrop-wrapper">
-                    <img 
-                        :src="backdropUrl(title.title_id)" 
-                        @load="(event) => event.target.classList.add('loaded')" 
-                        class="backdrop"
-                    >
-                </div>
-
                 <div class="poster-holder">
                     <img 
                         :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
@@ -274,6 +266,12 @@
                         @click.prevent="handleFavouriteToggle(title)"
                     />
 
+                    <IconCollection
+                        size="28px" 
+                        class="icon-button watch-list" 
+                        @click.prevent="handleCollectionsEdit(title)" 
+                    />
+
                     <IconListRemove 
                         v-if="title.is_in_watchlist" 
                         size="28px" 
@@ -318,7 +316,6 @@
         </div> -->
 
 
-
         <!-- Corner buttons -->
         <router-link 
             class="sticky-corner-button link-button" 
@@ -339,15 +336,50 @@
             <IconAdd size="28px"/>
         </router-link>
 
+
         <!-- Modals -->
-        <ConfirmationModal 
+        <ModalConfirmation 
             ref="removeTitleConfirmationModal"
             header="Remove from watchlist"
             text="Are you sure you wan't to remove the title from your watchlist?
             This gets rid of all your data on the title like your watched episodes and notes."
             affirmative-option="Remove title"
         />
-        
+
+        <ModalGeneric ref="editCollectionsMG" header="Edit collections">
+            <div class="title-collections">
+                <div v-for="(collection, index) in titleCollectionsData" :key="index">
+
+                    <div v-if="index != 0" class="seperator"></div>
+
+                    <div class="collection">
+                        <div class="details">
+                            <div class="icon-align">
+                                <h3>{{ collection.name }}</h3>
+                                <IconEdit size="20px" class="icon-button" left="4px" @click="handleEditCollection(collection)"/>
+                            </div>
+                            <span class="text-light">{{ collection.description }}</span>
+                        </div>
+                        <div>
+                            <button 
+                                v-if="collection.title_in_collection === 0"
+                                @click="handleAddTitleToCollection(collection)"
+                            >
+                                Add
+                            </button>
+                            <button 
+                                v-else
+                                @click="handleRemoveTitleFromCollection(collection)"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ModalGeneric>
+
+        <ModalCollection ref="editCollectionFC" type="Edit colleciton" submitText="Save"/>
     </div>
 </template>
 
@@ -371,7 +403,12 @@ import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
-import ConfirmationModal from '@/components/ModalConfirmation.vue';
+import ModalConfirmation from '@/components/ModalConfirmation.vue';
+import IconCollection from '@/components/icons/IconCollection.vue';
+import ModalGeneric from '@/components/ModalGeneric.vue';
+import { notify } from '@/utils/notification';
+import IconEdit from '@/components/icons/IconEdit.vue';
+import ModalCollection from '@/components/ModalCollection.vue';
 
 export default {
     name: 'HomePage',
@@ -380,7 +417,9 @@ export default {
         SwiperSlide,
         CustomSelect,
         IndicatorDots,
-        ConfirmationModal,
+        ModalConfirmation,
+        ModalGeneric,
+        ModalCollection,
         IconAdd,
         IconTMDB,
         IconHeart,
@@ -389,7 +428,9 @@ export default {
         IconChevronDown,
         IconSearch,
         IconListAdd,
-        IconListRemove
+        IconListRemove,
+        IconCollection,
+        IconEdit,
     },
     data() {
         return {
@@ -494,6 +535,8 @@ export default {
                 getAllTitles: false,
             },
             scrolledPastTitlesListed: false,    // A tracker to hide and show the scroll back button
+            titleCollectionsData: null,         // The Data for the modal that handles collections for a title
+            selectedTitleIdForCollection: null,
         };
     },
     methods: {
@@ -599,14 +642,6 @@ export default {
                 return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
             }
         },
-        backdropUrl(titleId) {
-            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
-            //     if (width == 600) width = 500; 
-            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            // } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=1200`;
-            // }
-        },
         async inputTriggeredFetchAllTitles() {
             this.allTitlesListOffset = 0;
             await this.fetchAllTitlesList();
@@ -627,7 +662,57 @@ export default {
                     title.favourite = false;
                 }
             }
-        }
+        },
+        async handleCollectionsEdit(title) {
+            this.selectedTitleIdForCollection = title.title_id;
+            this.titleCollectionsData = await api.getCollectionsForTitle(title.title_id);
+            this.$refs.editCollectionsMG.open();
+        },
+        async handleAddTitleToCollection(collection) {
+            const response = await api.addTitleToCollection(collection.collection_id, this.selectedTitleIdForCollection);
+            if (response) {
+                notify(response.message, 'success');
+                collection.title_in_collection = 1;
+            }
+        },
+        async handleRemoveTitleFromCollection(collection) {
+            const response = await api.removeTitleFromCollection(collection.collection_id, this.selectedTitleIdForCollection);
+            if (response) {
+                notify(response.message, 'success');
+                collection.title_in_collection = 0;
+            }
+        },
+        async handleEditCollection(initialCollection) {
+            const editedCollection = await this.$refs.editCollectionFC.prompt(
+                initialCollection.name, 
+                initialCollection.description, 
+                initialCollection.collection_id
+            );
+            
+            // If the process was cancelled - which returns false - return
+            if (!editedCollection) return;
+
+            const response = await api.editCollection(
+                initialCollection.collection_id, 
+                editedCollection.name, 
+                editedCollection.description
+            );
+
+            if (response) {
+                notify(response.message, 'success');
+                
+                const index = this.titleCollectionsData.findIndex(c => c.collection_id === initialCollection.collection_id);
+                if (index !== -1) {
+                    this.titleCollectionsData[index] = {
+                        ...this.titleCollectionsData[index],
+                        name: editedCollection.name,
+                        description: editedCollection.description
+                    };
+                }
+
+                this.$refs.editCollectionFC.close()
+            }
+        },
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
@@ -925,7 +1010,7 @@ export default {
 }
 
 .all-titles-list .title-element {
-    --title-height: 175px;
+    --title-height: 210px;
     --padding: var(--spacing-md);
     padding: var(--padding);
     gap: var(--spacing-md);
@@ -942,6 +1027,7 @@ export default {
     background-color: var(--color-background-card);
     transition: transform 0.15s var(--cubic-1);
     box-shadow: var(--shadow-card);
+    box-sizing: border-box;
     color: var(--color-text-white);
 }
 .all-titles-list .title-element:hover, 
@@ -963,32 +1049,9 @@ export default {
     transform: scale(1);
 }
 
-.backdrop-wrapper {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgb(24, 24, 24); /* prevents light bleed */
-    overflow: hidden;
-    z-index: 0;
-}
-.title-element .backdrop {
-    position: absolute;
-    overflow: hidden;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: blur(16px) brightness(0.4);
-    z-index: 1;
-}
-
 
 .all-titles-list .poster-holder {
-    width: calc(var(--title-height) / 3 * 2);
-    min-width: calc(var(--title-height) / 3 * 2);
+    aspect-ratio: 2/3;
     border-radius: var(--border-radius-small);
     background-color: var(--color-background-card);
 }
@@ -1097,6 +1160,35 @@ export default {
 }
 .title-element .icon-button.favourite.is-set:active {
     color: var(--color-secondary-active);
+}
+
+
+.title-collections {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--spacing-md);
+}
+
+.title-collections .seperator {
+    margin-bottom: var(--spacing-md);   /* Match the gap for a dirty fix */
+}
+
+.title-collections .collection {
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: var(--spacing-md);
+}
+
+.title-collections .collection .details {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.title-collections .collection .details h3 {
+    margin: 0;
 }
 
 </style>

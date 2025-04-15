@@ -75,6 +75,14 @@
 
                 <div class="name-and-stuff">
                     <div class="name-and-tagline">
+                        <!-- <div class="logo-img-wrapper">
+                            <img 
+                                class="logo-img"
+                                :src="logoUrl()"
+                                :alt="titleInfo.name"
+                                @load="(event) => event.target.classList.add('loaded')"
+                            >
+                        </div> -->
                         <h1 class="title-name">
                             <span class="all-pointer-events" :title="titleInfo.name">
                                 {{ titleInfo.name }} 
@@ -1148,6 +1156,9 @@ export default {
                 }
             }
         },
+        logoUrl() {
+            return `${this.apiUrl}/media/image/title/${this.titleInfo.title_id}/logo.png`;
+        },
         standAloneBlocked() {
             notify("Action not available! This feature requires a backend server to find a streaming service for the title.");
         }
@@ -1430,6 +1441,20 @@ export default {
 }
 .name-and-tagline .title-name .original-title {
     color: var(--color-text-lighter)
+}
+.name-and-tagline .logo-img-wrapper {
+    max-height: 120px;
+    max-width: 100%;
+
+    display: flex;
+    flex-direction: row;
+    align-items: start;
+    padding-bottom: var(--spacing-sm);
+}
+.name-and-tagline .logo-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 .name-and-tagline .tagline {
     color: var(--color-text-light);

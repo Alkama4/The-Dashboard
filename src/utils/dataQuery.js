@@ -624,14 +624,22 @@ const api = {
     async getCollectionsListed() {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
-        return this.getData('/watch_list/collection/list', params);
+        return this.getData('/watch_list/collections/list', params);
     },
+
+    async getCollectionsForTitle(title_id) {
+        let params = {};
+        params.session_key = localStorage.getItem('sessionKey');
+        params.title_id = title_id;
+        return this.getData('/watch_list/collections/for_title', params);
+    },
+
 
     async deleteCollection(collection_id) {
         let params = {};
         params.session_key = localStorage.getItem('sessionKey');
         params.collection_id = collection_id;
-        return this.deleteData('/watch_list/collection/delete', params);
+        return this.deleteData('/watch_list/collections/delete', params);
     },
 
     async editCollection(collection_id, name, description) {
@@ -640,7 +648,7 @@ const api = {
         params.collection_id = collection_id;
         params.name = name;
         params.description = description;
-        return this.postData('/watch_list/collection/edit', params);
+        return this.postData('/watch_list/collections/edit', params);
     },
 
     async createCollection(name, description) {
@@ -648,7 +656,7 @@ const api = {
         params.session_key = localStorage.getItem('sessionKey');
         params.name = name;
         params.description = description;
-        return this.postData('/watch_list/collection/create', params);
+        return this.postData('/watch_list/collections/create', params);
     },
 
     async addTitleToCollection(collection_id, title_id) {
@@ -656,7 +664,7 @@ const api = {
         params.session_key = localStorage.getItem('sessionKey');
         params.collection_id = collection_id;
         params.title_id = title_id;
-        return this.postData('/watch_list/collection/add_title', params);
+        return this.postData('/watch_list/collections/add_title', params);
     },
 
     async removeTitleFromCollection(collection_id, title_id) {
@@ -664,7 +672,7 @@ const api = {
         params.session_key = localStorage.getItem('sessionKey');
         params.collection_id = collection_id;
         params.title_id = title_id;
-        return this.postData('/watch_list/collection/remove_title', params);
+        return this.deleteData('/watch_list/collections/remove_title', params);
     },
 
 };

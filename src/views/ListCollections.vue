@@ -100,7 +100,6 @@ export default {
 
             if (response) {
                 notify(response.message, 'success');
-                this.$refs.editCollectionFC.close()
 
                 const index = this.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
                 if (index !== -1) {
@@ -110,6 +109,8 @@ export default {
                         description: editedCollection.description
                     };
                 }
+
+                this.$refs.editCollectionFC.close()
             }
         },
         async handleRemoveCollection(collection_id) {
