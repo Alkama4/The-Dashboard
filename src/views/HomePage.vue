@@ -229,15 +229,15 @@ import IconFilm from '@/components/icons/IconFilm.vue';
 import IconWallet from '@/components/icons/IconWallet.vue';
 
 // Other
-import api from '@/utils/dataQuery';
-import { convert, getCssVar } from '@/utils/mytools'
+import fastApi from '@/utils/fastApi';
+import { convert, getCssVar } from '@/utils/utils'
 import { notify } from '@/utils/notification';
 import { 
     generateTooltipMultiValue, 
 	generateTooltipSingleValue,
 	commonChartValues,
 	initialEchartSetup,
-} from '@/utils/chartTools'
+} from '@/utils/chartUtils'
 import ChartComponent from '@/components/ChartComponent.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 
@@ -378,7 +378,7 @@ export default {
 		async fetchServerLogs(refresh = false) {
 			this.waitingFor.push("fetchServerLogs");
 
-			const resourceLogsResponse = await api.getServerResourceLogs(this.serverLogsTimespan);
+			const resourceLogsResponse = await fastApi.getServerResourceLogs(this.serverLogsTimespan);
 			// console.log("resourceLogsResponse", resourceLogsResponse);
 			if (resourceLogsResponse && resourceLogsResponse.data) {
 				const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
@@ -714,7 +714,7 @@ export default {
 		},
 		async fetchFastapiLogs() {
 			// Fastapi logs data
-			const fastapiLogDataResponse = await api.getFastapiRequestLogData("24h");
+			const fastapiLogDataResponse = await fastApi.getFastapiRequestLogData("24h");
 			if (fastapiLogDataResponse && fastapiLogDataResponse.data) {
 				this.serverStats.fastapiData = fastapiLogDataResponse.data;
 				// console.log("Fastapi data: ", this.serverStats.fastapiData);
@@ -1097,14 +1097,14 @@ export default {
 		// Everything that needs to be done before echarts in one method
 		initialEchartSetup();
 
-		const backupResponse = await api.getBackups();
+		const backupResponse = await fastApi.getBackups();
 		if (backupResponse) {
 			this.backups = backupResponse.backups;
 		}
 		// console.log(this.backups);
 		
 		// Server drives
-		const drivesResponse = await api.getServerDrivesInfo();
+		const drivesResponse = await fastApi.getServerDrivesInfo();
 		if (drivesResponse) {
 			for (const drive of Object.entries(drivesResponse)) {
 				this.serverStats.storage.push(drive[1]);

@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import api from '@/utils/dataQuery.js';
+import fastApi from '@/utils/fastApi.js';
 import ModalCollection from '@/components/ModalCollection.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import { notify } from '@/utils/notification';
@@ -70,7 +70,7 @@ export default {
             // If the process was cancelled - which returns false - return
             if (!newCollection) return;
 
-            const response = await api.createCollection(
+            const response = await fastApi.createCollection(
                 newCollection.name, 
                 newCollection.description
             );
@@ -92,7 +92,7 @@ export default {
             // If the process was cancelled - which returns false - return
             if (!editedCollection) return;
 
-            const response = await api.editCollection(
+            const response = await fastApi.editCollection(
                 initialCollection.collection_id, 
                 editedCollection.name, 
                 editedCollection.description
@@ -116,14 +116,14 @@ export default {
         async handleRemoveCollection(collection_id) {
             if (!await this.$refs.deleteCollectionMC.prompt()) return;
             
-            const response = await api.deleteCollection(collection_id);
+            const response = await fastApi.deleteCollection(collection_id);
             if (response) {
                 notify(response.message, 'success');
                 this.collections = this.collections.filter(c => c.collection_id !== collection_id);
             }
         },
         async getOrRefreshData() {
-            this.collections = await api.getCollectionsListed();
+            this.collections = await fastApi.getCollectionsListed();
         }
     },
     async mounted() {

@@ -116,11 +116,11 @@
 </template>
 
 <script>
-// import api from '@/utils/dataQuery';
+// import fastApi from '@/utils/dataQuery';
 import { notify } from '@/utils/notification';
-import { interpolateBetweenColors, getCssVar } from '@/utils/mytools'
-import { initialEchartSetup, commonChartValues, generateTooltipSingleValue } from '@/utils/chartTools';
-import api from '@/utils/dataQuery';
+import { interpolateBetweenColors, getCssVar } from '@/utils/utils'
+import { initialEchartSetup, commonChartValues, generateTooltipSingleValue } from '@/utils/chartUtils';
+import fastApi from '@/utils/fastApi';
 import ChartComponent from '@/components/ChartComponent.vue';
 import ConfirmationModal from '@/components/ModalConfirmation.vue';
 import GenericModal from '@/components/ModalGeneric.vue';
@@ -184,7 +184,7 @@ export default {
     async mounted() {
         initialEchartSetup();
 
-        const lastMonthResponse = await api.getStatsForTimespan("month");
+        const lastMonthResponse = await fastApi.getStatsForTimespan("month");
         if (lastMonthResponse && lastMonthResponse.stats) {
             // this.pageValues.lastMonth = { ...lastMonthResponse.stats };
 

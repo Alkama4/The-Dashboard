@@ -1,31 +1,52 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
-import HomePage from '../views/HomePage.vue';
-import AccountPage from '../views/AccountPage.vue';
-import SpendingsPage from '../views/SpendingsPage.vue';
-import NewEntryPage from '@/views/NewEntryPage.vue';
+
+import HomePage from '@/views/HomePage.vue';
+import AccountPage from '@/views/AccountPage.vue';
 import LogInPage from '@/views/LogInPage.vue';
-import DebugPage from '@/views/DebugPage.vue';
-import AnalyticsPage from '@/views/AnalyticsPage.vue';
-import FourOFourPage from '@/views/404Page.vue'
-import WatchList from '@/views/WatchList.vue';
-import AddTitle from '@/views/AddTitle.vue';
-import TitleDetails from '@/views/TitleDetails.vue';
 import CreateAccountPage from '@/views/CreateAccountPage.vue';
-import ListCollections from '@/views/ListCollections.vue';
+import DebugPage from '@/views/DebugPage.vue';
+import FourOFourPage from '@/views/404Page.vue';
+
+// Spendings
+import SpendingsPage from '@/views/Spendings/SpendingsPage.vue';
+import NewEntryPage from '@/views/Spendings/NewEntryPage.vue';
+import AnalyticsPage from '@/views/Spendings/AnalyticsPage.vue';
+
+// WatchList
+import WatchList from '@/views/WatchList/WatchListPage.vue';
+import AddTitle from '@/views/WatchList/AddTitlePage.vue';
+import TitleDetails from '@/views/WatchList/TitleDetailsPage.vue';
+import ListCollections from '@/views/WatchList/ListCollectionsPage.vue';
 
 const routes = [
     {
-        path: '/',              // URL path
-        name: 'Home',           // Route name, propably just for me?
-        component: HomePage,    // Component
-        meta: { title: 'Home' } // The updating title part after "-" in the browser tab
+        path: '/',
+        name: 'Home',
+        component: HomePage,
+        meta: { title: 'Home' }
     },
+
+    // ----------- /account -----------
     {
         path: '/account',
         name: 'Account',
         component: AccountPage,
         meta: { title: 'Account' }
     },
+    {
+        path: '/account/login',
+        name: 'Log in',
+        component: LogInPage,
+        meta: { title: 'Log In' }
+    },
+    {
+        path: '/account/create',
+        name: 'Create account',
+        component: CreateAccountPage,
+        meta: { title: 'Create Account' }
+    },
+
+    // ----------- /spendings -----------
     {
         path: '/spendings',
         name: 'Spendings',
@@ -39,34 +60,18 @@ const routes = [
         meta: { title: 'New Entry' }
     },
     {
-        path: '/login',
-        name: 'Log in',
-        component: LogInPage,
-        meta: { title: 'Log In' }
-    },
-    {
-        path: '/create_account',
-        name: 'Create account',
-        component: CreateAccountPage,
-        meta: { title: 'Create account' }
-    },
-    {
-        path: '/debug',
-        name: 'Debug',
-        component: DebugPage,
-        meta: { title: 'Debug' }
-    },
-    {
-        path: '/analytics',
+        path: '/spendings/analytics',
         name: 'Analytics',
         component: AnalyticsPage,
         meta: { title: 'Analytics' }
     },
+
+    // ----------- /watch_list -----------
     {
         path: '/watch_list',
         name: 'Watch list',
         component: WatchList,
-        meta: { title: 'Watch list' }
+        meta: { title: 'Watch List' }
     },
     {
         path: '/watch_list/add_title',
@@ -86,6 +91,15 @@ const routes = [
         component: ListCollections,
         meta: { title: 'Collections' }
     },
+
+    
+    // ----------- Mixed -----------
+    {
+        path: '/debug',
+        name: 'Debug',
+        component: DebugPage,
+        meta: { title: 'Debug' }
+    },
     {
         path: '/:catchAll(.*)',
         name: '404',
@@ -93,6 +107,7 @@ const routes = [
         meta: { title: '404' }
     }
 ];
+
 
 // Create the router instance
 function scrollToElementWithOffset(element) {

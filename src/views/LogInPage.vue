@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
 import CustomGenericInput from '@/components/CustomGenericInput.vue';
@@ -48,7 +48,7 @@ export default {
                 return;
             }
 
-            const responseSuccess = await api.logIn({
+            const responseSuccess = await fastApi.logIn({
                 username: this.username,
                 password: this.password
             });

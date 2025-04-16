@@ -29,7 +29,7 @@ async function handleError(error, endpoint) {
         // Handle specific status codes
         if (statusCode === 403 && detail === "Invalid or expired session key.") {
             // Since the sessionKey is invalid log out locally and prompt for log in.
-            api.localLogOut();
+            fastApi.localLogOut();
         } else if (statusCode === 403) {
             notify("Unexpected error occurred. Please try again. " + detail, "error");
         } else if (statusCode === 404) {
@@ -52,7 +52,7 @@ async function handleError(error, endpoint) {
     return null;
 }
 
-const api = {
+const fastApi = {
     // - - - - - - - - - - - - - POST AND GET METHODS - - - - - - - - - - - - - 
     async getData(endpoint, params = {}) {
         const startTime = performance.now();  // Start the timer
@@ -677,4 +677,4 @@ const api = {
 
 };
 
-export default api;
+export default fastApi;

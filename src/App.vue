@@ -14,7 +14,7 @@
 // Imports
 import { initializeDarkMode } from './utils/darkMode';
 import TopBar from './components/TopBar.vue';
-import api from './utils/dataQuery';
+import fastApi from './utils/fastApi';
 
 // Exports
 export default {
@@ -27,7 +27,7 @@ export default {
         initializeDarkMode();
 
         // Automatically check the login status so that it can be used page wide 
-        api.getLoginStatus();
+        fastApi.getLoginStatus();
     },
 }
 </script>

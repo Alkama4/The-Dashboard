@@ -123,7 +123,7 @@ import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import SliderToggle from '@/components/SliderToggle.vue';
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 import { notify } from '@/utils/notification';
 
 export default {
@@ -154,7 +154,7 @@ export default {
                 this.waitingForResult.push("search");
                 this.resultTitleCategory = this.titleCategory.toLowerCase();
                 this.searchResults = null;
-                const response = await api.searchForTitle(this.titleCategory, this.titleName);
+                const response = await fastApi.searchForTitle(this.titleCategory, this.titleName);
                 if (response) {
                     this.searchResults = response.results;
                     console.log("[searchForTitles] Api response: ", response);
@@ -185,7 +185,7 @@ export default {
             this.waitingForResult.push(titleTmdbId);
 
             // Make the api call
-            const response = await api.removeTitleFromUserList(titleTmdbId);
+            const response = await fastApi.removeTitleFromUserList(titleTmdbId);
             if (response && response.success) {
                 // Change the data on site for the title
                 this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = false;
@@ -198,7 +198,7 @@ export default {
             // Disable click
             this.waitingForResult.push(titleTmdbId);
 
-            const response = await api.addTitleToUserList(titleTmdbId, type);
+            const response = await fastApi.addTitleToUserList(titleTmdbId, type);
             if (response && response.success) {
                 // Find the title and update the in_watch_list to reflect the current state and set the title_id
                 // to make the link update to the internal site.

@@ -53,7 +53,7 @@ export default {
         return {
             links: [
                 { display: 'Spendings', to: '/spendings' },
-                { display: 'Analytics', to: '/analytics' },
+                { display: 'Analytics', to: '/spendings/analytics' },
                 { display: 'Watch list', to: '/watch_list' },
                 // { display: 'New entry', to: '/newentry' },
                 { display: 'Account', to: '/account' },

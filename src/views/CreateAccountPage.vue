@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import CustomGenericInput from '@/components/CustomGenericInput.vue';
@@ -72,7 +72,7 @@ export default {
             if (failed.includes("spaces")) notify("Username cannot contain spaces.", "error");
             if (failed.length > 0) return;
 
-            const response = await api.createAccount(this.username, this.password);
+            const response = await fastApi.createAccount(this.username, this.password);
             if (response) {
                 console.log(response);
                 notify(response.message, "success");

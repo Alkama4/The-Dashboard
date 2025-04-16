@@ -148,18 +148,18 @@
 
 
 <script>
-import api from '@/utils/dataQuery';
-import SpendingsEntry from '../components/SpendingsEntry.vue';
+import fastApi from '@/utils/fastApi';
+import SpendingsEntry from '@/components/SpendingsEntry.vue';
 import FilterSettings from '@/components/FilterSettings.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import ModalTransaction from '@/components/ModalTransaction.vue';
 import ModalGeneric from '@/components/ModalGeneric.vue';
-import { convert } from '@/utils/mytools';
+import { convert } from '@/utils/utils';
 
 import IconFilter from '@/components/icons/IconFilter.vue';
-import IconSortBoth from '../components/icons/IconSortBoth.vue';
-import IconSortDown from '../components/icons/IconSortDown.vue';
-import IconSortUp from '../components/icons/IconSortUp.vue';
+import IconSortBoth from '@/components/icons/IconSortBoth.vue';
+import IconSortDown from '@/components/icons/IconSortDown.vue';
+import IconSortUp from '@/components/icons/IconSortUp.vue';
 import IconAdd from '@/components/icons/IconAdd.vue';
 
 export default {
@@ -251,7 +251,7 @@ export default {
             // Confirm before proceeding
             if (await this.$refs.deleteTransactionMC.prompt()) { 
                 // Send the delete request
-                const response = await api.deleteTransaction(transaction.transaction_id);
+                const response = await fastApi.deleteTransaction(transaction.transaction_id);
                 if (response) {
                     // Close the transaction becuase otherwise the one below it would be expanded which doesn't make sense
                     this.expandedIndex = null;
@@ -268,7 +268,7 @@ export default {
             console.log(modifiedTransaction);
             
             if (modifiedTransaction) {
-                const response = await api.editTransaction(modifiedTransaction);
+                const response = await fastApi.editTransaction(modifiedTransaction);
                 if (response) {
                     // Close the modal
                     this.$refs.editTransactionMT.close();
@@ -292,7 +292,7 @@ export default {
             // Use {standalone: true} as filter's when in a standalone build to avoid the query from
             // changing when the user plays with filters and not displaying anything.
             const standalone = process.env.VUE_APP_STANDALONE_BUILD == "true";
-            const response = await api.getTransactions(standalone ? {} : this.apiFilters);
+            const response = await fastApi.getTransactions(standalone ? {} : this.apiFilters);
             if (response && response.transactions) {
                 if (this.apiFilters.offset === 0) {
                     this.transactions = [...response.transactions];  // First page, reset
@@ -309,7 +309,7 @@ export default {
         },
         async fetchFilters() {
             // Get filters and pass them to the FilterSettings component
-            const filterResponse = await api.getFilters();
+            const filterResponse = await fastApi.getFilters();
             if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
                 this.filterOptions = filterResponse;
             } else {

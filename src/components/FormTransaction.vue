@@ -172,14 +172,14 @@ import CustomSearchSelect from './CustomSearchSelect.vue';
 // import IconChevronDown from './icons/IconChevronDown.vue';
 import IconCross from './icons/IconCross.vue';
 import SliderToggle from './SliderToggle.vue';
-import { convert } from '@/utils/mytools';
+import { convert } from '@/utils/utils';
 import IconReset from './icons/IconReset.vue';
 import IconTrash from './icons/IconTrash.vue';
 import IconSave from './icons/IconSave.vue';
 import IconPaste from './icons/IconPaste.vue';
 import ModalConfirmation from './ModalConfirmation.vue';
 import ModalGeneric from './ModalGeneric.vue';
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 
 export default {
     name: "FormTransaction",
@@ -390,7 +390,7 @@ export default {
     },
     async mounted() {
         // Fetch the options
-        const optionsResponse = await api.getOptions();
+        const optionsResponse = await fastApi.getOptions();
         if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
             this.options = optionsResponse;
         }

@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
@@ -142,7 +142,7 @@ export default {
             if (!await this.$refs.logOutCM.prompt()) { return }
             
             // Actually log out
-            const logOutSuccess = await api.logOut();
+            const logOutSuccess = await fastApi.logOut();
             if (logOutSuccess) {
                 this.isLoggedIn = "no";
                 this.username = null;
@@ -189,7 +189,7 @@ export default {
             // If there are changes, send them to the API
             if (changedSettings.length > 0) {
                 // Call the API with the changed settings
-                const response = await api.updateSettings(changedSettings);
+                const response = await fastApi.updateSettings(changedSettings);
                 if (response && response.message) {
                     console.log("[saveSettings]", response.message);
                     
@@ -204,7 +204,7 @@ export default {
         },
         async loadSettings() {
             // Call API to get settings
-            const response = await api.getSettings();
+            const response = await fastApi.getSettings();
             if (response) {
                 console.debug("[loadSettings]", response)
                 // Store the fetched settings in `this.settings` and `this.settingsInitial`

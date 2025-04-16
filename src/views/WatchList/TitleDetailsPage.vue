@@ -702,12 +702,12 @@
   
 <script>
 // Basic
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
-import { interpolateBetweenColors, getCssVar, convert } from '@/utils/mytools'
+import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
 
 // Icons
@@ -853,7 +853,7 @@ export default {
                 selectedTypesID = this.titleInfo.title_id
             }
 
-            const response = await api.modifyTitleWatchCount(type, selectedTypesID, watchedOrUnwatched)
+            const response = await fastApi.modifyTitleWatchCount(type, selectedTypesID, watchedOrUnwatched)
             if (response) {
                 console.debug(response)
                 // Update titles state on page
@@ -883,7 +883,7 @@ export default {
         async handleNotesSave() {
             this.waitingForResult.push("saveNotes");
 
-            const response = await api.saveTitleNotes(this.titleInfo.title_id, this.titleInfo.notes)
+            const response = await fastApi.saveTitleNotes(this.titleInfo.title_id, this.titleInfo.notes)
             if (response) {
                 console.log(response);
                 notify(response.message, "success");
@@ -920,7 +920,7 @@ export default {
 
             switch (action) {
                 case "info":
-                    response = await api.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
+                    response = await fastApi.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
                         updateInfo: isTitle || isAll, 
                         updateSeasonInfo: isSeason || isAll, 
                         seasonNumber: updatingNumber 
@@ -931,7 +931,7 @@ export default {
                     break;
 
                 case "images":
-                    response = await api.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
+                    response = await fastApi.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
                         updateImages: isTitle || isAll, 
                         updateSeasonImages: isSeason || isAll, 
                         seasonNumber: updatingNumber 
@@ -942,7 +942,7 @@ export default {
                     break;
 
                 case "full":
-                    response = await api.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
+                    response = await fastApi.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
                         updateInfo: isTitle || isAll, 
                         updateImages: isTitle || isAll, 
                         updateSeasonInfo: isSeason || isAll, 
@@ -965,7 +965,7 @@ export default {
         },
         async handleFavouriteToggle() {
             this.waitingForResult.push("favourite");
-            const response = await api.toggleTitleFavourite(this.titleInfo.title_id)
+            const response = await fastApi.toggleTitleFavourite(this.titleInfo.title_id)
             if (response) {
                 console.log(response);
                 this.titleInfo.favourite = !this.titleInfo.favourite;
@@ -981,12 +981,12 @@ export default {
 
             this.waitingForResult.push("titleWatched");
             if (action == "remove") {
-                const response = await api.removeTitleFromUserList(this.titleInfo.tmdb_id);
+                const response = await fastApi.removeTitleFromUserList(this.titleInfo.tmdb_id);
                 if (response) {
                     console.debug("Title removed successfully")
                 }
             } else if (action == "add") {
-                const response = await api.addTitleToUserList(this.titleInfo.tmdb_id, this.titleInfo.type);
+                const response = await fastApi.addTitleToUserList(this.titleInfo.tmdb_id, this.titleInfo.type);
                 if (response) {
                     console.debug("Title added successfully!")
                 }
@@ -1001,7 +1001,7 @@ export default {
         async queryTitleData() {
             this.waitingForResult.push("titleInfo");
             // Query the details from api for the title here:
-            const response = await api.getTitleInfo(this.titleID);
+            const response = await fastApi.getTitleInfo(this.titleID);
             if (response && response.title_info) {
                 if (response.title_info.length !== 0) {
                     this.titleInfo = response.title_info;

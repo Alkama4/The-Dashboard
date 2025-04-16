@@ -391,11 +391,11 @@ import 'swiper/swiper-bundle.css';
 
 // My imports
 import IconAdd from '@/components/icons/IconAdd.vue';
-import api from '@/utils/dataQuery.js';
+import fastApi from '@/utils/fastApi.js';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
-import { convert } from '@/utils/mytools';
+import { convert } from '@/utils/utils';
 import CustomSelect from '@/components/CustomSelect.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
@@ -548,7 +548,7 @@ export default {
                 await Promise.all(this.titleLists.map(async (list) => {
                     list.loading = true;
                     try {
-                        const titleData = await api.getTitleCards(
+                        const titleData = await fastApi.getTitleCards(
                             list.fetchDetails.sortBy,
                             list.fetchDetails.direction,
                             list.fetchDetails.titleType,
@@ -591,7 +591,7 @@ export default {
                 options.search_term = this.allTitlesListNonAutoOptions.searchTerm;
             
             // console.debug("[fetchAlltitlesList] options:", options)
-            const titlesListedResponse = await api.listTitles(options);
+            const titlesListedResponse = await fastApi.listTitles(options);
 
             if (titlesListedResponse) {
                 // Replace the whole thing if offset is 0 and if not just append the new ones
@@ -615,7 +615,7 @@ export default {
         },
         async handleFavouriteToggle(title) {
             this.waitingForResult.push(`${title.title_id}Favourite`);
-            const response = await api.toggleTitleFavourite(title.title_id)
+            const response = await fastApi.toggleTitleFavourite(title.title_id)
             if (response) {
                 console.log(response);
                 title.favourite = !title.favourite;
@@ -647,7 +647,7 @@ export default {
             await this.fetchAllTitlesList();
         },
         async handleAddTitleToUserList(title) {
-            const response = await api.addTitleToUserList(title.tmdb_id);
+            const response = await fastApi.addTitleToUserList(title.tmdb_id);
             if (response) {
                 title.is_in_watchlist = true;
             }
@@ -655,7 +655,7 @@ export default {
         async handleRemoveTitleFromUserList(title) {
             const confirmation = await this.$refs.removeTitleConfirmationModal.prompt();
             if (confirmation) {
-                const response = await api.removeTitleFromUserList(title.tmdb_id);
+                const response = await fastApi.removeTitleFromUserList(title.tmdb_id);
                 if (response) {
                     title.is_in_watchlist = false;
                     title.watch_count = 0;
@@ -666,18 +666,18 @@ export default {
         async handleCollectionsEdit(title) {
             this.$refs.editCollectionsMG.init();
             this.selectedTitleIdForCollection = title.title_id;
-            this.titleCollectionsData = await api.getCollectionsForTitle(title.title_id);
+            this.titleCollectionsData = await fastApi.getCollectionsForTitle(title.title_id);
             this.$refs.editCollectionsMG.open();
         },
         async handleAddTitleToCollection(collection) {
-            const response = await api.addTitleToCollection(collection.collection_id, this.selectedTitleIdForCollection);
+            const response = await fastApi.addTitleToCollection(collection.collection_id, this.selectedTitleIdForCollection);
             if (response) {
                 notify(response.message, 'success');
                 collection.title_in_collection = 1;
             }
         },
         async handleRemoveTitleFromCollection(collection) {
-            const response = await api.removeTitleFromCollection(collection.collection_id, this.selectedTitleIdForCollection);
+            const response = await fastApi.removeTitleFromCollection(collection.collection_id, this.selectedTitleIdForCollection);
             if (response) {
                 notify(response.message, 'success');
                 collection.title_in_collection = 0;
@@ -693,7 +693,7 @@ export default {
             // If the process was cancelled - which returns false - return
             if (!editedCollection) return;
 
-            const response = await api.editCollection(
+            const response = await fastApi.editCollection(
                 initialCollection.collection_id, 
                 editedCollection.name, 
                 editedCollection.description

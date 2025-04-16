@@ -62,6 +62,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - #3d3e40  
         - Nice Colors  
             - #601020  
+    - When unmounting a page gracefully cancel the mount request if not answered
 
 - Page specifics
     - Spendings page

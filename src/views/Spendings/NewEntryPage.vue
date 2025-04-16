@@ -12,7 +12,7 @@
   
 <script>
 import TransactionForm from '@/components/FormTransaction.vue';
-import api from '@/utils/dataQuery';
+import fastApi from '@/utils/fastApi';
 
 export default {
     name: 'SettingsPage',
@@ -21,7 +21,7 @@ export default {
     },
     methods: {
         handleFormSubmit(formData) {
-            const response = api.newTransaction(formData);
+            const response = fastApi.newTransaction(formData);
             console.debug("[NewEntry] Response from API:", response);
         }
     }
