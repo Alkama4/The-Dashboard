@@ -41,6 +41,9 @@ export default {
         }
     },
     methods: {
+        init() {
+            this.$refs.modalGenericMG.init();
+        },
         open() {
             this.$refs.modalGenericMG.open();
         },

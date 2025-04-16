@@ -664,6 +664,7 @@ export default {
             }
         },
         async handleCollectionsEdit(title) {
+            this.$refs.editCollectionsMG.init();
             this.selectedTitleIdForCollection = title.title_id;
             this.titleCollectionsData = await api.getCollectionsForTitle(title.title_id);
             this.$refs.editCollectionsMG.open();

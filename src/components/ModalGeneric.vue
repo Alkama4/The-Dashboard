@@ -1,11 +1,16 @@
 <template>
     <div 
-        v-if="isVisible"
+        v-if="vueShow || stylingShow || waitingVueShow"
         class="modal-backdrop" 
-        :class="{'is-displayed': isDisplayed}"
+        :class="{
+            'is-displayed': stylingShow,
+            'is-waiting': waitingStylingShow
+        }"
         @click.self="close"
     >
-        <div class="modal">
+        <IconLoading class="icon-loading" size="42px" v-if="waitingVueShow"/>
+
+        <div class="modal" v-if="!waiting">
 
             <div class="default-content">
                 <h2 class="title">{{ header }}</h2>
@@ -26,11 +31,13 @@
 
 <script>
 import IconCross from './icons/IconCross.vue';
+import IconLoading from './icons/IconLoading.vue';
 
 export default {
     name: 'ModalGeneric',
     components: {
         IconCross,
+        IconLoading,
     },
     props: {
         header: {
@@ -40,12 +47,17 @@ export default {
     },
     data() {
         return {
-            isVisible: false,
-            isDisplayed: false
+            vueShow: false,
+            stylingShow: false,
+            waitingVueShow: false,
+            waitingStylingShow: false,
+            isOpening: false,
         };
     },
     methods: {
-        open() {
+        init() {
+            this.isOpening = true;
+
             if (this.closeTimeout) {
                 clearTimeout(this.closeTimeout);
                 this.closeTimeout = null;
@@ -53,21 +65,45 @@ export default {
 
             document.documentElement.classList.add('no-scroll');
             document.addEventListener('keydown', this.closeWithKeypress);
-            this.isVisible = true;
+            this.waitingVueShow = true;
 
             setTimeout(() => {
-                this.isDisplayed = true;
-            }, 10);
+                this.waitingStylingShow = true;
+                this.isOpening = false;
+            }, 1);
+        },
+        open() {
+            this.isOpening = true;
+
+            if (this.closeTimeout) {
+                clearTimeout(this.closeTimeout);
+                this.closeTimeout = null;
+            }
+
+            this.vueShow = true;
+            this.stylingShow = false;
+
+            document.documentElement.classList.add('no-scroll');
+            document.addEventListener('keydown', this.closeWithKeypress);
+
+            setTimeout(() => {
+                this.stylingShow = true;
+                this.waitingStylingShow = false;
+                this.waitingVueShow = false;
+                this.isOpening = false;
+            }, 1);
         },
         close() {
             document.documentElement.classList.remove('no-scroll');
             document.removeEventListener('keydown', this.closeWithKeypress);
             this.$emit("closed");
-            this.isDisplayed = false;
+            this.stylingShow = false;
+            this.waitingStylingShow = false;
 
             this.closeTimeout = setTimeout(() => {
-                if (!this.isDisplayed) {
-                    this.isVisible = false;
+                if (!this.stylingShow &&  !this.isOpening) {
+                    this.vueShow = false;
+                    this.waitingVueShow = false;
                 }
                 this.closeTimeout = null;
             }, 200);
@@ -96,11 +132,30 @@ export default {
     transition: opacity 0.2s ease-out;
     pointer-events: none;
 }
+.modal-backdrop.is-waiting,
 .modal-backdrop.is-displayed {
     pointer-events: unset;
     cursor: pointer;
     opacity: 1;
 }
+
+.icon-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%) translateX(-50%);
+    animation: rotate-spin 1s linear infinite;
+}
+@keyframes rotate-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 .modal {
     max-width: 90vw;
     max-height: 80vh;
@@ -119,12 +174,18 @@ export default {
     margin: auto; /* Works with inset */
     
     transform: translateY(8px);
-    transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-out,
+                opacity 0.2s ease-out;
     cursor: auto;
+
+    pointer-events: none;
+    opacity: 0;
 }
 
 .is-displayed .modal {
+    pointer-events: unset;
     transform: translateY(0px);
+    opacity: 1;
 }
 
 .default-content {
