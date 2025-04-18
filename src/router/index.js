@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
+import { standAloneBuild } from '@/utils/config';
 
 import HomePage from '@/views/HomePage.vue';
 import AccountPage from '@/views/AccountPage.vue';
@@ -123,9 +124,9 @@ function scrollToElementWithOffset(element) {
 }
 
 const router = createRouter({
-    history: process.env.VUE_APP_STANDALONE_BUILD === 'false' 
-    ? createWebHistory(process.env.BASE_URL) 
-    : createWebHashHistory(process.env.BASE_URL),
+    history: standAloneBuild 
+    ? createWebHashHistory(process.env.BASE_URL) 
+    : createWebHistory(process.env.BASE_URL),
     routes,
     scrollBehavior(to, from, savedPosition) {
         if (to.hash) {

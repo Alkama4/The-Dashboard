@@ -155,6 +155,7 @@ import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import ModalTransaction from '@/components/ModalTransaction.vue';
 import ModalGeneric from '@/components/ModalGeneric.vue';
 import { convert } from '@/utils/utils';
+import { standAloneBuild } from '@/utils/config';
 
 import IconFilter from '@/components/icons/IconFilter.vue';
 import IconSortBoth from '@/components/icons/IconSortBoth.vue';

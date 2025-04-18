@@ -1,3 +1,6 @@
+import router from "@/router";
+import { notify } from "@/utils/notification";
+
 export const convert = {
     toFiNumber(value, maxFractionDigits = 3) {
         if (value == null) return null; // Handle null/undefined values
@@ -157,4 +160,23 @@ export function interpolateBetweenColors(color1, color2, position) {
     const b = Math.round(rgb1[2] + (rgb2[2] - rgb1[2]) * position);
 
     return `rgb(${r}, ${g}, ${b})`;
+}
+
+
+export function localLogOut(manualLogOut = false, quiet = false) {
+    if (router.currentRoute.value.path !== "/account/login") {
+        localStorage.removeItem("sessionKey");
+        localStorage.setItem("isLoggedIn", false);
+        localStorage.removeItem("username");
+        if (manualLogOut != true) {
+            notify("Your session has expired, and you have been logged out. Please log in again.", "info", 15000);
+        }
+        if (!quiet) {
+            router.push("/login");
+        }
+    }
+}
+
+export function getSessionKey() {
+    return localStorage.getItem('sessionKey');
 }

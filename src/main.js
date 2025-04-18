@@ -3,12 +3,14 @@ import App from './App.vue';
 import './assets/poppins.css';
 import './assets/global.css';
 import router from './router';
-import VueSelect from "vue-select";
+import { notify } from './utils/notification';
 
-createApp(App)
-    .use(router)
-    .component("v-select", VueSelect)
-    .mount('#app');
+const app = createApp(App);
 
-// Notification when entering the site
-// notify("This is a development site. Please note that any changes made here will not be saved.", "info", 10000);
+if (process.env.VUE_APP_STANDALONE_BUILD === "true") {
+    const disclaimer = "Please note: This app is in standalone mode. Most features are disabled, but you can browse the site to explore its look and feel.";
+    notify(disclaimer, "info", 15000);
+    console.warn(disclaimer);
+}
+
+app.use(router).mount('#app');

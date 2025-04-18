@@ -240,6 +240,7 @@ import {
 } from '@/utils/chartUtils'
 import ChartComponent from '@/components/ChartComponent.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
+import { standAloneBuild } from '@/utils/config';
 
 export default {
 	name: 'HomePage',
@@ -325,7 +326,7 @@ export default {
 			}
 		},
 		getServiceUrls() {
-			if (process.env.VUE_APP_STANDALONE_BUILD == "false") {
+			if (!standAloneBuild) {
 				const serviceUrls = [];
 				// Check if the current hostname is an IPv4 so that we later try the correct one first
 				const isIpv4 = /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(location.hostname);

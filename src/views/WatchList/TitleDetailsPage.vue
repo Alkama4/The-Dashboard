@@ -709,6 +709,7 @@ import InfoTooltip from '@/components/InfoTooltip.vue';
 import IndicatorDots from '@/components/IndicatorDots.vue';
 import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
+import { standAloneBuild } from '@/utils/config';
 
 // Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
@@ -727,6 +728,7 @@ import ModalGeneric from '@/components/ModalGeneric.vue';
 export default {
     data() {
         return {
+            standAloneBuild: standAloneBuild,
             apiUrl: process.env.VUE_APP_API_URL,
             titleID: this.$route.params.titleID,
             titleInfo: null,
@@ -741,7 +743,6 @@ export default {
             },
             openedSeasons: [],
             scrolledPastEpisodeMap: false,
-            standAloneBuild: process.env.VUE_APP_STANDALONE_BUILD == "true",
             isTouchDevice: false,
             selectedSeasonToUpdate: null,
         };
@@ -1140,7 +1141,7 @@ export default {
             });
         },
         imageUrl(width, backupUrl, titleId, seasonNumber, episodeNumber) {
-            if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+            if (standAloneBuild) {
                 if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
                 if (width == 900 && episodeNumber) width = 300;  // TMDB doesn't have a 900 for episodes so use the largest non-original 300 instead
                 return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
@@ -1216,7 +1217,7 @@ export default {
         // Scroll to the hash on the url if there is one.
         // Need to do this here instead of "beforeRouteEnter" because we need access to this and the titles info.
         // Need to also have a different method of getting the hash for standalone build
-        const hash = process.env.VUE_APP_STANDALONE_BUILD == "true" ? "#" + window.location.hash.split("#")[2] : window.location.hash;
+        const hash = standAloneBuild ? "#" + window.location.hash.split("#")[2] : window.location.hash;
         if (hash) {
             // Open season based on hash
             this.openCorrectSeason(hash);

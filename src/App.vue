@@ -33,5 +33,5 @@ export default {
 </script>
 
 <style>
-    @import "vue-select/dist/vue-select.css";
+
 </style>

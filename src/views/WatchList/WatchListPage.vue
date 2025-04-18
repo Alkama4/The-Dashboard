@@ -409,6 +409,7 @@ import ModalGeneric from '@/components/ModalGeneric.vue';
 import { notify } from '@/utils/notification';
 import IconEdit from '@/components/icons/IconEdit.vue';
 import ModalCollection from '@/components/ModalCollection.vue';
+import { standAloneBuild } from '@/utils/config';
 
 export default {
     name: 'HomePage',
@@ -635,7 +636,7 @@ export default {
             }
         },
         posterUrl(titleId, width, backupUrl) {
-            if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+            if (standAloneBuild) {
                 if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
                 return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
             } else {
