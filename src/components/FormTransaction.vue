@@ -390,9 +390,9 @@ export default {
     },
     async mounted() {
         // Fetch the options
-        const optionsResponse = await fastApi.getOptions();
-        if (optionsResponse && optionsResponse.counterparty && optionsResponse.category) {
-            this.options = optionsResponse;
+        const categoriesResponse = await fastApi.spendings.transactions.categories_options();
+        if (categoriesResponse && categoriesResponse.counterparty && categoriesResponse.category) {
+            this.options = categoriesResponse;
         }
     }
 };

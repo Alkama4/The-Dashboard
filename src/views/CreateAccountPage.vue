@@ -72,16 +72,16 @@ export default {
             if (failed.includes("spaces")) notify("Username cannot contain spaces.", "error");
             if (failed.length > 0) return;
 
-            const response = await fastApi.createAccount(this.username, this.password);
+            const response = await fastApi.account.create(this.username, this.password);
             if (response) {
                 console.log(response);
                 notify(response.message, "success");
-                router.push("/login");
+                router.push("/account/login");
             }
         }
     },
     mounted() {
-        if (localStorage.getItem("isLoggedIn") == "true") {
+        if (localStorage.getItem("sessionActive") == "true") {
             console.log("You are already logged in.");
             router.back();
         }

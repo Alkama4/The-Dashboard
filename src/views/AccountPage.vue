@@ -115,6 +115,7 @@ import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconWarningTriangle from '@/components/icons/IconWarningTriangle.vue';
 import ConfirmationModal from '@/components/ModalConfirmation.vue';
+import session from '@/utils/session';
 
 export default {
     components: {
@@ -124,7 +125,7 @@ export default {
     },
     data() {
         return {
-            isLoggedIn: "unknown",
+            sessionActive: "unknown",
             username: '',
             showModal: false,
             settingNames: [
@@ -142,12 +143,10 @@ export default {
             if (!await this.$refs.logOutCM.prompt()) { return }
             
             // Actually log out
-            const logOutSuccess = await fastApi.logOut();
+            const logOutSuccess = await session.logout();
             if (logOutSuccess) {
-                this.isLoggedIn = "no";
+                this.sessionActive = "false";
                 this.username = null;
-            } else {
-                this.isLoggedIn = "yes";
             }
         },
         async handleAccountDelete() {
@@ -189,7 +188,7 @@ export default {
             // If there are changes, send them to the API
             if (changedSettings.length > 0) {
                 // Call the API with the changed settings
-                const response = await fastApi.updateSettings(changedSettings);
+                const response = await fastApi.account.updateSettings(changedSettings);
                 if (response && response.message) {
                     console.log("[saveSettings]", response.message);
                     
@@ -204,7 +203,7 @@ export default {
         },
         async loadSettings() {
             // Call API to get settings
-            const response = await fastApi.getSettings();
+            const response = await fastApi.account.getSettings();
             if (response) {
                 console.debug("[loadSettings]", response)
                 // Store the fetched settings in `this.settings` and `this.settingsInitial`
@@ -218,9 +217,9 @@ export default {
     },
     async mounted() {
         // A logged in check that automatically sends to login page if the user isn't logged in.
-        const loggedIn = localStorage.getItem("isLoggedIn");
+        const loggedIn = localStorage.getItem("sessionActive");
         if (loggedIn != "true") {
-            router.push("/login");
+            router.push("/account/login");
         }
 
         // Get the username

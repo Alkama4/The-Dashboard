@@ -1,6 +1,6 @@
 <template>
     <div class="content-width-small">
-        <h1>Add title</h1>
+        <h1>Add title <span class="text-lighter">(Under construction)</span></h1>
         <p>Use the search box below to search for movies or TV-show to add to your watch list. Please note that if no one has added the title to their watch list before the process takes a while since the server queries for all the data for it. Especially on TV-series, since the amount of data is so much greater. </p>
 
         <form @submit.prevent="searchForTitles" class="title-form">
@@ -87,9 +87,9 @@
                         <button 
                             v-if="title.in_watch_list" 
                             class="button-danger" 
-                            @click="removeTitle(title.id)"
-                            :disabled="waitingForResult.includes(title.id)" 
-                            :class="{ loading: waitingForResult.includes(title.id)}"
+                            @click="removeTitle(title.title_id)"
+                            :disabled="waitingForResult.includes(title.title_id)" 
+                            :class="{ loading: waitingForResult.includes(title.title_id)}"
                         >
                             <IconTrash size="16px"/>Remove
                         </button>
@@ -143,7 +143,7 @@ export default {
             searchResults: null,
             waitingForResult: [],
             showConfirmationModal: false,
-
+            waiting: null,
             // This is clunky and the modal should be redone to allow better handling.
             titleToBeRemoved: ""
         }
@@ -154,7 +154,7 @@ export default {
                 this.waitingForResult.push("search");
                 this.resultTitleCategory = this.titleCategory.toLowerCase();
                 this.searchResults = null;
-                const response = await fastApi.searchForTitle(this.titleCategory, this.titleName);
+                const response = await fastApi.watch_list.search(this.titleName, this.titleCategory.toLowerCase());
                 if (response) {
                     this.searchResults = response.results;
                     console.log("[searchForTitles] Api response: ", response);
@@ -177,29 +177,29 @@ export default {
                 });
             }
         },
-        async removeTitle(titleTmdbId) {
+        async removeTitle(title_id) {
             // Confirm with the user
             if (! await this.$refs.removeTitleCM.prompt()) return;
 
             // Disable click
-            this.waitingForResult.push(titleTmdbId);
+            this.waitingForResult.push(title_id);
 
             // Make the api call
-            const response = await fastApi.removeTitleFromUserList(titleTmdbId);
-            if (response && response.success) {
+            const response = await fastApi.watch_list.titles.remove(title_id);
+            if (response) {
                 // Change the data on site for the title
-                this.searchResults.find(result => result.id === titleTmdbId).in_watch_list = false;
+                this.searchResults.find(result => result.title_id === title_id).in_watch_list = false;
             }
 
             // Allow click
-            this.removeItemFromWaitingArray(titleTmdbId);
+            this.removeItemFromWaitingArray(title_id);
         },
         async addTitle(titleTmdbId, type) {
             // Disable click
             this.waitingForResult.push(titleTmdbId);
 
-            const response = await fastApi.addTitleToUserList(titleTmdbId, type);
-            if (response && response.success) {
+            const response = await fastApi.watch_list.titles.add(null, titleTmdbId, type);
+            if (response) {
                 // Find the title and update the in_watch_list to reflect the current state and set the title_id
                 // to make the link update to the internal site.
                 const result = this.searchResults.find(result => result.id === titleTmdbId);

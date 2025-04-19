@@ -13,6 +13,7 @@
 <script>
 import TransactionForm from '@/components/FormTransaction.vue';
 import fastApi from '@/utils/fastApi';
+import { notify } from '@/utils/notification';
 
 export default {
     name: 'SettingsPage',
@@ -21,8 +22,10 @@ export default {
     },
     methods: {
         handleFormSubmit(formData) {
-            const response = fastApi.newTransaction(formData);
-            console.debug("[NewEntry] Response from API:", response);
+            const response = fastApi.spendings.transactions.create(formData);
+            if (response) {
+                notify("Transaction created successfully!", "success");
+            }
         }
     }
 };

@@ -184,7 +184,7 @@ export default {
     async mounted() {
         initialEchartSetup();
 
-        const lastMonthResponse = await fastApi.getStatsForTimespan("month");
+        const lastMonthResponse = await fastApi.spendings.analytics.stats.timespan("month");
         if (lastMonthResponse && lastMonthResponse.stats) {
             // this.pageValues.lastMonth = { ...lastMonthResponse.stats };
 

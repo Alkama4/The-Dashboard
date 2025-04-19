@@ -162,6 +162,7 @@ import IconSortBoth from '@/components/icons/IconSortBoth.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
 import IconAdd from '@/components/icons/IconAdd.vue';
+import { notify } from '@/utils/notification';
 
 export default {
     name: 'SpendingsPage',
@@ -252,8 +253,10 @@ export default {
             // Confirm before proceeding
             if (await this.$refs.deleteTransactionMC.prompt()) { 
                 // Send the delete request
-                const response = await fastApi.deleteTransaction(transaction.transaction_id);
+                const response = await fastApi.spendings.transactions.delete(transaction.transaction_id);
                 if (response) {
+                    notify("Transaction deleted successfully!", "success");
+
                     // Close the transaction becuase otherwise the one below it would be expanded which doesn't make sense
                     this.expandedIndex = null;
                     // Have to add a small delay or the watch on the transaction below would be triggered to expand
@@ -269,8 +272,10 @@ export default {
             console.log(modifiedTransaction);
             
             if (modifiedTransaction) {
-                const response = await fastApi.editTransaction(modifiedTransaction);
+                const response = await fastApi.spendings.transactions.update(modifiedTransaction.transaction_id, modifiedTransaction);
                 if (response) {
+                    notify("Transaction edited successfully!", "success");
+
                     // Close the modal
                     this.$refs.editTransactionMT.close();
 
@@ -292,8 +297,7 @@ export default {
 
             // Use {standalone: true} as filter's when in a standalone build to avoid the query from
             // changing when the user plays with filters and not displaying anything.
-            const standalone = process.env.VUE_APP_STANDALONE_BUILD == "true";
-            const response = await fastApi.getTransactions(standalone ? {} : this.apiFilters);
+            const response = await fastApi.spendings.transactions.list(standAloneBuild ? {} : this.apiFilters);
             if (response && response.transactions) {
                 if (this.apiFilters.offset === 0) {
                     this.transactions = [...response.transactions];  // First page, reset
@@ -310,7 +314,7 @@ export default {
         },
         async fetchFilters() {
             // Get filters and pass them to the FilterSettings component
-            const filterResponse = await fastApi.getFilters();
+            const filterResponse = await fastApi.spendings.transactions.filters_options();
             if (filterResponse && filterResponse.counterparty && filterResponse.category && filterResponse.amount && filterResponse.date) {
                 this.filterOptions = filterResponse;
             } else {

@@ -3,7 +3,7 @@
         <h1>Log in</h1>
         <p>Log in in order to access the data that is linked to your account. You can browse the website without logging in, but you can only view the example data and can not edit it.</p>
 
-        <p>Use the form below to log in by filling in the details. Don't have an account? Create one <router-link to="/create_account">here.</router-link> If you have forgotten your username or password please contanct the server admin.</p>
+        <p>Use the form below to log in by filling in the details. Don't have an account? Create one <router-link to="/account/create">here.</router-link> If you have forgotten your username or password please contanct the server admin.</p>
 
         <form @submit.prevent="handleLogin" class="card simple-form">
             <h2>Enter Your Details</h2>
@@ -21,11 +21,11 @@
 </template>
 
 <script>
-import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
 import CustomGenericInput from '@/components/CustomGenericInput.vue';
 import { notify } from '@/utils/notification';
+import session from '@/utils/session';
 
 export default {
     data() {
@@ -48,7 +48,7 @@ export default {
                 return;
             }
 
-            const responseSuccess = await fastApi.logIn({
+            const responseSuccess = await session.login({
                 username: this.username,
                 password: this.password
             });
@@ -58,7 +58,7 @@ export default {
         }
     },
     mounted() {
-        if (localStorage.getItem("isLoggedIn") == "true") {
+        if (localStorage.getItem("sessionActive") == "true") {
             console.log("You are already logged in.");
             router.back();
         }

@@ -10,7 +10,7 @@
     >
         <IconLoading class="icon-loading" size="42px" v-if="waitingVueShow"/>
 
-        <div class="modal" v-if="!waiting">
+        <div class="modal">
 
             <div class="default-content">
                 <h2 class="title">{{ header }}</h2>

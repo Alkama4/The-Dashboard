@@ -63,6 +63,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Nice Colors  
             - #601020  
     - When unmounting a page gracefully cancel the mount request if not answered
+    - img
+        - loading="lazy"
+            - Test how it works and if it works.
+            - If it not, maybe try out libararies (preferrable not).
 
 - Page specifics
     - Spendings page
@@ -73,6 +77,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Needs a revamp  
             - Accordion (Haitari) mini toggle instead → allows animation  
         - Loading placeholders on mobile have uneven spacing
+        - Edit transaction
+            - When modifying trasaction_item count the height of the selected transaction doesn't change when the modal closes.
 
     - Home page
         - The text-area div is offset as I wan't it, but it partially covers the content below.
@@ -134,6 +140,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Have the "user data updated" reflect latest update to title or episode.
             - Did already? 
         - Backdrop base color black so that the gradient is always visible?
+        - Notes always visible, even when not in watch_list
+        - Use a in watch_list tag instaed of -1 and "< 0"
+        - notes `ctrl + s` save
 
     - Search title
         - Looks generally bad
@@ -150,6 +159,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Reset all current sessions
         - Show current password?
         - Danger zone icon spacing
+        - Mark input field
+            - negative on fail or invalid input
+            - positive on success save success
+            - Back to text color on input
 
     - Admin tools
         - Wipe all

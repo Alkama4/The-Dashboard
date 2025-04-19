@@ -218,14 +218,14 @@ export default {
             
             // General stats
             (async () => {
-                const generalStatsResponse = await fastApi.getGeneralStats();
+                const generalStatsResponse = await fastApi.spendings.analytics.stats.general();
                 if (generalStatsResponse && generalStatsResponse.generalStats)
                     this.pageValues.generalStats = {...generalStatsResponse.generalStats};
             })(),
 
             // Last month stats
             (async () => {
-                const lastMonthResponse = await fastApi.getStatsForTimespan("month");
+                const lastMonthResponse = await fastApi.spendings.analytics.stats.timespan("month");
                 if (lastMonthResponse && lastMonthResponse.stats) {
                     this.pageValues.lastMonth = { ...lastMonthResponse.stats };
 
@@ -273,7 +273,7 @@ export default {
 
             // Last year stats
             (async () => {
-                const lastYearResponse = await fastApi.getStatsForTimespan("year")
+                const lastYearResponse = await fastApi.spendings.analytics.stats.timespan("year")
                 if (lastYearResponse && lastYearResponse.stats) {
                     this.pageValues.lastYear = {...lastYearResponse.stats}
 
@@ -322,7 +322,7 @@ export default {
             // Chart 1
             (async () => {
                 try {
-                    const response = await fastApi.getChartBalanceOverTime();
+                    const response = await fastApi.spendings.analytics.charts.balance_over_time();
                     const dates = response.balanceOverTime.map(item => item.date);
                     const runningSums = response.balanceOverTime.map(item => item.runningBalance);
                     
@@ -403,7 +403,7 @@ export default {
             // Chart 2
             (async () => {
                 try {
-                    const response = await fastApi.getChartSumByMonth();
+                    const response = await fastApi.spendings.analytics.charts.sum_by_month();
                     const months = response.monthlySums.map(item => item.month);
                     const totalIncomes = response.monthlySums.map(item => item.total_income);
                     const totalExpenses = response.monthlySums.map(item => item.total_expense);
@@ -492,7 +492,7 @@ export default {
             // Chart 3
             (async () => {
                 try {
-                    const response = await fastApi.getChartExpenseCategoriesMonthly();
+                    const response = await fastApi.spendings.analytics.charts.categories_monthly("expense");
                     const dates = response.monthlyCategoryExpenses.map(item => item.month);
                     const categories = Array.from(new Set(response.monthlyCategoryExpenses.flatMap(item =>
                         item.categories.map(cat => cat.category))));
@@ -570,7 +570,7 @@ export default {
             // Chart 4
             (async () => {
                 try {
-                    const response = await fastApi.getChartIncomeCategoriesMonthly();
+                    const response = await fastApi.spendings.analytics.charts.categories_monthly("income");
                     const dates = response.monthlyCategoryExpenses.map(item => item.month);
                     const categories = Array.from(new Set(response.monthlyCategoryExpenses.flatMap(item =>
                         item.categories.map(cat => cat.category))));

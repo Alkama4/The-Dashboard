@@ -135,7 +135,7 @@
                         <button 
                             v-if="titleInfo.watch_count == null || titleInfo.watch_count <= 0"
                             class="button-primary middle-button flex-2" 
-                            @click="handleTitleWatchClick('title', 'watched')"
+                            @click="handleTitleWatchClick('title', 1, null)"
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
                         >
@@ -144,7 +144,7 @@
                         <button 
                             v-else
                             class=" middle-button flex-2" 
-                            @click="handleTitleWatchClick('title', 'unwatched')" 
+                            @click="handleTitleWatchClick('title', 0, null)" 
                             :disabled="waitingForResult.length != 0"
                             :class="{loading: waitingForResult.length != 0}"
                         >
@@ -497,7 +497,7 @@
                     <button 
                         class="modify-watched button-primary"
                         v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                        @click.stop="handleTitleWatchClick('season', 'watched', season.season_id)"
+                        @click.stop="handleTitleWatchClick('season', 1, season.season_id)"
                         :disabled="waitingForResult.length != 0"
                         :class="{loading: waitingForResult.length != 0}"
                     >
@@ -506,7 +506,7 @@
                     <button
                         class="modify-watched "
                         v-else
-                        @click.stop="handleTitleWatchClick('season', 'unwatched', season.season_id)"
+                        @click.stop="handleTitleWatchClick('season', 0, season.season_id)"
                         :disabled="waitingForResult.length != 0"
                         :class="{loading: waitingForResult.length != 0}"
                     >
@@ -574,7 +574,7 @@
                                 <button 
                                     v-if="episode.watch_count == 0 || episode.watch_count == null"
                                     class="modify-watched button-primary"
-                                    @click="handleTitleWatchClick('episode', 'watched', episode.episode_id)"
+                                    @click="handleTitleWatchClick('episode', 1, episode.episode_id)"
                                     :class="{
                                         loading: waitingForResult.length != 0}"
                                 >
@@ -583,7 +583,7 @@
                                 <button 
                                     v-else
                                     class="modify-watched "
-                                    @click="handleTitleWatchClick('episode', 'unwatched', episode.episode_id)"
+                                    @click="handleTitleWatchClick('episode', 0, episode.episode_id)"
                                     :class="{loading: waitingForResult.length != 0}"
                                 >
                                     Unwatch
@@ -812,57 +812,50 @@ export default {
             })
         },
         // make this go through a MODAL?
-        async handleTitleWatchClick(titleOrSeasonOrEpisode, watchedOrUnwatched, customID) {
+        async handleTitleWatchClick(titleOrSeasonOrEpisode, watchCount, customID) {
             // Initially get a confirmation from the user before going through
             if (
                 this.titleInfo.type == "tv" && 
                 titleOrSeasonOrEpisode == "title" && 
-                watchedOrUnwatched == "watched" && 
+                watchCount == 1 && 
                 !await this.$refs.markTitleWatchedCM.prompt()
             ) { return } else if (
                 this.titleInfo.type == "tv" && 
                 titleOrSeasonOrEpisode == "title" && 
-                watchedOrUnwatched == "unwatched" && 
+                watchCount == 0 && 
                 !await this.$refs.markTitleUnwatchedCM.prompt()
             ) { return } else if (
                 this.titleInfo.type == "tv" && 
                 titleOrSeasonOrEpisode == "season" && 
-                watchedOrUnwatched == "watched" && 
+                watchCount == 1 && 
                 !await this.$refs.markSeasonWatchedCM.prompt()
             ) { return } else if (
                 this.titleInfo.type == "tv" && 
                 titleOrSeasonOrEpisode == "season" && 
-                watchedOrUnwatched == "unwatched" && 
+                watchCount == 0&& 
                 !await this.$refs.markSeasonUnwatchedCM.prompt()
             ) { return }
 
-            this.waitingForResult.push(`${titleOrSeasonOrEpisode}${watchedOrUnwatched}${customID}`);
-                
-            // A funny little if else where it gets whether we are getting tv, movie, season or episode
-            let type = "";
-            if (titleOrSeasonOrEpisode == "title") {
-                type = this.titleInfo.type;
-            } else {
-                type = titleOrSeasonOrEpisode;
+            // Disable inputs
+            this.waitingForResult.push(`${titleOrSeasonOrEpisode}${watchCount}${customID}`);
+
+            let response;
+            if (titleOrSeasonOrEpisode === "title") {
+                response = await fastApi.watch_list.titles.watchCountTitle(this.titleInfo.title_id, watchCount);
+            } else if (titleOrSeasonOrEpisode === "season") {
+                response = await fastApi.watch_list.titles.watchCountSeason(customID, this.titleInfo.title_id, watchCount);
+            } else if (titleOrSeasonOrEpisode === "episode") {
+                response = await fastApi.watch_list.titles.watchCountEpisode(customID, this.titleInfo.title_id, watchCount);
             }
 
-            // Select the correct id eg. title_id, season_id etc.
-            let selectedTypesID = 0;
-            if (customID)  {
-                selectedTypesID = customID;
-            } else {
-                selectedTypesID = this.titleInfo.title_id
-            }
-
-            const response = await fastApi.modifyTitleWatchCount(type, selectedTypesID, watchedOrUnwatched)
             if (response) {
-                console.debug(response)
+                // console.debug(response)
                 // Update titles state on page
                 this.titleInfo.watch_count = response.updated_data.watch_count;
                 // Update each episodes state on page by mathcing the episode_id
                 if (response.updated_data.episodes) {
-                    console.debug(response.updated_data.episodes)
-                    console.debug(this.titleInfo.seasons)
+                    // console.debug(response.updated_data.episodes)
+                    // console.debug(this.titleInfo.seasons)
                     
                     // Loop through each episode in response.updated_data.episodes
                     response.updated_data.episodes.forEach(updatedEpisode => {
@@ -879,12 +872,12 @@ export default {
                 }
             }
 
-            this.removeItemFromWaitingArray(`${titleOrSeasonOrEpisode}${watchedOrUnwatched}${customID}`);
+            this.removeItemFromWaitingArray(`${titleOrSeasonOrEpisode}${watchCount}${customID}`);
         },
         async handleNotesSave() {
             this.waitingForResult.push("saveNotes");
 
-            const response = await fastApi.saveTitleNotes(this.titleInfo.title_id, this.titleInfo.notes)
+            const response = await fastApi.watch_list.titles.notes(this.titleInfo.title_id, this.titleInfo.notes)
             if (response) {
                 console.log(response);
                 notify(response.message, "success");
@@ -921,10 +914,10 @@ export default {
 
             switch (action) {
                 case "info":
-                    response = await fastApi.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
-                        updateInfo: isTitle || isAll, 
-                        updateSeasonInfo: isSeason || isAll, 
-                        seasonNumber: updatingNumber 
+                    response = await fastApi.watch_list.titles.update(this.titleInfo.title_id, this.titleInfo.type, { 
+                        update_title_info: isTitle || isAll, 
+                        update_season_info: isSeason || isAll, 
+                        season_number: updatingNumber 
                     });
                     updateMessage = updatingNumber != 0
                         ? `Season ${updatingNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`
@@ -932,10 +925,10 @@ export default {
                     break;
 
                 case "images":
-                    response = await fastApi.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
-                        updateImages: isTitle || isAll, 
-                        updateSeasonImages: isSeason || isAll, 
-                        seasonNumber: updatingNumber 
+                    response = await fastApi.watch_list.titles.update(this.titleInfo.title_id, this.titleInfo.type, { 
+                        update_title_images: isTitle || isAll, 
+                        update_season_images: isSeason || isAll, 
+                        season_number: updatingNumber 
                     });
                     updateMessage = updatingNumber != 0
                         ? `Season ${updatingNumber} images for "${this.titleInfo.name}" are now updating in the background.`
@@ -943,12 +936,12 @@ export default {
                     break;
 
                 case "full":
-                    response = await fastApi.updateTitle(this.titleInfo.tmdb_id, this.titleInfo.type, { 
-                        updateInfo: isTitle || isAll, 
-                        updateImages: isTitle || isAll, 
-                        updateSeasonInfo: isSeason || isAll, 
-                        updateSeasonImages: isSeason || isAll, 
-                        seasonNumber: updatingNumber 
+                    response = await fastApi.watch_list.titles.update(this.titleInfo.title_id, this.titleInfo.type, { 
+                        update_title_info: isTitle || isAll, 
+                        update_title_images: isTitle || isAll, 
+                        update_season_info: isSeason || isAll, 
+                        update_season_images: isSeason || isAll, 
+                        season_number: updatingNumber 
                     });
                     updateMessage = updatingNumber != 0
                         ? `Season ${updatingNumber} full update for "${this.titleInfo.name}" is now in progress.`
@@ -966,7 +959,7 @@ export default {
         },
         async handleFavouriteToggle() {
             this.waitingForResult.push("favourite");
-            const response = await fastApi.toggleTitleFavourite(this.titleInfo.title_id)
+            const response = await fastApi.watch_list.titles.favourite(this.titleInfo.title_id)
             if (response) {
                 console.log(response);
                 this.titleInfo.favourite = !this.titleInfo.favourite;
@@ -982,12 +975,12 @@ export default {
 
             this.waitingForResult.push("titleWatched");
             if (action == "remove") {
-                const response = await fastApi.removeTitleFromUserList(this.titleInfo.tmdb_id);
+                const response = await fastApi.watch_list.titles.remove(this.titleInfo.title_id);
                 if (response) {
                     console.debug("Title removed successfully")
                 }
             } else if (action == "add") {
-                const response = await fastApi.addTitleToUserList(this.titleInfo.tmdb_id, this.titleInfo.type);
+                const response = await fastApi.watch_list.titles.add(this.titleInfo.title_id, this.titleInfo.type);
                 if (response) {
                     console.debug("Title added successfully!")
                 }
@@ -1002,11 +995,11 @@ export default {
         async queryTitleData() {
             this.waitingForResult.push("titleInfo");
             // Query the details from api for the title here:
-            const response = await fastApi.getTitleInfo(this.titleID);
+            const response = await fastApi.watch_list.titles.info(this.titleID);
             if (response && response.title_info) {
                 if (response.title_info.length !== 0) {
                     this.titleInfo = response.title_info;
-                    if (this.standAloneBuild) {
+                    if (standAloneBuild) {
                         this.titleInfo.backdrop_image_count = 1;
                     }
                     console.debug("[queryTitleData] Values set to this.titleInfo: ", this.titleInfo)
