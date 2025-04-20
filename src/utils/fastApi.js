@@ -1,7 +1,6 @@
 import axios from 'axios';
 import qs from 'qs';
 import { notify } from './notification';
-import { localLogOut } from './utils';
 import { standAloneBuild } from './config';
 import session from './session';
 
@@ -27,7 +26,7 @@ async function handleError(error, endpoint) {
         // Handle specific status codes
         if (statusCode === 403 && detail === "Invalid or expired session key.") {
             // Since the sessionKey is invalid log out locally and prompt for log in.
-            localLogOut();
+            session.clear();
         } else if (statusCode === 400) {
             notify(`Invalid request: ${detail}`, "error");
         } else if (statusCode === 403) {

@@ -1,5 +1,82 @@
 <template>
-    <div id="top-bar">
+    <div class="top-bar-wrapper">
+        <div class="top-bar desktop-nav">
+            <div class="side">
+                <router-link 
+                    to="/" 
+                    class="no-decoration website-name"
+                >
+                    The Dashboard
+                </router-link>
+            </div>
+            <div class="side">
+                <div
+                    v-for="(link, index) in links" 
+                    :key="index"
+                    class="primary-div desktop-only"
+                >
+                    <router-link
+                        :to="link.to"
+                        class="no-decoration text-button primary-link"
+                        :class="{ 'category-active': $route.path === link.to || $route.path.startsWith(link.to) }"
+                    >
+                        {{ link.display }}
+                    </router-link>
+                    <div class="children" v-if="link?.children.length > 0">
+                        <router-link 
+                            v-for="(child, index) in link.children" 
+                            :key="index" 
+                            :to="child.to"
+                            class="no-decoration text-button child"
+                        >
+                            {{ child.display }}
+                        </router-link>
+                    </div>
+                </div>
+                <IconDarkMode class="icon-button desktop-only" @click="localToggleDarkMode"/>
+                <IconMenu size="28px" class="icon-button mobile-only" @click="toggleMenu"/>
+            </div>
+        </div>
+        <div 
+            @click="toggleMenu"
+            ref="mobileNav"
+            class="mobile-nav backdrop"
+        >
+            <router-link 
+                to="/" 
+                class="no-decoration website-name"
+                :class="{ active: $route.path === '/' }"
+            >
+                The Dashboard
+            </router-link>
+            <div
+                v-for="(link, index) in links" 
+                :key="index"
+                class="primary-div"
+            >
+                <router-link
+                    :to="link.to"
+                    class="no-decoration text-button primary-link"
+                    >
+                    {{ link.display }}
+                </router-link>
+                <div class="children" v-if="link.children.length > 0">
+                    <router-link 
+                        v-for="(child, index) in link.children" 
+                        :key="index" 
+                        :to="child.to"
+                        class="no-decoration text-button child"
+                    >
+                        {{ child.display }}
+                    </router-link>
+                </div>
+            </div>
+            <IconDarkMode class="icon-button" @click="localToggleDarkMode"/>
+        </div>
+    </div>
+</template>
+
+    <!-- <div id="top-bar">
         <div id="top-bar-content">
             <div class="top-bar-side">
                 <router-link class="website-name" to="/">The Dashboard</router-link>
@@ -35,8 +112,7 @@
         <button @click="localToggleDarkMode(); toggleMenu()" class="nav-button square-button">
             <IconDarkMode color="var(--color-button-nav)" color-hover="var(--color-button-nav-hover)"/>
         </button>
-    </div>
-</template>
+    </div> -->
 
 <script>
 import IconDarkMode from './icons/IconDarkMode.vue';
@@ -47,23 +123,47 @@ export default {
     name: 'top-bar',
     components: {
         IconDarkMode,
-        IconMenu
+        IconMenu,
     },
     data() {
         return {
             links: [
-                { display: 'Spendings', to: '/spendings' },
-                { display: 'Analytics', to: '/spendings/analytics' },
-                { display: 'Watch list', to: '/watch_list' },
-                // { display: 'New entry', to: '/newentry' },
-                { display: 'Account', to: '/account' },
+                { 
+                    display: 'Spendings', 
+                    to: '/spendings',
+                    children: [
+                        { display: 'Analytics', to: '/spendings/analytics' },
+                        { display: 'Add Transaction', to: '/spendings/new_entry' },
+                    ]
+                },
+                { 
+                    display: 'Watch List', 
+                    to: '/watch_list',
+                    children: [
+                        { display: 'Collections', to: '/watch_list/collections' },
+                        { display: 'Add Title', to: '/watch_list/add_title' },
+                    ]
+                },
+                { 
+                    display: 'Account',
+                    to: '/account',
+                    children: []
+                }
             ]
         };
     },
     methods: {
         toggleMenu() {
-            // console.log("Menu toggled");
-            this.$refs['mobileNav'].classList.toggle("expanded");
+            const mobileNav = this.$refs.mobileNav;
+            const isShowing = mobileNav.classList.contains('show');
+            
+            if (isShowing) {
+                mobileNav.classList.remove('show');
+                document.documentElement.classList.remove('no-scroll');
+            } else {
+                mobileNav.classList.add('show');
+                document.documentElement.classList.add('no-scroll');
+            }
         },
         localToggleDarkMode() {
             toggleDarkMode();
@@ -73,149 +173,179 @@ export default {
 </script>
 
 <style scoped>
+.top-bar-wrapper {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    background-color: var(--color-background-top-bar);
+    z-index: var(--z-top-bar);
+}
 
-    #top-bar {
-        width: 100vw;
-        top: 0;
-        left: 0;
-        position: fixed;
-        background-color: var(--color-background-top-bar);
-        /* border-bottom: 1px solid var(--color-border); */
-        transition: box-shadow 0.3s;
-        z-index: var(--z-top-bar);
+.top-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    padding-inline: var(--spacing-md);
+    box-sizing: border-box;
+
+    width: 100%;
+    max-width: var(--width-top-bar);
+    height: 60px;
+
+    white-space: nowrap;
+}
+
+.top-bar .side {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+.website-name {
+    font-weight: 800;
+    font-size: var(--font-size-logo);
+}
+
+.text-button {
+    color: var(--color-text-light);
+    transition: color 0.1s ease-out;
+    font-size: 18px;
+    font-weight: 500;
+}
+.text-button:hover {
+    color: var(--color-text);
+}
+.text-button:active {
+    color: var(--color-text-bold);
+}
+
+.icon-button {
+    padding: var(--spacing-sm);
+}
+
+.primary-div {
+    display: flex;
+    position: relative;
+}
+.mobile-nav .primary-div {
+    flex-direction: column;
+    align-items: flex-end;
+}
+.desktop-nav .primary-div {
+    align-items: center;
+    height: var(--height-top-bar);
+    padding-inline: var(--spacing-sm);
+}
+
+.desktop-nav .primary-div .children {
+    background-color: var(--color-background-top-bar);
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% - 0px);
+    left: calc(-1 * var(--spacing-md));
+    min-width: 120px;
+    
+    padding: var(--spacing-md);
+    padding-inline: calc(var(--spacing-md) + var(--spacing-sm));
+    padding-top: 0;
+    border-radius: var(--border-radius-medium);
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+
+    opacity: 0;
+
+    transition: opacity 0.1s ease-out;
+}
+.desktop-nav .primary-div:hover .children {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.desktop-only .primary-div .children .child {
+    width: 100%;
+}
+
+.primary-div .children .child {
+    /* font-weight: 400; */
+    padding: var(--spacing-xs) 0;
+    /* color: var(--color-text-lighter); */
+}
+.primary-div .children .child:hover {
+    color: var(--color-text);
+}
+
+.mobile-only {
+    display: none;
+}
+@media (max-width: 750px) {
+    .mobile-only {
+        display: unset;
     }
-        
-    #top-bar-content {
-        background-color: var(--color-background-top-bar);
-        height: var(--height-top-bar);
-        width: 100vw;
-        max-width: var(--width-top-bar);
-        margin-inline: auto;
-
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        white-space: nowrap;
+    .desktop-only {
+        display: none !important;
     }
+}
 
-    .top-bar-side {
-        margin-inline: var(--spacing-md);
-    }
+/* - - - - - Mobile nav - - - - - */
 
-    .nav-button {
-        color: var(--color-button-nav);
-        font-size: large;
-        font-weight: 500;
-        text-decoration: none;
-        margin: 0;
-        padding: var(--spacing-sm);
-        transition: color 0.1s;
-        background-color: transparent;
-        border-radius: var(--border-radius-small);
+.mobile-nav {
+    padding: calc(var(--spacing-lg) + var(--spacing-md)) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 
-        /* Keep elements aligned horizontally */
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        vertical-align: middle; /* Align the icon with text */
-    }
-    .nav-button:hover {
-        color: var(--color-button-nav-hover);
-        box-shadow: 0 0 0 transparent;  /* To keep from the default box-shadow popping up */
-    }
-    .nav-button:active {
-        color: var(--color-button-nav-hover);
-        box-shadow: 0 0 0 transparent;  /* To keep from the default box-shadow popping up */
-    }
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-out;
+}
+.mobile-nav.show {
+    pointer-events: unset;
+    opacity: 1;
+}
 
-    .website-name {
-        font-weight: 800;
-        font-size: var(--font-size-logo);
-        text-decoration: none;
-        color: var(--color-text);
-        padding: var(--spacing-sm);
-        padding-left: 0;
-        transition: color 0.2s ease;
-        border-radius: var(--border-radius-small);
-    }
-    .website-name:hover {
-        color: var(--color-text-bold);
-    }
+.mobile-nav .website-name {
+    font-size: 2rem;
+}
+.mobile-nav .primary-div,
+.mobile-nav .icon-button {
+    margin-top: 32px;
+}
+.mobile-nav .primary-link {
+    /* color: var(--color-text); */
+    font-size: 1.5rem;
+}
+.mobile-nav .children {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.mobile-nav .child {
+    margin-top: var(--spacing-xs);
+    /* margin-right: var(--spacing-lg); */
+    text-align: end;
+    color: var(--color-text-light);
+    font-size: 1.2rem;
+}
 
-    .mobile-button {
-        display: none;
-        position: relative;
-        /* z-index: var(--z-mobile-nav-toggle-button); */
-    }
+.category-active {
+    color: var(--color-text) !important;
+}
 
-    .square-button {
-        aspect-ratio: 1;
-    }
-
-    @media (max-width: 745px)  {
-        .desktop-button {
-            display: none;
-        }
-        .mobile-button {
-            display: inline-flex;
-        }
-        .mobile-nav {
-            display: flex !important;
-        }
-    }
-
-
-    /* - - - - Mobile Navigation - - - - */
-    .mobile-nav {
-        z-index: var(--z-mobile-nav);
-        padding: var(--spacing-lg);
-        background-color: var(--color-background-backdrop-mobile-menu);
-
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-end;
-        display: none;
-
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.2s ease-out, visibility 0s 0.2s;
-    }
-
-    .mobile-nav.expanded {
-        opacity: 1;
-        visibility: visible;
-        transition: opacity 0.2s ease-out;
-    }
-
-    .mobile-nav .nav-button {
-        display: block;
-        font-size: var(--font-size-large);
-        opacity: 0;
-        transform: translateX(100px);
-        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        transition-delay: 0.3s;
-    }
-
-    .mobile-nav.expanded .nav-button {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    .mobile-nav.expanded .nav-button:nth-child(2) {
-        transition-delay: 0.05s;
-    }
-
-    .mobile-nav.expanded .nav-button:nth-child(3) {
-        transition-delay: 0.1s;
-    }
-
-    .mobile-nav.expanded .nav-button:nth-child(4) {
-        transition-delay: 0.15s;
-    }
-
-    .mobile-nav.expanded .nav-button:nth-child(5) {
-        transition-delay: 0.2s;
-    }
+.router-link-active {
+    /* color: var(--color-text-hidden) !important;
+    background-color: var(--color-text);
+    padding-inline: var(--spacing-md) !important;
+    border-radius: var(--border-radius-small); */
+    
+    color: var(--color-text) !important;
+}
 
 </style>

@@ -203,6 +203,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
                 - Make own components for show/edit, add
             - Seperate page for creating a collection
     - When adding a tv-show the seasons aren't added because it errors out.
+    - Collections shouldn't require an account.
 
 
 ### Feature ideas that might never see the light of day
