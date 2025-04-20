@@ -31,7 +31,6 @@
     </div>
 </template>
 
-
 <script>
 import IconChevronDown from './icons/IconChevronDown.vue';
 
@@ -133,8 +132,6 @@ export default {
     }
 };
 </script>
-
-
 
 <style scoped>
 .custom-select {

@@ -31,18 +31,6 @@
 					>
 					<span>{{ service.name }}</span>
 				</a>
-				
-				<div class="service-seperator"></div>
-
-				<!-- Buttons like this could be useful, but I don't have logos? Just come icons? -->
-				<router-link to="/spendings/new_entry" class="tile-button link-button">
-					<IconWallet/>
-					<span>New transaction</span>
-				</router-link>
-				<router-link to="/watch_list/add_title" class="tile-button link-button">
-					<IconFilm/>
-					<span>Add a title</span>
-				</router-link>
 			</div>
 		</div>
 
@@ -159,13 +147,16 @@
 		<div class="content-width-large">
 			<h2>Server resource usages <span class="text-lighter">(Under construction)</span></h2>
 			<div class="card server-resources content-width-large">
-				<CustomSelect 
-					v-model="serverLogsTimespan" 
-					:options="serverLogsTimespans"
-					:disabled="waitingFor.length != 0"
-					:class="{loading: waitingFor.length != 0}"
-					style="width: 100%; margin-bottom: var(--spacing-md);"
-				/>
+				<div style="width: 100%; margin-bottom: var(--spacing-md); gap: 8px;" class="icon-align">
+					<CustomSelect 
+						v-model="serverLogsTimespan" 
+						:options="serverLogsTimespans"
+						:disabled="waitingFor.length != 0"
+						:class="{loading: waitingFor.length != 0}"
+						style="flex: 1; "
+					/>
+					<IconRefresh size="28px" @click="fetchServerLogs(true)" class="icon-button"/>
+				</div>
 				<!-- Chart 1 - CPU temp -->
 				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
 
@@ -180,6 +171,11 @@
 
 				<!-- Chart 6 - Network up/down -->
 				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart6"/>
+
+				<div>
+					<h2>Uptime</h2>
+					{{ serverStats.formattedUptime }}
+				</div>
 			</div>
 		</div>
 
@@ -225,8 +221,7 @@ import IconHDD from '@/components/icons/IconHDD.vue';
 import IconBackup from '@/components/icons/IconBackup.vue';
 import IconBackupDown from '@/components/icons/IconBackupDown.vue';
 import InfoTooltip from '@/components/InfoTooltip.vue';
-import IconFilm from '@/components/icons/IconFilm.vue';
-import IconWallet from '@/components/icons/IconWallet.vue';
+import IconRefresh from '@/components/icons/IconRefresh.vue';
 
 // Other
 import fastApi from '@/utils/fastApi';
@@ -251,8 +246,7 @@ export default {
 		IconHDD,
 		IconBackup,
 		IconBackupDown,
-		IconFilm,
-		IconWallet,
+		IconRefresh,
 	},
 	data() {
 		return {
@@ -266,6 +260,7 @@ export default {
 			serverStats: {
 				storage: [],
 				fastapiData: {},
+				formattedUptime: 0,
 			},
 			serverLogsTimespan: "1h",
 			serverLogsTimespans: [
@@ -283,13 +278,13 @@ export default {
 		getGreeting() {
 			const hour = new Date().getHours();
 			if (hour < 5) {
-				return ["Good night!", "It's late, get some rest and recharge for tomorrow."];
+				return ["Good night", "Hope you're getting some rest."];
 			} else if (hour < 12) {
-				return ["Good morning!", "A fresh start to the day. Let's make the most of it."];
+				return ["Good morning", "Hope your day’s off to a good start."];
 			} else if (hour < 18) {
-				return ["Good afternoon!", "The day is moving along. Hope it's going well for you."];
+				return ["Good afternoon", "Hope your day’s going well."];
 			} else {
-				return ["Good evening!", "The day's winding down. Time to relax and prepare for tomorrow."];
+				return ["Good evening", "Hope you had a good day."];
 			}
 		},
 		formatBytes(value) {
@@ -382,11 +377,12 @@ export default {
 			const resourceLogsResponse = await fastApi.server.logs.system_resources(this.serverLogsTimespan);
 			// console.log("resourceLogsResponse", resourceLogsResponse);
 			if (resourceLogsResponse && resourceLogsResponse.data) {
+				this.serverStats.formattedUptime = convert.toTime(resourceLogsResponse.uptime_seconds);
 				const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
 				const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
 				const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
 				const chart3YaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
-				const chart5YaxisValues = resourceLogsResponse.data.map(log => log.system_load);
+				const chart5YaxisValues = resourceLogsResponse.data.map(log => log.cpu_clock_mhz / 1000);
 				const chartNetRecv = resourceLogsResponse.data.map((log, index, array) => {
 					if (index === 0) return 0;	// The first one can't have a differnce
 					const difference = (log.network_recv_bytes - array[index - 1].network_recv_bytes) / 10;		// Calculate
@@ -584,7 +580,7 @@ export default {
 				const chart5Options = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
-						text: 'System load',
+						text: 'CPU Frequenzy',
 						textStyle: {
 							color: getCssVar('color-text'),
 							fontSize: 24,
@@ -596,7 +592,7 @@ export default {
 						backgroundColor: getCssVar('color-background-card'),
 						borderWidth: 1,
 						borderColor: getCssVar("color-border"),
-						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toFrequency, false)
 					},
 					grid: {
 						left: 56,
@@ -617,8 +613,7 @@ export default {
 					},
 					yAxis: { 
 						type: 'value',      
-						name: 'Usage (%)',  // Y-akselin nimi
-						max: 100,
+						name: 'Frequency (GHz)',  // Y-akselin nimi
 						min: 0,
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiNumber(value)
@@ -626,7 +621,7 @@ export default {
 					},
 					series: [
 						{
-							name: 'System load',    // Tooltipissa näkyvä nimi
+							name: 'CPU Frequenzy',    // Tooltipissa näkyvä nimi
 							type: 'line',
 							areaStyle: {},
 							data: chart5YaxisValues,
@@ -1165,8 +1160,8 @@ export default {
 .greeting-area .text-area .header-sub-text {
 	display: inline-block;
 	color: var(--color-text-light);
-	margin-top: var(--spacing-md);
-	margin-bottom: var(--spacing-sm);
+	margin-top: var(--spacing-sm);
+	margin-bottom: var(--spacing-lg);
 }
 .greeting-area .text-area button {
 	margin-top: var(--spacing-md);
@@ -1267,19 +1262,6 @@ export default {
 	bottom: var(--spacing-md);
 }
 
-.service-seperator {
-	background-color: var(--color-border);
-	width: 2px;
-	border-radius: 100px;
-	/* margin-inline: var(--spacing-sm); */
-}
-@media (max-width: 575px) {
-	.service-seperator {
-		width: 100%;
-		height: 2px;
-		/* margin: var(--spacing-sm); */
-	}
-}
 
 /* - - - - Backup cards - - - - */
 .backups {

@@ -199,6 +199,15 @@
                 :to="`/watch_list/title/${title.title_id}`" 
                 class="title-element no-decoration"
             >
+
+                <div class="backdrop-wrapper">
+                    <img 
+                        :src="backdropUrl(title.title_id)" 
+                        @load="(event) => event.target.classList.add('loaded')" 
+                        class="backdrop"
+                    >
+                </div>
+
                 <div class="poster-holder">
                     <img 
                         :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
@@ -715,6 +724,14 @@ export default {
                 this.$refs.editCollectionFC.close()
             }
         },
+        backdropUrl(titleId) {
+            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+            //     if (width == 600) width = 500; 
+            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
+            // } else {
+                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=1200`;
+            // }
+        },
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
@@ -1049,6 +1066,34 @@ export default {
 .all-titles-list .title-element.content-not-found:hover,
 .all-titles-list .title-element.content-not-found:focus-visible {
     transform: scale(1);
+}
+
+.backdrop-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgb(24, 24, 24); /* prevents light bleed */
+    overflow: hidden;
+    z-index: 0;
+}
+.title-element .backdrop {
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: blur(16px) brightness(0.4);
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+.title-element:hover .backdrop,
+.title-element:focus-visible .backdrop {
+    opacity: 1;
 }
 
 

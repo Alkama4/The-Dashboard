@@ -14,6 +14,10 @@ export const convert = {
         return `${value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits })} °C`;
     },
 
+    toFrequency(value, unit = 'GHz', maxFractionDigits = 2) {
+        return `${value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits })} ${unit}`;
+    },
+
     toPercentage(value, maxFractionDigits = 2) {
         if (value == null) return null; // Handle null/undefined values
         return `${value.toLocaleString('fi-FI', { maximumFractionDigits: maxFractionDigits })} %`;
@@ -22,6 +26,29 @@ export const convert = {
     toEur(value) {
         if (value == null) return null; // Handle null/undefined values
         return value.toLocaleString('fi-FI', { style: 'currency', currency: 'EUR' });
+    },
+
+    toTime(seconds, maxUnits = 2) {
+        const units = [
+            { label: 'v', seconds: 31536000 },
+            { label: 'kk', seconds: 2592000 },
+            { label: 'pv', seconds: 86400 },
+            { label: 't', seconds: 3600 },
+            { label: 'min', seconds: 60 },
+            { label: 's', seconds: 1 },
+        ];
+    
+        const result = [];
+        for (const unit of units) {
+            const value = Math.floor(seconds / unit.seconds);
+            if (value > 0) {
+                result.push(`${value}${unit.label}`);
+                seconds -= value * unit.seconds;
+            }
+            if (result.length === maxUnits) break;
+        }
+    
+        return result.join(' ');
     },
 
     toLargeUsd(amount) {

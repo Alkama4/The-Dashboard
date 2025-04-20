@@ -15,6 +15,10 @@ export default {
             localStorage.setItem("sessionKey", response.sessionKey);
             localStorage.setItem("username", response.username);
             localStorage.setItem("sessionActive", 'true');
+
+            const event = new CustomEvent("sessionStatusUpdated", {});
+            window.dispatchEvent(event);
+
             return true;
         } else if (response?.loginStatus === "warning") {
             notify(response.statusMessage, "warning");

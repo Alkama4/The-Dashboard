@@ -1131,7 +1131,7 @@ overflow: hidden;
     padding: 6px 0;
     margin: 0;
     position: absolute;
-    z-index: 10;
+    z-index: var(--z-above-input);
     user-select: none;
     
     opacity: 1;
