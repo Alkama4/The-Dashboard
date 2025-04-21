@@ -57,19 +57,19 @@
         <div class="content-width-medium title-details">
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
-                    <a v-if="!standAloneBuild" :href="watchNowLink" target="_blank" class="poster-placholder">
+                    <div v-if="!standAloneBuild" class="poster-placholder" @click="handleWatchTitleNow()">
                         <img 
                             :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         >
-                        <IconLinkExternal class="icon-link" size="38px"/>
-                    </a>
-                    <div v-else class="poster-placholder" @click="standAloneBlocked">
+                        <IconPlay class="icon-watch-now" size="64px"/>
+                    </div>
+                    <div to="#watch-now" v-else class="poster-placholder" @click="handleWatchTitleNow()">
                         <img 
                             :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         >
-                        <IconLinkExternal class="icon-link" size="38px"/>
+                        <IconPlay class="icon-watch-now" size="64px"/>
                     </div>
                 </div>
 
@@ -94,7 +94,7 @@
                         <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
                     </div>
 
-                    <div class="tags">
+                    <div class="tags" v-if="hasTags">
                         <div class="tag tag-positive" v-if="titleInfo.watch_count >= 1">
                             Watched
                         </div>
@@ -107,71 +107,70 @@
                         <div class="tag tag-secondary" v-if="titleInfo.favourite == 1">
                             Favourite
                         </div>
-
-                        <div class="tag" v-for="genre in titleInfo.genres" :key="genre">{{ genre }}</div>
+                        <div class="tag tag-editable" v-for="collection in titleInfo.collections" :key="collection.collection_id" @click="handleEditCollection(collection)">{{ collection.name }}</div>
                     </div>
 
-                    <div class="control-button-array combined-buttons">
-                        <button 
-                            v-if="titleInfo.favourite == null || titleInfo.favourite == false"
-                            class="button-primary left-button flex-1" 
-                            @click="handleFavouriteToggle"
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            <IconHeart/>
-                        </button>
-                        <button 
-                            v-else
-                            class="red-heart left-button flex-1" 
-                            @click="handleFavouriteToggle" 
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            <IconHeart/>
-                        </button>
-
-                        <!-- Watched buttons -->
-                        <button 
-                            v-if="titleInfo.watch_count == null || titleInfo.watch_count <= 0"
-                            class="button-primary middle-button flex-2" 
-                            @click="handleTitleWatchClick('title', 1, null)"
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            Mark title as watched
-                        </button>
-                        <button 
-                            v-else
-                            class=" middle-button flex-2" 
-                            @click="handleTitleWatchClick('title', 0, null)" 
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            Reset title watch status 
-                        </button>
-
-                        <!-- Watch list buttons -->
-                        <button 
-                            v-if="titleInfo.watch_count == null || titleInfo.watch_count <= -1"
-                            class="button-primary right-button flex-1" 
-                            @click="handleWatchListModification('add')"
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            <IconListAdd/>
-                        </button>
-                        <button 
-                            v-else
-                            class="right-button flex-1"
-                            @click="handleWatchListModification('remove')" 
-                            :disabled="waitingForResult.length != 0"
-                            :class="{loading: waitingForResult.length != 0}"
-                        >
-                            <IconListRemove/>
-                        </button>
-                    </div>
                 </div>
+            </div>
+            <div class="control-button-array combined-buttons">
+                <button 
+                    v-if="titleInfo.favourite == null || titleInfo.favourite == false"
+                    class="button-primary left-button flex-1" 
+                    @click="handleFavouriteToggle"
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    <IconHeart/>
+                </button>
+                <button 
+                    v-else
+                    class="red-heart left-button flex-1" 
+                    @click="handleFavouriteToggle" 
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    <IconHeart/>
+                </button>
+
+                <!-- Watched buttons -->
+                <button 
+                    v-if="titleInfo.watch_count == null || titleInfo.watch_count <= 0"
+                    class="button-primary middle-button flex-2" 
+                    @click="handleTitleWatchClick('title', 1, null)"
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    Mark title as watched
+                </button>
+                <button 
+                    v-else
+                    class=" middle-button flex-2" 
+                    @click="handleTitleWatchClick('title', 0, null)" 
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    Reset title watch status 
+                </button>
+
+                <!-- Watch list buttons -->
+                <button 
+                    v-if="titleInfo.watch_count == null || titleInfo.watch_count <= -1"
+                    class="button-primary right-button flex-1" 
+                    @click="handleWatchListModification('add')"
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    <IconListAdd/>
+                </button>
+                <button 
+                    v-else
+                    class="right-button flex-1"
+                    @click="handleWatchListModification('remove')" 
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    <IconListRemove/>
+                </button>
             </div>
 
             <div class="at-a-glance">
@@ -254,6 +253,12 @@
                     </h3>
 
                     <div class="details-grid">
+                        <div>
+                            Genres
+                        </div>
+                        <div class="value">
+                            {{ titleInfo.genres.join(", ") }}
+                        </div>
 
                         <div v-if="titleInfo.type == 'movie'">
                             Movie length
@@ -386,7 +391,6 @@
                     Save notes
                 </button>
             </div>
-
         </div>
 
         <!-- TV-SHOW SPECIFIC -->
@@ -526,7 +530,7 @@
                                 'last': index === season.episodes.length - 1
                             }"
                         >
-                            <div class="still-container">
+                            <div class="still-container" @click="handleWatchEpisodeNow(episode)">
                                 <div 
                                     v-if="failedToLoadImages.includes(episode.episode_id)"
                                     class="still failed-to-load"
@@ -553,6 +557,8 @@
                                         Upcoming
                                     </div>
                                 </div>
+
+                                <IconPlay class="icon-watch-now" size="64px"/>
                             </div>
                             
                             <div class="text">
@@ -692,10 +698,28 @@
                 </div>
             </div>
         </ModalGeneric>
-    </div>
 
+        <!-- Collection edit -->
+        <ModalCollection ref="editCollectionFC" type="Edit colleciton" submitText="Save"/>
+
+        <!-- Watch now -->
+        <ModalGeneric ref="watchTitleNowMG" header="Watch Now">
+            <WatchNowRecursive :data="watchNowLinksForModal" class="content-width-medium"/>
+        </ModalGeneric>
+
+        <ModalGeneric ref="watchEpisodeNowMG" header="Watch Episode">
+            <WatchNowRecursive :data="watchNowLinksForModal" class="content-width-medium"/>
+        </ModalGeneric>
+
+    </div>
+    
     <div v-else-if="!waitingForResult.includes('titleInfo')">
         <notFoundPage/>
+    </div>
+
+    <div v-else-if="false">
+        <IconLoading size="32px"/>
+        <IconFilm/>
     </div>
 </template>
 
@@ -710,9 +734,11 @@ import IndicatorDots from '@/components/IndicatorDots.vue';
 import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
 import { standAloneBuild } from '@/utils/config';
+import WatchNowRecursive from '@/components/WatchNowRecursive.vue';
 
 // Icons
 import IconTMDB from '@/components/icons/IconTMDB.vue';
+import IconJustwatch from '@/components/icons/IconJustwatchColorful.vue';
 import IconTMDBColorful from '@/components/icons/IconTMDBColorful.vue';
 import IconIMDBColorful from '@/components/icons/IconIMDBColorful.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
@@ -724,6 +750,10 @@ import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import ModalGeneric from '@/components/ModalGeneric.vue';
+import IconLoading from '@/components/icons/IconLoading.vue';
+import ModalCollection from '@/components/ModalCollection.vue';
+import IconPlay from '@/components/icons/IconPlay.vue';
+import IconFilm from '@/components/icons/IconFilm.vue'; 
 
 export default {
     data() {
@@ -748,12 +778,13 @@ export default {
         };
     },
     components: {
-        InfoTooltip,
-        IndicatorDots,
         ModalConfirmation,
         ModalGeneric,
+        ModalCollection,
+        InfoTooltip,
+        IndicatorDots,
         notFoundPage,
-
+        WatchNowRecursive,
         IconTMDB,
         IconTMDBColorful,
         IconIMDBColorful,
@@ -764,6 +795,9 @@ export default {
         IconHeart,
         IconLinkExternal,
         IconRefresh,
+        IconLoading,
+        IconPlay,
+        IconFilm,
     },
     methods: {
         formatRuntime(runtime) {
@@ -1153,8 +1187,80 @@ export default {
         logoUrl() {
             return `${this.apiUrl}/media/image/title/${this.titleInfo.title_id}/logo.png`;
         },
-        standAloneBlocked() {
-            notify("Action not available! This feature requires a backend server to find a streaming service for the title.");
+        async handleEditCollection(initialCollection) {
+            const editedCollection = await this.$refs.editCollectionFC.prompt(
+                initialCollection.name, 
+                initialCollection.description, 
+                initialCollection.collection_id
+            );
+            
+            // If the process was cancelled - which returns false - return
+            if (!editedCollection) return;
+
+            const response = await fastApi.watch_list.collections.edit(
+                initialCollection.collection_id, 
+                editedCollection.name, 
+                editedCollection.description
+            );
+
+            if (response) {
+                notify(response.message, 'success');
+
+                const index = this.titleInfo.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
+                if (index !== -1) {
+                    this.titleInfo.collections[index] = {
+                        ...this.titleInfo.collections[index],
+                        name: editedCollection.name,
+                        description: editedCollection.description
+                    };
+                }
+
+                this.$refs.editCollectionFC.close()
+            }
+        },
+        handleWatchNow(additionalLinks = {}) {
+            // Basic automated aggregator links
+            const baseLinks = {
+                "Link aggregators": {
+                    tmdb: {
+                        name: "The Movie Database",
+                        details: "Watch options on TMDB.",
+                        link: `https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}/watch`,
+                        icon: IconTMDBColorful
+                    },
+                    justwatch: {
+                        name: "JustWatch",
+                        details: "Search for this title on JustWatch.",
+                        link: `https://www.justwatch.com/fi/search?q=${encodeURIComponent(this.titleInfo.name)}`,
+                        icon: IconJustwatch
+                    }
+                }
+            };
+
+            // If it's a stand-alone build, return base links only
+            if (standAloneBuild) {
+                this.watchNowLinksForModal = {
+                    ...baseLinks
+                };
+                return;
+            }
+
+            // Include additional watch now links from the episode or title
+            const fullLinks = {
+                ...baseLinks,
+                ...additionalLinks
+            };
+
+            this.watchNowLinksForModal = fullLinks;
+        },
+        handleWatchEpisodeNow(episode) {
+            if (!episode.watch_now_links) this.handleWatchNow();
+            else this.handleWatchNow(episode?.watch_now_links[0]);
+            this.$refs.watchEpisodeNowMG.open();
+        },
+        handleWatchTitleNow() {
+            this.handleWatchNow(this.titleInfo.watch_now_links);
+            this.$refs.watchTitleNowMG.open();
         }
     },
     computed: {
@@ -1173,10 +1279,16 @@ export default {
             }
             return null;
         },
-        watchNowLink() {
-            // Send to fastapi to redirect to the correct "Just watch" url
-            return process.env.VUE_APP_API_URL + '/redirect/watch_now/' + this.titleInfo.title_id;
-        }
+        hasTags() {
+            return (
+                this.titleInfo.watch_count >= 1 ||
+                (new Date(this.titleInfo.release_date) < new Date() &&
+                    new Date(this.titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)) ||
+                new Date(this.titleInfo.release_date) > new Date() ||
+                this.titleInfo.favourite == 1 ||
+                this.titleInfo.collections.length > 0
+            );
+        },
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1344,28 +1456,48 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 90%;
-    top: 50%;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%);
+    width: 100%;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    /* transform: translateX(-50%) translateY(-50%); */
     z-index: var(--z-backdrop-arrow-buttons);
 }
 .backdrop-container .button-holder button {
     color: var(--color-text-white);
+    padding: 0;
     margin: 0;
-    padding: var(--spacing-xs);
+    width: 20%;
+    height: 100%;
     background-color: transparent;
-    /* background-color: hsla(0, 0%, 0%, 0.2); */
-    /* backdrop-filter: blur(6px); */
     border-radius: 50%;
     position: relative; 
     z-index: var(--z-backdrop-arrow-buttons);
     box-shadow: none;
     transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
-.backdrop-container .button-holder button:hover {
-    transform: scale(1.2);
+
+.backdrop-container .button-holder button::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 80px;
+    height: 80px;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.35);  /* Semi-transparent black */
+    border-radius: 50%;  /* Make it round */
+    filter: blur(16px);  /* Add blur effect */
+    z-index: -1;  /* Place it behind the element */
 }
+
+.backdrop-container .button-holder button.right:hover svg {
+    transform: scale(1.25) rotate(-90deg);
+}
+.backdrop-container .button-holder button.left:hover svg {
+    transform: scale(1.25) rotate(90deg);
+}
+
 
 .backdrop-container .button-holder button svg {
     border-radius: 50%;
@@ -1556,6 +1688,7 @@ export default {
 .poster-next-to-stuff .poster-holder {
     position: relative;
     width: 210px;
+    max-width: 25vw;
 }
 
 .poster-next-to-stuff .poster-placholder {
@@ -1564,31 +1697,32 @@ export default {
     z-index: var(--z-title-poster);
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
-    height: 316px;
+    max-width: 100%;
     display: flex;
     cursor: pointer;
     /* Causes issues with gap. Don't use. */
-    /* aspect-ratio: 2/3; */
+    aspect-ratio: 2/3;
 }
 .poster-next-to-stuff .poster-placholder img {
     border-radius: var(--border-radius-medium);
-    height: 100%;
+    max-width: 100%;
     aspect-ratio: 2/3;
     transition: filter 0.1s ease-out;
 }
 .poster-next-to-stuff .poster-placholder:hover img {
-    filter: brightness(0.75);
+    filter: brightness(0.5);
 }
-.poster-next-to-stuff .poster-placholder .icon-link {
+.icon-watch-now {
+    color: var(--color-text-white-hover);
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    transition: filter 0.1s !important;
-    filter: opacity(0);
+    transition: opacity 0.1s ease-out !important;
+    opacity: 0;
 }
-.poster-next-to-stuff .poster-placholder:hover .icon-link {
-    filter: opacity(1);
+.poster-next-to-stuff .poster-placholder:hover .icon-watch-now {
+    opacity: 1;
 }
 
 .title-details .tags {
@@ -1624,7 +1758,7 @@ export default {
     margin: 0;
     box-shadow: none;
     background-color: initial;
-
+    margin: var(--spacing-md) 0;
 }
 .control-button-array button {
     white-space: nowrap;
@@ -1895,13 +2029,13 @@ iframe {
         max-width: none;
     }
 
-    .title-details .poster-next-to-stuff {
+    /* .title-details .poster-next-to-stuff {
         gap: 0;
         grid-template-columns: auto;
     }
     .title-details .poster-next-to-stuff .poster-placholder {
         display: none;
-    }
+    } */
 
     .season .about .poster {
         height: 200px;
@@ -2004,6 +2138,7 @@ iframe {
     aspect-ratio: 16/9;
     background-color: var(--color-background-card);
     position: relative;
+    cursor: pointer;
 }
 
 .episode .still-container .still {
@@ -2011,7 +2146,13 @@ iframe {
     aspect-ratio: inherit;
     border-radius: inherit;
     object-fit: contain;
+    transition: filter 0.1s ease-out;
+    filter: brightness(1);
 }
+.episode .still-container:hover .still {
+    filter: brightness(0.5);
+}
+
 .episode .still-container .still.failed-to-load {
     display: flex;
     flex-direction: column;
@@ -2020,6 +2161,10 @@ iframe {
     color: var(--color-text-hidden);
     font-weight: 700;
     font-size: 32px;
+}
+
+.episode .still-container:hover .icon-watch-now {
+    opacity: 1;
 }
 
 .tag-holder {

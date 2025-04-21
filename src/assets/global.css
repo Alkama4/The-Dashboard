@@ -237,6 +237,10 @@
     --color-button-general-hover: #333;
     --color-button-general-active: #303030;
 
+    --color-button-dark: var(--color-background-card);
+    --color-button-dark-hover: hsl(0, 0%, 14%);
+    --color-button-dark-active: hsl(0, 0%, 13%);
+
     --color-button-clean: hsla(0, 0%, 0%, 0);
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
@@ -373,6 +377,9 @@ button, .link-button {
                 background-color 0.1s ease-out,
                 box-shadow 0.1s ease-out;
 }
+.link-button {
+    border-radius: var(--border-radius-medium);
+}
 button:hover, .link-button:hover {
     color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
@@ -395,6 +402,17 @@ button:disabled {
 }
 button:focus {
     z-index: var(--z-input-focus);
+}
+
+/* Button dark (card) */
+.button-dark {
+    background-color: var(--color-button-dark);
+}
+.button-dark:hover {
+    background-color: var(--color-button-dark-hover);
+}
+.button-dark:active {
+    background-color: var(--color-button-dark-active);
 }
 
 /* Button primary */
@@ -988,7 +1006,9 @@ form.simple-form button {
 .tag.tag-general {
     background-color: var(--color-button-general) !important;
 }
-
+.tag.tag-editable {
+    cursor: pointer;
+}
 
 .fullwindow {
     max-height: none !important;
