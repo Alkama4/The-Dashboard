@@ -278,13 +278,13 @@ export default {
 		getGreeting() {
 			const hour = new Date().getHours();
 			if (hour < 5) {
-				return ["Good night", "Hope you're getting some rest."];
+				return ["Good night", "Hopefully you're actually getting some sleep and not scrolling through your phone."];
 			} else if (hour < 12) {
-				return ["Good morning", "Hope your day’s off to a good start."];
+				return ["Good morning", "Let’s pretend you’re already awake and fully functional."];
 			} else if (hour < 18) {
-				return ["Good afternoon", "Hope your day’s going well."];
+				return ["Good afternoon", "Still pretending to be productive, I see."];
 			} else {
-				return ["Good evening", "Hope you had a good day."];
+				return ["Good evening", "Survived the day, huh? That's something."];
 			}
 		},
 		formatBytes(value) {
@@ -377,7 +377,7 @@ export default {
 			const resourceLogsResponse = await fastApi.server.logs.system_resources(this.serverLogsTimespan);
 			// console.log("resourceLogsResponse", resourceLogsResponse);
 			if (resourceLogsResponse && resourceLogsResponse.data) {
-				this.serverStats.formattedUptime = convert.toTime(resourceLogsResponse.uptime_seconds);
+				this.serverStats.formattedUptime = convert.toTime(resourceLogsResponse.uptime_seconds, -1);
 				const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
 				const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
 				const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
@@ -1161,7 +1161,7 @@ export default {
 	display: inline-block;
 	color: var(--color-text-light);
 	margin-top: var(--spacing-sm);
-	margin-bottom: var(--spacing-lg);
+	margin-bottom: calc(var(--spacing-md) + var(--spacing-sm));
 }
 .greeting-area .text-area button {
 	margin-top: var(--spacing-md);

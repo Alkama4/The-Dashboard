@@ -85,13 +85,26 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Make not as tall and set position differently
 
     - Analytics  
+        - Balance over month overlapped
+            - See visually how each month differs. 
+            - Color gradiant from oldest to most recent
+            - How many months? Does the user select or always 6/12/all
+        - Add the time slieder to charts with time
+            - Allows to zoom on parts of the data, starts to be necessary
+        - The Last month/year should be a drop down choise with alternate options
+            - kk, 3kk, 6kk, 12kk, all
         - List of total amounts (old style) next to new pie chart
-        - Do no like how it shows the totals immidiately with colors making it the first thing that is shown
+            - Add color dots to clearly show what is what
+        - Totals should be removed
+            - First thing that catches eye with colors and big font
+            - Might cause confusion as to what is initially since so large
         - Could be revamped so that month and year are side by side and change with arrows when screen small
             - Or drop down select range
-        - Could be compacted quite a bit
+        - Could be compacted quite a bit, especially since charts can be fullscreened
 
-    - Watch List  
+    - Watch List
+        - Change to discover feed
+        - Add big suggestion slider at the start and make more card sliders
         - Add secondary sorting
             - "In progress" should be new episodes -> season in progress -> last modified
         - season(s) and episodes(s) but automated
@@ -105,25 +118,26 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Watch List functionality to the cards and list  
             - Mark watched & unwatched  
             - Add/remove from favorites  
-        - Cards implement a natice router-link element instead of the hacky @something
-        - all titles list
-            - add sort by options
-                - Use the list in fastapi's end
-            - Finish filers
-                - watched, unwatched, don't care
-                - favourite, not favourite, don't care
-                - tv, movie, don't care
-                - released, not released
-                - started...?
-            - mobile compability still bad?
-            - The un released tag should be different from the genres
-            - Remake sidebar filter thingy so that it can be used here
-                - And fix the instant hide at the same time.
-            - Placeholder like two pixels two small
-        - Search should be more available.
-            - Add a button next to "+"?
-            - Search bar to top bar or on the start?
-            - Seperate page for all titles list as a search page?
+
+    - all titles list
+        - Move to seperate page
+        - add sort by options
+            - Use the list in fastapi's end
+        - Finish filers
+            - watched, unwatched, don't care
+            - favourite, not favourite, don't care
+            - tv, movie, don't care
+            - released, not released
+            - started...?
+        - mobile compability still bad?
+        - The un released tag should be different from the genres
+        - Remake sidebar filter thingy so that it can be used here
+            - And fix the instant hide at the same time.
+        - Placeholder like two pixels two small
+    - Search should be more available.
+        - Add a button next to "+"?
+        - Search bar to top bar or on the start?
+        - Seperate page for all titles list as a search page?
 
     - Title Details  
         - Add link to a site that shows where to watch
@@ -143,6 +157,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Notes always visible, even when not in watch_list
         - Use a in watch_list tag instaed of -1 and "< 0"
         - notes `ctrl + s` save
+        - Shadow from sides when hovering over backdrop button
 
     - Search title
         - Looks generally bad

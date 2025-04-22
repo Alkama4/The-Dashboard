@@ -35,13 +35,19 @@
                             @load="image.isLoaded = true" 
                             :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
                             :src="`${apiUrl}/media/image/title/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
-                            />
+                        />
                     </div>
                 </div>
 
                 <div class="button-holder no-pointer-events" v-if="titleInfo.backdrop_image_count > 1">
-                    <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)"><IconChevronDown size="50"/></button>
-                    <button class="right all-pointer-events" @click="addOrSubtractSlideshowIndex(1)"><IconChevronDown size="50"/></button>
+                    <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)">
+                        <div class="hover-gradient"></div>
+                        <IconChevronDown size="52"/>
+                    </button>
+                    <button class="right all-pointer-events" @click="addOrSubtractSlideshowIndex(1)">
+                        <div class="hover-gradient"></div>
+                        <IconChevronDown size="52"/>
+                    </button>
                 </div>
                 
                 <div class="indicator">
@@ -94,7 +100,7 @@
                         <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
                     </div>
 
-                    <div class="tags" v-if="hasTags">
+                    <div class="tags">
                         <div class="tag tag-positive" v-if="titleInfo.watch_count >= 1">
                             Watched
                         </div>
@@ -106,6 +112,9 @@
                         </div>
                         <div class="tag tag-secondary" v-if="titleInfo.favourite == 1">
                             Favourite
+                        </div>
+                        <div class="tag">
+                            {{ titleInfo.type == 'tv' ? 'TV-show' : 'Movie' }}
                         </div>
                         <div class="tag tag-editable" v-for="collection in titleInfo.collections" :key="collection.collection_id" @click="handleEditCollection(collection)">{{ collection.name }}</div>
                     </div>
@@ -134,7 +143,7 @@
 
                 <!-- Watched buttons -->
                 <button 
-                    v-if="titleInfo.watch_count == null || titleInfo.watch_count <= 0"
+                    v-if="titleInfo.watch_count == null || titleInfo.watch_count == 0"
                     class="button-primary middle-button flex-2" 
                     @click="handleTitleWatchClick('title', 1, null)"
                     :disabled="waitingForResult.length != 0"
@@ -154,7 +163,7 @@
 
                 <!-- Watch list buttons -->
                 <button 
-                    v-if="titleInfo.watch_count == null || titleInfo.watch_count <= -1"
+                    v-if="!titleInfo.in_watch_list"
                     class="button-primary right-button flex-1" 
                     @click="handleWatchListModification('add')"
                     :disabled="waitingForResult.length != 0"
@@ -379,7 +388,7 @@
                 </div>
             </div>
                 
-            <div v-if="titleInfo.watch_count >= 0">
+            <div v-if="titleInfo.in_watch_list">
                 <h3>Notes</h3>
                 <textarea class="notes-text-area" v-model="this.titleInfo.notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
@@ -886,6 +895,7 @@ export default {
                 // console.debug(response)
                 // Update titles state on page
                 this.titleInfo.watch_count = response.updated_data.watch_count;
+                this.titleInfo.in_watch_list = 1;
                 // Update each episodes state on page by mathcing the episode_id
                 if (response.updated_data.episodes) {
                     // console.debug(response.updated_data.episodes)
@@ -997,9 +1007,7 @@ export default {
             if (response) {
                 console.log(response);
                 this.titleInfo.favourite = !this.titleInfo.favourite;
-                if (this.titleInfo.watch_count <= -1) {
-                    this.titleInfo.watch_count = 0;
-                }
+                this.titleInfo.in_watch_list = 1;
             }
             this.removeItemFromWaitingArray("favourite");
         },
@@ -1279,16 +1287,6 @@ export default {
             }
             return null;
         },
-        hasTags() {
-            return (
-                this.titleInfo.watch_count >= 1 ||
-                (new Date(this.titleInfo.release_date) < new Date() &&
-                    new Date(this.titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)) ||
-                new Date(this.titleInfo.release_date) > new Date() ||
-                this.titleInfo.favourite == 1 ||
-                this.titleInfo.collections.length > 0
-            );
-        },
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1417,15 +1415,8 @@ export default {
     z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
-    --space-left: calc((100vw - 1200px) * 0.5);
     mask-image: 
-    linear-gradient(to top, transparent 0%, white 50%),
-        linear-gradient(to right, 
-            white var(--space-left), 
-            transparent var(--space-left), 
-            transparent calc(100vw - var(--space-left) - 0.5px), 
-            white calc(100vw - var(--space-left))
-        );
+    linear-gradient(to top, transparent 0%, white 50%);
     mask-composite: intersect;
 }
 
@@ -1470,14 +1461,33 @@ export default {
     width: 20%;
     height: 100%;
     background-color: transparent;
-    border-radius: 50%;
+    border-radius: 0;
     position: relative; 
     z-index: var(--z-backdrop-arrow-buttons);
     box-shadow: none;
     transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
+.backdrop-container .button-holder button .hover-gradient {
+    background-color: rgba(0, 0, 0, 0);
+    mask-composite: intersect;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transition: background-color 0.2s ease-out;
+}
+.backdrop-container .button-holder button.left .hover-gradient {
+    mask-image: linear-gradient(to left, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
+}
+.backdrop-container .button-holder button.right .hover-gradient {
+    mask-image: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
+}
+.backdrop-container .button-holder button:hover .hover-gradient {
+    background-color: var(--color-background);
+}
 
-.backdrop-container .button-holder button::after {
+/* .backdrop-container .button-holder button::after {
     content: "";
     position: absolute;
     top: 50%;
@@ -1485,11 +1495,11 @@ export default {
     width: 80px;
     height: 80px;
     transform: translateX(-50%) translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.35);  /* Semi-transparent black */
-    border-radius: 50%;  /* Make it round */
-    filter: blur(16px);  /* Add blur effect */
-    z-index: -1;  /* Place it behind the element */
-}
+    background-color: rgba(0, 0, 0, 0.35);
+    border-radius: 50%;
+    filter: blur(16px);
+    z-index: -1;
+} */
 
 .backdrop-container .button-holder button.right:hover svg {
     transform: scale(1.25) rotate(-90deg);
@@ -1498,10 +1508,9 @@ export default {
     transform: scale(1.25) rotate(90deg);
 }
 
-
 .backdrop-container .button-holder button svg {
     border-radius: 50%;
-    fill: var(--color-text-white);
+    fill: var(--color-text);
     transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
 .backdrop-container button.left svg {
