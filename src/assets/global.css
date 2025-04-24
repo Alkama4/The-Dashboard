@@ -276,11 +276,10 @@ html, body {
     background-color: var(--color-background) !important;
     overflow-x: hidden;
 }
-/* 
+
 main {
-    width: fit-content;
-    margin-inline: auto;
-} */
+    margin-bottom: 128px;
+}
 
 html.no-scroll {
     overflow: hidden;

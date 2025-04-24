@@ -11,11 +11,6 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - disks
         - uptime
 
-- Transaction form rework
-    - Make it so that it always tries to be a set width, but is max-width 100% or similarly
-    - Make custom v-select
-    - unify inputs like buttons and text inputs
-
 
 ## Features
 ### Feature ideas
@@ -67,6 +62,12 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - loading="lazy"
             - Test how it works and if it works.
             - If it not, maybe try out libararies (preferrable not).
+    - Custom carousel
+        - Do not allow overscrolling to right (so that just one slide is visible)
+            - Dots valid positions based on: amount - (width  / (amount * cardwidth))
+        - Physics and not animations?
+            - Crash to edge and fall back instead of set to last
+        - Key input on just active and not all
 
 - Page specifics
     - Spendings page

@@ -18,6 +18,7 @@ import WatchList from '@/views/WatchList/WatchListPage.vue';
 import AddTitle from '@/views/WatchList/AddTitlePage.vue';
 import TitleDetails from '@/views/WatchList/TitleDetailsPage.vue';
 import ListCollections from '@/views/WatchList/ListCollectionsPage.vue';
+import ListTitles from '@/views/WatchList/ListTitles.vue';
 
 const routes = [
     {
@@ -91,6 +92,12 @@ const routes = [
         name: 'Collections',
         component: ListCollections,
         meta: { title: 'Collections' }
+    },
+    {
+        path: '/watch_list/titles',
+        name: 'Titles',
+        component: ListTitles,
+        meta: { title: 'Titles' }
     },
 
     

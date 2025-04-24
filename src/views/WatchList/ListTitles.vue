@@ -1,59 +1,308 @@
 <template>
-    <div>
+    <div class="list-titles">
+
         <div class="content-width-medium">
-            <h1>Discover <span class="text-lighter">(Under construction)</span></h1>
-            <p>Here you can find and track movies and TV-series from your watch list. If your watch list is empty you can search for titles to add with the button on the bottom right corner of the screen. </p>
+            <h1 id="titles_listed">Titles listed <span class="text-lighter">(Under construction)</span></h1>
+            <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
+        </div>
+    
+        <div class="all-titles-list-controls content-width-medium">
+            <div class="filter-buttons">
+                <div class="combined-buttons">
+                    <button 
+                        class="left-button" :class="{'button-primary': allTitlesListOptions.titleType == 'tv'}"
+                        @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'tv' ? '' : 'tv'"
+                    >
+                        TV
+                    </button>
+                    <button 
+                        class="right-button" :class="{'button-primary': allTitlesListOptions.titleType == 'movie'}"
+                        @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'movie' ? '' : 'movie'"
+                    >
+                        Movies
+                    </button>
+                </div>
+                <div class="combined-buttons title-progress">
+                    <button 
+                        class="left-button" :class="{'button-primary': allTitlesListOptions.titleProgress == 'watched'}"
+                        @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'watched' ? '' : 'watched'"
+                    >
+                        Watched
+                    </button>
+                    <button 
+                        class="right-button" :class="{'button-primary': allTitlesListOptions.titleProgress == 'unwatched'}"
+                        @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'unwatched' ? '' : 'unwatched'"
+                    >
+                        Unwatched
+                    </button>
+                </div>
+                <div class="combined-buttons">
+                    <button 
+                        class="left-button"
+                        :class="{'button-primary': allTitlesListOptions.getAllTitles == 'all_titles'}"
+                        @click="allTitlesListOptions.getAllTitles = allTitlesListOptions.getAllTitles == 'all_titles' ? '' : 'all_titles'"
+                    >
+                        All titles
+                    </button>
+                    <button 
+                        class="right-button"
+                        :class="{'button-primary': allTitlesListOptions.getAllTitles == 'not_added'}"
+                        @click="allTitlesListOptions.getAllTitles = allTitlesListOptions.getAllTitles == 'not_added' ? '' : 'not_added'"
+                    >
+                        Not added
+                    </button>
+                </div>
+    
+                <!-- Possible GUI components -->
+                <!-- 
+                    (Current three button thing)
+                    Tri-state Toggle Button
+                    Three-way Radio Button Group
+                    Tri-state Checkbox
+                    Slider with Three Positions
+                -->
+            </div>
+            <div class="search-and-sort">
+                <div class="button-in-text-field">
+                    <input 
+                        v-model="allTitlesListNonAutoOptions.searchTerm" 
+                        type="text" 
+                        placeholder="Search titles"
+                        @keydown.enter="inputTriggeredFetchAllTitles"
+                    >
+                    <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
+                </div>
+                <div class="flex icon-align">
+                    <CustomSelect 
+                        v-model="allTitlesListOptions.sortBy" 
+                        :options="allTitlesListSortByOptions"
+                    />
+                    <button 
+                        @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'"
+                        class="sort-direction"
+                        >
+                        <IconSortDown size="28px" v-if="allTitlesListOptions.direction == 'desc'"/>
+                        <IconSortUp size="28px" v-if="allTitlesListOptions.direction == 'asc'"/>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1"> -->
+    <div class="content-width-medium all-titles-list">
+        <router-link 
+            v-for="title in allTitlesList" 
+            :key="title.title_id" 
+            :to="`/watch_list/title/${title.title_id}`" 
+            class="title-element no-decoration"
+        >
+    
+            <div class="backdrop-wrapper">
+                <img 
+                    :src="backdropUrl(title.title_id)" 
+                    @load="(event) => event.target.classList.add('loaded')" 
+                    loading="lazy"
+                    class="backdrop"
+                >
+            </div>
+    
+            <div class="poster-holder">
+                <img 
+                    :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
+                    @load="(event) => event.target.classList.add('loaded')" 
+                    loading="lazy"
+                    class="poster"
+                >
+            </div>
+    
+            <div class="content">
+                <span class="title-name">
+                    <span>{{ title.name }}</span>
+                    &MediumSpace;
+                    <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
+                </span>
+                <div class="tags">
+                    <div class="tag tag-positive" v-if="title.watch_count >= 1">
+                        Watched
+                    </div>
+                    <div class="tag tag-secondary" v-if="title.favourite">
+                        Favourite
+                    </div>
+                    <div class="tag tag-primary" v-if="title.new_episodes">
+                        New episodes
+                    </div>
+                    <div class="tag tag-general" v-else-if="new Date(title.release_date) > new Date()">
+                        Upcoming
+                    </div>
+                    <div class="tag tag-general">
+                        {{ title.type === 'tv' ? 'TV' : 'Movie' }}
+                    </div>
+                    <div class="tag tag-general" v-for="genre in title.genres" :key="genre">
+                        {{ genre }}
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="detail-list">
+                        <span class="icon-align">
+                            <IconTMDB style="margin-right: 4px;"/>
+                            {{ title.tmdb_vote_average }}
+                            ({{ title.tmdb_vote_count }})
+                        </span>
+                        <span>
+                            {{ convertToDate(title.release_date) }}
+                        </span>
+                        <span class="progress-details">
+                            <template v-if="title.type === 'tv'">
+                                <div class="season-after">{{ title.season_count }}</div>
+                                <div class="episode-after">{{ title.episode_count }}</div>
+                            </template>
+                            <template v-else>
+                                {{ formatRuntime(title.movie_runtime) }}
+                            </template>
+                        </span>
+                    </div>
+                    <div class="overview">
+                        <p>{{ title.overview }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="appearing-buttons">
+                <IconHeart 
+                    size="28px"
+                    :class="{'is-set': title.favourite}" 
+                    class="icon-button favourite"
+                    @click.prevent="handleFavouriteToggle(title)"
+                />
+    
+                <IconCollection
+                    size="28px" 
+                    class="icon-button watch-list" 
+                    @click.prevent="handleCollectionsEdit(title)" 
+                />
+    
+                <IconListRemove 
+                    v-if="title.is_in_watchlist" 
+                    size="28px" 
+                    class="icon-button watch-list" 
+                    @click.prevent="handleRemoveTitleFromUserList(title)" 
+                />
+                <IconListAdd 
+                    v-else 
+                    size="28px" 
+                    class="icon-button watch-list" 
+                    @click.prevent="handleAddTitleToUserList(title)" 
+                />
+            </div>
+        </router-link>
+    
+        <div 
+            v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - allTitlesList?.length, 0): 0" 
+            :key="'placeholder-' + i" 
+            class="title-element loading-placeholder"
+        >
+        </div>
+    
+        <div v-if="allTitlesList?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
+            Looks like there's nothing here.<br>
+            <span class="text-hidden">Try adding titles to your watch list</span>
+        </div>
+    
+        <div class="flex-row">
+            <button 
+                v-if="allTitlesListHasMore"
+                :disabled="waitingForResult.includes('allTitlesList')"
+                :class="{'loading': waitingForResult.includes('allTitlesList')}"
+                @click="loadMoreTitlesForAllTitlesList"
+            >
+                Load more
+            </button>
         </div>
 
-        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large title-list">
-            <h2>{{ titleList.listName }}</h2>
-            <p class="text-light title-list-text">{{ titleList.text }}</p>
+        
+        <!-- Modals -->
+        <ModalConfirmation 
+            ref="removeTitleConfirmationModal"
+            header="Remove from watchlist"
+            text="Are you sure you wan't to remove the title from your watchlist?
+            This gets rid of all your data on the title like your watched episodes and notes."
+            affirmative-option="Remove title"
+        />
 
-            <CustomCarousel
-                :slides="titleList.titles"
-                :loading="titleList.loading"
-            />
-        </div>
+        <ModalGeneric ref="editCollectionsMG" header="Edit collections">
+            <div class="title-collections">
+                <div v-for="(collection, index) in titleCollectionsData" :key="index">
 
-        <!-- Corner buttons -->
-        <router-link 
-            class="sticky-corner-button link-button" 
-            style="
-                transition: opacity 0.1s ease-out;
-                margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);
-            "
-            :style="{ opacity: scrolledPastTitlesListed ? 1 : 0 }"
-            to="#titles_listed"
-        >
-            <IconChevronDown size="28px" style="rotate: 180deg;"/>
-        </router-link>
+                    <div v-if="index != 0" class="seperator"></div>
 
-        <router-link 
-            class="sticky-corner-button link-button button-primary"
-            to="/watch_list/add_title" 
-        >
-            <IconAdd size="28px"/>
-        </router-link>
+                    <div class="collection">
+                        <div class="details">
+                            <div class="icon-align">
+                                <h3>{{ collection.name }}</h3>
+                                <IconEdit size="20px" class="icon-button" left="4px" @click="handleEditCollection(collection)"/>
+                            </div>
+                            <span class="text-light">{{ collection.description }}</span>
+                        </div>
+                        <div>
+                            <button 
+                                v-if="collection.title_in_collection === 0"
+                                @click="handleAddTitleToCollection(collection)"
+                            >
+                                Add
+                            </button>
+                            <button 
+                                v-else
+                                @click="handleRemoveTitleFromCollection(collection)"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ModalGeneric>
+
+        <ModalCollection ref="editCollectionFC" type="Edit colleciton" submitText="Save"/>
     </div>
 </template>
 
 
 <script>
 // My imports
-import IconAdd from '@/components/icons/IconAdd.vue';
 import fastApi from '@/utils/fastApi';
+import IconTMDB from '@/components/icons/IconTMDB.vue';
+import IconHeart from '@/components/icons/IconHeart.vue';
 import { convert } from '@/utils/utils';
-import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+import CustomSelect from '@/components/CustomSelect.vue';
+import IconSortDown from '@/components/icons/IconSortDown.vue';
+import IconSortUp from '@/components/icons/IconSortUp.vue';
+import IconSearch from '@/components/icons/IconSearch.vue';
+import IconListAdd from '@/components/icons/IconListAdd.vue';
+import IconListRemove from '@/components/icons/IconListRemove.vue';
+import ModalConfirmation from '@/components/ModalConfirmation.vue';
+import IconCollection from '@/components/icons/IconCollection.vue';
+import ModalGeneric from '@/components/ModalGeneric.vue';
 import { notify } from '@/utils/notification';
+import IconEdit from '@/components/icons/IconEdit.vue';
+import ModalCollection from '@/components/ModalCollection.vue';
 import { standAloneBuild } from '@/utils/config';
-import CustomCarousel from '@/components/CustomCarousel.vue';
 
 export default {
     name: 'HomePage',
     components: {
-        CustomCarousel,
-        IconAdd,
-        IconChevronDown,
+        CustomSelect,
+        ModalConfirmation,
+        ModalGeneric,
+        ModalCollection,
+        IconTMDB,
+        IconHeart,
+        IconSortDown,
+        IconSortUp,
+        IconSearch,
+        IconListAdd,
+        IconListRemove,
+        IconCollection,
+        IconEdit,
     },
     data() {
         return {
@@ -342,7 +591,7 @@ export default {
             //     if (width == 600) width = 500; 
             //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
             // } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=1200`;
+                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=600`;
             // }
         },
     },
@@ -420,7 +669,7 @@ export default {
     flex-direction: column;
     align-items: center;
     row-gap: var(--spacing-sm);
-    margin: var(--spacing-sm) 0;
+    margin: var(--spacing-sm) auto;
 }
 .all-titles-list-controls .filter-buttons {
     width: 100%;

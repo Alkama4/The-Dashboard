@@ -3,6 +3,7 @@
         <img 
             :src="posterUrl(titleDetails.title_id, 600, titleDetails.backup_poster_url)" 
             class="title-card-thumbnail"
+            loading="lazy"
             @load="(event) => event.target.classList.add('loaded')" 
         />
         <div class="title-card-gradient"></div>

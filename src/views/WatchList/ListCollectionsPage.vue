@@ -1,6 +1,6 @@
 <template>
     <div class="list-collections">
-        <h1>List collections</h1>
+        <h1>List collections <span class="text-lighter">(Under construction)</span></h1>
     
         <button @click="handleNewCollection">New collection</button>
     
