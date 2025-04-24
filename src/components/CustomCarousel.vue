@@ -2,13 +2,17 @@
     <div 
         @keydown.prevent="handleKeydown"
         class="custom-carousel"
+        ref="customCarousel"
     >
         <div 
             v-if="slides.length"
             class="carousel" 
-            @pointerdown="startDrag"
         >
-            <div class="track" :style="{ transform: `translateX(${x}px)` }">
+            <div 
+                class="track" 
+                :style="{ transform: `translateX(${x}px)` }"
+                @pointerdown="startDrag"
+            >
                 <TitleCard 
                     v-for="(data, index) in slides" 
                     :key="index" 
@@ -26,7 +30,7 @@
         <div class="indicator-dots-holder">
             <IndicatorDots 
                 v-if="IndicatorDotsEnabled"
-                :dotCount="slides.length" 
+                :dotCount="maxIndex + 1" 
                 :dotIndex="currentIndex"
                 @dotSelected="goToSlide"
             />
@@ -54,7 +58,9 @@ export default {
             animationFrame: null,
             positions: [],
             currentIndex: 0,
-            slideWidth: 200 + 8 /2,
+            maxIndex: 0,
+            slideWidth: 200 + 8 / 2, // Width of each slide
+            carouselWidth: 0, // Width of the carousel
         }
     },
     props: {
@@ -72,6 +78,18 @@ export default {
         }
     },
     methods: {
+        calculateIndexes() {
+            this.carouselWidth = this.$refs.customCarousel.clientWidth;
+            if (this.carouselWidth > 0 && this.slideWidth > 0) {
+                const visibleSlides = Math.floor(this.carouselWidth / this.slideWidth);
+                const totalSlides = this.slides.length;
+                this.maxIndex = Math.max(0, totalSlides - visibleSlides);
+            } else {
+                this.maxIndex = 0;
+            }
+
+            this.goToSlide(Math.min(this.currentIndex, this.maxIndex));
+        },
         onClick(e) {
             if (this.positions.length) {
                 e.preventDefault()
@@ -108,9 +126,8 @@ export default {
 
                 this.positions = []
 
-                const maxIndex = this.slides.length - 1
                 const index = Math.round(-(this.x + this.vx * 12) / this.slideWidth)
-                const clampedIndex = Math.max(0, Math.min(maxIndex, index))
+                const clampedIndex = Math.max(0, Math.min(this.maxIndex, index))
                 this.goToSlide(clampedIndex)
             }, 1)
         },
@@ -135,41 +152,58 @@ export default {
             animate()
         },
         goToSlide(index) {
-            this.currentIndex = index
-            const target = -index * this.slideWidth
-            this.animateTo(target)
+            index = Math.max(0, Math.min(this.maxIndex, index));
+            this.currentIndex = index;
+
+            if (index < this.maxIndex || this.maxIndex <= 1) {
+                const target = -index * this.slideWidth;
+                this.animateTo(target);
+            } else {
+                const totalWidth = this.slides.length * this.slideWidth;
+                const overflow = totalWidth - this.carouselWidth;
+                const target = -overflow;
+                this.animateTo(target);
+            }
         },
         handleKeydown(event) {
             if (['ArrowLeft', 'a', 'w'].includes(event.key)) {
                 this.goToSlide(Math.max(0, this.currentIndex - 1))
             } else if (['ArrowRight', 'd', 's', 'Enter'].includes(event.key)) {
-                this.goToSlide(Math.min(this.slides.length - 1, this.currentIndex + 1))
+                this.goToSlide(Math.min(this.maxIndex, this.currentIndex + 1))
             } else if (!isNaN(event.key) && event.key !== '0') {
                 const index = parseInt(event.key, 10) - 1
-                if (index < this.slides.length) {
+                if (index < this.maxIndex) {
                     this.goToSlide(index)
                 }
             } else if (event.key === '0') {
-                const index = this.slides.length - 1
+                const index = this.maxIndex
                 this.goToSlide(index)
             }
+        }
+    },
+    watch: {
+        slides: {
+            handler() {
+
+                this.calculateIndexes();
+            },
         }
     },
     mounted() {
         window.addEventListener('pointermove', this.onDrag)
         window.addEventListener('pointerup', this.endDrag)
         window.addEventListener('pointerleave', this.endDrag)
-        window.addEventListener('keydown', this.handleKeydown)
+        this.calculateIndexes();
+        window.addEventListener('resize', this.calculateIndexes);
     },
     beforeUnmount() {
         window.removeEventListener('pointermove', this.onDrag)
         window.removeEventListener('pointerup', this.endDrag)
         window.removeEventListener('pointerleave', this.endDrag)
-        window.removeEventListener('keydown', this.handleKeydown)
+        window.removeEventListener('resize', this.calculateIndexes);
     }
 }
 </script>
-
 
 <style scoped>
 .custom-carousel {
@@ -185,7 +219,9 @@ export default {
 .track {
     display: flex;
     transition: none;
+    width: fit-content;
     column-gap: var(--spacing-xs);
+
 }
 
 .indicator-dots {
