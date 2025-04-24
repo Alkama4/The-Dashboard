@@ -178,7 +178,7 @@
                 <IconCollection
                     size="28px" 
                     class="icon-button watch-list" 
-                    @click.prevent="handleCollectionsEdit(title)" 
+                    @click.prevent="promptCollections(title.title_id)" 
                 />
     
                 <IconListRemove 
@@ -219,6 +219,11 @@
             </button>
         </div>
 
+        <ModalTitleCollections 
+            ref="modalTitleCollections" 
+            @title-collection-updated="handleTitleCollectionUpdate"
+            @collection-updated="handleCollectionUpdate"
+        />
         
         <!-- Modals -->
         <ModalConfirmation 
@@ -229,40 +234,6 @@
             affirmative-option="Remove title"
         />
 
-        <ModalGeneric ref="editCollectionsMG" header="Edit collections">
-            <div class="title-collections">
-                <div v-for="(collection, index) in titleCollectionsData" :key="index">
-
-                    <div v-if="index != 0" class="seperator"></div>
-
-                    <div class="collection">
-                        <div class="details">
-                            <div class="icon-align">
-                                <h3>{{ collection.name }}</h3>
-                                <IconEdit size="20px" class="icon-button" left="4px" @click="handleEditCollection(collection)"/>
-                            </div>
-                            <span class="text-light">{{ collection.description }}</span>
-                        </div>
-                        <div>
-                            <button 
-                                v-if="collection.title_in_collection === 0"
-                                @click="handleAddTitleToCollection(collection)"
-                            >
-                                Add
-                            </button>
-                            <button 
-                                v-else
-                                @click="handleRemoveTitleFromCollection(collection)"
-                            >
-                                Remove
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ModalGeneric>
-
-        <ModalCollection ref="editCollectionFC" type="Edit colleciton" submitText="Save"/>
     </div>
 </template>
 
@@ -281,19 +252,15 @@ import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import IconCollection from '@/components/icons/IconCollection.vue';
-import ModalGeneric from '@/components/ModalGeneric.vue';
-import { notify } from '@/utils/notification';
-import IconEdit from '@/components/icons/IconEdit.vue';
-import ModalCollection from '@/components/ModalCollection.vue';
 import { standAloneBuild } from '@/utils/config';
+import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
 
 export default {
     name: 'HomePage',
     components: {
         CustomSelect,
         ModalConfirmation,
-        ModalGeneric,
-        ModalCollection,
+        ModalTitleCollections,
         IconTMDB,
         IconHeart,
         IconSortDown,
@@ -302,7 +269,6 @@ export default {
         IconListAdd,
         IconListRemove,
         IconCollection,
-        IconEdit,
     },
     data() {
         return {
@@ -535,56 +501,28 @@ export default {
                 }
             }
         },
-        async handleCollectionsEdit(title) {
-            this.$refs.editCollectionsMG.init();
-            this.selectedTitleIdForCollection = title.title_id;
-            this.titleCollectionsData = await fastApi.watch_list.titles.collections(title.title_id);
-            this.$refs.editCollectionsMG.open();
-        },
-        async handleAddTitleToCollection(collection) {
-            const response = await fastApi.watch_list.collections.add_title(collection.collection_id, this.selectedTitleIdForCollection);
-            if (response) {
-                notify(response.message, 'success');
-                collection.title_in_collection = 1;
+        // TODO: Update in the future to correctly add a collections name or collection to the title
+        handleTitleCollectionUpdate(payload) {
+            if (payload.titleInCollection) {
+                // const modifiedTitle = this.allTitlesList.find((title) => title.title_id == payload.title.title_id)
+                // modifiedTitle.collections.push(payload.collection);
+            } else {
+                // Pop based on collection data.
             }
         },
-        async handleRemoveTitleFromCollection(collection) {
-            const response = await fastApi.watch_list.collections.remove_title(collection.collection_id, this.selectedTitleIdForCollection);
-            if (response) {
-                notify(response.message, 'success');
-                collection.title_in_collection = 0;
-            }
+        handleCollectionUpdate() {
+            // SOMETHING LIKE THIS CAN BE USED TO FIND AND UPDATE VALUES
+            // const index = this.titleCollectionsData.findIndex(c => c.collection_id === initialCollection.collection_id);
+            // if (index !== -1) {
+            //     this.titleCollectionsData[index] = {
+            //         ...this.titleCollectionsData[index],
+            //         name: editedCollection.name,
+            //         description: editedCollection.description
+            //     };
+            // }
         },
-        async handleEditCollection(initialCollection) {
-            const editedCollection = await this.$refs.editCollectionFC.prompt(
-                initialCollection.name, 
-                initialCollection.description, 
-                initialCollection.collection_id
-            );
-            
-            // If the process was cancelled - which returns false - return
-            if (!editedCollection) return;
-
-            const response = await fastApi.watch_list.collections.edit(
-                initialCollection.collection_id, 
-                editedCollection.name, 
-                editedCollection.description
-            );
-
-            if (response) {
-                notify(response.message, 'success');
-                
-                const index = this.titleCollectionsData.findIndex(c => c.collection_id === initialCollection.collection_id);
-                if (index !== -1) {
-                    this.titleCollectionsData[index] = {
-                        ...this.titleCollectionsData[index],
-                        name: editedCollection.name,
-                        description: editedCollection.description
-                    };
-                }
-
-                this.$refs.editCollectionFC.close()
-            }
+        promptCollections(titleId) {
+            this.$refs.modalTitleCollections.prompt(titleId);
         },
         backdropUrl(titleId) {
             // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
@@ -902,32 +840,5 @@ export default {
 }
 
 
-.title-collections {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--spacing-md);
-}
-
-.title-collections .seperator {
-    margin-bottom: var(--spacing-md);   /* Match the gap for a dirty fix */
-}
-
-.title-collections .collection {
-    width: 500px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    column-gap: var(--spacing-md);
-}
-
-.title-collections .collection .details {
-    display: flex;
-    flex-direction: column;
-    justify-content: left;
-}
-
-.title-collections .collection .details h3 {
-    margin: 0;
-}
 
 </style>

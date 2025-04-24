@@ -1,19 +1,19 @@
 <template>
-    <div v-if="titleInfo" class="title-info">
+    <div v-if="title_info" class="title-info">
         <div class="background backdrop-image-container" v-if="standAloneBuild">
             <img
                 @load="(event) => event.target.classList.add('visible')"
                 class="" 
-                :src="`https://image.tmdb.org/t/p/original${titleInfo.backup_backdrop_url}`" 
+                :src="`https://image.tmdb.org/t/p/original${title_info.backup_backdrop_url}`" 
             />
         </div>
-        <div class="background backdrop-image-container" v-else-if="titleInfo.backdrop_image_count >= 1">
+        <div class="background backdrop-image-container" v-else-if="title_info.backdrop_image_count >= 1">
             <div v-for="image in imageSlideshowData.individualData" :key="image.number">
                 <img
                     v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                     @load="image.isLoaded = true" 
                     :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                    :src="`${apiUrl}/media/image/title/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
+                    :src="`${apiUrl}/media/image/title/${title_info.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
                 />
             </div>
         </div>
@@ -25,21 +25,21 @@
                     <img
                         @load="(event) => event.target.classList.add('visible')"
                         class="" 
-                        :src="`https://image.tmdb.org/t/p/original${titleInfo.backup_backdrop_url}`" 
+                        :src="`https://image.tmdb.org/t/p/original${title_info.backup_backdrop_url}`" 
                     />
                 </div>
-                <div class="main backdrop-image-container" v-else-if="titleInfo.backdrop_image_count >= 1">
+                <div class="main backdrop-image-container" v-else-if="title_info.backdrop_image_count >= 1">
                     <div v-for="image in imageSlideshowData.individualData" :key="image.number">
                         <img
                             v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
                             @load="image.isLoaded = true" 
                             :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                            :src="`${apiUrl}/media/image/title/${titleInfo.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
+                            :src="`${apiUrl}/media/image/title/${title_info.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
                         />
                     </div>
                 </div>
 
-                <div class="button-holder no-pointer-events" v-if="titleInfo.backdrop_image_count > 1">
+                <div class="button-holder no-pointer-events" v-if="title_info.backdrop_image_count > 1">
                     <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)">
                         <div class="hover-gradient"></div>
                         <IconChevronDown size="52"/>
@@ -53,7 +53,7 @@
                 <div class="indicator">
                     <IndicatorDots 
                         :dotIndex="imageSlideshowData.chosenOne" 
-                        :dotCount="titleInfo.backdrop_image_count"
+                        :dotCount="title_info.backdrop_image_count"
                         @dotSelected="updateSlideshowImageTo"
                     />
                 </div>
@@ -65,14 +65,14 @@
                 <div class="poster-holder">
                     <div v-if="!standAloneBuild" class="poster-placholder" @click="handleWatchTitleNow()">
                         <img 
-                            :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
+                            :src="imageUrl(300, title_info.backup_poster_url, title_info.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         >
                         <IconPlay class="icon-watch-now" size="64px"/>
                     </div>
                     <div to="#watch-now" v-else class="poster-placholder" @click="handleWatchTitleNow()">
                         <img 
-                            :src="imageUrl(300, titleInfo.backup_poster_url, titleInfo.title_id)" 
+                            :src="imageUrl(300, title_info.backup_poster_url, title_info.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         >
                         <IconPlay class="icon-watch-now" size="64px"/>
@@ -85,49 +85,48 @@
                             <img 
                                 class="logo-img"
                                 :src="logoUrl()"
-                                :alt="titleInfo.name"
+                                :alt="title_info.name"
                                 @load="(event) => event.target.classList.add('loaded')"
                             >
                         </div> -->
                         <h1 class="title-name">
-                            <span class="all-pointer-events" :title="titleInfo.name">
-                                {{ titleInfo.name }} 
+                            <span class="all-pointer-events" :title="title_info.name">
+                                {{ title_info.name }} 
                             </span>
-                            <span class="all-pointer-events original-title" :title="titleInfo.name_original" v-if="titleInfo.name_original && titleInfo.name !== titleInfo.name_original">
-                                ({{ titleInfo.name_original }})
+                            <span class="all-pointer-events original-title" :title="title_info.name_original" v-if="title_info.name_original && title_info.name !== title_info.name_original">
+                                ({{ title_info.name_original }})
                             </span>
                         </h1>
-                        <q class="tagline all-pointer-events" v-if="titleInfo.tagline">{{ titleInfo.tagline }}</q>
+                        <q class="tagline all-pointer-events" v-if="title_info.tagline">{{ title_info.tagline }}</q>
                     </div>
 
                     <div class="tags">
-                        <div class="tag tag-positive" v-if="titleInfo.watch_count >= 1">
+                        <div class="tag tag-positive" v-if="title_info.watch_count >= 1">
                             Watched
                         </div>
-                        <div class="tag tag-primary" v-if="new Date(titleInfo.release_date) < new Date() && new Date(titleInfo.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
+                        <div class="tag tag-primary" v-if="new Date(title_info.release_date) < new Date() && new Date(title_info.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
                             Just released
                         </div>
-                        <div class="tag tag-upcoming" v-if="new Date(titleInfo.release_date) > new Date()">
+                        <div class="tag tag-upcoming" v-if="new Date(title_info.release_date) > new Date()">
                             Upcoming
                         </div>
-                        <div class="tag tag-secondary" v-if="titleInfo.favourite == 1">
+                        <div class="tag tag-secondary" v-if="title_info.favourite == 1">
                             Favourite
                         </div>
                         <div class="tag">
-                            {{ titleInfo.type == 'tv' ? 'TV-show' : 'Movie' }}
+                            {{ title_info.type == 'tv' ? 'TV-show' : 'Movie' }}
                         </div>
-                        <div class="tag tag-editable" v-for="collection in titleInfo.collections" :key="collection.collection_id" @click="handleEditCollection(collection)">{{ collection.name }}</div>
+                        <div class="tag tag-editable" v-for="collection in title_info.collections" :key="collection.collection_id" @click="handleEditCollection(collection)">{{ collection.name }}</div>
                     </div>
 
                 </div>
             </div>
+
             <div class="control-button-array combined-buttons">
                 <button 
-                    v-if="titleInfo.favourite == null || titleInfo.favourite == false"
+                    v-if="title_info.favourite == null || title_info.favourite == false"
                     class="button-primary left-button flex-1" 
                     @click="handleFavouriteToggle"
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
                 >
                     <IconHeart/>
                 </button>
@@ -135,39 +134,23 @@
                     v-else
                     class="red-heart left-button flex-1" 
                     @click="handleFavouriteToggle" 
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
                 >
                     <IconHeart/>
                 </button>
 
-                <!-- Watched buttons -->
-                <button 
-                    v-if="titleInfo.watch_count == null || titleInfo.watch_count == 0"
-                    class="button-primary middle-button flex-2" 
-                    @click="handleTitleWatchClick('title', 1, null)"
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
+                <!-- Collections -->
+                <button
+                    class="button-primary middle-button flex-1" 
+                    @click="promptTitleCollections()"
                 >
-                    Mark title as watched
-                </button>
-                <button 
-                    v-else
-                    class=" middle-button flex-2" 
-                    @click="handleTitleWatchClick('title', 0, null)" 
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
-                >
-                    Reset title watch status 
+                    <IconCollection/>
                 </button>
 
                 <!-- Watch list buttons -->
                 <button 
-                    v-if="!titleInfo.in_watch_list"
+                    v-if="!title_info.in_watch_list"
                     class="button-primary right-button flex-1" 
                     @click="handleWatchListModification('add')"
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
                 >
                     <IconListAdd/>
                 </button>
@@ -175,8 +158,6 @@
                     v-else
                     class="right-button flex-1"
                     @click="handleWatchListModification('remove')" 
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
                 >
                     <IconListRemove/>
                 </button>
@@ -188,19 +169,19 @@
                     <div class="short-value">
                         <span class="value icon-align">
                             <IconIMDBColorful size="40px" class="imdb-icon"/>
-                            {{ titleInfo?.imdb_vote_average ?? '-' }} 
+                            {{ title_info?.imdb_vote_average ?? '-' }} 
                         </span>
                         <span class="text-lighter">
-                            {{ titleInfo?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
+                            {{ title_info?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
                         </span>
                     </div>
                     <div class="short-value">
                         <span class="value icon-align">
                             <IconTMDBColorful size="40px" class="tmdb-icon"/>
-                            {{ titleInfo?.tmdb_vote_average ?? '-' }} 
+                            {{ title_info?.tmdb_vote_average ?? '-' }} 
                         </span>
                         <span class="text-lighter">
-                            {{ titleInfo?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
+                            {{ title_info?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
                         </span>
                     </div>
         
@@ -208,7 +189,7 @@
     
                     <div class="short-value">
                         <span class="value">
-                            {{ titleInfo.age_rating == "" || titleInfo.age_rating == null ? '-' : titleInfo.age_rating }}
+                            {{ title_info.age_rating == "" || title_info.age_rating == null ? '-' : title_info.age_rating }}
                         </span>
                         <span class="text-lighter">
                             Age rating
@@ -233,17 +214,48 @@
 
                 <div class="awards hide-on-mobile">
                     <a 
-                        :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}/awards`" 
+                        :href="`https://www.imdb.com/title/${this.title_info.imdb_id}/awards`" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="value no-decoration">{{ titleInfo.awards ?? '-' }}
+                        class="value no-decoration">{{ title_info.awards ?? '-' }}
                     </a>
                     <span class="text-lighter">Awards & Nominations</span>
                 </div>
             </div>
 
+            <h3>Watch count</h3>
+            <div class="combined-buttons numeric-stepper">
+                <!-- Watched buttons -->
+                <button 
+                    class="button-primary left-button" 
+                    @click="handleTitleWatchClick('title', title_info.watch_count + 1, null)"
+                >
+                    Add a watch
+                    <IconAdd/>
+                </button>
+                <div class="middle-button value">
+                    {{ title_info.watch_count || 0 }}
+                </div>
+                <button 
+                    class="right-button" 
+                    @click="handleTitleWatchClick('title', title_info.watch_count - 1, null)"
+                    :disabled="title_info.watch_count <= 0"
+                >
+                    <IconRemove/>
+                </button>
+                <!-- <button 
+                    v-if="!(title_info.watch_count == null || title_info.watch_count == 0)"
+                    class=" middle-button flex-2" 
+                    @click="handleTitleWatchClick('title', 0, null)" 
+                    :disabled="waitingForResult.length != 0"
+                    :class="{loading: waitingForResult.length != 0}"
+                >
+                    Reset 
+                </button> -->
+            </div>
+
             <h3>Overview</h3>
-            <p style="margin: 0;">{{ titleInfo.overview }}</p>
+            <p style="margin: 0;">{{ title_info.overview }}</p>
             
             <div class="trailer-details-flex">
                 <div class="details-container">
@@ -266,87 +278,87 @@
                             Genres
                         </div>
                         <div class="value">
-                            {{ titleInfo.genres.join(", ") }}
+                            {{ title_info.genres.join(", ") }}
                         </div>
 
-                        <div v-if="titleInfo.type == 'movie'">
+                        <div v-if="title_info.type == 'movie'">
                             Movie length
                         </div>
-                        <div v-if="titleInfo.type == 'movie'" class="value">
-                            {{ formatRuntime(titleInfo.movie_runtime) }}
+                        <div v-if="title_info.type == 'movie'" class="value">
+                            {{ formatRuntime(title_info.movie_runtime) }}
                         </div>
 
-                        <div v-if="titleInfo.type == 'tv'">Progress</div>
-                        <div v-if="titleInfo.type == 'tv'" class="value">
+                        <div v-if="title_info.type == 'tv'">Progress</div>
+                        <div v-if="title_info.type == 'tv'" class="value">
                             {{ getWatchedStats() }}
                         </div>
 
-                        <div v-if="titleInfo.type == 'tv'">
+                        <div v-if="title_info.type == 'tv'">
                             Season count
                         </div>
-                        <div v-if="titleInfo.type == 'tv'" class="value">
-                            {{ titleInfo.seasons.length }} season<template v-if="titleInfo.seasons.length > 1">s</template>
+                        <div v-if="title_info.type == 'tv'" class="value">
+                            {{ title_info.seasons.length }} season<template v-if="title_info.seasons.length > 1">s</template>
                         </div>
-                        <div v-if="titleInfo.type == 'tv'">
+                        <div v-if="title_info.type == 'tv'">
                             Episode count
                         </div>
-                        <div v-if="titleInfo.type == 'tv'" class="value">
+                        <div v-if="title_info.type == 'tv'" class="value">
                             {{ titleEpisodeCount }} episode<template v-if="titleEpisodeCount > 1">s</template>
                         </div>
 
                         <!-- Get the last episode date as "date - end date" -->
                         <div>
-                            <template v-if="titleInfo.type == 'tv'">First air date</template>
+                            <template v-if="title_info.type == 'tv'">First air date</template>
                             <template v-else>Release date</template>
                         </div>
                         <div class="value">
-                            {{ new Date(titleInfo.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}
+                            {{ new Date(title_info.release_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}
                         </div>
 
-                        <div v-if="titleInfo.type == 'tv'">
+                        <div v-if="title_info.type == 'tv'">
                             last air date
                         </div>
-                        <div v-if="titleInfo.type == 'tv'" class="value">
+                        <div v-if="title_info.type == 'tv'" class="value">
                             {{ new Date(titleLastAirDate).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) }}
                         </div>
 
-                        <div v-if="titleInfo.type == 'movie'">Revenue</div>
+                        <div v-if="title_info.type == 'movie'">Revenue</div>
                         <div 
-                            v-if="titleInfo.type == 'movie'" 
+                            v-if="title_info.type == 'movie'" 
                             class="value" 
-                            :title="titleInfo?.revenue?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
+                            :title="title_info?.revenue?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
                         >
-                            {{ formatToMillions(titleInfo.revenue) ?? '-' }}
+                            {{ formatToMillions(title_info.revenue) ?? '-' }}
                         </div>
-                        <div v-if="titleInfo.type == 'movie'">Budget</div>
+                        <div v-if="title_info.type == 'movie'">Budget</div>
                         <div 
-                            v-if="titleInfo.type == 'movie'"
+                            v-if="title_info.type == 'movie'"
                             class="value" 
-                            :title="titleInfo?.budget?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
+                            :title="title_info?.budget?.toLocaleString('fi-FI', { maximumFractionDigits: 0 }) + ' $'"
                         >
-                            {{ formatToMillions(titleInfo.budget) ?? '-' }}
+                            {{ formatToMillions(title_info.budget) ?? '-' }}
                         </div>
 
                         <div>Original language</div>
-                        <div class="value">{{ titleInfo.original_language ?? '-' }}</div>
+                        <div class="value">{{ title_info.original_language ?? '-' }}</div>
 
                         <div>
-                            Production countr<template v-if="titleInfo?.production_countries?.includes(',')">ies</template><template v-else>y</template>
+                            Production countr<template v-if="title_info?.production_countries?.includes(',')">ies</template><template v-else>y</template>
                         </div>
-                        <div class="value">{{ titleInfo?.production_countries ?? '-'}}</div>
+                        <div class="value">{{ title_info?.production_countries ?? '-'}}</div>
 
                         <h4>Metadata</h4>
                         <div></div>
 
                         <!-- <div>Title type</div>
-                        <div class="value">{{ titleInfo.type }}</div> -->
+                        <div class="value">{{ title_info.type }}</div> -->
 
                         <div>IMDB id</div>
                         <div class="value">
-                            {{ titleInfo.imdb_id }}
+                            {{ title_info.imdb_id }}
                             <a 
                                 class="flex"
-                                :href="`https://www.imdb.com/title/${this.titleInfo.imdb_id}`"
+                                :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                             >
@@ -356,10 +368,10 @@
 
                         <div>TMDB id</div>
                         <div class="value">
-                            {{ titleInfo.tmdb_id }}
+                            {{ title_info.tmdb_id }}
                             <a 
                                 class="flex"
-                                :href="`https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}`" 
+                                :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                             >
@@ -368,19 +380,19 @@
                         </div>
 
                         <div>Title details updated <InfoTooltip text="Title information is updated with the button above. This is only the title and does not include episodes or seasons." position="right"/></div>
-                        <div class="value">{{ new Date(titleInfo.last_updated).toLocaleDateString("fi-FI") }}</div>
+                        <div class="value">{{ new Date(title_info.last_updated).toLocaleDateString("fi-FI") }}</div>
 
                         <div>User data updated <InfoTooltip text="User-related information is updated when you mark the title (or any of its episodes or seasons) as watched, edit its notes, or add it to favourites." position="right"/></div>
-                        <div class="value">{{ new Date(titleInfo.user_title_last_updated).toLocaleDateString('fi-FI') }}</div>
+                        <div class="value">{{ new Date(title_info.user_title_last_updated).toLocaleDateString('fi-FI') }}</div>
 
                     </div>
                 </div>
 
-                <div v-if="titleInfo.trailer_key != null" class="trailer-container">
+                <div v-if="title_info.trailer_key != null" class="trailer-container">
                     <h3>Trailer</h3>
                     <div class="iframe-container">
                         <iframe
-                            :src="`https://www.youtube.com/embed/${titleInfo.trailer_key}`"
+                            :src="`https://www.youtube.com/embed/${title_info.trailer_key}`"
                             frameborder="0"
                             allowfullscreen
                         ></iframe>
@@ -388,9 +400,9 @@
                 </div>
             </div>
                 
-            <div v-if="titleInfo.in_watch_list">
+            <div v-if="title_info.in_watch_list">
                 <h3>Notes</h3>
-                <textarea class="notes-text-area" v-model="this.titleInfo.notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
+                <textarea class="notes-text-area" v-model="this.title_info.notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
                 <button 
                     @click="handleNotesSave"
                     :disabled="waitingForResult.includes('saveNotes')"
@@ -403,7 +415,7 @@
         </div>
 
         <!-- TV-SHOW SPECIFIC -->
-        <div class="content-width-medium-unrestricted" v-if="titleInfo.seasons">
+        <div class="content-width-medium-unrestricted" v-if="title_info.seasons">
             <h2 id="episode_map">Episode map</h2>
             <!-- <h2 id="episode_map" class="icon-align"><IconTMDB size="42px" style="margin-right: 6px;"/> Episode map</h2> -->
 
@@ -421,15 +433,15 @@
                     <div class="episode-tile label">
                     </div>
                     <div 
-                        v-for="(episode, index) in titleInfo.seasons.reduce((maxSeason, season) => 
-                            season.episodes.length > maxSeason.episodes.length ? season : maxSeason, titleInfo.seasons[0]).episodes" 
+                        v-for="(episode, index) in title_info.seasons.reduce((maxSeason, season) => 
+                            season.episodes.length > maxSeason.episodes.length ? season : maxSeason, title_info.seasons[0]).episodes" 
                         :key="episode.id"
                         class="episode-tile label" 
                     >
                         E{{ index + 1 }}
                     </div>
                 </div>
-                <div v-for="season in titleInfo.seasons" 
+                <div v-for="season in title_info.seasons" 
                     :key="season.season_id" 
                     class="season-row"
                 >
@@ -446,7 +458,7 @@
                         }"
                         :style="{'background-color': episode.tileColor || 'var(--color-background-card)'}"
                         :title="`S${season.season_number} E${episode.episode_number}`"
-                        :to="`/watch_list/title/${titleInfo.title_id}#S${season.season_number}E${episode.episode_number}`"
+                        :to="`/watch_list/title/${title_info.title_id}#S${season.season_number}E${episode.episode_number}`"
                     >
                         {{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }}
                     </router-link>
@@ -454,10 +466,10 @@
             </div>
         </div>
 
-        <div class="content-width-large" v-if="titleInfo.seasons">
+        <div class="content-width-large" v-if="title_info.seasons">
             <h2>Season & episode details</h2>
 
-            <div v-for="season in titleInfo.seasons" 
+            <div v-for="season in title_info.seasons" 
                 :key="season.season_id" 
                 class="card season" 
                 :class="{'active': expandedSeason == season.season_id}"
@@ -466,7 +478,7 @@
                     <div class="poster-container">
                         <img 
                             class="poster" 
-                            :src="imageUrl(300, season.backup_poster_url, titleInfo.title_id, season.season_number)" 
+                            :src="imageUrl(300, season.backup_poster_url, title_info.title_id, season.season_number)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         />
                         <div class="tag-holder">
@@ -487,14 +499,12 @@
                                 left="6px"
                                 @click.stop="openSeasonUpdateModal(season.season_number)"
                                 :class="{
-                                    'loading': waitingForResult.includes('titleUpdate' + season.season_number),
-                                    'spin-refresh-icon': waitingForResult.includes('titleUpdate' + season.season_number)
+                                    'loading': waitingForResult.includes('seasonUpdate' + season.season_number),
+                                    'spin-refresh-icon': waitingForResult.includes('seasonUpdate' + season.season_number)
                                 }"
                                 class="icon-button"
                             />
                         </h2>
-                        <!-- ONLY SPIN THE ICON FOR THE THING THAT WE ARE UPDATING -->
-                        <!-- ONLY SPIN THE ICON FOR THE THING THAT WE ARE UPDATING -->
                         <div class="details">
                             <div class="icon-align single-line">
                                 <span>{{ season.episode_count }} episodes</span>
@@ -550,7 +560,7 @@
                                 <img 
                                     v-else
                                     class="still" 
-                                    :src="imageUrl(900, episode.backup_still_url, titleInfo.title_id, season.season_number, episode.episode_number)"
+                                    :src="imageUrl(900, episode.backup_still_url, title_info.title_id, season.season_number, episode.episode_number)"
                                     @error="failedToLoadImages.push(episode.episode_id)"
                                     @load="(event) => event.target.classList.add('loaded')"
                                 >
@@ -623,18 +633,18 @@
 
         <!-- Titles watch/unwatch -->
         <ModalConfirmation 
-            ref="markTitleWatchedCM"
-            header="Mark watched"
-            text="Are you sure you want to mark the entire TV show as watched?
-            This will mark all episodes as watched, effectively erasing your progress."
-            affirmative-option="Mark as Watched"
+            ref="updateTitleWatchCountCM"
+            header="Update watch count"
+            text="Are you sure you want to update the watch count for this title? 
+            This will modify the watch progress for all episodes."
+            affirmative-option="Update Watch Count"
         />
         <ModalConfirmation 
-            ref="markTitleUnwatchedCM"
-            header="Reset watch status"
-            text="Are you sure you want to reset the title's watch status?
-            This will mark all episodes as unwatched, effectively erasing your progress."
-            affirmative-option="Reset status"
+            ref="removeTitleWatchCountCM"
+            header="Remove watch count"
+            text="Are you sure you want to remove the watch count for this title? 
+            This will reset the watch progress for all episodes."
+            affirmative-option="Remove Watch Count"
         />
 
         <!-- Seasons watch/unwatch -->
@@ -662,7 +672,7 @@
                     <li><strong>Images:</strong> Deletes and redownloads all current images.</li>
                     <li><strong>Full Update:</strong> Does both info and images.</li>
                 </ul>
-                <div v-if="titleInfo.type == 'tv'">
+                <div v-if="title_info.type == 'tv'">
                     <h3>Title & Seasons <InfoTooltip text="Doesn't include the episodes." position="broken"/></h3>
                     <div class="choice-buttons">
                         <button @click="handleTitleUpdate('title', 'info')" class="button-primary">Info</button>
@@ -711,6 +721,13 @@
         <!-- Collection edit -->
         <ModalCollection ref="editCollectionFC" type="Edit colleciton" submitText="Save"/>
 
+        <!-- Edit title collections -->
+        <ModalTitleCollections 
+            ref="modaTitleCollectionsMTC"
+            @title-collection-updated="handleTitleCollectionUpdate"
+            @collection-updated="handleCollectionUpdate"
+        />
+
         <!-- Watch now -->
         <ModalGeneric ref="watchTitleNowMG" header="Watch Now">
             <WatchNowRecursive :data="watchNowLinksForModal" class="content-width-medium"/>
@@ -722,7 +739,7 @@
 
     </div>
     
-    <div v-else-if="!waitingForResult.includes('titleInfo')">
+    <div v-else-if="!waitingForResult.includes('title_info')">
         <notFoundPage/>
     </div>
 
@@ -763,6 +780,10 @@ import IconLoading from '@/components/icons/IconLoading.vue';
 import ModalCollection from '@/components/ModalCollection.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import IconFilm from '@/components/icons/IconFilm.vue'; 
+import IconCollection from '@/components/icons/IconCollection.vue';
+import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
+import IconAdd from '@/components/icons/IconAdd.vue';
+import IconRemove from '@/components/icons/IconRemove.vue';
 
 export default {
     data() {
@@ -770,7 +791,7 @@ export default {
             standAloneBuild: standAloneBuild,
             apiUrl: process.env.VUE_APP_API_URL,
             titleID: this.$route.params.titleID,
-            titleInfo: null,
+            title_info: null,
             expandedSeason: null,
             waitingForResult: [],
             failedToLoadImages: [],
@@ -790,6 +811,7 @@ export default {
         ModalConfirmation,
         ModalGeneric,
         ModalCollection,
+        ModalTitleCollections,
         InfoTooltip,
         IndicatorDots,
         notFoundPage,
@@ -807,6 +829,9 @@ export default {
         IconLoading,
         IconPlay,
         IconFilm,
+        IconCollection,
+        IconAdd,
+        IconRemove,
     },
     methods: {
         formatRuntime(runtime) {
@@ -846,7 +871,7 @@ export default {
             }
         },
         closeAllSeasons(keepRef = "", noTransition = true) {
-            this.titleInfo.seasons.forEach(season => {
+            this.title_info.seasons.forEach(season => {
                 const seasonRef = `refSeason${season.season_number}`;
                 // Don't set height for the one that we wan't to be open
                 if (seasonRef != keepRef) {
@@ -858,22 +883,22 @@ export default {
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchCount, customID) {
             // Initially get a confirmation from the user before going through
             if (
-                this.titleInfo.type == "tv" && 
+                this.title_info.type == "tv" && 
                 titleOrSeasonOrEpisode == "title" && 
-                watchCount == 1 && 
-                !await this.$refs.markTitleWatchedCM.prompt()
+                watchCount >= 1 && 
+                !await this.$refs.updateTitleWatchCountCM.prompt()
             ) { return } else if (
-                this.titleInfo.type == "tv" && 
+                this.title_info.type == "tv" && 
                 titleOrSeasonOrEpisode == "title" && 
                 watchCount == 0 && 
-                !await this.$refs.markTitleUnwatchedCM.prompt()
+                !await this.$refs.removeTitleWatchCountCM.prompt()
             ) { return } else if (
-                this.titleInfo.type == "tv" && 
+                this.title_info.type == "tv" && 
                 titleOrSeasonOrEpisode == "season" && 
-                watchCount == 1 && 
+                watchCount >= 1 && 
                 !await this.$refs.markSeasonWatchedCM.prompt()
             ) { return } else if (
-                this.titleInfo.type == "tv" && 
+                this.title_info.type == "tv" && 
                 titleOrSeasonOrEpisode == "season" && 
                 watchCount == 0&& 
                 !await this.$refs.markSeasonUnwatchedCM.prompt()
@@ -884,27 +909,23 @@ export default {
 
             let response;
             if (titleOrSeasonOrEpisode === "title") {
-                response = await fastApi.watch_list.titles.watchCountTitle(this.titleInfo.title_id, watchCount);
+                response = await fastApi.watch_list.titles.watchCountTitle(this.title_info.title_id, watchCount);
             } else if (titleOrSeasonOrEpisode === "season") {
-                response = await fastApi.watch_list.titles.watchCountSeason(customID, this.titleInfo.title_id, watchCount);
+                response = await fastApi.watch_list.titles.watchCountSeason(customID, this.title_info.title_id, watchCount);
             } else if (titleOrSeasonOrEpisode === "episode") {
-                response = await fastApi.watch_list.titles.watchCountEpisode(customID, this.titleInfo.title_id, watchCount);
+                response = await fastApi.watch_list.titles.watchCountEpisode(customID, this.title_info.title_id, watchCount);
             }
 
             if (response) {
-                // console.debug(response)
                 // Update titles state on page
-                this.titleInfo.watch_count = response.updated_data.watch_count;
-                this.titleInfo.in_watch_list = 1;
+                this.title_info.watch_count = response.updated_data.watch_count;
+                this.title_info.in_watch_list = 1;
                 // Update each episodes state on page by mathcing the episode_id
                 if (response.updated_data.episodes) {
-                    // console.debug(response.updated_data.episodes)
-                    // console.debug(this.titleInfo.seasons)
-                    
                     // Loop through each episode in response.updated_data.episodes
                     response.updated_data.episodes.forEach(updatedEpisode => {
-                    // Find the matching episode in titleInfo using the episode_id
-                    const matchingEpisode = this.titleInfo.seasons
+                    // Find the matching episode in title_info using the episode_id
+                    const matchingEpisode = this.title_info.seasons
                         .flatMap(season => season.episodes)
                         .find(episode => episode.episode_id === updatedEpisode.episode_id);
                     
@@ -921,7 +942,7 @@ export default {
         async handleNotesSave() {
             this.waitingForResult.push("saveNotes");
 
-            const response = await fastApi.watch_list.titles.notes(this.titleInfo.title_id, this.titleInfo.notes)
+            const response = await fastApi.watch_list.titles.notes(this.title_info.title_id, this.title_info.notes)
             if (response) {
                 console.log(response);
                 notify(response.message, "success");
@@ -945,7 +966,7 @@ export default {
             const isSeason = type === "season";
             const isTitle = type === "title";
 
-            this.waitingForResult.push(`${type}Update` + updatingNumber);
+            this.waitingForResult.push(`${type}Update${updatingNumber}`);
 
             if (isSeason) {
                 this.$refs.refreshSeasonDataGM.close();
@@ -954,33 +975,33 @@ export default {
             }
 
             let response = null;
-            let updateMessage = `"${this.titleInfo.name}" info updated!`;
+            let updateMessage = `"${this.title_info.name}" info updated!`;
 
             switch (action) {
                 case "info":
-                    response = await fastApi.watch_list.titles.update(this.titleInfo.title_id, this.titleInfo.type, { 
+                    response = await fastApi.watch_list.titles.update(this.title_info.title_id, this.title_info.type, { 
                         update_title_info: isTitle || isAll, 
                         update_season_info: isSeason || isAll, 
                         season_number: updatingNumber 
                     });
                     updateMessage = updatingNumber != 0
-                        ? `Season ${updatingNumber} info for "${this.titleInfo.name}" has been updated. Missing images might still be loading in the background.`
-                        : `"${this.titleInfo.name}" title information has been updated. Missing images might still be loading in the background.`;
+                        ? `Season ${updatingNumber} info for "${this.title_info.name}" has been updated. Missing images might still be loading in the background.`
+                        : `"${this.title_info.name}" title information has been updated. Missing images might still be loading in the background.`;
                     break;
 
                 case "images":
-                    response = await fastApi.watch_list.titles.update(this.titleInfo.title_id, this.titleInfo.type, { 
+                    response = await fastApi.watch_list.titles.update(this.title_info.title_id, this.title_info.type, { 
                         update_title_images: isTitle || isAll, 
                         update_season_images: isSeason || isAll, 
                         season_number: updatingNumber 
                     });
                     updateMessage = updatingNumber != 0
-                        ? `Season ${updatingNumber} images for "${this.titleInfo.name}" are now updating in the background.`
-                        : `"${this.titleInfo.name}" title images are now updating in the background.`;
+                        ? `Season ${updatingNumber} images for "${this.title_info.name}" are now updating in the background.`
+                        : `"${this.title_info.name}" title images are now updating in the background.`;
                     break;
 
                 case "full":
-                    response = await fastApi.watch_list.titles.update(this.titleInfo.title_id, this.titleInfo.type, { 
+                    response = await fastApi.watch_list.titles.update(this.title_info.title_id, this.title_info.type, { 
                         update_title_info: isTitle || isAll, 
                         update_title_images: isTitle || isAll, 
                         update_season_info: isSeason || isAll, 
@@ -988,8 +1009,8 @@ export default {
                         season_number: updatingNumber 
                     });
                     updateMessage = updatingNumber != 0
-                        ? `Season ${updatingNumber} full update for "${this.titleInfo.name}" is now in progress.`
-                        : `All the data for "${this.titleInfo.name}" has been replaced. Images are also now updating in the background.`;
+                        ? `Season ${updatingNumber} full update for "${this.title_info.name}" is now in progress.`
+                        : `All the data for "${this.title_info.name}" has been replaced. Images are also now updating in the background.`;
                     break;
             }
 
@@ -999,15 +1020,15 @@ export default {
                 this.episodeMapTileBackgroundColors();
             }
 
-            this.removeItemFromWaitingArray(`${type}Update` + updatingNumber);
+            this.removeItemFromWaitingArray(`${type}Update${updatingNumber}`);
         },
         async handleFavouriteToggle() {
             this.waitingForResult.push("favourite");
-            const response = await fastApi.watch_list.titles.favourite(this.titleInfo.title_id)
+            const response = await fastApi.watch_list.titles.favourite(this.title_info.title_id)
             if (response) {
                 console.log(response);
-                this.titleInfo.favourite = !this.titleInfo.favourite;
-                this.titleInfo.in_watch_list = 1;
+                this.title_info.favourite = !this.title_info.favourite;
+                this.title_info.in_watch_list = 1;
             }
             this.removeItemFromWaitingArray("favourite");
         },
@@ -1017,12 +1038,12 @@ export default {
 
             this.waitingForResult.push("titleWatched");
             if (action == "remove") {
-                const response = await fastApi.watch_list.titles.remove(this.titleInfo.title_id);
+                const response = await fastApi.watch_list.titles.remove(this.title_info.title_id);
                 if (response) {
                     console.debug("Title removed successfully")
                 }
             } else if (action == "add") {
-                const response = await fastApi.watch_list.titles.add(this.titleInfo.title_id, this.titleInfo.type);
+                const response = await fastApi.watch_list.titles.add(this.title_info.title_id, this.title_info.type);
                 if (response) {
                     console.debug("Title added successfully!")
                 }
@@ -1035,22 +1056,22 @@ export default {
             this.waitingForResult = this.waitingForResult.filter(i => i !== item);
         },
         async queryTitleData() {
-            this.waitingForResult.push("titleInfo");
+            this.waitingForResult.push("title_info");
             // Query the details from api for the title here:
             const response = await fastApi.watch_list.titles.info(this.titleID);
             if (response && response.title_info) {
                 if (response.title_info.length !== 0) {
-                    this.titleInfo = response.title_info;
+                    this.title_info = response.title_info;
                     if (standAloneBuild) {
-                        this.titleInfo.backdrop_image_count = 1;
+                        this.title_info.backdrop_image_count = 1;
                     }
-                    console.debug("[queryTitleData] Values set to this.titleInfo: ", this.titleInfo)
+                    console.debug("[queryTitleData] Values set to this.title_info: ", this.title_info)
                 } else {
                     notify("The title doesn't exist!", "error");
                     router.push("/watch_list");
                 }
             }
-            this.removeItemFromWaitingArray("titleInfo");
+            this.removeItemFromWaitingArray("title_info");
         },
         backdropKeypress(event) {
             if (['ArrowLeft', 'a', 'w'].includes(event.key)) {
@@ -1058,13 +1079,13 @@ export default {
             } else if (['ArrowRight', 'd', 's', 'Enter'].includes(event.key)) {
                 this.addOrSubtractSlideshowIndex(1);
             } else if (['1', '2', '3', '4', '5'].includes(event.key)) {
-                if (Number(event.key) <= this.titleInfo.backdrop_image_count)
+                if (Number(event.key) <= this.title_info.backdrop_image_count)
                     this.updateSlideshowImageTo(Number(event.key) - 1);
             }
         },
         getWatchedStats() {
-            const totalEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
-            const watchedEpisodes = this.titleInfo.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
+            const totalEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
+            const watchedEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
             const percentage = totalEpisodes ? ((watchedEpisodes / totalEpisodes) * 100).toFixed(1) + "%" : "0%";
             return `${watchedEpisodes} / ${totalEpisodes} episodes (${percentage})`;
         },
@@ -1089,18 +1110,18 @@ export default {
             let newNumber = this.imageSlideshowData.chosenOne + amount;
 
             // Ensure looping through images
-            if (newNumber >= this.titleInfo.backdrop_image_count) newNumber = 0;
-            if (newNumber < 0) newNumber = this.titleInfo.backdrop_image_count - 1;
+            if (newNumber >= this.title_info.backdrop_image_count) newNumber = 0;
+            if (newNumber < 0) newNumber = this.title_info.backdrop_image_count - 1;
 
             // Call updateImage with the new number
             this.updateSlideshowImageTo(newNumber);
         },
         episodeMapTileBackgroundColors() {
-            if (this.titleInfo && this.titleInfo.seasons) {
+            if (this.title_info && this.title_info.seasons) {
                 const baseColor = getCssVar("color-background-card");
                 const ratingColor = getCssVar("color-primary");
 
-                this.titleInfo.seasons.forEach(season => {
+                this.title_info.seasons.forEach(season => {
                     season.episodes.forEach(episode => {
                         let rating = episode.tmdb_vote_average;
 
@@ -1193,7 +1214,7 @@ export default {
             }
         },
         logoUrl() {
-            return `${this.apiUrl}/media/image/title/${this.titleInfo.title_id}/logo.png`;
+            return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/logo.png`;
         },
         async handleEditCollection(initialCollection) {
             const editedCollection = await this.$refs.editCollectionFC.prompt(
@@ -1214,10 +1235,10 @@ export default {
             if (response) {
                 notify(response.message, 'success');
 
-                const index = this.titleInfo.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
+                const index = this.title_info.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
                 if (index !== -1) {
-                    this.titleInfo.collections[index] = {
-                        ...this.titleInfo.collections[index],
+                    this.title_info.collections[index] = {
+                        ...this.title_info.collections[index],
                         name: editedCollection.name,
                         description: editedCollection.description
                     };
@@ -1233,13 +1254,13 @@ export default {
                     tmdb: {
                         name: "The Movie Database",
                         details: "Watch options on TMDB.",
-                        link: `https://www.themoviedb.org/${this.titleInfo.type}/${this.titleInfo.tmdb_id}/watch`,
+                        link: `https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}/watch`,
                         icon: IconTMDBColorful
                     },
                     justwatch: {
                         name: "JustWatch",
                         details: "Search for this title on JustWatch.",
-                        link: `https://www.justwatch.com/fi/search?q=${encodeURIComponent(this.titleInfo.name)}`,
+                        link: `https://www.justwatch.com/fi/search?q=${encodeURIComponent(this.title_info.name)}`,
                         icon: IconJustwatch
                     }
                 }
@@ -1267,21 +1288,45 @@ export default {
             this.$refs.watchEpisodeNowMG.open();
         },
         handleWatchTitleNow() {
-            this.handleWatchNow(this.titleInfo.watch_now_links);
+            this.handleWatchNow(this.title_info.watch_now_links);
             this.$refs.watchTitleNowMG.open();
-        }
+        },
+        promptTitleCollections() {
+            this.$refs.modaTitleCollectionsMTC.prompt(this.title_info.title_id);
+        },
+        handleTitleCollectionUpdate(payload) {
+            if (payload.titleInCollection) {
+                this.title_info.collections.push(payload.collection);
+            } else {
+                this.title_info.collections = this.title_info.collections.filter(
+                    c => c.collection_id !== payload.collection.collection_id
+                );
+            }
+        },
+        handleCollectionUpdate(payload) {
+            const updated = payload.newCollectionValues;
+            const index = this.title_info.collections.findIndex(
+                c => c.collection_id === updated.collection_id
+            );
+
+            console.log(updated, this.title_info.collections);
+
+            if (index !== -1) {
+                this.title_info.collections[index] = updated;
+            }
+        },
     },
     computed: {
         titleEpisodeCount() {
             let count = 0;
-            this.titleInfo.seasons.forEach(season => {
+            this.title_info.seasons.forEach(season => {
                 count += season.episode_count;
             });
             return count;
         },
         titleLastAirDate() {
-            if (this.titleInfo && this.titleInfo.type == 'tv' && this.titleInfo.seasons?.length) {
-                let lastSeason = this.titleInfo.seasons[this.titleInfo.seasons.length - 1];
+            if (this.title_info && this.title_info.type == 'tv' && this.title_info.seasons?.length) {
+                let lastSeason = this.title_info.seasons[this.title_info.seasons.length - 1];
                 let lastAirDate = lastSeason?.episodes?.[lastSeason.episodes.length - 1]?.air_date || null;
                 return lastAirDate;
             }
@@ -1300,14 +1345,14 @@ export default {
         await this.queryTitleData();
 
         // Generate individual data for each backdrop image dynamically
-        if (this.titleInfo) {
-            this.imageSlideshowData.individualData = Array.from({ length: this.titleInfo.backdrop_image_count }, (_, i) => ({
+        if (this.title_info) {
+            this.imageSlideshowData.individualData = Array.from({ length: this.title_info.backdrop_image_count }, (_, i) => ({
                 number: i,
                 isLoaded: false
             }));
 
             // Set the title to the titles name instead of "Title info"
-            document.title = `Dashboard - ${this.titleInfo.name || 'Default Title'}`
+            document.title = `Dashboard - ${this.title_info.name || 'Default Title'}`
         }
 
         // Run initially and add the event listener to update on darkmode change
@@ -2262,6 +2307,23 @@ iframe {
 
 .choice-modal .text-hidden {
     margin-bottom: 0;
+}
+
+.numeric-stepper {
+    border: 1px solid var(--color-border);
+    border-radius: var(--spacing-sm);
+    width: fit-content;
+    white-space: nowrap;
+}
+.numeric-stepper > * {
+    padding-inline: var(--spacing-md) !important;
+}
+.numeric-stepper .value {
+    background-color: var(--color-background-card-section);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
 }
 </style>
   

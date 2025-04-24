@@ -7,9 +7,11 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Convert some of the chart to driving gauges with single value or other charts. 
     - Also could combine some of them?
     - Backups kind of dull, give it some life and readability
-    - Backend add:
-        - disks
-        - uptime
+
+    - Loading
+        - Unify acorss site
+        - Do not block actions if not absolutely necessary
+        - Add and remove block should be util
 
 
 ## Features
