@@ -5,27 +5,13 @@
         <button @click="handleNewCollection">New collection</button>
     
         <div class="collections">            
-            <div v-for="(collection, index) in collections" :key="index" class="collection">
-                <div class="header-bar">
-                    <div class="name-description">
-                        <h2>{{ collection.name }}</h2>
-                        <span class="text-light">{{ collection.description }}</span>
-                    </div>
-                    <div>
-                        <IconTrash @click="handleRemoveCollection(collection.collection_id)" class="icon-button"/>
-                        <IconEdit @click="handleEditCollection(collection)" class="icon-button"/>
-                    </div>
-                </div>
-                <div class="titles">
-                    <div v-for="(title, index) in collection.titles" :key="index" class="title">
-                        {{ title.title_id }}
-                        {{ title.name }}
-                    </div>
-                    <div class="title add-title">
-                        <IconAdd size="64px"/>
-                    </div>
-                </div>
-            </div>
+            <CollectionItem 
+                v-for="(collection, index) in collections" 
+                :key="index" 
+                :collection="collection" 
+                @remove-collection="handleRemoveCollection" 
+                @edit-collection="handleEditCollection"
+            />
         </div>
 
         <ModalCollection ref="newCollectionFC" header="New collection" submitText="Create"/>
@@ -44,19 +30,14 @@ import fastApi from '@/utils/fastApi';
 import ModalCollection from '@/components/ModalCollection.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import { notify } from '@/utils/notification';
-import IconTrash from '@/components/icons/IconTrash.vue';
-import IconEdit from '@/components/icons/IconEdit.vue';
-import IconAdd from '@/components/icons/IconAdd.vue';
-
+import CollectionItem from '@/components/CollectionItem.vue';
 
 export default {
     name: 'listCollections',
     components: {
         ModalCollection,
         ModalConfirmation,
-        IconTrash,
-        IconEdit,
-        IconAdd,
+        CollectionItem,
     },
     data() {
         return {
@@ -132,80 +113,11 @@ export default {
 }
 </script>
 
+
 <style scoped>
 .collections {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
-}
-
-.collection {
-    display: flex;
     row-gap: var(--spacing-md);
-    flex-direction: column;
-    border-radius: var(--border-radius-medium);
-    padding: var(--spacing-md);
-    border: 1px solid var(--color-border);
-    box-sizing: border-box;
-    width: 100%;
 }
-
-.collection .header-bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.collection .header-bar .name-description {
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    column-gap: var(--spacing-md);
-}
-.collection h2 {
-    display: inline;
-    margin: 0;
-}
-
-.titles {
-    display: flex;
-    flex-direction: row;
-    column-gap: 8px;
-    overflow-x: scroll;
-}
-
-.title {
-    min-width: 200px;
-    width: 200px;
-    height: 300px;
-    border-radius: var(--border-radius-medium);
-    background-color: var(--color-background-card);
-    box-sizing: border-box;
-}
-
-.title.add-title {
-    background-color: transparent;
-    border: 3px dashed var(--color-text-hidden);
-    color: var(--color-text-hidden);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: border-color 0.1s ease-out,
-                color 0.1s ease-out;
-}
-.title.add-title:hover {
-    border-color: var(--color-text-lighter);
-    color: var(--color-text-lighter);
-}
-
-
-.collection-form {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md);
-}
-.collection-form .submit {
-    width: 100%;
-}
-
 </style>

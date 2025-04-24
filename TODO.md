@@ -140,6 +140,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Seperate page for all titles list as a search page?
 
     - Title Details  
+        - If no title poster the poster holder collapses
         - Add link to a site that shows where to watch
         - Add a season progress bar?
             - Title also
@@ -219,20 +220,11 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Seperate page for creating a collection
     - When adding a tv-show the seasons aren't added because it errors out.
     - Collections shouldn't require an account.
+    - Trailers table. Current single triler is quite limiting. Would be cool to have more and actually check out a proper triler, sinse some trailers are not good.
 
 
 ### Feature ideas that might never see the light of day
-- Swiper add horizontal scrolling
-    - Would make usage with trackpad work. Now awkward.
-    - "Swiper" doesn't seem to support it in the way that I hoped it would
-    - Might have to can this one for now and if I later wish to I can make my own slider component
-    - https://codesandbox.io/p/sandbox/54f29d?file=%2Fsrc%2FApp.vue
-    - https://swiperjs.com/demos#scroll-container
-- Title details poster also show on mobile layout?
-    - Doesn't really fit and doesn't really work with the current layout :/
-    - If I figure out how to do it one day will do.
-    - Now that we push it over backdrop could be possible?
-
+- Currently none
 
 ## Issues
 ### Waiting to be fixed

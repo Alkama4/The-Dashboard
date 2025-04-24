@@ -1,0 +1,207 @@
+<template>
+    <div 
+        @keydown.prevent="handleKeydown"
+        class="custom-carousel"
+    >
+        <div 
+            v-if="slides.length"
+            class="carousel" 
+            @pointerdown="startDrag"
+        >
+            <div class="track" :style="{ transform: `translateX(${x}px)` }">
+                <TitleCard 
+                    v-for="(data, index) in slides" 
+                    :key="index" 
+                    :titleDetails="data" 
+                    @click.capture="onClick"
+                    draggable="false"
+                />
+            </div>
+        </div>
+        <div v-else-if="loading" class="loading-placeholder full-width-slide"></div>
+        <div v-else class="content-not-found card full-width-slide">
+            Looks like there's nothing here.<br>
+            <span class="text-hidden">Try adding adding more titles to your watch list</span>
+        </div>
+        <div class="indicator-dots-holder">
+            <IndicatorDots 
+                v-if="IndicatorDotsEnabled"
+                :dotCount="slides.length" 
+                :dotIndex="currentIndex"
+                @dotSelected="goToSlide"
+            />
+        </div>
+    </div>
+</template>
+
+<script>
+import TitleCard from './TitleCard.vue'
+import IndicatorDots from './IndicatorDots.vue'
+
+export default {
+    name: 'CustomCarousel',
+    components: {
+        TitleCard,
+        IndicatorDots,
+    },
+    data() {
+        return {
+            x: 0,
+            vx: 0,
+            startX: 0,
+            lastX: 0,
+            isDragging: false,
+            animationFrame: null,
+            positions: [],
+            currentIndex: 0,
+            slideWidth: 200 + 8 /2,
+        }
+    },
+    props: {
+        slides: {
+            type: Array,
+            default: () => []
+        },
+        loading: {
+            type: Boolean,
+            default: false,
+        },
+        IndicatorDotsEnabled: {
+            type: Boolean,
+            default: true,
+        }
+    },
+    methods: {
+        onClick(e) {
+            if (this.positions.length) {
+                e.preventDefault()
+            }
+        },
+        startDrag(e) {
+            this.isDragging = true
+            this.startX = e.clientX
+            this.lastX = this.x
+            cancelAnimationFrame(this.animationFrame)
+        },
+        onDrag(e) {
+            if (!this.isDragging) return
+            const now = Date.now()
+            const delta = e.clientX - this.startX
+            this.x = this.lastX + delta
+            this.positions.push({ x: this.x, time: now })
+
+            if (this.positions.length > 2) {
+                this.positions.shift()
+            }
+        },
+        endDrag() {
+            setTimeout(() => {
+                if (!this.isDragging) return
+                this.isDragging = false
+
+                if (this.positions.length === 0) return
+
+                const first = this.positions[0]
+                const last = this.positions[this.positions.length - 1]
+                const dt = (last.time - first.time) || 1
+                this.vx = (last.x - first.x) / dt * 16
+
+                this.positions = []
+
+                const maxIndex = this.slides.length - 1
+                const index = Math.round(-(this.x + this.vx * 12) / this.slideWidth)
+                const clampedIndex = Math.max(0, Math.min(maxIndex, index))
+                this.goToSlide(clampedIndex)
+            }, 1)
+        },
+        animateTo(target) {
+            cancelAnimationFrame(this.animationFrame)
+
+            const stiffness = 0.4
+            const damping = 0.2
+
+            const animate = () => {
+                const force = target - this.x
+                this.vx = (this.vx + force * stiffness) * damping
+                this.x += this.vx
+                if (Math.abs(this.vx) > 0.05) {
+                    this.animationFrame = requestAnimationFrame(animate)
+                } else {
+                    this.x = target
+                    this.vx = 0
+                }
+            }
+
+            animate()
+        },
+        goToSlide(index) {
+            this.currentIndex = index
+            const target = -index * this.slideWidth
+            this.animateTo(target)
+        },
+        handleKeydown(event) {
+            if (['ArrowLeft', 'a', 'w'].includes(event.key)) {
+                this.goToSlide(Math.max(0, this.currentIndex - 1))
+            } else if (['ArrowRight', 'd', 's', 'Enter'].includes(event.key)) {
+                this.goToSlide(Math.min(this.slides.length - 1, this.currentIndex + 1))
+            } else if (!isNaN(event.key) && event.key !== '0') {
+                const index = parseInt(event.key, 10) - 1
+                if (index < this.slides.length) {
+                    this.goToSlide(index)
+                }
+            } else if (event.key === '0') {
+                const index = this.slides.length - 1
+                this.goToSlide(index)
+            }
+        }
+    },
+    mounted() {
+        window.addEventListener('pointermove', this.onDrag)
+        window.addEventListener('pointerup', this.endDrag)
+        window.addEventListener('pointerleave', this.endDrag)
+        window.addEventListener('keydown', this.handleKeydown)
+    },
+    beforeUnmount() {
+        window.removeEventListener('pointermove', this.onDrag)
+        window.removeEventListener('pointerup', this.endDrag)
+        window.removeEventListener('pointerleave', this.endDrag)
+        window.removeEventListener('keydown', this.handleKeydown)
+    }
+}
+</script>
+
+
+<style scoped>
+.custom-carousel {
+    row-gap: var(--spacing-sm);
+    display: flex;
+    flex-direction: column;
+}
+.carousel {
+    overflow: hidden;
+    width: 100%;
+    touch-action: pan-y;
+}
+.track {
+    display: flex;
+    transition: none;
+    column-gap: var(--spacing-xs);
+}
+
+.indicator-dots {
+    justify-content: center;
+}
+.indicator-dots-holder {
+    height: 10px;
+}
+
+.full-width-slide {
+    border-radius: var(--border-radius-medium);
+    --card-height: 300px;
+    --card-width: 200px;
+    height: calc(var(--card-height) * 0.95);
+    width: calc(var(--card-width) * 0.95);
+    margin: calc(var(--card-height) *(1 - 0.95) / 2) calc(var(--card-width) * (1 - 0.95) / 2);
+    width: 100%;
+}
+</style>

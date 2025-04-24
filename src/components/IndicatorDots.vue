@@ -1,69 +1,31 @@
 <template>
     <div class="indicator-dots" v-if="dotCount > 1">
         <div 
-            v-for="index in [...Array(dotCount).keys()]" 
+            v-for="index in dotCount" 
             :key="index" 
             class="dot" 
-            :class="{ active: index === (dotIndex ?? swiperDotIndex) }"
-            @click="moveSwiperTo(index)"
+            :class="{ active: index - 1 === dotIndex }"
+            @click="$emit('dotSelected', index - 1)"
         ></div>
     </div>
 </template>
 
 <script>
-import { useSwiper } from 'swiper/vue';
-
 export default {
-    data() {
-        return {
-            swiper: null,
-            swiperDotIndex: 0,
-        };
-    },
+    name: 'IndicatorDots',
     props: {
         dotIndex: {
             type: Number,
-            required: false
+            required: false,
+            default: 0
         },
         dotCount: {
             type: Number,
             required: true
-        },
-        swiperMode: {
-            type: Boolean,
-            default: false
         }
-    },
-    methods: {
-        moveSwiperTo(index) {
-            // Use swiper controls to move to the specific slide
-            if (this.swiperMode && this.swiper) {
-                this.swiper.slideTo(index);
-            } else {
-                // Emit the new dot index to the parent
-                this.$emit("dotSelected", index);
-            }
-
-        },
-    },
-    mounted() {
-        if (this.swiperMode) {
-            const swiper = useSwiper();
-            if (swiper) {
-                this.swiper = swiper;
-            }
-        }
-    },
-    watch: {
-        // Watch for changes to the swiper's activeIndex
-        'swiper.activeIndex'(newIndex) {
-            // Since the dotIndex is v-bind we can't modify it from the inside so we have to use an internal value
-            this.swiperDotIndex = newIndex;
-        }
-    },
+    }
 };
 </script>
-
 
 <style scoped>
 .indicator-dots {
