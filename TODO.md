@@ -34,6 +34,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Custome type-select
         - Custom Select  
             - Tab select and arrow keys select value  
+        - Since not using form element implement submit from inputs elseway.
     - Modals  
         - Finish the modal windows:  
             - Duplicate  
@@ -123,7 +124,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Add/remove from favorites  
 
     - all titles list
-        - Move to seperate page
+        - If not found suggest a straight link for it from tmdb.
         - add sort by options
             - Use the list in fastapi's end
         - Finish filers
@@ -228,6 +229,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
 
 ### Feature ideas that might never see the light of day
 - Currently none
+
 
 ## Issues
 ### Waiting to be fixed

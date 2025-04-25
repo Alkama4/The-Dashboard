@@ -224,35 +224,13 @@
             </div>
 
             <h3>Watch count</h3>
-            <div class="combined-buttons numeric-stepper">
-                <!-- Watched buttons -->
-                <button 
-                    class="button-primary left-button" 
-                    @click="handleTitleWatchClick('title', title_info.watch_count + 1, null)"
-                >
-                    Add a watch
-                    <IconAdd/>
-                </button>
-                <div class="middle-button value">
-                    {{ title_info.watch_count || 0 }}
-                </div>
-                <button 
-                    class="right-button" 
-                    @click="handleTitleWatchClick('title', title_info.watch_count - 1, null)"
-                    :disabled="title_info.watch_count <= 0"
-                >
-                    <IconRemove/>
-                </button>
-                <!-- <button 
-                    v-if="!(title_info.watch_count == null || title_info.watch_count == 0)"
-                    class=" middle-button flex-2" 
-                    @click="handleTitleWatchClick('title', 0, null)" 
-                    :disabled="waitingForResult.length != 0"
-                    :class="{loading: waitingForResult.length != 0}"
-                >
-                    Reset 
-                </button> -->
-            </div>
+            <NumericStepper 
+                :displayValue="title_info.type === 'movie' 
+                    ? title_info.watch_count 
+                    : title_info.seasons.reduce((min, season) => 
+                        season.episodes.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
+                @valueUpdated="val => handleTitleWatchClick('title', val, null)"
+            />
 
             <h3>Overview</h3>
             <p style="margin: 0;">{{ title_info.overview }}</p>
@@ -517,24 +495,12 @@
                         </div>
                         <p :title="season.overview">{{ season.overview }}</p>
                     </div>
-                    <button 
-                        class="modify-watched button-primary"
-                        v-if="season.episodes.length === 0 || 0 === season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                        @click.stop="handleTitleWatchClick('season', 1, season.season_id)"
-                        :disabled="waitingForResult.length != 0"
-                        :class="{loading: waitingForResult.length != 0}"
-                    >
-                        Mark season watched
-                    </button>
-                    <button
-                        class="modify-watched "
-                        v-else
-                        @click.stop="handleTitleWatchClick('season', 0, season.season_id)"
-                        :disabled="waitingForResult.length != 0"
-                        :class="{loading: waitingForResult.length != 0}"
-                    >
-                        Mark season unwatched
-                    </button>
+
+                    <NumericStepper 
+                        class="modify-watched"
+                        :displayValue="season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
+                        @valueUpdated="val => handleTitleWatchClick('season', val, season.season_id)"
+                    />
                 </div>
                 
                 <!-- EPISODES -->
@@ -596,23 +562,12 @@
                                     </div>
                                 </div>
                                 <p :title="episode.overview">{{ episode.overview }}</p>
-                                <button 
-                                    v-if="episode.watch_count == 0 || episode.watch_count == null"
-                                    class="modify-watched button-primary"
-                                    @click="handleTitleWatchClick('episode', 1, episode.episode_id)"
-                                    :class="{
-                                        loading: waitingForResult.length != 0}"
-                                >
-                                    Mark watched
-                                </button>
-                                <button 
-                                    v-else
-                                    class="modify-watched "
-                                    @click="handleTitleWatchClick('episode', 0, episode.episode_id)"
-                                    :class="{loading: waitingForResult.length != 0}"
-                                >
-                                    Unwatch
-                                </button>
+
+                                <NumericStepper 
+                                    class="modify-watched"
+                                    :displayValue="episode.watch_count"
+                                    @valueUpdated="val => handleTitleWatchClick('episode', val, episode.episode_id)"
+                                />
                             </div>
                         </div>
                     </div>
@@ -782,8 +737,7 @@ import IconPlay from '@/components/icons/IconPlay.vue';
 import IconFilm from '@/components/icons/IconFilm.vue'; 
 import IconCollection from '@/components/icons/IconCollection.vue';
 import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
-import IconAdd from '@/components/icons/IconAdd.vue';
-import IconRemove from '@/components/icons/IconRemove.vue';
+import NumericStepper from '@/components/NumericStepper.vue';
 
 export default {
     data() {
@@ -816,6 +770,7 @@ export default {
         IndicatorDots,
         notFoundPage,
         WatchNowRecursive,
+        NumericStepper,
         IconTMDB,
         IconTMDBColorful,
         IconIMDBColorful,
@@ -830,8 +785,6 @@ export default {
         IconPlay,
         IconFilm,
         IconCollection,
-        IconAdd,
-        IconRemove,
     },
     methods: {
         formatRuntime(runtime) {
@@ -904,40 +857,44 @@ export default {
                 !await this.$refs.markSeasonUnwatchedCM.prompt()
             ) { return }
 
-            // Disable inputs
-            this.waitingForResult.push(`${titleOrSeasonOrEpisode}${watchCount}${customID}`);
-
-            let response;
+            // Update values on page immediately
+            this.title_info.in_watch_list = 1;
             if (titleOrSeasonOrEpisode === "title") {
-                response = await fastApi.watch_list.titles.watchCountTitle(this.title_info.title_id, watchCount);
-            } else if (titleOrSeasonOrEpisode === "season") {
-                response = await fastApi.watch_list.titles.watchCountSeason(customID, this.title_info.title_id, watchCount);
-            } else if (titleOrSeasonOrEpisode === "episode") {
-                response = await fastApi.watch_list.titles.watchCountEpisode(customID, this.title_info.title_id, watchCount);
-            }
-
-            if (response) {
-                // Update titles state on page
-                this.title_info.watch_count = response.updated_data.watch_count;
-                this.title_info.in_watch_list = 1;
-                // Update each episodes state on page by mathcing the episode_id
-                if (response.updated_data.episodes) {
-                    // Loop through each episode in response.updated_data.episodes
-                    response.updated_data.episodes.forEach(updatedEpisode => {
-                    // Find the matching episode in title_info using the episode_id
-                    const matchingEpisode = this.title_info.seasons
-                        .flatMap(season => season.episodes)
-                        .find(episode => episode.episode_id === updatedEpisode.episode_id);
-                    
-                    if (matchingEpisode) {
-                        // If a matching episode is found update value
-                        matchingEpisode.watch_count = updatedEpisode.watch_count;
-                    }
+                this.title_info.watch_count = watchCount;   // Update the watch count for both, even though tv don't use
+                if (this.title_info.type === "tv") {
+                    this.title_info.seasons.forEach(season => {
+                        season.episodes.forEach(episode => {
+                            episode.watch_count = watchCount; // Update each episode's watch count
+                        });
                     });
+                }
+            } else if (titleOrSeasonOrEpisode === "season") {
+                // Find the season and update the watch_count for all episodes in that season
+                const season = this.title_info.seasons.find(s => s.season_id === customID);
+                if (season) {
+                    season.watch_count = watchCount;
+                    season.episodes.forEach(episode => {
+                        episode.watch_count = watchCount; // Update all episodes' watch_count in the season
+                    });
+                }
+            } else if (titleOrSeasonOrEpisode === "episode") {
+                // Find the episode and update its watch_count
+                const episode = this.title_info.seasons
+                    .flatMap(season => season.episodes)
+                    .find(ep => ep.episode_id === customID);
+                if (episode) {
+                    episode.watch_count = watchCount; // Update episode's watch count
                 }
             }
 
-            this.removeItemFromWaitingArray(`${titleOrSeasonOrEpisode}${watchCount}${customID}`);
+            // let response;
+            if (titleOrSeasonOrEpisode === "title") {
+                await fastApi.watch_list.titles.watchCountTitle(this.title_info.title_id, watchCount);
+            } else if (titleOrSeasonOrEpisode === "season") {
+                await fastApi.watch_list.titles.watchCountSeason(customID, this.title_info.title_id, watchCount);
+            } else if (titleOrSeasonOrEpisode === "episode") {
+                await fastApi.watch_list.titles.watchCountEpisode(customID, this.title_info.title_id, watchCount);
+            }
         },
         async handleNotesSave() {
             this.waitingForResult.push("saveNotes");
@@ -2309,21 +2266,6 @@ iframe {
     margin-bottom: 0;
 }
 
-.numeric-stepper {
-    border: 1px solid var(--color-border);
-    border-radius: var(--spacing-sm);
-    width: fit-content;
-    white-space: nowrap;
-}
-.numeric-stepper > * {
-    padding-inline: var(--spacing-md) !important;
-}
-.numeric-stepper .value {
-    background-color: var(--color-background-card-section);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-}
+
 </style>
   

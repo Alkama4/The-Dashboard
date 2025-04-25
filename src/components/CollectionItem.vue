@@ -3,7 +3,7 @@
         <div class="header-bar">
             <div class="name-description">
                 <h2>{{ collection.name }}</h2>
-                <span class="text-light">{{ collection.description }}</span>
+                <span class="text-light">{{ `${totalTitleCount} titles &bull; ${collection.description}` }}</span>
             </div>
             <div>
                 <IconTrash @click="handleRemoveCollection(collection.collection_id)" class="icon-button"/>
@@ -39,6 +39,18 @@ export default {
         },
         async handleEditCollection(collection) {
             this.$emit('edit-collection', collection);
+        }
+    },
+    computed: {
+        totalTitleCount() {
+            const countTitles = (collection) => {
+                let count = collection.titles.length;
+                for (const child of collection.children || []) {
+                    count += countTitles(child);
+                }
+                return count;
+            };
+            return countTitles(this.collection);
         }
     }
 }
