@@ -366,11 +366,18 @@
                     </div>
                 </div>
 
-                <div v-if="title_info.trailer_key != null" class="trailer-container">
-                    <h3>Trailer</h3>
+                <div v-if="title_info.trailers.length > 0" class="trailer-container">
+                    <h3>
+                        Trailer
+                    </h3>
+                    <div class="options">
+                        <CustomSelect :options="trailerOptions" v-model="trailerIndex" class="flex-1"/>
+                        <!-- When implementing the default possibility use this -->
+                        <!-- <IconHome class="icon-button"/> -->
+                    </div>
                     <div class="iframe-container">
                         <iframe
-                            :src="`https://www.youtube.com/embed/${title_info.trailer_key}`"
+                            :src="`https://www.youtube.com/embed/${title_info.trailers[trailerIndex].trailer_key}`"
                             frameborder="0"
                             allowfullscreen
                         ></iframe>
@@ -738,6 +745,8 @@ import IconFilm from '@/components/icons/IconFilm.vue';
 import IconCollection from '@/components/icons/IconCollection.vue';
 import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
 import NumericStepper from '@/components/NumericStepper.vue';
+import CustomSelect from '@/components/CustomSelect.vue';
+// import IconHome from '@/components/icons/IconHome.vue';
 
 export default {
     data() {
@@ -759,6 +768,7 @@ export default {
             scrolledPastEpisodeMap: false,
             isTouchDevice: false,
             selectedSeasonToUpdate: null,
+            trailerIndex: 0,
         };
     },
     components: {
@@ -771,6 +781,7 @@ export default {
         notFoundPage,
         WatchNowRecursive,
         NumericStepper,
+        CustomSelect,
         IconTMDB,
         IconTMDBColorful,
         IconIMDBColorful,
@@ -785,6 +796,7 @@ export default {
         IconPlay,
         IconFilm,
         IconCollection,
+        // IconHome,
     },
     methods: {
         formatRuntime(runtime) {
@@ -1289,6 +1301,17 @@ export default {
             }
             return null;
         },
+        trailerOptions() {
+            const options = [];
+            for (const [index, trailer] of this.title_info.trailers.entries()) {
+                options.push({
+                    label: trailer.video_name,
+                    value: index
+                });
+            }
+            return options;
+        }
+
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1802,6 +1825,13 @@ export default {
 
 .trailer-container {
     margin-left: auto;
+}
+.trailer-container .options {
+    display: flex;
+    flex-direction: row;
+    column-gap: var(--spacing-sm);
+    align-items: center;
+    margin-bottom: var(--spacing-md);
 }
 iframe {
     aspect-ratio: 16/9;

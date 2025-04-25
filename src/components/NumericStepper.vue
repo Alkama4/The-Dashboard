@@ -56,6 +56,9 @@ export default {
 .numeric-stepper > * {
     padding-inline: var(--spacing-md) !important;
 }
+.numeric-stepper .left-button {
+    flex: 3;
+}
 .numeric-stepper .value {
     background-color: var(--color-background-card-section);
     display: flex;
@@ -63,5 +66,9 @@ export default {
     justify-content: center;
     font-weight: 600;
     cursor: text;
+    flex: 1;
+}
+.numeric-stepper .right-button {
+    flex: 1;
 }
 </style>

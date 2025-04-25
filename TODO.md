@@ -225,6 +225,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - When adding a tv-show the seasons aren't added because it errors out.
     - Collections shouldn't require an account.
     - Trailers table. Current single triler is quite limiting. Would be cool to have more and actually check out a proper triler, sinse some trailers are not good.
+    - Title genres might be adding duplicates. Add a unique (title_id, genre_id) or check if needed.
 
 
 ### Feature ideas that might never see the light of day
