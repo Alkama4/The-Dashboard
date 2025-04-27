@@ -17,18 +17,6 @@
 
         <!-- Corner buttons -->
         <router-link 
-            class="sticky-corner-button link-button" 
-            style="
-                transition: opacity 0.1s ease-out;
-                margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);
-            "
-            :style="{ opacity: scrolledPastTitlesListed ? 1 : 0 }"
-            to="#titles_listed"
-        >
-            <IconChevronDown size="28px" style="rotate: 180deg;"/>
-        </router-link>
-
-        <router-link 
             class="sticky-corner-button link-button button-primary"
             to="/watch_list/add_title" 
         >
@@ -42,10 +30,6 @@
 // My imports
 import IconAdd from '@/components/icons/IconAdd.vue';
 import fastApi from '@/utils/fastApi';
-import { convert } from '@/utils/utils';
-import IconChevronDown from '@/components/icons/IconChevronDown.vue';
-import { notify } from '@/utils/notification';
-import { standAloneBuild } from '@/utils/config';
 import CustomCarousel from '@/components/CustomCarousel.vue';
 
 export default {
@@ -53,7 +37,6 @@ export default {
     components: {
         CustomCarousel,
         IconAdd,
-        IconChevronDown,
     },
     data() {
         return {
@@ -139,33 +122,9 @@ export default {
                     }
                 },
             ],
-            allTitlesList: [],
-            allTitlesListHasMore: false,
-            allTitlesListOffset: 0,
-            allTitlesListNonAutoOptions: {
-                searchTerm: '',
-            },
-            allTitlesListSortByOptions: [
-                {label: 'TMDB rating', value: 'vote_average'},
-                {label: 'Release date', value: 'release_date'},
-                {label: 'Modified', value: 'latest_updated'},
-            ],
-            allTitlesListOptions: {
-                sortBy: 'vote_average',
-                direction: "desc",
-                titleType: "",
-                titleProgress: "",
-                getAllTitles: false,
-            },
-            scrolledPastTitlesListed: false,    // A tracker to hide and show the scroll back button
-            titleCollectionsData: null,         // The Data for the modal that handles collections for a title
-            selectedTitleIdForCollection: null,
         };
     },
     methods: {
-        formatRuntime(runtime) {
-            return convert.runtime(runtime);
-        },
         async fetchTitleLists() {
             try {
                 await Promise.all(this.titleLists.map(async (list) => {
@@ -194,182 +153,12 @@ export default {
                 console.error("Error fetching title lists:", error);
             }
         },
-        async fetchAllTitlesList() {
-            this.waitingForResult.push("allTitlesList");
-
-            const options = {
-                sort_by: this.allTitlesListOptions.sortBy,
-                direction: this.allTitlesListOptions.direction,
-                offset: this.allTitlesListOffset,
-                all_titles: this.allTitlesListOptions.getAllTitles
-            };
-
-            if (this.allTitlesListOptions.titleType)
-                options.title_type = this.allTitlesListOptions.titleType;
-
-            if (this.allTitlesListOptions.titleProgress)
-                options.watched = this.allTitlesListOptions.titleProgress === 'watched';
-
-            if (this.allTitlesListNonAutoOptions.searchTerm)
-                options.search_term = this.allTitlesListNonAutoOptions.searchTerm;
-            
-            // console.debug("[fetchAlltitlesList] options:", options)
-            const titlesListedResponse = await fastApi.watch_list.titles.list(options);
-
-            if (titlesListedResponse) {
-                // Replace the whole thing if offset is 0 and if not just append the new ones
-                if (this.allTitlesListOffset == 0) {
-                    this.allTitlesList = titlesListedResponse.titles;
-                } else {
-                    this.allTitlesList = this.allTitlesList.concat(titlesListedResponse.titles);
-                }
-
-                this.allTitlesListHasMore = titlesListedResponse.has_more;
-                console.debug("[fetchAllTitlesList]", this.allTitlesList);
-            }
-            this.removeItemFromWaitingArray("allTitlesList")
-        },
-        async loadMoreTitlesForAllTitlesList() {
-            this.allTitlesListOffset += 1;
-            await this.fetchAllTitlesList();
-        },
-        removeItemFromWaitingArray(item) {
-            this.waitingForResult = this.waitingForResult.filter(i => i !== item);
-        },
-        async handleFavouriteToggle(title) {
-            this.waitingForResult.push(`${title.title_id}Favourite`);
-            const response = await fastApi.watch_list.titles.favourite(title.title_id)
-            if (response) {
-                console.log(response);
-                title.favourite = !title.favourite;
-                if (title.is_in_watchlist != null) 
-                    title.is_in_watchlist = true;
-            }
-            this.removeItemFromWaitingArray(`${title.title_id}Favourite`);
-        },
-        convertToDate(date) {
-            return convert.toFiDate(date, "default");
-        },
-        checkScroll() {
-            const titleslistedHeader = document.getElementById('titles_listed');
-            if (titleslistedHeader) {
-                const scrollY = window.scrollY || document.documentElement.scrollTop;
-                this.scrolledPastTitlesListed = scrollY > titleslistedHeader.offsetTop;
-            }
-        },
-        posterUrl(titleId, width, backupUrl) {
-            if (standAloneBuild) {
-                if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
-                return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
-            }
-        },
-        async inputTriggeredFetchAllTitles() {
-            this.allTitlesListOffset = 0;
-            await this.fetchAllTitlesList();
-        },
-        async handleAddTitleToUserList(title) {
-            const response = await fastApi.watch_list.titles.add(title.tmdb_id);
-            if (response) {
-                title.is_in_watchlist = true;
-            }
-        },
-        async handleRemoveTitleFromUserList(title) {
-            const confirmation = await this.$refs.removeTitleConfirmationModal.prompt();
-            if (confirmation) {
-                const response = await fastApi.watch_list.titles.remove(title.tmdb_id);
-                if (response) {
-                    title.is_in_watchlist = false;
-                    title.watch_count = 0;
-                    title.favourite = false;
-                }
-            }
-        },
-        async handleCollectionsEdit(title) {
-            this.$refs.editCollectionsMG.init();
-            this.selectedTitleIdForCollection = title.title_id;
-            this.titleCollectionsData = await fastApi.watch_list.titles.collections(title.title_id);
-            this.$refs.editCollectionsMG.open();
-        },
-        async handleAddTitleToCollection(collection) {
-            const response = await fastApi.watch_list.collections.add_title(collection.collection_id, this.selectedTitleIdForCollection);
-            if (response) {
-                notify(response.message, 'success');
-                collection.title_in_collection = 1;
-            }
-        },
-        async handleRemoveTitleFromCollection(collection) {
-            const response = await fastApi.watch_list.collections.remove_title(collection.collection_id, this.selectedTitleIdForCollection);
-            if (response) {
-                notify(response.message, 'success');
-                collection.title_in_collection = 0;
-            }
-        },
-        async handleEditCollection(initialCollection) {
-            const editedCollection = await this.$refs.editCollectionFC.prompt(
-                initialCollection.name, 
-                initialCollection.description, 
-                initialCollection.collection_id
-            );
-            
-            // If the process was cancelled - which returns false - return
-            if (!editedCollection) return;
-
-            const response = await fastApi.watch_list.collections.edit(
-                initialCollection.collection_id, 
-                editedCollection.name, 
-                editedCollection.description
-            );
-
-            if (response) {
-                notify(response.message, 'success');
-                
-                const index = this.titleCollectionsData.findIndex(c => c.collection_id === initialCollection.collection_id);
-                if (index !== -1) {
-                    this.titleCollectionsData[index] = {
-                        ...this.titleCollectionsData[index],
-                        name: editedCollection.name,
-                        description: editedCollection.description
-                    };
-                }
-
-                this.$refs.editCollectionFC.close()
-            }
-        },
-        backdropUrl(titleId) {
-            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
-            //     if (width == 600) width = 500; 
-            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            // } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=1200`;
-            // }
-        },
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
 
-        // Use a seperate function because of it's complexity
         await this.fetchTitleLists();
-
-        // Get all the titles listed
-        await this.fetchAllTitlesList();
-
-        // Add a scroll listener to show and hide the scroll back button
-        window.addEventListener('scroll', this.checkScroll);
     },
-    unmounted() {
-        window.removeEventListener('scroll', this.checkScroll);
-    },
-    watch: {
-        allTitlesListOptions: {
-            deep: true,
-            async handler() {
-                await this.inputTriggeredFetchAllTitles();
-            }
-        }
-    }
-
 };
 </script>
 

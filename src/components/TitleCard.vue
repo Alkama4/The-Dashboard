@@ -24,7 +24,15 @@
         </div>
 
         <div class="tag tag-positive" v-if="titleDetails.watch_count >= 1">Watched</div>
-        <div class="tag tag-primary" v-else-if="new Date(titleDetails.release_date) >= new Date(new Date() - 14 * 24 * 60 * 60 * 1000)">Just released</div>
+        <div 
+            class="tag tag-primary"
+            v-else-if="
+                new Date(titleDetails.release_date) <= new Date() &&
+                new Date(titleDetails.release_date) >= new Date(new Date() - 30 * 24 * 60 * 60 * 1000)
+            "
+        >
+            New release
+        </div>
         <div class="tag tag-primary" v-else-if="titleDetails.new_episodes >= 1">New episodes</div>
         <div class="tag" v-else-if="new Date(titleDetails.release_date) > new Date()">Upcoming</div>
 

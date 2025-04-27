@@ -140,7 +140,7 @@ export default {
                     display: 'Watch List', 
                     to: '/watch_list',
                     children: [
-                        { display: 'Titles', to: '/watch_list/titles' },
+                        { display: 'Search', to: '/watch_list/titles' },
                         { display: 'Collections', to: '/watch_list/collections' },
                         { display: 'Add Title', to: '/watch_list/add_title' },
                     ]

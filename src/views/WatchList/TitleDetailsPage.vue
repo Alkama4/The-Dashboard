@@ -104,8 +104,8 @@
                         <div class="tag tag-positive" v-if="title_info.watch_count >= 1">
                             Watched
                         </div>
-                        <div class="tag tag-primary" v-if="new Date(title_info.release_date) < new Date() && new Date(title_info.release_date) > new Date(new Date() - 2 * 7 * 24 * 60 * 60 * 1000)">
-                            Just released
+                        <div class="tag tag-primary" v-if="new Date(title_info.release_date) < new Date() && new Date(title_info.release_date) > new Date(new Date() - 30 * 24 * 60 * 60 * 1000)">
+                            Recently released
                         </div>
                         <div class="tag tag-upcoming" v-if="new Date(title_info.release_date) > new Date()">
                             Upcoming
@@ -542,7 +542,7 @@
                                     <div class="tag tag-positive" v-if="episode.watch_count >= 1">
                                         Watched
                                     </div>
-                                    <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 7 * 24 * 60 * 60 * 1000)">
+                                    <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 14 * 24 * 60 * 60 * 1000)">
                                         New episode
                                     </div>
                                     <div class="tag" v-else-if="new Date(episode.air_date) > new Date()">
@@ -1731,6 +1731,7 @@ export default {
     z-index: var(--z-title-poster);
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
+    width: 100%;
     max-width: 100%;
     display: flex;
     cursor: pointer;
@@ -1739,7 +1740,8 @@ export default {
 }
 .poster-next-to-stuff .poster-placholder img {
     border-radius: var(--border-radius-medium);
-    max-width: 100%;
+    /* max-width: 100%; */
+    width: 100%;
     aspect-ratio: 2/3;
     transition: filter 0.1s ease-out;
 }

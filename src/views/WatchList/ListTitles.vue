@@ -274,86 +274,6 @@ export default {
         return {
             apiUrl: process.env.VUE_APP_API_URL,
             waitingForResult: [],
-            titleLists: [
-                {
-                    listName: "In progress",
-                    watched: true,
-                    text: "TV-series that you have started but have not finished yet.",
-                    titles: [],
-                    loading: true,
-                    activeSlide: 0,
-                    fetchDetails: {
-                        sortBy: "last_watched",
-                        titleType: "tv",
-                        started: true,
-                        watched: false,
-                        released: true,
-                    }
-                },
-                {
-                    listName: "Movies to watch",
-                    text: "Movies that are on your watch list and that you have yet not watched.",
-                    titles: [],
-                    loading: true,
-                    activeSlide: 0,
-                    fetchDetails: {
-                        sortBy: "release_date",
-                        titleType: "movie",
-                        watched: false,
-                        released: true,
-                    }
-                },
-                {
-                    listName: "TV-series to start watching",
-                    text: "TV-series that you are have on you watch list but haven't started to watch yet.",
-                    titles: [],
-                    loading: true,
-                    activeSlide: 0,
-                    fetchDetails: {
-                        sortBy: "release_date",
-                        titleType: "tv",
-                        started: false,
-                        watched: false,
-                        released: true,
-                    }
-                },
-                {
-                    listName: "Upcoming titles",
-                    watched: true,
-                    text: "Upcoming titles you've added to your list.",
-                    titles: [],
-                    loading: true,
-                    activeSlide: 0,
-                    fetchDetails: {
-                        sortBy: "release_date",
-                        direction: "asc",
-                        released: false,
-                    }
-                },
-                {
-                    listName: "Your favourites",
-                    watched: true,
-                    text: "Your favourite movies and TV-series.",
-                    titles: [],
-                    loading: true,
-                    activeSlide: 0,
-                    fetchDetails: {
-                        favourite: true,
-                    }
-                },
-                {
-                    listName: "Watched titles",
-                    watched: true,
-                    text: "The titles you've recently watched or interacted with, such as those you've watched or added to your favorites.",
-                    titles: [],
-                    loading: true,
-                    activeSlide: 0,
-                    fetchDetails: {
-                        sortBy: "last_watched",
-                        watched: true,
-                    }
-                },
-            ],
             allTitlesList: [],
             allTitlesListHasMore: false,
             allTitlesListOffset: 0,
@@ -372,42 +292,13 @@ export default {
                 titleProgress: "",
                 getAllTitles: false,
             },
-            scrolledPastTitlesListed: false,    // A tracker to hide and show the scroll back button
-            titleCollectionsData: null,         // The Data for the modal that handles collections for a title
+            titleCollectionsData: null,
             selectedTitleIdForCollection: null,
         };
     },
     methods: {
         formatRuntime(runtime) {
             return convert.runtime(runtime);
-        },
-        async fetchTitleLists() {
-            try {
-                await Promise.all(this.titleLists.map(async (list) => {
-                    list.loading = true;
-                    try {
-                        const titleData = await fastApi.watch_list.titles.cards(
-                            list.fetchDetails.sortBy,
-                            list.fetchDetails.direction,
-                            list.fetchDetails.titleType,
-                            list.fetchDetails.watched,
-                            list.fetchDetails.favourite,
-                            list.fetchDetails.released,
-                            list.fetchDetails.started,
-                        );
-                        if (titleData && titleData.titles) {
-                            list.titles = titleData.titles;
-                            console.debug(list.listName, "titles and their info:", list.titles);
-                        }
-                    } catch (error) {
-                        console.error(`Error fetching data for ${list.listName}:`, error);
-                    } finally {
-                        list.loading = false;
-                    }
-                }));
-            } catch (error) {
-                console.error("Error fetching title lists:", error);
-            }
         },
         async fetchAllTitlesList() {
             this.waitingForResult.push("allTitlesList");
@@ -465,13 +356,6 @@ export default {
         convertToDate(date) {
             return convert.toFiDate(date, "default");
         },
-        checkScroll() {
-            const titleslistedHeader = document.getElementById('titles_listed');
-            if (titleslistedHeader) {
-                const scrollY = window.scrollY || document.documentElement.scrollTop;
-                this.scrolledPastTitlesListed = scrollY > titleslistedHeader.offsetTop;
-            }
-        },
         posterUrl(titleId, width, backupUrl) {
             if (standAloneBuild) {
                 if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
@@ -479,6 +363,14 @@ export default {
             } else {
                 return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
             }
+        },
+        backdropUrl(titleId) {
+            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
+            //     if (width == 600) width = 500; 
+            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
+            // } else {
+                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=600`;
+            // }
         },
         async inputTriggeredFetchAllTitles() {
             this.allTitlesListOffset = 0;
@@ -524,26 +416,12 @@ export default {
         promptCollections(titleId) {
             this.$refs.modalTitleCollections.prompt(titleId);
         },
-        backdropUrl(titleId) {
-            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
-            //     if (width == 600) width = 500; 
-            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            // } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=600`;
-            // }
-        },
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
 
-        // Use a seperate function because of it's complexity
-        await this.fetchTitleLists();
-
         // Get all the titles listed
         await this.fetchAllTitlesList();
-
-        // Add a scroll listener to show and hide the scroll back button
-        window.addEventListener('scroll', this.checkScroll);
     },
     unmounted() {
         window.removeEventListener('scroll', this.checkScroll);
