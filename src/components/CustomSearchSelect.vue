@@ -23,6 +23,7 @@
             v-if="isLogicalOpen" 
             class="options-list"
             :class="{'hidden': !isStylingOpen}"
+            tabindex="-1"
         >
             <li 
                 v-for="(option, index) in filteredOptions" 

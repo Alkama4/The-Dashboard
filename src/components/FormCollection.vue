@@ -1,12 +1,12 @@
 <template>
-    <div>
-        <div class="collection-form">
+        <div class="form-collection" @keydown="handleFormWideKeyDown">
             <div>
                 <label>Name</label>
                 <CustomGenericInput 
                     v-model="currentFormValues.name" 
                     type="text"
                     placeholder="The name of your collection"
+                    ref="focusOnAutomatically"
                 />
             </div>
             <div>
@@ -19,7 +19,6 @@
             </div>
             <button class="button-primary submit" color="primary" @click="handleSubmit">{{ submitText }}</button>
         </div>
-    </div>
 </template>
 
 <script>
@@ -54,6 +53,15 @@ export default {
                 ...this.currentFormValues
             });
         },
+        handleFormWideKeyDown(e) {
+            if (e.key === 'Enter') {
+                const isTextarea = e.target.tagName === 'TEXTAREA';
+                if ((isTextarea && e.ctrlKey) || (!isTextarea && !e.ctrlKey)) {
+                    e.preventDefault();
+                    this.handleSubmit();
+                }
+            }
+        }
     },
     created() {
         if (this.initialFormValues) {
@@ -61,16 +69,19 @@ export default {
             this.currentFormValues.description = this.initialFormValues?.description;
         }
     },
+    mounted() {
+        this.$refs.focusOnAutomatically?.focus?.();
+    }
 }
 </script>
 
 <style scoped>
-.collection-form {
+.form-collection {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
 }
-.collection-form .submit {
+.form-collection .submit {
     width: 100%;
 }
 </style>

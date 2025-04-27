@@ -278,7 +278,7 @@ html, body {
 }
 
 main {
-    margin-bottom: 128px;
+    margin-bottom: 64px;
 }
 
 html.no-scroll {
@@ -922,6 +922,7 @@ form.simple-form button {
     font-weight: 600;
     font-size: var(--font-size-small);
     white-space: nowrap;
+    color: var(--color-text);
     /* border: 1px solid var(--color-border); */
 }
 .tag.tag-positive {
@@ -1097,8 +1098,8 @@ overflow: hidden;
     /* transition: background-color 0.1s ease-out; */
 }
 .options-list li.highlighted {
-    color: var(--color-text);
-    background-color: var(--color-background-select-hover);
+    color: var(--color-text-white-hover);
+    background-color: var(--color-primary-hover);
 }
 .options-list.hidden {
     opacity: 0;

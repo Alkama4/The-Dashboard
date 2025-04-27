@@ -39,6 +39,9 @@ export default {
         };
     },
     methods: {
+        focus() {
+            this.$el.querySelector('input').focus();
+        },
         markInvalid() {
             this.invalidState = true;
         },

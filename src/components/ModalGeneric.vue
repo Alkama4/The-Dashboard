@@ -157,8 +157,8 @@ export default {
 
 
 .modal {
-    max-width: 90vw;
-    max-height: 80vh;
+    max-width: 95vw;
+    max-height: 85vh;
     width: fit-content;
     height: fit-content;
     box-sizing: border-box;
@@ -197,10 +197,11 @@ export default {
 
 .default-content .title {
     margin: 0;
-}
+}   
 
 .content {
     overflow-y: auto; /* Enable vertical scrolling */
+    padding: var(--spacing-xs);
 }
 
 </style>

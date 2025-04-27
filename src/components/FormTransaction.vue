@@ -1,5 +1,5 @@
 <template>
-    <div class="form-transaction">
+    <div class="form-transaction" @keydown="handleFormWideKeyDown">
         <div class="form-row tool-row">
             <div class="presets-carousel">
                 <button v-for="(preset, index) in presets" :key="index" @click="$refs.comingSoonGM.open()">
@@ -377,6 +377,17 @@ export default {
             this.dropping.hoveredZoneIndex = null;
             this.dropping.draggedIndex = null;
         },
+        handleFormWideKeyDown(e) {
+            // Check for the Enter key
+            if (e.key === 'Enter') {
+                const isTextarea = e.target.tagName === 'TEXTAREA';
+                // Check if it's a regular input or Ctrl+Enter on a textarea
+                if ((!isTextarea && !e.ctrlKey) || (isTextarea && e.ctrlKey)) {
+                    e.preventDefault();
+                    this.handleSubmit();
+                }
+            }
+        }
     },
     computed: {
         totalAmount() {
