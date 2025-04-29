@@ -534,10 +534,9 @@ input:focus-visible, textarea:focus-visible {
 textarea {
     padding-top: 5px;
     resize: vertical;
-    height: 100px;
     font-family: 'Poppins';
     margin: 0;
-    min-height: 3.5rem;
+    min-height: 90px;
 }
 
 input[type="radio"] {
@@ -553,7 +552,6 @@ input[type="radio"] {
 .custom-input input,
 .custom-input textarea {
     width: 100%;
-    min-height: 40px;
     box-sizing: border-box;
 }
 
@@ -565,6 +563,16 @@ input[type="radio"] {
     border-color: var(--color-negative-hover) !important;
     outline-color: var(--color-negative-hover);
 }
+
+.valid-input {
+    border-color: var(--color-positive) !important;
+    outline-color: var(--color-positive);
+}
+.valid-input:hover {
+    border-color: var(--color-positive-hover) !important;
+    outline-color: var(--color-positive-hover);
+}
+
 
 ::placeholder {
     color: var(--color-text-placeholder);

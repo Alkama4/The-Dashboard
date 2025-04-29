@@ -387,7 +387,13 @@
                 
             <div v-if="title_info.in_watch_list">
                 <h3>Notes</h3>
-                <textarea class="notes-text-area" v-model="this.title_info.notes" placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."></textarea>
+                <CustomGenericInput 
+                    type="textarea" 
+                    class="notes-text-area" 
+                    ref="titleNotesInput"
+                    v-model="this.title_info.notes"
+                    placeholder="Write your notes, thoughts, favorite moments, or timestamps here..."
+                />
                 <button 
                     @click="handleNotesSave"
                     :disabled="waitingForResult.includes('saveNotes')"
@@ -746,6 +752,7 @@ import IconCollection from '@/components/icons/IconCollection.vue';
 import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
 import NumericStepper from '@/components/NumericStepper.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
+import CustomGenericInput from '@/components/CustomGenericInput.vue';
 // import IconHome from '@/components/icons/IconHome.vue';
 
 export default {
@@ -782,6 +789,7 @@ export default {
         WatchNowRecursive,
         NumericStepper,
         CustomSelect,
+        CustomGenericInput,
         IconTMDB,
         IconTMDBColorful,
         IconIMDBColorful,
@@ -915,6 +923,7 @@ export default {
             if (response) {
                 console.log(response);
                 notify(response.message, "success");
+                this.$refs.titleNotesInput.markValid();
             }
             
             this.removeItemFromWaitingArray("saveNotes");

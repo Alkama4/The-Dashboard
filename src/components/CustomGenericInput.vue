@@ -4,14 +4,20 @@
             v-if="type !== 'textarea'" 
             :type="type" 
             :value="modelValue" 
-            :class="{'invalid-input': invalidState}"
+            :class="{
+                'invalid-input': invalidState,
+                'valid-input': validState
+            }"
             :placeholder="placeholder"
             @input="onInput($event, 'input')"
         >
         <textarea 
             v-else 
             :value="modelValue" 
-            :class="{'invalid-input': invalidState}"
+            :class="{
+                'invalid-input': invalidState,
+                'valid-input': validState
+            }"
             :placeholder="placeholder"
             @input="onInput($event, 'textarea')"
             ref="textareaRef"
@@ -43,6 +49,7 @@ export default {
     data() {
         return {
             invalidState: false,
+            validState: false,
         };
     },
     methods: {
@@ -51,6 +58,9 @@ export default {
         },
         markInvalid() {
             this.invalidState = true;
+        },
+        markValid() {
+            this.validState = true;
         },
         onInput(event, type) {
             if (event.target.validity.badInput) {
@@ -61,6 +71,7 @@ export default {
             if (type == "textarea") {
                 this.resizeTextarea();
             }
+            this.validState = false;
             this.$emit('update:modelValue', event.target.value);
         },
         resizeTextarea() {
