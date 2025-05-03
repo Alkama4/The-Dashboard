@@ -105,7 +105,7 @@
                             Watched
                         </div>
                         <div class="tag tag-primary" v-if="new Date(title_info.release_date) < new Date() && new Date(title_info.release_date) > new Date(new Date() - 30 * 24 * 60 * 60 * 1000)">
-                            Recently released
+                            New release
                         </div>
                         <div class="tag tag-upcoming" v-if="new Date(title_info.release_date) > new Date()">
                             Upcoming
@@ -244,8 +244,8 @@
                             left="6px"
                             @click="openTitleUpdateModal()"
                             :class="{
-                                'loading': waitingForResult.includes('titleUpdate' + 0),
-                                'spin-refresh-icon': waitingForResult.includes('titleUpdate' + 0)
+                                'loading': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0'),
+                                'spin-refresh-icon': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0')
                             }"
                             class="icon-button"
                         />
@@ -852,7 +852,6 @@ export default {
                 }
             })
         },
-        // make this go through a MODAL?
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchCount, customID) {
             // Initially get a confirmation from the user before going through
             if (
@@ -877,43 +876,46 @@ export default {
                 !await this.$refs.markSeasonUnwatchedCM.prompt()
             ) { return }
 
-            // Update values on page immediately
-            this.title_info.in_watch_list = 1;
+            let response = null;
             if (titleOrSeasonOrEpisode === "title") {
-                this.title_info.watch_count = watchCount;   // Update the watch count for both, even though tv don't use
-                if (this.title_info.type === "tv") {
-                    this.title_info.seasons.forEach(season => {
-                        season.episodes.forEach(episode => {
-                            episode.watch_count = watchCount; // Update each episode's watch count
-                        });
-                    });
-                }
+                response = await fastApi.watch_list.titles.watchCount(this.title_info.title_id, watchCount);
             } else if (titleOrSeasonOrEpisode === "season") {
-                // Find the season and update the watch_count for all episodes in that season
-                const season = this.title_info.seasons.find(s => s.season_id === customID);
-                if (season) {
-                    season.watch_count = watchCount;
-                    season.episodes.forEach(episode => {
-                        episode.watch_count = watchCount; // Update all episodes' watch_count in the season
-                    });
-                }
+                response = await fastApi.watch_list.seasons.watchCount(customID, watchCount);
             } else if (titleOrSeasonOrEpisode === "episode") {
-                // Find the episode and update its watch_count
-                const episode = this.title_info.seasons
-                    .flatMap(season => season.episodes)
-                    .find(ep => ep.episode_id === customID);
-                if (episode) {
-                    episode.watch_count = watchCount; // Update episode's watch count
-                }
+                response = await fastApi.watch_list.episodes.watchCount(customID, watchCount);
             }
+            if (response) {
+                console.debug(response);
 
-            // let response;
-            if (titleOrSeasonOrEpisode === "title") {
-                await fastApi.watch_list.titles.watchCountTitle(this.title_info.title_id, watchCount);
-            } else if (titleOrSeasonOrEpisode === "season") {
-                await fastApi.watch_list.titles.watchCountSeason(customID, this.title_info.title_id, watchCount);
-            } else if (titleOrSeasonOrEpisode === "episode") {
-                await fastApi.watch_list.titles.watchCountEpisode(customID, this.title_info.title_id, watchCount);
+                this.title_info.in_watch_list = 1;
+
+                if (titleOrSeasonOrEpisode === "title") {
+                    this.title_info.watch_count = watchCount;   // Update the watch count for both, even though tv don't use
+                    if (this.title_info.type === "tv") {
+                        this.title_info.seasons.forEach(season => {
+                            season.episodes.forEach(episode => {
+                                episode.watch_count = watchCount; // Update each episode's watch count
+                            });
+                        });
+                    }
+                } else if (titleOrSeasonOrEpisode === "season") {
+                    // Find the season and update the watch_count for all episodes in that season
+                    const season = this.title_info.seasons.find(s => s.season_id === customID);
+                    if (season) {
+                        season.watch_count = watchCount;
+                        season.episodes.forEach(episode => {
+                            episode.watch_count = watchCount; // Update all episodes' watch_count in the season
+                        });
+                    }
+                } else if (titleOrSeasonOrEpisode === "episode") {
+                    // Find the episode and update its watch_count
+                    const episode = this.title_info.seasons
+                        .flatMap(season => season.episodes)
+                        .find(ep => ep.episode_id === customID);
+                    if (episode) {
+                        episode.watch_count = watchCount; // Update episode's watch count
+                    }
+                }
             }
         },
         async handleNotesSave() {
@@ -944,6 +946,7 @@ export default {
             const isSeason = type === "season";
             const isTitle = type === "title";
 
+            console.log(`${type}Update${updatingNumber}`)
             this.waitingForResult.push(`${type}Update${updatingNumber}`);
 
             if (isSeason) {
@@ -1004,7 +1007,7 @@ export default {
             this.waitingForResult.push("favourite");
             const response = await fastApi.watch_list.titles.favourite(this.title_info.title_id)
             if (response) {
-                console.log(response);
+                console.debug(response);
                 this.title_info.favourite = !this.title_info.favourite;
                 this.title_info.in_watch_list = 1;
             }

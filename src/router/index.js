@@ -18,7 +18,7 @@ import WatchList from '@/views/WatchList/WatchListPage.vue';
 import AddTitle from '@/views/WatchList/AddTitlePage.vue';
 import TitleDetails from '@/views/WatchList/TitleDetailsPage.vue';
 import ListCollections from '@/views/WatchList/ListCollectionsPage.vue';
-import ListTitles from '@/views/WatchList/ListTitles.vue';
+import ListTitles from '@/views/WatchList/ListTitlesPage.vue';
 
 const routes = [
     {

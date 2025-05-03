@@ -365,22 +365,8 @@ const fastApi = {
                 });
             },
         
-            async watchCountTitle(title_id, watch_count) {
+            async watchCount(title_id, watch_count) {
                 return await putData(`/watch_list/titles/${title_id}/watch_count`, {
-                    session_key: session.getKey(),
-                    watch_count
-                });
-            },
-            
-            async watchCountSeason(season_id, title_id, watch_count) {
-                return await putData(`/watch_list/titles/${title_id}/seasons/${season_id}/watch_count`, {
-                    session_key: session.getKey(),
-                    watch_count
-                });
-            },
-            
-            async watchCountEpisode(episode_id, title_id, watch_count) {
-                return await putData(`/watch_list/titles/${title_id}/episodes/${episode_id}/watch_count`, {
                     session_key: session.getKey(),
                     watch_count
                 });
@@ -419,7 +405,25 @@ const fastApi = {
                 });
             }
         },
-        
+
+        seasons: {
+            async watchCount(season_id, watch_count) {
+                return await putData(`/watch_list/seasons/${season_id}/watch_count`, {
+                    session_key: session.getKey(),
+                    watch_count
+                });
+            },
+        },
+
+        episodes: {
+            async watchCount(episode_id, watch_count) {
+                return await putData(`/watch_list/episodes/${episode_id}/watch_count`, {
+                    session_key: session.getKey(),
+                    watch_count
+                });
+            },
+        },
+
         collections: {
             async list() {
                 return await getData('/watch_list/collections', {
