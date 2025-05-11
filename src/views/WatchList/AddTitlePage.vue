@@ -156,7 +156,7 @@ export default {
                 this.searchResults = null;
                 const response = await fastApi.watch_list.search(this.titleName, this.titleCategory.toLowerCase());
                 if (response) {
-                    this.searchResults = response.results;
+                    this.searchResults = response.result.results;
                     console.log("[searchForTitles] Api response: ", response);
                 }
                 this.removeItemFromWaitingArray("search");

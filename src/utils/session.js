@@ -10,7 +10,7 @@ export default {
 
     async login(params = {}) {
         const response = await fastApi.account.login(params);
-        if (response?.loginStatus === "success") {
+        if (response?.sessionKey && response?.username) {
             notify("Logged in successfully!", "success");
             localStorage.setItem("sessionKey", response.sessionKey);
             localStorage.setItem("username", response.username);
@@ -19,9 +19,6 @@ export default {
             const event = new CustomEvent("sessionStatusUpdated", {});
             window.dispatchEvent(event);
 
-            return true;
-        } else if (response?.loginStatus === "warning") {
-            notify(response.statusMessage, "warning");
             return true;
         } else {
             notify("Failed to log in: " + (response?.statusMessage || "Unknown error"), "error");
@@ -32,7 +29,7 @@ export default {
     async logout() {
         const sessionKey = this.getKey();
         const response = await fastApi.account.logout(sessionKey);
-        if (response?.logOutSuccess) {
+        if (response) {
             notify("You have been logged out.", "info");
             console.log("[session.logout] success");
             this.clear(true);

@@ -1103,6 +1103,11 @@ overflow: hidden;
     color: var(--color-text-light);
     padding: var(--spacing-xs) var(--spacing-sm);
     cursor: pointer;
+    display: -webkit-box;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     /* transition: background-color 0.1s ease-out; */
 }
 .options-list li.highlighted {

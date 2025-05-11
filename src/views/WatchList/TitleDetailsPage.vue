@@ -1833,7 +1833,7 @@ export default {
 
 .trailer-details-flex {
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 1fr 1fr;
     column-gap: var(--spacing-md);
 }
 

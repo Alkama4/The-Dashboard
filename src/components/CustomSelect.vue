@@ -13,7 +13,7 @@
             @focus="open"
             @blur="close"
         >
-            <span class="longest-option">{{ longestOptionLabel }}</span>
+            <!-- <span class="longest-option">{{ longestOptionLabel }}</span> -->
             <span v-if="selectedOption?.label" class="visible-option">{{ selectedOption.label }}</span>
             <span v-else class="visible-option text-lighter">Select an option</span>
             <IconChevronDown size="28px"/>
@@ -137,7 +137,10 @@ export default {
 .custom-select {
     position: relative;
     height: 40px;
+    max-width: 100%;
+    width: max-content;
 }
+
 .loading.custom-select .selected-option {
     cursor: wait;
 }
@@ -147,6 +150,7 @@ export default {
     justify-content: space-between;
     box-sizing: border-box;
     width: 100%;
+    min-width: 100%;
     height: 100%;
     padding-left: var(--spacing-sm);
 
@@ -187,5 +191,13 @@ export default {
 .selected-option svg {
     position: absolute;
     right: 6px;
+}
+
+.selected-option .visible-option {
+    position: absolute;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: calc(100% - 40px); /* adjust based on icon size & padding */
 }
 </style>

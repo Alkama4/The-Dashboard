@@ -68,7 +68,6 @@
                         v-model="allTitlesListNonAutoOptions.searchTerm" 
                         type="text" 
                         placeholder="Search titles"
-                        @keydown.enter="inputTriggeredFetchAllTitles"
                     >
                     <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
                 </div>
@@ -432,9 +431,11 @@ export default {
             async handler() {
                 await this.inputTriggeredFetchAllTitles();
             }
+        },
+        'allTitlesListNonAutoOptions.searchTerm': function () {
+            this.inputTriggeredFetchAllTitles();
         }
     }
-
 };
 </script>
 

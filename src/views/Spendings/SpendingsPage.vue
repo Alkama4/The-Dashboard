@@ -28,7 +28,7 @@
         <ModalTransaction ref="editTransactionMT"/>
 
         <!-- Transaction details -->
-        <ModalGeneric ref="showTransactionMG">
+        <ModalGeneric ref="showTransactionMG" header="Title details">
             <div class="details-modal-content">
                 <div style="grid-area: a; max-width: 25ch;">
                     <h4>ID</h4>

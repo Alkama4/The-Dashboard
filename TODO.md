@@ -122,6 +122,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Watch List functionality to the cards and list  
             - Mark watched & unwatched  
             - Add/remove from favorites  
+        - For tv-series show start and most recent episodes year as range (like 2008 - 2012)
 
     - all titles list
         - If not found suggest a straight link for it from tmdb.
@@ -226,6 +227,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Collections shouldn't require an account.
     - Trailers table. Current single triler is quite limiting. Would be cool to have more and actually check out a proper triler, sinse some trailers are not good.
     - Title genres might be adding duplicates. Add a unique (title_id, genre_id) or check if needed.
+    - Production companies table
 
 
 ### Feature ideas that might never see the light of day
