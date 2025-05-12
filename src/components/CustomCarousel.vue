@@ -3,6 +3,7 @@
         @keydown.prevent="handleKeydown"
         class="custom-carousel"
         ref="customCarousel"
+        tabindex="0"
     >
         <div 
             v-if="slides.length"
@@ -102,10 +103,32 @@ export default {
             cancelAnimationFrame(this.animationFrame)
         },
         onDrag(e) {
-            if (!this.isDragging) return
+            if (!this.isDragging || this.maxIndex == 0) return
             const now = Date.now()
             const delta = e.clientX - this.startX
             this.x = this.lastX + delta
+
+            // Calculate the current index based on the position x
+            this.updateCurrentIndex();
+
+            // Get the total width of the carousel and the boundaries
+            const totalWidth = this.slides.length * this.slideWidth
+            const overflow = Math.max(0, totalWidth - this.carouselWidth)
+            const minX = -overflow
+            const maxX = 0
+
+            // Apply the boundary clamping and overshoot effect
+            if (this.x < minX) {
+                // Calculate overshoot and apply deceleration
+                const overshoot = minX - this.x
+                this.x = minX - overshoot * Math.pow(Math.abs(overshoot), -0.33)
+            } else if (this.x > maxX) {
+                // Calculate overshoot and apply deceleration
+                const overshoot = this.x - maxX
+                this.x = maxX + overshoot * Math.pow(Math.abs(overshoot), -0.33)
+            }
+
+            // Store the positions for calculating velocity
             this.positions.push({ x: this.x, time: now })
 
             if (this.positions.length > 2) {
@@ -126,10 +149,49 @@ export default {
 
                 this.positions = []
 
-                const index = Math.round(-(this.x + this.vx * 12) / this.slideWidth)
-                const clampedIndex = Math.max(0, Math.min(this.maxIndex, index))
-                this.goToSlide(clampedIndex)
+                const predicted = this.x + this.vx * 12
+                const index = Math.round(-predicted / this.slideWidth)
+
+                if (index < 0 || index > this.maxIndex) {
+                    this.animateRubberBand(predicted)
+                } else {
+                    this.goToSlide(index)
+                }
             }, 1)
+        },
+
+        animateRubberBand(predictedX) {
+            cancelAnimationFrame(this.animationFrame)
+
+            const totalWidth = this.slides.length * this.slideWidth
+            const overflow = Math.max(0, totalWidth - this.carouselWidth)
+            const minX = -overflow
+            const maxX = 0
+
+            // Rubber-band easing
+            const clampedX = Math.max(minX, Math.min(maxX, predictedX))
+            const overshoot = predictedX - clampedX
+            const easedOvershoot = overshoot / (Math.abs(overshoot) / this.slideWidth + 1) // exponential ease
+
+            const target = clampedX + easedOvershoot
+
+            const stiffness = 0.2
+            const damping = 0.4
+
+            const animate = () => {
+                this.updateCurrentIndex();
+                const force = target - this.x
+                this.vx = (this.vx + force * stiffness) * damping
+                this.x += this.vx
+
+                if (Math.abs(this.vx) > 0.5 || Math.abs(force) > 1) {
+                    this.animationFrame = requestAnimationFrame(animate)
+                } else {
+                    this.animateTo(clampedX)
+                }
+            }
+ 
+            animate()
         },
         animateTo(target) {
             cancelAnimationFrame(this.animationFrame)
@@ -138,6 +200,7 @@ export default {
             const damping = 0.2
 
             const animate = () => {
+                this.updateCurrentIndex()
                 const force = target - this.x
                 this.vx = (this.vx + force * stiffness) * damping
                 this.x += this.vx
@@ -153,7 +216,6 @@ export default {
         },
         goToSlide(index) {
             index = Math.max(0, Math.min(this.maxIndex, index));
-            this.currentIndex = index;
 
             if (index < this.maxIndex || this.maxIndex <= 1) {
                 const target = -index * this.slideWidth;
@@ -178,6 +240,23 @@ export default {
             } else if (event.key === '0') {
                 const index = this.maxIndex
                 this.goToSlide(index)
+            }
+        },
+        updateCurrentIndex() {
+            const totalWidth = this.slides.length * this.slideWidth;
+            const overflow = totalWidth - this.carouselWidth;
+
+            const secondLastIndex = this.maxIndex - 1;
+            const secondLastX = -secondLastIndex * this.slideWidth;
+            const overflowX = -overflow;
+            const halfwayX = (secondLastX + overflowX) / 2;
+
+            const isAtOverflow = this.x <= halfwayX;
+
+            if (isAtOverflow && this.maxIndex > 1) {
+                this.currentIndex = this.maxIndex;
+            } else {
+                this.currentIndex = Math.min(Math.max(Math.round(-this.x / this.slideWidth), 0), this.maxIndex);
             }
         }
     },

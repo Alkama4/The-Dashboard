@@ -63,14 +63,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - When unmounting a page gracefully cancel the mount request if not answered
     - img
         - loading="lazy"
-            - Test how it works and if it works.
-            - If it not, maybe try out libararies (preferrable not).
+            - Check that its implemented everywhere
     - Custom carousel
-        - Do not allow overscrolling to right (so that just one slide is visible)
-            - Dots valid positions based on: amount - (width  / (amount * cardwidth))
-        - Physics and not animations?
-            - Crash to edge and fall back instead of set to last
-        - Key input on just active and not all
+        - Support scrolling (mainly for laptop usage)
+        - Make the overshoot animation not stop at the overshoot position
 
 - Page specifics
     - Spendings page

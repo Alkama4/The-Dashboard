@@ -119,7 +119,7 @@ export default {
     width: 20px;
     /* min-width: 20px; */
 }
-.dot-click:hover .dot {
+.pointer-device .dot-click:hover .dot {
     background-color: var(--color-text);
 }
 </style>
