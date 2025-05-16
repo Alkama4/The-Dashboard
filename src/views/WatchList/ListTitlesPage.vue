@@ -2,70 +2,15 @@
     <div class="list-titles">
 
         <div class="content-width-medium">
-            <h1 id="titles_listed">Titles listed <span class="text-lighter">(Under construction)</span></h1>
-            <p>Here one day will be a list of all the titles where you can fitler and sort them as you wish to find something to watch. It will take a while though since there are so many things that haven't yet been implemented that are far more crucial.</p>
+            <h1 id="titles_listed">Search for titles <span class="text-lighter">(Under construction)</span></h1>
+            <p>Here you can search for titles and filter the results to match your interests. Use the filters to refine by watched status, genre, or other options.</p>
         </div>
     
-        <div class="all-titles-list-controls content-width-medium">
-            <div class="filter-buttons">
-                <div class="combined-buttons">
-                    <button 
-                        class="left-button" :class="{'button-primary': allTitlesListOptions.titleType == 'tv'}"
-                        @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'tv' ? '' : 'tv'"
-                    >
-                        TV
-                    </button>
-                    <button 
-                        class="right-button" :class="{'button-primary': allTitlesListOptions.titleType == 'movie'}"
-                        @click="allTitlesListOptions.titleType = allTitlesListOptions.titleType == 'movie' ? '' : 'movie'"
-                    >
-                        Movies
-                    </button>
-                </div>
-                <div class="combined-buttons title-progress">
-                    <button 
-                        class="left-button" :class="{'button-primary': allTitlesListOptions.titleProgress == 'watched'}"
-                        @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'watched' ? '' : 'watched'"
-                    >
-                        Watched
-                    </button>
-                    <button 
-                        class="right-button" :class="{'button-primary': allTitlesListOptions.titleProgress == 'unwatched'}"
-                        @click="allTitlesListOptions.titleProgress = allTitlesListOptions.titleProgress == 'unwatched' ? '' : 'unwatched'"
-                    >
-                        Unwatched
-                    </button>
-                </div>
-                <div class="combined-buttons">
-                    <button 
-                        class="left-button"
-                        :class="{'button-primary': allTitlesListOptions.getAllTitles == 'all_titles'}"
-                        @click="allTitlesListOptions.getAllTitles = allTitlesListOptions.getAllTitles == 'all_titles' ? '' : 'all_titles'"
-                    >
-                        All titles
-                    </button>
-                    <button 
-                        class="right-button"
-                        :class="{'button-primary': allTitlesListOptions.getAllTitles == 'not_added'}"
-                        @click="allTitlesListOptions.getAllTitles = allTitlesListOptions.getAllTitles == 'not_added' ? '' : 'not_added'"
-                    >
-                        Not added
-                    </button>
-                </div>
-    
-                <!-- Possible GUI components -->
-                <!-- 
-                    (Current three button thing)
-                    Tri-state Toggle Button
-                    Three-way Radio Button Group
-                    Tri-state Checkbox
-                    Slider with Three Positions
-                -->
-            </div>
-            <div class="search-and-sort">
+        <div class="all-titles-list-controls card content-width-medium">
+            <div class="basic-options">
                 <div class="button-in-text-field">
                     <input 
-                        v-model="allTitlesListNonAutoOptions.searchTerm" 
+                        v-model="allTitlesListOptions.search_term" 
                         type="text" 
                         placeholder="Search titles"
                     >
@@ -73,7 +18,7 @@
                 </div>
                 <div class="flex icon-align">
                     <CustomSelect 
-                        v-model="allTitlesListOptions.sortBy" 
+                        v-model="allTitlesListOptions.sort_by" 
                         :options="allTitlesListSortByOptions"
                     />
                     <button 
@@ -85,13 +30,68 @@
                     </button>
                 </div>
             </div>
+            <div class="extra-options-holder" ref="extraOptionsHolder">
+                <div class="extra-options margin-fix" ref="extraOptions">
+                    <label>Type</label>
+                    <TriStateToggle
+                        button1-text="TV"
+                        button2-text="Movies"
+                        v-model="allTitlesListOptions.title_type"
+                        button1-value="tv"
+                        button2-value="movie"
+                        unset-value=""
+                    />
+                    <label>Watched</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.watched"
+                    />
+                    <label>In watchlist</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.in_watchlist"
+                    />
+                    <label>Favourite</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.favourite"
+                    />
+                    <label>Released</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.released"
+                    />
+                    <label>Title in progress</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.title_in_progress"
+                    />
+                    <label>Season in progress</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.season_in_progress"
+                    />
+        
+                    <!-- Possible GUI components -->
+                    <!-- 
+                        (Current three button thing)
+                        Tri-state Toggle Button
+                        Three-way Radio Button Group
+                        Tri-state Checkbox
+                        Slider with Three Positions
+                    -->
+                </div>
+            </div>
+            <button
+                @click="toggleExtraOptions()"
+                class="expand-button margin-fix "
+            >
+                {{ extraOptionsVisible ? "Hide options" : "Show more options" }}
+                <div class="icon-align" ref="expandButtonChevron">
+                    <IconChevronDown/>
+                </div>
+            </button>
         </div>
     </div>
     
     <!-- <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1"> -->
     <div class="content-width-medium all-titles-list">
         <router-link 
-            v-for="title in allTitlesList" 
+            v-for="title in titlesArray" 
             :key="title.title_id" 
             :to="`/watch_list/title/${title.title_id}`" 
             class="title-element no-decoration"
@@ -137,8 +137,8 @@
                     <div class="tag tag-general">
                         {{ title.type === 'tv' ? 'TV' : 'Movie' }}
                     </div>
-                    <div class="tag tag-general" v-for="genre in title.genres" :key="genre">
-                        {{ genre }}
+                    <div class="tag tag-general" v-for="collection in title.collections" :key="collection">
+                        {{ collection }}
                     </div>
                 </div>
                 <div class="details">
@@ -153,8 +153,8 @@
                         </span>
                         <span class="progress-details">
                             <template v-if="title.type === 'tv'">
-                                <div class="season-after">{{ title.season_count }}</div>
-                                <div class="episode-after">{{ title.episode_count }}</div>
+                                <div>{{ title.season_count }} seasons</div>
+                                <div>{{ title.episode_count }} episodes</div>
                             </template>
                             <template v-else>
                                 {{ formatRuntime(title.movie_runtime) }}
@@ -196,20 +196,20 @@
         </router-link>
     
         <div 
-            v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - allTitlesList?.length, 0): 0" 
+            v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - titlesArray?.length, 0): 0" 
             :key="'placeholder-' + i" 
             class="title-element loading-placeholder"
         >
         </div>
     
-        <div v-if="allTitlesList?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
+        <div v-if="titlesArray?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
             Looks like there's nothing here.<br>
             <span class="text-hidden">Try adding titles to your watch list</span>
         </div>
     
         <div class="flex-row">
             <button 
-                v-if="allTitlesListHasMore"
+                v-if="hasMore"
                 :disabled="waitingForResult.includes('allTitlesList')"
                 :class="{'loading': waitingForResult.includes('allTitlesList')}"
                 @click="loadMoreTitlesForAllTitlesList"
@@ -253,6 +253,9 @@ import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import IconCollection from '@/components/icons/IconCollection.vue';
 import { standAloneBuild } from '@/utils/config';
 import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
+import TriStateToggle from '@/components/TriStateToggle.vue';
+import BooleanFitlerToggle from '@/components/BooleanFitlerToggle.vue';
+import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 
 export default {
     name: 'HomePage',
@@ -260,6 +263,8 @@ export default {
         CustomSelect,
         ModalConfirmation,
         ModalTitleCollections,
+        TriStateToggle,
+        BooleanFitlerToggle,
         IconTMDB,
         IconHeart,
         IconSortDown,
@@ -268,31 +273,41 @@ export default {
         IconListAdd,
         IconListRemove,
         IconCollection,
+        IconChevronDown,
     },
     data() {
         return {
             apiUrl: process.env.VUE_APP_API_URL,
             waitingForResult: [],
-            allTitlesList: [],
-            allTitlesListHasMore: false,
-            allTitlesListOffset: 0,
-            allTitlesListNonAutoOptions: {
-                searchTerm: '',
-            },
+            titlesArray: [],
+            hasMore: false,
+            offset: 0,
             allTitlesListSortByOptions: [
-                {label: 'TMDB rating', value: 'vote_average'},
-                {label: 'Release date', value: 'release_date'},
-                {label: 'Modified', value: 'latest_updated'},
+                {label: 'Modified', value: 'modified'},
+                {label: 'Rating', value: 'rating'},
+                {label: 'Popularity', value: 'popularity'},
+                {label: 'Date', value: 'release_date'},
+                {label: 'Name', value: 'title_name'},
+                {label: 'Duration', value: 'duration'},
+                {label: 'Data updated', value: 'data_updated'},
             ],
             allTitlesListOptions: {
-                sortBy: 'vote_average',
-                direction: "desc",
-                titleType: "",
-                titleProgress: "",
-                getAllTitles: false,
+                search_term: '',
+                title_type: '',
+                collection_id: null,
+                in_watchlist: true,
+                watched: null,
+                favourite: null,
+                released: null,
+                title_in_progress: null,
+                season_in_progress: null,
+                
+                sort_by: 'modified',
+                direction: 'desc',
             },
             titleCollectionsData: null,
             selectedTitleIdForCollection: null,
+            extraOptionsVisible: false,
         };
     },
     methods: {
@@ -302,40 +317,31 @@ export default {
         async fetchAllTitlesList() {
             this.waitingForResult.push("allTitlesList");
 
-            const options = {
-                sort_by: this.allTitlesListOptions.sortBy,
-                direction: this.allTitlesListOptions.direction,
-                offset: this.allTitlesListOffset,
-                all_titles: this.allTitlesListOptions.getAllTitles
-            };
+            const options = Object.fromEntries(
+                Object.entries(this.allTitlesListOptions).filter(([, value]) => {
+                    return value != null
+                })
+            );
 
-            if (this.allTitlesListOptions.titleType)
-                options.title_type = this.allTitlesListOptions.titleType;
-
-            if (this.allTitlesListOptions.titleProgress)
-                options.watched = this.allTitlesListOptions.titleProgress === 'watched';
-
-            if (this.allTitlesListNonAutoOptions.searchTerm)
-                options.search_term = this.allTitlesListNonAutoOptions.searchTerm;
-            
-            // console.debug("[fetchAlltitlesList] options:", options)
-            const titlesListedResponse = await fastApi.watch_list.titles.list(options);
+            const titlesListedResponse = await fastApi.watch_list.titles.list({
+                ...options
+            });
 
             if (titlesListedResponse) {
                 // Replace the whole thing if offset is 0 and if not just append the new ones
-                if (this.allTitlesListOffset == 0) {
-                    this.allTitlesList = titlesListedResponse.titles;
+                if (this.offset == 0) {
+                    this.titlesArray = titlesListedResponse.titles;
                 } else {
-                    this.allTitlesList = this.allTitlesList.concat(titlesListedResponse.titles);
+                    this.titlesArray = this.titlesArray.concat(titlesListedResponse.titles);
                 }
 
-                this.allTitlesListHasMore = titlesListedResponse.has_more;
-                console.debug("[fetchAllTitlesList]", this.allTitlesList);
+                this.hasMore = titlesListedResponse.has_more;
+                console.debug("[fetchAllTitlesList]", this.titlesArray);
             }
             this.removeItemFromWaitingArray("allTitlesList")
         },
         async loadMoreTitlesForAllTitlesList() {
-            this.allTitlesListOffset += 1;
+            this.offset += 1;
             await this.fetchAllTitlesList();
         },
         removeItemFromWaitingArray(item) {
@@ -372,7 +378,7 @@ export default {
             // }
         },
         async inputTriggeredFetchAllTitles() {
-            this.allTitlesListOffset = 0;
+            this.offset = 0;
             await this.fetchAllTitlesList();
         },
         async handleAddTitleToUserList(title) {
@@ -415,15 +421,38 @@ export default {
         promptCollections(titleId) {
             this.$refs.modalTitleCollections.prompt(titleId);
         },
+        toggleExtraOptions() {
+            if (!this.extraOptionsVisible) {
+                // Expand
+                this.$refs.extraOptionsHolder.style.height = this.$refs.extraOptions.scrollHeight + 8 + "px";
+                this.$refs.expandButtonChevron.classList.add('rotated');
+            } else {
+                // Collapse
+                this.$refs.extraOptionsHolder.style.height = "0px";
+                this.$refs.expandButtonChevron.classList.remove('rotated');
+            }
+            this.extraOptionsVisible = !this.extraOptionsVisible
+        },
+        handleResize() {
+            if (this.extraOptionsVisible) {
+                this.$refs.extraOptionsHolder.style.height = this.$refs.extraOptions.scrollHeight + 8 + "px";
+            }
+        }
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
 
         // Get all the titles listed
         await this.fetchAllTitlesList();
+
+        window.addEventListener('resize', this.handleResize);
     },
     unmounted() {
+        // Why does this exist? Left overs? Might be used to get rid of extra modal stuff that lingers? If so should be handled in other ways.
         window.removeEventListener('scroll', this.checkScroll);
+
+        window.removeEventListener('resize', this.handleResize);
+
     },
     watch: {
         allTitlesListOptions: {
@@ -432,13 +461,9 @@ export default {
                 await this.inputTriggeredFetchAllTitles();
             }
         },
-        'allTitlesListNonAutoOptions.searchTerm': function () {
-            this.inputTriggeredFetchAllTitles();
-        }
     }
 };
 </script>
-
 
 
 <style scoped>
@@ -481,45 +506,65 @@ export default {
     gap: var(--spacing-md);
 }
 
+/* all-titles-list-controls */
 .all-titles-list-controls {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    row-gap: var(--spacing-sm);
-    margin: var(--spacing-sm) auto;
-}
-.all-titles-list-controls .filter-buttons {
     width: 100%;
-    column-gap: var(--spacing-sm);
-    display: flex;
-    flex-direction: row;
-    overflow-x: scroll;
+    box-sizing: border-box;
 }
-.filter-buttons .combined-buttons {
-    flex: 1;
-    white-space: nowrap;
-}
-.filter-buttons button {
-    padding-inline: calc(var(--spacing-md) + var(--spacing-sm));
+.all-titles-list-controls .margin-fix {
+    margin-top: var(--spacing-sm);
 }
 
-.all-titles-list-controls .search-and-sort {
+
+.all-titles-list-controls .basic-options {
     width: 100%;
     display: flex;
     column-gap: var(--spacing-sm);
 }
-.search-and-sort .button-in-text-field {
+.basic-options .button-in-text-field {
     flex: 3;
 }
-.search-and-sort .button-in-text-field .icon-button {
+.basic-options .button-in-text-field .icon-button {
     z-index: var(--z-above-input);
 }
-.search-and-sort .icon-align {
+.basic-options .icon-align {
     flex: 2;
 }
-.search-and-sort .custom-select {
+.basic-options .custom-select {
     width: 100%;
 }
+
+.all-titles-list-controls .extra-options-holder {
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.2s ease-out;
+}
+.extra-options-holder .extra-options {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto 1fr auto 1fr;
+    column-gap: var(--spacing-sm);
+    row-gap: var(--spacing-xs);
+}
+@media(max-width: 850px) {
+    .extra-options-holder .extra-options {
+        grid-template-columns: auto 1fr;
+    }
+}
+.extra-options label {
+    margin: 0;
+    align-items: center;
+    margin-right: var(--spacing-md);
+    display: flex;
+    white-space: nowrap;
+}
+
+.expand-button .rotated {
+    transform: rotate(180deg);
+}
+
 
 .all-titles-list-controls .sort-direction {
     color: var(--color-text-light);

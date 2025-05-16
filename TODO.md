@@ -13,6 +13,12 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Do not block actions if not absolutely necessary
         - Add and remove block should be util
 
+    - Standard title query.
+        - Filter by age rating?
+        - Filter by vote average?
+        - Collection!
+        - Genre!
+
 
 ## Features
 ### Feature ideas
@@ -119,6 +125,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Mark watched & unwatched  
             - Add/remove from favorites  
         - For tv-series show start and most recent episodes year as range (like 2008 - 2012)
+        - "Suprise me" button
+            - Open a random titles info page
+            - Make an endpoint
 
     - all titles list
         - If not found suggest a straight link for it from tmdb.
