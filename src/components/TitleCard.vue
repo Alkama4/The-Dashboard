@@ -23,7 +23,8 @@
             </div>
         </div>
 
-        <div class="tag tag-positive" v-if="titleDetails.watch_count >= 1">Watched</div>
+        <div class="tag tag-secondary" v-if="titleDetails.favourite">Favourite</div>
+        <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">Watched</div>
         <div 
             class="tag tag-primary"
             v-else-if="
