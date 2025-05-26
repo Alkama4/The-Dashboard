@@ -1,9 +1,6 @@
 <template>
     <div>
-        <div class="content-width-medium">
-            <h1>Discover <span class="text-lighter">(Under construction)</span></h1>
-            <p>Here you can find and track movies and TV-series from your watch list. If your watch list is empty you can search for titles to add with the button on the bottom right corner of the screen. </p>
-        </div>
+        <TitleShowcase/>
 
         <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large title-list">
             <h2>{{ titleList.listName }}</h2>
@@ -40,17 +37,20 @@ import IconAdd from '@/components/icons/IconAdd.vue';
 import fastApi from '@/utils/fastApi';
 import CustomCarousel from '@/components/CustomCarousel.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
+import TitleShowcase from '@/components/TitleShowcase.vue';
+import { apiUrl } from '@/utils/config';
 
 export default {
     name: 'HomePage',
     components: {
         CustomCarousel,
+        TitleShowcase,
         IconAdd,
         IconSearch,
     },
     data() {
         return {
-            apiUrl: process.env.VUE_APP_API_URL,
+            apiUrl: apiUrl,
             waitingForResult: [],
             titleLists: [
                 {
@@ -76,6 +76,7 @@ export default {
                         title_type: "movie",
                         watched: false,
                         released: true,
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -102,6 +103,7 @@ export default {
                         sort_by: "release_date",
                         direction: "asc",
                         released: false,
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -112,6 +114,7 @@ export default {
                     loading: true,
                     fetchDetails: {
                         favourite: true,
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -123,6 +126,7 @@ export default {
                     fetchDetails: {
                         sortBy: "last_updated",
                         watched: true,
+                        in_watchlist: true,
                     }
                 },
             ],
@@ -139,7 +143,6 @@ export default {
                                 return value != null
                             })
                         );
-                        console.log(options)
 
                         const titleData = await fastApi.watch_list.titles.list({
                             ...options
@@ -159,6 +162,7 @@ export default {
                 console.error("Error fetching title lists:", error);
             }
         },
+
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");

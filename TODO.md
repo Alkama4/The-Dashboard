@@ -23,6 +23,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
 ## Features
 ### Feature ideas
 - General UI
+    - Tag
+        - Blurred glass effect instead of solid fill? Would look sick on showcase.
+        - Not sure of colored tags. Just no that much opacity?
     - Inputs
         - Match the color of default placholder and the custom ones.
         - Search input

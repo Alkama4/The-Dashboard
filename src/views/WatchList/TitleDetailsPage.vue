@@ -1,64 +1,6 @@
 <template>
     <div v-if="title_info" class="title-info">
-        <div class="background backdrop-image-container" v-if="standAloneBuild">
-            <img
-                @load="(event) => event.target.classList.add('visible')"
-                class="" 
-                :src="`https://image.tmdb.org/t/p/original${title_info.backup_backdrop_url}`" 
-            />
-        </div>
-        <div class="background backdrop-image-container" v-else-if="title_info.backdrop_image_count >= 1">
-            <div v-for="image in imageSlideshowData.individualData" :key="image.number">
-                <img
-                    v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
-                    @load="image.isLoaded = true" 
-                    :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                    :src="`${apiUrl}/media/image/title/${title_info.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
-                />
-            </div>
-        </div>
-
-        <div class="backdrop-dimension"></div>
-        <div class="backdrop-container backdrop-dimension" @keydown="backdropKeypress" tabindex="0">
-            <div class="content-inside">
-                <div class="main backdrop-image-container" v-if="standAloneBuild">
-                    <img
-                        @load="(event) => event.target.classList.add('visible')"
-                        class="" 
-                        :src="`https://image.tmdb.org/t/p/original${title_info.backup_backdrop_url}`" 
-                    />
-                </div>
-                <div class="main backdrop-image-container" v-else-if="title_info.backdrop_image_count >= 1">
-                    <div v-for="image in imageSlideshowData.individualData" :key="image.number">
-                        <img
-                            v-if="image.number === imageSlideshowData.showOnDom || imageSlideshowData.keepOnDom.includes(image.number)" 
-                            @load="image.isLoaded = true" 
-                            :class="{ visible: image.isLoaded && image.number === imageSlideshowData.chosenOne }" 
-                            :src="`${apiUrl}/media/image/title/${title_info.title_id}/backdrop${image.number + 1}.jpg${isTouchDevice ? '?width=1200' : ''}`" 
-                        />
-                    </div>
-                </div>
-
-                <div class="button-holder no-pointer-events" v-if="title_info.backdrop_image_count > 1">
-                    <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)">
-                        <div class="hover-gradient"></div>
-                        <IconChevronDown size="52"/>
-                    </button>
-                    <button class="right all-pointer-events" @click="addOrSubtractSlideshowIndex(1)">
-                        <div class="hover-gradient"></div>
-                        <IconChevronDown size="52"/>
-                    </button>
-                </div>
-                
-                <div class="indicator">
-                    <IndicatorDots 
-                        :dotIndex="imageSlideshowData.chosenOne" 
-                        :dotCount="title_info.backdrop_image_count"
-                        @dotSelected="updateSlideshowImageTo"
-                    />
-                </div>
-            </div>
-        </div>
+        <BackdropSlideShow :imageLinks="backdropUrls"/>
 
         <div class="content-width-medium title-details">
             <div class="poster-next-to-stuff">
@@ -81,14 +23,6 @@
 
                 <div class="name-and-stuff">
                     <div class="name-and-tagline">
-                        <!-- <div class="logo-img-wrapper">
-                            <img 
-                                class="logo-img"
-                                :src="logoUrl()"
-                                :alt="title_info.name"
-                                @load="(event) => event.target.classList.add('loaded')"
-                            >
-                        </div> -->
                         <h1 class="title-name">
                             <span class="all-pointer-events" :title="title_info.name">
                                 {{ title_info.name }} 
@@ -101,6 +35,9 @@
                     </div>
 
                     <div class="tags">
+                        <div class="tag tag-warning" v-if="!title_info.in_watch_list">
+                            Not in watchlist
+                        </div>
                         <div class="tag tag-positive" v-if="title_info.watch_count >= 1">
                             Watched
                         </div>
@@ -724,10 +661,9 @@ import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
-import IndicatorDots from '@/components/IndicatorDots.vue';
 import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
-import { standAloneBuild } from '@/utils/config';
+import { apiUrl, standAloneBuild } from '@/utils/config';
 import WatchNowRecursive from '@/components/WatchNowRecursive.vue';
 
 // Icons
@@ -753,13 +689,14 @@ import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
 import NumericStepper from '@/components/NumericStepper.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 import CustomGenericInput from '@/components/CustomGenericInput.vue';
+import BackdropSlideShow from '@/components/BackdropSlideShow.vue';
 // import IconHome from '@/components/icons/IconHome.vue';
 
 export default {
     data() {
         return {
             standAloneBuild: standAloneBuild,
-            apiUrl: process.env.VUE_APP_API_URL,
+            apiUrl: apiUrl,
             titleID: this.$route.params.titleID,
             title_info: null,
             expandedSeason: null,
@@ -773,7 +710,6 @@ export default {
             },
             openedSeasons: [],
             scrolledPastEpisodeMap: false,
-            isTouchDevice: false,
             selectedSeasonToUpdate: null,
             trailerIndex: 0,
         };
@@ -784,12 +720,12 @@ export default {
         ModalCollection,
         ModalTitleCollections,
         InfoTooltip,
-        IndicatorDots,
         notFoundPage,
         WatchNowRecursive,
         NumericStepper,
         CustomSelect,
         CustomGenericInput,
+        BackdropSlideShow,
         IconTMDB,
         IconTMDBColorful,
         IconIMDBColorful,
@@ -1054,48 +990,11 @@ export default {
             }
             this.removeItemFromWaitingArray("title_info");
         },
-        backdropKeypress(event) {
-            if (['ArrowLeft', 'a', 'w'].includes(event.key)) {
-                this.addOrSubtractSlideshowIndex(-1);
-            } else if (['ArrowRight', 'd', 's', 'Enter'].includes(event.key)) {
-                this.addOrSubtractSlideshowIndex(1);
-            } else if (['1', '2', '3', '4', '5'].includes(event.key)) {
-                if (Number(event.key) <= this.title_info.backdrop_image_count)
-                    this.updateSlideshowImageTo(Number(event.key) - 1);
-            }
-        },
         getWatchedStats() {
             const totalEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
             const watchedEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
             const percentage = totalEpisodes ? ((watchedEpisodes / totalEpisodes) * 100).toFixed(1) + "%" : "0%";
             return `${watchedEpisodes} / ${totalEpisodes} episodes (${percentage})`;
-        },
-        updateSlideshowImageTo(newImageIndex) {
-            // Push the current image to fade-out images before updating
-            this.imageSlideshowData.keepOnDom.push(this.imageSlideshowData.chosenOne);
-
-            // Update `showOnDom` and ensure it loops correctly
-            this.imageSlideshowData.showOnDom = newImageIndex;
-
-            // Small timeout to let the DOM update (prevents flickering)
-            setTimeout(() => {
-                this.imageSlideshowData.chosenOne = this.imageSlideshowData.showOnDom;
-            }, 20);
-
-            // Remove the oldest fade-out image after the transition completes
-            setTimeout(() => {
-                this.imageSlideshowData.keepOnDom.shift();
-            }, 500);
-        },
-        addOrSubtractSlideshowIndex(amount) {
-            let newNumber = this.imageSlideshowData.chosenOne + amount;
-
-            // Ensure looping through images
-            if (newNumber >= this.title_info.backdrop_image_count) newNumber = 0;
-            if (newNumber < 0) newNumber = this.title_info.backdrop_image_count - 1;
-
-            // Call updateImage with the new number
-            this.updateSlideshowImageTo(newNumber);
         },
         episodeMapTileBackgroundColors() {
             if (this.title_info && this.title_info.seasons) {
@@ -1193,9 +1092,6 @@ export default {
                     return "";
                 }
             }
-        },
-        logoUrl() {
-            return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/logo.png`;
         },
         async handleEditCollection(initialCollection) {
             const editedCollection = await this.$refs.editCollectionFC.prompt(
@@ -1322,6 +1218,16 @@ export default {
                 });
             }
             return options;
+        },
+        backdropUrls() {
+            if (!this.title_info || !this.title_info.backdrop_image_count || !this.title_info.title_id) {
+                return [];
+            }
+
+            return Array.from({ length: this.title_info.backdrop_image_count }, (_, i) => {
+                let suffix = this.isTouchDevice ? '?width=1200' : '';
+                return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/backdrop${i + 1}.jpg${suffix}`;
+            });
         }
 
     },
@@ -1330,19 +1236,11 @@ export default {
             await this.openCorrectSeason(to.hash);
         }
     },
-    created () {
-        this.isTouchDevice = 'ontouchstart' in document.documentElement;
-    },
     async mounted() {
         await this.queryTitleData();
 
         // Generate individual data for each backdrop image dynamically
         if (this.title_info) {
-            this.imageSlideshowData.individualData = Array.from({ length: this.title_info.backdrop_image_count }, (_, i) => ({
-                number: i,
-                isLoaded: false
-            }));
-
             // Set the title to the titles name instead of "Title info"
             document.title = `Dashboard - ${this.title_info.name || 'Default Title'}`
         }
@@ -1377,28 +1275,12 @@ export default {
         window.removeEventListener('darkModeChange', this.episodeMapTileBackgroundColors);
         window.removeEventListener('scroll', this.checkScroll);
     },
-    watch: {
-        backdropNumber() {
-            this.backdropShow = false;
-            setTimeout(() => (this.backdropShow = true), 300); // Short delay before reloading
-        }
-    }
+
 };
 </script>
 
   
 <style scoped>
-.title-info {
-    --z-backdrop-dimension: -10;
-    --z-backdrop-image-bg: 1;
-    --z-backdrop-container: 2;
-    --z-backdrop-image-main: 3;
-    --z-backdrop-content-inside: 4;
-    --z-backdrop-arrow-buttons: 5;
-    --z-backdrop-indicator: 6;
-    --z-title-poster: 10;
-}
-
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
 .backdrop-dimension {
     width: 100vw;

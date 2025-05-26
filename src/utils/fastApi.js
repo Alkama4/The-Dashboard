@@ -392,6 +392,12 @@ const fastApi = {
                     ...params
                 });
             },
+
+            async showcase() {
+                return await getData('/watch_list/titles/showcase', {
+                    session_key: session.getKey()
+                });
+            },
         
             async info(title_id) {
                 return await getData(`/watch_list/titles/${title_id}`, {
