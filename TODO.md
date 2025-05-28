@@ -28,7 +28,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Not sure of colored tags. Just no that much opacity?
     - Inputs
         - Match the color of default placholder and the custom ones.
-        - Search input
+        - Search input (x instead of search icon)
     - Loading placeholers
         - Make them 100vh. It feels better when its overkill because it allows to scroll and is clearer for the user?
     - Navigation  
@@ -59,6 +59,10 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Also hover effects could be removed with it?
     - Notification
         - Add the capability to have multiple notifications
+    - Custom select
+        - Jump search with key presses
+        - Make a param that allows resetting the value
+        - Modal for touch devices
     - Colors
         - The positive green and warning yellow could be toned down to make readability with white text better
         - Stolen color palette that looks nice

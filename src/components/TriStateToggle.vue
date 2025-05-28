@@ -51,10 +51,10 @@ export default {
 
 <style scoped>
 .tri-state-toggle {
-    flex: 1;
     white-space: nowrap;
 }
 .tri-state-toggle button {
-    padding-inline: calc(var(--spacing-md) + var(--spacing-sm));
+    /* padding-inline: calc(var(--spacing-md) + var(--spacing-sm)); */
+    padding-inline: 0;
 }
 </style>

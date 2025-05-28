@@ -45,10 +45,6 @@
                     <BooleanFitlerToggle
                         v-model="allTitlesListOptions.watched"
                     />
-                    <label>In watchlist</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.in_watchlist"
-                    />
                     <label>Favourite</label>
                     <BooleanFitlerToggle
                         v-model="allTitlesListOptions.favourite"
@@ -65,15 +61,15 @@
                     <BooleanFitlerToggle
                         v-model="allTitlesListOptions.season_in_progress"
                     />
-        
-                    <!-- Possible GUI components -->
-                    <!-- 
-                        (Current three button thing)
-                        Tri-state Toggle Button
-                        Three-way Radio Button Group
-                        Tri-state Checkbox
-                        Slider with Three Positions
-                    -->
+                    <label>In watchlist</label>
+                    <BooleanFitlerToggle
+                        v-model="allTitlesListOptions.in_watchlist"
+                    />
+                    <label>Collection</label>
+                    <CustomSelect
+                        v-model="allTitlesListOptions.collection_id"
+                        :options="allTitlesListCollectionOptions"
+                    />
                 </div>
             </div>
             <button
@@ -283,15 +279,16 @@ export default {
             hasMore: false,
             offset: 0,
             allTitlesListSortByOptions: [
-                {label: 'Modified', value: 'modified'},
+                {label: 'Watched/Modified', value: 'modified'},
                 {label: 'Rating', value: 'rating'},
                 {label: 'Popularity', value: 'popularity'},
                 {label: 'Date', value: 'release_date'},
-                {label: 'Name', value: 'title_name'},
+                {label: 'Title name', value: 'title_name'},
                 {label: 'Duration', value: 'duration'},
-                {label: 'Data updated', value: 'data_updated'},
+                {label: 'Details updated', value: 'data_updated'},
             ],
-            allTitlesListOptions: {
+            allTitlesListCollectionOptions: [],
+            allTitlesListOptionsDefaults: {
                 search_term: '',
                 title_type: '',
                 collection_id: null,
@@ -305,6 +302,7 @@ export default {
                 sort_by: 'modified',
                 direction: 'desc',
             },
+            allTitlesListOptions: {},
             titleCollectionsData: null,
             selectedTitleIdForCollection: null,
             extraOptionsVisible: false,
@@ -339,6 +337,16 @@ export default {
                 console.debug("[fetchAllTitlesList]", this.titlesArray);
             }
             this.removeItemFromWaitingArray("allTitlesList")
+        },
+        async fetchCollectionOptions() {
+            const response = await fastApi.watch_list.options.collections();
+            if (response) {
+                this.allTitlesListCollectionOptions = response.map(item => ({
+                    label: item.name,
+                    value: item.collection_id
+                }));
+                console.log(this.allTitlesListCollectionOptions)
+            }
         },
         async loadMoreTitlesForAllTitlesList() {
             this.offset += 1;
@@ -425,10 +433,14 @@ export default {
             if (!this.extraOptionsVisible) {
                 // Expand
                 this.$refs.extraOptionsHolder.style.height = this.$refs.extraOptions.scrollHeight + 8 + "px";
+                setTimeout(() => {
+                    this.$refs.extraOptionsHolder.classList.add('open');
+                }, 200)
                 this.$refs.expandButtonChevron.classList.add('rotated');
             } else {
                 // Collapse
                 this.$refs.extraOptionsHolder.style.height = "0px";
+                this.$refs.extraOptionsHolder.classList.remove('open');
                 this.$refs.expandButtonChevron.classList.remove('rotated');
             }
             this.extraOptionsVisible = !this.extraOptionsVisible
@@ -437,14 +449,30 @@ export default {
             if (this.extraOptionsVisible) {
                 this.$refs.extraOptionsHolder.style.height = this.$refs.extraOptions.scrollHeight + 8 + "px";
             }
+        },
+        castQueryValue(key, val) {
+            const boolKeys = ['in_watchlist', 'watched', 'released', 'favourite', 'title_in_progress', 'season_in_progress'];
+            const intKeys = ['collection_id'];
+
+            if (val === null || val === 'null') return null;
+            if (boolKeys.includes(key)) return val === 'true';
+            if (intKeys.includes(key)) return Number(val);
+            return val;
         }
     },
-    async mounted() {
+    mounted() {
+        for (const key in this.allTitlesListOptionsDefaults) {
+            const queryVal = this.$route.query[key];
+            this.allTitlesListOptions[key] = 
+                queryVal !== undefined 
+                    ? this.castQueryValue(key, queryVal) 
+                    : this.allTitlesListOptionsDefaults[key];
+        }
+
+        // Fetch data
         this.waitingForResult.push("allTitlesList");
-
-        // Get all the titles listed
-        await this.fetchAllTitlesList();
-
+        this.fetchAllTitlesList();
+        this.fetchCollectionOptions();
         window.addEventListener('resize', this.handleResize);
     },
     unmounted() {
@@ -457,11 +485,23 @@ export default {
     watch: {
         allTitlesListOptions: {
             deep: true,
-            async handler() {
-                await this.inputTriggeredFetchAllTitles();
+            handler() {
+                const query = {};
+                for (const key in this.allTitlesListOptions) {
+                    const val = this.allTitlesListOptions[key];
+                    const defaultVal = this.allTitlesListOptionsDefaults[key];
+
+                    if (val !== defaultVal) {
+                        query[key] = val;
+                    }
+                }
+
+                this.$router.replace({ query });
+                this.inputTriggeredFetchAllTitles();
             }
-        },
+        }
     }
+
 };
 </script>
 
@@ -534,6 +574,7 @@ export default {
 }
 .basic-options .custom-select {
     width: 100%;
+    min-width: 170px;
 }
 
 .all-titles-list-controls .extra-options-holder {
@@ -541,12 +582,18 @@ export default {
     overflow: hidden;
     transition: height 0.2s ease-out;
 }
+.all-titles-list-controls .extra-options-holder.open {
+    overflow: visible;
+}
 .extra-options-holder .extra-options {
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr auto 1fr;
     column-gap: var(--spacing-sm);
     row-gap: var(--spacing-xs);
+}
+.extra-options-holder .custom-select {
+    width: 100%;
 }
 @media(max-width: 850px) {
     .extra-options-holder .extra-options {

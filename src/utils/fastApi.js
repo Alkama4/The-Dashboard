@@ -430,6 +430,14 @@ const fastApi = {
             },
         },
 
+        options: {
+            async collections() {
+                return await getData('/watch_list/options/collections', {
+                    session_key: session.getKey()
+                })
+            }
+        },
+
         collections: {
             async list() {
                 return await getData('/watch_list/collections', {

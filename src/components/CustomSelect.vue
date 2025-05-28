@@ -10,7 +10,7 @@
             @keydown.up.prevent="handleKeyDown('up')" 
             @keydown.enter.prevent="handleKeyDown('enter')"
             @keydown.esc.prevent="handleKeyDown('esc')"
-            @focus="open"
+            @click="isStylingOpen ? close() : open()"
             @blur="close"
         >
             <!-- <span class="longest-option">{{ longestOptionLabel }}</span> -->
@@ -112,6 +112,9 @@ export default {
         markInvalid() {
             this.invalidState = true;
         },
+        updateSelectedOption() {
+            this.selectedOption = this.options.find(opt => opt.value === this.modelValue) || null;
+        }
     },
     computed: {
         longestOptionLabel() {
@@ -123,13 +126,9 @@ export default {
         }
     },
     watch: {
-        modelValue: {
-            immediate: true,
-            handler(value) {
-                this.selectedOption = this.options.find(opt => opt.value === value) || null;
-            }
-        }
-    }
+        modelValue: 'updateSelectedOption',
+        options: 'updateSelectedOption',
+    },
 };
 </script>
 
