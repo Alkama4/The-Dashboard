@@ -329,8 +329,8 @@ footer a {
 /* - - - - GENERIC ELEMENTS - - - - */
 p {
     text-align: justify;
-    /* margin-inline: auto; */
     width: 100%;
+    /* margin-inline: auto; */
     /* width: fit-content; */
     /* max-width: 60ch; */
 }
@@ -378,7 +378,7 @@ button, .link-button {
                 box-shadow 0.1s ease-out;
 }
 .link-button {
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-small);
 }
 button:hover, .link-button:hover {
     color: var(--color-text-bold);
@@ -418,7 +418,7 @@ button:focus {
 /* Button primary */
 .button-primary {
     background-color: var(--color-primary);
-    color: var(--color-text-white);
+    color: var(--color-text-white) !important;
 } 
 .button-primary:hover {
     background-color: var(--color-primary-hover);
@@ -805,8 +805,6 @@ input[type="radio"] {
 
 .no-decoration {
     text-decoration: none;
-    width: fit-content;
-    height: fit-content;
     color: var(--color-text);
 }
 .hover-decoration:hover {
@@ -922,6 +920,7 @@ form.simple-form button {
     color: var(--color-text-light);
     transform: scale(1);
     margin-inline: var(--spacing-sm);
+    border-radius: var(--border-radius-small);
     transition: transform 0.1s var(--cubic-bounce-soft-out),
                 color 0.1s var(--cubic-bounce-soft-out) !important;
 }
@@ -977,6 +976,9 @@ form.simple-form button {
 }
 .tag.tag-editable {
     cursor: pointer;
+}
+.tag.tag-type {
+    background-color: var(--color-button-general);
 }
 
 .fullwindow {

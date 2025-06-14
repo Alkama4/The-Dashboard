@@ -83,113 +83,156 @@
             </button>
         </div>
     </div>
-    
+
     <!-- <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1"> -->
     <div class="content-width-medium all-titles-list">
-        <router-link 
-            v-for="title in titlesArray" 
+        <div 
+            v-for="(title, index) in titlesArray" 
             :key="title.title_id" 
-            :to="`/watch_list/title/${title.title_id}`" 
-            class="title-element no-decoration"
+            class="title-element"
+            :class="{'active': index == activeTitleIndex}"
+            @click="toggleActiveTitleIndex(index)"
+            @keydown.enter="toggleActiveTitleIndex(index)"
+            tabindex="0"
         >
-    
-            <div class="backdrop-wrapper">
-                <img 
-                    :src="backdropUrl(title.title_id)" 
-                    @load="(event) => event.target.classList.add('loaded')" 
-                    loading="lazy"
-                    class="backdrop"
-                >
-            </div>
-    
-            <div class="poster-holder">
-                <img 
-                    :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
-                    @load="(event) => event.target.classList.add('loaded')" 
-                    loading="lazy"
-                    class="poster"
-                >
-            </div>
-    
-            <div class="content">
-                <span class="title-name">
-                    <span>{{ title.name }}</span>
-                    &MediumSpace;
-                    <span class="text-lighter" v-if="title.name != title.name_original">({{ title.name_original }})</span>
-                </span>
-                <div class="tags">
-                    <div class="tag tag-positive" v-if="title.watch_count >= 1">
-                        Watched
-                    </div>
-                    <div class="tag tag-secondary" v-if="title.favourite">
-                        Favourite
-                    </div>
-                    <div class="tag tag-primary" v-if="title.new_episodes">
-                        New episodes
-                    </div>
-                    <div class="tag tag-general" v-else-if="new Date(title.release_date) > new Date()">
-                        Upcoming
-                    </div>
-                    <div class="tag tag-general">
-                        {{ title.type === 'tv' ? 'TV' : 'Movie' }}
-                    </div>
-                    <div class="tag tag-general" v-for="collection in title.collections" :key="collection">
-                        {{ collection }}
-                    </div>
+            <div class="default-content">
+                <div class="backdrop-wrapper">
+                    <img 
+                        :src="backdropUrl(title.title_id)" 
+                        @load="(event) => event.target.classList.add('loaded')" 
+                        loading="lazy"
+                        class="backdrop"
+                    >
                 </div>
-                <div class="details">
-                    <div class="detail-list">
-                        <span class="icon-align">
-                            <IconTMDB style="margin-right: 4px;"/>
-                            {{ title.tmdb_vote_average }}
-                            ({{ title.tmdb_vote_count }})
+        
+                <div class="poster-holder">
+                    <img 
+                        :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
+                        @load="(event) => event.target.classList.add('loaded')" 
+                        loading="lazy"
+                        class="poster"
+                    >
+                </div>
+        
+                <div class="content">
+                    <router-link 
+                        :to="`/watch_list/title/${title.title_id}`"
+                        class="title-name no-decoration hover-decoration"
+                        tabindex="-1"
+                        @click.stop
+                    >
+                        {{ title.name }}
+                        <span class="text-lighter" v-if="title.name !== title.name_original">
+                            ({{ title.name_original }})
                         </span>
-                        <span>
-                            {{ convertToDate(title.release_date) }}
-                        </span>
-                        <span class="progress-details">
+                    </router-link>
+                    <div class="tags">
+                        <div class="tag tag-positive" v-if="title.watch_count >= 1">
+                            Watched
+                        </div>
+                        <div class="tag tag-secondary" v-if="title.favourite">
+                            Favourite
+                        </div>
+                        <div class="tag tag-primary" v-if="title.new_episodes">
+                            New episodes
+                        </div>
+                        <div class="tag tag-general" v-else-if="new Date(title.release_date) > new Date()">
+                            Upcoming
+                        </div>
+                        <div class="tag tag-type">
+                            {{ title.type === 'tv' ? 'TV' : 'Movie' }}
+                        </div>
+                        <div class="tag tag-general" v-for="collection in title.collections" :key="collection">
+                            {{ collection }}
+                        </div>
+                    </div>
+                    <div class="details">
+                        <div class="detail-list">
+                            <IconTMDB/>
+                            {{ title.tmdb_vote_average }} 
+                            <!-- ({{ title.tmdb_vote_count }})  -->
+                            &bull;
+
+                            {{ converToReleaseYear(title.release_date) }} 
+                            &bull;
+
+                            {{ title.age_rating }}
+                            &bull;
+
                             <template v-if="title.type === 'tv'">
-                                <div>{{ title.season_count }} seasons</div>
-                                <div>{{ title.episode_count }} episodes</div>
+                                <span class="season">{{ title.season_count }} </span>,
+                                <span class="episode">{{ title.episode_count }} </span>
                             </template>
                             <template v-else>
                                 {{ formatRuntime(title.movie_runtime) }}
                             </template>
-                        </span>
-                    </div>
-                    <div class="overview">
-                        <p>{{ title.overview }}</p>
+                        </div>
+                        <p class="overview">
+                            {{ title.overview }}
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="appearing-buttons">
-                <IconHeart 
-                    size="28px"
-                    :class="{'is-set': title.favourite}" 
-                    class="icon-button favourite"
-                    @click.prevent="handleFavouriteToggle(title)"
-                />
-    
-                <IconCollection
-                    size="28px" 
-                    class="icon-button watch-list" 
-                    @click.prevent="promptCollections(title.title_id)" 
-                />
-    
-                <IconListRemove 
-                    v-if="title.is_in_watchlist" 
-                    size="28px" 
-                    class="icon-button watch-list" 
-                    @click.prevent="handleRemoveTitleFromUserList(title)" 
-                />
-                <IconListAdd 
-                    v-else 
-                    size="28px" 
-                    class="icon-button watch-list" 
-                    @click.prevent="handleAddTitleToUserList(title)" 
-                />
+            <div class="controls-wrapper">
+                <div class="controls">
+                    <button 
+                        v-if="title.is_in_watchlist" 
+                        @click.stop="handleRemoveTitleFromUserList(title)" 
+                        @keydown.enter.stop
+                        :tabindex="index == activeTitleIndex ? '' : -1"
+                    >
+                        <IconListRemove 
+                            size="22px" 
+                            class="icon-button" 
+                        />
+                    </button>
+                    <button 
+                        v-else 
+                        @click.stop="handleAddTitleToUserList(title)" 
+                        @keydown.enter.stop
+                        :tabindex="index == activeTitleIndex ? '' : -1"
+                    >
+                        <IconListAdd 
+                            size="22px" 
+                            class="icon-button" 
+                        />
+                    </button>
+
+                    <button 
+                        @click.stop="promptCollections(title.title_id)" 
+                        @keydown.enter.stop
+                        :tabindex="index == activeTitleIndex ? '' : -1"
+                    >
+                        <IconCollection
+                            size="22px" 
+                            class="icon-button" 
+                        />
+                    </button>
+
+                    <button 
+                        @click.stop="handleFavouriteToggle(title)" 
+                        @keydown.enter.stop
+                        :tabindex="index == activeTitleIndex ? '' : -1"
+                    >
+                        <IconHeart 
+                            size="22px"
+                            :class="{'is-set': title.favourite}" 
+                            class="icon-button favourite"
+                        />
+                    </button>
+        
+                    <router-link 
+                        :to="`/watch_list/title/${title.title_id}`"
+                        class="link-button no-decoration button-primary"
+                        :tabindex="index == activeTitleIndex ? '' : -1"
+                        @keydown.enter.stop
+                        @click.stop
+                    >
+                        View details
+                    </router-link>
+                </div>
             </div>
-        </router-link>
+        </div>
     
         <div 
             v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - titlesArray?.length, 0): 0" 
@@ -306,6 +349,7 @@ export default {
             titleCollectionsData: null,
             selectedTitleIdForCollection: null,
             extraOptionsVisible: false,
+            activeTitleIndex: null,
         };
     },
     methods: {
@@ -322,7 +366,8 @@ export default {
             );
 
             const titlesListedResponse = await fastApi.watch_list.titles.list({
-                ...options
+                ...options,
+                offset: this.offset
             });
 
             if (titlesListedResponse) {
@@ -345,7 +390,6 @@ export default {
                     label: item.name,
                     value: item.collection_id
                 }));
-                console.log(this.allTitlesListCollectionOptions)
             }
         },
         async loadMoreTitlesForAllTitlesList() {
@@ -366,8 +410,8 @@ export default {
             }
             this.removeItemFromWaitingArray(`${title.title_id}Favourite`);
         },
-        convertToDate(date) {
-            return convert.toFiDate(date, "default");
+        converToReleaseYear(date) {
+            return convert.toFiDate(date, "year");
         },
         posterUrl(titleId, width, backupUrl) {
             if (standAloneBuild) {
@@ -445,6 +489,13 @@ export default {
             }
             this.extraOptionsVisible = !this.extraOptionsVisible
         },
+        toggleActiveTitleIndex(newActive) {
+            if (newActive != this.activeTitleIndex)
+                this.activeTitleIndex = newActive;
+            else {
+                this.activeTitleIndex = null;
+            }
+        },
         handleResize() {
             if (this.extraOptionsVisible) {
                 this.$refs.extraOptionsHolder.style.height = this.$refs.extraOptions.scrollHeight + 8 + "px";
@@ -458,9 +509,9 @@ export default {
             if (boolKeys.includes(key)) return val === 'true';
             if (intKeys.includes(key)) return Number(val);
             return val;
-        }
+        },
     },
-    mounted() {
+    async mounted() {
         for (const key in this.allTitlesListOptionsDefaults) {
             const queryVal = this.$route.query[key];
             this.allTitlesListOptions[key] = 
@@ -469,10 +520,12 @@ export default {
                     : this.allTitlesListOptionsDefaults[key];
         }
 
-        // Fetch data
-        this.waitingForResult.push("allTitlesList");
-        this.fetchAllTitlesList();
-        this.fetchCollectionOptions();
+        // Fetch options
+        await this.fetchCollectionOptions();
+
+        // Do not need to fetch for the data itself, since its automatically fetched 
+        // when the empty array is populated with the default values.
+
         window.addEventListener('resize', this.handleResize);
     },
     unmounted() {
@@ -630,43 +683,61 @@ export default {
 }
 
 .all-titles-list .title-element {
-    --title-height: 210px;
-    --padding: var(--spacing-md);
-    padding: var(--padding);
-    gap: var(--spacing-md);
     display: flex;
+    flex-direction: column;
     position: relative;
     width: 100%;
-    flex-direction: row;
-    height: var(--title-height);
+    min-height: 210px;
+    height: fit-content;
     /* box-sizing: border-box; */
     cursor: pointer;
-    user-select: none;
     border-radius: var(--border-radius-medium);
     overflow: hidden;
     background-color: var(--color-background-card);
     transition: transform 0.15s var(--cubic-1);
     box-shadow: var(--shadow-card);
     box-sizing: border-box;
-    color: var(--color-text-white);
-}
-.all-titles-list .title-element:hover, 
-.all-titles-list .title-element:focus-visible {
-    transform: scale(1.025);
-}
-.all-titles-list .title-element:hover .title-name, 
-.all-titles-list .title-element:focus-visible .title-name {
-    text-decoration: underline;
-}
-.all-titles-list .title-element * {
-    z-index: 10;
 }
 
-.all-titles-list .title-element.loading-placeholder:hover,
-.all-titles-list .title-element.loading-placeholder:focus-visible,
-.all-titles-list .title-element.content-not-found:hover,
-.all-titles-list .title-element.content-not-found:focus-visible {
-    transform: scale(1);
+
+.all-titles-list .title-element .default-content {
+    padding: var(--spacing-md);
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    height: fit-content;
+    column-gap: var(--spacing-md);
+    width: 100%;
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    transition: transform 0.15s var(--cubic-1);
+    box-shadow: var(--shadow-card);
+    box-sizing: border-box;
+}
+
+.all-titles-list .title-element .controls {
+    display: grid;
+    column-gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    grid-template-columns: 1fr 1fr 1fr 2.5fr;
+}
+.all-titles-list .title-element .controls-wrapper {
+    transition: height 0.2s ease-out;
+    height: 0px;
+}
+.all-titles-list .title-element.active .controls-wrapper {
+    height: 56px;
+}
+.all-titles-list .title-element .controls > * {
+    white-space: nowrap;
+    padding-inline: 0;
+}
+/* .all-titles-list .title-element:hover, 
+.all-titles-list .title-element:focus-visible {
+    transform: scale(1.025);
+} */
+.all-titles-list .title-element * {
+    z-index: 10;
 }
 
 .backdrop-wrapper {
@@ -675,7 +746,7 @@ export default {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgb(24, 24, 24); /* prevents light bleed */
+    background-color: var(--color-background-card); /* prevents light bleed */
     overflow: hidden;
     z-index: 0;
 }
@@ -687,18 +758,18 @@ export default {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: blur(16px) brightness(0.4);
+    filter: blur(16px) opacity(0.4);
     z-index: 1;
     opacity: 0;
     transition: opacity 0.2s ease-out;
 }
-.title-element:hover .backdrop,
-.title-element:focus-visible .backdrop {
+.title-element.active .backdrop {
     opacity: 1;
 }
 
 
 .all-titles-list .poster-holder {
+    height: 210px;
     aspect-ratio: 2/3;
     border-radius: var(--border-radius-small);
     background-color: var(--color-background-card);
@@ -728,45 +799,56 @@ export default {
 }
 
 .title-element .title-name {
-    color: var(--color-text-white);
     font-weight: 700;
     font-size: var(--font-size-large);
     margin-top: 0;
     margin-bottom: 0;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
     /* gap: var(--spacing-sm); */
-    display: flex;
 }
 
 .title-element .tags {
     display: flex;
+    flex-wrap: wrap;
     gap: var(--spacing-sm);
     margin: 0;
-    margin-top: 4px;
-    margin-bottom: 12px;
+    margin-top: var(--spacing-sm);
+    margin-bottom: var(--spacing-sm);
 }
 
 .title-element .tags .tag {
-    font-size: var(--font-size-small);
     color: var(--color-text);
     padding: 2px 6px;
 }
 
-
 .title-element .details {
-    height: 100%;
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
 }
 
 .title-element .detail-list {
-    display: flex;
-    flex-direction: column;
+    color: var(--color-text-light);
+    display: inline;
     min-width: 125px;
 }
+.title-element .detail-list svg {
+    vertical-align: middle;
+}
+
+.detail-list .season::after {
+    content: " season";
+}
+.detail-list .episode::after {
+    content: " episode";
+}
+
 
 .title-element p {
-    color: var(--color-text-white-light);
     margin: 0;
     display: -webkit-box;
     line-clamp: 4;
@@ -775,29 +857,24 @@ export default {
     overflow: hidden;
 }
 
-/* Optimize for mobile. Curren't setup not anywhere near */
 @media (max-width: 600px) {
-    .title-element p {
-        display: none;
+    .detail-list .season::after {
+        content: "S";
     }
-}
-
-.title-element .appearing-buttons {
-    position: absolute;
-    top: 0;
-    right: 0;
-    display: flex;
-    flex-direction: row;
-    margin: var(--spacing-md);
-    gap: var(--spacing-sm);
-    opacity: 0;
-    transform: translateX(4px);
-    transition: opacity 0.2s var(--cubic-1),
-                transform 0.2s var(--cubic-1);
-}
-.title-element:hover .appearing-buttons {
-    opacity: 1;
-    transform: translateX(0px);
+    .detail-list .episode::after {
+        content: "E";
+    }
+    .title-element .details {
+        font-size: var(--font-size-small);
+        gap: var(--spacing-xs);
+    }
+    .title-element .tags {
+        margin-top: var(--spacing-xs);
+        margin-bottom: var(--spacing-xs);
+    }
+    .title-element .tags .tag {
+        font-size: var(--font-size-tiny);
+    }
 }
 
 .title-element .icon-button.favourite.is-set {

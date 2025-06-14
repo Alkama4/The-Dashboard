@@ -53,6 +53,7 @@ export default {
         };
     },
     mounted() {
+        this.updateSelectedOption(this.modelValue)
         document.addEventListener('click', this.handleClickOutside);
     },
     beforeUnmount() {

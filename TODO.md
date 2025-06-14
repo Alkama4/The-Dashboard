@@ -89,6 +89,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
             - Headers, spacing, dropdown for sliders? (Not a fan)  
             - Needs a revamp  
             - Accordion (Haitari) mini toggle instead → allows animation  
+            - Missing hide animation
         - Loading placeholders on mobile have uneven spacing
         - Edit transaction
             - When modifying trasaction_item count the height of the selected transaction doesn't change when the modal closes.
@@ -138,23 +139,20 @@ This file is a collection of notes for things that need to be done or fixed. It 
 
     - all titles list
         - If not found suggest a straight link for it from tmdb.
-        - add sort by options
-            - Use the list in fastapi's end
-        - Finish filers
-            - watched, unwatched, don't care
-            - favourite, not favourite, don't care
-            - tv, movie, don't care
-            - released, not released
-            - started...?
         - mobile compability still bad?
-        - The un released tag should be different from the genres
-        - Remake sidebar filter thingy so that it can be used here
-            - And fix the instant hide at the same time.
-        - Placeholder like two pixels two small
-    - Search should be more available.
-        - Add a button next to "+"?
-        - Search bar to top bar or on the start?
-        - Seperate page for all titles list as a search page?
+        - Placeholder broken
+        - Figure out the data that we wish to display and the layout for it.
+        - Search should be more available.
+            - Add a button next to "+"?
+            - Search bar to top bar or on the start?
+            - Seperate page for all titles list as a search page?
+        - Automatic hiding and toggling of tv with title/season in progress controls
+        - Finalize search controls layout.
+            - Seperator line
+            - Header?
+            - Chevorn on the side instead of a button?
+            - Reset button!
+        - Load more button not appearing!?
 
     - Title Details  
         - If no title poster the poster holder collapses
@@ -240,6 +238,8 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Trailers table. Current single triler is quite limiting. Would be cool to have more and actually check out a proper triler, sinse some trailers are not good.
     - Title genres might be adding duplicates. Add a unique (title_id, genre_id) or check if needed.
     - Production companies table
+    - Resized images arent deleted when the original images are
+        - Leads to a mismatch of resized and full size images.
 
 
 ### Feature ideas that might never see the light of day

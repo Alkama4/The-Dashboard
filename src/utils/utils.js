@@ -74,6 +74,7 @@ export const convert = {
             fullWithWeek: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
             date: { day: 'numeric', month: 'short', year: '2-digit' },
             month: { month: 'short', year: '2-digit' },
+            year: { year: 'numeric' },
             timetimeInMinutes: { weekday: 'short', minute: '2-digit', hour: '2-digit'},
             titimeInSecondsme: { weekday: 'short', second: '2-digit', minute: '2-digit', hour: '2-digit'},
         };
