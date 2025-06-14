@@ -10,7 +10,12 @@
     >
         <IconLoading class="icon-loading" size="42px" v-if="waitingVueShow"/>
 
-        <div class="modal">
+        <div 
+            class="modal"
+            ref="trapContainer"
+            tabindex="-1"
+            @keydown.tab="handleTab"
+        >
 
             <div class="default-content">
                 <h2 class="title">{{ header }}</h2>
@@ -18,6 +23,8 @@
                     class="icon-button"
                     size="36px"
                     @click="close"
+                    @keydown.enter="close"
+                    tabindex="0"
                 />
             </div>
 
@@ -74,12 +81,6 @@ export default {
         },
         open() {
             this.isOpening = true;
-
-            if (this.closeTimeout) {
-                clearTimeout(this.closeTimeout);
-                this.closeTimeout = null;
-            }
-
             this.vueShow = true;
             this.stylingShow = false;
 
@@ -91,6 +92,11 @@ export default {
                 this.waitingStylingShow = false;
                 this.waitingVueShow = false;
                 this.isOpening = false;
+
+                // Focus trap container
+                this.$nextTick(() => {
+                    this.$refs.trapContainer?.focus();
+                });
             }, 1);
         },
         close() {
@@ -111,6 +117,25 @@ export default {
         closeWithKeypress(event) {
             if (event.key === 'Escape') {
                 this.close();
+            }
+        },
+
+        handleTab(e) {
+            const focusables = this.$refs.trapContainer?.querySelectorAll(
+                'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+            );
+
+            if (!focusables || focusables.length === 0) return;
+
+            const first = focusables[0];
+            const last = focusables[focusables.length - 1];
+
+            if (e.shiftKey && document.activeElement === first) {
+                e.preventDefault();
+                last.focus();
+            } else if (!e.shiftKey && document.activeElement === last) {
+                e.preventDefault();
+                first.focus();
             }
         }
     }

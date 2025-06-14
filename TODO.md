@@ -180,6 +180,17 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Loading placheholder
             - jumps up a bit
             - could have multiple
+        - Name of the page not consistant
+        - Backdrop should load when clicked and not on page load.
+        - Filters and options have so many things to add:
+            - Multiple collections filter
+            - Show filters that differ from default as "tags" that can be removed by clicking
+            - Filter by age limit
+                - Slider or select allowed/not allowed
+            - UI might need a rethink if adding much more.
+                - The expand button should not be a button but a text that can be clicked?
+        - Show how many results found in total
+        - Auto load when at bottom?
 
     - New Entry 
         - Add QOL
@@ -199,12 +210,14 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Wipe all
         - Get backup file of data
         - Manage other users
+        - Delete title from database
 
     - Sources and about page?
         - Sources
             - TMDB  
             - OMDB
-            - Boxicon  
+            - Boxicon
+        - Replace current debug page?
 
     - dataQuery.js
         - Follow the same router style as fastapi

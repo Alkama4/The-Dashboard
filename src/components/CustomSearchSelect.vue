@@ -14,6 +14,7 @@
                 @keydown.down.prevent="handleKeyDown('down')"
                 @keydown.up.prevent="handleKeyDown('up')"
                 @keydown.enter.prevent="handleKeyDown('enter')"
+                @keydown.tab="handleKeyDown('enter')"
             >
             <span class="longest-option">{{ longestOption }}</span>
             <span v-if="!selectedOption || selectedOption == ''" class="placeholder">{{ placeholder }}</span>

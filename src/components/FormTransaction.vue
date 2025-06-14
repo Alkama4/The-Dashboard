@@ -378,14 +378,9 @@ export default {
             this.dropping.draggedIndex = null;
         },
         handleFormWideKeyDown(e) {
-            // Check for the Enter key
-            if (e.key === 'Enter') {
-                const isTextarea = e.target.tagName === 'TEXTAREA';
-                // Check if it's a regular input or Ctrl+Enter on a textarea
-                if ((!isTextarea && !e.ctrlKey) || (isTextarea && e.ctrlKey)) {
-                    e.preventDefault();
-                    this.handleSubmit();
-                }
+            if (e.key === 'Enter' && e.ctrlKey) {
+                e.preventDefault();
+                this.handleSubmit();
             }
         }
     },
