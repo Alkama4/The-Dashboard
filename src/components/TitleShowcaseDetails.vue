@@ -33,7 +33,7 @@
             <div class="tag tag-secondary" v-if="titleDetails.favourite == 1">
                 Favourite
             </div>
-            <div class="tag">
+            <div class="tag tag-type">
                 {{ titleDetails.type == 'tv' ? 'TV-show' : 'Movie' }}
             </div>
             <div class="tag" v-for="collection in titleDetails.collections" :key="collection.collection_id">{{ collection }}</div>
@@ -70,9 +70,7 @@ export default {
     },
     computed: {
         formattedReleaseDate() {
-            return this.titleDetails?.release_date
-                ? new Date(this.titleDetails.release_date).toLocaleDateString('fi-FI', { year: 'numeric' })
-                : '';
+            return convert.toFiDate(this.titleDetails.release_date, 'year');
         },
         formattedRuntime() {
             return convert.runtime(this.titleDetails.movie_runtime);

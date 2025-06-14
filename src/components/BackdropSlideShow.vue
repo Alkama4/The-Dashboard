@@ -4,11 +4,10 @@
             <div 
                 v-for="image in individualData" 
                 :key="image.number"
-                class="slide"
-                :class="{ visible: image.isLoaded && image.number === selectedImage }" 
             >
                 <img
                     class="backdrop-image"
+                    :class="{ 'image-visible': image.isLoaded && image.number === selectedImage }" 
                     v-if="image.number === showOnDom || keepOnDom.includes(image.number)" 
                     @load="image.isLoaded = true" 
                     :src="image.url" 
@@ -16,7 +15,7 @@
             </div>
         </div>
 
-        <div class="backdrop-dimension"></div>
+        <div class="backdrop-dimension flow-fixer"></div>
         
         <div class="backdrop-container backdrop-dimension" @keydown="handleKeypress" tabindex="0">
             <div class="content-inside">
@@ -25,17 +24,19 @@
                         v-for="image in individualData" 
                         :key="image.number"
                         class="slide"
-                        :class="{ visible: image.isLoaded && image.number === selectedImage }" 
+                        :class="{ visible: image.number === selectedImage }"
                     >
-                        <div
-                            v-if="image.number === showOnDom || keepOnDom.includes(image.number)" 
-                        >
+                        <div v-if="image.number === showOnDom || keepOnDom.includes(image.number)">
                             <img
                                 class="backdrop-image"
+                                :class="{ 'image-visible': image.isLoaded }"
                                 @load="image.isLoaded = true" 
                                 :src="image.url" 
                             />
-                            <TitleShowcaseDetails v-if="image.titleDetails" :titleDetails="image.titleDetails"/>
+                            <TitleShowcaseDetails 
+                                v-if="image.titleDetails" 
+                                :titleDetails="image.titleDetails"
+                            />
                         </div>
                     </div>
                 </div>
@@ -43,11 +44,11 @@
                 <div class="button-holder no-pointer-events" v-if="imageLinks.length > 1">
                     <button class="left all-pointer-events" @click="addOrSubtractSlideshowIndex(-1)">
                         <div class="hover-gradient"></div>
-                        <IconChevronDown size="52"/>
+                        <IconChevronDown size="min(6vw, 56px)"/>
                     </button>
                     <button class="right all-pointer-events" @click="addOrSubtractSlideshowIndex(1)">
                         <div class="hover-gradient"></div>
-                        <IconChevronDown size="52"/>
+                        <IconChevronDown size="min(6vw, 56px)"/>
                     </button>
                 </div>
                 
@@ -160,8 +161,10 @@ export default {
 <style scoped>
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
 .backdrop-dimension {
+    --backdrop-max-width: 1200px;
     width: 100vw;
-    max-width: min(100vw, 1200px);
+    max-width: min(100vw, var(--backdrop-max-width), calc(66vh / 9 * 16));
+    height: min(calc(100vw / 16 * 9), calc(var(--backdrop-max-width) / 16 * 9), 66vh);
     aspect-ratio: 16 / 9;
     /* max-height: 50vh; */
     margin-inline: auto;
@@ -174,6 +177,10 @@ export default {
     transform: translateX(-50%);
     z-index: var(--z-backdrop-container);
     background-color: var(--color-background);
+}
+
+.flow-fixer {
+    width: min(100vw, 100%);
 }
 
 /* BACKDROPS */
@@ -189,12 +196,19 @@ export default {
     transition: opacity 0.5s ease-in-out;
     opacity: 0;
 }
-.backdrop-image-container .slide.visible,
-.backdrop-image-container .slide.visible img {
+.backdrop-image-container .slide.visible {
     opacity: 1;
 }
 
-.backdrop-image-container.main img { 
+.backdrop-image-container .backdrop-image {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+.backdrop-image.image-visible {
+    opacity: 1;
+}
+
+.backdrop-image-container.main img.backdrop-image { 
     position: absolute;
     top: 0;
     bottom: 0;
@@ -203,7 +217,7 @@ export default {
     mask-image: linear-gradient(to top, transparent 0%, white 50%);
     z-index: var(--z-backdrop-image-main);
 }
-.backdrop-image-container.background img { 
+.backdrop-image-container.background img.backdrop-image { 
     position: absolute;
     top: 60px;
     left: 50%;
@@ -211,7 +225,7 @@ export default {
     object-fit: cover; 
     
     width: 100vw;
-    height: 675px;/* (1200px / 16 * 9) */
+    height: min(675px, 66vh);/* (1200px / 16 * 9) or 66vh */
     z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
@@ -294,6 +308,9 @@ export default {
     background-color: var(--color-background);
 }
 
+.backdrop-container .button-holder button svg {
+    width: 100% !important;
+}
 .backdrop-container .button-holder button.right:hover svg {
     transform: scale(1.25) rotate(-90deg);
 }

@@ -60,9 +60,13 @@ export default {
 <style>
 .title-showcase .backdrop-dimension {
     min-height: 400px !important;
-    max-width: min(100vw, 1500px);
+    --backdrop-max-width: 1500px;
 }
 .title-showcase .backdrop-image-container img.backdrop-image {
-    mask-image: linear-gradient(to top, transparent 0%, rgba(255,255,255,0.2) 40%, white 75%) !important;
+    mask-image: linear-gradient(to top, 
+                                hsla(0, 0%, 100%, 0) 0%, 
+                                hsla(0, 0%, 100%, 0.4) 40%, 
+                                hsla(0, 0%, 100%, 1) 66%
+                                ) !important;
 }
 </style>
