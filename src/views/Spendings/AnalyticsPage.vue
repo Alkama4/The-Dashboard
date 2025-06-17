@@ -58,19 +58,25 @@
         </div>
 
         <div class="card content-width-medium">
-            <h2 class="card-header">Last Month</h2>
+            <div class="card-header">
+                <h2>Custom timespan</h2>
+                <CustomSelect
+                    v-model="timespanStartMonthCount" 
+                    :options="presetTimespans"
+                />
+            </div>
             <div class="info-grid">
                 <div class="cell">
-                    <div class="label">Daily Average Spending</div>
-                    <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageDay) || '-' }}</div>
+                    <div class="label">Daily Average Expenses</div>
+                    <div class="data">{{ toEur(pageValues.timespan.expenses_avg_day) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Weekly Average Spending</div>
-                    <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageWeek) || '-' }}</div>
+                    <div class="label">Weekly Average Expenses</div>
+                    <div class="data">{{ toEur(pageValues.timespan.expenses_avg_week) || '-' }}</div>
                 </div>
                 <div class="cell">
-                    <div class="label">Spendings Last Month <InfoTooltip text="Since the average and the time period are both the same it doesn't make sence to call it average."/></div>
-                    <div class="data">{{ toEur(pageValues.lastMonth.spendingsAverageMonth) || '-' }}</div>
+                    <div class="label">Monthly Average Expenses</div>
+                    <div class="data">{{ toEur(pageValues.timespan.expenses_avg_month) || '-' }}</div>
                 </div>
             </div>
 
@@ -79,63 +85,22 @@
             <div class="info-grid">
                 <div class="cell">
                     <div class="label">Expense-to-Income Ratio</div>
-                    <div class="data">{{ toFiNumber(pageValues.lastMonth.incomeExpenseRatio) || '-' }}</div>
+                    <div class="data">{{ toFiNumber(pageValues.timespan.income_expense_ratio) || '-' }}</div>
                 </div>
                 <div class="cell">
                     <div class="label">Net Total</div>
                     <div 
                         class="data" 
-                        :class="pageValues.lastMonth.netTotal > 0 ? 'positive' : 'negative'" 
+                        :class="pageValues.timespan.net_total > 0 ? 'positive' : 'negative'" 
                     >
-                        {{ toEur(pageValues.lastMonth.netTotal) || '-' }}
+                        {{ toEur(pageValues.timespan.net_total) || '-' }}
                     </div>
                 </div>
             </div>
 
             <div class="card-spacer"></div>
 
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.pie1"/>
-
-        </div>
-
-        <div class="card content-width-medium">
-            <h2 class="card-header">Last Year</h2>
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Daily Average Spending</div>
-                    <div class="data">{{ toEur(pageValues.lastYear.spendingsAverageDay) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Weekly Average Spending</div>
-                    <div class="data">{{ toEur(pageValues.lastYear.spendingsAverageWeek) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Monthly Average Spending</div>
-                    <div class="data">{{ toEur(pageValues.lastYear.spendingsAverageMonth) || '-' }}</div>
-                </div>
-            </div>
-
-            <div class="card-spacer"></div>
-
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Expense-to-Income Ratio</div>
-                    <div class="data">{{ toFiNumber(pageValues.lastYear.incomeExpenseRatio) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Net Total</div>
-                    <div 
-                        class="data" 
-                        :class="pageValues.lastYear.netTotal > 0 ? 'positive' : 'negative'" 
-                    >
-                        {{ toEur(pageValues.lastYear.netTotal) || '-' }}
-                    </div>                
-                </div>
-            </div>
-
-            <div class="card-spacer"></div>
-    
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.pie2"/>
+            <ChartComponent :chartOptionsGenerator="chartValueGenerators.timespanPie"/>
 
         </div>
 
@@ -171,7 +136,6 @@
 <script>
 // My utils
 import fastApi from '@/utils/fastApi';
-import InfoTooltip from '@/components/InfoTooltip.vue';
 import { convert, getCssVar } from '@/utils/utils'
 import { 
     generateTooltipMultiValue, 
@@ -180,21 +144,30 @@ import {
     initialEchartSetup,
 } from '@/utils/chartUtils'
 import ChartComponent from '@/components/ChartComponent.vue';
+import CustomSelect from '@/components/CustomSelect.vue';
 
 export default {
     name: 'AnalyticsPage',
     components: {
-        InfoTooltip,
         ChartComponent,
+        CustomSelect,
     },
     data() {
         return {
             chartValueGenerators: {},
             pageValues: {
                 generalStats: {},
-                lastMonth: {},
-                lastYear: {}
+                timespan: {},
             },
+            presetTimespans: [
+				{label: "1 month", value: 0},
+				{label: "3 months", value: 2},
+				{label: "6 months", value: 5},
+				{label: "1 year", value: 11},
+				// {label: "2 years", value: 23},
+				{label: "All time", value: -1},
+			],
+            timespanStartMonthCount: 0,
         };
     },
     methods: {
@@ -208,6 +181,83 @@ export default {
         toEur(value) {
             return convert.toEur(value)
         },
+        getTimespanStartMonth() {
+            const today = new Date();
+            const currentYear = today.getFullYear();
+            const currentMonth = today.getMonth();
+
+            if (this.timespanStartMonthCount == -1) {
+                return "all";
+            }
+
+            // Calculate total months by subtracting the offset
+            const totalMonths = (currentYear * 12 + currentMonth) - this.timespanStartMonthCount;
+            
+            // Get new year and month from the total months
+            const newYear = Math.floor(totalMonths / 12);
+            const newMonth = totalMonths % 12;
+
+            // Create a new Date object with adjusted year, month (0-11), and set day to 1
+            const adjustedDate = new Date(newYear, newMonth, 1);
+
+            // Format the date as YYYY-MM-DD
+            const formattedDate = `${adjustedDate.getFullYear()}-${String(adjustedDate.getMonth() + 1).padStart(2, '0')}-${String(adjustedDate.getDate()).padStart(2, '0')}`;
+
+            return formattedDate;
+        },
+        async fetchTimespanStatistics() {
+            const response = await fastApi.spendings.analytics.stats.timespan(this.getTimespanStartMonth());
+            if (response && response.stats) {
+                this.pageValues.timespan = { ...response.stats };
+
+                const pieData1 = response.stats.expense_categories.map(item => ({
+                    name: item.category,
+                    value: item.total_amount,
+                }));
+
+                const timespanPieOptions = () => ({
+                    textStyle: commonChartValues().textStyle,
+                    title: {
+                        text: 'Spendings This Month by Category',
+                        textStyle: {
+                            color: getCssVar('color-text-lighter'),
+                            fontSize: 16,
+                            fontWeight: 500,
+                        },
+                        x: 'center',
+                    },
+                    legend: commonChartValues().legend,
+                    color: commonChartValues().color,
+                    tooltip: { 
+                        trigger: 'item',
+                        backgroundColor: getCssVar('color-background-card'),
+                        borderWidth: 1,
+                        borderColor: getCssVar("color-border"),
+                        formatter: params => generateTooltipSingleValue(params, 'eur'),
+                    },
+                    series: [
+                        {
+                            name: 'Monthly Average Spending',
+                            type: 'pie',
+                            label: {
+                                color: getCssVar('color-text'),
+                            },
+                            data: pieData1,
+                        },
+                    ],
+                });
+
+                // Set the value generator for the chart
+                this.chartValueGenerators.timespanPie = timespanPieOptions;
+            }
+        }
+    },
+    watch: {
+        timespanStartMonthCount: {
+            async handler() {
+                this.fetchTimespanStatistics()
+            }
+        }
     },
     async mounted() {
         // Everything that needs to be done before echarts in one method
@@ -225,98 +275,7 @@ export default {
 
             // Last month stats
             (async () => {
-                const lastMonthResponse = await fastApi.spendings.analytics.stats.timespan("month");
-                if (lastMonthResponse && lastMonthResponse.stats) {
-                    this.pageValues.lastMonth = { ...lastMonthResponse.stats };
-
-                    const pieData1 = lastMonthResponse.stats.topMostExpensiveCategories.map(item => ({
-                        name: item.category,
-                        value: item.totalAmount,
-                    }));
-
-                    const pie1Options = () => ({
-                        textStyle: commonChartValues().textStyle,
-                        title: {
-                            text: 'Spendings This Month by Category',
-                            textStyle: {
-                                color: getCssVar('color-text-lighter'),
-                                fontSize: 16,
-                                fontWeight: 500,
-                            },
-                            x: 'center',
-                        },
-                        legend: commonChartValues().legend,
-                        color: commonChartValues().color,
-                        tooltip: { 
-                            trigger: 'item',
-                            backgroundColor: getCssVar('color-background-card'),
-                            borderWidth: 1,
-                            borderColor: getCssVar("color-border"),
-                            formatter: params => generateTooltipSingleValue(params, 'eur'),
-                        },
-                        series: [
-                            {
-                                name: 'Monthly Average Spending',
-                                type: 'pie',
-                                label: {
-                                    color: getCssVar('color-text'),
-                                },
-                                data: pieData1,
-                            },
-                        ],
-                    });
-
-                    // Set the value generator for the chart
-                    this.chartValueGenerators.pie1 = pie1Options;
-                }
-            })(),
-
-            // Last year stats
-            (async () => {
-                const lastYearResponse = await fastApi.spendings.analytics.stats.timespan("year")
-                if (lastYearResponse && lastYearResponse.stats) {
-                    this.pageValues.lastYear = {...lastYearResponse.stats}
-
-                    const pieData2 = lastYearResponse.stats.topMostExpensiveCategories.map(item => ({
-                        name: item.category,
-                        value: item.totalAmount
-                    }));
-
-                    const pie2Options = () => ({
-                        textStyle: commonChartValues().textStyle,
-                        title: {
-                            text: 'Monthly Average Spendings by Category',
-                            textStyle: {
-                                color: getCssVar('color-text-lighter'),
-                                fontSize: 16,
-                                fontWeight: 500,
-                            },
-                            x: 'center',
-                        },
-                        legend: commonChartValues().legend,
-                        color: commonChartValues().color,
-                        tooltip: { 
-                            trigger: 'item',
-                            backgroundColor: getCssVar('color-background-card'),
-                            borderWidth: 1,
-                            borderColor: getCssVar("color-border"),
-                            formatter: params => generateTooltipSingleValue(params, 'eur')
-                        },
-                        series: [
-                            {
-                                name: 'Monthly Average Spending',
-                                type: 'pie',
-                                label: {
-                                    color: getCssVar('color-text')
-                                },
-                                data: pieData2,
-                            }
-                        ]
-                    })
-
-                    // Set the value generator for the chart
-                    this.chartValueGenerators.pie2 = pie2Options;
-                }
+                await this.fetchTimespanStatistics();
             })(),
 
             // Chart 1
@@ -666,6 +625,15 @@ export default {
 
 
 <style scoped>
+.card-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.custom-select {
+    width: 120px;
+}
+
 .chartCard {
     position: relative;
     width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */

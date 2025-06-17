@@ -49,32 +49,23 @@ export default {
     methods: {
         initializeChart() {
             if (this.$refs.chartHolder) {
-                // Init the chart
-                const chart = init(this.$refs.chartHolder);
-    
-                // Initialize the chart with the given options function
-                chart.setOption(this.chartOptionsGenerator());
-    
-                // Add a listener to resize the chart when needed
-                this.setupResizeObserver(chart);
+                this.chart = init(this.$refs.chartHolder);
+                this.chart.setOption(this.chartOptionsGenerator());
+                this.setupResizeObserver(this.chart);
 
-                // Add listener for esc
                 document.addEventListener('keydown', (event) => {
                     if (event.key === 'Escape') {
-                        this.exitFullscreen()
+                        this.exitFullscreen();
                     }
                 });
-    
-                // Listen for custom dark mode change event
+
                 window.addEventListener("darkModeChange", () => {
-                    // Set the options again with the function (but now with appropriate colors)
-                    chart.setOption(this.chartOptionsGenerator());
+                    this.chart.setOption(this.chartOptionsGenerator());
                 });
 
-                // Display the chart
                 this.isLoaded = true;
             } else {
-                console.warn("[initializeChart] Invalid ref.")
+                console.warn("[initializeChart] Invalid ref.");
             }
         },
         setupResizeObserver(chart) {
@@ -125,9 +116,11 @@ export default {
     },
     watch: {
         chartOptionsGenerator: {
-            handler(newData) { 
-                if (newData != null && !this.isLoaded) {
+            handler(newVal) {
+                if (!this.isLoaded) {
                     this.initializeChart();
+                } else if (this.chart) {
+                    this.chart.setOption(newVal());
                 }
             },
             immediate: true,

@@ -138,6 +138,7 @@ export default {
     position: relative;
     height: 40px;
     max-width: 100%;
+    min-width: 75px;
     width: max-content;
 }
 
