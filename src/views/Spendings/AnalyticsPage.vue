@@ -27,7 +27,7 @@
         -->
 
         <div class="card content-width-medium">
-            <h2 class="card-header">Overall Statistics</h2>
+            <h2 class="card-header">Overall</h2>
             <div class="info-grid">
                 <div class="cell">
                     <div class="label">Total Transactions Logged</div>
@@ -59,7 +59,7 @@
 
         <div class="card content-width-medium">
             <div class="card-header">
-                <h2>Custom timespan</h2>
+                <h2>Timespan</h2>
                 <CustomSelect
                     v-model="timespanStartMonthCount" 
                     :options="presetTimespans"
@@ -160,7 +160,7 @@ export default {
                 timespan: {},
             },
             presetTimespans: [
-				{label: "1 month", value: 0},
+				{label: "This month", value: 0},
 				{label: "3 months", value: 2},
 				{label: "6 months", value: 5},
 				{label: "1 year", value: 11},
@@ -261,7 +261,7 @@ export default {
     },
     async mounted() {
         // Everything that needs to be done before echarts in one method
-        initialEchartSetup(this);
+        initialEchartSetup();
         
         // Async setup for each chart
         const fetchAndSetupCharts = [
@@ -284,7 +284,22 @@ export default {
                     const response = await fastApi.spendings.analytics.charts.balance_over_time();
                     const dates = response.balanceOverTime.map(item => item.date);
                     const runningSums = response.balanceOverTime.map(item => item.runningBalance);
-                    
+
+                    const today = new Date().toISOString().split('T')[0];
+                    const todayIndex = dates.indexOf(today);
+
+                    let beforeToday = [];
+                    let afterToday = [];
+
+                    if (todayIndex === -1) {
+                        // 'today' not found, show everything as historical
+                        beforeToday = runningSums;
+                        afterToday = new Array(runningSums.length).fill(null);
+                    } else {
+                        beforeToday = runningSums.slice(0, todayIndex + 1);
+                        afterToday = new Array(todayIndex + 1).fill(null).concat(runningSums.slice(todayIndex + 1));
+                    }
+
                     const chart1Options = () => ({
                         textStyle: commonChartValues().textStyle,
                         title: {
@@ -294,7 +309,7 @@ export default {
                                 fontSize: 24,
                             }
                         },
-                        color: [getCssVar('color-primary')],
+                        // color: [getCssVar('color-primary')],
                         tooltip: { 
                             trigger: 'axis',
                             backgroundColor: getCssVar('color-background-card'),
@@ -329,10 +344,10 @@ export default {
                         },
                         series: [
                             {
-                                name: 'Balance',    // Tooltipissa näkyvä nimi
+                                name: 'Balance',
                                 type: 'line',
-                                data: runningSums,
-                                // smooth: true,
+                                data: beforeToday,
+                                color: getCssVar('color-primary'),
                                 areaStyle: {
                                     color: {
                                         type: 'linear',
@@ -348,6 +363,26 @@ export default {
                                     }
                                 },
                             },
+                            afterToday.length > 0 ? {
+                                name: 'Balance (Upcoming)',
+                                type: 'line',
+                                data: afterToday,
+                                color: getCssVar('color-primary-opaque'),
+                                areaStyle: {
+                                    color: {
+                                        type: 'linear',
+                                        x: 0,
+                                        y: 0,
+                                        x2: 0,
+                                        y2: 1,
+                                        colorStops: [{
+                                            offset: 0, color: getCssVar("color-primary-opaque")
+                                        }, {
+                                            offset: 1, color: 'rgba(0,0,0,0)'
+                                        }]
+                                    }
+                                },
+                            } : null,
                         ],
                     });
 
@@ -363,9 +398,12 @@ export default {
             (async () => {
                 try {
                     const response = await fastApi.spendings.analytics.charts.sum_by_month();
+                    console.log(response);
                     const months = response.monthlySums.map(item => item.month);
-                    const totalIncomes = response.monthlySums.map(item => item.total_income);
-                    const totalExpenses = response.monthlySums.map(item => item.total_expense);
+                    const pastIncomes = response.monthlySums.map(item => item.past.income);
+                    const upcomingIncomes = response.monthlySums.map(item => item.upcoming.income);
+                    const pastExpenses = response.monthlySums.map(item => item.past.expense);
+                    const upcomingExpenses = response.monthlySums.map(item => item.upcoming.expense);
                     const netTotals = response.monthlySums.map(item => item.net_total);
 
                     const chart2Options = () => ({
@@ -377,7 +415,13 @@ export default {
                                 fontSize: 24,
                             }
                         },
-                        color: [getCssVar("color-positive"), getCssVar("color-negative"), getCssVar("color-text")],
+                        color: [
+                            getCssVar("color-positive"),
+                            getCssVar("color-positive-opaque"),
+                            getCssVar("color-negative"),
+                            getCssVar("color-negative-opaque"),
+                            getCssVar("color-text"),
+                        ],
                         tooltip: { 
                             trigger: 'axis',
                             backgroundColor: getCssVar('color-background-card'),
@@ -420,14 +464,28 @@ export default {
                             {
                                 name: 'Incomes',
                                 type: 'bar',
-                                data: totalIncomes,
+                                data: pastIncomes,
+                                smooth: true,
+                                stack: 'stacked'
+                            },
+                            {
+                                name: 'Incomes (Upcoming)',
+                                type: 'bar',
+                                data: upcomingIncomes,
                                 smooth: true,
                                 stack: 'stacked'
                             },
                             {
                                 name: 'Expenses',
                                 type: 'bar',
-                                data: totalExpenses,
+                                data: pastExpenses,
+                                smooth: true,
+                                stack: 'stacked'
+                            },
+                            {
+                                name: 'Expenses (Upcoming)',
+                                type: 'bar',
+                                data: upcomingExpenses,
                                 smooth: true,
                                 stack: 'stacked'
                             },
@@ -631,7 +689,7 @@ export default {
     justify-content: space-between;
 }
 .custom-select {
-    width: 120px;
+    width: 140px;
 }
 
 .chartCard {

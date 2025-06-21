@@ -20,7 +20,7 @@ export function generateTooltipMultiValue(params, yAxisFormatToDateType, xAxisFo
     let sum = 0;
     for (let i = 0; i < params.length; i++) {
         // Speacial case if the data already includes a sum value, but we would like to use the custom one for continuity
-        if (showSumRow === true && params[i].seriesName === 'Sum') {
+        if (showSumRow === true && params[i].seriesName === 'Sum' || params[i].data == null) {
             continue;   // In case there is one we just skip it
         }
         rows += `
