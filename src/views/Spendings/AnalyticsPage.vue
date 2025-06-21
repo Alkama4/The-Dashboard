@@ -42,7 +42,7 @@
                     <div class="data">{{ toFiNumber(pageValues.generalStats.daysLogged) || '-' }}</div>
                 </div>
             </div>
-
+<!-- 
             <div class="card-spacer"></div>
 
             <div class="info-grid">
@@ -54,7 +54,7 @@
                     <div class="label">Total Logged Income</div>
                     <div class="data positive">{{ toEur(pageValues.generalStats.totalIncomes) || '-' }}</div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="card content-width-medium">
@@ -297,7 +297,7 @@ export default {
                         afterToday = new Array(runningSums.length).fill(null);
                     } else {
                         beforeToday = runningSums.slice(0, todayIndex + 1);
-                        afterToday = new Array(todayIndex + 1).fill(null).concat(runningSums.slice(todayIndex + 1));
+                        afterToday = new Array(todayIndex).fill(null).concat(runningSums.slice(todayIndex));
                     }
 
                     const chart1Options = () => ({
@@ -309,7 +309,6 @@ export default {
                                 fontSize: 24,
                             }
                         },
-                        // color: [getCssVar('color-primary')],
                         tooltip: { 
                             trigger: 'axis',
                             backgroundColor: getCssVar('color-background-card'),
@@ -321,7 +320,7 @@ export default {
                             left: 80,
                             right: 8,
                             top: 88,
-                            bottom: 42,
+                            bottom: 100,
                         },
                         xAxis: {
                             type: 'category',
@@ -336,12 +335,42 @@ export default {
                         },
                         yAxis: { 
                             type: 'value',      
-                            name: 'Amount (€)',  // Y-akselin nimi
-                            //interval: 500,    // Kuinka tiheesti näytetään sivu labelit
-                            axisLabel: {        // Y-akselin arvojen muotoilu
+                            name: 'Amount (€)',
+                            axisLabel: {
                                 formatter: value => this.toEur(value, 'axis')
                             }
                         },
+                        dataZoom: [
+                            {
+                                type: 'inside',
+                                xAxisIndex: 0,
+                                filterMode: 'filter'
+                            },
+                            {
+                                type: 'slider',
+                                xAxisIndex: 0,
+                                height: 32,
+                                bottom: 12,
+                                handleSize: '80%',
+                                handleStyle: {
+                                    color: getCssVar('color-text-hidden'),
+                                },
+                                dataBackground: {
+                                    areaStyle: {
+                                        color: getCssVar('color-text-hidden')
+                                    },
+                                    lineStyle: {
+                                        color: getCssVar('color-text-lighter')
+                                    }
+                                },
+                                borderColor: "transparent",
+                                fillerColor: getCssVar('color-primary-opaque'),
+                                filterMode: 'filter',
+                                textStyle: {
+                                    color: getCssVar('color-text-lighter')
+                                }
+                            }
+                        ],
                         series: [
                             {
                                 name: 'Balance',
@@ -383,7 +412,7 @@ export default {
                                     }
                                 },
                             } : null,
-                        ],
+                        ].filter(Boolean),
                     });
 
                     // Set the value generator for the chart
