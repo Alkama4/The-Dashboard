@@ -58,10 +58,14 @@ export default {
 </script>
 
 <style>
-.title-showcase .backdrop-dimension {
-    min-height: 400px !important;
+.title-showcase .backdrop-slide-show {
     --backdrop-max-width: 1500px;
 }
+.title-showcase .backdrop-dimension {
+    min-height: 400px !important;
+    min-width: min(711.11px, 100vw) !important;
+}
+
 .title-showcase .backdrop-image-container img.backdrop-image {
     mask-image: linear-gradient(to top, 
                                 hsla(0, 0%, 100%, 0) 0%, 

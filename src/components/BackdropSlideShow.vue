@@ -160,12 +160,13 @@ export default {
 
 <style scoped>
 /* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
-.backdrop-dimension {
+.backdrop-slide-show {
     --backdrop-max-width: 1200px;
-    width: 100vw;
-    max-width: min(100vw, var(--backdrop-max-width), calc(66vh / 9 * 16));
+}
+.backdrop-dimension {
+    width: min(100vw, var(--backdrop-max-width));
     height: min(calc(100vw / 16 * 9), calc(var(--backdrop-max-width) / 16 * 9), 66vh);
-    aspect-ratio: 16 / 9;
+    /* aspect-ratio: 16 / 9; */
     /* max-height: 50vh; */
     margin-inline: auto;
     z-index: var(--z-backdrop-dimension);
@@ -225,7 +226,8 @@ export default {
     object-fit: cover; 
     
     width: 100vw;
-    height: min(675px, 66vh);/* (1200px / 16 * 9) or 66vh */
+    /* height: min(675px, 66vh);(1200px / 16 * 9) or 66vh */
+    height: min(calc(100vw / 16 * 9), calc(var(--backdrop-max-width) / 16 * 9), 66vh);
     z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
@@ -233,11 +235,11 @@ export default {
     mask-composite: intersect;
 }
 
-@media (max-width: 1200px) {
+/* @media (max-width: 1200px) {
     .backdrop-image-container.background { 
         display: none;
     }
-}
+} */
 
 /* INSIDE CONTENT */
 .backdrop-container .content-inside {

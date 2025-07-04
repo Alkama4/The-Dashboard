@@ -20,9 +20,10 @@
                 {{ formattedRuntime }}
             </template>
         </span>
-        <div class="tags">
+        <!-- <div class="tags">
             <div class="tag tag-positive" v-if="titleDetails.watch_count >= 1">
-                Watched
+            {{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}
+
             </div>
             <div class="tag tag-primary" v-if="new Date(titleDetails.release_date) < new Date() && new Date(titleDetails.release_date) > new Date(new Date() - 30 * 24 * 60 * 60 * 1000)">
                 New release
@@ -37,7 +38,7 @@
                 {{ titleDetails.type == 'tv' ? 'TV-show' : 'Movie' }}
             </div>
             <div class="tag" v-for="collection in titleDetails.collections" :key="collection.collection_id">{{ collection }}</div>
-        </div>
+        </div> -->
         
         <span class="overview">{{ titleDetails?.overview }} </span>
         <router-link :to="`/watch_list/title/${titleDetails?.title_id}`" class="link-button no-decoration">View details</router-link>
@@ -120,20 +121,20 @@ export default {
     font-weight: 500;
 }
 
-.title-showcase-details .tags {
+/* .title-showcase-details .tags {
     display: flex;
     flex-wrap: wrap;
     column-gap: var(--spacing-sm);
     row-gap: var(--spacing-xs);
-}
+} */
 
 @media (max-width: 700px) {
     .title-showcase-details {
         font-size: var(--font-size-small);
         row-gap: var(--spacing-sm);
     }
-    .title-showcase-details .tags {
+    /* .title-showcase-details .tags {
         display: none;
-    }
+    } */
 }
 </style>
