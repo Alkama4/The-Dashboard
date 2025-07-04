@@ -32,8 +32,8 @@
                 v-else 
                 class="content-not-found card full-width-slide"
             >
-                Looks like there's nothing here.<br>
-                <span class="text-hidden">Try adding adding more titles to your watch list</span>
+                Looks like there's nothing here<br>
+                <span class="text-hidden">Try adding adding more titles to your watch list.</span>
             </div>
         </div>
         <div class="indicator-dots-holder">
@@ -351,6 +351,7 @@ export default {
 .cards {
     margin-inline: auto;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .custom-carousel {

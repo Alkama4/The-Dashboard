@@ -59,7 +59,7 @@
 
         <div class="card content-width-medium">
             <div class="card-header">
-                <h2>Timespan</h2>
+                <h2>Timespan {{ pageValues.timespan.dateRange }}</h2>
                 <CustomSelect
                     v-model="timespanStartMonthCount" 
                     :options="presetTimespans"
@@ -102,6 +102,54 @@
 
             <ChartComponent :chartOptionsGenerator="chartValueGenerators.timespanPie"/>
 
+            <div class="card-spacer"></div>
+
+            <div class="info-grid column-for-mobile">
+                <div class="cell">
+                    <h3>Expense categories total</h3>
+                    <div 
+                        v-for="(category, index) in pageValues.timespan.expense_categories_total" 
+                        :key="index" 
+                        class="data-row"
+                    >
+                        <div class="name">{{ category.category }}</div>
+                        <div class="value">{{ toEur(category.total_amount) }}</div>
+                    </div>
+                    <div 
+                        v-if="pageValues.timespan?.expense_categories_total?.length > 0" 
+                        class="data-row sum-row"
+                    >
+                        <div class="name">Total</div>
+                        <div class="value">{{ toEur(pageValues.timespan.expense_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
+                    </div>
+                    <div v-else class="content-not-found">
+                        No values found
+                        <span class="text-hidden">Try modifying the timerange.</span>
+                    </div>
+                </div>
+                <div class="cell">
+                    <h3>Income categories total</h3>
+                    <div 
+                        v-for="(category, index) in pageValues.timespan.income_categories_total" 
+                        :key="index" 
+                        class="data-row"
+                    >
+                        <div class="name">{{ category.category }}</div>
+                        <div class="value">{{ toEur(category.total_amount) }}</div>
+                    </div>
+                    <div 
+                        v-if="pageValues.timespan?.income_categories_total?.length > 0" 
+                        class="data-row sum-row"
+                    >
+                        <div class="name">Total</div>
+                        <div class="value">{{ toEur(pageValues.timespan.income_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
+                    </div>
+                    <div v-else class="content-not-found">
+                        No values found
+                        <span class="text-hidden">Try modifying the timerange.</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- <h2>All time?</h2> -->
@@ -184,41 +232,51 @@ export default {
             const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
             if (this.timespanStartMonthCount === -1) {
-                // Let backend decide the default
                 return null;
             }
 
-            // Subtract the number of months
             const newDate = new Date(
                 currentDate.getFullYear(),
                 currentDate.getMonth() - this.timespanStartMonthCount,
                 1
             );
 
-            return newDate.toISOString().split('T')[0]; // YYYY-MM-DD
+            const year = newDate.getFullYear();
+            const month = String(this.timespanStartMonthCount === 0 
+                ? newDate.getMonth() + 1 
+                : newDate.getMonth()).padStart(2, '0');
+            const day = this.timespanStartMonthCount === 0
+                ? '01'
+                : String(currentDate.getDate()).padStart(2, '0');
+
+            return `${year}-${month}-${day}`;
         },
         async fetchTimespanStatistics() {
             const startDate = this.getTimespanStartDate();
             const endDate = new Date().toISOString().split('T')[0]; // today
-
             const response = await fastApi.spendings.analytics.stats.timespan(startDate, endDate);
-            console.log(response)
+
             if (response && response.stats) {
+                // Store all values for the page
                 this.pageValues.timespan = { ...response.stats };
 
-                const pieData1 = response.stats.expense_categories.map(item => ({
+                // Construct the date text for the timespan
+                this.pageValues.timespan.dateRange = `${convert.toFiDate(response.timespan.start_date, "date")} - ${convert.toFiDate(response.timespan.end_date, "date")} (${response.timespan.days_in_period} days)`
+
+                // Map the values for the chart
+                const pieData1 = response.stats.expense_categories_avg_month.map(item => ({
                     name: item.category,
-                    value: item.total_amount,
+                    value: item.avg_per_month,
                 }));
 
                 const timespanPieOptions = () => ({
                     textStyle: commonChartValues().textStyle,
                     title: {
-                        text: 'Spendings by Category',
+                        text: 'Monthly Average Expenses by Category',
                         textStyle: {
-                            color: getCssVar('color-text-lighter'),
-                            fontSize: 16,
-                            fontWeight: 500,
+                            color: getCssVar('color-text'),
+                            fontSize: getCssVar('font-size-medium'),
+                            fontWeight: 700,
                         },
                         x: 'center',
                     },
@@ -490,34 +548,49 @@ export default {
                                 type: 'bar',
                                 data: pastIncomes,
                                 smooth: true,
-                                stack: 'stacked'
+                                stack: 'stacked',
+                                emphasis: {
+                                    focus: 'series'
+                                }
                             },
                             {
                                 name: 'Incomes (Upcoming)',
                                 type: 'bar',
                                 data: upcomingIncomes,
                                 smooth: true,
-                                stack: 'stacked'
+                                stack: 'stacked',
+                                emphasis: {
+                                    focus: 'series'
+                                }
                             },
                             {
                                 name: 'Expenses',
                                 type: 'bar',
                                 data: pastExpenses,
                                 smooth: true,
-                                stack: 'stacked'
+                                stack: 'stacked',
+                                emphasis: {
+                                    focus: 'series'
+                                }
                             },
                             {
                                 name: 'Expenses (Upcoming)',
                                 type: 'bar',
                                 data: upcomingExpenses,
                                 smooth: true,
-                                stack: 'stacked'
+                                stack: 'stacked',
+                                emphasis: {
+                                    focus: 'series'
+                                }
                             },
                             {
                                 name: 'Sum',
                                 type: 'line',
                                 data: netTotals,
                                 smooth: true,
+                                emphasis: {
+                                    focus: 'series'
+                                }
                             },
                         ],
                     });
@@ -546,6 +619,9 @@ export default {
                             const categoryData = monthData.categories.find(cat => cat.category === category);
                             return categoryData ? categoryData.total_expense : 0;
                         }),
+                        emphasis: {
+                            focus: 'series'
+                        }
                     }));
 
                     const chart3Options = () => ({
@@ -624,6 +700,9 @@ export default {
                             const categoryData = monthData.categories.find(cat => cat.category === category);
                             return categoryData ? categoryData.total_expense : 0;
                         }),
+                        emphasis: {
+                            focus: 'series'
+                        }
                     }));
 
                     const chart4Options = () => ({
@@ -732,7 +811,7 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     gap: 10px;
     flex-wrap: wrap;
 }
@@ -756,7 +835,47 @@ export default {
     font-weight: 700;
     font-size: 32px;
 }
+.info-grid .cell h3 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+}
 
+@media(max-width: 675px) {
+    .column-for-mobile {
+        flex-direction: column;
+    }
+    .column-for-mobile .cell {
+        width: 100%;
+    }
+}
+
+.info-grid .cell .data-row {
+    display: flex;
+    justify-content: space-between;
+    margin-inline: var(--spacing-md);
+}
+.info-grid .cell .sum-row {
+    border-top: 2px solid var(--color-border);
+    padding-top: 6px;
+    margin-top: 6px;
+}
+.data-row .name {
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+.data-row .value {
+    color: var(--color-text);
+}
+.info-grid .cell .sum-row,
+.info-grid .cell .sum-row .name {
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.content-not-found {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+}
 
 .info-grid table {
     margin-top: var(--spacing-sm);
