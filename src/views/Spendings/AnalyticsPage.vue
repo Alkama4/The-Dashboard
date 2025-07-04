@@ -134,7 +134,6 @@
 
 
 <script>
-// My utils
 import fastApi from '@/utils/fastApi';
 import { convert, getCssVar } from '@/utils/utils'
 import { 
@@ -161,10 +160,9 @@ export default {
             },
             presetTimespans: [
 				{label: "This month", value: 0},
-				{label: "3 months", value: 2},
-				{label: "6 months", value: 5},
-				{label: "1 year", value: 11},
-				// {label: "2 years", value: 23},
+				{label: "Last 3 months", value: 2},
+				{label: "Last 6 months", value: 5},
+				{label: "Last year", value: 11},
 				{label: "All time", value: -1},
 			],
             timespanStartMonthCount: 0,
@@ -181,32 +179,30 @@ export default {
         toEur(value) {
             return convert.toEur(value)
         },
-        getTimespanStartMonth() {
+        getTimespanStartDate() {
             const today = new Date();
-            const currentYear = today.getFullYear();
-            const currentMonth = today.getMonth();
+            const currentDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-            if (this.timespanStartMonthCount == -1) {
-                return "all";
+            if (this.timespanStartMonthCount === -1) {
+                // Let backend decide the default
+                return null;
             }
 
-            // Calculate total months by subtracting the offset
-            const totalMonths = (currentYear * 12 + currentMonth) - this.timespanStartMonthCount;
-            
-            // Get new year and month from the total months
-            const newYear = Math.floor(totalMonths / 12);
-            const newMonth = totalMonths % 12;
+            // Subtract the number of months
+            const newDate = new Date(
+                currentDate.getFullYear(),
+                currentDate.getMonth() - this.timespanStartMonthCount,
+                1
+            );
 
-            // Create a new Date object with adjusted year, month (0-11), and set day to 1
-            const adjustedDate = new Date(newYear, newMonth, 1);
-
-            // Format the date as YYYY-MM-DD
-            const formattedDate = `${adjustedDate.getFullYear()}-${String(adjustedDate.getMonth() + 1).padStart(2, '0')}-${String(adjustedDate.getDate()).padStart(2, '0')}`;
-
-            return formattedDate;
+            return newDate.toISOString().split('T')[0]; // YYYY-MM-DD
         },
         async fetchTimespanStatistics() {
-            const response = await fastApi.spendings.analytics.stats.timespan(this.getTimespanStartMonth());
+            const startDate = this.getTimespanStartDate();
+            const endDate = new Date().toISOString().split('T')[0]; // today
+
+            const response = await fastApi.spendings.analytics.stats.timespan(startDate, endDate);
+            console.log(response)
             if (response && response.stats) {
                 this.pageValues.timespan = { ...response.stats };
 
@@ -218,7 +214,7 @@ export default {
                 const timespanPieOptions = () => ({
                     textStyle: commonChartValues().textStyle,
                     title: {
-                        text: 'Spendings This Month by Category',
+                        text: 'Spendings by Category',
                         textStyle: {
                             color: getCssVar('color-text-lighter'),
                             fontSize: 16,
@@ -427,7 +423,6 @@ export default {
             (async () => {
                 try {
                     const response = await fastApi.spendings.analytics.charts.sum_by_month();
-                    console.log(response);
                     const months = response.monthlySums.map(item => item.month);
                     const pastIncomes = response.monthlySums.map(item => item.past.income);
                     const upcomingIncomes = response.monthlySums.map(item => item.upcoming.income);

@@ -249,10 +249,11 @@ const fastApi = {
                     });
                 },
                 
-                async timespan(start) {
-                    return await getData('/spendings/analytics/stats', {
+                async timespan(start_date, end_date) {
+                    return await getData('/spendings/analytics/stats/timespan', {
                         session_key: session.getKey(),
-                        start_month: start
+                        start_date,
+                        end_date
                     });
                 },
             },
