@@ -7,9 +7,12 @@
             <p class="text-light title-list-text">{{ titleList.text }}</p>
 
             <CustomCarousel
+                class="full-width-carousel-dimensions"
                 :slides="titleList.titles"
                 :loading="titleList.loading"
+                side-offset="5vw"
             />
+            <div class="full-width-carousel-dimensions flow-fixer"></div>
         </div>
 
         <!-- Corner buttons -->
@@ -173,11 +176,29 @@ export default {
 </script>
 
 
-<style scoped>
+<style>
 .title-list h2 {
     margin-bottom: var(--spacing-xs);
 }
 .title-list .title-list-text {
     margin-top: var(--spacing-xs);
+}
+
+.full-width-carousel-dimensions {
+    width: 100vw;
+    height: 318px;
+    position: absolute;
+    left: 0;
+}
+.flow-fixer {
+    position: relative;
+    width: 100%;
+    z-index: -100;
+}
+
+/* Poke to make the carousel work with this pages layout */
+.custom-carousel .cards {
+    padding-inline: 5vw;
+    max-width: calc(200px * 7 + var(--spacing-xs) * 8);
 }
 </style>
