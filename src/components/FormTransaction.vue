@@ -559,7 +559,7 @@ export default {
     align-items: center;
     user-select: none;
     cursor: grab;
-    font-size: 24px;
+    font-size: var(--font-size-large);
     color: var(--color-text-light);
 }
 .right-mod-area {

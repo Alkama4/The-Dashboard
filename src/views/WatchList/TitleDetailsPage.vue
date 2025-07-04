@@ -39,7 +39,7 @@
                             Not in watchlist
                         </div>
                         <div class="tag tag-positive" v-if="title_info.watch_count >= 1">
-                            Watched
+                            {{ title_info.watch_count }} watch{{ title_info.watch_count > 1 ? 'es' : '' }}
                         </div>
                         <div class="tag tag-primary" v-if="new Date(title_info.release_date) < new Date() && new Date(title_info.release_date) > new Date(new Date() - 30 * 24 * 60 * 60 * 1000)">
                             New release
@@ -53,7 +53,15 @@
                         <div class="tag">
                             {{ title_info.type == 'tv' ? 'TV-show' : 'Movie' }}
                         </div>
-                        <div class="tag tag-editable" v-for="collection in title_info.collections" :key="collection.collection_id" @click="handleEditCollection(collection)">{{ collection.name }}</div>
+                        <router-link 
+                            class="tag tag-interactable hover-decoration" 
+                            v-for="collection in title_info.collections" 
+                            :key="collection.collection_id" 
+                            target="_blank"
+                            :to="`/watch_list/titles?collection_id=${collection.collection_id}`"
+                        >
+                            {{ collection.name }}
+                        </router-link>
                     </div>
 
                 </div>
@@ -103,7 +111,12 @@
             <div class="at-a-glance">
 
                 <div class="ratings">
-                    <div class="short-value">
+                    <a 
+                        class="short-value"
+                        :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                    >
                         <span class="value icon-align">
                             <IconIMDBColorful size="40px" class="imdb-icon"/>
                             {{ title_info?.imdb_vote_average ?? '-' }} 
@@ -111,8 +124,13 @@
                         <span class="text-lighter">
                             {{ title_info?.imdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
                         </span>
-                    </div>
-                    <div class="short-value">
+                    </a>
+                    <a 
+                        class="short-value"
+                        :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                    >
                         <span class="value icon-align">
                             <IconTMDBColorful size="40px" class="tmdb-icon"/>
                             {{ title_info?.tmdb_vote_average ?? '-' }} 
@@ -120,7 +138,7 @@
                         <span class="text-lighter">
                             {{ title_info?.tmdb_vote_count?.toLocaleString("fi-FI") ?? '0' }} votes
                         </span>
-                    </div>
+                    </a>
         
                     <div class="seperator"></div>
     
@@ -270,26 +288,24 @@
 
                         <div>IMDB id</div>
                         <div class="value">
-                            {{ title_info.imdb_id }}
                             <a 
-                                class="flex"
                                 :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                             >
+                                {{ title_info.imdb_id }}
                                 <IconLinkExternal size="20px"/>
                             </a>
                         </div>
 
                         <div>TMDB id</div>
                         <div class="value">
-                            {{ title_info.tmdb_id }}
                             <a 
-                                class="flex"
                                 :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                             >
+                                {{ title_info.tmdb_id }}
                                 <IconLinkExternal size="20px"/>
                             </a>
                         </div>
@@ -410,8 +426,8 @@
                             @load="(event) => event.target.classList.add('loaded')"
                         />
                         <div class="tag-holder">
-                            <div class="tag tag-positive" v-if="0 != season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity) && season.episodes.length >= 1">
-                                Watched
+                            <div class="tag tag-positive" v-if="0 != getSeasonWatchCount(season) && season.episodes.length >= 1">
+                                {{ getSeasonWatchCount(season) }} watch{{ getSeasonWatchCount(season) > 1 ? 'es' : '' }}
                             </div>
                             <div class="tag tag-primary" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
                                 Upcoming
@@ -483,7 +499,7 @@
                                 <!-- Tag to show if newly released or watched, or maybe even un released status -->
                                 <div class="tag-holder">
                                     <div class="tag tag-positive" v-if="episode.watch_count >= 1">
-                                        Watched
+                                        {{ episode.watch_count }} watch{{ episode.watch_count > 1 ? 'es' : '' }}
                                     </div>
                                     <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 14 * 24 * 60 * 60 * 1000)">
                                         New episode
@@ -743,6 +759,9 @@ export default {
         // IconHome,
     },
     methods: {
+        getSeasonWatchCount(season) {
+            return season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity);
+        },
         formatRuntime(runtime) {
             return convert.runtime(runtime);
         },
@@ -1093,37 +1112,37 @@ export default {
                 }
             }
         },
-        async handleEditCollection(initialCollection) {
-            const editedCollection = await this.$refs.editCollectionFC.prompt(
-                initialCollection.name, 
-                initialCollection.description, 
-                initialCollection.collection_id
-            );
+        // async handleEditCollection(initialCollection) {
+        //     const editedCollection = await this.$refs.editCollectionFC.prompt(
+        //         initialCollection.name, 
+        //         initialCollection.description, 
+        //         initialCollection.collection_id
+        //     );
             
-            // If the process was cancelled - which returns false - return
-            if (!editedCollection) return;
+        //     // If the process was cancelled - which returns false - return
+        //     if (!editedCollection) return;
 
-            const response = await fastApi.watch_list.collections.edit(
-                initialCollection.collection_id, 
-                editedCollection.name, 
-                editedCollection.description
-            );
+        //     const response = await fastApi.watch_list.collections.edit(
+        //         initialCollection.collection_id, 
+        //         editedCollection.name, 
+        //         editedCollection.description
+        //     );
 
-            if (response) {
-                notify(response.message, 'success');
+        //     if (response) {
+        //         notify(response.message, 'success');
 
-                const index = this.title_info.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
-                if (index !== -1) {
-                    this.title_info.collections[index] = {
-                        ...this.title_info.collections[index],
-                        name: editedCollection.name,
-                        description: editedCollection.description
-                    };
-                }
+        //         const index = this.title_info.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
+        //         if (index !== -1) {
+        //             this.title_info.collections[index] = {
+        //                 ...this.title_info.collections[index],
+        //                 name: editedCollection.name,
+        //                 description: editedCollection.description
+        //             };
+        //         }
 
-                this.$refs.editCollectionFC.close()
-            }
-        },
+        //         this.$refs.editCollectionFC.close()
+        //     }
+        // },
         handleWatchNow(additionalLinks = {}) {
             // Basic automated aggregator links
             const baseLinks = {
@@ -1664,11 +1683,6 @@ export default {
     /* height: 32px; */
     /* margin:  0; */
     /* margin-top: var(--spacing-md); */
-}
-.title-details .tags .tag {
-    font-weight: 500;
-    background-color: var(--color-background-card);
-    box-sizing: border-box;
 }
 
 .title-details .tags .tag.tag-upcoming {

@@ -128,7 +128,7 @@
                     </router-link>
                     <div class="tags">
                         <div class="tag tag-positive" v-if="title.watch_count >= 1">
-                            Watched
+                            {{ title.watch_count }} watch{{ title.watch_count > 1 ? 'es' : '' }}
                         </div>
                         <div class="tag tag-secondary" v-if="title.favourite">
                             Favourite

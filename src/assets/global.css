@@ -3,6 +3,7 @@
     --font-size-tiny: 0.75rem;
     --font-size-small: 0.875rem;
     --font-size-base: 1rem;
+    --font-size-medium: 1.1rem;
     --font-size-large: 1.25rem;
     --font-size-heading: 2rem;
     --font-size-logo: 1.75rem;
@@ -279,6 +280,7 @@
 html, body {
     margin: 0;
     font-family: 'Poppins';
+    font-size: var(--font-size-base);
     color: var(--color-text);
     background-color: var(--color-background) !important;
     overflow-x: hidden;
@@ -694,7 +696,7 @@ input[type="radio"] {
 }
 .chart-tooltip .header {
     color: var(--color-text);
-    font-size: 16px; 
+    font-size: var(--font-size-medium); 
     font-weight: 700;
     margin-bottom: 4px;
     text-align: start;
@@ -980,8 +982,15 @@ form.simple-form button {
 .tag.tag-general {
     background-color: var(--color-button-general) !important;
 }
-.tag.tag-editable {
+.tag.tag-interactable {
     cursor: pointer;
+    transition: background-color 0.1s ease-out;
+}
+.tag.tag-interactable:hover {
+    background-color: var(--color-button-general-hover);
+}
+.tag.tag-interactable:active {
+    background-color: var(--color-button-general-active);
 }
 .tag.tag-type {
     background-color: var(--color-button-general);

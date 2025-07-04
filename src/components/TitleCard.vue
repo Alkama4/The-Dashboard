@@ -24,7 +24,7 @@
         </div>
 
         <div class="tag tag-secondary" v-if="titleDetails.favourite">Favourite</div>
-        <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">Watched</div>
+        <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">{{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}</div>
         <div 
             class="tag tag-primary"
             v-else-if="

@@ -206,6 +206,10 @@ export default {
     pointer-events: none;
     opacity: 0;
 }
+.modal:focus-visible {
+    /* Fix bug where when opening sometimes causes outline to be visible, even though it should be unselectable. Caused by us force setting it when ever opening to create a tab loop */
+    outline: none;
+}
 
 .is-displayed .modal {
     pointer-events: unset;

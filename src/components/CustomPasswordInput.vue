@@ -7,12 +7,17 @@
             :placeholder="placeholder"
             @input="onInput($event)"
         >
-        <component 
-            :is="showPassword ? 'IconShow' : 'IconHide'"
+        <div 
             class="icon-button"
             tabindex="0"
-            @click="showPassword = !showPassword"
-        />
+            ref="toggleButton"
+            @click="toggleShowState"
+            @keydown.enter="toggleShowState"
+            @keydown.space="toggleShowState"
+        >
+            <IconShow v-if="showPassword"/>
+            <IconHide v-else/>
+        </div>
     </div>
 </template>
 
@@ -48,6 +53,10 @@ export default {
         onInput(event) {
             this.$emit('update:modelValue', event.target.value);
             this.invalidState = false;
+        },
+        toggleShowState() {
+            this.showPassword = !this.showPassword;
+            this.$refs.toggleButton.focus();
         }
     }
 };
@@ -57,7 +66,11 @@ export default {
 .custom-password-input .icon-button {
     position: absolute;
     top: 7.5px;
-    right: 12px;
+    right: calc(7.5px + 0px);
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-inline: 0;
     /* Keep over the input when focused */
     z-index: 101;
 }
