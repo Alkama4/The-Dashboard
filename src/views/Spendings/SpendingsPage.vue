@@ -5,59 +5,12 @@
             <h1>Spendings page</h1>
             <p> Welcome to the transactions page! Here, you'll find a comprehensive table listing all your logged transactions. This page not only provides a clear overview of your spending activity but also serves as a powerful tool for managing your financial records. You can easily add new transactions, edit existing ones, duplicate entries for efficiency, or remove items no longer needed. </p>
         </div>
-            
-        <!-- Fullscreen filter menu hidden by default -->
-        <FilterSettings
-            v-if="showFilters" 
-            @close="showFilters = false" 
-            @apply="applyFilters"
-            fullscreen-mode="true"
-            :filterData="filterData"
-            :filterOptions="filterOptions"
-        />
 
-        <!-- Need to figure out a way to have a single one of these and not inside each spendings entry -->
-        <ModalConfirmation 
-            ref="deleteTransactionMC"
-            header="Delete transaction"
-            text="Are you sure you want to delete the transaction? This cannot be undone"
-            affirmative-option="Delete transaction"
-        />
-
-        <!-- For editing the transaction, and maybe for future duplication? -->
-        <ModalTransaction ref="editTransactionMT"/>
-
-        <!-- Transaction details -->
-        <ModalGeneric ref="showTransactionMG" header="Title details">
-            <div class="details-modal-content">
-                <div style="grid-area: a; max-width: 25ch;">
-                    <h4>ID</h4>
-                    <span>{{ transactionToShow.transaction_id }}</span>
-                    <h4>Direction</h4>
-                    <span>{{ transactionToShow.direction }}</span>
-                    <h4>Date</h4> 
-                    <span>{{ convertToFiDate(transactionToShow.date, "fullWithWeek") }}</span>
-                </div>
-                <div style="grid-area: b; max-width: 25ch;">
-                    <h4>Counterparty</h4> 
-                    <span>{{ transactionToShow.counterparty }}</span>
-                    <h4>Amount breakdown</h4>
-                    <ul>
-                        <li v-for="(category, index) in transactionToShow.categories" :key="index">
-                            {{ category.category }}: {{ convertToEur(category.amount) }}
-                        </li>
-                    </ul>
-                    <span>
-                        Total amount: 
-                        <b>{{ convertToEur(transactionToShow.categories.reduce((sum, category) => sum + category.amount, 0)) }}</b> 
-                    </span>
-                </div>
-                <div style="grid-area: c; max-width: 50ch;">
-                    <h4>Notes</h4> 
-                    <span :style="transactionToShow.notes ? '' : 'color: var(--color-text-hidden);'">{{ transactionToShow.notes || "(This entry doesn't have notes)" }}</span>
-                </div>
+        <div class="content-width-large count-row">
+            <div>
+                Found <span class="tag">{{ totalCount }}</span> transactions
             </div>
-        </ModalGeneric>
+        </div>
 
         <!-- The transactions table -->
         <div class="transactions-holder content-width-large">
@@ -118,16 +71,31 @@
             </div>
         </div>
     
+        <div class="content-width-large count-row">
+            <div>
+                Shown 
+                <span v-if="returnedCount === totalCount">
+                    all
+                </span>
+                <span class="tag"> 
+                    {{ returnedCount }} of {{ totalCount }} 
+                </span> 
+                transactions
+            </div>
+        </div>
+
         <!-- Button to load more entries -->
-        <button 
-            class="center load-more" 
-            @click="loadMore"
-            :disabled="waitingForResponse"
-            :class="{loading: waitingForResponse}"
-            v-if="loadMoreButtonVisible"
-        >
-            Load more
-        </button>
+        <div class="content-width-large">
+            <button 
+                class="center load-more" 
+                @click="loadMore"
+                :disabled="waitingForResponse"
+                :class="{loading: waitingForResponse}"
+                v-if="loadMoreButtonVisible"
+            >
+                Load more
+            </button>
+        </div>
 
         <!-- Buttons in the bottom right corner -->
         <button 
@@ -143,6 +111,60 @@
                 <IconAdd size="28px"/> 
             </button>
         </router-link>
+
+
+        <!-- Fullscreen filter menu hidden by default -->
+        <FilterSettings
+            v-if="showFilters" 
+            @close="showFilters = false" 
+            @apply="applyFilters"
+            fullscreen-mode="true"
+            :filterData="filterData"
+            :filterOptions="filterOptions"
+        />
+
+        <!-- Need to figure out a way to have a single one of these and not inside each spendings entry -->
+        <ModalConfirmation 
+            ref="deleteTransactionMC"
+            header="Delete transaction"
+            text="Are you sure you want to delete the transaction? This cannot be undone"
+            affirmative-option="Delete transaction"
+        />
+
+        <!-- For editing the transaction, and maybe for future duplication? -->
+        <ModalTransaction ref="editTransactionMT"/>
+
+        <!-- Transaction details -->
+        <ModalGeneric ref="showTransactionMG" header="Title details">
+            <div class="details-modal-content">
+                <div style="grid-area: a; max-width: 25ch;">
+                    <h4>ID</h4>
+                    <span>{{ transactionToShow.transaction_id }}</span>
+                    <h4>Direction</h4>
+                    <span>{{ transactionToShow.direction }}</span>
+                    <h4>Date</h4> 
+                    <span>{{ convertToFiDate(transactionToShow.date, "fullWithWeek") }}</span>
+                </div>
+                <div style="grid-area: b; max-width: 25ch;">
+                    <h4>Counterparty</h4> 
+                    <span>{{ transactionToShow.counterparty }}</span>
+                    <h4>Amount breakdown</h4>
+                    <ul>
+                        <li v-for="(category, index) in transactionToShow.categories" :key="index">
+                            {{ category.category }}: {{ convertToEur(category.amount) }}
+                        </li>
+                    </ul>
+                    <span>
+                        Total amount: 
+                        <b>{{ convertToEur(transactionToShow.categories.reduce((sum, category) => sum + category.amount, 0)) }}</b> 
+                    </span>
+                </div>
+                <div style="grid-area: c; max-width: 50ch;">
+                    <h4>Notes</h4> 
+                    <span :style="transactionToShow.notes ? '' : 'color: var(--color-text-hidden);'">{{ transactionToShow.notes || "(This entry doesn't have notes)" }}</span>
+                </div>
+            </div>
+        </ModalGeneric>
     </div>
 </template>
 
@@ -230,6 +252,8 @@ export default {
                 category: {}
             },
             waitingForResponse: true,
+            returnedCount: 0,
+            totalCount: 0,
             loadMoreButtonVisible: false,
             transactionToShow: null,
         };
@@ -305,8 +329,11 @@ export default {
                     this.transactions = [...this.transactions, ...response.transactions]; // Append new data
                 }
 
+                this.totalCount = response.total_count;
+                this.returnedCount = response.returned_count;
+
                 // If there are more entries, keep showing "Load More" button
-                this.loadMoreButtonVisible = response.hasMore;
+                this.loadMoreButtonVisible = response.has_more;
             } else {
                 console.error("[SpendingsPage] Failed to retrieve transactions.");
             }
@@ -395,6 +422,14 @@ export default {
 /* .transactions-holder { */
     /* Replaced the "table" element */
 /* } */
+
+.count-row {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    color: var(--color-text-lighter);
+    margin: var(--spacing-sm) 0;
+}
 
 .transaction-row {
     display: flex;
@@ -545,6 +580,7 @@ export default {
 
 .load-more {
     margin-top: var(--spacing-md);
+    width: 50%;
 }
 
 </style>
