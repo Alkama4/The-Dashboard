@@ -245,7 +245,7 @@ export default {
         height: 250px;
         color: var(--color-text-light);
         font-weight: 500;
-        font-size: var(--font-size-medium);
+        font-size: var(--font-size-lg);
         
         display: flex;
         flex-direction: column;
@@ -327,7 +327,7 @@ export default {
         padding: var(--spacing-xs) var(--spacing-sm);
         background-color: var(--color-background-card-section);
         border-radius: var(--border-radius-small);
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-sm);
         font-weight: 500;
         white-space: nowrap;
     }

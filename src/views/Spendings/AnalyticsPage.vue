@@ -275,7 +275,7 @@ export default {
                         text: 'Monthly Average Expenses by Category',
                         textStyle: {
                             color: getCssVar('color-text'),
-                            fontSize: getCssVar('font-size-medium'),
+                            fontSize: getCssVar('font-size-lg'),
                             fontWeight: 700,
                         },
                         x: 'center',

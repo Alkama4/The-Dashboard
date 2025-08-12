@@ -273,8 +273,8 @@ export default {
     max-width: 150px;
 }
 
-.danger-zone button {
-    margin: 0;
+.danger-zone {
+    margin-top: var(--spacing-lg);
 }
 
 </style>

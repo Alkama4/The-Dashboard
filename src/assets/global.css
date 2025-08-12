@@ -1,11 +1,23 @@
 :root {
     /* font sizes */
-    --font-size-tiny: 0.75rem;
-    --font-size-small: 0.875rem;
-    --font-size-base: 1rem;
-    --font-size-medium: 1.15rem;
-    --font-size-large: 1.5rem;
-    --font-size-heading: 2rem;
+
+    /* Old sizes */
+    /* --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.15rem;
+    --font-size-xl: 1.5rem;
+    --font-size-xxl: 2rem;
+    --font-size-logo: 1.75rem; */
+
+    font-size: 16px;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.2rem;
+    --font-size-xl: 1.6rem;
+    --font-size-xxl: 2rem;
     --font-size-logo: 1.75rem;
 
     /* spacing */
@@ -13,15 +25,16 @@
     --spacing-sm: 8px;
     --spacing-md: 16px;
     --spacing-lg: 32px;
-    --spacing-hg: 64px;
+    --spacing-xl: 64px;
     
     /* border radius */
     --border-radius-small: 4px;
     --border-radius-medium: 8px;
     --border-radius-large: 16px;
+    --border-radius-extra-large: 32px;
     
     /* Widths and heights*/
-    --width-top-bar: 1200px;
+    --width-top-bar: 160ch;
     --height-top-bar: 60px;
     /* --width-max-page: 900px; */
     --width-modal: 400px;
@@ -123,15 +136,15 @@
     --color-text-inverted-hover: #ffffff;
     --color-text-selection: var(--color-text-white-hover);
 
-    --color-border: hsla(0, 0%, 0%, 0.15);
-    --color-border-hover: hsla(0, 0%, 0%, 0.25);
-    --color-border-light: hsla(0, 0%, 0%, 0.35);
+    --color-border: hsla(0, 0%, 0%, 0.1);
+    --color-border-hover: hsla(0, 0%, 0%, 0.2);
+    --color-border-light: hsla(0, 0%, 0%, 0.3);
 
     /* Backgrounds */
     --color-background: hsl(0, 0%, 93.5%);
     --color-background-backdrop: rgba(0, 0, 0, 0.3);
     --color-background-backdrop-mobile-menu: rgba(255, 255, 255, 0.3);
-    --color-background-top-bar: var(--color-background);
+    --color-background-top-bar: hsl(0, 0%, 93.5%, 0.2);
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
     --color-background-modal: hsl(0, 0%, 96%);
     --color-background-card: hsl(0, 0%, 96%);
@@ -139,8 +152,8 @@
     --color-background-input: hsl(0, 0%, 100%);
     --color-background-input-light: hsl(0, 0%, 98%);
     --color-background-input-strong: hsl(0, 0%, 100%);
-    --color-background-tr-active: hsl(0, 0%, 90%);
-    --color-background-tr-hover: hsl(0, 0%, 85%);
+    --color-background-card-active: hsl(0, 0%, 90%);
+    --color-background-card-hover: hsl(0, 0%, 100%);
     
     /* Button colors */
     --color-button-general: hsl(0, 0%, 100%);
@@ -163,7 +176,7 @@
     --color-background-select-hover: hsl(0, 0%, 90%);
 
     /* Shadows */
-    --shadow-card: 0 4px 10px rgba(0, 0, 0, 0.1);
+    --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.05);
     --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
     --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.2);
     --shadow-option-list: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -201,8 +214,8 @@
     --color-denary: #3cb4ae;     
     --color-undecenary: #5d3285; 
 
-    --color-positive: #14a561;
-    --color-positive-hover: #0bbe6b;
+    --color-positive: #15965a;
+    --color-positive-hover: #22b36f;
     --color-positive-opaque: hsla(152, 78%, 36%, 0.5);
     --color-negative: #b94646;
     --color-negative-hover: #d34f4f;
@@ -229,7 +242,7 @@
     --color-background: hsl(0, 0%, 6.3%);
     --color-background-backdrop: hsla(0, 0%, 0%, 0.5);
     --color-background-backdrop-mobile-menu: rgba(0, 0, 0, 0.5);
-    --color-background-top-bar: var(--color-background);
+    --color-background-top-bar: hsl(0, 0%, 6.3%, 0.66);
     --color-background-mobile-nav: hsla(0, 0%, 0%, 0.3);
     --color-background-modal: #111;
     --color-background-card: hsl(0, 0%, 10%);
@@ -237,8 +250,8 @@
     --color-background-input: #262626;
     --color-background-input-light: #1a1a1a;
     --color-background-input-strong: #292929;
-    --color-background-tr-active: hsl(0, 0%, 11%);
-    --color-background-tr-hover: hsl(0, 0%, 13%);
+    --color-background-card-active: hsl(0, 0%, 13%);
+    --color-background-card-hover: hsl(0, 0%, 16%);
 
     /* Button colors */
     --color-button-general: #282828;
@@ -280,7 +293,7 @@
 html, body {
     margin: 0;
     font-family: 'Poppins';
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     color: var(--color-text);
     background-color: var(--color-background) !important;
     overflow-x: hidden;
@@ -345,18 +358,22 @@ p {
 
 h1, h2, h3, h4 {
     color: var(--color-text);
+}
+h1 {
+    font-size: var(--font-size-xxl);
     margin-bottom: calc(var(--spacing-md) + var(--spacing-sm));
 }
 h2 {
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-xl);
+    margin-bottom: calc(var(--spacing-sm));
 }
 h3 {
-    font-size: var(--font-size-medium);
+    font-size: var(--font-size-lg);
+    margin-bottom: calc(var(--spacing-sm));
 }
-
-h2 {
-    margin-top: var(--spacing-lg);
-    /* margin-bottom: var(--spacing-md); */
+h4 {
+    font-size: var(--font-size-md);
+    margin-bottom: calc(var(--spacing-sm));
 }
 
 img {
@@ -376,13 +393,13 @@ button, .link-button {
     gap: 4px;
 
     border-width: 0;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-medium);
     margin: 0;
     padding: var(--spacing-sm) var(--spacing-lg);
     
     cursor: pointer;
     font-family: 'Poppins';
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     font-weight: 600;
     color: var(--color-text);
     background-color: var(--color-button-general);
@@ -391,13 +408,13 @@ button, .link-button {
                 background-color 0.1s ease-out,
                 box-shadow 0.1s ease-out;
 }
-.link-button {
-    border-radius: var(--border-radius-small);
-}
 button:hover, .link-button:hover {
     color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
     box-shadow: var(--shadow-button-hover);
+}
+.link-button:hover {
+    text-decoration: underline;
 }
 /* button:hover svg {
     fill: var(--color-text-bold)
@@ -550,13 +567,13 @@ input, textarea {
     /* min-width: 82px; */
 
     color: var(--color-text);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
     font-family: 'Poppins';
 
     border-width: 1px;
     border-style: solid;
     border-color: var(--color-border);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-medium);
     /* outline-width: 0; */
     transition: border-color 0.1s ease-out,
                 outline-color 0.1s ease-out;
@@ -625,7 +642,7 @@ input[type="radio"] {
     background: transparent !important;
 }
 .noUi-value {
-    font-size: var(--font-size-small) !important;
+    font-size: var(--font-size-sm) !important;
 }
 /* .noUi-base {
     cursor: pointer !important;
@@ -667,7 +684,7 @@ input[type="radio"] {
 .noUi-tooltip {
     background-color: transparent !important;
     color: var(--color-text-light) !important;
-    font-size: var(--font-size-small) !important;
+    font-size: var(--font-size-sm) !important;
     border: none !important;
     bottom: 100% !important;
 }
@@ -702,7 +719,7 @@ input[type="radio"] {
 }
 .chart-tooltip .header {
     color: var(--color-text);
-    font-size: var(--font-size-medium); 
+    font-size: var(--font-size-lg); 
     font-weight: 700;
     margin-bottom: 4px;
     text-align: start;
@@ -755,10 +772,11 @@ input[type="radio"] {
     display: flex;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
+    height: 100vh;
+    width: 100vw;
+    box-sizing: border-box;
     background: var(--color-background-backdrop);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(16px);
     cursor: pointer;
     /* animation: fadeIn 0.2s ease-out; */
 }
@@ -845,10 +863,22 @@ input[type="radio"] {
 
 .card {
     background-color: var(--color-background-card);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-large);
+    border: 1px solid var(--color-border);
     box-shadow: var(--shadow-card);
     padding: var(--spacing-md);
-    margin: calc(var(--spacing-md) + var(--spacing-xs)) 0;
+    /* margin: calc(var(--spacing-md) + var(--spacing-xs)) 0; */
+    margin: 0;
+}
+
+.card .card-label {
+    color: var(--color-text-lighter);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+}
+.card .card-value {
+    font-size: var(--font-size-xl);
+    font-weight: 700;
 }
 
 .card h2 {
@@ -964,7 +994,7 @@ form.simple-form button {
     border-radius: var(--border-radius-small);
     width: fit-content;
     font-weight: 600;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sm);
     white-space: nowrap;
     color: var(--color-text);
     /* border: 1px solid var(--color-border); */
@@ -1005,12 +1035,13 @@ form.simple-form button {
 .fullwindow {
     max-height: none !important;
     max-width: none !important;
-    height: auto !important;
-    width: auto !important;
-    aspect-ratio: initial !important;
+    height: 100vh !important;
+    width: 100vw !important;
+    box-sizing: border-box;
+    aspect-ratio: unset !important;
     position: fixed !important;
     border-radius: 0;
-    top: 0px;
+    top: 0;
     bottom: 0;
     left: 0;
     right: 0;
@@ -1045,15 +1076,34 @@ form.simple-form button {
 .loading-placeholder {
     background: linear-gradient(
         90deg,
-        var(--color-background-tr-active) 40%,
-        var(--color-background-tr-hover) 70%,
-        var(--color-background-tr-active) 100%
+        var(--color-background-card-active) 40%,
+        var(--color-background-card-hover) 70%,
+        var(--color-background-card-active) 100%
     );
     background-size: 200% 100%;
     animation: highlight-wave 2s infinite linear;
     box-shadow: none !important;
     display: flex;
     margin: 0;
+}
+.text-loading-placeholder {
+    background: linear-gradient(
+        90deg,
+        var(--color-background-card-active) 40%,
+        var(--color-background-card-hover) 70%,
+        var(--color-background-card-active) 100%
+    );
+    background-size: 200% 100%;
+    animation: highlight-wave 2s infinite linear;
+    box-shadow: none !important;
+    margin: 0;
+    border-radius: var(--border-radius-medium);
+    color: transparent;
+
+    /* Edit these locally to fit the usecase */
+    height: 35px;
+    max-width: 150px;
+    width: 50%;
 }
 @keyframes highlight-wave {
     0% {

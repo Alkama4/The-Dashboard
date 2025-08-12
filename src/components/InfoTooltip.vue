@@ -109,7 +109,7 @@ export default {
     color: var(--color-text-light);
     /* white-space: nowrap; */
     font-weight: 500;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sm);
     box-shadow: var(--shadow-card);
     text-align: left;
 

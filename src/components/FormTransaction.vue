@@ -456,7 +456,7 @@ export default {
 
 .tool-row button {
     padding: 4px 8px;
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sm);
     font-weight: 500;
     margin: 0;
     white-space: nowrap;
@@ -559,7 +559,7 @@ export default {
     align-items: center;
     user-select: none;
     cursor: grab;
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-xl);
     color: var(--color-text-light);
 }
 .right-mod-area {

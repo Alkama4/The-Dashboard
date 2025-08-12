@@ -412,128 +412,129 @@
 
         <div class="content-width-large" v-if="title_info.seasons">
             <h2>Season & episode details</h2>
-
-            <div v-for="season in title_info.seasons" 
-                :key="season.season_id" 
-                class="card season" 
-                :class="{'active': expandedSeason == season.season_id}"
-            >
-                <div class="about" @click="toggleHeight(`refSeason${season.season_number}`)">
-                    <div class="poster-container">
-                        <img 
-                            class="poster" 
-                            :src="imageUrl(300, season.backup_poster_url, title_info.title_id, season.season_number)" 
-                            @load="(event) => event.target.classList.add('loaded')"
-                        />
-                        <div class="tag-holder">
-                            <div class="tag tag-positive" v-if="0 != getSeasonWatchCount(season) && season.episodes.length >= 1">
-                                {{ getSeasonWatchCount(season) }} watch{{ getSeasonWatchCount(season) > 1 ? 'es' : '' }}
-                            </div>
-                            <div class="tag tag-primary" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
-                                Upcoming
-                            </div>
-                        </div>
-                    </div>
-                    <div class="text">
-                        <h2 class="icon-align">
-                            {{ season.season_name }}
-                            <!-- @click.stop="handleTitleUpdate('seasonInfo', season.season_number)" -->
-                            <IconRefresh 
-                                size="28px"
-                                left="6px"
-                                @click.stop="openSeasonUpdateModal(season.season_number)"
-                                :class="{
-                                    'loading': waitingForResult.includes('seasonUpdate' + season.season_number),
-                                    'spin-refresh-icon': waitingForResult.includes('seasonUpdate' + season.season_number)
-                                }"
-                                class="icon-button"
+            <div class="seasons-wrapper">
+                <div v-for="season in title_info.seasons" 
+                    :key="season.season_id" 
+                    class="card season" 
+                    :class="{'active': expandedSeason == season.season_id}"
+                >
+                    <div class="about" @click="toggleHeight(`refSeason${season.season_number}`)">
+                        <div class="poster-container">
+                            <img 
+                                class="poster" 
+                                :src="imageUrl(300, season.backup_poster_url, title_info.title_id, season.season_number)" 
+                                @load="(event) => event.target.classList.add('loaded')"
                             />
-                        </h2>
-                        <div class="details">
-                            <div class="icon-align single-line">
-                                <span>{{ season.episode_count }} episodes</span>
-                                <span class="bullet">&bullet;</span>
-                                <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.tmdb_vote_average }} ({{ seasonVotes(season) }} votes)</span>
-                            </div>
-                            <div>
-                                {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                            <div class="tag-holder">
+                                <div class="tag tag-positive" v-if="0 != getSeasonWatchCount(season) && season.episodes.length >= 1">
+                                    {{ getSeasonWatchCount(season) }} watch{{ getSeasonWatchCount(season) > 1 ? 'es' : '' }}
+                                </div>
+                                <div class="tag tag-primary" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
+                                    Upcoming
+                                </div>
                             </div>
                         </div>
-                        <p :title="season.overview">{{ season.overview }}</p>
-                    </div>
-
-                    <NumericStepper 
-                        class="modify-watched"
-                        :displayValue="season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                        @valueUpdated="val => handleTitleWatchClick('season', val, season.season_id)"
-                    />
-                </div>
-                
-                <!-- EPISODES -->
-                <div class="episodes" :ref="`refSeason${season.season_number}`">
-                    <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_number}`)">
-                        <div 
-                            v-for="(episode, index) in season.episodes" 
-                            :key="episode.episode_number" class="episode" 
-                            :id="`S${season.season_number}E${episode.episode_number}`"
-                            :class="{
-                                'not-realeased': new Date(episode.air_date) > new Date(),
-                                'last': index === season.episodes.length - 1
-                            }"
-                        >
-                            <div class="still-container" @click="handleWatchEpisodeNow(episode)">
-                                <div 
-                                    v-if="failedToLoadImages.includes(episode.episode_id)"
-                                    class="still failed-to-load"
-                                >
-                                    <IconFileImage size="40px"/>
-                                    <span>404</span>
-                                </div>
-                                <img 
-                                    v-else
-                                    class="still" 
-                                    :src="imageUrl(900, episode.backup_still_url, title_info.title_id, season.season_number, episode.episode_number)"
-                                    @error="failedToLoadImages.push(episode.episode_id)"
-                                    @load="(event) => event.target.classList.add('loaded')"
-                                >
-                                <!-- Tag to show if newly released or watched, or maybe even un released status -->
-                                <div class="tag-holder">
-                                    <div class="tag tag-positive" v-if="episode.watch_count >= 1">
-                                        {{ episode.watch_count }} watch{{ episode.watch_count > 1 ? 'es' : '' }}
-                                    </div>
-                                    <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 14 * 24 * 60 * 60 * 1000)">
-                                        New episode
-                                    </div>
-                                    <div class="tag" v-else-if="new Date(episode.air_date) > new Date()">
-                                        Upcoming
-                                    </div>
-                                </div>
-
-                                <IconPlay class="icon-watch-now" size="64px"/>
-                            </div>
-                            
-                            <div class="text">
-                                <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
-                                <div class="details">
-                                    <span class="icon-align" >
-                                        <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                        <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.tmdb_vote_count ?? '0'}} votes)</span>
-                                    </span>
-                                    <div>
-                                        {{ 
-                                            episode.air_date ? 
-                                            new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : 
-                                            "No release date"
-                                        }}
-                                    </div>
-                                </div>
-                                <p :title="episode.overview">{{ episode.overview }}</p>
-
-                                <NumericStepper 
-                                    class="modify-watched"
-                                    :displayValue="episode.watch_count"
-                                    @valueUpdated="val => handleTitleWatchClick('episode', val, episode.episode_id)"
+                        <div class="text">
+                            <h2 class="icon-align">
+                                {{ season.season_name }}
+                                <!-- @click.stop="handleTitleUpdate('seasonInfo', season.season_number)" -->
+                                <IconRefresh 
+                                    size="28px"
+                                    left="6px"
+                                    @click.stop="openSeasonUpdateModal(season.season_number)"
+                                    :class="{
+                                        'loading': waitingForResult.includes('seasonUpdate' + season.season_number),
+                                        'spin-refresh-icon': waitingForResult.includes('seasonUpdate' + season.season_number)
+                                    }"
+                                    class="icon-button"
                                 />
+                            </h2>
+                            <div class="details">
+                                <div class="icon-align single-line">
+                                    <span>{{ season.episode_count }} episodes</span>
+                                    <span class="bullet">&bullet;</span>
+                                    <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.tmdb_vote_average }} ({{ seasonVotes(season) }} votes)</span>
+                                </div>
+                                <div>
+                                    {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                                </div>
+                            </div>
+                            <p :title="season.overview">{{ season.overview }}</p>
+                        </div>
+    
+                        <NumericStepper 
+                            class="modify-watched"
+                            :displayValue="season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
+                            @valueUpdated="val => handleTitleWatchClick('season', val, season.season_id)"
+                        />
+                    </div>
+                    
+                    <!-- EPISODES -->
+                    <div class="episodes" :ref="`refSeason${season.season_number}`">
+                        <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_number}`)">
+                            <div 
+                                v-for="(episode, index) in season.episodes" 
+                                :key="episode.episode_number" class="episode" 
+                                :id="`S${season.season_number}E${episode.episode_number}`"
+                                :class="{
+                                    'not-realeased': new Date(episode.air_date) > new Date(),
+                                    'last': index === season.episodes.length - 1
+                                }"
+                            >
+                                <div class="still-container" @click="handleWatchEpisodeNow(episode)">
+                                    <div 
+                                        v-if="failedToLoadImages.includes(episode.episode_id)"
+                                        class="still failed-to-load"
+                                    >
+                                        <IconFileImage size="40px"/>
+                                        <span>404</span>
+                                    </div>
+                                    <img 
+                                        v-else
+                                        class="still" 
+                                        :src="imageUrl(900, episode.backup_still_url, title_info.title_id, season.season_number, episode.episode_number)"
+                                        @error="failedToLoadImages.push(episode.episode_id)"
+                                        @load="(event) => event.target.classList.add('loaded')"
+                                    >
+                                    <!-- Tag to show if newly released or watched, or maybe even un released status -->
+                                    <div class="tag-holder">
+                                        <div class="tag tag-positive" v-if="episode.watch_count >= 1">
+                                            {{ episode.watch_count }} watch{{ episode.watch_count > 1 ? 'es' : '' }}
+                                        </div>
+                                        <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 14 * 24 * 60 * 60 * 1000)">
+                                            New episode
+                                        </div>
+                                        <div class="tag" v-else-if="new Date(episode.air_date) > new Date()">
+                                            Upcoming
+                                        </div>
+                                    </div>
+    
+                                    <IconPlay class="icon-watch-now" size="64px"/>
+                                </div>
+                                
+                                <div class="text">
+                                    <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
+                                    <div class="details">
+                                        <span class="icon-align" >
+                                            <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
+                                            <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.tmdb_vote_count ?? '0'}} votes)</span>
+                                        </span>
+                                        <div>
+                                            {{ 
+                                                episode.air_date ? 
+                                                new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : 
+                                                "No release date"
+                                            }}
+                                        </div>
+                                    </div>
+                                    <p :title="episode.overview">{{ episode.overview }}</p>
+    
+                                    <NumericStepper 
+                                        class="modify-watched"
+                                        :displayValue="episode.watch_count"
+                                        @valueUpdated="val => handleTitleWatchClick('episode', val, episode.episode_id)"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1578,7 +1579,7 @@ export default {
     align-content: center;
     white-space: nowrap;
     font-weight: 700;
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-xl);
 }
 
 .at-a-glance .awards {
@@ -1716,7 +1717,7 @@ export default {
     }
     .control-button-array button {
         padding-inline: var(--spacing-lg);
-        border-radius: var(--border-radius-small) !important;
+        border-radius: var(--border-radius-medium);
     }
 }
 
@@ -1901,6 +1902,11 @@ iframe {
 }
 
 /* - - - - - SEASON - - - - -  */
+.seasons-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md)
+}
 .season {
     position: relative;
     padding-bottom: 0;

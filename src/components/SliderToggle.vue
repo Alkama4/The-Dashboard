@@ -88,7 +88,7 @@ export default {
     max-width: 100%;
     height: 40px;
     box-sizing: border-box;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-medium);
     background-color: var(--color-background-input);
     display: flex;
     align-items: center;

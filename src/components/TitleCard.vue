@@ -123,7 +123,7 @@ export default {
     right: var(--spacing-sm);
     padding: var(--spacing-xs);
     border-radius: var(--border-radius-small);
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-sm);
     font-weight: 500;
     text-align: end;
     color: var(--color-text-white-light);
@@ -134,7 +134,7 @@ export default {
 }
 
 .title-card-name {
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--color-text-white);
     display: -webkit-box;
@@ -181,7 +181,7 @@ export default {
 
 /* Touch Device Overrides */
 .touch-device .title-card {
-    width: calc((100% - var(--spacing-hg)) / 2);
+    width: calc((100% - var(--spacing-xl)) / 2);
     aspect-ratio: 2 / 3;
     height: auto;
 }
@@ -194,7 +194,7 @@ export default {
 /* Full Width Variant */
 .full-width-title-card {
     height: calc(300px * 0.95);
-    width: calc(100% - var(--spacing-hg)) !important;
+    width: calc(100% - var(--spacing-xl)) !important;
     margin: calc(300px * 0.025) calc(200px * 0.025);
     box-sizing: border-box;
     transform: none !important;

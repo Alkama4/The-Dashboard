@@ -202,7 +202,7 @@
     position: relative;
     transition: background-color 0.1s ease-out,
                 height 0.2s ease-out;
-    border-top: 2px solid var(--color-background-tr-active);
+    border-top: 2px solid var(--color-background-card-active);
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -211,10 +211,10 @@
     height: 41px;
 }
 .transaction-component.expanded {
-    background-color: var(--color-background-tr-active);
+    background-color: var(--color-background-card-active);
 }
 .transaction-component:hover {
-    background-color: var(--color-background-tr-hover);
+    background-color: var(--color-background-card-hover);
 }
 .transaction-component:focus {
     z-index: 2;

@@ -106,7 +106,7 @@ export default {
 }
 
 .title-showcase-details .overview {
-    /* font-size: var(--font-size-small); */
+    /* font-size: var(--font-size-sm); */
     display: -webkit-box;
     width: 66ch;
     max-width: 100%;
@@ -130,7 +130,7 @@ export default {
 
 @media (max-width: 700px) {
     .title-showcase-details {
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-sm);
         row-gap: var(--spacing-sm);
     }
     /* .title-showcase-details .tags {

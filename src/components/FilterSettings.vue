@@ -457,7 +457,7 @@ export default {
     overflow: hidden;
 
     width: 500px;
-    max-width: calc(100vw - var(--spacing-md) * 2 - var(--spacing-hg)); /* window - padding - space I want on the right */
+    max-width: calc(100vw - var(--spacing-md) * 2 - var(--spacing-xl)); /* window - padding - space I want on the right */
     left: 0;
     top: 0;
     bottom: 0;
@@ -597,7 +597,7 @@ h5 {
     margin-top: var(--spacing-sm);
     margin-bottom: 0;
     margin-left: var(--spacing-md);
-    font-size: var(--font-size-base);
+    font-size: var(--font-size-md);
 }
 .income-section {
     padding-bottom: var(--spacing-sm);
@@ -614,7 +614,7 @@ h5 {
     user-select: none;
 }
 .option:hover {
-    background-color: var(--color-background-tr-hover);
+    background-color: var(--color-background-card-hover);
 }
 
 .apply {

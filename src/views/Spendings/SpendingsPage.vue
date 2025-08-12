@@ -549,8 +549,8 @@ export default {
 
 .no-transactions-found {
     /* min-height: 200px; */
-    padding-top: var(--spacing-hg);
-    padding-bottom: var(--spacing-hg);
+    padding-top: var(--spacing-xl);
+    padding-bottom: var(--spacing-xl);
     margin-top: var(--spacing-sm);
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);

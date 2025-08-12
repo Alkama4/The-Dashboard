@@ -584,7 +584,7 @@ export default {
 
 .full-width-swiper-slide {
     height: calc(300px * 0.95);
-    width: calc(100% - var(--spacing-hg)) !important;
+    width: calc(100% - var(--spacing-xl)) !important;
     margin: calc(300px * 0.025) calc(200px * 0.025);
     box-sizing: border-box;
     
@@ -800,7 +800,7 @@ export default {
 
 .title-element .title-name {
     font-weight: 700;
-    font-size: var(--font-size-large);
+    font-size: var(--font-size-xl);
     margin-top: 0;
     margin-bottom: 0;
     display: -webkit-box;
@@ -865,7 +865,7 @@ export default {
         content: "E";
     }
     .title-element .details {
-        font-size: var(--font-size-small);
+        font-size: var(--font-size-sm);
         gap: var(--spacing-xs);
     }
     .title-element .tags {
@@ -873,7 +873,7 @@ export default {
         margin-bottom: var(--spacing-xs);
     }
     .title-element .tags .tag {
-        font-size: var(--font-size-tiny);
+        font-size: var(--font-size-xs);
     }
 }
 
