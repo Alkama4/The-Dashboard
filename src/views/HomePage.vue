@@ -1,23 +1,19 @@
 <template>
 	<div>
-		<div class="greeting-area content-width-medium">
-			<div class="text-area">
+		<div class="greeting-area content-width-large">
+			<div class="greeting">
 				<h1>{{ greeting[0] }}</h1>
 				<span class="header-sub-text">{{ greeting[1] }}</span>
-				<router-link class="no-decoration" to="/spendings/new_entry" tabindex="-1">
-					<button class="button-primary">Start logging</button>
-				</router-link>
 			</div>
-			<div class="action-area">
-				<div class="color-blob one"></div>
-				<div class="color-blob two"></div>
-				<div class="color-blob three"></div>
-			</div>
+            <div class="info">
+                <span class="label">Server uptime </span>
+                <span class="value">{{ formattedUptime() || "loading... " }}</span>
+            </div>
 		</div>
-
-		<div class="flex-column">
-			<h2>Service links</h2>
-			<div class="tile-container">
+        
+		<div class="content-width-large">
+            <h2>Service links</h2>
+			<div class="service-links">
 				<a 
 					v-for="(service, index) in serviceUrls"
 					:href="service.url"
@@ -29,13 +25,199 @@
 						:src="service.iconUrl" 
 						@load="(event) => event.target.classList.add('loaded')"
 					>
-					<span>{{ service.name }}</span>
+					<span class="icon-align">{{ service.name }}<IconLinkExternal left="4px" size="16px"/></span>
 				</a>
 			</div>
 		</div>
 
-		<div class="flex-column content-width-medium">
-			<h2>Backups <span class="text-lighter">(Under construction)</span></h2>
+		<div class="content-width-large server-resource-usage">
+            <div class="icon-align header">
+                <h2>Server resource usage</h2>
+                <div class="icon-align selector">
+                    <CustomSelect 
+                        v-model="serverLogsTimespan" 
+                        :options="serverLogsTimespans"
+                        :disabled="waitingFor.length != 0"
+                        :class="{loading: waitingFor.length != 0}"
+                    />
+                    <IconRefresh size="28px" @click="fetchServerLogs(true)" class="icon-button"/>
+                </div>
+            </div>
+			<div class="data">
+                <div class="widgets">
+                    <ResourceUsageTile
+                        label="CPU Usage"
+                        :current="current.cpuUsage"
+                        :max="current.cpuUsageMax"
+                        :currentFormatted="current.cpuUsageFormatted"
+                        :maxFormatted="current.cpuUsageMaxFormatted"
+                        indicatorColor="var(--color-primary)"
+                        :chartOptionsGenerator="chartValueGenerators.chartCpuUsage"
+                    />
+
+                    <ResourceUsageTile
+                        label="Cpu Clock speed"
+                        :current="current.cpuFreq"
+                        :max="current.cpuFreqMax"
+                        :currentFormatted="current.cpuFreqFormatted"
+                        :maxFormatted="current.cpuFreqMaxFormatted"
+                        indicatorColor="var(--color-quinary)"
+                        usageKey="cpuFreq"
+                        :chartOptionsGenerator="chartValueGenerators.chartCpuFreq"
+                    />
+
+                    <ResourceUsageTile
+                        label="CPU Temp"
+                        :current="current.cpuTemp"
+                        :max="current.cpuTempMax"
+                        :currentFormatted="current.cpuTempFormatted"
+                        :maxFormatted="current.cpuTempMaxFormatted"
+                        indicatorColor="var(--color-secondary)"
+                        :chartOptionsGenerator="chartValueGenerators.chartCpuTemp"
+                    />
+
+                    <ResourceUsageTile
+                        label="RAM Usage"
+                        :current="current.ramUsage"
+                        :max="current.ramUsageMax"
+                        :currentFormatted="current.ramUsageFormatted"
+                        :maxFormatted="current.ramUsageMaxFormatted"
+                        indicatorColor="var(--color-tertiary)"
+                        :chartOptionsGenerator="chartValueGenerators.chartRamUsage"
+                    />
+
+                    <ResourceUsageTile
+                        label="Swap Usage"
+                        :current="current.swapUsage"
+                        :max="current.swapUsageMax"
+                        :currentFormatted="current.swapUsageFormatted"
+                        :maxFormatted="current.swapUsageMaxFormatted"
+                        indicatorColor="var(--color-septenary)"
+                        :chartOptionsGenerator="chartValueGenerators.chartSwapUsage"
+                    />
+
+                    <ResourceUsageTile
+                        label="Network down"
+                        :current="current.netRecv"
+                        :max="current.netRecvMax"
+                        :currentFormatted="current.netRecvFormatted"
+                        :maxFormatted="current.netRecvMaxFormatted"
+                        indicatorColor="var(--color-jokumikalie)"
+                        :chartOptionsGenerator="chartValueGenerators.chartNetUsage"
+                    />
+
+                    <!-- <ResourceUsageTile
+                        label="Network up"
+                        :current="current.netSent"
+                        :max="current.netSentMax"
+                        :currentFormatted="current.netSentFormatted"
+                        :maxFormatted="current.netSentMaxFormatted"
+                        indicatorColor="var(--color-senary)"
+                        :chartOptionsGenerator="chartValueGenerators.chartNetUsage"
+                    /> -->
+                </div>
+				<ChartComponent class="server-resource-chart cpu-usage card" :chartOptionsGenerator="chartValueGenerators.chartCpuUsage"/>
+				<ChartComponent class="server-resource-chart cpu-temp card" :chartOptionsGenerator="chartValueGenerators.chartCpuTemp"/>
+				<ChartComponent class="server-resource-chart network card" :chartOptionsGenerator="chartValueGenerators.chartNetUsage"/>
+
+				<div class="drives" v-if="serverStats.storage.length == 0">
+					<DriveCard 
+						v-for="(drive, index) in [0, 1, 2]" 
+						:key="index"
+						:loadingVersion="true"
+					/>
+				</div>
+
+				<div v-else class="drives">
+					<DriveCard 
+						v-for="(drive, index) in serverStats.storage" 
+						:key="index"
+						:driveProperties="drive"
+					/>
+				</div>
+			</div>
+		</div>
+        
+        <div class="content-width-large">
+            <h2>Docker containers</h2>
+            <div class="containers">
+                <ContainerStack
+                    v-for="(containers, stackName) in containerInfo"
+                    :key="stackName"
+                    :stack-name="stackName"
+                    :containers="containers"
+                    :portainer-url="portainerUrl"
+                />
+            </div>
+        </div>
+
+        <div class="content-width-large">
+			<h2>Fastapi requests</h2>	
+			<div class="fastapi-analysis">
+
+				<ChartComponent class="card fastapi-chart fastapi-over-time" :chartOptionsGenerator="chartValueGenerators.chart10"/>
+				<ChartComponent class="card fastapi-chart fastapi-response-time" :chartOptionsGenerator="chartValueGenerators.chart11"/>
+
+				<div class="single-values">
+					<div class="card">
+						<div class="card-label">Average request processing time</div>
+						<div class="card-value" :class="{
+							'text-loading-placeholder': serverStats.fastapiData.avg_backend_time == undefined
+						}">
+							{{ formatToMs(serverStats.fastapiData.avg_backend_time) }}
+						</div>
+					</div>
+	
+					<div class="card">
+						<div class="card-label">Total requests in 24h</div>
+						<div class="card-value" :class="{
+							'text-loading-placeholder': serverStats.fastapiData.avg_backend_time == undefined
+						}">
+							{{ serverStats.fastapiData.total_requests }} kpl
+						</div>
+					</div>
+	
+					<div class="card">
+						<div class="card-label">Request success rate</div>
+						<div class="card-value" :class="{
+							'text-loading-placeholder': serverStats.fastapiData.success_rate == undefined
+						}">
+							{{ formatToPercentage(serverStats.fastapiData.success_rate) }}
+						</div>
+					</div>
+				</div>
+
+				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-client-ip" :chartOptionsGenerator="chartValueGenerators.chart7"/>
+				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-status-code" :chartOptionsGenerator="chartValueGenerators.chart8"/>
+				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-request-method" :chartOptionsGenerator="chartValueGenerators.chart9"/>
+
+				<div class="card fastapi-requests">
+					<h2>Requests by endpoint</h2>
+					
+					<div class="server-info-row">
+						<span class="endpoint-name endpoint-label">Endpoint name</span>
+						<span class="endpoint-value endpoint-label">Requests</span>
+						<span class="endpoint-value endpoint-label">
+							Avg. time 
+							<InfoTooltip text="The average time that the backend takes to process the request. Note that this doesn't include transmission." position="left"/>
+						</span>
+					</div>
+					<div class="server-info-scroll">
+						<div v-for="(item, index) in serverStats.fastapiData.endpoint_count" :key="index" class="server-info-row">
+							<span class="endpoint-name">{{ item.endpoint }}</span>
+							<span class="endpoint-value">{{ item.count }} kpl</span>
+							<span class="endpoint-value">{{ item.avg_response_time_ms }} ms</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
+				<ChartComponent class="card fastapi-chart fastapi-error-codes" :chartOptionsGenerator="chartValueGenerators.chart12"/>
+			</div>
+		</div>
+
+        <div class="flex-column content-width-medium">
+			<h2>Backups</h2>
 			<div class="backups">
 				<div v-for="(backupCategory, categoryName) in backups" :key="categoryName" class="card backup-card">
 					<div class="flex header">
@@ -79,149 +261,16 @@
 				</div>
 			</div>
 		</div>
-
-		<div class="content-width-large">
-			<h2>Fastapi logs analysis <span class="text-lighter">(Under construction)</span></h2>	
-			<p>The logs do not include the automated loggin reqests since they make the data unreadable.</p>
-			<div class="flex-column">
-				<div style="margin: var(--spacing-xs);" class="card flex-column">
-					<label for="avg_backend_time">Average server processing time</label>
-					<span id="avg_backend_time">{{ new Number(serverStats.fastapiData.avg_backend_time).toFixed(0) }} ms</span>
-				</div>
-
-				<div style="margin: var(--spacing-xs);" class="card flex-column">
-					<label for="total_requests">Total request in the timespan</label>
-					<span id="total_requests">{{ serverStats.fastapiData.total_requests }} kpl</span>
-				</div>
-
-
-				<!-- REQUEST SUCCESS RATE -->
-
-
-				<div style="margin: var(--spacing-xs);" class="card flex-column">
-					<label>Requests by endpoint</label>
-					
-					<div class="server-info-row">
-						<span class="endpoint-name endpoint-label">Endpoint name</span>
-						<span class="endpoint-value endpoint-label">Requests</span>
-						<span class="endpoint-value endpoint-label">
-							Avg. time 
-							<InfoTooltip text="The average time that the backend takes to process the request." position="left"/>
-						</span>
-					</div>
-					<div class="server-info-scroll">
-						<div v-for="(item, index) in serverStats.fastapiData.endpoint_count" :key="index" class="server-info-row">
-							<span class="endpoint-name">{{ item.endpoint }}</span>
-							<span class="endpoint-value">{{ item.count }} kpl</span>
-							<span class="endpoint-value">{{ item.avg_response_time_ms }} ms</span>
-						</div>
-					</div>
-				</div>
-
-				<div class="card server-resources">
-					<!-- Chart 7 - FASTAPI -->
-					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart7"/>
-
-					<!-- Chart 8 - FASTAPI -->
-					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart8"/>
-
-					<!-- Chart 9 - FASTAPI -->
-					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart9"/>
-
-					<!-- Chart 10 - FASTAPI -->
-					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart10"/>
-
-					<!-- Chart 11 - Fastapi requesttime histogram -->
-					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart11"/>
-
-					<!-- Chart 12 - Fastapi endpoints and error codes -->
-					<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-					<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-					<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-					<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart12"/>
-				</div>
-
-			</div>
-		</div>
-
-		<div class="content-width-large">
-			<h2>Server resource usages <span class="text-lighter">(Under construction)</span></h2>
-			<div class="card server-resources content-width-large">
-				<div style="width: 100%; margin-bottom: var(--spacing-md); gap: 8px;" class="icon-align">
-					<CustomSelect 
-						v-model="serverLogsTimespan" 
-						:options="serverLogsTimespans"
-						:disabled="waitingFor.length != 0"
-						:class="{loading: waitingFor.length != 0}"
-						style="flex: 1; "
-					/>
-					<IconRefresh size="28px" @click="fetchServerLogs(true)" class="icon-button"/>
-				</div>
-				<!-- Chart 1 - CPU temp -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
-
-				<!-- Chart 2 - RAM Usage -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart2"/>
-
-				<!-- Chart 3 - CPU Usage -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart3"/>
-
-				<!-- Chart 5 - System load -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart5"/>
-
-				<!-- Chart 6 - Network up/down -->
-				<ChartComponent :chartOptionsGenerator="chartValueGenerators.chart6"/>
-
-				<div>
-					<h2>Uptime</h2>
-					{{ serverStats.formattedUptime }}
-				</div>
-			</div>
-		</div>
-
-		<div class="flex-column">
-			<h2>Server Drives</h2>
-			<div class="flex-row">
-				<div v-for="(drive, index) in serverStats.storage" :key="index" class="drive-card card">
-					<div class="name">
-						<IconHDD colorHover="var(--color-text)"/>
-						{{ drive.name }}
-					</div>
-					
-					<div class="text">
-						<div class="label">Used space</div>
-						<div class="value">{{ formatBytes(drive.used) }}</div>
-						<div class="label">Available space</div>
-						<div class="value">{{ formatBytes(drive.free) }}</div>
-						<div class="label">Disk size</div>
-						<div class="value">{{ formatBytes(drive.total) }}</div>
-					</div>
-					
-					<div>
-						<div class="capacityIndicator">
-							<div 
-								class="bar" 
-								:class="(drive.used / drive.total) < 0.9 ? 'positiveBackground' : 'negativeBackground'"
-								:style="{ width: (drive.used / drive.total * 100) + '%' }"
-							></div>
-							<div class="text">
-								{{ (drive.used / drive.total * 100).toFixed(2) + '%' }}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
 	</div>
 </template>
 
 <script>
 // Icons
-import IconHDD from '@/components/icons/IconHDD.vue';
 import IconBackup from '@/components/icons/IconBackup.vue';
 import IconBackupDown from '@/components/icons/IconBackupDown.vue';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
+import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 
 // Other
 import fastApi from '@/utils/fastApi';
@@ -235,7 +284,11 @@ import {
 } from '@/utils/chartUtils'
 import ChartComponent from '@/components/ChartComponent.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
-import { standAloneBuild } from '@/utils/config';
+import { standAloneBuild, portainerUrl } from '@/utils/config';
+import { setTimeout } from 'core-js';
+import ResourceUsageTile from '@/components/ResourceUsageTile.vue';
+import ContainerStack from '@/components/ContainerStack.vue';
+import DriveCard from '@/components/DriveCard.vue';
 
 export default {
 	name: 'HomePage',
@@ -243,10 +296,13 @@ export default {
 		InfoTooltip,
 		ChartComponent,
 		CustomSelect,
-		IconHDD,
+        ResourceUsageTile,
+        ContainerStack,
+		DriveCard,
 		IconBackup,
 		IconBackupDown,
 		IconRefresh,
+        IconLinkExternal,
 	},
 	data() {
 		return {
@@ -260,9 +316,10 @@ export default {
 			serverStats: {
 				storage: [],
 				fastapiData: {},
-				formattedUptime: 0,
+                uptimeSeconds: 0,
 			},
-			serverLogsTimespan: "1h",
+            secondsPassed: 0,
+			serverLogsTimespan: "15m",
 			serverLogsTimespans: [
 				{label: "15 min", value: "15m"},
 				{label: "30 min", value: "30m"},
@@ -272,24 +329,43 @@ export default {
 				{label: "12 hours", value: "12h"},
 				{label: "24 hours", value: "24h"},
 			],
+            current: {},
+            portainerUrl: portainerUrl,
+			containerInfo: {},
 		};
 	},
 	methods: {
+        openServerUsageChart(ref) {
+            this.$refs[ref + "GM"].open();
+            setTimeout(() => {
+                this.$refs[ref + "Chart"].initializeChart();
+            }, 1)
+        },
 		getGreeting() {
 			const hour = new Date().getHours();
 			if (hour < 5) {
 				return ["Good night", "Hopefully you're actually getting some sleep and not scrolling through your phone."];
 			} else if (hour < 12) {
-				return ["Good morning", "Let’s pretend you’re already awake and fully functional."];
+				return ["Good morning", "Let's pretend you're already awake and fully functional."];
 			} else if (hour < 18) {
 				return ["Good afternoon", "Still pretending to be productive, I see."];
 			} else {
 				return ["Good evening", "Survived the day, huh? That's something."];
 			}
 		},
-		formatBytes(value) {
-			return convert.toBytes(value)
+		formatToBytes(value) {
+			return convert.toBytes(value);
 		},
+		formatToPercentage(value) {
+			return convert.toPercentage(value);
+		},
+		formatToMs(value) {
+			return convert.toFiNumber(value, 0) + " ms";
+		},
+        formattedUptime() {
+            const uptime = Math.floor(this.serverStats.uptimeSeconds);
+            return convert.toTime(uptime + this.secondsPassed, -1);
+        },
 		copyToClipboard(textToCopy, what) {
 			try {
 				if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -371,31 +447,75 @@ export default {
 		removeItemFromWaitingArray(item) {
             this.waitingFor = this.waitingFor.filter(i => i !== item);
         },
+        async fetchContainerInfo() {
+            this.containerInfo = await fastApi.server.containers();
+        },
 		async fetchServerLogs(refresh = false) {
 			this.waitingFor.push("fetchServerLogs");
 
 			const resourceLogsResponse = await fastApi.server.logs.system_resources(this.serverLogsTimespan);
 			// console.log("resourceLogsResponse", resourceLogsResponse);
 			if (resourceLogsResponse && resourceLogsResponse.data) {
-				this.serverStats.formattedUptime = convert.toTime(resourceLogsResponse.uptime_seconds, -1);
+				this.serverStats.uptimeSeconds = resourceLogsResponse.uptime_seconds;
+
+                // Timestamps for all charts
 				const resourceLogsTimeStamps = resourceLogsResponse.data.map(log => log.timestamp);
-				const chart1YaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
-				const chart2YaxisValues = resourceLogsResponse.data.map(log => log.ram_usage);
-				const chart3YaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
-				const chart5YaxisValues = resourceLogsResponse.data.map(log => log.cpu_clock_mhz / 1000);
-				const chartNetRecv = resourceLogsResponse.data.map((log, index, array) => {
+                
+				const chartCpuUsageYaxisValues = resourceLogsResponse.data.map(log => log.cpu_usage);
+                this.current.cpuUsage = chartCpuUsageYaxisValues[chartCpuUsageYaxisValues.length - 1];
+                this.current.cpuUsageMax = 100;
+                this.current.cpuUsageFormatted = convert.toPercentage(this.current.cpuUsage);
+                this.current.cpuUsageMaxFormatted = convert.toPercentage(this.current.cpuUsageMax);
+
+				const chartCpuTempYaxisValues = resourceLogsResponse.data.map(log => log.cpu_temperature);
+                this.current.cpuTemp = chartCpuTempYaxisValues[chartCpuTempYaxisValues.length - 1];
+                this.current.cpuTempMax = 80;
+                this.current.cpuTempFormatted = convert.toCelcius(this.current.cpuTemp);
+                this.current.cpuTempMaxFormatted = convert.toCelcius(this.current.cpuTempMax);
+
+				const chartRamUsageYaxisValues = resourceLogsResponse.data.map(log => log.ram_usage_bytes);
+				const chartRamUsageMaxValue = resourceLogsResponse.max_ram_bytes;
+                this.current.ramUsage = chartRamUsageYaxisValues[chartRamUsageYaxisValues.length - 1];
+                this.current.ramUsageMax = chartRamUsageMaxValue;
+                this.current.ramUsageFormatted = convert.toBytes(this.current.ramUsage);
+                this.current.ramUsageMaxFormatted = convert.toBytes(this.current.ramUsageMax);
+
+				const chartSwapUsageYaxisValues = resourceLogsResponse.data.map(log => log.swap_usage_bytes);
+				const chartSwapUsageMaxValue = resourceLogsResponse.max_swap_bytes;
+                this.current.swapUsage = chartSwapUsageYaxisValues[chartSwapUsageYaxisValues.length - 1];
+                this.current.swapUsageMax = chartSwapUsageMaxValue;
+                this.current.swapUsageFormatted = convert.toBytes(this.current.swapUsage);
+                this.current.swapUsageMaxFormatted = convert.toBytes(this.current.swapUsageMax);
+
+				const chartCpuFreqYaxisValues = resourceLogsResponse.data.map(log => log.cpu_clock_mhz / 1000);
+                this.current.cpuFreq = chartCpuFreqYaxisValues[chartCpuFreqYaxisValues.length - 1];
+                this.current.cpuFreqMax = 1.8;
+                this.current.cpuFreqFormatted = convert.toFrequency(this.current.cpuFreq);
+                this.current.cpuFreqMaxFormatted = convert.toFrequency(this.current.cpuFreqMax);
+
+				const chartNetRecvYaxisValues = resourceLogsResponse.data.map((log, index, array) => {
 					if (index === 0) return 0;	// The first one can't have a differnce
 					const difference = (log.network_recv_bytes - array[index - 1].network_recv_bytes) / 10;		// Calculate
 					return difference > 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
 				});
-				const chartNetSent = resourceLogsResponse.data.map((log, index, array) => {
+                this.current.netRecv = chartNetRecvYaxisValues[chartNetRecvYaxisValues.length - 1];
+                this.current.netRecvMax = 1E9 / 8;
+                this.current.netRecvFormatted = convert.toBytesPerSecond(this.current.netRecv);
+                this.current.netRecvMaxFormatted = convert.toBytesPerSecond(this.current.netRecvMax);
+                
+				const chartNetSentYaxisValues = resourceLogsResponse.data.map((log, index, array) => {
 					if (index === 0) return 0;	// The first one can't have a differnce
 					const difference = (-log.network_sent_bytes + array[index - 1].network_sent_bytes) / 10;	// Calculate
 					return difference < 0 ? difference : 0;	// If negative the server propably reset the count so set to 0
 				});
+                this.current.netSent = -chartNetSentYaxisValues[chartNetSentYaxisValues.length - 1];
+                this.current.netSentMax = 1E9 / 8;
+                this.current.netSentFormatted = convert.toBytesPerSecond(this.current.netSent);
+                this.current.netSentMaxFormatted = convert.toBytesPerSecond(this.current.netSentMax);
 
-				// Chart 1 - CPU temperature
-				const chart1Options = () => ({
+
+				// Chart CPU temperature
+				const chartCpuTempOptions = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
 						text: 'CPU temperature',
@@ -454,16 +574,16 @@ export default {
 									}]
 								}
 							},
-							data: chart1YaxisValues,
+							data: chartCpuTempYaxisValues,
 							smooth: true,
 						},
 					],
 				});
 				// Set the value generator for the chart
-				this.chartValueGenerators.chart1 = chart1Options;
+				this.chartValueGenerators.chartCpuTemp = chartCpuTempOptions;
 
-				// Chart 2 - RAM Usage
-				const chart2Options = () => ({
+				// Chart RAM Usage
+				const chartRamUsageOptions = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
 						text: 'RAM Usage',
@@ -478,7 +598,7 @@ export default {
 						backgroundColor: getCssVar('color-background-card'),
 						borderWidth: 1,
 						borderColor: getCssVar("color-border"),
-						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toPercentage, false)
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toBytes, false)
 					},
 					grid: {
 						left: 56,
@@ -499,11 +619,11 @@ export default {
 					},
 					yAxis: { 
 						type: 'value',      
-						name: 'Usage (%)',  // Y-akselin nimi
-						max: 100,
+						name: 'Usage (bytes)',  // Y-akselin nimi
+						max: chartRamUsageMaxValue,
 						min: 0,
 						axisLabel: {        // Y-akselin arvojen muotoilu
-							formatter: value => convert.toFiNumber(value)
+							formatter: value => convert.toBytes(value)
 						}
 					},
 					series: [
@@ -511,16 +631,16 @@ export default {
 							name: 'RAM Usage',    // Tooltipissa näkyvä nimi
 							type: 'line',
 							areaStyle: {},
-							data: chart2YaxisValues,
+							data: chartRamUsageYaxisValues,
 							smooth: true,
 						},
 					],
 				});
 				// Set the value generator for the chart
-				this.chartValueGenerators.chart2 = chart2Options;
+				this.chartValueGenerators.chartRamUsage = chartRamUsageOptions;
 
 				// Chart 3 - CPU Usage
-				const chart3Options = () => ({
+				const chartCpuUsageOptions = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
 						text: 'CPU Usage',
@@ -568,16 +688,73 @@ export default {
 							name: 'CPU Usage',    // Tooltipissa näkyvä nimi
 							type: 'line',
 							areaStyle: {},
-							data: chart3YaxisValues,
+							data: chartCpuUsageYaxisValues,
 							smooth: true,
 						},
 					],
 				});
 				// Set the value generator for the chart
-				this.chartValueGenerators.chart3 = chart3Options;
+				this.chartValueGenerators.chartCpuUsage = chartCpuUsageOptions;
 
-				// Chart 5 - System load
-				const chart5Options = () => ({
+				// Chart 4 - Swap Usage
+				const chartSwapUsageOptions = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Swap Usage',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					color: [getCssVar('color-septenary')],
+					tooltip: { 
+						trigger: 'axis',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: params => generateTooltipMultiValue(params, 'timeInSeconds', convert.toBytes, false)
+					},
+					grid: {
+						left: 56,
+						right: 8,
+						top: 80,
+						bottom: 64,
+					},
+					xAxis: {
+						type: 'category',
+						data: resourceLogsTimeStamps,
+						axisLabel: {
+							rotate: 45,
+							formatter: value => convert.toFiDate(value, 'timeInSeconds'),
+						},
+						axisTick: {
+							alignWithLabel: true
+						},
+					},
+					yAxis: { 
+						type: 'value',      
+						name: 'Usage (bytes)',  // Y-akselin nimi
+						max: chartSwapUsageMaxValue,
+						min: 0,
+						axisLabel: {        // Y-akselin arvojen muotoilu
+							formatter: value => convert.toBytes(value)
+						}
+					},
+					series: [
+						{
+							name: 'Swap Usage',    // Tooltipissa näkyvä nimi
+							type: 'line',
+							areaStyle: {},
+							data: chartSwapUsageYaxisValues,
+							smooth: true,
+						},
+					],
+				});
+				// Set the value generator for the chart
+				this.chartValueGenerators.chartSwapUsage = chartSwapUsageOptions;
+
+				// Chart Cpu Frequenzy
+				const chartCpuFreqOptions = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
 						text: 'CPU Frequenzy',
@@ -624,16 +801,16 @@ export default {
 							name: 'CPU Frequenzy',    // Tooltipissa näkyvä nimi
 							type: 'line',
 							areaStyle: {},
-							data: chart5YaxisValues,
+							data: chartCpuFreqYaxisValues,
 							smooth: true,
 						},
 					],
 				});
 				// Set the value generator for the chart
-				this.chartValueGenerators.chart5 = chart5Options;
+				this.chartValueGenerators.chartCpuFreq = chartCpuFreqOptions;
 
 				// Chart 6 - Network up/down
-				const chart6Options = () => ({
+				const chartNetUsageOptions = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
 						text: 'Network up/down',
@@ -679,20 +856,20 @@ export default {
 							name: 'Data received',    // Tooltipissa näkyvä nimi
 							type: 'line',
 							areaStyle: {},
-							data: chartNetRecv,
+							data: chartNetRecvYaxisValues,
 							smooth: true,
 						},
 						{
 							name: 'Data sent',    // Tooltipissa näkyvä nimi
 							type: 'line',
 							areaStyle: {},
-							data: chartNetSent,
+							data: chartNetSentYaxisValues,
 							smooth: true,
 						},
 					],
 				});
 				// Set the value generator for the chart
-				this.chartValueGenerators.chart6 = chart6Options;
+				this.chartValueGenerators.chartNetUsage = chartNetUsageOptions;
 			}
 
 			if (refresh) {
@@ -1086,7 +1263,7 @@ export default {
             }
         }
     },
-	async mounted() {
+    async mounted() {
 		// Get services from env
 		this.getServiceUrls();
 
@@ -1108,134 +1285,92 @@ export default {
 		}
 		// console.log(this.serverStats.storage);
 
+        await this.fetchContainerInfo();
 		await this.fetchServerLogs();
 		await this.fetchFastapiLogs();
 
+        setInterval(() =>  {
+            this.secondsPassed += 1;
+        }, 1000);
 	}
 };
 </script>
 
 <style scoped>
 
-.server-resources {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-}
-.ChartComponent {
-	width: 50%;
-	height: 300px;
-}
-@media (max-width: 900px) {
-	.ChartComponent {
-		width: 100%;
-	}
-}
-
+/* - - - - Greeting area - - - - */
 .greeting-area {
-	--greeting-area-height: min(60vh, 800px);
-	height: var(--greeting-area-height);
+	/* height: var(--greeting-area-height); */
 	display: flex;
 	position: relative;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	/* background-color: red; */
+    box-sizing: border-box;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
 }
 
-.greeting-area .text-area {
+.greeting-area .greeting {
 	height: 100%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin-top: min(15vh, calc(800px / 60 * 15));
 }
 
-.greeting-area .text-area h1 {
+.greeting-area .greeting h1 {
 	margin: 0;
 	/* Row gap? to large */
 	line-height: 48px;
 	font-size: 48px;
 }
-.greeting-area .text-area .header-sub-text {
+.greeting-area .greeting .header-sub-text {
 	display: inline-block;
 	color: var(--color-text-light);
-	margin-top: var(--spacing-sm);
-	margin-bottom: calc(var(--spacing-md) + var(--spacing-sm));
-}
-.greeting-area .text-area button {
-	margin-top: var(--spacing-md);
-	margin-inline: 0;
+	margin-top: var(--spacing-xs);
+	/* margin-bottom: calc(var(--spacing-md) + var(--spacing-sm)); */
 }
 
-/* Color blobs */
-.greeting-area .color-blob {
-    border-radius: 50%;
-    position: absolute;
-    animation: moveBlobs 5s infinite cubic-bezier(0.5, 0, 0.5, 1);
-    filter: blur(50px);
-	--x-offset: calc(-250px + 50%);
-	--y-offset: calc(-200px + var(--greeting-area-height) * 0.5)
+.greeting-area .info {
+    display: flex;
+    flex-direction: column;
+    text-align: end;
+}
+.greeting-area .info .label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-light);
+    /* font-weight: 500; */
+}
+.greeting-area .info .value {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
 }
 
-.greeting-area .color-blob.one {
-    background-color: var(--color-primary-active);
-	opacity: 0.5;
-    height: 300px;
-    width: 300px;
-    right: calc(var(--x-offset) - 0px);
-    top: calc(var(--y-offset) - 50px);
-    z-index: -101;
-    animation-delay: 0s;
-}
-.dark-mode .greeting-area .color-blob.one {
-	opacity: 1;
-    background-color: var(--color-primary);
-}
-.greeting-area .color-blob.two {
-    background-color: var(--color-secondary-active);
-    height: 225px;
-    width: 225px;
-    right: calc(var(--x-offset) - 80px);
-    top: calc(var(--y-offset) + 100px);
-    z-index: -100;
-    animation-delay: 0.75s;
-}
-.dark-mode .greeting-area .color-blob.two {
-    background-color: var(--color-secondary);
-}
-.greeting-area .color-blob.three {
-    background-color: var(--color-tertiary-active);
-    height: 150px;
-    width: 150px;
-    right: calc(var(--x-offset) - 200px);
-    top: calc(var(--y-offset) + 60px);
-    z-index: -99;
-    animation-delay: 1s;
-}
-.dark-mode .greeting-area .color-blob.three {
-    background-color: var(--color-tertiary);
-}
-
-@keyframes moveBlobs {
-    0% {
-        transform: translate(0, 0);
+@media (max-width: 600px) {
+    .greeting-area {
+        flex-direction: column;
+		justify-content: left;
+		align-items: start;
+		gap: var(--spacing-md);
     }
-	50% {
-        transform: translate(0px, 50px);
+	.greeting-area .info {
+		text-align: start;
 	}
-    100% {
-        transform: translate(0, 0);
-    }
 }
 
-/* - - - - Other services - - - - */
-.tile-container {
+
+/* - - - - Service links - - - - */
+.service-links {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: center;
+    justify-content: start;
 	gap: var(--spacing-md);
+}
+@media(max-width: 600px) {
+	.service-links {
+		justify-content: center;
+	}
 }
 .tile-button {
 	position: relative;
@@ -1248,7 +1383,7 @@ export default {
 	padding-inline: var(--spacing-sm);
 	margin: 0;
 }
-.tile-button img, .tile-button svg {
+.tile-button img {
 	position: absolute;
 	top: var(--spacing-md);
 	width: 80px;
@@ -1260,6 +1395,248 @@ export default {
 .tile-button span {
 	position: absolute;
 	bottom: var(--spacing-md);
+}
+
+
+/* - - - - Server resources - - - - */
+.server-resource-usage .header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.server-resource-usage .header .selector {
+    width: 150px;
+    column-gap: var(--spacing-sm);
+}
+.server-resource-usage .header .custom-select {
+    flex: 1;
+}
+.server-resource-chart {
+    min-height: 350px;
+}
+.server-resource-chart.cpu-temp,
+.server-resource-chart.network {
+    height: 350px;
+}
+
+.server-resource-usage .data {
+    max-width: 100%;
+	display: grid;
+    grid-template-columns: 3fr 4fr;
+    grid-template-areas: 
+		"widgets cpu-usage"
+		"network cpu-temp"
+		"drives drives";
+    gap: var(--spacing-md);
+}
+.server-resource-usage .data .widgets {
+    grid-area: widgets;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: var(--spacing-md);
+}
+.server-resource-usage .data .drives {
+	grid-area: drives;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--spacing-md);
+}
+.server-resource-usage .data .drives .drive-card {
+	flex: 1;
+}
+
+@media (max-width: 1000px) {
+    .server-resource-usage .data {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: 
+			"widgets widgets"
+			"cpu-usage cpu-temp"
+			"network network"
+			"drives drives";
+    }
+    .server-resource-usage .data .widgets {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .server-resource-usage .data {
+        grid-template-columns: 1fr;
+        grid-template-areas: "widgets"
+                            "cpu-usage"
+                            "cpu-temp"
+                            "network"
+							"drives";
+    }
+    .server-resource-usage .data .widgets {
+        grid-template-columns: 1fr 1fr;
+    }
+	.server-resource-usage .data .drives .drive-card {
+		max-width: unset;
+	}
+}
+
+.info-tile {
+    background-color: var(--color-background-card);
+    padding: var(--spacing-md);
+    padding-right: calc(var(--spacing-sm) + 20px + var(--spacing-md));
+    border-radius: var(--border-radius-medium);
+    position: relative;
+    overflow: hidden;
+}
+.info-tile .label {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-lighter);
+    margin-bottom: var(--spacing-sm);
+}
+.info-tile .current {
+    font-size: var(--font-size-xl);
+    font-weight: 600;
+}
+.info-tile .max {
+    color: var(--color-text-light);
+    /* font-size: var(--font-size-lg); */
+}
+.info-tile .indicator-holder {
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    right: 0;
+    top: 0;
+    background-color: var(--color-border);
+}
+.info-tile .indicator {
+    position: absolute;
+    width: 100%;
+    height: 0%;
+    right: 0;
+    bottom: 0;
+    background-color: var(--color-primary);
+}
+
+.containers {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+	justify-items: auto;
+    gap: var(--spacing-md);
+}
+.containers > * {
+	flex: 1;
+}
+
+.server-resource-usage .data .cpu-usage {
+    grid-area: cpu-usage;
+}
+.server-resource-usage .data .cpu-temp {
+    grid-area: cpu-temp;
+}
+.server-resource-usage .data .network {
+    grid-area: network;
+}
+
+/* - - - - - Fastapi analysis - - - - */
+.fastapi-analysis {
+    gap: var(--spacing-md);
+    display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-areas: 
+		"single-values single-values single-values"
+		"over-time over-time response-time"
+		"client-ip status-code request-method"
+		"requests requests error-codes";
+}
+
+.fastapi-analysis .single-values {
+	display: flex;
+	flex-direction: row;
+	gap: var(--spacing-md);
+	grid-area: single-values;
+}
+
+.fastapi-over-time {
+	grid-area: over-time;
+}
+.fastapi-response-time {
+	grid-area: response-time;
+}
+.fastapi-client-ip {
+	grid-area: client-ip;
+}
+.fastapi-status-code {
+	grid-area: status-code;
+}
+.fastapi-request-method {
+	grid-area: request-method;
+}
+.fastapi-requests {
+	grid-area: requests;
+	height: 500px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+.fastapi-error-codes {
+	grid-area: error-codes
+}
+
+.server-info-row {
+	display: grid;
+	grid-template-columns: auto 80px 120px;
+	gap: 0;
+}
+
+.server-info-row .endpoint-name {
+	text-align: start;
+	color: var(--color-text-light);
+	white-space: nowrap;
+	overflow: hidden;
+	mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+}
+.server-info-row .endpoint-value {
+	text-align: end;
+	color: var(--color-text);
+	font-weight: 500;
+}
+.server-info-row .endpoint-label {
+	/* Overwrite the properties for the labels */
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+.server-info-scroll {
+	overflow: scroll;
+	max-height: 100%;
+}
+
+.fastapi-chart {
+	height: 500px;
+}
+.fastapi-piechart {
+	height: 300px;
+}
+
+@media (max-width: 600px) {
+	.fastapi-analysis {
+		grid-template-columns: 1fr;
+		grid-template-areas: 
+			"single-values"
+			"over-time"
+			"response-time"
+			"client-ip"
+			"status-code"
+			"request-method"
+			"error-codes"
+			"requests ";
+	}
+	.fastapi-chart {
+		height: 350px;
+	}
+	.fastapi-piechart {
+		height: 250px;
+	}
 }
 
 
@@ -1340,7 +1717,6 @@ export default {
 	}
 }
 
-
 .bad {
 	color: var(--color-negative);
 }
@@ -1351,105 +1727,5 @@ export default {
 	color: var(--color-positive);
 }
 
-/* @media (max-width: 500px) {
-	.backup-card {
-		width: 300px;
-	}
-	.backup-card .fromTo .arrow {
-		transform: rotate(0);
-		margin-inline: auto;
-	}
-	.backup-card .fromTo {
-		grid-template-columns: auto;
-	}
-} */
 
-/* - - - - - Fastapi info - - - - */
-.server-info-row {
-	display: grid;
-	grid-template-columns: auto 80px 120px;
-	gap: 0;
-}
-
-.server-info-row .endpoint-name {
-	text-align: start;
-	color: var(--color-text-light);
-	white-space: nowrap;
-	overflow: hidden;
-	mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
-}
-.server-info-row .endpoint-value {
-	text-align: end;
-	color: var(--color-text);
-	font-weight: 500;
-}
-.server-info-row .endpoint-label {
-	/* Overwrite the properties for the labels */
-	font-weight: 600;
-	color: var(--color-text);
-}
-
-.server-info-scroll {
-	max-height: 200px;
-	overflow: scroll;
-}
-
-/* - - - - Server drives - - - - */
-.drive-card {
-	width: 250px;
-	margin: 0;
-	animation: fadeIn 0.5s ease-out;
-}
-.drive-card .name {
-	font-weight: 700;
-	font-size: 18px;
-	display: flex;
-	flex-direction: row;
-	gap: var(--spacing-sm);
-	margin-bottom: var(--spacing-sm);
-}
-.drive-card .text {
-	margin: 12px 0;
-	display: grid;
-	grid-template-columns: auto auto;
-}
-.drive-card .text .label {
-	color: var(--color-text-light);
-	margin-right: var(--spacing-md);
-}
-.drive-card .text .value {
-	font-weight: 500;
-	text-align: end;
-}
-
-.capacityIndicator {
-	width: 100%;
-	height: 32px;
-	background-color: var(--color-background-card-section);
-	/* border: 1px solid var(--color-border); */
-	border-radius: var(--border-radius-small);
-	position: relative;
-}
-.capacityIndicator .bar {
-	height: 100%;
-	border-radius: var(--border-radius-small);
-}
-.capacityIndicator .bar.positiveBackground {
-	background-color: var(--color-positive);
-}
-.capacityIndicator .bar.negativeBackground {
-	background-color: var(--color-negative);
-}
-.capacityIndicator .text {
-	display: flex;
-	position: absolute;
-	justify-content: center;
-	flex-direction: column;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	right: 0;
-	padding-left: 12px;
-	font-weight: 500;
-}
 </style>

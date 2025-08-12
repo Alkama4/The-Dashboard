@@ -12,12 +12,13 @@
 
         <div 
             class="modal"
+            :class="{'offcenter': offcenter}"
             ref="trapContainer"
             tabindex="-1"
             @keydown.tab="handleTab"
         >
 
-            <div class="default-content">
+            <div class="default-content" v-if="showDefaultcontent">
                 <h2 class="title">{{ header }}</h2>
                 <IconCross
                     class="icon-button"
@@ -51,6 +52,10 @@ export default {
             type: String,
             default: "Modal header"
         },
+        showDefaultcontent: {
+            type: Boolean,
+            default: true
+        }
     },
     data() {
         return {
@@ -59,6 +64,7 @@ export default {
             waitingVueShow: false,
             waitingStylingShow: false,
             isOpening: false,
+            offcenter: false,
         };
     },
     methods: {
@@ -118,6 +124,10 @@ export default {
             if (event.key === 'Escape') {
                 this.close();
             }
+        },
+
+        setOffcenter(value) {
+            this.offcenter = !value;
         },
 
         handleTab(e) {
@@ -210,6 +220,9 @@ export default {
     /* Fix bug where when opening sometimes causes outline to be visible, even though it should be unselectable. Caused by us force setting it when ever opening to create a tab loop */
     outline: none;
 }
+.modal.offcenter {
+    margin: 0;
+}
 
 .is-displayed .modal {
     pointer-events: unset;
@@ -230,7 +243,11 @@ export default {
 
 .content {
     overflow-y: auto; /* Enable vertical scrolling */
-    padding: var(--spacing-xs);
+
+    /* This proparbly had a reason to exist. 
+    If the reason is figured write it here. 
+    vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv */
+    /* padding: var(--spacing-xs); */
 }
 
 </style>

@@ -305,6 +305,10 @@ const fastApi = {
         async backups() {
             return await getData('/server/backups');
         },
+
+        async containers() {
+            return await getData('/server/containers')
+        },
     },
 
 

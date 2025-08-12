@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="ChartComponent"
+        class="chart-component"
         :class="{ 
             fullwindow: isFullscreen && !isTouchDevice,
             fullscreen: isFullscreen && isTouchDevice 
@@ -25,7 +25,6 @@
 import IconCollapse from './icons/IconCollapse.vue';
 import IconExpand from './icons/IconExpand.vue';
 import { init } from 'echarts/core'
-// import { initializeAndSetupChart } from '@/utils/chartTools';
 
 export default {
     name: 'ChartComponent',
@@ -44,6 +43,7 @@ export default {
             isFullscreen: false,
             isLoaded: false,
             isTouchDevice: 'ontouchstart' in document.documentElement,
+            doNotTouchNoScroll: false,
         };
     },
     methods: {
@@ -72,24 +72,36 @@ export default {
             const container = this.$refs.chartHolder;
             if (!container) return;
 
+            let resizeTimeout = null;
             const resizeObserver = new ResizeObserver(() => {
-                chart.resize();
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(() => {
+                    chart.resize();
+                }, 1);
             });
 
             resizeObserver.observe(container);
 
-            // Store the observer for cleanup
-            if (!this.resizeObservers) {
-                this.resizeObservers = [];
-            }
+            this.resizeObservers = this.resizeObservers || [];
             this.resizeObservers.push(resizeObserver);
         },
         toggleFullscreenChart() {
             const isTouchDevice = 'ontouchstart' in document.documentElement;
 
+            // Emit the current state for modal fixes
+            this.$emit('fullscreen-toggle', this.isFullscreen);
+
             if (this.isFullscreen != true) {
                 this.isFullscreen = true;
-                document.documentElement.classList.add('no-scroll');
+
+                // If there isn't a no-scroll style add it
+                if (!document.documentElement.classList.contains('no-scroll')) {
+                    document.documentElement.classList.add('no-scroll');
+
+                // Else add a flag to not remove it later, since something else is handling it
+                } else {
+                    this.doNotTouchNoScroll = true;
+                }
 
                 if (isTouchDevice) {
                     document.documentElement.requestFullscreen?.().then(() => {
@@ -108,7 +120,9 @@ export default {
         },
         exitFullscreen() {
             this.isFullscreen = false;
-            document.documentElement.classList.remove('no-scroll');
+            if (!this.doNotTouchNoScroll) {
+                document.documentElement.classList.remove('no-scroll');
+            }
             if (document.fullscreenElement) {
                 document.exitFullscreen?.();
             }
@@ -123,7 +137,7 @@ export default {
                     this.chart.setOption(newVal());
                 }
             },
-            immediate: true,
+            // immediate: true,
             deep: true
         }
     },
@@ -134,10 +148,12 @@ export default {
 </script>
 
 <style scoped>
-.ChartComponent { 
+.chart-component { 
     position: relative;
-    height: 450px;
+    min-width: 10px;
+    min-height: 10px;
     width: 100%;
+    box-sizing: border-box;
     background-color: var(--color-background-card);
 }
 
@@ -147,8 +163,8 @@ export default {
 
 .fullscreen-button {
     position: absolute;
-    right: 0;
-    top: 0;
+    right: var(--spacing-sm);
+    top: var(--spacing-sm);
     z-index: 1; /* Otherwise under chart */
     color: var(--color-text-light);
     background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
