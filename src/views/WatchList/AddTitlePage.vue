@@ -121,8 +121,8 @@ import IconAdd from '@/components/icons/IconAdd.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconTrash from '@/components/icons/IconTrash.vue';
-import ModalConfirmation from '@/components/ModalConfirmation.vue';
-import SliderToggle from '@/components/SliderToggle.vue';
+import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
+import SliderToggle from '@/components/common/SliderToggle.vue';
 import fastApi from '@/utils/fastApi';
 import { notify } from '@/utils/notification';
 

@@ -11,7 +11,7 @@
 
   
 <script>
-import TransactionForm from '@/components/FormTransaction.vue';
+import TransactionForm from '@/components/Spendings/FormTransaction.vue';
 import fastApi from '@/utils/fastApi';
 import { notify } from '@/utils/notification';
 

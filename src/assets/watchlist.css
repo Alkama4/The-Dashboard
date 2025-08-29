@@ -1,0 +1,6 @@
+:root.watchlist.dark-mode {
+    --color-primary: #5613ad;
+    --color-primary-hover: #6c2bc0;
+    --color-primary-active: #7e3ed1;
+    --color-background: rgb(8, 8, 8);
+}

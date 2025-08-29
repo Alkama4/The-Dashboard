@@ -1,19 +1,11 @@
 <template>
-    <TopBar/>
-    <main>
-        <RouterView/>
-    </main>
-    <footer class="center">
-        <router-link to="/debug"><p>
-            &copy; 2024 Aleksi Malkki
-        </p></router-link>
-    </footer>
+    <RouterView/>
 </template>
 
 <script>
 // Imports
 import { initializeDarkMode } from './utils/darkMode';
-import TopBar from './components/TopBar.vue';
+// import TopBar from './components/TopBar.vue';
 import session from './utils/session';
 import { isTouchDevice } from './utils/config';
 
@@ -21,7 +13,7 @@ import { isTouchDevice } from './utils/config';
 export default {
     name: 'App',
     components: {
-        TopBar,
+        // TopBar,
     },
     async mounted() {
         // Check for browser stuff and localstorage for previous choises
@@ -29,7 +21,7 @@ export default {
 
         // Set touch-device class if touch device
         if (isTouchDevice) 
-            document.documentElement.classList.add("touch-device")
+            document.documentElement.classList.add("touch-device");
         else
             document.documentElement.classList.add("pointer-device");
 
@@ -39,7 +31,3 @@ export default {
     },
 }
 </script>
-
-<style>
-
-</style>

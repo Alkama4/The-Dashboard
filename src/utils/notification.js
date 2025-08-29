@@ -1,5 +1,5 @@
 import { createApp } from "vue";
-import Notification from "../components/NotificationPopup.vue";
+import Notification from "@/components/common/NotificationPopup.vue";
 
 let activeNotification = null; // Global reference to the active notification
 

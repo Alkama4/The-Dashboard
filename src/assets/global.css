@@ -301,7 +301,8 @@ html, body {
 }
 
 main {
-    margin-bottom: 64px;
+    margin-bottom: var(--spacing-lg);
+    margin-top: var(--height-top-bar);
 }
 
 html.no-scroll {
@@ -314,20 +315,11 @@ body {
 }
 
 #app {
-    min-height: calc(100vh - var(--height-top-bar));
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     width: 100vw;
-    margin-top: var(--height-top-bar);
     z-index: var(--z-app);
-}
-
-footer {
-    margin-top: auto;
-}
-footer a {
-    color: var(--color-text-hidden);
-    text-decoration: none;
 }
 
 ::selection {

@@ -286,20 +286,20 @@ import fastApi from '@/utils/fastApi';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
 import { convert } from '@/utils/utils';
-import CustomSelect from '@/components/CustomSelect.vue';
+import CustomSelect from '@/components/common/CustomSelect.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
-import ModalConfirmation from '@/components/ModalConfirmation.vue';
+import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
 import IconCollection from '@/components/icons/IconCollection.vue';
 import { standAloneBuild } from '@/utils/config';
-import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
-import TriStateToggle from '@/components/TriStateToggle.vue';
-import BooleanFitlerToggle from '@/components/BooleanFitlerToggle.vue';
+import ModalTitleCollections from '@/components/WatchList/ModalTitleCollections.vue';
+import TriStateToggle from '@/components/common/TriStateToggle.vue';
+import BooleanFitlerToggle from '@/components/common/BooleanFitlerToggle.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
-import MissingImage from '@/components/MissingImage.vue';
+import MissingImage from '@/components/common/MissingImage.vue';
 
 export default {
     name: 'HomePage',

@@ -527,31 +527,31 @@
 import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
-import InfoTooltip from '@/components/InfoTooltip.vue';
+import InfoTooltip from '@/components/common/InfoTooltip.vue';
 import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
 import { apiUrl, standAloneBuild, isTouchDevice } from '@/utils/config';
-import WatchNowRecursive from '@/components/WatchNowRecursive.vue';
+import WatchNowRecursive from '@/components/WatchList/WatchNowRecursive.vue';
 import IconJustwatch from '@/components/icons/IconJustwatchColorful.vue';
 import IconTMDBColorful from '@/components/icons/IconTMDBColorful.vue';
 import IconIMDBColorful from '@/components/icons/IconIMDBColorful.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
-import ModalConfirmation from '@/components/ModalConfirmation.vue';
-import ModalGeneric from '@/components/ModalGeneric.vue';
+import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
+import ModalGeneric from '@/components/common/ModalGeneric.vue';
 import IconLoading from '@/components/icons/IconLoading.vue';
-import ModalCollection from '@/components/ModalCollection.vue';
+import ModalCollection from '@/components/WatchList/ModalCollection.vue';
 import IconFilm from '@/components/icons/IconFilm.vue'; 
-import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
-import NumericStepper from '@/components/NumericStepper.vue';
-import CustomSelect from '@/components/CustomSelect.vue';
-import CustomGenericInput from '@/components/CustomGenericInput.vue';
-import BackdropSlideShow from '@/components/BackdropSlideShow.vue';
-import MissingImage from '@/components/MissingImage.vue';
-import SeasonBrowser from '@/components/SeasonBrowser.vue';
+import ModalTitleCollections from '@/components/WatchList/ModalTitleCollections.vue';
+import NumericStepper from '@/components/common/NumericStepper.vue';
+import CustomSelect from '@/components/common/CustomSelect.vue';
+import CustomGenericInput from '@/components/common/CustomGenericInput.vue';
+import BackdropSlideShow from '@/components/WatchList/BackdropSlideShow.vue';
+import MissingImage from '@/components/common/MissingImage.vue';
+import SeasonBrowser from '@/components/WatchList/SeasonBrowser.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
-import DropdownMenu from '@/components/DropdownMenu.vue';
-import TitleTags from '@/components/TitleTags.vue';
+import DropdownMenu from '@/components/common/DropdownMenu.vue';
+import TitleTags from '@/components/WatchList/TitleTags.vue';
 
 export default {
     data() {

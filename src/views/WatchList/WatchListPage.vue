@@ -46,10 +46,10 @@
 
 <script>
 import fastApi from '@/utils/fastApi';
-import TitleShowcase from '@/components/TitleShowcase.vue';
+import TitleShowcase from '@/components/WatchList/TitleShowcase.vue';
 import { apiUrl } from '@/utils/config';
 import Flicking from "@egjs/vue3-flicking";
-import TitleCard from '@/components/TitleCard.vue';
+import TitleCard from '@/components/WatchList/TitleCard.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 
 export default {

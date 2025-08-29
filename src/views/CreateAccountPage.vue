@@ -26,8 +26,8 @@
 import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
-import CustomGenericInput from '@/components/CustomGenericInput.vue';
-import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
+import CustomGenericInput from '@/components/common/CustomGenericInput.vue';
+import CustomPasswordInput from '@/components/common/CustomPasswordInput.vue';
 
 export default {
     data() {

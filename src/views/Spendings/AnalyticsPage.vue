@@ -198,8 +198,8 @@ import {
     commonChartValues,
     initialEchartSetup,
 } from '@/utils/chartUtils'
-import ChartComponent from '@/components/ChartComponent.vue';
-import CustomSelect from '@/components/CustomSelect.vue';
+import ChartComponent from '@/components/common/ChartComponent.vue';
+import CustomSelect from '@/components/common/CustomSelect.vue';
 
 export default {
     name: 'AnalyticsPage',

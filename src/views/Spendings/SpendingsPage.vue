@@ -164,11 +164,11 @@
 
 <script>
 import fastApi from '@/utils/fastApi';
-import SpendingsEntry from '@/components/SpendingsEntry.vue';
-import FilterSettings from '@/components/FilterSettings.vue';
-import ModalConfirmation from '@/components/ModalConfirmation.vue';
-import ModalTransaction from '@/components/ModalTransaction.vue';
-import ModalGeneric from '@/components/ModalGeneric.vue';
+import SpendingsEntry from '@/components/Spendings/SpendingsEntry.vue';
+import FilterSettings from '@/components/Spendings/FilterSettings.vue';
+import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
+import ModalTransaction from '@/components/Spendings/ModalTransaction.vue';
+import ModalGeneric from '@/components/common/ModalGeneric.vue';
 import { convert } from '@/utils/utils';
 import { standAloneBuild } from '@/utils/config';
 

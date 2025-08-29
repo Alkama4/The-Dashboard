@@ -1,120 +1,50 @@
 import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router';
 import { standAloneBuild } from '@/utils/config';
 
-import HomePage from '@/views/HomePage.vue';
-import AccountPage from '@/views/AccountPage.vue';
-import LogInPage from '@/views/LogInPage.vue';
-import CreateAccountPage from '@/views/CreateAccountPage.vue';
-import DebugPage from '@/views/DebugPage.vue';
-import FourOFourPage from '@/views/404Page.vue';
-
-// Spendings
-import SpendingsPage from '@/views/Spendings/SpendingsPage.vue';
-import NewEntryPage from '@/views/Spendings/NewEntryPage.vue';
-import AnalyticsPage from '@/views/Spendings/AnalyticsPage.vue';
-
-// WatchList
-import WatchList from '@/views/WatchList/WatchListPage.vue';
-import AddTitle from '@/views/WatchList/AddTitlePage.vue';
-import TitleDetails from '@/views/WatchList/TitleDetailsPage.vue';
-import ListCollections from '@/views/WatchList/ListCollectionsPage.vue';
-import ListTitles from '@/views/WatchList/ListTitlesPage.vue';
+const DashboardLayout = () => import('@/layouts/DashboardLayout.vue')
+const SpendingsLayout = () => import('@/layouts/SpendingsLayout.vue')
+const WatchListLayout  = () => import('@/layouts/WatchListLayout.vue')
 
 const routes = [
-    {
-        path: '/',
-        name: 'Home',
-        component: HomePage,
-        meta: { title: 'Home' }
-    },
+  /*  ── Dashboard section ──────────────────────────────────────── */
+  {
+    path: '/',
+    component: DashboardLayout,
+    children: [
+      { path: '', name: 'Home', component: () => import('@/views/HomePage.vue'), meta: { title: 'Home' } },
+      { path: 'account', component: () => import('@/views/AccountPage.vue'), meta: { title: 'Account' } },
+      { path: 'account/login', component: () => import('@/views/LogInPage.vue'), meta: { title: 'Log In' } },
+      { path: 'account/create', component: () => import('@/views/CreateAccountPage.vue'), meta: { title: 'Create Account' } },
+    ]
+  },
 
-    // ----------- /account -----------
-    {
-        path: '/account',
-        name: 'Account',
-        component: AccountPage,
-        meta: { title: 'Account' }
-    },
-    {
-        path: '/account/login',
-        name: 'Log in',
-        component: LogInPage,
-        meta: { title: 'Log In' }
-    },
-    {
-        path: '/account/create',
-        name: 'Create account',
-        component: CreateAccountPage,
-        meta: { title: 'Create Account' }
-    },
+  /*  ── Spendings section ───────────────────────────────────────── */
+  {
+    path: '/spendings',
+    component: SpendingsLayout,
+    children: [
+      { path: '', name: 'Spendings', component: () => import('@/views/Spendings/SpendingsPage.vue'), meta: { title: 'Spendings' } },
+      { path: 'new_entry', component: () => import('@/views/Spendings/NewEntryPage.vue'), meta: { title: 'New Entry' } },
+      { path: 'analytics', component: () => import('@/views/Spendings/AnalyticsPage.vue'), meta: { title: 'Analytics' } },
+    ]
+  },
 
-    // ----------- /spendings -----------
-    {
-        path: '/spendings',
-        name: 'Spendings',
-        component: SpendingsPage,
-        meta: { title: 'Spendings' }
-    },
-    {
-        path: '/spendings/new_entry',
-        name: 'New Entry',
-        component: NewEntryPage,
-        meta: { title: 'New Entry' }
-    },
-    {
-        path: '/spendings/analytics',
-        name: 'Analytics',
-        component: AnalyticsPage,
-        meta: { title: 'Analytics' }
-    },
+  /*  ── Watch List section ───────────────────────────────────────── */
+  {
+    path: '/watch_list',
+    component: WatchListLayout,
+    children: [
+      { path: '', name: 'WatchList', component: () => import('@/views/WatchList/WatchListPage.vue'), meta: { title: 'Watch List' } },
+      { path: 'add_title', component: () => import('@/views/WatchList/AddTitlePage.vue'), meta: { title: 'Add Title' } },
+      { path: 'title/:titleID', component: () => import('@/views/WatchList/TitleDetailsPage.vue'), meta: { title: 'Title Details' } },
+      { path: 'collections', component: () => import('@/views/WatchList/ListCollectionsPage.vue'), meta: { title: 'Collections' } },
+      { path: 'titles', component: () => import('@/views/WatchList/ListTitlesPage.vue'), meta: { title: 'Titles' } },
+    ]
+  },
 
-    // ----------- /watch_list -----------
-    {
-        path: '/watch_list',
-        name: 'Watch list',
-        component: WatchList,
-        meta: { title: 'Watch List' }
-    },
-    {
-        path: '/watch_list/add_title',
-        name: 'Add Title',
-        component: AddTitle,
-        meta: { title: 'Add Title' }
-    },
-    {
-        path: '/watch_list/title/:titleID',
-        name: 'Title Details',
-        component: TitleDetails,
-        meta: { title: 'Title Details' }
-    },
-    {
-        path: '/watch_list/collections',
-        name: 'Collections',
-        component: ListCollections,
-        meta: { title: 'Collections' }
-    },
-    {
-        path: '/watch_list/titles',
-        name: 'Titles',
-        component: ListTitles,
-        meta: { title: 'Titles' }
-    },
-
-    
-    // ----------- Mixed -----------
-    {
-        path: '/debug',
-        name: 'Debug',
-        component: DebugPage,
-        meta: { title: 'Debug' }
-    },
-    {
-        path: '/:catchAll(.*)',
-        name: '404',
-        component: FourOFourPage,
-        meta: { title: '404' }
-    }
-];
+  /*  ── Miscellaneous ─────────────────────────────────────────────── */
+  { path: '/:catchAll(.*)', name: '404', component: () => import('@/views/404Page.vue'), meta: { title: '404' } },
+]
 
 
 // Create the router instance

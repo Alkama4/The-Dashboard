@@ -25,7 +25,12 @@
 						:src="service.iconUrl" 
 						@load="(event) => event.target.classList.add('loaded')"
 					>
-					<span class="icon-align">{{ service.name }}<IconLinkExternal left="4px" size="16px"/></span>
+					<div class="service-name-wrapper">
+						<div class="service-name">
+							{{ service.name }}
+							<IconLinkExternal size="16px"/>
+						</div>
+					</div>
 				</a>
 			</div>
 		</div>
@@ -267,13 +272,13 @@ import {
 	commonChartValues,
 	initialEchartSetup,
 } from '@/utils/chartUtils'
-import ChartComponent from '@/components/ChartComponent.vue';
-import CustomSelect from '@/components/CustomSelect.vue';
+import ChartComponent from '@/components/common/ChartComponent.vue';
+import CustomSelect from '@/components/common/CustomSelect.vue';
 import { standAloneBuild, portainerUrl } from '@/utils/config';
 import { setTimeout } from 'core-js';
-import ResourceUsageTile from '@/components/ResourceUsageTile.vue';
-import ContainerStack from '@/components/ContainerStack.vue';
-import DriveCard from '@/components/DriveCard.vue';
+import ResourceUsageTile from '@/components/Dashboard/ResourceUsageTile.vue';
+import ContainerStack from '@/components/Dashboard/ContainerStack.vue';
+import DriveCard from '@/components/Dashboard/DriveCard.vue';
 
 export default {
 	name: 'HomePage',
@@ -1436,9 +1441,22 @@ export default {
 	aspect-ratio: 1;
 	color: var(--color-text-light);
 }
-.tile-button span {
+.tile-button .service-name-wrapper {
 	position: absolute;
-	bottom: var(--spacing-md);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	height: 50px;
+	bottom: var(--spacing-xs);
+}
+.tile-button .service-name {
+	text-align: center;
+
+	display: -webkit-box;
+	line-clamp: 2;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 

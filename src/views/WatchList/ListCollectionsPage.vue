@@ -27,10 +27,10 @@
 
 <script>
 import fastApi from '@/utils/fastApi';
-import ModalCollection from '@/components/ModalCollection.vue';
-import ModalConfirmation from '@/components/ModalConfirmation.vue';
+import ModalCollection from '@/components/WatchList/ModalCollection.vue';
+import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
 import { notify } from '@/utils/notification';
-import CollectionItem from '@/components/CollectionItem.vue';
+import CollectionItem from '@/components/WatchList/CollectionItem.vue';
 
 export default {
     name: 'listCollections',

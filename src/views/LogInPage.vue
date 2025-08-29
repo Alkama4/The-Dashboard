@@ -22,8 +22,8 @@
 
 <script>
 import router from '@/router';
-import CustomPasswordInput from '@/components/CustomPasswordInput.vue';
-import CustomGenericInput from '@/components/CustomGenericInput.vue';
+import CustomPasswordInput from '@/components/common/CustomPasswordInput.vue';
+import CustomGenericInput from '@/components/common/CustomGenericInput.vue';
 import { notify } from '@/utils/notification';
 import session from '@/utils/session';
 

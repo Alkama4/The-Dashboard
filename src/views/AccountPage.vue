@@ -117,9 +117,9 @@
 import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
-import InfoTooltip from '@/components/InfoTooltip.vue';
+import InfoTooltip from '@/components/common/InfoTooltip.vue';
 import IconWarningTriangle from '@/components/icons/IconWarningTriangle.vue';
-import ConfirmationModal from '@/components/ModalConfirmation.vue';
+import ConfirmationModal from '@/components/common/ModalConfirmation.vue';
 import session from '@/utils/session';
 
 export default {
