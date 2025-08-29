@@ -220,14 +220,16 @@ export default {
 }
 .backdrop-image-container.background img.backdrop-image { 
     position: absolute;
-    top: 60px;
+    top: 0px;
     left: 50%;
     transform: translateX(-50%);
     object-fit: cover; 
     
     width: 100vw;
     /* height: min(675px, 66vh);(1200px / 16 * 9) or 66vh */
-    height: min(calc(100vw / 16 * 9), calc(var(--backdrop-max-width) / 16 * 9), 66vh);
+    height: min(calc(100vw / 16 * 9 + 60px),
+            calc(var(--backdrop-max-width) / 16 * 9 + 60px),
+            calc(66vh + 60px));
     z-index: var(--z-backdrop-image-bg);
 
     filter: blur(20px) opacity(0.5);
@@ -306,17 +308,17 @@ export default {
 .backdrop-container .button-holder button.right .hover-gradient {
     mask-image: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
 }
-.backdrop-container .button-holder button:hover .hover-gradient {
+.pointer-device .backdrop-container .button-holder button:hover .hover-gradient {
     background-color: var(--color-background);
 }
 
 .backdrop-container .button-holder button svg {
     width: 100% !important;
 }
-.backdrop-container .button-holder button.right:hover svg {
+.pointer-device .backdrop-container .button-holder button.right:hover svg {
     transform: scale(1.25) rotate(-90deg);
 }
-.backdrop-container .button-holder button.left:hover svg {
+.pointer-device .backdrop-container .button-holder button.left:hover svg {
     transform: scale(1.25) rotate(90deg);
 }
 

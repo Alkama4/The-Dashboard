@@ -2,53 +2,62 @@
     <div>
         <TitleShowcase/>
 
-        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-large title-list">
+        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-extra-large title-list">
             <h2>{{ titleList.listName }}</h2>
-            <p class="text-light title-list-text">{{ titleList.text }}</p>
-
-            <CustomCarousel
-                class="full-width-carousel-dimensions"
-                :slides="titleList.titles"
-                :loading="titleList.loading"
-                side-offset="5vw"
-            />
-            <div class="full-width-carousel-dimensions flow-fixer"></div>
+            <div 
+                v-if="titleList.titles == null"
+                class="title-card-placeholder content-not-found"
+            >
+                Try adding titles to your watchlist.
+            </div>
+            <Flicking 
+                v-else-if="titleList.titles.length >= 1"
+                :options="{
+                    align: 'prev',
+                    bound: true,
+                    bounce: '33%',
+                    renderOnlyVisible: false,
+                }"
+            >
+                <TitleCard 
+                    v-for="(data, index) in titleList.titles" 
+                    :key="index" 
+                    :titleDetails="data" 
+                    draggable="false"
+                />
+            </Flicking>
+            <div 
+                v-else
+                class="title-card-placeholder loading-placeholder"
+            >
+            </div>
         </div>
-
-        <!-- Corner buttons -->
-        <router-link 
-            class="sticky-corner-button link-button button-primary"
-            to="/watch_list/add_title" 
-        >
-            <IconAdd size="28px"/>
-        </router-link>
-
-        <router-link 
-            class="sticky-corner-button link-button button-primary"
-            to="/watch_list/titles" 
-            style="margin-bottom: calc(var(--spacing-lg) * 1.5 + 52px);"
-        >
-            <IconSearch size="28px"/>
-        </router-link>
+        <div class="content-width-small bottom">
+            <h2>You've reached the bottom.</h2>
+            Impressive dedication. Sadly, there's nothing else hiding down here.  
+            If you're still determined, you could always try searching instead. 
+            <router-link class="link-button no-decoration" to="/watch_list/titles">
+                <IconSearch size="20px"/> Fine, let's search
+            </router-link>
+        </div>
     </div>
 </template>
 
 
 <script>
-// My imports
-import IconAdd from '@/components/icons/IconAdd.vue';
 import fastApi from '@/utils/fastApi';
-import CustomCarousel from '@/components/CustomCarousel.vue';
-import IconSearch from '@/components/icons/IconSearch.vue';
 import TitleShowcase from '@/components/TitleShowcase.vue';
 import { apiUrl } from '@/utils/config';
+import Flicking from "@egjs/vue3-flicking";
+import TitleCard from '@/components/TitleCard.vue';
+import IconSearch from '@/components/icons/IconSearch.vue';
 
 export default {
     name: 'HomePage',
     components: {
-        CustomCarousel,
         TitleShowcase,
-        IconAdd,
+        Flicking,
+        TitleCard,
         IconSearch,
     },
     data() {
@@ -58,7 +67,6 @@ export default {
             titleLists: [
                 {
                     listName: "In progress",
-                    watched: true,
                     text: "TV-series that you have started but have not finished yet.",
                     titles: [],
                     loading: true,
@@ -97,21 +105,33 @@ export default {
                     }
                 },
                 {
-                    listName: "Upcoming titles",
-                    watched: true,
-                    text: "Upcoming titles you've added to your list.",
+                    listName: "Recently added",
+                    text: "Titles that you recently added to your watchlist.",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        sort_by: "last_updated",
+                        watched: false,
+                        in_watchlist: true,
+                    }
+                },
+                {
+                    listName: "New Seasons Available",
+                    text: "TV series you've watched up to the end of a season, and now a new season has been released.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
                         sort_by: "release_date",
                         direction: "asc",
-                        released: false,
-                        in_watchlist: true,
+                        title_type: "tv",
+                        title_in_progress: true,
+                        season_in_progress: false,
+                        watched: false,
+                        in_watchlist: true
                     }
                 },
                 {
                     listName: "Your favourites",
-                    watched: true,
                     text: "Your favourite movies and TV-series.",
                     titles: [],
                     loading: true,
@@ -121,14 +141,25 @@ export default {
                     }
                 },
                 {
-                    listName: "Watched titles",
-                    watched: true,
+                    listName: "Just watched",
                     text: "The titles you've recently watched or interacted with, such as those you've watched or added to your favorites.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
                         sortBy: "last_updated",
                         watched: true,
+                        in_watchlist: true,
+                    }
+                },
+                {
+                    listName: "Upcoming titles",
+                    text: "Upcoming titles to look forward to.",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        sort_by: "release_date",
+                        direction: "asc",
+                        released: false,
                         in_watchlist: true,
                     }
                 },
@@ -152,11 +183,13 @@ export default {
                         });
 
                         if (titleData && titleData.titles) {
-                            list.titles = titleData.titles;
-                            console.debug(list.listName, "titles and their info:", list.titles);
+                            list.titles = titleData.titles.length == 0 ? null : titleData.titles;
+                        } else {
+                            list.titles = null;
                         }
                     } catch (error) {
                         console.error(`Error fetching data for ${list.listName}:`, error);
+                        list.titles = null;
                     } finally {
                         list.loading = false;
                     }
@@ -165,7 +198,6 @@ export default {
                 console.error("Error fetching title lists:", error);
             }
         },
-
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
@@ -177,6 +209,14 @@ export default {
 
 
 <style>
+@import url("/node_modules/@egjs/vue3-flicking/dist/flicking.css");
+.title-card-placeholder {
+    height: calc(330px * 0.95);
+    width: calc(100% - 220px * 0.05);
+    margin: calc(330px * 0.025) calc(220px * 0.025);
+    border-radius: var(--border-radius-large);
+}
+
 .title-list h2 {
     margin-bottom: var(--spacing-xs);
 }
@@ -184,21 +224,11 @@ export default {
     margin-top: var(--spacing-xs);
 }
 
-.full-width-carousel-dimensions {
-    width: 100vw;
-    height: 318px;
-    position: absolute;
-    left: 0;
+.bottom {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
 }
-.flow-fixer {
-    position: relative;
-    width: 100%;
-    z-index: -100;
-}
-
-/* Poke to make the carousel work with this pages layout */
-.custom-carousel .cards {
-    padding-inline: 5vw;
-    max-width: calc(200px * 7 + var(--spacing-xs) * 8);
+.bottom a {
+    margin-top: var(--spacing-md);
 }
 </style>

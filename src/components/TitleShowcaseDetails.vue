@@ -74,7 +74,7 @@ export default {
             return convert.toFiDate(this.titleDetails.release_date, 'year');
         },
         formattedRuntime() {
-            return convert.runtime(this.titleDetails.movie_runtime);
+            return convert.toRuntime(this.titleDetails.movie_runtime);
         }
     }
 }

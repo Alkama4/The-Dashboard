@@ -1,25 +1,33 @@
 <template>
     <router-link :to="`/watch_list/title/${titleDetails.title_id}`" class="title-card">
-        <img 
-            :src="posterUrl(titleDetails.title_id, 600, titleDetails.backup_poster_url)" 
+        <div
             class="title-card-thumbnail"
-            loading="lazy"
-            @load="(event) => event.target.classList.add('loaded')" 
-        />
+        >
+            <MissingImage v-if="imgNotFound"/>
+            <img 
+                v-else
+                :src="posterUrl(titleDetails.title_id, 600, titleDetails.backup_poster_url)" 
+                loading="lazy"
+                @load="(event) => event.target.classList.add('loaded')" 
+                @error="imgNotFound = true"
+            />
+        </div>
         <div class="title-card-gradient"></div>
         <div class="title-card-details">
-            <span class="title-card-name">{{ titleDetails.name }}</span>
-            <div class="title-card-rating">
-                <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
-            </div>
-            <div class="title-card-progress">
-                <template v-if="titleDetails.type === 'tv'">
-                    <span class="season-after">{{ titleDetails.season_count }}</span>
-                    <span class="episode-after">{{ titleDetails.episode_count }}</span>
-                </template>
-                <template v-else>
-                    {{ formatRuntime(titleDetails.movie_runtime) }}
-                </template>
+            <div class="details">
+                <span class="title-card-name">{{ titleDetails.name }}</span>
+                <div class="title-card-rating">
+                    <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
+                </div>
+                <div class="title-card-progress">
+                    <template v-if="titleDetails.type === 'tv'">
+                        <span class="season-after">{{ titleDetails.season_count }}</span>
+                        <span class="episode-after">{{ titleDetails.episode_count }}</span>
+                    </template>
+                    <template v-else>
+                        {{ formatRuntime(titleDetails.movie_runtime) }}
+                    </template>
+                </div> 
             </div>
         </div>
 
@@ -37,6 +45,13 @@
         <div class="tag tag-primary" v-else-if="titleDetails.new_episodes >= 1">New episodes</div>
         <div class="tag" v-else-if="new Date(titleDetails.release_date) > new Date()">Upcoming</div>
 
+        <div class="three-dots-wrapper">
+            <IconThreeDots
+                class="icon-button"
+                size="32px"
+                @click.prevent="openContextMenu"
+            />
+        </div>
     </router-link>
 </template>
 
@@ -44,14 +59,20 @@
 import { convert } from '@/utils/utils';
 import IconTMDB from './icons/IconTMDB.vue';
 import { standAloneBuild } from '@/utils/config';
+import IconThreeDots from './icons/IconThreeDots.vue';
+import { notify } from '@/utils/notification';
+import MissingImage from './MissingImage.vue';
 
 export default {
     name: 'TitleCard',
     components: {
-        IconTMDB
+        IconTMDB,
+        IconThreeDots,
+        MissingImage,
     },
     data() {
         return {
+            imgNotFound: false,
         }
     },
     props: {
@@ -62,7 +83,7 @@ export default {
     },
     methods: {
         formatRuntime(runtime) {
-            return convert.runtime(runtime);
+            return convert.toRuntime(runtime);
         },
         posterUrl(titleId, width, backupUrl) {
             if (standAloneBuild) {
@@ -72,6 +93,13 @@ export default {
                 return `${process.env.VUE_APP_API_URL}/media/image/title/${titleId}/poster.jpg?width=${width}`;
             }
         },
+        openContextMenu() {
+            notify("TBD");
+            // Toggle favourites,
+            // Add to queue
+            // remove from watchlist
+            // Add to collection
+        }
     }
 }
 </script>
@@ -82,10 +110,8 @@ export default {
     display: flex;
     background-color: var(--color-background-card);
     border-radius: var(--border-radius-medium);
-    min-width: 200px;
-    width: 200px;
-    min-height: 300px;
-    height: 300px;
+    width: 220px;
+    aspect-ratio: 2/3;
     position: relative;
     overflow: hidden;
     cursor: pointer;
@@ -94,16 +120,24 @@ export default {
     transform: scale(0.95);
     transition: transform 0.15s var(--cubic-1);
 }
+@media (max-width: 900px) {
+    .title-card {
+        width: 180px;
+    }
+}
 
 /* Thumbnail Image */
 .title-card-thumbnail {
     position: absolute;
-    inset: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--color-background-card-section);
+    z-index: 1;
+}
+.title-card-thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    background-color: var(--color-background-card-section);
-    z-index: 1;
 }
 
 /* Gradient Overlay */
@@ -134,7 +168,7 @@ export default {
 }
 
 .title-card-name {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-lg);
     font-weight: 700;
     color: var(--color-text-white);
     display: -webkit-box;
@@ -166,29 +200,43 @@ export default {
     z-index: 10;
 }
 
+/* Controls */
+.three-dots-wrapper {
+    opacity: 0;
+    transition: opacity 0.2s var(--cubic-1);
+    position: absolute;
+    top: var(--spacing-sm);
+    right: 0;
+    z-index: 10;
+}
+.three-dots-wrapper::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: black;
+    filter: blur(40px);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
 /* Hover and Touch Interactions */
-.title-card:hover {
+.pointer-device .title-card:hover {
     transform: scale(1);
 }
 
 .title-card:hover .title-card-details,
 .title-card:hover .title-card-gradient,
+.title-card:hover .three-dots-wrapper,
 .touch-device .title-card .title-card-details,
-.touch-device .title-card .title-card-gradient {
+.touch-device .title-card .title-card-gradient,
+.touch-device .title-card .three-dots-wrapper {
     opacity: 1;
     transform: translateX(0);
-}
-
-/* Touch Device Overrides */
-.touch-device .title-card {
-    width: calc((100% - var(--spacing-xl)) / 2);
-    aspect-ratio: 2 / 3;
-    height: auto;
-}
-
-.touch-device .full-width-title-card {
-    height: calc(100vw / 594 * 423.5);
-    aspect-ratio: auto;
 }
 
 /* Full Width Variant */
@@ -216,20 +264,4 @@ export default {
     content: "E";
 }
 
-/* Other Wrappers */
-.touch-device .cards-thing-wrapper {
-    position: relative;
-    height: calc(100vw / 594 * 423.5);
-}
-
-.touch-device .cards-thing-wrapper .swiper {
-    position: absolute;
-    top: 0;
-    left: -5vw;
-    width: 100vw;
-}
-
-.slides-indicator-holder {
-    display: none;
-}
 </style>
