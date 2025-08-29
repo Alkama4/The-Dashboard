@@ -5,19 +5,20 @@
         <div class="content-width-medium title-details">
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
-                    <div v-if="!standAloneBuild" class="poster-placholder" @click="handleWatchTitleNow()">
+                    <div v-if="!standAloneBuild" class="poster-placholder">
+                        <MissingImage v-if="failedToLoadImages.includes('poster')"/>
                         <img 
+                            v-else
                             :src="imageUrl(300, title_info.backup_poster_url, title_info.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
+                            @error="failedToLoadImages.push('poster')"
                         >
-                        <IconPlay class="icon-watch-now" size="64px"/>
                     </div>
-                    <div to="#watch-now" v-else class="poster-placholder" @click="handleWatchTitleNow()">
+                    <div v-else class="poster-placholder">
                         <img 
                             :src="imageUrl(300, title_info.backup_poster_url, title_info.title_id)" 
                             @load="(event) => event.target.classList.add('loaded')"
                         >
-                        <IconPlay class="icon-watch-now" size="64px"/>
                     </div>
                 </div>
 
@@ -34,41 +35,32 @@
                         <q class="tagline all-pointer-events" v-if="title_info.tagline">{{ title_info.tagline }}</q>
                     </div>
 
-                    <div class="tags">
-                        <div class="tag tag-warning" v-if="!title_info.in_watch_list">
-                            Not in watchlist
-                        </div>
-                        <div class="tag tag-positive" v-if="title_info.watch_count >= 1">
-                            {{ title_info.watch_count }} watch{{ title_info.watch_count > 1 ? 'es' : '' }}
-                        </div>
-                        <div class="tag tag-primary" v-if="new Date(title_info.release_date) < new Date() && new Date(title_info.release_date) > new Date(new Date() - 30 * 24 * 60 * 60 * 1000)">
-                            New release
-                        </div>
-                        <div class="tag tag-upcoming" v-if="new Date(title_info.release_date) > new Date()">
-                            Upcoming
-                        </div>
-                        <div class="tag tag-secondary" v-if="title_info.favourite == 1">
-                            Favourite
-                        </div>
-                        <div class="tag">
-                            {{ title_info.type == 'tv' ? 'TV-show' : 'Movie' }}
-                        </div>
-                        <router-link 
-                            class="tag tag-interactable hover-decoration" 
-                            v-for="collection in title_info.collections" 
-                            :key="collection.collection_id" 
-                            target="_blank"
-                            :to="`/watch_list/titles?collection_id=${collection.collection_id}`"
-                        >
-                            {{ collection.name }}
-                        </router-link>
-                    </div>
-
+                    <TitleTags class="tags-desktop" :title-info="title_info"/>
                 </div>
             </div>
 
-            <div class="control-button-array combined-buttons">
-                <button 
+
+            <TitleTags class="tags-mobile" :title-info="title_info"/>
+
+            <div class="control-button-array">
+                <NumericStepper 
+                    class="flex-1"
+                    :displayValue="title_info.type === 'movie' 
+                        ? title_info.watch_count 
+                        : title_info.seasons.reduce((min, season) => 
+                            season.episodes.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
+                    @valueUpdated="val => handleTitleWatchClick('title', val, null)"
+                />
+
+                
+                <button class="button-primary flex-1" @click="handleWhereToWatch()">
+                    <IconPlay/> Watch now
+                </button>
+                
+                <DropdownMenu
+                    :options="menuOptions"
+                />
+                <!-- <button 
                     v-if="title_info.favourite == null || title_info.favourite == false"
                     class="button-primary left-button flex-1" 
                     @click="handleFavouriteToggle"
@@ -81,38 +73,25 @@
                     @click="handleFavouriteToggle" 
                 >
                     <IconHeart/>
-                </button>
+                </button> -->
 
-                <!-- Collections -->
-                <button
+                <!-- <button
                     class="button-primary middle-button flex-1" 
-                    @click="promptTitleCollections()"
+                    @click="openTitleUpdateModal()"
                 >
-                    <IconCollection/>
-                </button>
-
-                <!-- Watch list buttons -->
-                <button 
-                    v-if="!title_info.in_watch_list"
-                    class="button-primary right-button flex-1" 
-                    @click="handleWatchListModification('add')"
-                >
-                    <IconListAdd/>
-                </button>
-                <button 
-                    v-else
-                    class="right-button flex-1"
-                    @click="handleWatchListModification('remove')" 
-                >
-                    <IconListRemove/>
-                </button>
+                    <IconRefresh
+                        :class="{
+                            'loading': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0'),
+                            'spin-refresh-icon': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0')
+                        }"
+                    />
+                </button> -->
             </div>
 
             <div class="at-a-glance">
-
                 <div class="ratings">
                     <a 
-                        class="short-value"
+                        class="short-value no-decoration hover-decoration"
                         :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
                         target="_blank" 
                         rel="noopener noreferrer" 
@@ -126,7 +105,7 @@
                         </span>
                     </a>
                     <a 
-                        class="short-value"
+                        class="short-value no-decoration hover-decoration"
                         :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
                         target="_blank" 
                         rel="noopener noreferrer" 
@@ -172,20 +151,11 @@
                         :href="`https://www.imdb.com/title/${this.title_info.imdb_id}/awards`" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="value no-decoration">{{ title_info.awards ?? '-' }}
+                        class="value no-decoration hover-decoration">{{ title_info.awards ?? '-' }}
                     </a>
                     <span class="text-lighter">Awards & Nominations</span>
                 </div>
             </div>
-
-            <h3>Watch count</h3>
-            <NumericStepper 
-                :displayValue="title_info.type === 'movie' 
-                    ? title_info.watch_count 
-                    : title_info.seasons.reduce((min, season) => 
-                        season.episodes.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
-                @valueUpdated="val => handleTitleWatchClick('title', val, null)"
-            />
 
             <h3>Overview</h3>
             <p style="margin: 0;">{{ title_info.overview }}</p>
@@ -194,26 +164,9 @@
                 <div class="details-container">
                     <h3 class="icon-align">
                         Title details
-                        <IconRefresh
-                            size="28px"
-                            left="6px"
-                            @click="openTitleUpdateModal()"
-                            :class="{
-                                'loading': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0'),
-                                'spin-refresh-icon': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0')
-                            }"
-                            class="icon-button"
-                        />
                     </h3>
 
                     <div class="details-grid">
-                        <div>
-                            Genres
-                        </div>
-                        <div class="value">
-                            {{ title_info.genres.join(", ") }}
-                        </div>
-
                         <div v-if="title_info.type == 'movie'">
                             Movie length
                         </div>
@@ -289,9 +242,10 @@
                         <div>IMDB id</div>
                         <div class="value">
                             <a 
+                                class="no-decoration hover-decoration"
                                 :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
                                 target="_blank" 
-                                rel="noopener noreferrer" 
+                                rel="noopener noreferrer"
                             >
                                 {{ title_info.imdb_id }}
                                 <IconLinkExternal size="20px"/>
@@ -301,6 +255,7 @@
                         <div>TMDB id</div>
                         <div class="value">
                             <a 
+                                class="no-decoration hover-decoration"
                                 :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
@@ -410,137 +365,14 @@
             </div>
         </div>
 
-        <div class="content-width-large" v-if="title_info.seasons">
-            <h2>Season & episode details</h2>
-            <div class="seasons-wrapper">
-                <div v-for="season in title_info.seasons" 
-                    :key="season.season_id" 
-                    class="card season" 
-                    :class="{'active': expandedSeason == season.season_id}"
-                >
-                    <div class="about" @click="toggleHeight(`refSeason${season.season_number}`)">
-                        <div class="poster-container">
-                            <img 
-                                class="poster" 
-                                :src="imageUrl(300, season.backup_poster_url, title_info.title_id, season.season_number)" 
-                                @load="(event) => event.target.classList.add('loaded')"
-                            />
-                            <div class="tag-holder">
-                                <div class="tag tag-positive" v-if="0 != getSeasonWatchCount(season) && season.episodes.length >= 1">
-                                    {{ getSeasonWatchCount(season) }} watch{{ getSeasonWatchCount(season) > 1 ? 'es' : '' }}
-                                </div>
-                                <div class="tag tag-primary" v-else-if="season.episodes.length == 0 || new Date(season.episodes[0].air_date) > new Date()">
-                                    Upcoming
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text">
-                            <h2 class="icon-align">
-                                {{ season.season_name }}
-                                <!-- @click.stop="handleTitleUpdate('seasonInfo', season.season_number)" -->
-                                <IconRefresh 
-                                    size="28px"
-                                    left="6px"
-                                    @click.stop="openSeasonUpdateModal(season.season_number)"
-                                    :class="{
-                                        'loading': waitingForResult.includes('seasonUpdate' + season.season_number),
-                                        'spin-refresh-icon': waitingForResult.includes('seasonUpdate' + season.season_number)
-                                    }"
-                                    class="icon-button"
-                                />
-                            </h2>
-                            <div class="details">
-                                <div class="icon-align single-line">
-                                    <span>{{ season.episode_count }} episodes</span>
-                                    <span class="bullet">&bullet;</span>
-                                    <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.tmdb_vote_average }} ({{ seasonVotes(season) }} votes)</span>
-                                </div>
-                                <div>
-                                    {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
-                                </div>
-                            </div>
-                            <p :title="season.overview">{{ season.overview }}</p>
-                        </div>
-    
-                        <NumericStepper 
-                            class="modify-watched"
-                            :displayValue="season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                            @valueUpdated="val => handleTitleWatchClick('season', val, season.season_id)"
-                        />
-                    </div>
-                    
-                    <!-- EPISODES -->
-                    <div class="episodes" :ref="`refSeason${season.season_number}`">
-                        <div class="episodes-padding" v-if="this.openedSeasons.includes(`refSeason${season.season_number}`)">
-                            <div 
-                                v-for="(episode, index) in season.episodes" 
-                                :key="episode.episode_number" class="episode" 
-                                :id="`S${season.season_number}E${episode.episode_number}`"
-                                :class="{
-                                    'not-realeased': new Date(episode.air_date) > new Date(),
-                                    'last': index === season.episodes.length - 1
-                                }"
-                            >
-                                <div class="still-container" @click="handleWatchEpisodeNow(episode)">
-                                    <div 
-                                        v-if="failedToLoadImages.includes(episode.episode_id)"
-                                        class="still failed-to-load"
-                                    >
-                                        <IconFileImage size="40px"/>
-                                        <span>404</span>
-                                    </div>
-                                    <img 
-                                        v-else
-                                        class="still" 
-                                        :src="imageUrl(900, episode.backup_still_url, title_info.title_id, season.season_number, episode.episode_number)"
-                                        @error="failedToLoadImages.push(episode.episode_id)"
-                                        @load="(event) => event.target.classList.add('loaded')"
-                                    >
-                                    <!-- Tag to show if newly released or watched, or maybe even un released status -->
-                                    <div class="tag-holder">
-                                        <div class="tag tag-positive" v-if="episode.watch_count >= 1">
-                                            {{ episode.watch_count }} watch{{ episode.watch_count > 1 ? 'es' : '' }}
-                                        </div>
-                                        <div class="tag tag-primary" v-else-if="new Date(episode.air_date) < new Date() && new Date(episode.air_date) > new Date(new Date() - 14 * 24 * 60 * 60 * 1000)">
-                                            New episode
-                                        </div>
-                                        <div class="tag" v-else-if="new Date(episode.air_date) > new Date()">
-                                            Upcoming
-                                        </div>
-                                    </div>
-    
-                                    <IconPlay class="icon-watch-now" size="64px"/>
-                                </div>
-                                
-                                <div class="text">
-                                    <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ episode.episode_name }}</h3>
-                                    <div class="details">
-                                        <span class="icon-align" >
-                                            <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                            <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.tmdb_vote_count ?? '0'}} votes)</span>
-                                        </span>
-                                        <div>
-                                            {{ 
-                                                episode.air_date ? 
-                                                new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : 
-                                                "No release date"
-                                            }}
-                                        </div>
-                                    </div>
-                                    <p :title="episode.overview">{{ episode.overview }}</p>
-    
-                                    <NumericStepper 
-                                        class="modify-watched"
-                                        :displayValue="episode.watch_count"
-                                        @valueUpdated="val => handleTitleWatchClick('episode', val, episode.episode_id)"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <SeasonBrowser
+            v-if="title_info?.seasons && title_info?.seasons.length > 0"
+            ref="seasonBrowser"
+            :seasons-data="title_info.seasons"
+            :title-id="title_info.title_id"
+            :handleWhereToWatch="handleWatchEpisodeNow"
+            :handleTitleWatchClick="handleTitleWatchClick"
+        />
 
         <!-- ========== MODALS ========== -->
 
@@ -594,31 +426,37 @@
                     <li><strong>Images:</strong> Deletes and redownloads all current images.</li>
                     <li><strong>Full Update:</strong> Does both info and images.</li>
                 </ul>
-                <div v-if="title_info.type == 'tv'">
-                    <h3>Title & Seasons <InfoTooltip text="Doesn't include the episodes." position="broken"/></h3>
-                    <div class="choice-buttons">
-                        <button @click="handleTitleUpdate('title', 'info')" class="button-primary">Info</button>
-                        <button @click="handleTitleUpdate('title', 'images')">Images</button>
-                        <button @click="handleTitleUpdate('title', 'full')">Full Update</button>
+                <div v-if="title_info.type === 'tv'">
+                    <h3>Scope</h3>
+                    <div>
+                        <div class="icon-align">
+                            <input type="radio" id="title" name="title" value="title" v-model="updateOptions.type"/>
+                            <label for="title">Title & Seasons</label>
+                        </div>
+                        <div class="icon-align">
+                            <input type="radio" id="all" name="all" value="all" v-model="updateOptions.type"/>
+                            <label for="all">Title, Seasons & Episodes</label>
+                        </div>
                     </div>
-                    <h3>Title, Seasons & Episodes <InfoTooltip text="Includes the whole thing." position="center"/></h3>
-                    <div class="choice-buttons">
-                        <button @click="handleTitleUpdate('all', 'info')" class="button-primary">Info</button>
-                        <button @click="handleTitleUpdate('all', 'images')">Images</button>
-                        <button @click="handleTitleUpdate('all', 'full')">Full Update</button>
-                    </div>
-                    <p class="text-hidden icon-align">
-                        Tip: For episodes you should use the seperate season specific menu.
-                    </p>
                 </div>
                 <div v-else>
-                    <h3></h3>
-                    <div class="choice-buttons">
-                        <button @click="handleTitleUpdate('title', 'info')" class="button-primary">Title Info</button>
-                        <button @click="handleTitleUpdate('title', 'images')">Title Images</button>
-                        <button @click="handleTitleUpdate('title', 'full')">Full Update</button>
+                    <input type="hidden" v-model="updateOptions.type" value="title">
+                </div>
+
+                <div>
+                    <h3>Data Types</h3>
+                    <div class="icon-align">
+                        <input type="checkbox" v-model="updateOptions.actions" id="info" name="info" value="info">
+                        <label class="cursor-pointer" for="info">Info</label>
+                    </div>
+                    <div class="icon-align">
+                        <input type="checkbox" v-model="updateOptions.actions" id="images" name="images" value="images">
+                        <label class="cursor-pointer" for="images">Images</label>
                     </div>
                 </div>
+                <button class="button-primary" @click="handleTitleUpdate">
+                    Update selected data
+                </button>
             </div>
         </ModalGeneric>
 
@@ -631,14 +469,27 @@
                     <li><strong>Images:</strong> Deletes and redownloads all current images.</li>
                     <li><strong>Full Update:</strong> Does both info and images.</li>
                 </ul>
-                <h3>Season Episodes</h3>
-                <div class="choice-buttons">
-                    <button @click="handleTitleUpdate('season', 'info')" class="button-primary">Info</button>
-                    <button @click="handleTitleUpdate('season', 'images')">Images</button>
-                    <button @click="handleTitleUpdate('season', 'full')">Full Update</button>
+
+                <input type="hidden" v-model="updateOptions.type" value="season">
+
+                <div>
+                    <h3>Data Types</h3>
+                    <div class="icon-align">
+                        <input type="checkbox" v-model="updateOptions.actions" id="season-info" name="info" value="info">
+                        <label class="cursor-pointer" for="season-info">Info</label>
+                    </div>
+                    <div class="icon-align">
+                        <input type="checkbox" v-model="updateOptions.actions" id="season-images" name="images" value="images">
+                        <label class="cursor-pointer" for="season-images">Images</label>
+                    </div>
                 </div>
+
+                <button class="button-primary" @click="handleTitleUpdate">
+                    Update selected data
+                </button>
             </div>
         </ModalGeneric>
+
 
         <!-- Collection edit -->
         <ModalCollection ref="editCollectionFC" type="Edit colleciton" submitText="Save"/>
@@ -673,46 +524,40 @@
 
   
 <script>
-// Basic
 import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/InfoTooltip.vue';
 import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
-import { apiUrl, standAloneBuild } from '@/utils/config';
+import { apiUrl, standAloneBuild, isTouchDevice } from '@/utils/config';
 import WatchNowRecursive from '@/components/WatchNowRecursive.vue';
-
-// Icons
-import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconJustwatch from '@/components/icons/IconJustwatchColorful.vue';
 import IconTMDBColorful from '@/components/icons/IconTMDBColorful.vue';
 import IconIMDBColorful from '@/components/icons/IconIMDBColorful.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
-import IconListRemove from '@/components/icons/IconListRemove.vue';
-import IconListAdd from '@/components/icons/IconListAdd.vue';
-import IconFileImage from '@/components/icons/IconFileImage.vue';
-import IconHeart from '@/components/icons/IconHeart.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
-import IconRefresh from '@/components/icons/IconRefresh.vue';
 import ModalConfirmation from '@/components/ModalConfirmation.vue';
 import ModalGeneric from '@/components/ModalGeneric.vue';
 import IconLoading from '@/components/icons/IconLoading.vue';
 import ModalCollection from '@/components/ModalCollection.vue';
-import IconPlay from '@/components/icons/IconPlay.vue';
 import IconFilm from '@/components/icons/IconFilm.vue'; 
-import IconCollection from '@/components/icons/IconCollection.vue';
 import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
 import NumericStepper from '@/components/NumericStepper.vue';
 import CustomSelect from '@/components/CustomSelect.vue';
 import CustomGenericInput from '@/components/CustomGenericInput.vue';
 import BackdropSlideShow from '@/components/BackdropSlideShow.vue';
-// import IconHome from '@/components/icons/IconHome.vue';
+import MissingImage from '@/components/MissingImage.vue';
+import SeasonBrowser from '@/components/SeasonBrowser.vue';
+import IconPlay from '@/components/icons/IconPlay.vue';
+import DropdownMenu from '@/components/DropdownMenu.vue';
+import TitleTags from '@/components/TitleTags.vue';
 
 export default {
     data() {
         return {
             standAloneBuild: standAloneBuild,
+            isTouchDevice: isTouchDevice,
             apiUrl: apiUrl,
             titleID: this.$route.params.titleID,
             title_info: null,
@@ -729,6 +574,10 @@ export default {
             scrolledPastEpisodeMap: false,
             selectedSeasonToUpdate: null,
             trailerIndex: 0,
+            updateOptions: {
+                type: 'title',
+                actions: ['info']
+            }
         };
     },
     components: {
@@ -743,28 +592,21 @@ export default {
         CustomSelect,
         CustomGenericInput,
         BackdropSlideShow,
-        IconTMDB,
+        MissingImage,
+        SeasonBrowser,
         IconTMDBColorful,
         IconIMDBColorful,
         IconChevronDown,
-        IconListRemove,
-        IconListAdd,
-        IconFileImage,
-        IconHeart,
         IconLinkExternal,
-        IconRefresh,
         IconLoading,
-        IconPlay,
         IconFilm,
-        IconCollection,
-        // IconHome,
+        IconPlay,
+        DropdownMenu,
+        TitleTags,
     },
     methods: {
-        getSeasonWatchCount(season) {
-            return season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity);
-        },
         formatRuntime(runtime) {
-            return convert.runtime(runtime);
+            return convert.toRuntime(runtime);
         },
         formatToMillions(amount) {
             return convert.toLargeUsd(amount);
@@ -884,80 +726,71 @@ export default {
                 this.$refs.titleNotesInput.markValid();
             }
             
-            this.removeItemFromWaitingArray("saveNotes");
+            this.modifyWaitingArray("saveNotes");
         },
         openTitleUpdateModal() {
             // Set to 0 incase user chooses to update everything and the user has already updated/opened a season
-            // Also acts as a useful identifier for the spinning animation
+            // Also used as an identifier for the spinning animation
             this.selectedSeasonToUpdate = 0;    
             this.$refs.refreshTitleDataGM.open();
         },
         openSeasonUpdateModal(seasonNumber) {
+            // The season/update number is used to determine the season that is being updated to show the animation for it
             this.selectedSeasonToUpdate = seasonNumber;
+            this.updateOptions.type = "season";
             this.$refs.refreshSeasonDataGM.open();
         },
-        async handleTitleUpdate(type, action) {
+        async handleTitleUpdate() {
+            const type = this.updateOptions.type;
+            const actions = this.updateOptions.actions;
+
+            // Update waiting array
             const updatingNumber = this.selectedSeasonToUpdate;
+            const updatingIdentifier = `${type}Update${updatingNumber}`;
+            this.modifyWaitingArray(updatingIdentifier, true);
+            
+            // One of these is true
             const isAll = type === "all";
-            const isSeason = type === "season";
             const isTitle = type === "title";
+            const isSeason = type === "season";
 
-            console.log(`${type}Update${updatingNumber}`)
-            this.waitingForResult.push(`${type}Update${updatingNumber}`);
+            console.log(type, isAll, isTitle, isSeason);
 
+            // If its season, we know it's from season modal so close it
             if (isSeason) {
                 this.$refs.refreshSeasonDataGM.close();
-            } else {
+            } else {    // and of course else title modal
                 this.$refs.refreshTitleDataGM.close();
             }
 
-            let response = null;
-            let updateMessage = `"${this.title_info.name}" info updated!`;
+            const payload = {
+                update_title_info: actions.includes("info") && (isTitle || isAll),
+                update_season_info: actions.includes("info") && (isSeason || isAll),
+                update_title_images: actions.includes("images") && (isTitle || isAll),
+                update_season_images: actions.includes("images") && (isSeason || isAll),
+                season_number: updatingNumber
+            };
 
-            switch (action) {
-                case "info":
-                    response = await fastApi.watch_list.titles.update(this.title_info.title_id, this.title_info.type, { 
-                        update_title_info: isTitle || isAll, 
-                        update_season_info: isSeason || isAll, 
-                        season_number: updatingNumber 
-                    });
-                    updateMessage = updatingNumber != 0
-                        ? `Season ${updatingNumber} info for "${this.title_info.name}" has been updated. Missing images might still be loading in the background.`
-                        : `"${this.title_info.name}" title information has been updated. Missing images might still be loading in the background.`;
-                    break;
-
-                case "images":
-                    response = await fastApi.watch_list.titles.update(this.title_info.title_id, this.title_info.type, { 
-                        update_title_images: isTitle || isAll, 
-                        update_season_images: isSeason || isAll, 
-                        season_number: updatingNumber 
-                    });
-                    updateMessage = updatingNumber != 0
-                        ? `Season ${updatingNumber} images for "${this.title_info.name}" are now updating in the background.`
-                        : `"${this.title_info.name}" title images are now updating in the background.`;
-                    break;
-
-                case "full":
-                    response = await fastApi.watch_list.titles.update(this.title_info.title_id, this.title_info.type, { 
-                        update_title_info: isTitle || isAll, 
-                        update_title_images: isTitle || isAll, 
-                        update_season_info: isSeason || isAll, 
-                        update_season_images: isSeason || isAll, 
-                        season_number: updatingNumber 
-                    });
-                    updateMessage = updatingNumber != 0
-                        ? `Season ${updatingNumber} full update for "${this.title_info.name}" is now in progress.`
-                        : `All the data for "${this.title_info.name}" has been replaced. Images are also now updating in the background.`;
-                    break;
-            }
+            const response = await fastApi.watch_list.titles.update(
+                this.title_info.title_id,
+                this.title_info.type,
+                payload
+            );
 
             if (response) {
+                let updateMessage;
+                if (updatingNumber !== 0) {
+                    updateMessage = `Season ${updatingNumber} ${actions.join(" & ")} for "${this.title_info.name}" updated.`;
+                } else {
+                    updateMessage = `"${this.title_info.name}" ${actions.join(" & ")} updated.`;
+                }
+
                 notify(updateMessage, "success");
                 await this.queryTitleData();
                 this.episodeMapTileBackgroundColors();
             }
 
-            this.removeItemFromWaitingArray(`${type}Update${updatingNumber}`);
+            this.modifyWaitingArray(updatingIdentifier);
         },
         async handleFavouriteToggle() {
             this.waitingForResult.push("favourite");
@@ -967,7 +800,7 @@ export default {
                 this.title_info.favourite = !this.title_info.favourite;
                 this.title_info.in_watch_list = 1;
             }
-            this.removeItemFromWaitingArray("favourite");
+            this.modifyWaitingArray("favourite", false);
         },
         async handleWatchListModification(action) {
             // Get confirmation before initiaing if removing
@@ -987,10 +820,14 @@ export default {
             }            
             await this.queryTitleData()
             this.episodeMapTileBackgroundColors();
-            this.removeItemFromWaitingArray("titleWatched");
+            this.modifyWaitingArray("titleWatched");
         },
-        removeItemFromWaitingArray(item) {
-            this.waitingForResult = this.waitingForResult.filter(i => i !== item);
+        modifyWaitingArray(item, add = false) {
+            if (add) {
+                this.waitingForResult.push(item);
+            } else {
+                this.waitingForResult = this.waitingForResult.filter(i => i !== item);
+            }
         },
         async queryTitleData() {
             this.waitingForResult.push("title_info");
@@ -1008,7 +845,7 @@ export default {
                     router.push("/watch_list");
                 }
             }
-            this.removeItemFromWaitingArray("title_info");
+            this.modifyWaitingArray("title_info");
         },
         getWatchedStats() {
             const totalEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
@@ -1046,15 +883,6 @@ export default {
                 this.scrolledPastEpisodeMap = scrollY > episodeMap.offsetTop;
             }
         },
-        seasonVotes(season) {
-            let runningSum = 0;
-            if (season && season.episodes) {
-                season.episodes.forEach((episode) => {
-                    runningSum += episode.tmdb_vote_count || 0;
-                });
-            }
-            return isNaN(runningSum) ? '0' : runningSum;
-        },
         openCorrectSeason(hash) {
             return new Promise((resolve) => {
                 // console.log(to);
@@ -1067,32 +895,11 @@ export default {
                 if (seasonNumber == null)
                     return resolve();
 
-                const refKey = `refSeason${seasonNumber}`
-                // console.log(seasonNumber, refKey);
+                this.$refs.seasonBrowser.setActiveSeason(seasonNumber);
 
-                // Close all other seasons
-                this.closeAllSeasons(refKey);
-
-                // Mark the season as opened to load to dom with v-if to start loading images
-                if (!this.openedSeasons.includes(refKey)) {
-                    this.openedSeasons.push(refKey);
-                }
-                
-                // Set a minimal timeout so that the dom change registers before the height is calculated
+                // Set a minimal timeout so that the dom change registers before we allow the jump to happen
                 setTimeout(() => {
-                    // Set height
-                    const element = this.$refs[refKey]?.[0]; // Get the first element
-                    if (!element) 
-                        return resolve();   // Check if exists
-                    element.style.transition = 'height 0s';
-                    element.style.height = element.scrollHeight + "px"; // Expand
-
-                    // Ensure the height change is finished before setting back
-                    setTimeout(() => {
-                        element.style.transition = '';
-                        // Allow the router to finish it's thing
-                        resolve();
-                    }, 1)
+                    resolve();
                 }, 1)
             });
         },
@@ -1184,7 +991,7 @@ export default {
             else this.handleWatchNow(episode?.watch_now_links[0]);
             this.$refs.watchEpisodeNowMG.open();
         },
-        handleWatchTitleNow() {
+        handleWhereToWatch() {
             this.handleWatchNow(this.title_info.watch_now_links);
             this.$refs.watchTitleNowMG.open();
         },
@@ -1248,8 +1055,24 @@ export default {
                 let suffix = this.isTouchDevice ? '?width=1200' : '';
                 return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/backdrop${i + 1}.jpg${suffix}`;
             });
+        },
+        menuOptions() {
+            if (this.title_info.in_watch_list) {
+                return [
+                    { label: 'Toggle favourite', action: () => this.handleFavouriteToggle() },
+                    { label: 'Update title details', action: () => this.openTitleUpdateModal() },
+                    { label: 'Modify title collections', action: () => this.promptTitleCollections() },
+                    { label: 'Remove from Watchlist', action: () => this.handleWatchListModification('remove') },
+                ];
+            } else {
+                return [
+                    { label: 'Toggle favourite', action: () => this.handleFavouriteToggle() },
+                    { label: 'Update title details', action: () => this.openTitleUpdateModal() },
+                    { label: 'Modify title collections', action: () => this.promptTitleCollections() },
+                    { label: 'Add to Watchlist', action: () => this.handleWatchListModification('add') },
+                ];
+            }
         }
-
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1301,185 +1124,6 @@ export default {
 
   
 <style scoped>
-/* - - - - - BACKDROP AND VALUES ON TOP - - - - -  */
-.backdrop-dimension {
-    width: 100vw;
-    max-width: min(100vw, 1200px);
-    aspect-ratio: 16 / 9;
-    /* max-height: 50vh; */
-    margin-inline: auto;
-    z-index: var(--z-backdrop-dimension);
-}
-.backdrop-container {
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: var(--z-backdrop-container);
-}
-
-/* BACKDROPS */
-.backdrop-image-container img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    transition: opacity 0.5s ease-in-out;
-    object-fit: cover;
-}
-.backdrop-image-container img.visible {
-    opacity: 1;
-}
-
-.backdrop-image-container.main { 
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    height: 100%;
-    width: 100%;
-    mask-image: linear-gradient(to top, transparent 0%, white 50%);
-    z-index: var(--z-backdrop-image-main);
-}
-.backdrop-image-container.background { 
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translateX(-50%);
-    object-fit: cover; 
-    
-    width: 100vw;
-    height: 675px;/* (1200px / 16 * 9) */
-    z-index: var(--z-backdrop-image-bg);
-
-    filter: blur(20px) opacity(0.5);
-    mask-image: 
-    linear-gradient(to top, transparent 0%, white 50%);
-    mask-composite: intersect;
-}
-
-@media (max-width: 1200px) {
-    .backdrop-image-container.background { 
-        display: none;
-    }
-}
-
-/* INSIDE CONTENT */
-.backdrop-container .content-inside {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    z-index: var(--z-backdrop-content-inside);
-}
-
-.content-inside .indicator {
-    position: absolute;
-    bottom: var(--spacing-sm);
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: var(--z-backdrop-indicator);
-}
-
-.backdrop-container .button-holder {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    width: 100%;
-    height: 100%;
-    top: 0%;
-    left: 0%;
-    /* transform: translateX(-50%) translateY(-50%); */
-    z-index: var(--z-backdrop-arrow-buttons);
-}
-.backdrop-container .button-holder button {
-    color: var(--color-text-white);
-    padding: 0;
-    margin: 0;
-    width: 20%;
-    height: 100%;
-    background-color: transparent;
-    border-radius: 0;
-    position: relative; 
-    z-index: var(--z-backdrop-arrow-buttons);
-    box-shadow: none;
-    transition: transform 0.2s var(--cubic-bounce-soft-out);
-}
-.backdrop-container .button-holder button .hover-gradient {
-    background-color: rgba(0, 0, 0, 0);
-    mask-composite: intersect;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    transition: background-color 0.2s ease-out;
-}
-.backdrop-container .button-holder button.left .hover-gradient {
-    mask-image: linear-gradient(to left, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
-}
-.backdrop-container .button-holder button.right .hover-gradient {
-    mask-image: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
-}
-.backdrop-container .button-holder button:hover .hover-gradient {
-    background-color: var(--color-background);
-}
-
-/* .backdrop-container .button-holder button::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 80px;
-    height: 80px;
-    transform: translateX(-50%) translateY(-50%);
-    background-color: rgba(0, 0, 0, 0.35);
-    border-radius: 50%;
-    filter: blur(16px);
-    z-index: -1;
-} */
-
-.backdrop-container .button-holder button.right:hover svg {
-    transform: scale(1.25) rotate(-90deg);
-}
-.backdrop-container .button-holder button.left:hover svg {
-    transform: scale(1.25) rotate(90deg);
-}
-
-.backdrop-container .button-holder button svg {
-    border-radius: 50%;
-    fill: var(--color-text);
-    transition: transform 0.2s var(--cubic-bounce-soft-out);
-}
-.backdrop-container button.left svg {
-    transform: rotate(90deg);
-}
-.backdrop-container button.right svg {
-    transform: rotate(-90deg);
-}
-/* @media (max-width: 666px) {
-    .backdrop-container .button-holder button svg {
-        fill: transparent;
-    }
-    .backdrop-container .button-holder button {
-        border-radius: 0;
-        height: 100%;
-        width: 30%;
-    }
-    .backdrop-container .button-holder  {
-        height: 100%;
-        width: 100%;
-        top: 0;
-    }
-    .backdrop-container .button-holder button::after {
-        background-color: transparent;
-    }
-    .backdrop-container .button-holder button:hover::after {
-        background-color: transparent;
-    }
-} */
-
 .poster-next-to-stuff .name-and-stuff {
     display: flex;
     flex-direction: column;
@@ -1545,7 +1189,7 @@ export default {
     display: flex;
     flex-direction: row;
     gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
+    margin: var(--spacing-lg) 0;
 }
 
 /* .seperator {
@@ -1648,7 +1292,6 @@ export default {
     width: 100%;
     max-width: 100%;
     display: flex;
-    cursor: pointer;
     /* Causes issues with gap. Don't use. */
     aspect-ratio: 2/3;
 }
@@ -1657,68 +1300,41 @@ export default {
     /* max-width: 100%; */
     width: 100%;
     aspect-ratio: 2/3;
-    transition: filter 0.1s ease-out;
-}
-.poster-next-to-stuff .poster-placholder:hover img {
-    filter: brightness(0.5);
-}
-.icon-watch-now {
-    color: var(--color-text-white-hover);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 0.1s ease-out !important;
-    opacity: 0;
-}
-.poster-next-to-stuff .poster-placholder:hover .icon-watch-now {
-    opacity: 1;
 }
 
-.title-details .tags {
-    gap: 6px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    /* height: 32px; */
-    /* margin:  0; */
-    /* margin-top: var(--spacing-md); */
+.tags-desktop {
+    display: flex !important;
 }
-
-.title-details .tags .tag.tag-upcoming {
-    background-color: var(--color-button-general);
+.tags-mobile {
+    display: none !important;
+    margin: var(--spacing-md) 0;
+}
+@media (max-width: 800px) {
+    .tags-desktop {
+        display: none !important;
+    }
+    .tags-mobile {
+        display: flex !important;
+    }
 }
 
 .control-button-array {
-    border-radius: var(--border-radius-medium);
-    box-sizing: border-box;
-    box-shadow: var(--shadow-card);
-
-    position: static;
-    transform: none;
     width: 100%;
-    border: none;
-    padding: 0;
-    margin: 0;
-    box-shadow: none;
-    background-color: initial;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    gap: var(--spacing-sm);
     margin: var(--spacing-md) 0;
 }
 .control-button-array button {
     white-space: nowrap;
-    margin: 0;
-    padding-inline: var(--spacing-md);
 }
 
-@media (min-width: 550px) {
-    .control-button-array {
-        gap: var(--spacing-sm);
-    }
-    .control-button-array button {
-        padding-inline: var(--spacing-lg);
-        border-radius: var(--border-radius-medium);
-    }
+.dropdown-menu-wrapper {
+    display: flex;
+    justify-content: end;
 }
 
 .red-heart {
@@ -1814,13 +1430,6 @@ iframe {
     margin: var(--spacing-sm);
     padding-left: var(--spacing-md);
 }
-.title-details a {
-    color: var(--color-text);
-    text-decoration: none;
-}
-.title-details a:hover {
-    text-decoration: underline;
-}
 
 .title-details .times-watched {
     display: flex;
@@ -1901,281 +1510,7 @@ iframe {
     user-select: initial;
 }
 
-/* - - - - - SEASON - - - - -  */
-.seasons-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-md)
-}
-.season {
-    position: relative;
-    padding-bottom: 0;
-}
-/* Could have a transition here but honestly can't see it so not worth it */
-.season.active {
-    padding-bottom: var(--spacing-md);
-}
 
-.season .about {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-areas: 
-    "img text"
-    "button button";
-    column-gap: var(--spacing-md);
-    cursor: pointer;
-}
-.season h2 {
-    margin: 0;
-    max-width: calc(100% - 243px - 8px);
-    display: -webkit-box;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.season .about .poster-container {
-    display: flex;
-    position: relative;
-}
-.season .about .poster {
-    height: 250px;
-    width: 166.666px;
-    min-width: 166.666px;
-    background-color: var(--color-background-card-section);
-    border-radius: var(--border-radius-medium);
-    grid-area: img;
-}
-.season .about p {
-    margin-bottom: 0;
-    margin-top: 10px;
-    display: -webkit-box;
-    line-clamp: 6;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.season .about .details {
-    color: var(--color-text-light);
-}
-.season .details .single-line {
-    column-gap: var(--spacing-xs);
-}
-
-.season .about .text {
-    grid-area: text;
-}
-
-
-.season .about .modify-watched {
-    position: absolute;
-    top: var(--spacing-md);
-    right: var(--spacing-md);
-    margin: 0;
-    width: auto;
-}
-
-@media (max-width: 750px) {
-    .season .about .modify-watched {
-        margin-top: var(--spacing-md);
-        position: static;
-        grid-area: button;
-        width: 100%;
-    }
-    .season h2 {
-        max-width: none;
-    }
-
-    /* .title-details .poster-next-to-stuff {
-        gap: 0;
-        grid-template-columns: auto;
-    }
-    .title-details .poster-next-to-stuff .poster-placholder {
-        display: none;
-    } */
-
-    .season .about .poster {
-        height: 200px;
-        width: 133.333px;
-        min-width: 133.333px;
-        background-color: var(--color-background-card-section);
-        border-radius: var(--border-radius-medium);
-        grid-area: img;
-    }
-    .season .about p {
-        line-clamp: 4;
-        -webkit-line-clamp: 4;
-    }
-}
-@media (max-width: 550px) {
-    .season .about p {
-        line-clamp: 3;
-        -webkit-line-clamp: 3;
-    }
-    .season .details .single-line {
-        flex-direction: column;
-        align-items: start;
-    }
-    .season .details .single-line .bullet {
-        display: none;
-    }
-}
-
-
-.season .episodes {
-    box-sizing: border-box;
-    height: 0px;
-    overflow: hidden;
-    transition: height 0.5s var(--cubic-ease-slow-in-slow-out),
-                margin-top 0.5s var(--cubic-ease-slow-in-slow-out);
-    margin-top: var(--spacing-md);
-}
-.season .episodes-padding {
-    --episode-gap-line-height: 3px;
-    display: flex;
-    flex-direction: column;
-    gap: var(--episode-gap-line-height);
-    border-radius: var(--border-radius-medium);    
-    background-color: var(--color-background-card-section);
-    padding: var(--spacing-sm);
-    margin-bottom: var(--spacing-md);
-}
-
-
-/* - - - - - EPISODE - - - - -  */
-.episode {
-    position: relative;
-    background-color: var(--color-background-card-section);
-    padding: var(--spacing-md);
-    margin: 0;
-    display: flex;
-    flex-direction: row;
-    gap: var(--spacing-md);
-    /* border-radius: var(--border-radius-medium); */
-    transition: background-color 0.1s ease-out;
-}
-.episode::after {
-    content: "";
-    width: calc(100% - var(--spacing-lg));
-    height: var(--episode-gap-line-height);
-    position: absolute;
-    bottom: calc(var(--episode-gap-line-height) * -1);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--color-border);
-    border-radius: var(--episode-gap-line-height);
-    z-index: 2;
-}
-.episode.last::after {
-    display: none;
-}
-/* .episode.not-realeased {
-    filter: opacity(0.5);
-    pointer-events: none;
-    user-select: none;
-} */
-
-
-.episode h3 {
-    margin: 0;
-    display: -webkit-box;
-    line-clamp: 1;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    max-width: calc(100% - 160px);
-}
-
-.episode .still-container {
-    display: flex;
-    width: 300px;
-    min-width: 300px;
-    border-radius: var(--border-radius-medium);
-    height: fit-content;
-    aspect-ratio: 16/9;
-    background-color: var(--color-background-card);
-    position: relative;
-    cursor: pointer;
-}
-
-.episode .still-container .still {
-    width: inherit;
-    aspect-ratio: inherit;
-    border-radius: inherit;
-    object-fit: contain;
-    transition: filter 0.1s ease-out;
-    filter: brightness(1);
-}
-.episode .still-container:hover .still {
-    filter: brightness(0.5);
-}
-
-.episode .still-container .still.failed-to-load {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-text-hidden);
-    font-weight: 700;
-    font-size: 32px;
-}
-
-.episode .still-container:hover .icon-watch-now {
-    opacity: 1;
-}
-
-.tag-holder {
-    position: absolute;
-    width: calc(100% - var(--spacing-sm) * 2);
-    height: calc(100% - var(--spacing-sm) * 2);
-    top: var(--spacing-sm);
-    left: var(--spacing-sm);
-    display: inline;
-    pointer-events: none;
-}
-
-
-.episode .text {
-    /* padding-top: var(--spacing-sm); */
-    width: 100%;
-}
-.episode .details {
-    color: var(--color-text-light);
-}
-.episode p {
-    margin-bottom: 0;
-    margin-top: 4px;
-    display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-.episode .modify-watched {
-    position: absolute;
-    top: var(--spacing-md);
-    right: var(--spacing-md);
-    margin: 0;
-    width: auto;
-}
-@media (max-width: 850px) {
-    .episode .modify-watched {
-        margin-top: var(--spacing-sm);
-        position: static;
-        width: 100%;
-    }
-    .episode h3 {
-        max-width: none;
-    }
-    .episode {
-        flex-direction: column;
-    }
-    .episode .still-container {
-        width: 100%;
-        min-width: none;
-        max-height: 220px;
-    }
-}
 
 .choice-modal {
     display: flex;

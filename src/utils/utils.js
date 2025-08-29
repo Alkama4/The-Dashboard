@@ -1,3 +1,5 @@
+import { standAloneBuild, apiUrl } from "./config";
+
 export const convert = {
     toFiNumber(value, maxFractionDigits = 3) {
         if (value == null) return null; // Handle null/undefined values
@@ -74,6 +76,7 @@ export const convert = {
             fullWithWeek: { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' },
             date: { day: 'numeric', month: 'short', year: '2-digit' },
             month: { month: 'short', year: '2-digit' },
+            monthAndYear: { month: 'long', year: 'numeric' },
             year: { year: 'numeric' },
             timetimeInMinutes: { weekday: 'short', minute: '2-digit', hour: '2-digit'},
             titimeInSecondsme: { weekday: 'short', second: '2-digit', minute: '2-digit', hour: '2-digit'},
@@ -114,7 +117,7 @@ export const convert = {
         return (parseFloat(value) === parseInt(value) ? parseInt(value) : value) + ' ' + sizes[i];
     },
 
-    runtime(runtime) {
+    toRuntime(runtime) {
         const hours = Math.floor(runtime / 60);
         const minutes = runtime % 60;
         return hours > 0 ? `${hours}hr ${minutes}min` : `${minutes}min`;
@@ -185,4 +188,25 @@ export function interpolateBetweenColors(color1, color2, position) {
     const b = Math.round(rgb1[2] + (rgb2[2] - rgb1[2]) * position);
 
     return `rgb(${r}, ${g}, ${b})`;
+}
+
+export function getMediaImageUrl(width, backupUrl, titleId, seasonNumber, episodeNumber) {
+    if (standAloneBuild) {
+        // Width remapping rules for TMDB
+        const widthMap = {
+            600: 500,
+            900: episodeNumber ? 300 : 900
+        };
+        const finalWidth = widthMap[width] || width;
+        return `https://image.tmdb.org/t/p/w${finalWidth}${backupUrl}`;
+    }
+
+    const base = `${apiUrl}/media/image/title/${titleId}`;
+    if (!seasonNumber) {
+        return `${base}/poster.jpg?width=${width}`;
+    }
+    if (!episodeNumber) {
+        return `${base}/season${seasonNumber}/poster.jpg?width=${width}`;
+    }
+    return `${base}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
 }
