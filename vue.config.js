@@ -30,5 +30,12 @@ module.exports = defineConfig({
 
 	devServer: {
 		port: 80
-	}
+	},
+
+	chainWebpack: config => {
+        config.plugin('html').tap(args => {
+            args[0].title = 'Dashboard';
+            return args;
+        });
+    }
 });

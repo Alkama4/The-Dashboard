@@ -3,10 +3,12 @@
         <h1>Account</h1>
         <p>Your settings are stored locally on your device. Please note that while your settings are saved locally, all of your data is stored centrally behind your account so that it can be accessed from any device and stays synced.</p>
 
-        <div class="flex-column loggedInAs card content-width-extra-small">
-            <h2>Current account</h2>
-            <div>You are currently logged in as <span class="username">{{ username }}</span></div>
-            <button @click="callApiToLogOut">Log out</button>
+        <div class="content-width-extra-small">
+            <div class="flex-column loggedInAs card">
+                <h2>Current account</h2>
+                <div>You are currently logged in as <span class="username">{{ username }}</span></div>
+                <button @click="callApiToLogOut">Log out</button>
+            </div>
         </div>
 
         <div class="content-width-small">
@@ -59,32 +61,35 @@
             </div>
         </div>
 
-        <div class="content-width-small card danger-zone">
-            <h2>
-                <span class="icon-align">
-                    <IconWarningTriangle size="24" right="var(--spacing-xs)"/>
-                    Danger zone
-                </span>
-            </h2>
-            <p>Pay extra attention and be careful with these buttons, as they have significant consequences and are not reversible.</p>
-            <div class="flex-row">
-                <button 
-                    class="button-danger"
-                    @click="handleAccountDelete"
-                >
-                    Delete account permanently
-                </button>
-                <button 
-                    class="button-danger"
-                    @click="handleDataReset"
-                >
-                    Reset user data
-                </button>
-            </div>
+        <div class="content-width-small">
+            <div class="card danger-zone">
+                <h2>
+                    <span class="icon-align">
+                        <IconWarningTriangle size="24" right="var(--spacing-xs)"/>
+                        Danger zone
+                    </span>
+                </h2>
+                <p>Pay extra attention and be careful with these buttons, as they have significant consequences and are not reversible.</p>
+                <div class="flex-row">
+                    <button 
+                        class="button-danger"
+                        @click="handleAccountDelete"
+                    >
+                        Delete account permanently
+                    </button>
+                    <button 
+                        class="button-danger"
+                        @click="handleDataReset"
+                    >
+                        Reset user data
+                    </button>
+                </div>
 
-            <!-- What was the other thing that I could add here? -->
-             
+                <!-- What was the other thing that I could add here? -->
+                
+            </div>
         </div>
+
         <ConfirmationModal 
             ref="logOutCM"
             header="Log out"

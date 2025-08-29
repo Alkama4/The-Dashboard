@@ -6,81 +6,83 @@
             <p>Here you can search for titles and filter the results to match your interests. Use the filters to refine by watched status, genre, or other options.</p>
         </div>
     
-        <div class="all-titles-list-controls card content-width-medium">
-            <div class="basic-options">
-                <div class="button-in-text-field">
-                    <input 
-                        v-model="allTitlesListOptions.search_term" 
-                        type="text" 
-                        placeholder="Search titles"
-                    >
-                    <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
-                </div>
-                <div class="flex icon-align">
-                    <CustomSelect 
-                        v-model="allTitlesListOptions.sort_by" 
-                        :options="allTitlesListSortByOptions"
-                    />
-                    <button 
-                        @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'"
-                        class="sort-direction"
+        <div class="content-width-medium">
+            <div class="all-titles-list-controls card">
+                <div class="basic-options">
+                    <div class="button-in-text-field">
+                        <input 
+                            v-model="allTitlesListOptions.search_term" 
+                            type="text" 
+                            placeholder="Search titles"
                         >
-                        <IconSortDown size="28px" v-if="allTitlesListOptions.direction == 'desc'"/>
-                        <IconSortUp size="28px" v-if="allTitlesListOptions.direction == 'asc'"/>
-                    </button>
+                        <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
+                    </div>
+                    <div class="flex icon-align">
+                        <CustomSelect 
+                            v-model="allTitlesListOptions.sort_by" 
+                            :options="allTitlesListSortByOptions"
+                        />
+                        <button 
+                            @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'"
+                            class="sort-direction icon-button"
+                            >
+                            <IconSortDown size="28px" v-if="allTitlesListOptions.direction == 'desc'"/>
+                            <IconSortUp size="28px" v-if="allTitlesListOptions.direction == 'asc'"/>
+                        </button>
+                    </div>
                 </div>
+                <div class="extra-options-holder" ref="extraOptionsHolder">
+                    <div class="extra-options margin-fix" ref="extraOptions">
+                        <label>Type</label>
+                        <TriStateToggle
+                            button1-text="TV"
+                            button2-text="Movies"
+                            v-model="allTitlesListOptions.title_type"
+                            button1-value="tv"
+                            button2-value="movie"
+                            unset-value=""
+                        />
+                        <label>Watched</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.watched"
+                        />
+                        <label>Favourite</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.favourite"
+                        />
+                        <label>Released</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.released"
+                        />
+                        <label>Title in progress</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.title_in_progress"
+                        />
+                        <label>Season in progress</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.season_in_progress"
+                        />
+                        <label>In watchlist</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.in_watchlist"
+                        />
+                        <label>Collection</label>
+                        <CustomSelect
+                            v-model="allTitlesListOptions.collection_id"
+                            :options="allTitlesListCollectionOptions"
+                        />
+                    </div>
+                </div>
+                <button
+                    @click="toggleExtraOptions()"
+                    class="expand-button margin-fix"
+                >
+                    {{ extraOptionsVisible ? "Hide options" : "Show more options" }}
+                    <div class="icon-align" ref="expandButtonChevron">
+                        <IconChevronDown/>
+                    </div>
+                </button>
             </div>
-            <div class="extra-options-holder" ref="extraOptionsHolder">
-                <div class="extra-options margin-fix" ref="extraOptions">
-                    <label>Type</label>
-                    <TriStateToggle
-                        button1-text="TV"
-                        button2-text="Movies"
-                        v-model="allTitlesListOptions.title_type"
-                        button1-value="tv"
-                        button2-value="movie"
-                        unset-value=""
-                    />
-                    <label>Watched</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.watched"
-                    />
-                    <label>Favourite</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.favourite"
-                    />
-                    <label>Released</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.released"
-                    />
-                    <label>Title in progress</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.title_in_progress"
-                    />
-                    <label>Season in progress</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.season_in_progress"
-                    />
-                    <label>In watchlist</label>
-                    <BooleanFitlerToggle
-                        v-model="allTitlesListOptions.in_watchlist"
-                    />
-                    <label>Collection</label>
-                    <CustomSelect
-                        v-model="allTitlesListOptions.collection_id"
-                        :options="allTitlesListCollectionOptions"
-                    />
-                </div>
-            </div>
-            <button
-                @click="toggleExtraOptions()"
-                class="expand-button margin-fix "
-            >
-                {{ extraOptionsVisible ? "Hide options" : "Show more options" }}
-                <div class="icon-align" ref="expandButtonChevron">
-                    <IconChevronDown/>
-                </div>
-            </button>
         </div>
     </div>
 
@@ -106,9 +108,12 @@
                 </div>
         
                 <div class="poster-holder">
+                    <MissingImage v-if="posterNotFound.includes(title.title_id)"/>
                     <img 
+                        v-else
                         :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
                         @load="(event) => event.target.classList.add('loaded')" 
+                        @error="posterNotFound.push(title.title_id)"
                         loading="lazy"
                         class="poster"
                     >
@@ -242,8 +247,7 @@
         </div>
     
         <div v-if="titlesArray?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
-            Looks like there's nothing here.<br>
-            <span class="text-hidden">Try adding titles to your watch list</span>
+            <span class="text-hidden">Try adding titles to your watch list or widening your search.</span>
         </div>
     
         <div class="flex-row">
@@ -295,6 +299,7 @@ import ModalTitleCollections from '@/components/ModalTitleCollections.vue';
 import TriStateToggle from '@/components/TriStateToggle.vue';
 import BooleanFitlerToggle from '@/components/BooleanFitlerToggle.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+import MissingImage from '@/components/MissingImage.vue';
 
 export default {
     name: 'HomePage',
@@ -304,6 +309,7 @@ export default {
         ModalTitleCollections,
         TriStateToggle,
         BooleanFitlerToggle,
+        MissingImage,
         IconTMDB,
         IconHeart,
         IconSortDown,
@@ -350,11 +356,12 @@ export default {
             selectedTitleIdForCollection: null,
             extraOptionsVisible: false,
             activeTitleIndex: null,
+            posterNotFound: [],
         };
     },
     methods: {
         formatRuntime(runtime) {
-            return convert.runtime(runtime);
+            return convert.toRuntime(runtime);
         },
         async fetchAllTitlesList() {
             this.waitingForResult.push("allTitlesList");
@@ -597,6 +604,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
+    padding-top: var(--spacing-md);
 }
 
 /* all-titles-list-controls */
@@ -667,19 +675,12 @@ export default {
 
 
 .all-titles-list-controls .sort-direction {
-    color: var(--color-text-light);
-    padding: 0;
     margin: 0;
     aspect-ratio: 1;
-    /* border: 1px solid var(--color-border); */
-    height: 41px;
+    padding: 0 var(--spacing-sm);
+    height: 40px;
     box-sizing: border-box;
-    /* background-color: var(--color-background-input); */
     background-color: transparent;
-    transition: border 0.1s ease-out;
-}
-.all-titles-list-controls .sort-direction:hover {
-    border-color: var(--color-border-hover);
 }
 
 .all-titles-list .title-element {
@@ -770,12 +771,13 @@ export default {
 
 .all-titles-list .poster-holder {
     height: 210px;
-    aspect-ratio: 2/3;
-    border-radius: var(--border-radius-small);
-    background-color: var(--color-background-card);
+    width: 140px;
+    min-width: 140px;
+    border-radius: var(--border-radius-medium);
+    background-color: var(--color-background-card-section);
+    overflow: hidden;
 }
 .poster-holder .poster {
-    border-radius: var(--border-radius-small);
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -886,7 +888,5 @@ export default {
 .title-element .icon-button.favourite.is-set:active {
     color: var(--color-secondary-active);
 }
-
-
 
 </style>

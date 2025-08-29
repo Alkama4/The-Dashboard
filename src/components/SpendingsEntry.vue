@@ -213,7 +213,7 @@
 .transaction-component.expanded {
     background-color: var(--color-background-card-active);
 }
-.transaction-component:hover {
+.pointer-device .transaction-component:hover {
     background-color: var(--color-background-card-hover);
 }
 .transaction-component:focus {

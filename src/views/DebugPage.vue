@@ -8,6 +8,11 @@
         <h2>GitHub</h2>
         <p>Here's the link to the <a href="https://github.com/Alkama4/The-Dashboard">GitHub repo</a>.</p>
 
+        <div class="content-width-small">
+            <h2>Transition input</h2>
+            <TextInputTransition :options="options"/>
+            <CustomSearchSelect :options="options" />
+        </div>
 
 		<h2>Notification buttons</h2>
         <div class="flex-row" style="gap: 0">
@@ -113,7 +118,6 @@
         </div>
 
         <CustomCarousel/>
-
     </div>
 </template>
 
@@ -128,6 +132,8 @@ import ConfirmationModal from '@/components/ModalConfirmation.vue';
 import GenericModal from '@/components/ModalGeneric.vue';
 import FormTransaction from '@/components/FormTransaction.vue';
 import CustomCarousel from '@/components/CustomCarousel.vue';
+import TextInputTransition from '@/components/TextInputTransition.vue';
+import CustomSearchSelect from '@/components/CustomSearchSelect.vue';
 
 export default {
     name: 'DebugPage',
@@ -137,6 +143,8 @@ export default {
         GenericModal,
         FormTransaction,
         CustomCarousel,
+        TextInputTransition,
+        CustomSearchSelect,
     },  
     data() {
         return {
@@ -145,6 +153,13 @@ export default {
                 { id: 2, name: 'Item 2' },
                 { id: 3, name: 'Item 3' },
                 { id: 4, name: 'Item 4' },
+            ],
+            options: [
+                'Example',
+                'Testing',
+                'Values',
+                'For',
+                'Debugging',
             ],
             exampleChartOptions: null,
             draggedIndex: null,

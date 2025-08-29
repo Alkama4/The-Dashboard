@@ -26,6 +26,7 @@
     --spacing-md: 16px;
     --spacing-lg: 32px;
     --spacing-xl: 64px;
+    --spacing-xxl: 128px;
     
     /* border radius */
     --border-radius-small: 4px;
@@ -256,7 +257,7 @@
     /* Button colors */
     --color-button-general: #282828;
     --color-button-general-hover: #333;
-    --color-button-general-active: #303030;
+    --color-button-general-active: #3a3a3a;
 
     --color-button-dark: var(--color-background-card);
     --color-button-dark-hover: hsl(0, 0%, 14%);
@@ -316,9 +317,7 @@ body {
     min-height: calc(100vh - var(--height-top-bar));
     display: flex;
     flex-direction: column;
-    width: 90vw;
-    /* max-width: var(--width-max-page); */
-    margin-inline: 5vw;
+    width: 100vw;
     margin-top: var(--height-top-bar);
     z-index: var(--z-app);
 }
@@ -376,13 +375,13 @@ h4 {
     margin-bottom: calc(var(--spacing-sm));
 }
 
-img {
+/* img {
     opacity: 0;
     transition: opacity .3s var(--cubic-ease-slow-in-slow-out);
 }
 img.loaded {
     opacity: 1;
-}
+} */
 
 /* Default button */
 button, .link-button {
@@ -408,18 +407,20 @@ button, .link-button {
                 background-color 0.1s ease-out,
                 box-shadow 0.1s ease-out;
 }
-button:hover, .link-button:hover {
+.pointer-device button:hover, 
+.pointer-device .link-button:hover {
     color: var(--color-text-bold);
     background-color: var(--color-button-general-hover);
     box-shadow: var(--shadow-button-hover);
 }
-.link-button:hover {
+.pointer-device .link-button:hover {
     text-decoration: underline;
 }
 /* button:hover svg {
     fill: var(--color-text-bold)
 } */
-button:active, .link-button:active {
+.pointer-device button:active, 
+.pointer-device .link-button:active {
     background-color: var(--color-button-general-active);
     box-shadow: var(--shadow-button-active);
 }
@@ -439,10 +440,10 @@ button:focus {
 .button-dark {
     background-color: var(--color-button-dark);
 }
-.button-dark:hover {
+.pointer-device .button-dark:hover {
     background-color: var(--color-button-dark-hover);
 }
-.button-dark:active {
+.pointer-device .button-dark:active {
     background-color: var(--color-button-dark-active);
 }
 
@@ -451,14 +452,14 @@ button:focus {
     background-color: var(--color-primary);
     color: var(--color-text-white) !important;
 } 
-.button-primary:hover {
+.pointer-device .button-primary:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white-hover);
 }
-.button-primary:hover svg {
+.pointer-device .button-primary:hover svg {
     fill: var(--color-text-white-hover);
 }
-.button-primary:active {
+.pointer-device .button-primary:active {
     background-color: var(--color-primary-active);
     color: var(--color-text-white-hover);
 }
@@ -471,10 +472,10 @@ button:focus {
 .button-secondary {
     background-color: var(--color-secondary);
 } 
-.button-secondary:hover {
+.pointer-device .button-secondary:hover {
     background-color: var(--color-secondary-hover);
 }
-.button-secondary:active {
+.pointer-device .button-secondary:active {
     background-color: var(--color-secondary-active);
 }
 
@@ -482,10 +483,10 @@ button:focus {
 .button-positive {
     background-color: var(--color-positive);
 } 
-.button-positive:hover {
+.pointer-device .button-positive:hover {
     background-color: var(--color-positive-hover);
 }
-.button-positive:active {
+.pointer-device .button-positive:active {
     background-color: var(--color-positive-active);
 }
 
@@ -493,34 +494,34 @@ button:focus {
 .button-negative {
     background-color: var(--color-negative);
 } 
-.button-negative:hover {
+.pointer-device .button-negative:hover {
     background-color: var(--color-negative-hover);
 }
-.button-negative:active {
+.pointer-device .button-negative:active {
     background-color: var(--color-negative-active);
 }
 
 /* Button danger */
-.button-danger:hover {
+.pointer-device .button-danger:hover {
     background-color: var(--color-button-delete-hover);
     color: var(--color-text-white-hover);
 }
-.button-danger:hover svg {
+.pointer-device .button-danger:hover svg {
     fill: var(--color-text-white-hover);
 }
-.button-danger:active {
+.pointer-device .button-danger:active {
     background-color: var(--color-button-delete-active);
     color: var(--color-text-white-hover);
 }
 
-.button-hidden-primary:hover {
+.pointer-device .button-hidden-primary:hover {
     background-color: var(--color-primary-hover);
     color: var(--color-text-white-hover);
 }
-.button-hidden-primary:hover svg {
+.pointer-device .button-hidden-primary:hover svg {
     fill: var(--color-text-white-hover);
 }
-.button-hidden-primary:active {
+.pointer-device .button-hidden-primary:active {
     background-color: var(--color-primary-active);
     color: var(--color-text-white-hover);
 }
@@ -549,7 +550,6 @@ button.button-transparent:hover {
 label {
     font-weight: 600;
     color: var(--color-text);
-    cursor: text;
     margin-left: 0;
     margin-bottom: 2px;
     margin-right: auto;
@@ -595,6 +595,11 @@ textarea {
 
 input[type="radio"] {
     width: fit-content;
+    cursor: pointer;
+}
+input[type="checkbox"] {
+    width: fit-content;
+    cursor: pointer;
 }
 
 .custom-input {
@@ -940,6 +945,30 @@ form.simple-form button {
 .flex-2 {
     flex: 2;
 }
+.flex-3 {
+    flex: 3;
+}
+.flex-4 {
+    flex: 4;
+}
+.flex-5 {
+    flex: 5;
+}
+.flex-6 {
+    flex: 6;
+}
+.flex-7 {
+    flex: 7;
+}
+.flex-8 {
+    flex: 8;
+}
+.flex-9 {
+    flex: 9;
+}
+.flex-10 {
+    flex: 10;
+}
 
 .text-light {
     color: var(--color-text-light);
@@ -986,6 +1015,13 @@ form.simple-form button {
     height: 100%;
     width: 100%;
     position: relative;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+.cursor-text {
+    cursor: text;
 }
 
 .tag {
@@ -1085,6 +1121,7 @@ form.simple-form button {
     box-shadow: none !important;
     display: flex;
     margin: 0;
+    border-radius: var(--border-radius-medium);
 }
 .text-loading-placeholder {
     background: linear-gradient(
@@ -1115,12 +1152,13 @@ form.simple-form button {
 }
 
 .content-not-found {
+    background-color: var(--color-background-card);
+    color: var(--color-text-hidden);
     display: flex;
     flex-direction: column !important;
     justify-content: center;
     align-items: center;
     text-align: center;
-    color: var(--color-text-light) !important;
     font-weight: 500;
     user-select: none;
     gap: 0 !important;
@@ -1128,6 +1166,10 @@ form.simple-form button {
     cursor: auto !important;
 
     padding-inline: calc(22% - var(--spacing-lg));
+}
+.content-not-found::before {
+    color: var(--color-text-light);
+    content: "Looks like there's nothing here.";
 }
 
 .seperator {
@@ -1150,21 +1192,25 @@ overflow: hidden;
 /* - - - - CONTENT WIDTH LIMITORS - - - - */
 .content-width-extra-small {
     margin-inline: auto;
+    padding-inline: 5vw;
     max-width: 60ch;
 }
 
 .content-width-small {
     margin-inline: auto;
+    padding-inline: 5vw;
     max-width: 80ch;
 }
 
 .content-width-medium {
     margin-inline: auto;
+    padding-inline: 5vw;
     max-width: 100ch;
 }
 
 .content-width-medium-unrestricted {
     margin-inline: auto;
+    padding-inline: 5vw;
     max-width: 100%;
     min-width: min(100ch, 100%);
     width: fit-content;
@@ -1172,7 +1218,18 @@ overflow: hidden;
 
 .content-width-large {
     margin-inline: auto;
+    padding-inline: 5vw;
     max-width: 140ch;
+}
+
+.content-width-extra-large {
+    margin-inline: auto;
+    padding-inline: 5vw;
+    max-width: calc(1920px);
+}
+
+.content-no-padding {
+    padding-inline: 0;
 }
 
 

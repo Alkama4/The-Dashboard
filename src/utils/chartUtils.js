@@ -3,8 +3,8 @@ import { convert, getCssVar } from '@/utils/utils'
 
 // ECharts imports
 import { use } from 'echarts/core'
-import { LineChart, BarChart, PieChart, GaugeChart } from 'echarts/charts'
-import { TooltipComponent, GridComponent, TitleComponent, LegendComponent, DataZoomComponent } from 'echarts/components'
+import { LineChart, BarChart, PieChart, ScatterChart } from 'echarts/charts'
+import { TooltipComponent, GridComponent, TitleComponent, LegendComponent, DataZoomComponent, VisualMapComponent } from 'echarts/components'
 
 // Pick a renderer
 // import { CanvasRenderer } from 'echarts/renderers'
@@ -12,7 +12,7 @@ import { SVGRenderer } from 'echarts/renderers'
 
 
 export function initialEchartSetup() {
-    use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, GaugeChart, SVGRenderer, TitleComponent, LegendComponent, DataZoomComponent]);
+    use([TooltipComponent, GridComponent, LineChart, BarChart, PieChart, ScatterChart, SVGRenderer, TitleComponent, LegendComponent, DataZoomComponent, VisualMapComponent]);
 }
 
 export function generateTooltipMultiValue(params, yAxisFormatToDateType, xAxisFormatter, showSumRow) {
@@ -75,6 +75,30 @@ export function generateTooltipSingleValue(params, countOrEur) {
                     <td class="value">${countOrEur == 'eur' ? convert.toEur(params.value) : params.value + ' kpl'}</td>
                 </tr>
             </table>
+        </div>
+    `;
+}
+
+export function generateTooltipCustomValues(title, values) {
+    let rows = '';
+
+    for (let i = 0; i < values.length; i++) {
+        rows += `
+            <tr class="${values[i].value === 0 ? 'disabled' : ''}">
+                <td class="label">
+                    <div>
+                        <div class="series-name">${values[i].label}</div>
+                    </div>
+                </td>
+                <td class="value">${values[i].value}</td>
+            </tr>
+        `;
+    }
+
+    return `
+        <div class="chart-tooltip">
+            <div class="header">${title}</div>
+            <table>${rows}</table>
         </div>
     `;
 }

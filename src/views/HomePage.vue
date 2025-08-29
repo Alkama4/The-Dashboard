@@ -122,7 +122,7 @@
 
 				<div class="drives" v-if="serverStats.storage.length == 0">
 					<DriveCard 
-						v-for="(drive, index) in [0, 1, 2]" 
+						v-for="(drive, index) in [0, 1]" 
 						:key="index"
 						:loadingVersion="true"
 					/>
@@ -190,29 +190,14 @@
 				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-client-ip" :chartOptionsGenerator="chartValueGenerators.chart7"/>
 				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-status-code" :chartOptionsGenerator="chartValueGenerators.chart8"/>
 				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-request-method" :chartOptionsGenerator="chartValueGenerators.chart9"/>
-
-				<div class="card fastapi-requests">
-					<h2>Requests by endpoint</h2>
-					
-					<div class="server-info-row">
-						<span class="endpoint-name endpoint-label">Endpoint name</span>
-						<span class="endpoint-value endpoint-label">Requests</span>
-						<span class="endpoint-value endpoint-label">
-							Avg. time 
-							<InfoTooltip text="The average time that the backend takes to process the request. Note that this doesn't include transmission." position="left"/>
-						</span>
-					</div>
-					<div class="server-info-scroll">
-						<div v-for="(item, index) in serverStats.fastapiData.endpoint_count" :key="index" class="server-info-row">
-							<span class="endpoint-name">{{ item.endpoint }}</span>
-							<span class="endpoint-value">{{ item.count }} kpl</span>
-							<span class="endpoint-value">{{ item.avg_response_time_ms }} ms</span>
-						</div>
+				<ChartComponent class="card fastapi-chart fastapi-requests-by-endpoint" :chartOptionsGenerator="chartValueGenerators.chartRequestsByEndpoint"/>
+				<div v-if="serverStats.fastapiData.noErrorCodesFound" class="card fastapi-chart fastapi-error-codes">
+					<h2>Errors</h2>
+					<div class="content-not-found">
+						Your endpoints are so perfect, they put unicorns to shame!
 					</div>
 				</div>
-
-				<!-- THIS SHOULD ACTUALLY BE A SCROLL CONTAINER JUST LIKE THE REQUESTS BY ENDPOINT -->
-				<ChartComponent class="card fastapi-chart fastapi-error-codes" :chartOptionsGenerator="chartValueGenerators.chart12"/>
+				<ChartComponent v-else class="card fastapi-chart fastapi-error-codes" :chartOptionsGenerator="chartValueGenerators.chart12"/>
 			</div>
 		</div>
 
@@ -268,7 +253,6 @@
 // Icons
 import IconBackup from '@/components/icons/IconBackup.vue';
 import IconBackupDown from '@/components/icons/IconBackupDown.vue';
-import InfoTooltip from '@/components/InfoTooltip.vue';
 import IconRefresh from '@/components/icons/IconRefresh.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 
@@ -279,6 +263,7 @@ import { notify } from '@/utils/notification';
 import { 
     generateTooltipMultiValue, 
 	generateTooltipSingleValue,
+	generateTooltipCustomValues,
 	commonChartValues,
 	initialEchartSetup,
 } from '@/utils/chartUtils'
@@ -293,7 +278,6 @@ import DriveCard from '@/components/DriveCard.vue';
 export default {
 	name: 'HomePage',
 	components: {
-		InfoTooltip,
 		ChartComponent,
 		CustomSelect,
         ResourceUsageTile,
@@ -315,7 +299,9 @@ export default {
 			backups: [],
 			serverStats: {
 				storage: [],
-				fastapiData: {},
+				fastapiData: {
+					noErrorCodesFound: false,
+				},
                 uptimeSeconds: 0,
 			},
             secondsPassed: 0,
@@ -912,44 +898,53 @@ export default {
 				const chart11Timestamps = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.time_range);
 				const chart11Values = fastapiLogDataResponse.data.backend_time_histogram.map(item => item.count);
 
-				// - - - - - Chart 12 values - - - - - 
+
+				// - - - - - Chart 12 values - - - - -
 				const errorSeries = [];
 				const endpointNames = [];
 				const errorCodeMap = {};
 
-				// Loop through each endpoint's error summary
-				fastapiLogDataResponse.data.endpoint_error_summary.forEach(endpoint => {
-					// Skip endpoints starting with "/image" if there is a 404 error with count <= 1
-					if (
-						endpoint.endpoint.startsWith("/image") && 
-						endpoint.errors.some(error => error.status_code === 404 && error.count <= 1)
-					) return;
-
-					endpointNames.push(endpoint.endpoint);
-
-					// Loop through the errors of each endpoint
-					endpoint.errors.forEach(error => {
-						const { status_code: errorCode, count: errorCount } = error;
-
-						// Initialize the series for this error code if not already initialized
-						if (!errorCodeMap[errorCode]) {
-							errorCodeMap[errorCode] = {
-								name: `Error ${errorCode} count`,
-								type: 'bar',
-								stack: true,
-								data: Array(fastapiLogDataResponse.data.endpoint_error_summary.length).fill(0)
-							};
-						}
-
-						const endpointIndex = endpointNames.length - 1;
-						errorCodeMap[errorCode].data[endpointIndex] = errorCount;
+				if (fastapiLogDataResponse.data.endpoint_error_summary.length == 0) {
+					this.serverStats.fastapiData.noErrorCodesFound = true;
+				} else {
+					// Loop through each endpoint's error summary
+					fastapiLogDataResponse.data.endpoint_error_summary.forEach(endpoint => {
+						endpointNames.push(endpoint.endpoint);
+	
+						// Loop through the errors of each endpoint
+						endpoint.errors.forEach(error => {
+							const { status_code: errorCode, count: errorCount } = error;
+	
+							// Initialize the series for this error code if not already initialized
+							if (!errorCodeMap[errorCode]) {
+								errorCodeMap[errorCode] = {
+									name: `Error ${errorCode} count`,
+									type: 'bar',
+									stack: true,
+									data: Array(fastapiLogDataResponse.data.endpoint_error_summary.length).fill(0)
+								};
+							}
+	
+							const endpointIndex = endpointNames.length - 1;
+							errorCodeMap[errorCode].data[endpointIndex] = errorCount;
+						});
 					});
-				});
-
-				// Convert errorCodeMap to an array
-				for (const errorCode in errorCodeMap) {
-					errorSeries.push(errorCodeMap[errorCode]);
+	
+					// Convert errorCodeMap to an array
+					for (const errorCode in errorCodeMap) {
+						errorSeries.push(errorCodeMap[errorCode]);
+					}
 				}
+
+				const chartRequestsByEndpointValues = this.serverStats.fastapiData.endpoint_count.map(item => ({
+					name: item.endpoint,
+					value: [
+						item.endpoint, // x: endpoint (categorical)
+						item.avg_response_time_ms, // y: response time
+						item.count // used for bubble size
+					]
+				}));
+
 
 				// Chart 7 - FASTAPI
 				const chart7Options = () => ({
@@ -1225,6 +1220,82 @@ export default {
 				});
 				// Set the value generator for the chart
 				this.chartValueGenerators.chart12 = chart12Options;
+
+				// Chart requests by endpoint
+				const chartRequestsByEndpointOptions = () => ({
+					textStyle: commonChartValues().textStyle,
+					title: {
+						text: 'Requests by endpoint',
+						textStyle: {
+							color: getCssVar('color-text'),
+							fontSize: 24,
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						backgroundColor: getCssVar('color-background-card'),
+						borderWidth: 1,
+						borderColor: getCssVar("color-border"),
+						formatter: (params) => generateTooltipCustomValues(
+							params.value[0],
+							[
+								{ label: 'Avg Response time', value: params.data.value[1] + ' ms' },
+								{ label: 'Request Count', value: convert.toFiCount(params.data.value[2]) }
+							]
+						),
+					},
+					xAxis: {
+						type: 'category',
+						axisLabel: {
+							show: false
+						},
+					},
+					yAxis: {
+						name: 'Avg Response Time (ms)',
+						type: 'value',
+						scale: true,
+						axisLabel: {
+							formatter: value => convert.toFiNumber(value)
+						}
+					},
+					grid: {
+						left: 80,
+						right: 32,
+						top: 80,
+						bottom: 32,
+					},
+					visualMap: {
+						show: false,
+						min: Math.min(...this.serverStats.fastapiData.endpoint_count.map(item => item.avg_response_time_ms)),
+						max: Math.max(...this.serverStats.fastapiData.endpoint_count.map(item => item.avg_response_time_ms)),
+						inRange: {
+							color: [getCssVar('color-text-light'), getCssVar('color-negative-hover')],
+						},
+						calculable: true,
+						orient: 'horizontal',
+						left: 'center',
+						bottom: 10,
+						dimension: 1, // Map color to the second value (response time)
+					},
+					series: [
+						{
+							type: 'scatter',
+							data: chartRequestsByEndpointValues,
+							symbolSize: data => Math.sqrt(data[2] * 10 / Math.PI) * 2,
+							encode: {
+								x: 0, // endpoint
+								y: 1, // response time
+								tooltip: [0, 1, 2],
+							},
+							emphasis: {
+								focus: 'self',
+							},
+						}
+					]
+				});
+
+				// Set the value generator for the chart
+				this.chartValueGenerators.chartRequestsByEndpoint = chartRequestsByEndpointOptions;
 			}
 		}
 	},
@@ -1232,33 +1303,6 @@ export default {
         serverLogsTimespan: {
             deep: true,
             async handler() {
-			// async handler(value) {
-                // let sortByTranslated;
-
-                // switch (value.sortBy) {
-                //     case 'TMDB rating':
-                //         sortByTranslated = 'vote_average';
-                //         break;
-                //     case 'Release date':
-                //         sortByTranslated = 'release_date';
-                //         break;
-                //     case 'Modified':
-                //         sortByTranslated = 'latest_updated'
-                //         break;
-                //     // case 'Name':
-                //     //     sortByTranslated = 'name'
-                //     //     break;
-
-                //     // This could be the sum of minutes of all episodes. That way it would be logical?
-                //     // case 'Length/Episode count': HOW TO HANDLE TV AND MOVIE DIFFERENCE?
-                //     //     sortByTranslated = 'length'
-                //     //     break;
-                //     default:
-                //         return;
-                // }
-
-                // console.debug("New sorting values detected:", sortByTranslated, value.direction);
-                // this.allTitlesListOffset = 0;
                 await this.fetchServerLogs(true);
             }
         }
@@ -1572,14 +1616,21 @@ export default {
 .fastapi-request-method {
 	grid-area: request-method;
 }
-.fastapi-requests {
+.fastapi-requests-by-endpoint {
 	grid-area: requests;
 	height: 500px;
 	box-sizing: border-box;
 	overflow: hidden;
 }
 .fastapi-error-codes {
-	grid-area: error-codes
+	grid-area: error-codes;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+}
+.fastapi-error-codes .content-not-found {
+	flex: 1;
+	margin-bottom: 10%;
 }
 
 .server-info-row {

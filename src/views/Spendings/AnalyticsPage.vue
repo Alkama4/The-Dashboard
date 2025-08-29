@@ -26,127 +26,129 @@
         Which of these would be useful and with what timefrmaes and comparisons?
         -->
 
-        <div class="card content-width-medium">
-            <h2 class="card-header">Overall</h2>
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Total Transactions Logged</div>
-                    <div class="data">{{ toFiNumber(pageValues.generalStats.transactionsLogged) || '-' }}</div>
+        <div class="content-width-medium">
+            <div class="card stat-card">
+                <h2 class="card-header">Overall</h2>
+                <div class="info-grid">
+                    <div class="cell">
+                        <div class="label">Total Transactions Logged</div>
+                        <div class="data">{{ toFiNumber(pageValues.generalStats.transactionsLogged) || '-' }}</div>
+                    </div>
+                    <div class="cell">
+                        <div class="label">Average Logs per Day</div>
+                        <div class="data">{{ toFiNumber(pageValues.generalStats.avgLogsPerDay) || '-' }}</div>
+                    </div>
+                    <div class="cell">
+                        <div class="label">Total Days Logged</div>
+                        <div class="data">{{ toFiNumber(pageValues.generalStats.daysLogged) || '-' }}</div>
+                    </div>
                 </div>
-                <div class="cell">
-                    <div class="label">Average Logs per Day</div>
-                    <div class="data">{{ toFiNumber(pageValues.generalStats.avgLogsPerDay) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Total Days Logged</div>
-                    <div class="data">{{ toFiNumber(pageValues.generalStats.daysLogged) || '-' }}</div>
-                </div>
-            </div>
-<!-- 
-            <div class="card-spacer"></div>
+    <!-- 
+                <div class="card-spacer"></div>
 
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Total Logged Expenses</div>
-                    <div class="data negative">{{ toEur(pageValues.generalStats.totalExpenses) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Total Logged Income</div>
-                    <div class="data positive">{{ toEur(pageValues.generalStats.totalIncomes) || '-' }}</div>
-                </div>
-            </div> -->
-        </div>
-
-        <div class="card content-width-medium">
-            <div class="card-header">
-                <h2>Timespan {{ pageValues.timespan.dateRange }}</h2>
-                <CustomSelect
-                    v-model="timespanStartMonthCount" 
-                    :options="presetTimespans"
-                />
-            </div>
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Daily Average Expenses</div>
-                    <div class="data">{{ toEur(pageValues.timespan.expenses_avg_day) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Weekly Average Expenses</div>
-                    <div class="data">{{ toEur(pageValues.timespan.expenses_avg_week) || '-' }}</div>
-                </div>
-                <div class="cell">
-                    <div class="label">Monthly Average Expenses</div>
-                    <div class="data">{{ toEur(pageValues.timespan.expenses_avg_month) || '-' }}</div>
-                </div>
+                <div class="info-grid">
+                    <div class="cell">
+                        <div class="label">Total Logged Expenses</div>
+                        <div class="data negative">{{ toEur(pageValues.generalStats.totalExpenses) || '-' }}</div>
+                    </div>
+                    <div class="cell">
+                        <div class="label">Total Logged Income</div>
+                        <div class="data positive">{{ toEur(pageValues.generalStats.totalIncomes) || '-' }}</div>
+                    </div>
+                </div> -->
             </div>
 
-            <div class="card-spacer"></div>
-
-            <div class="info-grid">
-                <div class="cell">
-                    <div class="label">Expense-to-Income Ratio</div>
-                    <div class="data">{{ toFiNumber(pageValues.timespan.income_expense_ratio) || '-' }}</div>
+            <div class="card stat-card">
+                <div class="card-header">
+                    <h2>Timespan {{ pageValues.timespan.dateRange }}</h2>
+                    <CustomSelect
+                        v-model="timespanStartMonthCount" 
+                        :options="presetTimespans"
+                    />
                 </div>
-                <div class="cell">
-                    <div class="label">Net Total</div>
-                    <div 
-                        class="data" 
-                        :class="pageValues.timespan.net_total > 0 ? 'positive' : 'negative'" 
-                    >
-                        {{ toEur(pageValues.timespan.net_total) || '-' }}
+                <div class="info-grid">
+                    <div class="cell">
+                        <div class="label">Daily Average Expenses</div>
+                        <div class="data negative">{{ toEur(pageValues.timespan.expenses_avg_day) || '-' }}</div>
                     </div>
-                </div>
-            </div>
-
-            <div class="card-spacer"></div>
-
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.timespanPie"/>
-
-            <div class="card-spacer"></div>
-
-            <div class="info-grid column-for-mobile">
-                <div class="cell">
-                    <h3>Expense categories total</h3>
-                    <div 
-                        v-for="(category, index) in pageValues.timespan.expense_categories_total" 
-                        :key="index" 
-                        class="data-row"
-                    >
-                        <div class="name">{{ category.category }}</div>
-                        <div class="value">{{ toEur(category.total_amount) }}</div>
+                    <div class="cell">
+                        <div class="label">Weekly Average Expenses</div>
+                        <div class="data negative">{{ toEur(pageValues.timespan.expenses_avg_week) || '-' }}</div>
                     </div>
-                    <div 
-                        v-if="pageValues.timespan?.expense_categories_total?.length > 0" 
-                        class="data-row sum-row"
-                    >
-                        <div class="name">Total</div>
-                        <div class="value">{{ toEur(pageValues.timespan.expense_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
-                    </div>
-                    <div v-else class="content-not-found">
-                        No values found
-                        <span class="text-hidden">Try modifying the timerange.</span>
+                    <div class="cell">
+                        <div class="label">Monthly Average Expenses</div>
+                        <div class="data negative">{{ toEur(pageValues.timespan.expenses_avg_month) || '-' }}</div>
                     </div>
                 </div>
-                <div class="cell">
-                    <h3>Income categories total</h3>
-                    <div 
-                        v-for="(category, index) in pageValues.timespan.income_categories_total" 
-                        :key="index" 
-                        class="data-row"
-                    >
-                        <div class="name">{{ category.category }}</div>
-                        <div class="value">{{ toEur(category.total_amount) }}</div>
+
+                <div class="card-spacer"></div>
+
+                <div class="info-grid">
+                    <div class="cell">
+                        <div class="label">Expense-to-Income Ratio</div>
+                        <div class="data">{{ toFiNumber(pageValues.timespan.income_expense_ratio) || '-' }}</div>
                     </div>
-                    <div 
-                        v-if="pageValues.timespan?.income_categories_total?.length > 0" 
-                        class="data-row sum-row"
-                    >
-                        <div class="name">Total</div>
-                        <div class="value">{{ toEur(pageValues.timespan.income_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
+                    <div class="cell">
+                        <div class="label">Net Total</div>
+                        <div 
+                            class="data" 
+                            :class="pageValues.timespan.net_total > 0 ? 'positive' : 'negative'" 
+                        >
+                            {{ toEur(pageValues.timespan.net_total) || '-' }}
+                        </div>
                     </div>
-                    <div v-else class="content-not-found">
-                        No values found
-                        <span class="text-hidden">Try modifying the timerange.</span>
+                </div>
+
+                <div class="card-spacer"></div>
+
+                <ChartComponent class="pie-chart" :chartOptionsGenerator="chartValueGenerators.timespanPie"/>
+
+                <div class="card-spacer"></div>
+
+                <div class="info-grid column-for-mobile">
+                    <div class="cell">
+                        <h3>Expense categories total</h3>
+                        <div 
+                            v-for="(category, index) in pageValues.timespan.expense_categories_total" 
+                            :key="index" 
+                            class="data-row"
+                        >
+                            <div class="name">{{ category.category }}</div>
+                            <div class="value">{{ toEur(category.total_amount) }}</div>
+                        </div>
+                        <div 
+                            v-if="pageValues.timespan?.expense_categories_total?.length > 0" 
+                            class="data-row sum-row"
+                        >
+                            <div class="name">Total</div>
+                            <div class="value">{{ toEur(pageValues.timespan.expense_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
+                        </div>
+                        <div v-else class="content-not-found">
+                            No values found
+                            <span class="text-hidden">Try modifying the timerange.</span>
+                        </div>
+                    </div>
+                    <div class="cell">
+                        <h3>Income categories total</h3>
+                        <div 
+                            v-for="(category, index) in pageValues.timespan.income_categories_total" 
+                            :key="index" 
+                            class="data-row"
+                        >
+                            <div class="name">{{ category.category }}</div>
+                            <div class="value">{{ toEur(category.total_amount) }}</div>
+                        </div>
+                        <div 
+                            v-if="pageValues.timespan?.income_categories_total?.length > 0" 
+                            class="data-row sum-row"
+                        >
+                            <div class="name">Total</div>
+                            <div class="value">{{ toEur(pageValues.timespan.income_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
+                        </div>
+                        <div v-else class="content-not-found">
+                            No values found
+                            <span class="text-hidden">Try modifying the timerange.</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -160,21 +162,27 @@
                 
             <p>This allows you to observe trends, identify patterns, and track changes in your financial behavior across an extended timeline. Whether you're analyzing seasonal variations or monitoring long-term progress, these charts are a helpful tool for gaining a deeper understanding of your financial activity.</p>
         </div>
-
-        <div class="chartCard card content-width-large">
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart1"/>
-        </div>
-
-        <div class="chartCard card content-width-large">
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart2"/>
-        </div>
-
-        <div class="chartCard card content-width-large">
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart3"/>
-        </div>
-
-        <div class="chartCard card content-width-large">
-            <ChartComponent :chartOptionsGenerator="chartValueGenerators.chart4"/>
+        
+        <div class="content-width-large chart-wrapper">
+            <ChartComponent
+                class="chart-card card"
+                :chartOptionsGenerator="chartValueGenerators.chart1"
+            />
+    
+            <ChartComponent
+                class="chart-card card"
+                :chartOptionsGenerator="chartValueGenerators.chart2"
+            />
+    
+            <ChartComponent
+                class="chart-card card"
+                :chartOptionsGenerator="chartValueGenerators.chart3"
+            />
+    
+            <ChartComponent
+                class="chart-card card"
+                :chartOptionsGenerator="chartValueGenerators.chart4"
+            />
         </div>
 
     </div>
@@ -786,6 +794,9 @@ export default {
 
 
 <style scoped>
+.stat-card {
+    margin-bottom: var(--spacing-md);
+}
 .card-header {
     display: flex;
     flex-direction: row;
@@ -795,13 +806,18 @@ export default {
     width: 140px;
 }
 
-.chartCard {
-    position: relative;
-    width: calc(100% - var(--spacing-md) * 2);  /* Get rid of the padding of card */
+.pie-chart {
+    height: 450px;
 }
-.chartCard .ChartComponent {
-    height: calc(100vw * 0.5 + 168px);
-    max-height: 650px;
+
+.chart-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+.chart-card {
+    position: relative;
+    height: 600px;
 }
 
 .loaded {

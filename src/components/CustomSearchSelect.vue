@@ -8,6 +8,7 @@
                 class="input-field" 
                 type="text" 
                 v-model="selectedOption" 
+                :placeholder="placeholder"
                 @input="updateInput"
                 @focusin="open"
                 @focusout="close"
@@ -17,7 +18,7 @@
                 @keydown.tab="handleKeyDown('enter')"
             >
             <span class="longest-option">{{ longestOption }}</span>
-            <span v-if="!selectedOption || selectedOption == ''" class="placeholder">{{ placeholder }}</span>
+            <!-- <span v-if="!selectedOption || selectedOption == ''" class="placeholder">{{ placeholder }}</span> -->
             <IconChevronDown size="28px"/>
         </div>
         <ul 
@@ -46,6 +47,7 @@
 import IconChevronDown from './icons/IconChevronDown.vue';
 
 export default {
+    name: 'CustomSearchSelect',
     components: {
         IconChevronDown,
     },

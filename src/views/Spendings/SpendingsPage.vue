@@ -6,12 +6,6 @@
             <p> Welcome to the transactions page! Here, you'll find a comprehensive table listing all your logged transactions. This page not only provides a clear overview of your spending activity but also serves as a powerful tool for managing your financial records. You can easily add new transactions, edit existing ones, duplicate entries for efficiency, or remove items no longer needed. </p>
         </div>
 
-        <div class="content-width-large count-row">
-            <div>
-                Found <span class="tag">{{ totalCount }}</span> transactions
-            </div>
-        </div>
-
         <!-- The transactions table -->
         <div class="transactions-holder content-width-large">
             <div class="transaction-headers transaction-row">
@@ -64,8 +58,7 @@
                 </div>
                 <div v-else-if="transactions.length == 0">
                     <div class="no-transactions-found content-not-found">
-                        Looks like there's nothing here<br>
-                        <span class="text-hidden">You either have no transactions or your filters excluded them.</span>
+                        You either have no transactions or your filters excluded them.
                     </div>
                 </div>
             </div>
@@ -73,12 +66,12 @@
     
         <div class="content-width-large count-row">
             <div>
-                Shown 
+                Shown
                 <span v-if="returnedCount === totalCount">
                     all
                 </span>
                 <span class="tag"> 
-                    {{ returnedCount }} of {{ totalCount }} 
+                    {{ returnedCount || 0 }} of {{ totalCount || 0 }} 
                 </span> 
                 transactions
             </div>
@@ -519,15 +512,15 @@ export default {
 }
 .transaction-headers > div svg {
     fill: var(--color-text-lighter)
-} .transaction-headers > div:hover svg {
+} .pointer-device .transaction-headers > div:hover svg {
     fill: var(--color-text)
-} .transaction-headers > div:active svg {
+} .pointer-device .transaction-headers > div:active svg {
     fill: var(--color-text-bold)
 } .transaction-headers > div.active svg {
     fill: var(--color-primary)
-} .transaction-headers > div.active:hover svg {
+} .pointer-device .transaction-headers > div.active:hover svg {
     fill: var(--color-primary-hover)
-} .transaction-headers > div.active:active svg {
+} .pointer-device .transaction-headers > div.active:active svg {
     fill: var(--color-primary-active)
 }
 

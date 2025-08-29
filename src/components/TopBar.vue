@@ -223,7 +223,7 @@ export default {
     transition: color 0.1s ease-out,
                 background-color 0.1s ease-out;
 }
-.text-button:hover {
+.pointer-device .text-button:hover {
     color: var(--color-text);
 }
 .text-button:active {

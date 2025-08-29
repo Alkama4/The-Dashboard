@@ -171,9 +171,6 @@ export default {
     padding: var(--spacing-sm);
 	margin: 0;
 }
-.fullscreen-button:hover {
-    color: var(--color-text);
-}
 .fullscreen .fullscreen-button, .fullwindow .fullscreen-button {
     top: max(env(safe-area-inset-top), var(--spacing-md));
     right: max(env(safe-area-inset-right), var(--spacing-md));
