@@ -3,6 +3,7 @@ import App from './App.vue';
 import './assets/poppins.css';
 import './assets/global.css';
 import router from './router';
+import 'boxicons/css/boxicons.min.css';
 import { notify } from './utils/notification';
 
 const app = createApp(App);
