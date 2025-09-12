@@ -3,10 +3,13 @@
         class="custom-toggle"
         @click="toggle"
         tabindex="0"
+        :class="{
+            'active': state,
+            // 'primary-color-mode': primaryColorMode
+        }"
     >
         <div 
             class="slider"
-            :class="{'active': state}"
         ></div>
     </div>
 </template>
@@ -18,7 +21,11 @@ export default {
         modelValue: { 
             type: Boolean,
             required: true
-        }
+        },
+        // primaryColorMode: {
+        //     type: Boolean,
+        //     default: true
+        // }
     },
     computed: {
         state: {
@@ -40,9 +47,10 @@ export default {
 
 <style scoped>
 .custom-toggle {
-    --width: 63px;
-    --bar-width: 42px;
-    height: 28px;
+    --height: 28px;
+    --width: calc(var(--height) * 1.75);
+    --spacing: 2px;
+    height: var(--height);
     width: var(--width);
     margin-inline: var(--spacing-sm);
     border: 1px solid var(--color-border);
@@ -50,41 +58,80 @@ export default {
     background-color: var(--color-background-input);
     cursor: pointer;
     position: relative;
+    background-color: var(--color-negative);
+    transition: background-color 0.15s ease-out;
 }
-.custom-toggle:hover, textarea:hover {
+.custom-toggle:hover {
+    border-color: var(--color-border-hover);
+}
+.custom-toggle:active {
     border-color: var(--color-border-hover);
 }
 .custom-toggle:focus-visible, textarea:focus-visible {
     z-index: var(--z-input-focus);
 }
 
-.slider {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    height: 100%;
-    width: var(--bar-width);
-
-    border-radius: 100px;
-    background-color: var(--color-negative);
-
-    transition: left 0.15s var(--cubic-1),
-                background-color 0.15s ease-out;
-}
-.slider:hover {
+.custom-toggle:hover {
     background-color: var(--color-negative-hover);
 }
-.slider:active {
+.custom-toggle:active {
     background-color: var(--color-negative-active);
 }
-.slider.active {
-    left: calc(var(--width) - var(--bar-width));
+.custom-toggle.active {
     background-color: var(--color-positive);
 }
-.slider.active:hover {
+.custom-toggle.active:hover {
     background-color: var(--color-positive-hover);
 }
-.slider.active:active {
+.custom-toggle.active:active {
     background-color: var(--color-positive-active);
 }
+
+
+/* .custom-toggle.primary-color-mode {
+    background-color: var(--color-background-input);
+}
+.custom-toggle.primary-color-mode:hover {
+    background-color: unset;
+}
+.custom-toggle.primary-color-mode:active {
+    background-color: unset;
+}
+.custom-toggle.primary-color-mode.active {
+    background-color: var(--color-primary);
+}
+.custom-toggle.primary-color-mode.active:hover {
+    background-color: var(--color-primary-hover);
+}
+.custom-toggle.primary-color-mode.active:active {
+    background-color: var(--color-primary-active);
+} */
+
+
+.slider {
+    --bar-width: calc(var(--height) - var(--spacing) * 2);
+    position: absolute;
+    top: var(--spacing);
+    bottom: var(--spacing);
+    left: var(--spacing);
+    width: var(--bar-width);
+    background-color: var(--color-button-general);
+
+    border-radius: 100px;
+
+    transition: left 0.25s var(--cubic-1),
+                background-color 0.15s ease-out;
+}
+.custom-toggle:hover .slider {
+    background-color: var(--color-button-general-hover);
+}
+.custom-toggle:active .slider {
+    background-color: var(--color-button-general-active);
+}
+
+
+.active .slider {
+    left: calc(var(--width) - var(--bar-width) - var(--spacing));
+}
+
 </style>
