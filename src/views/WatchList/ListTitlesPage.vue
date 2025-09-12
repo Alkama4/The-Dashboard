@@ -1,38 +1,9 @@
 <template>
     <div class="list-titles">
-
         <div class="content-width-medium">
-            <h1 id="titles_listed">Search for titles <span class="text-lighter">(Under construction)</span></h1>
-            <p>Here you can search for titles and filter the results to match your interests. Use the filters to refine by watched status, genre, or other options.</p>
-        </div>
-    
-        <div class="content-width-medium">
-            <div class="all-titles-list-controls card">
-                <div class="basic-options">
-                    <div class="button-in-text-field">
-                        <input 
-                            v-model="allTitlesListOptions.search_term" 
-                            type="text" 
-                            placeholder="Search titles"
-                        >
-                        <IconSearch class="icon-button" @click="inputTriggeredFetchAllTitles"/>
-                    </div>
-                    <div class="flex icon-align">
-                        <CustomSelect 
-                            v-model="allTitlesListOptions.sort_by" 
-                            :options="allTitlesListSortByOptions"
-                        />
-                        <button 
-                            @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'"
-                            class="sort-direction icon-button"
-                            >
-                            <IconSortDown size="28px" v-if="allTitlesListOptions.direction == 'desc'"/>
-                            <IconSortUp size="28px" v-if="allTitlesListOptions.direction == 'asc'"/>
-                        </button>
-                    </div>
-                </div>
+            <div class="all-titles-list-controls">
                 <div class="extra-options-holder" ref="extraOptionsHolder">
-                    <div class="extra-options margin-fix" ref="extraOptions">
+                    <div class="extra-options" ref="extraOptions">
                         <label>Type</label>
                         <TriStateToggle
                             button1-text="TV"
@@ -75,207 +46,221 @@
                 </div>
                 <button
                     @click="toggleExtraOptions()"
-                    class="expand-button margin-fix"
+                    class="expand-button"
                 >
                     {{ extraOptionsVisible ? "Hide options" : "Show more options" }}
                     <div class="icon-align" ref="expandButtonChevron">
                         <IconChevronDown/>
                     </div>
                 </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1"> -->
-    <div class="content-width-medium all-titles-list">
-        <div 
-            v-for="(title, index) in titlesArray" 
-            :key="title.title_id" 
-            class="title-element"
-            :class="{'active': index == activeTitleIndex}"
-            @click="toggleActiveTitleIndex(index)"
-            @keydown.enter="toggleActiveTitleIndex(index)"
-            tabindex="0"
-        >
-            <div class="default-content">
-                <div class="backdrop-wrapper">
-                    <img 
-                        :src="backdropUrl(title.title_id)" 
-                        @load="(event) => event.target.classList.add('loaded')" 
-                        loading="lazy"
-                        class="backdrop"
-                    >
-                </div>
-        
-                <div class="poster-holder">
-                    <MissingImage v-if="posterNotFound.includes(title.title_id)"/>
-                    <img 
-                        v-else
-                        :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
-                        @load="(event) => event.target.classList.add('loaded')" 
-                        @error="posterNotFound.push(title.title_id)"
-                        loading="lazy"
-                        class="poster"
-                    >
-                </div>
-        
-                <div class="content">
-                    <router-link 
-                        :to="`/watch_list/title/${title.title_id}`"
-                        class="title-name no-decoration hover-decoration"
-                        tabindex="-1"
-                        @click.stop
-                    >
-                        {{ title.name }}
-                        <span class="text-lighter" v-if="title.name !== title.name_original">
-                            ({{ title.name_original }})
-                        </span>
-                    </router-link>
-                    <div class="tags">
-                        <div class="tag tag-positive" v-if="title.watch_count >= 1">
-                            {{ title.watch_count }} watch{{ title.watch_count > 1 ? 'es' : '' }}
-                        </div>
-                        <div class="tag tag-secondary" v-if="title.favourite">
-                            Favourite
-                        </div>
-                        <div class="tag tag-primary" v-if="title.new_episodes">
-                            New episodes
-                        </div>
-                        <div class="tag tag-general" v-else-if="new Date(title.release_date) > new Date()">
-                            Upcoming
-                        </div>
-                        <div class="tag tag-type">
-                            {{ title.type === 'tv' ? 'TV' : 'Movie' }}
-                        </div>
-                        <div class="tag tag-general" v-for="collection in title.collections" :key="collection">
-                            {{ collection }}
-                        </div>
-                    </div>
-                    <div class="details">
-                        <div class="detail-list">
-                            <IconTMDB/>
-                            {{ title.tmdb_vote_average }} 
-                            <!-- ({{ title.tmdb_vote_count }})  -->
-                            &bull;
-
-                            {{ converToReleaseYear(title.release_date) }} 
-                            &bull;
-
-                            {{ title.age_rating }}
-                            &bull;
-
-                            <template v-if="title.type === 'tv'">
-                                <span class="season">{{ title.season_count }} </span>,
-                                <span class="episode">{{ title.episode_count }} </span>
-                            </template>
-                            <template v-else>
-                                {{ formatRuntime(title.movie_runtime) }}
-                            </template>
-                        </div>
-                        <p class="overview">
-                            {{ title.overview }}
-                        </p>
+                <div class="basic-options">
+                    <div class="flex icon-align">
+                        <CustomSelect 
+                            v-model="allTitlesListOptions.sort_by" 
+                            :options="allTitlesListSortByOptions"
+                        />
+                        <button 
+                            @click="allTitlesListOptions.direction = allTitlesListOptions.direction == 'asc' ? 'desc' : 'asc'"
+                            class="sort-direction icon-button"
+                            >
+                            <IconSortDown size="28px" v-if="allTitlesListOptions.direction == 'desc'"/>
+                            <IconSortUp size="28px" v-if="allTitlesListOptions.direction == 'asc'"/>
+                        </button>
                     </div>
                 </div>
             </div>
-            <div class="controls-wrapper">
-                <div class="controls">
-                    <button 
-                        v-if="title.is_in_watchlist" 
-                        @click.stop="handleRemoveTitleFromUserList(title)" 
-                        @keydown.enter.stop
-                        :tabindex="index == activeTitleIndex ? '' : -1"
-                    >
-                        <IconListRemove 
-                            size="22px" 
-                            class="icon-button" 
-                        />
-                    </button>
-                    <button 
-                        v-else 
-                        @click.stop="handleAddTitleToUserList(title)" 
-                        @keydown.enter.stop
-                        :tabindex="index == activeTitleIndex ? '' : -1"
-                    >
-                        <IconListAdd 
-                            size="22px" 
-                            class="icon-button" 
-                        />
-                    </button>
-
-                    <button 
-                        @click.stop="promptCollections(title.title_id)" 
-                        @keydown.enter.stop
-                        :tabindex="index == activeTitleIndex ? '' : -1"
-                    >
-                        <IconCollection
-                            size="22px" 
-                            class="icon-button" 
-                        />
-                    </button>
-
-                    <button 
-                        @click.stop="handleFavouriteToggle(title)" 
-                        @keydown.enter.stop
-                        :tabindex="index == activeTitleIndex ? '' : -1"
-                    >
-                        <IconHeart 
-                            size="22px"
-                            :class="{'is-set': title.favourite}" 
-                            class="icon-button favourite"
-                        />
-                    </button>
-        
-                    <router-link 
-                        :to="`/watch_list/title/${title.title_id}`"
-                        class="link-button no-decoration button-primary"
-                        :tabindex="index == activeTitleIndex ? '' : -1"
-                        @keydown.enter.stop
-                        @click.stop
-                    >
-                        View details
-                    </router-link>
-                </div>
-            </div>
         </div>
-    
-        <div 
-            v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - titlesArray?.length, 0): 0" 
-            :key="'placeholder-' + i" 
-            class="title-element loading-placeholder"
-        >
-        </div>
-    
-        <div v-if="titlesArray?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
-            <span class="text-hidden">Try adding titles to your watch list or widening your search.</span>
-        </div>
-    
-        <div class="flex-row">
-            <button 
-                v-if="hasMore"
-                :disabled="waitingForResult.includes('allTitlesList')"
-                :class="{'loading': waitingForResult.includes('allTitlesList')}"
-                @click="loadMoreTitlesForAllTitlesList"
+        <!-- <div class="content-width-medium all-titles-list" v-if="allTitlesList?.length >= 1"> -->
+        <div class="content-width-medium all-titles-list">
+            <div 
+                v-for="(title, index) in titlesArray" 
+                :key="title.title_id" 
+                class="title-element"
+                :class="{'active': index == activeTitleIndex}"
+                @click="toggleActiveTitleIndex(index)"
+                @keydown.enter="toggleActiveTitleIndex(index)"
+                tabindex="0"
             >
-                Load more
-            </button>
-        </div>
-
-        <ModalTitleCollections 
-            ref="modalTitleCollections" 
-            @title-collection-updated="handleTitleCollectionUpdate"
-            @collection-updated="handleCollectionUpdate"
-        />
+                <div class="default-content">
+                    <div class="backdrop-wrapper">
+                        <img 
+                            :src="backdropUrl(title.title_id)" 
+                            @load="(event) => event.target.classList.add('loaded')" 
+                            loading="lazy"
+                            class="backdrop"
+                        >
+                    </div>
+            
+                    <div class="poster-holder">
+                        <MissingImage v-if="posterNotFound.includes(title.title_id)"/>
+                        <img 
+                            v-else
+                            :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
+                            @load="(event) => event.target.classList.add('loaded')" 
+                            @error="posterNotFound.push(title.title_id)"
+                            loading="lazy"
+                            class="poster"
+                        >
+                    </div>
+            
+                    <div class="content">
+                        <router-link 
+                            :to="`/watch_list/title/${title.title_id}`"
+                            class="title-name no-decoration hover-decoration"
+                            tabindex="-1"
+                            @click.stop
+                        >
+                            {{ title.name }}
+                            <span class="text-lighter" v-if="title.name !== title.name_original">
+                                ({{ title.name_original }})
+                            </span>
+                        </router-link>
+                        <div class="tags">
+                            <div class="tag tag-positive" v-if="title.watch_count >= 1">
+                                {{ title.watch_count }} watch{{ title.watch_count > 1 ? 'es' : '' }}
+                            </div>
+                            <div class="tag tag-secondary" v-if="title.favourite">
+                                Favourite
+                            </div>
+                            <div class="tag tag-primary" v-if="title.new_episodes">
+                                New episodes
+                            </div>
+                            <div class="tag tag-general" v-else-if="new Date(title.release_date) > new Date()">
+                                Upcoming
+                            </div>
+                            <div class="tag tag-type">
+                                {{ title.type === 'tv' ? 'TV' : 'Movie' }}
+                            </div>
+                            <div class="tag tag-general" v-for="collection in title.collections" :key="collection">
+                                {{ collection }}
+                            </div>
+                        </div>
+                        <div class="details">
+                            <div class="detail-list">
+                                <IconTMDB/>
+                                {{ title.tmdb_vote_average }} 
+                                <!-- ({{ title.tmdb_vote_count }})  -->
+                                &bull;
+    
+                                {{ converToReleaseYear(title.release_date) }} 
+                                &bull;
+    
+                                {{ title.age_rating }}
+                                &bull;
+    
+                                <template v-if="title.type === 'tv'">
+                                    <span class="season">{{ title.season_count }} </span>,
+                                    <span class="episode">{{ title.episode_count }} </span>
+                                </template>
+                                <template v-else>
+                                    {{ formatRuntime(title.movie_runtime) }}
+                                </template>
+                            </div>
+                            <p class="overview">
+                                {{ title.overview }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="controls-wrapper">
+                    <div class="controls">
+                        <button 
+                            v-if="title.is_in_watchlist" 
+                            @click.stop="handleRemoveTitleFromUserList(title)" 
+                            @keydown.enter.stop
+                            :tabindex="index == activeTitleIndex ? '' : -1"
+                        >
+                            <IconListRemove 
+                                size="22px" 
+                                class="icon-button" 
+                            />
+                        </button>
+                        <button 
+                            v-else 
+                            @click.stop="handleAddTitleToUserList(title)" 
+                            @keydown.enter.stop
+                            :tabindex="index == activeTitleIndex ? '' : -1"
+                        >
+                            <IconListAdd 
+                                size="22px" 
+                                class="icon-button" 
+                            />
+                        </button>
+    
+                        <button 
+                            @click.stop="promptCollections(title.title_id)" 
+                            @keydown.enter.stop
+                            :tabindex="index == activeTitleIndex ? '' : -1"
+                        >
+                            <IconCollection
+                                size="22px" 
+                                class="icon-button" 
+                            />
+                        </button>
+    
+                        <button 
+                            @click.stop="handleFavouriteToggle(title)" 
+                            @keydown.enter.stop
+                            :tabindex="index == activeTitleIndex ? '' : -1"
+                        >
+                            <IconHeart 
+                                size="22px"
+                                :class="{'is-set': title.favourite}" 
+                                class="icon-button favourite"
+                            />
+                        </button>
+            
+                        <router-link 
+                            :to="`/watch_list/title/${title.title_id}`"
+                            class="link-button no-decoration button-primary"
+                            :tabindex="index == activeTitleIndex ? '' : -1"
+                            @keydown.enter.stop
+                            @click.stop
+                        >
+                            View details
+                        </router-link>
+                    </div>
+                </div>
+            </div>
         
-        <!-- Modals -->
-        <ModalConfirmation 
-            ref="removeTitleConfirmationModal"
-            header="Remove from watchlist"
-            text="Are you sure you wan't to remove the title from your watchlist?
-            This gets rid of all your data on the title like your watched episodes and notes."
-            affirmative-option="Remove title"
-        />
-
+            <div 
+                v-for="i in waitingForResult.includes('allTitlesList') ? Math.max(8 - titlesArray?.length, 0): 0" 
+                :key="'placeholder-' + i" 
+                class="title-element loading-placeholder"
+            >
+            </div>
+        
+            <div v-if="titlesArray?.length == 0 && !waitingForResult.includes('allTitlesList')" class="title-element content-not-found">
+                <span class="text-hidden">Try adding titles to your watch list or widening your search.</span>
+            </div>
+        
+            <div class="flex-row">
+                <button 
+                    v-if="hasMore"
+                    :disabled="waitingForResult.includes('allTitlesList')"
+                    :class="{'loading': waitingForResult.includes('allTitlesList')}"
+                    @click="loadMoreTitlesForAllTitlesList"
+                >
+                    Load more
+                </button>
+            </div>
+    
+            <ModalTitleCollections 
+                ref="modalTitleCollections" 
+                @title-collection-updated="handleTitleCollectionUpdate"
+                @collection-updated="handleCollectionUpdate"
+            />
+            
+            <!-- Modals -->
+            <ModalConfirmation 
+                ref="removeTitleConfirmationModal"
+                header="Remove from watchlist"
+                text="Are you sure you wan't to remove the title from your watchlist?
+                This gets rid of all your data on the title like your watched episodes and notes."
+                affirmative-option="Remove title"
+            />
+    
+        </div>
     </div>
 </template>
 
@@ -289,7 +274,6 @@ import { convert } from '@/utils/utils';
 import CustomSelect from '@/components/common/CustomSelect.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
-import IconSearch from '@/components/icons/IconSearch.vue';
 import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
@@ -302,7 +286,7 @@ import IconChevronDown from '@/components/icons/IconChevronDown.vue';
 import MissingImage from '@/components/common/MissingImage.vue';
 
 export default {
-    name: 'HomePage',
+    name: 'ListTitlesPage',
     components: {
         CustomSelect,
         ModalConfirmation,
@@ -314,7 +298,6 @@ export default {
         IconHeart,
         IconSortDown,
         IconSortUp,
-        IconSearch,
         IconListAdd,
         IconListRemove,
         IconCollection,
@@ -338,10 +321,9 @@ export default {
             ],
             allTitlesListCollectionOptions: [],
             allTitlesListOptionsDefaults: {
-                search_term: '',
                 title_type: '',
                 collection_id: null,
-                in_watchlist: true,
+                in_watchlist: null,
                 watched: null,
                 favourite: null,
                 released: null,
@@ -363,13 +345,22 @@ export default {
         formatRuntime(runtime) {
             return convert.toRuntime(runtime);
         },
+        updateQueryParam(key, value) {
+            const query = { ...this.$route.query };
+
+            if (value === this.allTitlesListOptionsDefaults[key] || value == null) {
+                delete query[key];
+            } else {
+                query[key] = value;
+            }
+
+            this.$router.replace({ query });
+        },
         async fetchAllTitlesList() {
             this.waitingForResult.push("allTitlesList");
 
             const options = Object.fromEntries(
-                Object.entries(this.allTitlesListOptions).filter(([, value]) => {
-                    return value != null
-                })
+                Object.entries(this.$route.query).map(([k, v]) => [k, this.castQueryValue(k, v)])
             );
 
             const titlesListedResponse = await fastApi.watch_list.titles.list({
@@ -378,17 +369,15 @@ export default {
             });
 
             if (titlesListedResponse) {
-                // Replace the whole thing if offset is 0 and if not just append the new ones
-                if (this.offset == 0) {
+                if (this.offset === 0) {
                     this.titlesArray = titlesListedResponse.titles;
                 } else {
                     this.titlesArray = this.titlesArray.concat(titlesListedResponse.titles);
                 }
-
                 this.hasMore = titlesListedResponse.has_more;
-                console.debug("[fetchAllTitlesList]", this.titlesArray);
             }
-            this.removeItemFromWaitingArray("allTitlesList")
+
+            this.removeItemFromWaitingArray("allTitlesList");
         },
         async fetchCollectionOptions() {
             const response = await fastApi.watch_list.options.collections();
@@ -518,6 +507,11 @@ export default {
             return val;
         },
     },
+    computed: {
+        searchQuery() {
+            return this.$route.query.q || ''
+        }
+    },
     async mounted() {
         for (const key in this.allTitlesListOptionsDefaults) {
             const queryVal = this.$route.query[key];
@@ -546,22 +540,47 @@ export default {
         allTitlesListOptions: {
             deep: true,
             handler() {
-                const query = {};
-                for (const key in this.allTitlesListOptions) {
-                    const val = this.allTitlesListOptions[key];
-                    const defaultVal = this.allTitlesListOptionsDefaults[key];
+                const query = { ...this.$route.query };
 
-                    if (val !== defaultVal) {
-                        query[key] = val;
+                console.log(this.allTitlesListOptions.in_watchlist)
+
+                for (const key in this.allTitlesListOptions) {
+                    if (key === 'search_term') continue; // don’t touch search_term
+
+                    const val = this.allTitlesListOptions[key];
+                    // const defaultVal = this.allTitlesListOptionsDefaults[key];
+
+                    if ( val == undefined ) {
+                        delete query[key];
+                    } else {
+                        query[key] = val ;
                     }
                 }
 
                 this.$router.replace({ query });
-                this.inputTriggeredFetchAllTitles();
+            },
+        },
+
+        '$route.query': {
+            immediate: true,
+            deep: true,
+            handler(newQuery) {
+                // map params into local state
+                for (const key in this.allTitlesListOptionsDefaults) {
+                    if (key === 'search_term') continue;
+
+                    this.allTitlesListOptions[key] =
+                        newQuery[key] !== undefined
+                            ? this.castQueryValue(key, newQuery[key])
+                            : this.allTitlesListOptionsDefaults[key];
+                }
+
+                // fetch with actual query params (not allTitlesListOptions)
+                this.offset = 0;
+                this.fetchAllTitlesList();
             }
         }
     }
-
 };
 </script>
 
@@ -613,6 +632,7 @@ export default {
     flex-direction: column;
     width: 100%;
     box-sizing: border-box;
+    margin-top: var(--spacing-md);
 }
 .all-titles-list-controls .margin-fix {
     margin-top: var(--spacing-sm);
@@ -622,16 +642,13 @@ export default {
 .all-titles-list-controls .basic-options {
     width: 100%;
     display: flex;
+    justify-content: end;
     column-gap: var(--spacing-sm);
-}
-.basic-options .button-in-text-field {
-    flex: 3;
-}
-.basic-options .button-in-text-field .icon-button {
-    z-index: var(--z-above-input);
+    margin-top: var(--spacing-md);
 }
 .basic-options .icon-align {
-    flex: 2;
+    width: 300px;
+    max-width: 100%;
 }
 .basic-options .custom-select {
     width: 100%;
@@ -690,7 +707,6 @@ export default {
     width: 100%;
     min-height: 210px;
     height: fit-content;
-    /* box-sizing: border-box; */
     cursor: pointer;
     border-radius: var(--border-radius-medium);
     overflow: hidden;
@@ -698,6 +714,7 @@ export default {
     transition: transform 0.15s var(--cubic-1);
     box-shadow: var(--shadow-card);
     box-sizing: border-box;
+    border: 1px solid var(--color-border);
 }
 
 

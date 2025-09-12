@@ -1,40 +1,42 @@
 <template>
-    <div class="desktop-nav-wrapper">
-        <div class="top-bar desktop-nav" @mouseleave="handleMouseleave()">
-            <div class="primary-row">
-                <div class="side">
-                    <router-link 
-                        to="/" 
-                        class="no-decoration website-name"
-                    >
-                        {{ title }}
-                    </router-link>
+    <div class="top-bar">
+        <div class="desktop-nav-wrapper">
+            <div class="top-bar desktop-nav" @mouseleave="handleMouseleave()">
+                <div class="primary-row">
+                    <div class="side">
+                        <router-link 
+                            to="/" 
+                            class="no-decoration website-name"
+                        >
+                            {{ title }}
+                        </router-link>
+                    </div>
+                    <div class="side">
+                        <router-link
+                            v-for="(link, index) in links" 
+                            :key="index"
+                            :to="link.to"
+                            class="no-decoration text-button primary-link desktop-only"
+                            :class="{ 'category-active': $route.path === link.to || $route.path.startsWith(link.to) }"
+                            @mouseover="handleMouseover(index)"
+                        >
+                            {{ link.display }}
+                        </router-link>
+                        <IconDarkMode class="icon-button desktop-only" @click="localToggleDarkMode"/>
+                        <IconMenu size="28px" class="icon-button mobile-only" @click="toggleMenu"/>
+                    </div>
                 </div>
-                <div class="side">
-                    <router-link
-                        v-for="(link, index) in links" 
-                        :key="index"
-                        :to="link.to"
-                        class="no-decoration text-button primary-link desktop-only"
-                        :class="{ 'category-active': $route.path === link.to || $route.path.startsWith(link.to) }"
-                        @mouseover="handleMouseover(index)"
-                    >
-                        {{ link.display }}
-                    </router-link>
-                    <IconDarkMode class="icon-button desktop-only" @click="localToggleDarkMode"/>
-                    <IconMenu size="28px" class="icon-button mobile-only" @click="toggleMenu"/>
-                </div>
-            </div>
-            <div class="secondary-row" ref="secondaryRow">
-                <div class="secondary-row-content" ref="secondaryRowContent">
-                    <router-link 
-                        v-for="(link, index) in links[mouseoverIndex]?.children" 
-                        :key="index"
-                        class="no-decoration text-button"
-                        :to="link.to"
-                    >
-                        {{ link.display }}
-                    </router-link>
+                <div class="secondary-row" ref="secondaryRow">
+                    <div class="secondary-row-content" ref="secondaryRowContent">
+                        <router-link 
+                            v-for="(link, index) in links[mouseoverIndex]?.children" 
+                            :key="index"
+                            class="no-decoration text-button"
+                            :to="link.to"
+                        >
+                            {{ link.display }}
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -156,6 +158,10 @@ export default {
 </script>
 
 <style scoped>
+.top-bar {
+    z-index: var(--z-top-bar);
+}
+
 /* This has the actual styling */
 .desktop-nav-wrapper {
     width: 100vw;
@@ -164,10 +170,10 @@ export default {
     left: 0;
     display: flex;
     justify-content: center;
+
+    border-bottom: 1px solid var(--color-border);
     background-color: var(--color-background-top-bar);
     backdrop-filter: blur(30px);    /* Keep under 1/2 of height */
-    border-bottom: 1px solid var(--color-border);
-    z-index: var(--z-top-bar);
 }
 
 .desktop-nav {

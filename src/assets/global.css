@@ -1,15 +1,4 @@
 :root {
-    /* font sizes */
-
-    /* Old sizes */
-    /* --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
-    --font-size-md: 1rem;
-    --font-size-lg: 1.15rem;
-    --font-size-xl: 1.5rem;
-    --font-size-xxl: 2rem;
-    --font-size-logo: 1.75rem; */
-
     font-size: 16px;
 
     --font-size-xs: 0.75rem;
@@ -83,6 +72,8 @@
     --color-text-black-hover: black;
     --color-text-black-light: #666666;
 
+    /* Effects */
+    --blur-top-bar: blur(30px);    /* Keep under 1/2 of height */
 
     /* Spesific fills */
     --fill-tmdb: linear-gradient(90deg, #90cea1 0%, #3cbec9 56%, #00b3e5 100%);
@@ -123,6 +114,7 @@
     --color-positive-opaque: hsla(152, 86%, 37%, 0.5);
     --color-negative: #df5151;
     --color-negative-hover: #ea6363;
+    --color-negative-active: #fc8383;
     --color-negative-opaque: hsla(0, 69%, 60%, 0.5);
     --color-warning: #c3b736;
     --color-warning-hover: #d1c648;
@@ -204,6 +196,7 @@
     --color-secondary-active: #f85384;
 
     --color-tertiary: #4bc04f;  
+    --color-tertiary-hover: #63d667;  
     --color-tertiary-active: #7bdb7e; 
 
     --color-quaternary: #ece038; 
@@ -216,11 +209,14 @@
     --color-denary: #3cb4ae;     
     --color-undecenary: #5d3285; 
 
-    --color-positive: #15965a;
-    --color-positive-hover: #22b36f;
+    --color-positive: hsl(152, 75%, 34%);
+    --color-positive-hover: hsl(152, 65%, 44%);
+    --color-positive-active: hsl(152, 55%, 54%);
+    --color-positive-overshoot: hsl(152, 72%, 65%);
     --color-positive-opaque: hsla(152, 78%, 36%, 0.5);
     --color-negative: #b94646;
     --color-negative-hover: #d34f4f;
+    --color-negative-active: #e76464;
     --color-negative-opaque: hsla(0, 45%, 50%, 0.5);
     --color-warning: #c3b736;
     --color-warning-hover: #d1c648;
@@ -301,9 +297,9 @@ html, body {
     overflow-x: hidden;
 }
 
-main {
-    margin-bottom: var(--spacing-lg);
-    margin-top: var(--height-top-bar);
+main > div {
+    padding-bottom: var(--spacing-lg);
+    padding-top: calc(var(--height-top-bar) + 1px);
 }
 
 html.no-scroll {
@@ -419,6 +415,7 @@ button, .link-button {
 } */
 .pointer-device button:active, 
 .pointer-device .link-button:active {
+    color: var(--color-text-bold);
     background-color: var(--color-button-general-active);
     box-shadow: var(--shadow-button-active);
 }
@@ -553,6 +550,11 @@ label {
     margin-right: auto;
 }
 
+.interactable-label {
+    user-select: none;
+    cursor: pointer;
+}
+
 input, textarea {
     cursor: text;
     
@@ -598,6 +600,12 @@ input[type="radio"] {
 input[type="checkbox"] {
     width: fit-content;
     cursor: pointer;
+}
+input[type="file"] {
+    cursor: pointer;
+    padding-top: var(--spacing-sm);
+    padding-bottom: var(--spacing-sm);
+    height: unset;
 }
 
 .custom-input {
@@ -986,22 +994,18 @@ form.simple-form button {
 }
 
 .icon-button {
-    /* The default setup is higher priority so we have to use important on some */
-    cursor: pointer !important;
+    cursor: pointer;
     color: var(--color-text-light);
     transform: scale(1);
-    margin-inline: var(--spacing-sm);
     border-radius: var(--border-radius-small);
     transition: transform 0.1s var(--cubic-bounce-soft-out),
                 color 0.1s var(--cubic-bounce-soft-out) !important;
 }
 .icon-button:hover {
     color: var(--color-text);
-    /* transform: scale(1.15); */
 }
 .icon-button:active {
     color: var(--color-text-bold);
-    /* transform: scale(1.15); */
 }
 
 .loading {
@@ -1209,8 +1213,9 @@ overflow: hidden;
 .content-width-medium-unrestricted {
     margin-inline: auto;
     padding-inline: 5vw;
-    max-width: 100%;
-    min-width: min(100ch, 100%);
+    --max-width: calc(100vw - 5vw * 2);
+    max-width: var(--max-width);
+    min-width: min(100ch, var(--max-width));
     width: fit-content;
 }
 

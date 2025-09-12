@@ -1,6 +1,311 @@
+:root.watchlist {
+    /* font sizes */
+    font-size: 16px;
+
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-md: 1rem;
+    --font-size-lg: 1.2rem;
+    --font-size-xl: 1.6rem;
+    --font-size-xxl: 2rem;
+    --font-size-logo: 1.75rem;
+
+    /* spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 32px;
+    --spacing-xl: 64px;
+    --spacing-xxl: 128px;
+    
+    /* border radius */
+    --border-radius-small: 4px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 16px;
+    --border-radius-extra-large: 32px;
+    
+    /* Widths and heights*/
+    --width-top-bar: 160ch;
+    --height-top-bar: 60px;
+    /* --width-max-page: 900px; */
+    --width-modal: 400px;
+
+    /* Cubic beziers */
+    --cubic-1: cubic-bezier(.3,.63,.4,1);
+    --cubic-whip-ease-out: cubic-bezier(.42,-0.53,.3,1.06);
+    --cubic-whip: cubic-bezier(.51,-0.71,.83,.62);
+    --cubic-swing-out: cubic-bezier(.6,-0.64,.5,1);
+    --cubic-bounce-soft-out: cubic-bezier(.22,.74,.42,1.02);
+    --cubic-hover-and-snap: cubic-bezier(.21,1.34,.8,.76);
+    --cubic-ease-slow-in-normal-out: cubic-bezier(.82,0,.5,1);
+    --cubic-ease-slow-in-slow-out: cubic-bezier(.75,0,.25,1);
+
+    /* Z-indexes */
+    --z-index-fullscreen: 10000700;
+    --z-mobile-nav: 10000600;
+    --z-notification: 10000500;
+    --z-modal: 10000400;
+    --z-filters: 10000300;
+    --z-top-bar: 10000200;
+    --z-hovering-corner-button: 10000100;
+    /* Apache echart tooltip is at 10 000 000 */
+    /* To hard to change it,
+       cannot add spaces or markers between thousands in css */
+    --z-tooltip: 200;
+    --z-above-input: 101;
+    --z-input-focus: 100;
+    --z-app: 0;
+
+    /* Media break off points */
+    /* 
+        - 1500px: table-date-format
+        - 777px: table-notes, form, filter
+        - 745px: top bar
+        - 600px: table-type, modal full width
+    */
+
+    /* Always one color */
+    --color-text-white: hsl(0, 9%, 90%);
+    --color-text-white-hover: hsl(0, 0%, 100%);
+    --color-text-white-light: hsl(0, 0%, 60%);
+    --color-text-black: #292929;
+    --color-text-black-hover: black;
+    --color-text-black-light: #666666;
+
+
+    /* Spesific fills */
+    --fill-tmdb: linear-gradient(90deg, #90cea1 0%, #3cbec9 56%, #00b3e5 100%);
+    --fill-imdb: #e2b616;
+
+    /* - - - - - - - - - - - - - - - - */
+    /* - - - - - LIGHT  MODE - - - - - */
+    /* - - - - - - - - - - - - - - - - */
+
+    /* Mode */
+    color-scheme: light;
+
+    /* General colors */
+    --color-primary: #3f5a79;
+    --color-primary-hover: #4a6788;
+    --color-primary-active: #567597;
+    --color-primary-opaque: hsla(212, 32%, 36%, 0.5);
+
+    --color-secondary: #e01854;
+    --color-secondary-hover: #eb386e;
+    --color-secondary-active: #f85384;
+
+    --color-tertiary: #fad73e;
+    --color-tertiary-active: #ffeb90;
+    
+    --color-quaternary: #1db14e;
+    --color-quinary: #2196F3;
+    --color-jokumikalie: #7e3fb9; 
+    --color-senary: #153963;
+    --color-septenary: #b3083b;
+    --color-octonary: rgb(240, 205, 6);
+    --color-nonary: #0c9b3c;
+    --color-denary: #0068bd;
+    --color-undecenary: #54198b;
+
+    --color-positive: #0daf63;
+    --color-positive-hover: #2bc77e;
+    --color-positive-opaque: hsla(152, 86%, 37%, 0.5);
+    --color-negative: #df5151;
+    --color-negative-hover: #ea6363;
+    --color-negative-opaque: hsla(0, 69%, 60%, 0.5);
+    --color-warning: #c3b736;
+    --color-warning-hover: #d1c648;
+
+    /* Text */
+    --color-text: var(--color-text-black);
+    --color-text-bold: var(--color-text-black-hover);
+    --color-text-light: var(--color-text-black-light);
+    --color-text-lighter: #969696;
+    --color-text-hidden: #c4c4c4;
+    --color-text-placeholder: #aaa;
+    --color-text-inverted: #e9ebf0;
+    --color-text-inverted-hover: #ffffff;
+    --color-text-selection: var(--color-text-white-hover);
+
+    --color-border: hsla(0, 0%, 0%, 0.1);
+    --color-border-hover: hsla(0, 0%, 0%, 0.2);
+    --color-border-light: hsla(0, 0%, 0%, 0.3);
+
+    /* Backgrounds */
+    --color-background: hsl(0, 0%, 93.5%);
+    --color-background-backdrop: rgba(0, 0, 0, 0.3);
+    --color-background-backdrop-mobile-menu: rgba(255, 255, 255, 0.3);
+    --color-background-top-bar: hsl(0, 0%, 93.5%, 0.2);
+    --color-background-mobile-nav: hsla(0, 0%, 0%, 0);
+    --color-background-modal: hsl(0, 0%, 96%);
+    --color-background-card: hsl(0, 0%, 96%);
+    --color-background-card-section: hsl(0, 0%, 90%);
+    --color-background-input: hsl(0, 0%, 100%);
+    --color-background-input-light: hsl(0, 0%, 98%);
+    --color-background-input-strong: hsl(0, 0%, 100%);
+    --color-background-card-active: hsl(0, 0%, 90%);
+    --color-background-card-hover: hsl(0, 0%, 100%);
+    
+    /* Button colors */
+    --color-button-general: hsl(0, 0%, 100%);
+    --color-button-general-hover: hsl(0, 0%, 100%);
+    --color-button-general-active: hsl(0, 0%, 100%);
+
+    --color-button-clean: hsla(0, 0%, 0%, 0);
+    --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
+    --color-button-clean-active: hsla(0, 0%, 0%, 0.0666);
+
+    --color-button-nav: var(--color-text-light);
+    --color-button-nav-hover: var(--color-text-bold);
+
+    --color-button-delete-hover: rgb(212, 37, 37);
+    --color-button-delete-active: rgb(182, 29, 29);
+
+    --color-background-button-transparent: hsla(0, 0%, 100%, 0.66);
+    --color-background-button-transparent-hover: hsla(0, 0%, 85%, 0.66);
+
+    --color-background-select-hover: hsl(0, 0%, 90%);
+
+    /* Shadows */
+    --shadow-card: 0 4px 6px rgba(0, 0, 0, 0.05);
+    --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-option-list: 0 2px 4px rgba(0, 0, 0, 0.2);
+    --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
 :root.watchlist.dark-mode {
-    --color-primary: #5613ad;
-    --color-primary-hover: #6c2bc0;
-    --color-primary-active: #7e3ed1;
-    --color-background: rgb(8, 8, 8);
+    /* - - - - - - - - - - - - - - - */
+    /* - - - - - DARK MODE - - - - - */
+    /* - - - - - - - - - - - - - - - */
+
+    /* Mode */
+    color-scheme: dark;
+
+    /* General colors */
+    --color-primary: hsl(0, 0%, 90%);
+    --color-primary-hover: hsl(0, 0%, 100%);
+    --color-primary-active: hsl(0, 0%, 95%);
+    --color-primary-opaque: hsla(260, 75%, 33%, 0.5);
+
+    /* --color-primary: hsl(260, 75%, 33%);
+    --color-primary-hover: hsl(260, 75%, 43%);
+    --color-primary-active: hsl(260, 75%, 50%);
+    --color-primary-opaque: hsla(260, 75%, 33%, 0.5); */
+
+    --color-secondary: #e01854;
+    --color-secondary-hover: #eb386e;
+    --color-secondary-active: #f85384;
+
+    --color-tertiary: #4bc04f;  
+    --color-tertiary-active: #7bdb7e; 
+
+    --color-quaternary: #ece038; 
+    --color-quinary: #17c3cf;    
+    --color-jokumikalie: #7e3fb9; 
+    --color-senary: #1d3279;     
+    --color-septenary: #b61967;  
+    --color-octonary: #28964d;   
+    --color-nonary: #b5c523;     
+    --color-denary: #3cb4ae;     
+    --color-undecenary: #5d3285; 
+
+    --color-positive: hsl(152, 75%, 34%);
+    --color-positive-hover: hsl(152, 68%, 42%);
+    --color-positive-opaque: hsla(152, 78%, 36%, 0.5);
+    --color-negative: #b94646;
+    --color-negative-hover: #d34f4f;
+    --color-negative-opaque: hsla(0, 45%, 50%, 0.5);
+    --color-warning: #c3b736;
+    --color-warning-hover: #d1c648;
+        
+    /* Text */
+    --color-text: var(--color-text-white);
+    --color-text-bold: var(--color-text-white-hover);
+    --color-text-light: var(--color-text-white-light);
+    --color-text-lighter: hsl(0, 0%, 45%);
+    --color-text-hidden: hsl(0, 0%, 25%);
+    --color-text-placeholder: #666;
+    --color-text-inverted: #292929;
+    --color-text-inverted-hover: #000;
+    --color-text-selection: var(--color-text-black-hover);
+
+    --color-border: hsla(0, 0%, 100%, 0.1);
+    --color-border-hover: hsla(0, 0%, 100%, 0.2);
+    --color-border-light: hsla(0, 0%, 100%, 0.3);
+    
+    /* Backgrounds */
+    --color-background: hsl(240, 100%, 0%);
+    --color-background-backdrop: hsla(0, 0%, 0%, 0.5);
+    --color-background-backdrop-mobile-menu: rgba(0, 0, 0, 0.5);
+    --color-background-top-bar: hsl(0, 0%, 0%, 0.66);
+    --color-background-mobile-nav: hsla(0, 0%, 0%, 0.3);
+    --color-background-modal: #111;
+    --color-background-card: hsl(0, 0%, 7.5%);
+    --color-background-card-active: hsl(0, 0%, 10%);
+    --color-background-card-hover: hsl(0, 0%, 12.5%);
+    --color-background-card-section: hsl(0, 0%, 5%);
+    --color-background-input: hsl(0, 0%, 5%);
+    --color-background-input-light: hsl(0, 0%, 7.5%);
+    --color-background-input-strong: hsl(0, 0%, 12.5%);
+
+    /* Button colors */
+    --color-button-general: hsl(0, 0%, 10%);
+    --color-button-general-hover: hsl(0, 0%, 15%);
+    --color-button-general-active: hsl(0, 0%, 17.5%);
+
+    --color-button-dark: var(--color-background-card);
+    --color-button-dark-hover: hsl(0, 0%, 14%);
+    --color-button-dark-active: hsl(0, 0%, 13%);
+
+    --color-button-clean: hsla(0, 0%, 0%, 0);
+    --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
+    --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
+
+    --color-button-nav: var(--color-text-light);
+    --color-button-nav-hover: var(--color-text);
+
+    --color-button-delete-hover: rgb(187, 30, 30);
+    --color-button-delete-active: rgb(145, 13, 13);
+
+    --color-background-button-transparent: hsla(0, 0%, 0%, 0.66);
+    --color-background-button-transparent-hover: hsla(0, 0%, 15%, 0.66);
+
+    --color-background-select-hover: hsl(0, 0%, 17.5%);
+
+
+    /* Shadows */
+    /* --shadow-card: 0 4px 8px rgba(255, 0, 0, 0.5); */
+    --shadow-card: none;
+    /* --shadow-button-hover: 0 4px 8px rgba(0, 0, 0, 0.2); */
+    --shadow-button-hover: none;
+    /* --shadow-button-active: 0 2px 4px rgba(0, 0, 0, 0.5); */
+    --shadow-button-active: none;
+    --shadow-option-list: 0 4px 8px rgba(0, 0, 0, 0.4);
+    --shadow-floating-button: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+.watchlist .button-primary {
+    color: var(--color-text-black) !important;
+} 
+.watchlist.pointer-device .button-primary:hover {
+    color: var(--color-text-black-hover);
+}
+.watchlist.pointer-device .button-primary:hover svg {
+    fill: var(--color-text-black-hover);
+}
+.watchlist.pointer-device .button-primary:active {
+    color: var(--color-text-black-hover);
+}
+.watchlist .button-primary:disabled, .button-primary:hover:disabled, .button-primary:active:disabled  {
+    color: var(--color-text-black);
+}
+
+.watchlist .options-list li.highlighted {
+    color: var(--color-text-black-hover);
+    background-color: var(--color-primary-hover);
+}
+
+.watchlist .tag-primary {
+    color: var(--color-text-black);
 }

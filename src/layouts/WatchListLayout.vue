@@ -9,7 +9,7 @@
 
 <script>
 import FooterComponent from '@/components/common/FooterComponent.vue';
-import TopBar from '@/components/common/TopBar.vue';
+import TopBar from '@/components/WatchList/TopBar.vue';
 import '@/assets/watchlist.css';
 
 export default {
