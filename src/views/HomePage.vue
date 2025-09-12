@@ -1,37 +1,62 @@
 <template>
-	<div>
-		<div class="greeting-area content-width-large">
-			<div class="greeting">
-				<h1>{{ greeting[0] }}</h1>
-				<span class="header-sub-text">{{ greeting[1] }}</span>
+	<div class="home-page">
+		<div class="content-width-large">
+			<div class="greeting-area ">
+				<div class="greeting">
+					<h1>{{ greeting[0] }}</h1>
+					<span class="header-sub-text">{{ greeting[1] }}</span>
+				</div>
+				<div class="info">
+					<span class="label">Server uptime </span>
+					<span class="value">{{ formattedUptime() || "loading... " }}</span>
+				</div>
 			</div>
-            <div class="info">
-                <span class="label">Server uptime </span>
-                <span class="value">{{ formattedUptime() || "loading... " }}</span>
-            </div>
 		</div>
         
 		<div class="content-width-large">
-            <h2>Service links</h2>
+            <h2>
+				Service links 
+				<IconAdd
+					class="icon-button"
+					@click="handleServiceLinksCreateOrEdit()"
+				/>
+			</h2>
 			<div class="service-links">
-				<a 
-					v-for="(service, index) in serviceUrls"
-					:href="service.url"
-					class="tile-button link-button"
-					:key="index"
-					rel="noreferrer"
-				>
-					<img 
-						:src="service.iconUrl" 
-						@load="(event) => event.target.classList.add('loaded')"
-					>
-					<div class="service-name-wrapper">
-						<div class="service-name">
-							{{ service.name }}
-							<IconLinkExternal size="16px"/>
-						</div>
-					</div>
-				</a>
+                <div
+                    v-for="(service, index) in serviceUrls"
+                    :key="index"
+                    class="link-button-wrapper"
+                >
+                    <a 
+                        :href="service.link"
+                        rel="noreferrer"
+                        class="link-button no-decoration hover-decoration"
+                    >
+                        <div class="image-wrapper">
+                            <img 
+                                v-if="service.image_path"
+                                :src="`${this.apiUrl}/media/image${service.image_path}`" 
+                                @load="(event) => event.target.classList.add('loaded')"
+                            >
+                            <MissingImage v-else/>
+                        </div>
+                        <div class="service-text">
+                            <div class="icon-align service-name">
+                                {{ service.name }}
+                                <IconLinkExternal left="4px" size="16px"/>
+                            </div>
+                            <div class="service-description">
+                                {{ service.description }}
+                            </div>
+                        </div>
+                    </a>
+                    <DropdownMenu
+                        :options="[
+                            { label: 'Edit', action: () => handleServiceLinksCreateOrEdit(service) },
+                            { label: 'Delete', action: () => handleServiceLinkDelete(service.id) },
+                        ]"
+                    />
+                </div>
 			</div>
 		</div>
 
@@ -251,6 +276,18 @@
 				</div>
 			</div>
 		</div>
+
+		<ServiceLinkModal
+			ref="serviceLinkModal"
+		/>
+
+        <ModalConfirmation
+            ref="serviceLinkDeleteCM"
+            header="Delete External Service Link"
+            text="Are you sure you wish to delete this external service link? This action cannot be undone!"
+            affirmative-option="Delete"
+            negative-option="Cancel"
+        />
 	</div>
 </template>
 
@@ -274,11 +311,16 @@ import {
 } from '@/utils/chartUtils'
 import ChartComponent from '@/components/common/ChartComponent.vue';
 import CustomSelect from '@/components/common/CustomSelect.vue';
-import { standAloneBuild, portainerUrl } from '@/utils/config';
+import { apiUrl, portainerUrl } from '@/utils/config';
 import { setTimeout } from 'core-js';
 import ResourceUsageTile from '@/components/Dashboard/ResourceUsageTile.vue';
 import ContainerStack from '@/components/Dashboard/ContainerStack.vue';
 import DriveCard from '@/components/Dashboard/DriveCard.vue';
+import ServiceLinkModal from '@/components/Dashboard/ServiceLinkModal.vue';
+import IconAdd from '@/components/icons/IconAdd.vue';
+import DropdownMenu from '@/components/common/DropdownMenu.vue';
+import MissingImage from '@/components/common/MissingImage.vue';
+import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
 
 export default {
 	name: 'HomePage',
@@ -288,14 +330,20 @@ export default {
         ResourceUsageTile,
         ContainerStack,
 		DriveCard,
+		ServiceLinkModal,
+        MissingImage,
+		DropdownMenu,
+        ModalConfirmation,
 		IconBackup,
 		IconBackupDown,
 		IconRefresh,
         IconLinkExternal,
+		IconAdd,
 	},
 	data() {
 		return {
 			greeting: this.getGreeting(),
+			apiUrl: apiUrl,
             isLoaded: {},
 			chartValueGenerators: {},
 			waitingFor: [],
@@ -387,54 +435,28 @@ export default {
 				console.error("[copyToClipboard]", error);
 			}
 		},
-		getServiceUrls() {
-			if (!standAloneBuild) {
-				const serviceUrls = [];
-				// Check if the current hostname is an IPv4 so that we later try the correct one first
-				const isIpv4 = /^(\d{1,3}\.){3}\d{1,3}(:\d+)?$/.test(location.hostname);
-				let i = 1;
-
-				// Loop through envs until at least one is missing
-				while (
-					process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`]
-					&& process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`]
-					&& (process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_IP`]
-					|| process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_HOSTNAME`])
-				) {
-					const urlIp = process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_IP`];
-					const urlHostname = process.env[`VUE_APP_OTHER_SERVICE_${i}_URL_HOSTNAME`];
-					serviceUrls.push({
-						name: process.env[`VUE_APP_OTHER_SERVICE_${i}_NAME`],
-						iconUrl: process.env[`VUE_APP_OTHER_SERVICE_${i}_ICON_URL`],
-						url: isIpv4 ? (urlIp || urlHostname) : (urlHostname || urlIp) // Choose IP or hostname based on IPv4 check
-					});
-					
-					i++;
-				}
-
-				this.serviceUrls = serviceUrls;
-			} else {
-				this.serviceUrls = [{
-					name: "GitHub repo",
-					url: "https://github.com/Alkama4/The-Dashboard",
-					iconUrl: localStorage.getItem("darkMode") === "true" ? 
-					"https://github.githubassets.com/favicons/favicon-dark.svg" :
-					"https://github.githubassets.com/favicons/favicon.svg"
-				}];
-
-				// Add a listener that changes the icon if dark mode is changed
-				window.addEventListener("darkModeChange", (event) => {
-					const darkModeEnabled = event.detail.darkModeEnabled;
-					this.serviceUrls = [{
-						name: "GitHub repo",
-						url: "https://github.com/Alkama4/The-Dashboard",
-						iconUrl: darkModeEnabled ? 
-						"https://github.githubassets.com/favicons/favicon-dark.svg" :
-						"https://github.githubassets.com/favicons/favicon.svg"
-					}];
-				});
+		async getServiceLinks() {
+			const response = await fastApi.account.get_external_service_links();
+			if (response) {
+				console.log(response);
+				this.serviceUrls = response.links;
 			}
 		},
+        async handleServiceLinksCreateOrEdit(serviceData) {
+            const response = await this.$refs.serviceLinkModal.prompt(serviceData);
+            if (!response) return;
+            
+            this.getServiceLinks();
+        },
+        async handleServiceLinkDelete(linkId) {
+            if (!await this.$refs.serviceLinkDeleteCM.prompt()) { return }
+            
+            const response = await fastApi.account.delete_external_service_links(linkId);
+            if (response) {
+                notify(response.message, "success");
+                this.getServiceLinks();
+            }
+        },
 		removeItemFromWaitingArray(item) {
             this.waitingFor = this.waitingFor.filter(i => i !== item);
         },
@@ -1314,7 +1336,7 @@ export default {
     },
     async mounted() {
 		// Get services from env
-		this.getServiceUrls();
+		this.getServiceLinks();
 
 		// Everything that needs to be done before echarts in one method
 		initialEchartSetup();
@@ -1410,53 +1432,65 @@ export default {
 
 /* - - - - Service links - - - - */
 .service-links {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-    justify-content: start;
+	display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
 	gap: var(--spacing-md);
 }
-@media(max-width: 600px) {
-	.service-links {
-		justify-content: center;
-	}
+.service-links .dropdown-menu {
+    top: 12px;
+    right: 8px;
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
 }
-.tile-button {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	aspect-ratio: 1;
-	width: 150px;
-	border-radius: var(--border-radius-medium);
-	box-sizing: border-box;
-	padding-inline: var(--spacing-sm);
-	margin: 0;
+.pointer-device .service-links .link-button-wrapper:hover .dropdown-menu {
+    opacity: 1;
 }
-.tile-button img {
-	position: absolute;
-	top: var(--spacing-md);
-	width: 80px;
-	height: 80px;
-	object-fit: contain;
-	aspect-ratio: 1;
-	color: var(--color-text-light);
+.touch-device .service-links .dropdown-menu {
+    opacity: 1;
 }
-.tile-button .service-name-wrapper {
-	position: absolute;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	height: 50px;
-	bottom: var(--spacing-xs);
-}
-.tile-button .service-name {
-	text-align: center;
 
-	display: -webkit-box;
-	line-clamp: 2;
-	-webkit-line-clamp: 2;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
+.service-links .link-button-wrapper {
+    position: relative;
+}
+.service-links .link-button {
+    display: flex;
+    justify-content: start;
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+}
+
+.service-links .image-wrapper {
+    min-width: 70px;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    justify-content: center;
+}
+.service-links .image-wrapper img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.service-links .service-description {
+    color: var(--color-text-light);
+    font-weight: 400;
+    font-size: var(--font-size-sm);
+}
+
+@media (max-width: 1200px) {
+    .service-links {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 750px) {
+    .service-links {
+        grid-template-columns: 1fr;
+    }
+    .service-links .image-wrapper {
+        min-width: 50px;
+        width: 50px;
+        height: 50px;
+    }
 }
 
 

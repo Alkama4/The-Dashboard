@@ -201,6 +201,47 @@ const fastApi = {
                 session_key: session.getKey()
             });
         },
+
+        async add_external_service_link(name, link, description, image) {
+            return await postData(
+                '/account/external_service_links',
+                {
+                    session_key: session.getKey(),
+                    name: name,
+                    link: link,
+                    description: description,
+                    image: image
+                },
+                { 
+                    headers: { 'Content-Type': 'multipart/form-data' } 
+                }
+            );
+        },
+
+        async update_external_service_link(linkId, name, link, description, image, removeImage) {
+            return await putData(
+                `/account/external_service_links/${linkId}`,
+                {
+                    session_key: session.getKey(),
+                    name: name,
+                    link: link,
+                    description: description,
+                    image: image,
+                    remove_image: removeImage
+                },
+                { 
+                    headers: { 'Content-Type': 'multipart/form-data' } 
+                }
+            );
+        },
+
+        async delete_external_service_links(linkId) {
+            return await deleteData(`/account/external_service_links/${linkId}`, {session_key: session.getKey()});
+        },
+        
+        async get_external_service_links() {
+            return await getData('/account/external_service_links', {session_key: session.getKey()});
+        }
     },
 
 

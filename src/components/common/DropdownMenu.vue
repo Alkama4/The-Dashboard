@@ -1,27 +1,27 @@
 <template>
     <div 
         class="dropdown-menu"
+        :class="{'active': isOpen}"
         @blur="closeMenu"
         tabindex="0"
     >
-        <IconThreeDots size="32px" @click="toggleMenu" class="icon-button"/>
-        <ul v-if="isOpen" class="menu card">
+        <i class="bx bx-dots-vertical-rounded icon-button" @click.stop.prevent="toggleMenu"></i>
+        <ul v-if="isOpen" class="menu card" @click.prevent>
             <li v-for="(item, index) in options" 
                 :key="index" 
-                @click="handleClick(item)">
-                {{ item.label }}
+                @click="handleClick(item)"
+            >
+                <i v-if="item.icon" class="bx" :class="item.icon"></i>
+                <span>{{ item.label }}</span>
             </li>
         </ul>
     </div>
 </template>
 
 <script>
-import IconThreeDots from '@/components/icons/IconThreeDots.vue';
-
 export default {
     name: "DropdownMenu",
     components: {
-        IconThreeDots,
     },
     props: {
         options: {
@@ -57,11 +57,19 @@ export default {
 
 <style scoped>
 .dropdown-menu {
-    position: relative;
+    position: absolute;
     height: fit-content;
     width: fit-content;
     display: flex;
 }
+.dropdown-menu.active {
+    opacity: 1;
+}
+
+.dropdown-menu .bx-dots-vertical-rounded {
+    font-size: var(--font-size-xxl);
+}
+
 .menu {
     position: absolute;
     top: 100%;
@@ -70,12 +78,22 @@ export default {
     padding: var(--border-radius-medium) 0;
     border-radius: var(--border-radius-medium);
     list-style: none;
+    user-select: none;
+    z-index: var(--z-drop-down);
 }
 .menu li {
     padding: var(--spacing-xs) 12px;
     cursor: pointer;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
     color: var(--color-text-light);
+    font-weight: 400;
+    font-size: var(--font-size-md);
+}
+.menu li i {
+    font-size: var(--font-size-lg);
 }
 .menu li:hover {
     background: var(--color-background-card-hover);
