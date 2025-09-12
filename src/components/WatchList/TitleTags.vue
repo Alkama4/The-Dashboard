@@ -14,14 +14,14 @@
         </div>
         <router-link 
             v-if="titleInfo.favourite == 1"
-            :to="'/watch_list/titles?favourite=true'"
+            :to="'/watch_list/search?favourite=true'"
             target="_blank"
             class="tag tag-secondary no-decoration hover-decoration" 
         >
             Favourite
         </router-link>
         <router-link 
-            :to="`/watch_list/titles?title_type=${titleInfo.type}`"
+            :to="`/watch_list/search?title_type=${titleInfo.type}`"
             target="_blank"
             class="tag no-decoration hover-decoration"
         >
@@ -32,7 +32,7 @@
             v-for="(genre, index) in titleInfo.genres" 
             :key="index"
             target="_blank"
-            :to="`/watch_list/titles?genre=${genre}`"
+            :to="`/watch_list/search?genre=${genre}`"
         >
             {{ genre }}
         </router-link>

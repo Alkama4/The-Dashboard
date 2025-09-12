@@ -1,5 +1,7 @@
 <template>
     <div v-if="title_info" class="title-info">
+        <div class="background-color-accents" ref="backgroundColorAccents" :style="titleInfoStyle"></div>
+
         <BackdropSlideShow :imageLinks="backdropUrls"/>
 
         <div class="content-width-medium title-details">
@@ -36,9 +38,12 @@
                     </div>
 
                     <TitleTags class="tags-desktop" :title-info="title_info"/>
+
+                    <DropdownMenu
+                        :options="menuOptions"
+                    />
                 </div>
             </div>
-
 
             <TitleTags class="tags-mobile" :title-info="title_info"/>
 
@@ -51,15 +56,15 @@
                             season.episodes.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
                     @valueUpdated="val => handleTitleWatchClick('title', val, null)"
                 />
-
                 
-                <button class="button-primary flex-1" @click="handleWhereToWatch()">
-                    <IconPlay/> Watch now
+                <button
+                    v-if="title_info?.type == 'tv'"
+                    class="flex-1"
+                    @click="jumpToNextEpisode()"
+                >
+                    <i class="bx bx-chevrons-down"></i> Jump to next episode
                 </button>
-                
-                <DropdownMenu
-                    :options="menuOptions"
-                />
+
                 <!-- <button 
                     v-if="title_info.favourite == null || title_info.favourite == false"
                     class="button-primary left-button flex-1" 
@@ -154,6 +159,25 @@
                         class="value no-decoration hover-decoration">{{ title_info.awards ?? '-' }}
                     </a>
                     <span class="text-lighter">Awards & Nominations</span>
+                </div>
+            </div>
+
+            <div v-if="titleColors && showDisplayColors">
+                <h3>Title colors</h3>
+                <div style="display: flex; gap: var(--spacing-md);">
+                    <div
+                        v-for="(color, index) in titleColors"
+                        :key="index"
+                    >
+                        <div 
+                            class="color-swab"
+                            :style="{'background-color': color.value}"
+                            style="height: 100px; width: 150px; border-radius: var(--border-radius-medium);"
+                        >
+                    </div>
+                    {{ color.proportion }} <br>
+                    {{ color.value }}
+                    </div>
                 </div>
             </div>
 
@@ -292,6 +316,65 @@
                     </div>
                 </div>
             </div>
+
+            <WatchNowSection
+                :title-media="title_info?.title_media.movies"
+            />
+
+            <h3>Extras</h3>
+            <div class="aggregator-wrapper">
+                <a 
+                    v-for="(extra, i) in title_info.title_media.extras" 
+                    :key="i"
+                    :href="fileBridgeLink(extra.link)"
+                    class="link-button no-decoration hover-decoration"
+                >
+                    <div>
+                        <div class="name">
+                            [{{ extra.extra_type }}]
+                            {{ extra.parsed_file_name }}
+                        </div>
+                        <div class="tag tag-primary" v-if="extra.hdr_type">
+                            {{ extra.hdr_type }}
+                        </div>
+                        <div class="details flex">
+                            <div>
+                                {{ extra.video_width }} x 
+                                {{ extra.video_height }}
+                            </div>
+                            &ZeroWidthSpace; &bull; &ZeroWidthSpace;
+                            <div>
+                                {{ formatToBytes(extra.file_size) }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <h3>Link aggregators</h3>
+            <div class="aggregator-wrapper">
+                <a 
+                    v-for="(aggregator, i) in linkAggregators" 
+                    :key="i"
+                    :href="aggregator.link"
+                    class="link-button no-decoration hover-decoration"
+                    target="_blank"
+                >
+                    <component
+                        :is="aggregator.icon"
+                        class="icon"
+                        size="48px"
+                    />
+                    <div>
+                        <div class="name">
+                            {{ aggregator.name }}
+                        </div>
+                        <div class="details">
+                            {{ aggregator.details }}
+                        </div>
+                    </div>
+                </a>
+            </div>
                 
             <div v-if="title_info.in_watch_list">
                 <h3>Notes</h3>
@@ -321,8 +404,8 @@
             <router-link 
                 class="sticky-corner-button link-button" 
                 style="transition: opacity 0.1s ease-out;"
-                :style="{ opacity: scrolledPastEpisodeMap ? 1 : 0 }"
-                to="#episode_map"
+                :style="{ opacity: scrolledPastSeasonBrowserHeader ? 1 : 0 }"
+                to="#seasonBrowserHeader"
             >
                 <IconChevronDown size="28px" style="rotate: 180deg;"/>
             </router-link>
@@ -352,10 +435,10 @@
                         :key="episode.episode_number" 
                         class="episode-tile"
                         :class="{ 
-                            watched: episode.watch_count > 0,
+                            'watched': episode.watch_count > 0,
                             'un-released': new Date(episode.air_date) > new Date()
                         }"
-                        :style="{'background-color': episode.tileColor || 'var(--color-background-card)'}"
+                        :style="{'background-color': ( episode.watch_count > 0 ? episode.tileColorWatched : episode.tileColorUnWatched ) || 'var(--color-background-card)'}"
                         :title="`S${season.season_number} E${episode.episode_number}`"
                         :to="`/watch_list/title/${title_info.title_id}#S${season.season_number}E${episode.episode_number}`"
                     >
@@ -370,7 +453,7 @@
             ref="seasonBrowser"
             :seasons-data="title_info.seasons"
             :title-id="title_info.title_id"
-            :handleWhereToWatch="handleWatchEpisodeNow"
+            :handleWatchEpisodeNow="handleWatchEpisodeNow"
             :handleTitleWatchClick="handleTitleWatchClick"
         />
 
@@ -503,11 +586,11 @@
 
         <!-- Watch now -->
         <ModalGeneric ref="watchTitleNowMG" header="Watch Now">
-            <WatchNowRecursive :data="watchNowLinksForModal" class="content-width-medium"/>
+            <WatchNowRecursive :data="watchNowLinksForModal"/>
         </ModalGeneric>
 
         <ModalGeneric ref="watchEpisodeNowMG" header="Watch Episode">
-            <WatchNowRecursive :data="watchNowLinksForModal" class="content-width-medium"/>
+            <WatchNowRecursive :data="watchNowLinksForModal"/>
         </ModalGeneric>
 
     </div>
@@ -528,7 +611,7 @@ import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/common/InfoTooltip.vue';
-import { interpolateBetweenColors, getCssVar, convert } from '@/utils/utils'
+import { interpolateBetweenColors, getCssVar, convert, fileBridgeLink } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
 import { apiUrl, standAloneBuild, isTouchDevice } from '@/utils/config';
 import WatchNowRecursive from '@/components/WatchList/WatchNowRecursive.vue';
@@ -552,8 +635,10 @@ import SeasonBrowser from '@/components/WatchList/SeasonBrowser.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import DropdownMenu from '@/components/common/DropdownMenu.vue';
 import TitleTags from '@/components/WatchList/TitleTags.vue';
+import WatchNowSection from './WatchNowSection.vue';
 
 export default {
+    name: 'TitleDetailsPage',
     data() {
         return {
             standAloneBuild: standAloneBuild,
@@ -571,14 +656,17 @@ export default {
                 individualData: []
             },
             openedSeasons: [],
-            scrolledPastEpisodeMap: false,
+            scrolledPastSeasonBrowserHeader: false,
             selectedSeasonToUpdate: null,
             trailerIndex: 0,
             updateOptions: {
                 type: 'title',
                 actions: ['info']
-            }
-        };
+            },
+            titleColors: [],
+            showDisplayColors: false,
+            titleInfoStyle: null,
+        }
     },
     components: {
         ModalConfirmation,
@@ -603,6 +691,7 @@ export default {
         IconPlay,
         DropdownMenu,
         TitleTags,
+        WatchNowSection,
     },
     methods: {
         formatRuntime(runtime) {
@@ -610,6 +699,91 @@ export default {
         },
         formatToMillions(amount) {
             return convert.toLargeUsd(amount);
+        },
+        formatToBytes(amount) {
+            return convert.toBytes(amount);
+        },
+        fileBridgeLink(link) {
+            return fileBridgeLink(link);
+        },
+        rgbToHsl(rgb) {
+            let [r, g, b] = rgb.map(v => v / 255);   // normalize
+
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            const delta = max - min;
+
+            // Lightness
+            let l = (max + min) / 2;
+
+            // Saturation
+            let s = delta === 0 ? 0
+                : l < 0.5 ? delta / (max + min)
+                : delta / (2 - max - min);
+
+            // Hue
+            let h;
+            if (delta === 0) {
+                h = 0;                     // achromatic
+            } else {
+                switch (max) {
+                case r: h = (g - b) / delta; break;
+                case g: h = 2 + (b - r) / delta; break;
+                case b: h = 4 + (r - g) / delta; break;
+                }
+                h *= 60;                    // degrees
+                if (h < 0) h += 360;
+            }
+
+            // Convert to percentages
+            return [h, s * 100, l * 100];
+        },
+        rgbToHslClamped(rgb) {
+            const maxAllowedLightness = 15;
+            const [h, s, l] = this.rgbToHsl(rgb);
+            return [h, s, Math.min(l, maxAllowedLightness)].join(' ');
+        },
+        async getTitleColors() {
+            const resp = await fastApi.colors(this.titleID);
+            if (!resp) return;
+
+            // Build colour strings with spaces after commas
+            const colours = resp.colors.map(c => `rgb(${c.rgb.join(', ')})`);
+            this.titleColors = colours.map((c, i) => ({
+                value: c,
+                proportion: convert.toFiNumber(resp.colors[i].proportion, 6)
+            }));
+
+            // Four-layer radial gradients
+            const positions = [
+                "20% 30%",
+                "80% 25%",
+                "25% 75%",
+                "75% 70%"
+            ];
+
+            const gradients = resp.colors.map((c, i) => {
+                const hsl = this.rgbToHslClamped(c.rgb);
+                return `radial-gradient(
+                    circle at ${positions[i]},
+                    hsl(${hsl}) 0%,
+                    transparent 60%
+                )`;
+            });
+
+            // Add the black fade overlay first
+            const fadeHeight = "25%";
+            gradients.unshift(`linear-gradient(
+                to bottom,
+                var(--color-background) 0px,
+                transparent ${fadeHeight},
+                transparent calc(100% - ${fadeHeight}),
+                var(--color-background) 100%
+            )`);
+
+            this.titleInfoStyle = { background: gradients.join(', ') };
+
+            this.episodeMapTileBackgroundColors();
         },
         toggleHeight(refKey) {
             // Mark the season as opened to load to dom with v-if to start loading images
@@ -721,7 +895,6 @@ export default {
 
             const response = await fastApi.watch_list.titles.notes(this.title_info.title_id, this.title_info.notes)
             if (response) {
-                console.log(response);
                 notify(response.message, "success");
                 this.$refs.titleNotesInput.markValid();
             }
@@ -856,7 +1029,8 @@ export default {
         episodeMapTileBackgroundColors() {
             if (this.title_info && this.title_info.seasons) {
                 const baseColor = getCssVar("color-background-card");
-                const ratingColor = getCssVar("color-primary");
+                const watchedColor = getCssVar("color-positive");
+                const ratingColor = "#aaa";
 
                 this.title_info.seasons.forEach(season => {
                     season.episodes.forEach(episode => {
@@ -871,16 +1045,17 @@ export default {
                         // Adjust the color scaling with power
                         rating = Math.pow(rating, 5);
                         
-                        episode.tileColor = interpolateBetweenColors(baseColor, ratingColor, rating);
-                    });        
+                        episode.tileColorWatched = interpolateBetweenColors(baseColor, watchedColor, rating);
+                        episode.tileColorUnWatched = interpolateBetweenColors(baseColor, ratingColor, rating);
+                    });
                 });
             }
         },
         checkScroll() {
-            const episodeMap = document.getElementById('episode_map');
+            const episodeMap = document.getElementById('seasonBrowserHeader');
             if (episodeMap) {
                 const scrollY = window.scrollY || document.documentElement.scrollTop;
-                this.scrolledPastEpisodeMap = scrollY > episodeMap.offsetTop;
+                this.scrolledPastSeasonBrowserHeader = scrollY > episodeMap.offsetTop;
             }
         },
         openCorrectSeason(hash) {
@@ -920,80 +1095,57 @@ export default {
                 }
             }
         },
-        // async handleEditCollection(initialCollection) {
-        //     const editedCollection = await this.$refs.editCollectionFC.prompt(
-        //         initialCollection.name, 
-        //         initialCollection.description, 
-        //         initialCollection.collection_id
-        //     );
-            
-        //     // If the process was cancelled - which returns false - return
-        //     if (!editedCollection) return;
-
-        //     const response = await fastApi.watch_list.collections.edit(
-        //         initialCollection.collection_id, 
-        //         editedCollection.name, 
-        //         editedCollection.description
-        //     );
-
-        //     if (response) {
-        //         notify(response.message, 'success');
-
-        //         const index = this.title_info.collections.findIndex(c => c.collection_id === initialCollection.collection_id);
-        //         if (index !== -1) {
-        //             this.title_info.collections[index] = {
-        //                 ...this.title_info.collections[index],
-        //                 name: editedCollection.name,
-        //                 description: editedCollection.description
-        //             };
-        //         }
-
-        //         this.$refs.editCollectionFC.close()
-        //     }
-        // },
-        handleWatchNow(additionalLinks = {}) {
-            // Basic automated aggregator links
-            const baseLinks = {
-                "Link aggregators": {
-                    tmdb: {
-                        name: "The Movie Database",
-                        details: "Watch options on TMDB.",
-                        link: `https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}/watch`,
-                        icon: IconTMDBColorful
-                    },
-                    justwatch: {
-                        name: "JustWatch",
-                        details: "Search for this title on JustWatch.",
-                        link: `https://www.justwatch.com/fi/search?q=${encodeURIComponent(this.title_info.name)}`,
-                        icon: IconJustwatch
+        handleWatchTitleNow() {
+            const movies = this.title_info.title_media.movies;
+            console.log(movies)
+            if (movies) {
+                const chosenMedia = movies.reduce((max, obj) => obj.file_size > max.file_size ? obj : max, movies[0]);
+                window.location.href = fileBridgeLink(chosenMedia.link);
+            }
+        },
+        jumpToNextEpisode() {
+            // Find the minimum watch count among linked episodes
+            let minCount = Infinity;
+            for (const season of this.title_info.seasons) {
+                for (const episode of season.episodes) {
+                    if (episode.watch_count < minCount) {
+                        minCount = episode.watch_count;
                     }
                 }
-            };
-
-            // If it's a stand-alone build, return base links only
-            if (standAloneBuild) {
-                this.watchNowLinksForModal = {
-                    ...baseLinks
-                };
-                return;
             }
 
-            // Include additional watch now links from the episode or title
-            const fullLinks = {
-                ...baseLinks,
-                ...additionalLinks
-            };
+            // Jump to the first episode that matches that minCount
+            if (minCount !== Infinity) {
+                for (const season of this.title_info.seasons) {
+                    for (const episode of season.episodes) {
+                        if (episode.watch_count === minCount) {
+                            router.push(
+                                `/watch_list/title/${this.title_info.title_id}`
+                            );
+                            router.push(
+                                `/watch_list/title/${this.title_info.title_id}#S${season.season_number}E${episode.episode_number}`
+                            );
+                            return;
+                        }
+                    }
+                }
+            }
 
-            this.watchNowLinksForModal = fullLinks;
+            // Fallback if nothing matched
+            router.push(`/watch_list/title/${this.title_info.title_id}#S1E1`);
         },
         handleWatchEpisodeNow(episode) {
-            if (!episode.watch_now_links) this.handleWatchNow();
-            else this.handleWatchNow(episode?.watch_now_links[0]);
-            this.$refs.watchEpisodeNowMG.open();
+            const media = episode.episode_media;
+            if (media) {
+                const chosenMedia = media.reduce((max, obj) => obj.file_size > max.file_size ? obj : max, media[0]);
+                window.location.href = fileBridgeLink(chosenMedia.link);
+            }
         },
-        handleWhereToWatch() {
-            this.handleWatchNow(this.title_info.watch_now_links);
-            this.$refs.watchTitleNowMG.open();
+        async handleUpdateTitleMediaInfo() {
+            const response = await fastApi.watch_list.titles.update_media_info(this.title_info.title_id);
+            if (response) {
+                notify(response.message, 'success');
+            }
         },
         promptTitleCollections() {
             this.$refs.modaTitleCollectionsMTC.prompt(this.title_info.title_id);
@@ -1057,22 +1209,36 @@ export default {
             });
         },
         menuOptions() {
-            if (this.title_info.in_watch_list) {
-                return [
-                    { label: 'Toggle favourite', action: () => this.handleFavouriteToggle() },
-                    { label: 'Update title details', action: () => this.openTitleUpdateModal() },
-                    { label: 'Modify title collections', action: () => this.promptTitleCollections() },
-                    { label: 'Remove from Watchlist', action: () => this.handleWatchListModification('remove') },
-                ];
-            } else {
-                return [
-                    { label: 'Toggle favourite', action: () => this.handleFavouriteToggle() },
-                    { label: 'Update title details', action: () => this.openTitleUpdateModal() },
-                    { label: 'Modify title collections', action: () => this.promptTitleCollections() },
-                    { label: 'Add to Watchlist', action: () => this.handleWatchListModification('add') },
-                ];
-            }
-        }
+            const base = [
+                { icon: 'bxs-heart', label: 'Toggle favourite', action: () => this.handleFavouriteToggle() },
+                { icon: 'bx-refresh', label: 'Update title', action: () => this.openTitleUpdateModal() },
+                { icon: 'bxs-file-image', label: 'Update media info', action: () => this.handleUpdateTitleMediaInfo() },
+                { icon: 'bxs-collection', label: 'Modify title collections', action: () => this.promptTitleCollections() },
+                { icon: 'bxs-palette', label: 'Toggle title colors', action: () => { this.showDisplayColors = !this.showDisplayColors } },
+            ];
+
+            const watchlistAction = this.title_info.in_watch_list
+                ? { icon: 'bx-list-minus', label: 'Remove from Watchlist', action: () => this.handleWatchListModification('remove') }
+                : { icon: 'bx-list-plus', label: 'Add to Watchlist', action: () => this.handleWatchListModification('add') };
+
+            return [...base, watchlistAction];
+        },
+        linkAggregators() {
+            return [
+                {
+                    name: "The Movie Database",
+                    details: "Available streaming services",
+                    link: `https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}/watch`,
+                    icon: IconTMDBColorful
+                },
+                {
+                    name: "JustWatch",
+                    details: "Search for the title on JustWatch",
+                    link: `https://www.justwatch.com/fi/search?q=${encodeURIComponent(this.title_info.name)}`,
+                    icon: IconJustwatch
+                }
+            ];
+        },
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1113,6 +1279,8 @@ export default {
                 }
             }, 1)
         }
+
+        await this.getTitleColors();
     },
     unmounted() {
         window.removeEventListener('darkModeChange', this.episodeMapTileBackgroundColors);
@@ -1124,11 +1292,25 @@ export default {
 
   
 <style scoped>
+.title-info {
+    position: relative;
+}
+
+.background-color-accents {
+    position: absolute;
+    top: 735px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: -100;
+}
+
 .poster-next-to-stuff .name-and-stuff {
     display: flex;
     flex-direction: column;
     gap: var(--spacing-md);
     margin-top: var(--spacing-sm);
+    position: relative;
 }
 .name-and-tagline {
     align-items: left;
@@ -1151,6 +1333,7 @@ export default {
     margin-top: 0;
     font-size: 48px;
     line-height: 64px;
+    padding-right: var(--spacing-lg);
     /* display: -webkit-box;
     line-clamp: 2;
     -webkit-line-clamp: 2;
@@ -1262,6 +1445,11 @@ export default {
     }
 }
 
+.dropdown-menu {
+    top: var(--spacing-md);
+    right: 0;
+}
+
 
 /* - - - - - VALUES AND DETAILS - - - - -  */
 
@@ -1330,11 +1518,6 @@ export default {
 }
 .control-button-array button {
     white-space: nowrap;
-}
-
-.dropdown-menu-wrapper {
-    display: flex;
-    justify-content: end;
 }
 
 .red-heart {
@@ -1458,6 +1641,22 @@ iframe {
 }
 
 
+.aggregator-wrapper {
+    display: flex;
+    gap: var(--spacing-sm);
+    flex-wrap: wrap;
+}
+.aggregator-wrapper .link-button {
+    display: flex;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+}
+.aggregator-wrapper .details {
+    font-size: var(--font-size-sm);
+    font-weight: 400;
+    color: var(--color-text-light);
+}
+
 
 /* - - - - - EPISODE MAP - - - - -  */
 .episode-map {
@@ -1484,7 +1683,7 @@ iframe {
     cursor: pointer;
     user-select: none;
     font-weight: 600;
-    border-bottom: 4px solid transparent; /* Watched - Green line */
+    /* border-bottom: 4px solid transparent; */
     color: var(--color-text);
     text-decoration: none;
 }
@@ -1492,10 +1691,10 @@ iframe {
     text-decoration: underline;
 }
 
-.episode-tile.watched {
-    border: 0px solid transparent;
-    border-bottom: 4px solid green; /* Watched - Green line */
-}
+/* .episode-tile.watched { */
+    /* border: 0px solid transparent; */
+    /* border-bottom: 4px solid green; */
+/* } */
 
 .episode-tile.un-released {
     background-color: var(--color-background-card-section) !important;
@@ -1546,7 +1745,5 @@ iframe {
 .choice-modal .text-hidden {
     margin-bottom: 0;
 }
-
-
 </style>
   

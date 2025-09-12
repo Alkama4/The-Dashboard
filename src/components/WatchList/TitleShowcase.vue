@@ -165,9 +165,11 @@ export default {
 .title-showcase {
     width: 100vw;
     height: 70vh;
+    max-height: 1000px;
+    position: relative;
 }
 
-.title-showcase .content-wrapper {
+.content-wrapper {
     position: relative;
     height: 100%;
     width: 100%;
@@ -243,20 +245,27 @@ export default {
     box-sizing: border-box;
 }
 
-.title-showcase .backdrop {
+.backdrop-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+.backdrop {
     --width: 70%;
     object-fit: cover;
     position: absolute;
     top: 0;
     left: calc(100% - var(--width));
     width: var(--width);
-    height: 80vh;
+    height: 120%;
     /* max-height: 100vw; */
     opacity: 0;
     z-index: -1;
     transition: opacity 0.5s var(--cubic-1);
     /* mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30vh); */
-    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30vh),
+    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%),
                 linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%);
     mask-composite: intersect;
 }
@@ -266,7 +275,7 @@ export default {
 @media (max-width: 1500px) {
     .title-showcase .backdrop {
         --width: 100%;
-        mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.33) 30vh);
+        mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.33) 30%);
     }
     .overview {
         display: -webkit-box;

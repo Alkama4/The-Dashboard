@@ -5,11 +5,13 @@
         @keydown="handleKeyDown"
         tabindex="0"
     >
-        <h2>Season & episode details</h2>
+        <h2 id="seasonBrowserHeader">Season & episode details</h2>
         
         <div class="icon-align">
-            <input type="checkbox" id="showSpoilers" v-model="showSpoilers">
-            <label for="showSpoilers">Show spoilers</label>
+            <CustomToggle v-model="showSpoilers"/>
+            <label class="interactable-label" for="showSpoilers" @click="showSpoilers = !showSpoilers">
+                Show spoilers
+            </label>
         </div>
 
         <div class="season-tabs" v-if="seasonsData.length > 1">
@@ -17,9 +19,20 @@
                 v-for="(season, index) in seasonsData"
                 :key="index"
                 @click="setActiveSeason(season.season_number)"
-                :class="{'button-primary': season.season_number == activeSeason}"
+                :class="{
+                    'button-primary': season.season_number == activeSeason,
+                }"
             >
-                {{ season.season_name }}
+                <div class="progress-indicator-wrapper">
+                    <div 
+                        class="progress-indicator"
+                        :style="{width: `${getSeasonWatchPercentage(season)}%`}"
+                    >
+                    </div>
+                </div>
+                <span class="text">
+                    {{ season.season_name }}
+                </span>
             </button>
         </div>
         <div class="seasons-wrapper" ref="seasonsWrapper">
@@ -31,10 +44,9 @@
                 <transition :name="transitionDirection" mode="out-in">
                     <div 
                         v-if="activeSeason == season.season_number"
-                        class="card"
                         :ref="'season' + season.season_number"
                     >
-                        <div class="about">
+                        <div class="about card">
                             <div class="poster-container">
                                 <MissingImage v-if="failedToLoadImages.includes('season' + season.season_id)"/>
                                 <img 
@@ -75,7 +87,7 @@
                                         <span class="icon-align"><IconTMDB style="margin-left: -3px; margin-right: 3px;"/> {{ season.tmdb_vote_average }} ({{ getSeasonVotes(season) }} votes)</span>
                                     </div>
                                     <div>
-                                        {{ season.episodes.length > 0 ? new Date(season.episodes[0].air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : "No release date"}}
+                                        {{ seasonReleaseDates(season) }}
                                     </div>
                                 </div>
                                 <p :title="season.overview">{{ season.overview }}</p>
@@ -89,8 +101,6 @@
                             />
                         </div>
 
-                        <div class="card-spacer"></div>
-                        
                         <!-- EPISODES -->
                         <div v-if="season.episodes.length == 0" class="content-not-found">
                             It seems that this season doesn't have eny episodes!?
@@ -107,9 +117,9 @@
                                 }"
                                 :id="`S${season.season_number}E${episode.episode_number}`"
                             >
-                                <div class="still-container" @click="handleWhereToWatch(episode)">
-                                    <MissingImage v-if="failedToLoadImages.includes('episode' + episode.episode_id)"/>
-                                    <HiddenImage v-else-if="!showSpoilers && episode.watch_count == 0"/>
+                                <div class="still-container" @click="handleWatchEpisodeNow(episode)">
+                                    <HiddenImage v-if="!showSpoilers && episode.watch_count == 0" class="still"/>
+                                    <MissingImage v-else-if="failedToLoadImages.includes('episode' + episode.episode_id)" class="still"/>
                                     <img 
                                         v-else
                                         class="still" 
@@ -133,11 +143,28 @@
                                 </div>
                                 
                                 <div class="text">
-                                    <h3 :title="episode.episode_name">{{ episode.episode_number }}. {{ showSpoilers || episode.watch_count >= 1 ? episode.episode_name : 'Episode' }}</h3>
+                                    <h3>
+                                        {{ episode.episode_number }}.
+                                        {{ showSpoilers || episode.watch_count >= 1 ? episode.episode_name : 'Episode' }}
+                                    </h3>
                                     <div class="details">
                                         <span class="icon-align" >
                                             <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                            <span class="icon-align"><IconTMDB style="margin-right: 3px; margin-left: 2px;"/>{{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} ({{ episode.tmdb_vote_count ?? '0'}} votes)</span>
+                                            <span class="icon-align">
+                                                <IconTMDB 
+                                                    style="
+                                                        margin-right: 3px; 
+                                                        margin-left: 2px;
+                                                    "
+                                                />
+                                                <template v-if="showSpoilers || episode.watch_count >= 1">
+                                                    {{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} 
+                                                    ({{ episode.tmdb_vote_count ?? '0'}} votes)
+                                                </template>
+                                                <template v-else>
+                                                    ??
+                                                </template>
+                                            </span>
                                         </span>
                                         <div>
                                             {{ 
@@ -147,7 +174,11 @@
                                             }}
                                         </div>
                                     </div>
-                                    <p :title="episode.overview">{{ showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Episode overview hidden.' }}</p>
+                                    <p 
+                                        :title="showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Overview hidden. Enable spoilers or watch the episode.'"
+                                    >
+                                        {{ showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Overview hidden. Enable spoilers or watch the episode to show details.' }}
+                                    </p>
 
                                     <NumericStepper 
                                         class="modify-watched"
@@ -172,6 +203,7 @@ import IconTMDB from '@/components/icons/IconTMDB.vue';
 import NumericStepper from '@/components/common/NumericStepper.vue';
 import { newReleaseCutoffDate } from '@/utils/config';
 import HiddenImage from '@/components/WatchList/HiddenImage.vue';
+import CustomToggle from '../common/CustomToggle.vue';
 
 export default {
     name: 'SeasonBrowser',
@@ -184,7 +216,7 @@ export default {
             type: Number,
             default: null,
         },
-        handleWhereToWatch: {
+        handleWatchEpisodeNow: {
             type: Function,
             required: true,
         },
@@ -199,6 +231,7 @@ export default {
         IconPlay,
         IconTMDB,
         NumericStepper,
+        CustomToggle,
     },
     data() {
         return {
@@ -217,7 +250,21 @@ export default {
             return getMediaImageUrl(width, backupUrl, this.titleId, seasonNumber, episodeNumber);
         },
         getSeasonWatchCount(season) {
-            return season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity);
+            if (!season || !season.episodes || season.episodes.length === 0) {
+                return 0;
+            }
+            return season.episodes.reduce((min, ep) => {
+                return ep.watch_count < min ? ep.watch_count : min;
+            }, Number.POSITIVE_INFINITY);
+        },
+        getSeasonEpisodeWatchCount(season) {
+            return season.episodes.reduce((cnt, ep) => {
+                return cnt + (ep.watch_count > 0 ? 1 : 0);
+            }, 0);
+        },
+        getSeasonWatchPercentage(season) {
+            const watched = this.getSeasonEpisodeWatchCount(season);
+            return (watched / season.episodes.length) * 100;
         },
         getSeasonVotes(season) {
             let runningSum = 0;
@@ -262,13 +309,24 @@ export default {
         },
         updateSeasonWrapperHeight() {
             this.$nextTick(() => {
-                const wrapper = this.$refs.seasonsWrapper;
-                const activeSeason = this.$refs['season' + this.activeSeason][0];
-                if (wrapper && activeSeason) {
-                    wrapper.style.height = activeSeason.clientHeight + 'px';
-                }
+                setTimeout(() => {
+                    const wrapper = this.$refs.seasonsWrapper;
+                    const activeSeason = this.$refs['season' + this.activeSeason][0];
+                    if (wrapper && activeSeason) {
+                        wrapper.style.height = activeSeason.clientHeight + 'px';
+                    }
+                }, 100)
             });
-        }
+        },
+        seasonReleaseDates(season) {
+            if (season.episodes.length === 0) {
+                return "No release date";
+            }
+            const first = new Date(season.episodes[0].air_date);
+            const last = new Date(season.episodes[season.episodes.length - 1].air_date);
+
+            return `${first.toLocaleDateString("fi-FI", {day: "numeric", month: "short", year: "numeric"})} - ${last.toLocaleDateString("fi-FI", {day: "numeric", month: "short", year: "numeric"})}`;
+        },
     },
     watch: {
         activeSeason() {
@@ -296,13 +354,53 @@ export default {
 }
 .season-tabs button {
     white-space: nowrap;
+    position: relative;
 }
+/* .season-tabs button.button-primary {
+    padding-inline: var(--spacing-xl);
+} */
+.season-tabs button .progress-indicator-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+}
+.season-tabs button .progress-indicator {
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: var(--color-positive);
+    transition: width 0.5s var(--cubic-1),
+                background-color 0.1s ease-out;
+}
+.season-tabs button .text {
+    z-index: 2;
+}
+
+.season-tabs button:hover .progress-indicator {
+    background-color: var(--color-positive-hover);
+}
+.season-tabs button:active .progress-indicator {
+    background-color: var(--color-positive-active);
+}
+
+.season-tabs button.button-primary .progress-indicator {
+    background-color: var(--color-positive-active);
+}
+.season-tabs button.button-primary:hover .progress-indicator {
+    background-color: var(--color-positive-overshoot);
+}
+
 
 /* - - - - - SEASON - - - - -  */
 .seasons-wrapper {
     transition: height 0.4s var(--cubic-ease-slow-in-slow-out);
     position: relative;
-    overflow: hidden;
 }
 .season {
     position: absolute;
@@ -314,6 +412,7 @@ export default {
     "img text"
     "button button";
     column-gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
 }
 .season h2 {
     margin: 0;

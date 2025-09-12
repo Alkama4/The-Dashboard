@@ -23,7 +23,7 @@
                     v-for="(data, index) in titleList.titles" 
                     :key="index" 
                     :titleDetails="data" 
-                    draggable="false"
+                    @favourite-toggle="data.favourite = !data.favourite"
                 />
             </Flicking>
             <div 

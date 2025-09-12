@@ -94,9 +94,9 @@ async function deleteData(endpoint, data, config = {}) {
     return handleModifyingRequest('delete', endpoint, data, config);
 }
 
-// async function patchData(endpoint, data, config = {}) {
-//     return handleModifyingRequest('patch', endpoint, data, config);
-// }
+async function patchData(endpoint, data, config = {}) {
+    return handleModifyingRequest('patch', endpoint, data, config);
+}
 
 async function getData(endpoint, params = {}) {
     const startTime = performance.now();  // Start the timer
@@ -161,6 +161,11 @@ async function getData(endpoint, params = {}) {
 
 
 const fastApi = {
+
+    // TEMPORARY - DELETE THIS FUNCTION WHEN PROPER IS IMPLEMENTED
+    async colors(title_id) {
+        return await getData(`/media/colors/title/${title_id}/backdrop1_600.jpg`);
+    },
 
     // - - - - - - - - - - - - - ACCOUNT - - - - - - - - - - - - - 
     account: {
@@ -456,6 +461,10 @@ const fastApi = {
                 return await getData(`/watch_list/titles/${title_id}/collections`, {
                     session_key: session.getKey()
                 });
+            },
+
+            async update_media_info(title_id = null) {
+                return await patchData(`/watch_list/titles/${title_id ? title_id + '/' : ''}media_info`, {});
             }
         },
 

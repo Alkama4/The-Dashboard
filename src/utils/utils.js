@@ -210,3 +210,7 @@ export function getMediaImageUrl(width, backupUrl, titleId, seasonNumber, episod
     }
     return `${base}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
 }
+
+export function fileBridgeLink(link) {
+    return `flbrdge://open?path=${link}`;
+}

@@ -10,10 +10,10 @@
                 v-model="titleCategory"
                 :options="['Movie', 'TV']" 
                 :colors="{
-                    color1: 'var(--color-primary)',
-                    color1Hover: 'var(--color-primary-hover)',
-                    color2: 'var(--color-secondary)',
-                    color2Hover: 'var(--color-secondary-hover)',
+                    color1: 'var(--color-secondary)',
+                    color1Hover: 'var(--color-secondary-hover)',
+                    color2: 'var(--color-tertiary)',
+                    color2Hover: 'var(--color-tertiary-hover)',
                 }"
             />
             </div>
@@ -232,6 +232,7 @@ export default {
 <style scoped>
     .title-form {
         display: grid;
+        gap: var(--spacing-md);
         grid-template-columns: 180px auto auto;
         justify-content: center;
         align-items: end;

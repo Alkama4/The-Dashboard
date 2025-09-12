@@ -1,78 +1,80 @@
 <template>
-    <router-link :to="`/watch_list/title/${titleDetails.title_id}`" class="title-card">
-        <div
-            class="title-card-thumbnail"
-        >
-            <MissingImage v-if="imgNotFound"/>
-            <img 
-                v-else
-                :src="posterUrl(titleDetails.title_id, 600, titleDetails.backup_poster_url)" 
-                loading="lazy"
-                @load="(event) => event.target.classList.add('loaded')" 
-                @error="imgNotFound = true"
-            />
-        </div>
-        <div class="title-card-gradient"></div>
-        <div class="title-card-details">
-            <div class="details">
-                <span class="title-card-name">{{ titleDetails.name }}</span>
-                <div class="title-card-rating">
-                    <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
-                </div>
-                <div class="title-card-progress">
-                    <template v-if="titleDetails.type === 'tv'">
-                        <span class="season-after">{{ titleDetails.season_count }}</span>
-                        <span class="episode-after">{{ titleDetails.episode_count }}</span>
-                    </template>
-                    <template v-else>
-                        {{ formatRuntime(titleDetails.movie_runtime) }}
-                    </template>
-                </div> 
+    <div class="title-card">
+        <router-link :to="`/watch_list/title/${titleDetails.title_id}`" draggable="false">
+            <div
+                class="title-card-thumbnail"
+            >
+                <MissingImage v-if="imgNotFound"/>
+                <img 
+                    v-else
+                    :src="posterUrl(titleDetails.title_id, 600, titleDetails.backup_poster_url)" 
+                    loading="lazy"
+                    @load="(event) => event.target.classList.add('loaded')" 
+                    @error="imgNotFound = true"
+                />
             </div>
-        </div>
+            <div class="title-card-gradient"></div>
+            <div class="title-card-details">
+                <div class="details">
+                    <span class="title-card-name">{{ titleDetails.name }}</span>
+                    <div class="title-card-rating">
+                        <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
+                    </div>
+                    <div class="title-card-progress">
+                        <template v-if="titleDetails.type === 'tv'">
+                            <span class="season-after">{{ titleDetails.season_count }}</span>
+                            <span class="episode-after">{{ titleDetails.episode_count }}</span>
+                        </template>
+                        <template v-else>
+                            {{ formatRuntime(titleDetails.movie_runtime) }}
+                        </template>
+                    </div> 
+                </div>
+            </div>
+    
+            <div class="tag tag-secondary" v-if="titleDetails.favourite">Favourite</div>
+            <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">{{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}</div>
+            <div 
+                class="tag tag-primary"
+                v-else-if="
+                    new Date(titleDetails.release_date) <= new Date() &&
+                    new Date(titleDetails.release_date) >= new Date(new Date() - 30 * 24 * 60 * 60 * 1000)
+                "
+            >
+                New release
+            </div>
+            <div class="tag tag-primary" v-else-if="titleDetails.new_episodes >= 1">New episodes</div>
+            <div class="tag" v-else-if="new Date(titleDetails.release_date) > new Date()">Upcoming</div>
+        </router-link>
 
-        <div class="tag tag-secondary" v-if="titleDetails.favourite">Favourite</div>
-        <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">{{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}</div>
-        <div 
-            class="tag tag-primary"
-            v-else-if="
-                new Date(titleDetails.release_date) <= new Date() &&
-                new Date(titleDetails.release_date) >= new Date(new Date() - 30 * 24 * 60 * 60 * 1000)
-            "
-        >
-            New release
-        </div>
-        <div class="tag tag-primary" v-else-if="titleDetails.new_episodes >= 1">New episodes</div>
-        <div class="tag" v-else-if="new Date(titleDetails.release_date) > new Date()">Upcoming</div>
-
-        <div class="three-dots-wrapper">
-            <IconThreeDots
-                class="icon-button"
-                size="32px"
-                @click.prevent="openContextMenu"
-            />
-        </div>
-    </router-link>
+        <DropdownMenu class="three-dots-wrapper" :options="dropDownOptions"/>
+    </div>
 </template>
 
 <script>
 import { convert } from '@/utils/utils';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import { standAloneBuild } from '@/utils/config';
-import IconThreeDots from '@/components/icons/IconThreeDots.vue';
-import { notify } from '@/utils/notification';
 import MissingImage from '@/components/common/MissingImage.vue';
+import DropdownMenu from '../common/DropdownMenu.vue';
+import fastApi from '@/utils/fastApi';
 
 export default {
     name: 'TitleCard',
     components: {
         IconTMDB,
-        IconThreeDots,
         MissingImage,
+        DropdownMenu,
     },
     data() {
         return {
             imgNotFound: false,
+            dropDownOptions: [
+                { icon: "bxs-heart", label: "Toggle Favourite", action: () => this.handleToggleFavourite() },
+                { icon: "bxs-time-five", label: "Add to Queue", action: () => {} },
+                { icon: "bxs-collection", label: "Title Collections", action: () => {} },
+                { icon: "bx-list-minus", label: "Remove Title", action: () => {} },
+            ]
         }
     },
     props: {
@@ -81,6 +83,7 @@ export default {
             required: true
         }
     },
+    emits: ['favouriteToggle'],
     methods: {
         formatRuntime(runtime) {
             return convert.toRuntime(runtime);
@@ -93,12 +96,11 @@ export default {
                 return `${process.env.VUE_APP_API_URL}/media/image/title/${titleId}/poster.jpg?width=${width}`;
             }
         },
-        openContextMenu() {
-            notify("TBD");
-            // Toggle favourites,
-            // Add to queue
-            // remove from watchlist
-            // Add to collection
+        async handleToggleFavourite() {
+            const response = await fastApi.watch_list.titles.favourite(this.titleDetails.title_id);
+            if (response) {
+                this.$emit('favouriteToggle');
+            }
         }
     }
 }
@@ -109,16 +111,21 @@ export default {
 .title-card {
     display: flex;
     background-color: var(--color-background-card);
-    border-radius: var(--border-radius-medium);
     width: 220px;
     aspect-ratio: 2/3;
     position: relative;
-    overflow: hidden;
     cursor: pointer;
     user-select: none;
     box-shadow: var(--shadow-card);
     transform: scale(0.95);
     transition: transform 0.15s var(--cubic-1);
+}
+.title-card a {
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: absolute;
 }
 @media (max-width: 900px) {
     .title-card {

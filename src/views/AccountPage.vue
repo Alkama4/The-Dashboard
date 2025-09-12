@@ -62,6 +62,18 @@
         </div>
 
         <div class="content-width-small">
+            <h2>Actions</h2>
+            <div class="chart-settings">
+                <div class="setting-name">
+                    Update the data for 
+                </div>
+                <div class="setting-value">
+                    <button @click="handleUpdateTitleMediaInfo">Update</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-width-small">
             <div class="card danger-zone">
                 <h2>
                     <span class="icon-align">
@@ -96,6 +108,14 @@
             text="Are you sure you want to log out?"
             affirmative-option="Log out"
         />
+
+        <ConfirmationModal 
+            ref="updateMediaInfoCM"
+            header="Update info"
+            text="Are you sure you want to update the info for all media? Depending on the library size this might take a while."
+            affirmative-option="Update"
+        />
+
 
         <ConfirmationModal 
             ref="deleteAccountCM"
@@ -217,6 +237,14 @@ export default {
                     this.settings[key] = Number(value);
                     this.settingsInitial[key] = Number(value); // Save initial values
                 }
+            }
+        },
+        async handleUpdateTitleMediaInfo() {
+            if (!await this.$refs.updateMediaInfoCM.prompt()) { return }
+
+            const response = await fastApi.watch_list.titles.update_media_info();
+            if (response) {
+                notify(response.message, 'success');
             }
         },
     },

@@ -40,7 +40,7 @@ export default {
     },
     props: {
         options: Array,
-        modelValue: String,
+        modelValue: [String, Number],
         disabled: Boolean,
     },
     data() {
