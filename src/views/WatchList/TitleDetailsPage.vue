@@ -1210,11 +1210,11 @@ export default {
         },
         menuOptions() {
             const base = [
-                { icon: 'bxs-heart', label: 'Toggle favourite', action: () => this.handleFavouriteToggle() },
-                { icon: 'bx-refresh', label: 'Update title', action: () => this.openTitleUpdateModal() },
-                { icon: 'bxs-file-image', label: 'Update media info', action: () => this.handleUpdateTitleMediaInfo() },
-                { icon: 'bxs-collection', label: 'Modify title collections', action: () => this.promptTitleCollections() },
-                { icon: 'bxs-palette', label: 'Toggle title colors', action: () => { this.showDisplayColors = !this.showDisplayColors } },
+                { icon: 'bxs-heart', label: 'Toggle Favourite', action: () => this.handleFavouriteToggle() },
+                { icon: 'bxs-collection', label: 'Modify Title Collections', action: () => this.promptTitleCollections() },
+                { icon: 'bx-refresh', label: 'Requery Title Data ', action: () => this.openTitleUpdateModal() },
+                { icon: 'bxs-file-find', label: 'Scan Library for Title', action: () => this.handleUpdateTitleMediaInfo() },
+                { icon: 'bxs-palette', label: 'Colors Toggle', action: () => { this.showDisplayColors = !this.showDisplayColors } },
             ];
 
             const watchlistAction = this.title_info.in_watch_list

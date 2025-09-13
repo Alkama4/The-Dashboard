@@ -15,13 +15,29 @@
                 <span>{{ item.label }}</span>
             </li>
         </ul>
+        <MobileDrawer ref="dropDownDrawer">
+            <ul class="menu mobile">
+                <li v-for="(item, index) in options" 
+                    :key="index" 
+                    :class="{ 'no-border': index == 0 }"
+                    @click="handleClick(item)"
+                >
+                    <i v-if="item.icon" class="bx" :class="item.icon"></i>
+                    <span>{{ item.label }}</span>
+                </li>
+            </ul>
+        </MobileDrawer>
     </div>
 </template>
 
 <script>
+import MobileDrawer from './MobileDrawer.vue';
+import { isTouchDevice } from '@/utils/config';
+
 export default {
     name: "DropdownMenu",
     components: {
+        MobileDrawer
     },
     props: {
         options: {
@@ -35,19 +51,28 @@ export default {
         };
     },
     methods: {
-        // openMenu() {
-        //     this.isOpen = true;
-        // },
+        openMenu() {
+            if (isTouchDevice) {
+                this.$refs.dropDownDrawer.open();
+            } else {
+                this.isOpen = true;
+            }
+        },
         closeMenu() {
             this.isOpen = false;
         },
         toggleMenu() {
-            this.isOpen = !this.isOpen;
+            if (isTouchDevice) {
+                this.$refs.dropDownDrawer.open();
+            } else {
+                this.isOpen = !this.isOpen;
+            }
         },
         handleClick(item) {
             if (item.action && typeof item.action === "function") {
                 item.action();
             }
+            this.$refs.dropDownDrawer.close();
             this.closeMenu();
         }
     }
@@ -95,8 +120,26 @@ export default {
 .menu li i {
     font-size: var(--font-size-lg);
 }
-.menu li:hover {
+.pointer-device .menu li:hover {
     background: var(--color-background-card-hover);
     color: var(--color-text);
+}
+
+.menu.mobile {
+    position: static;
+}
+.menu.mobile li {
+    padding: var(--spacing-md) var(--spacing-sm);
+    gap: var(--spacing-md);
+    color: var(--color-text);
+    font-weight: 400;
+    font-size: 1.1rem;
+    border-top: 2px solid var(--color-border);
+}
+.menu.mobile li.no-border {
+    border: unset;
+}
+.menu.mobile li i {
+    font-size: var(--font-size-xxl);
 }
 </style>
