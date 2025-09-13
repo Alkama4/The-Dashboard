@@ -177,7 +177,7 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     z-index: var(--z-backdrop-container);
-    background-color: var(--color-background);
+    /* background-color: var(--color-background); */
 }
 
 .flow-fixer {
@@ -303,10 +303,12 @@ export default {
     transition: background-color 0.2s ease-out;
 }
 .backdrop-container .button-holder button.left .hover-gradient {
-    mask-image: linear-gradient(to left, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
+    mask-image: linear-gradient(to left, transparent 0%, hsla(0, 0%, 0%, 0.45) 100%),
+                linear-gradient(to top, transparent 0%, black 25%);
 }
 .backdrop-container .button-holder button.right .hover-gradient {
-    mask-image: linear-gradient(to right, transparent 0%, rgba(255, 255, 255, 0.45) 100%);
+    mask-image: linear-gradient(to right, transparent 0%, hsla(0, 0%, 0%, 0.45) 100%),
+                linear-gradient(to top, transparent 0%, black 25%);
 }
 .pointer-device .backdrop-container .button-holder button:hover .hover-gradient {
     background-color: var(--color-background);

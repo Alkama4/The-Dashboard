@@ -756,10 +756,10 @@ export default {
 
             // Four-layer radial gradients
             const positions = [
-                "20% 30%",
-                "80% 25%",
-                "25% 75%",
-                "75% 70%"
+                "10% 0%",
+                "80% 33%",
+                "20% 66%",
+                "90% 100%"
             ];
 
             const gradients = resp.colors.map((c, i) => {
@@ -767,7 +767,7 @@ export default {
                 return `radial-gradient(
                     circle at ${positions[i]},
                     hsl(${hsl}) 0%,
-                    transparent 60%
+                    transparent 50%
                 )`;
             });
 
@@ -1298,7 +1298,8 @@ export default {
 
 .background-color-accents {
     position: absolute;
-    top: 735px;
+    /* top: 735px; */
+    top: 367.5px;
     bottom: 0;
     left: 0;
     right: 0;
