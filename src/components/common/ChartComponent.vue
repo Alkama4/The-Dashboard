@@ -11,27 +11,22 @@
             class="chart" 
             :class="{ loaded: isLoaded }"
         ></div>
-        <button 
-            class="button-simple fullscreen-button" 
+        <i 
+            class="bx icon-button fullscreen-button"
+            :class="{ 
+                'bx-collapse': isFullscreen,
+                'bx-expand': !isFullscreen
+            }"
             @click="toggleFullscreenChart"
-        >
-            <IconCollapse v-if="isFullscreen"/>
-            <IconExpand v-else/>
-        </button>
+        ></i>
     </div>
 </template>
 
 <script>
-import IconCollapse from '@/components/icons/IconCollapse.vue';
-import IconExpand from '@/components/icons/IconExpand.vue';
 import { init } from 'echarts/core'
 
 export default {
     name: 'ChartComponent',
-    components: {
-        IconExpand,
-        IconCollapse,
-    },
     props: {
         chartOptionsGenerator: {
             type: Function,
@@ -162,16 +157,15 @@ export default {
 }
 
 .fullscreen-button {
+    background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
     position: absolute;
     right: var(--spacing-sm);
     top: var(--spacing-sm);
-    z-index: 1; /* Otherwise under chart */
-    color: var(--color-text-light);
-    background: linear-gradient(90deg, transparent, var(--color-background-card) 50%);
     padding: var(--spacing-sm);
-	margin: 0;
+    z-index: 1; /* Otherwise under chart */
 }
-.fullscreen .fullscreen-button, .fullwindow .fullscreen-button {
+.fullscreen .fullscreen-button, 
+.fullwindow .fullscreen-button {
     top: max(env(safe-area-inset-top), var(--spacing-md));
     right: max(env(safe-area-inset-right), var(--spacing-md));
 }

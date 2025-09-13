@@ -106,28 +106,8 @@
                 <div class="card-spacer"></div>
 
                 <div class="info-grid column-for-mobile">
-                    <div class="cell">
-                        <h3>Expense categories total</h3>
-                        <div 
-                            v-for="(category, index) in pageValues.timespan.expense_categories_total" 
-                            :key="index" 
-                            class="data-row"
-                        >
-                            <div class="name">{{ category.category }}</div>
-                            <div class="value">{{ toEur(category.total_amount) }}</div>
-                        </div>
-                        <div 
-                            v-if="pageValues.timespan?.expense_categories_total?.length > 0" 
-                            class="data-row sum-row"
-                        >
-                            <div class="name">Total</div>
-                            <div class="value">{{ toEur(pageValues.timespan.expense_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
-                        </div>
-                        <div v-else class="content-not-found">
-                            No values found
-                            <span class="text-hidden">Try modifying the timerange.</span>
-                        </div>
-                    </div>
+                    <ChartComponent class="sanky-chart" :chartOptionsGenerator="chartValueGenerators.timespanSankey"/>
+
                     <div class="cell">
                         <h3>Income categories total</h3>
                         <div 
@@ -150,6 +130,30 @@
                             <span class="text-hidden">Try modifying the timerange.</span>
                         </div>
                     </div>
+
+                    <div class="cell">
+                        <h3>Expense categories total</h3>
+                        <div 
+                            v-for="(category, index) in pageValues.timespan.expense_categories_total" 
+                            :key="index" 
+                            class="data-row"
+                        >
+                            <div class="name">{{ category.category }}</div>
+                            <div class="value">{{ toEur(category.total_amount) }}</div>
+                        </div>
+                        <div 
+                            v-if="pageValues.timespan?.expense_categories_total?.length > 0" 
+                            class="data-row sum-row"
+                        >
+                            <div class="name">Total</div>
+                            <div class="value">{{ toEur(pageValues.timespan.expense_categories_total.reduce((sum, c) => sum + c.total_amount, 0)) }}</div>
+                        </div>
+                        <div v-else class="content-not-found">
+                            No values found
+                            <span class="text-hidden">Try modifying the timerange.</span>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -259,6 +263,10 @@ export default {
 
             return `${year}-${month}-${day}`;
         },
+        nodeName(kind, category, CENTRAL, duplicates) {
+            if (category === CENTRAL) return `${kind}:${category}`;
+            return duplicates.has(category) ? `${kind}:${category}` : category;
+        },
         async fetchTimespanStatistics() {
             const startDate = this.getTimespanStartDate();
             const endDate = new Date().toISOString().split('T')[0]; // today
@@ -271,8 +279,10 @@ export default {
                 // Construct the date text for the timespan
                 this.pageValues.timespan.dateRange = `${convert.toFiDate(response.timespan.start_date, "date")} - ${convert.toFiDate(response.timespan.end_date, "date")} (${response.timespan.days_in_period} days)`
 
-                // Map the values for the chart
-                const pieData1 = response.stats.expense_categories_avg_month.map(item => ({
+
+                // ____Pie chart________________________
+
+                const pieData = response.stats.expense_categories_avg_month.map(item => ({
                     name: item.category,
                     value: item.avg_per_month,
                 }));
@@ -304,13 +314,118 @@ export default {
                             label: {
                                 color: getCssVar('color-text'),
                             },
-                            data: pieData1,
+                            data: pieData,
                         },
                     ],
                 });
 
                 // Set the value generator for the chart
                 this.chartValueGenerators.timespanPie = timespanPieOptions;
+
+
+                // ____Sankey chart______________________
+
+                const expenses = response.stats.expense_categories_total;
+                const incomes = response.stats.income_categories_total;
+
+                const CENTRAL = 'Income';
+
+                const expenseNames = new Set(expenses.map(e => e.category));
+                const incomeNames = new Set(incomes.map(i => i.category));
+                const duplicates = new Set(
+                    [...incomeNames].filter(n => expenseNames.has(n))
+                );
+
+                const nodes = new Set([CENTRAL]);
+                const links = [];
+
+                // Handle incomes (swap if negative)
+                for (const i of incomes) {
+                    if (i.total_amount >= 0) {
+                        const name = this.nodeName('income', i.category, CENTRAL, duplicates);
+                        nodes.add(name);
+                        links.push({
+                            source: name,
+                            target: CENTRAL,
+                            value: i.total_amount
+                        });
+                    } else {
+                        const name = this.nodeName('expense', i.category, CENTRAL, duplicates);
+                        nodes.add(name);
+                        links.push({
+                            source: CENTRAL,
+                            target: name,
+                            value: Math.abs(i.total_amount)
+                        });
+                    }
+                }
+
+                // Handle expenses (swap if negative)
+                for (const e of expenses) {
+                    if (e.total_amount >= 0) {
+                        const name = this.nodeName('expense', e.category, CENTRAL, duplicates);
+                        nodes.add(name);
+                        links.push({
+                            source: CENTRAL,
+                            target: name,
+                            value: e.total_amount
+                        });
+                    } else {
+                        const name = this.nodeName('income', e.category, CENTRAL, duplicates);
+                        nodes.add(name);
+                        links.push({
+                            source: name,
+                            target: CENTRAL,
+                            value: Math.abs(e.total_amount)
+                        });
+                    }
+                }
+
+                const data = [...nodes].map(n => ({ name: n }));
+
+                const timespanSankeyOptions = () => ({
+                    textStyle: commonChartValues().textStyle,
+                    title: {
+                        text: 'Categories total sanky',
+                        textStyle: {
+                            color: getCssVar('color-text'),
+                            fontSize: getCssVar('font-size-lg'),
+                            fontWeight: 700,
+                        },
+                        x: 'center',
+                    },
+                    color: commonChartValues().color,
+                    tooltip: { 
+                        trigger: 'item',
+                        backgroundColor: getCssVar('color-background-card'),
+                        borderWidth: 1,
+                        borderColor: getCssVar("color-border"),
+                        formatter: params => generateTooltipSingleValue(params, 'eur'),
+                    },
+                    series: [
+                        {
+                            name: 'Category Total',
+                            type: 'sankey',
+                            // label: {
+                            //     color: getCssVar('color-text'),
+                            // },
+                            label: {
+                                color: getCssVar('color-text'),
+                            },
+                            lineStyle: {
+                                color: 'gradient',
+                                opacity: 0.33,
+                            },
+                            top: 35 + 16,
+                            bottom: 16,
+                            data: data,
+                            links: links,
+                        },
+                    ],
+                });
+
+                // Set the value generator for the chart
+                this.chartValueGenerators.timespanSankey = timespanSankeyOptions;
             }
         }
     },
@@ -812,6 +927,10 @@ export default {
 
 .pie-chart {
     height: 450px;
+}
+
+.sanky-chart {
+    height: 600px;
 }
 
 .chart-wrapper {
