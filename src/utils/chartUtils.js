@@ -138,5 +138,10 @@ export function commonChartValues() {
             fontFamily: 'Poppins',
             color: getCssVar('color-text-lighter'),
         },
+        splitLine: {
+            lineStyle: {
+                color: getCssVar("color-border"),
+            }
+        },
     }
 }

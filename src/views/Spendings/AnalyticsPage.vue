@@ -400,7 +400,8 @@ export default {
                             name: 'Amount (€)',
                             axisLabel: {
                                 formatter: value => this.toEur(value, 'axis')
-                            }
+                            },
+                            splitLine: commonChartValues().splitLine,
                         },
                         dataZoom: [
                             {
@@ -548,7 +549,8 @@ export default {
                             name: 'Amount (€)',
                             axisLabel: {        
                                 formatter: value => this.toEur(value, 'axis')
-                            }
+                            },
+                            splitLine: commonChartValues().splitLine,
                         },
                         series: [
                             {
@@ -679,7 +681,8 @@ export default {
                             name: 'Amount (€)',
                             axisLabel: {        
                                 formatter: value => this.toEur(value, 'axis')
-                            }
+                            },
+                            splitLine: commonChartValues().splitLine,
                         },
                         series: seriesData,
                     });
@@ -760,7 +763,8 @@ export default {
                             name: 'Amount (€)',
                             axisLabel: {        
                                 formatter: value => this.toEur(value, 'axis')
-                            }
+                            },
+                            splitLine: commonChartValues().splitLine,
                         },
                         series: seriesData,
                     });

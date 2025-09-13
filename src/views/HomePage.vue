@@ -560,14 +560,15 @@ export default {
 						},
 						axisTick: {
 							alignWithLabel: true
-						}
+						},
 					},
 					yAxis: { 
 						type: 'value',      
 						name: 'Temp (°C)',  // Y-akselin nimi
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiNumber(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -637,7 +638,8 @@ export default {
 						min: 0,
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toBytes(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -694,7 +696,8 @@ export default {
 						min: 0,
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiNumber(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -751,7 +754,8 @@ export default {
 						min: 0,
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toBytes(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -807,7 +811,8 @@ export default {
 						min: 0,
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiNumber(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -862,7 +867,8 @@ export default {
 						name: 'Data (Mt/s)',  // Y-akselin nimi
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiNumber(value / 1_000_000)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -963,16 +969,6 @@ export default {
 					}
 				}
 
-				const chartRequestsByEndpointValues = this.serverStats.fastapiData.endpoint_count.map(item => ({
-					name: item.endpoint,
-					value: [
-						item.endpoint, // x: endpoint (categorical)
-						item.avg_response_time_ms, // y: response time
-						item.count // used for bubble size
-					]
-				}));
-
-
 				// Chart 7 - FASTAPI
 				const chart7Options = () => ({
 					textStyle: commonChartValues().textStyle,
@@ -996,7 +992,7 @@ export default {
 					},
 					series: [
 						{
-							name: 'Monthly Average Spending',
+							name: 'Client IP',
 							type: 'pie',
 							label: {
 								color: getCssVar('color-text'),
@@ -1031,7 +1027,7 @@ export default {
 					},
 					series: [
 						{
-							name: 'Monthly Average Spending',
+							name: 'Status Code',
 							type: 'pie',
 							label: {
 								color: getCssVar('color-text'),
@@ -1066,7 +1062,7 @@ export default {
 					},
 					series: [
 						{
-							name: 'Monthly Average Spending',
+							name: 'Request Method',
 							type: 'pie',
 							label: {
 								color: getCssVar('color-text'),
@@ -1118,7 +1114,8 @@ export default {
 						name: 'Requests (kpl)',  // Y-akselin nimi
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiCount(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -1180,7 +1177,8 @@ export default {
 						name: 'Backend time (ms)',  // Y-akselin nimi
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiCount(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: [
 						{
@@ -1241,7 +1239,8 @@ export default {
 						name: 'Error count (kpl)',  // Y-akselin nimi
 						axisLabel: {        // Y-akselin arvojen muotoilu
 							formatter: value => convert.toFiCount(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
 					series: errorSeries
 				});
@@ -1249,10 +1248,19 @@ export default {
 				this.chartValueGenerators.chart12 = chart12Options;
 
 				// Chart requests by endpoint
+				const chartRequestsByEndpointValues = this.serverStats.fastapiData.endpoint_count.map(item => ({
+					name: item.endpoint,
+					value: [
+						item.count,                // x: request count (numeric)
+						item.avg_response_time_ms, // y: average response time
+						item.count                 // used for bubble size
+					]
+				}));
+
 				const chartRequestsByEndpointOptions = () => ({
 					textStyle: commonChartValues().textStyle,
 					title: {
-						text: 'Requests by endpoint',
+						text: 'Requests by Endpoint',
 						textStyle: {
 							color: getCssVar('color-text'),
 							fontSize: 24,
@@ -1264,7 +1272,7 @@ export default {
 						borderWidth: 1,
 						borderColor: getCssVar("color-border"),
 						formatter: (params) => generateTooltipCustomValues(
-							params.value[0],
+							params.data.name, // endpoint name
 							[
 								{ label: 'Avg Response time', value: params.data.value[1] + ' ms' },
 								{ label: 'Request Count', value: convert.toFiCount(params.data.value[2]) }
@@ -1272,10 +1280,13 @@ export default {
 						),
 					},
 					xAxis: {
-						type: 'category',
+						name: 'Request Count',
+						type: 'value', // now numeric
 						axisLabel: {
-							show: false
+							formatter: value => convert.toFiCount(value)
 						},
+						splitLine: commonChartValues().splitLine,
+
 					},
 					yAxis: {
 						name: 'Avg Response Time (ms)',
@@ -1283,8 +1294,10 @@ export default {
 						scale: true,
 						axisLabel: {
 							formatter: value => convert.toFiNumber(value)
-						}
+						},
+						splitLine: commonChartValues().splitLine,
 					},
+
 					grid: {
 						left: 80,
 						right: 32,
@@ -1296,13 +1309,13 @@ export default {
 						min: Math.min(...this.serverStats.fastapiData.endpoint_count.map(item => item.avg_response_time_ms)),
 						max: Math.max(...this.serverStats.fastapiData.endpoint_count.map(item => item.avg_response_time_ms)),
 						inRange: {
-							color: [getCssVar('color-text-light'), getCssVar('color-negative-hover')],
+							color: [getCssVar('color-text'), getCssVar('color-negative')],
 						},
 						calculable: true,
 						orient: 'horizontal',
 						left: 'center',
 						bottom: 10,
-						dimension: 1, // Map color to the second value (response time)
+						dimension: 1, // still map color to response time
 					},
 					series: [
 						{
@@ -1310,7 +1323,7 @@ export default {
 							data: chartRequestsByEndpointValues,
 							symbolSize: data => Math.sqrt(data[2] * 10 / Math.PI) * 2,
 							encode: {
-								x: 0, // endpoint
+								x: 0, // request count
 								y: 1, // response time
 								tooltip: [0, 1, 2],
 							},
@@ -1320,6 +1333,7 @@ export default {
 						}
 					]
 				});
+
 
 				// Set the value generator for the chart
 				this.chartValueGenerators.chartRequestsByEndpoint = chartRequestsByEndpointOptions;
