@@ -26,31 +26,41 @@
                             :src="`${apiUrl}/media/image/title/${title.title_id}/logo.${title.logo_file_type}${title.logo_file_type != 'svg' ? '?width=900' : ''}`"
                         >
 
-                        <div class="details">
-                            <div class="rating">
-                                <IconTMDB right="4px"/>
-                                {{ title.tmdb_vote_average }} ({{ title.tmdb_vote_count }} votes)
-                                <div class="bullet">&ZeroWidthSpace; &bull; &ZeroWidthSpace;</div>
+                        <div class="text-details">
+                            <div class="details">
+                                <div>{{ convertToYear(title.release_date) }}</div>
+                                <div>
+                                    <template v-if="title.type === 'tv'">
+                                        {{ title.season_count }} Seasons, {{ title.episode_count }} Episodes
+                                    </template>
+                                    <template v-else>
+                                        {{ convertToTime(title.movie_runtime) }}
+                                    </template>
+                                </div>
+                                <div class="rating">
+                                    <IconTMDBColorful right="4px"/>
+                                    {{ title.tmdb_vote_average }}
+                                </div>
                             </div>
-                            <div>
-                                <template v-if="title.type === 'tv'">
-                                    {{ title.season_count }} Seasons, {{ title.episode_count }} Episodes
-                                </template>
-                                <template v-else>
-                                    {{ convertToTime(title.movie_runtime) }}
-                                </template>
-                                <div class="bullet">&ZeroWidthSpace; &bull; &ZeroWidthSpace;</div>
+    
+                            <div class="genres">
+                                <div 
+                                    v-for="(genre, index) in title.genres.split(', ')"
+                                    :key="index"
+                                >
+                                    <template v-if="index != 0">&ZeroWidthSpace; &bull;</template>
+                                    {{ genre }}
+                                </div>
                             </div>
-                            <div>{{ convertToYear(title.release_date) }}</div>
-                        </div>
-
-                        <div class="overview">
-                            {{ title.overview }}
+    
+                            <div class="overview">
+                                {{ title.overview }}
+                            </div>
                         </div>
             
                         <router-link 
                             :to="`/watch_list/title/${title.title_id}`" 
-                            class="link-button no-decoration"
+                            class="link-button no-decoration button-primary"
                         >
                             View details
                         </router-link>
@@ -59,13 +69,13 @@
             </div>
 
             <div class="controls">
-                <IconChevronDown class="icon-button" size="36px" style="rotate: 90deg;" @click="prev"/>
+                <i class="bx bx-chevron-left icon-button" @click="prev"></i>
                 <IndicatorDots 
                     :dot-count="showcaseTitles.length" 
                     :dot-index="showCaseIndex"
                     @dotSelected="setShowcaseIndex"
                 />
-                <IconChevronDown class="icon-button" size="36px" style="rotate: -90deg;" @click="next"/>
+                <i class="bx bx-chevron-right icon-button" @click="next"></i>
             </div>
         </div>
 
@@ -86,15 +96,13 @@ import fastApi from '@/utils/fastApi';
 import { apiUrl, isTouchDevice } from '@/utils/config';
 import IndicatorDots from '@/components/WatchList/IndicatorDots.vue';
 import { convert } from '@/utils/utils';
-import IconTMDB from '@/components/icons/IconTMDB.vue';
-import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+import IconTMDBColorful from '../icons/IconTMDBColorful.vue';
 
 export default {
     name: 'TitleShowcase',
     components: {
         IndicatorDots,
-        IconChevronDown,
-        IconTMDB,
+        IconTMDBColorful,
     },
     data() {
         return {
@@ -110,7 +118,7 @@ export default {
             return convert.toRuntime(value);
         },
         convertToYear(value) {
-            return convert.toFiDate(value, 'monthAndYear');
+            return convert.toFiDate(value, 'year');
         },
         setShowcaseIndex(index) {
             const len = this.showcaseTitles.length;
@@ -173,10 +181,10 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    max-width: min(90vw, 1920px);
     display: flex;
     flex-direction: column;
     justify-content: center;
-    box-sizing: border-box;
 }
 
 .content {
@@ -205,17 +213,28 @@ export default {
     z-index: 2;
     user-select: none;
 }
+.controls .icon-button {
+    font-size: 36px;
+}
 
 .logo {
     width: 600px;
     max-width: 100%;
 }
 
+
+.text-details {
+    margin-top: var(--spacing-xl);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
 .details {
-    font-size: 1.1rem;
-    font-weight: 500;
+    /* font-size: var(--font-size-lg); */
+    font-weight: 600;
+    gap: var(--spacing-md);
     color: var(--color-text);
-    margin: var(--spacing-md) 0;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -227,11 +246,19 @@ export default {
     justify-content: center;
 }
 
-.overview {
-    max-width: 60ch;
-    color: var(--color-text-light);
-    margin: var(--spacing-md) 0;
+.genres {
+    /* font-size: var(--font-size-lg); */
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 
+.overview {
+    /* max-width: 60ch; */
+    /* color: var(--color-text-light); */
+
+    margin-top: var(--spacing-sm);
     display: -webkit-box;
     line-clamp: 5;
     -webkit-line-clamp: 5;
@@ -246,37 +273,36 @@ export default {
 }
 
 .backdrop-wrapper {
-    position: absolute;
+    /* position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
+    width: 100%; */
 }
 .backdrop {
-    --width: 70%;
+    --width: 100%;
     object-fit: cover;
     position: absolute;
-    top: 0;
+    top: calc(-1 * var(--height-top-bar));
     left: calc(100% - var(--width));
     width: var(--width);
-    height: 120%;
+    height: calc(100 / 70%);
     /* max-height: 100vw; */
     opacity: 0;
     z-index: -1;
     transition: opacity 0.5s var(--cubic-1);
     /* mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30vh); */
-    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30%),
-                linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 50%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 30%);
     mask-composite: intersect;
 }
 .title-showcase .backdrop.active {
     opacity: 1;
 }
 @media (max-width: 1500px) {
-    .title-showcase .backdrop {
+    /* .title-showcase .backdrop {
         --width: 100%;
         mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.33) 30%);
-    }
+    } */
     .overview {
         display: -webkit-box;
         line-clamp: 4;
@@ -287,8 +313,8 @@ export default {
 }
 @media (max-width: 700px) {
     .controls {
-        left: 50%;
-        transform: translateX(-50%);
+        right: 5vw;
+        justify-content: space-between;
     }
     .link-button {
         width: 100%;

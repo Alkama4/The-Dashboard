@@ -35,7 +35,7 @@ const routes = [
     component: WatchListLayout,
     children: [
       { path: '', redirect: '/watch_list/discover' },
-      { path: 'discover', name: 'Discover', component: () => import('@/views/WatchList/WatchListPage.vue'), meta: { title: 'Discover' } },
+      { path: 'discover', name: 'Discover', component: () => import('@/views/WatchList/DiscoverPage.vue'), meta: { title: 'Discover' } },
       { path: 'add_title', component: () => import('@/views/WatchList/AddTitlePage.vue'), meta: { title: 'Add Title' } },
       { path: 'title/:titleID', component: () => import('@/views/WatchList/TitleDetailsPage.vue'), meta: { title: 'Title Details' } },
       { path: 'collections', component: () => import('@/views/WatchList/ListCollectionsPage.vue'), meta: { title: 'Collections' } },

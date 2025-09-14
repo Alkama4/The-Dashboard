@@ -53,7 +53,7 @@ import TitleCard from '@/components/WatchList/TitleCard.vue';
 import IconSearch from '@/components/icons/IconSearch.vue';
 
 export default {
-    name: 'HomePage',
+    name: 'DiscoverPage',
     components: {
         TitleShowcase,
         Flicking,
