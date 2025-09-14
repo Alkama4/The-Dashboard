@@ -149,10 +149,28 @@ export default {
     },
     watch: {
         imageLinks: {
-            handler() {
+            handler(newLinks) {
+                const prevSelected = this.selectedImage;
+                const prevData = this.individualData;
+
                 this.setIndividualData();
+
+                // restore `isLoaded` flags for unchanged URLs
+                this.individualData.forEach((img) => {
+                    const old = prevData.find(o => o.url === img.url);
+                    if (old) img.isLoaded = old.isLoaded;
+                });
+
+                // keep current index if still valid
+                if (prevSelected < newLinks.length) {
+                    this.selectedImage = prevSelected;
+                    this.showOnDom = prevSelected;
+                } else {
+                    this.selectedImage = 0;
+                    this.showOnDom = 0;
+                }
             },
-            immediate: true, // Run when mounted
+            immediate: true,
         },
     }
 }

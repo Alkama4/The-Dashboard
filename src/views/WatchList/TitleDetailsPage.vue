@@ -957,8 +957,13 @@ export default {
                 } else {
                     updateMessage = `"${this.title_info.name}" ${actions.join(" & ")} updated.`;
                 }
-
                 notify(updateMessage, "success");
+                
+                // If images updated, force cache-bust
+                if (payload.update_title_images || payload.update_season_images) {
+                    this.title_info.image_version = Date.now();
+                }
+
                 await this.queryTitleData();
                 this.episodeMapTileBackgroundColors();
             }
@@ -1145,6 +1150,7 @@ export default {
             const response = await fastApi.watch_list.titles.update_media_info(this.title_info.title_id);
             if (response) {
                 notify(response.message, 'success');
+                await this.queryTitleData();
             }
         },
         promptTitleCollections() {
@@ -1203,9 +1209,11 @@ export default {
                 return [];
             }
 
+            const cacheBuster = this.title_info.image_version || Date.now(); 
+            let suffix = this.isTouchDevice ? '?width=1200' : '';
+
             return Array.from({ length: this.title_info.backdrop_image_count }, (_, i) => {
-                let suffix = this.isTouchDevice ? '?width=1200' : '';
-                return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/backdrop${i + 1}.jpg${suffix}`;
+                return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/backdrop${i + 1}.jpg${suffix}?v=${cacheBuster}`;
             });
         },
         menuOptions() {
@@ -1213,7 +1221,7 @@ export default {
                 { icon: 'bxs-heart', label: 'Toggle Favourite', action: () => this.handleFavouriteToggle() },
                 { icon: 'bxs-collection', label: 'Modify Title Collections', action: () => this.promptTitleCollections() },
                 { icon: 'bx-refresh', label: 'Requery Title Data ', action: () => this.openTitleUpdateModal() },
-                { icon: 'bxs-file-find', label: 'Scan Library for Title', action: () => this.handleUpdateTitleMediaInfo() },
+                { icon: 'bxs-file-find', label: 'Scan Media Library for Title', action: () => this.handleUpdateTitleMediaInfo() },
                 { icon: 'bxs-palette', label: 'Colors Toggle', action: () => { this.showDisplayColors = !this.showDisplayColors } },
             ];
 
