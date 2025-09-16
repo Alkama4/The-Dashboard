@@ -33,10 +33,6 @@
                                 @load="image.isLoaded = true" 
                                 :src="image.url" 
                             />
-                            <TitleShowcaseDetails 
-                                v-if="image.titleDetails" 
-                                :titleDetails="image.titleDetails"
-                            />
                         </div>
                     </div>
                 </div>
@@ -68,14 +64,12 @@
 import { apiUrl, isTouchDevice, standAloneBuild } from '@/utils/config';
 import IndicatorDots from '@/components/WatchList/IndicatorDots.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
-import TitleShowcaseDetails from '@/components/WatchList/TitleShowcaseDetails.vue';
 
 export default {
     name: "BackdropSlideShow",
     components: {
         IndicatorDots,
         IconChevronDown,
-        TitleShowcaseDetails
     },
     data() {
         return {

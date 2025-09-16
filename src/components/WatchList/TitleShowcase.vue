@@ -272,13 +272,13 @@ export default {
     box-sizing: border-box;
 }
 
-.backdrop-wrapper {
-    /* position: absolute;
+/* .backdrop-wrapper {
+    position: absolute;
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%; */
-}
+    width: 100%;
+} */
 .backdrop {
     --width: 100%;
     object-fit: cover;
