@@ -68,7 +68,7 @@
                 </transition>
             </div>
 
-            <div class="controls">
+            <div class="controls card">
                 <i class="bx bx-chevron-left icon-button" @click="prev"></i>
                 <IndicatorDots 
                     :dot-count="showcaseTitles.length" 
@@ -212,6 +212,7 @@ export default {
     left: 5vw;
     z-index: 2;
     user-select: none;
+    padding: 4px var(--spacing-sm);
 }
 .controls .icon-button {
     font-size: 36px;
@@ -313,8 +314,10 @@ export default {
 }
 @media (max-width: 700px) {
     .controls {
-        right: 5vw;
-        justify-content: space-between;
+        left: 50%;
+        transform: translateX(-50%);
+        gap: var(--spacing-sm);
+        /* justify-content: space-between; */
     }
     .link-button {
         width: 100%;
