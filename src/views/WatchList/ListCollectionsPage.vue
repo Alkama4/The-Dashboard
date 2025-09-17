@@ -1,8 +1,8 @@
 <template>
-    <div class="list-collections">
-        <h1>List collections <span class="text-lighter">(Under construction)</span></h1>
+    <div class="list-collections content-width-extra-large">
+        <h1>Your collections</h1>
     
-        <button @click="handleNewCollection">New collection</button>
+        <!-- <button @click="handleNewCollection">New collection</button> -->
     
         <div class="collections">            
             <CollectionItem 
@@ -117,7 +117,8 @@ export default {
 <style scoped>
 .collections {
     display: flex;
-    flex-direction: column;
-    row-gap: var(--spacing-md);
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
 }
 </style>
