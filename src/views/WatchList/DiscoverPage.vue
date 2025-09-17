@@ -4,6 +4,7 @@
 
         <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-extra-large title-list">
             <h2>{{ titleList.listName }}</h2>
+            <!-- <div class="title-list-text text-light">{{ titleList.text }}</div> -->
             <div 
                 v-if="titleList.titles == null"
                 class="title-card-placeholder content-not-found"
@@ -23,6 +24,7 @@
                     v-for="(data, index) in titleList.titles" 
                     :key="index" 
                     :titleDetails="data" 
+                    :class="{ 'last': index == titleList.titles.length - 1 }"
                     @favourite-toggle="data.favourite = !data.favourite"
                 />
             </Flicking>
@@ -211,17 +213,25 @@ export default {
 <style>
 @import url("/node_modules/@egjs/vue3-flicking/dist/flicking.css");
 .title-card-placeholder {
-    height: calc(330px * 0.95);
-    width: calc(100% - 220px * 0.05);
-    margin: calc(330px * 0.025) calc(220px * 0.025);
+    height: 414px;
+    width: 100%;
     border-radius: var(--border-radius-large);
 }
 
 .title-list h2 {
     margin-bottom: var(--spacing-xs);
+    margin-top: var(--spacing-xl);
 }
 .title-list .title-list-text {
     margin-top: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.title-card {
+    margin-right: var(--spacing-md);
+}
+.title-card.last {
+    margin-right: 0;
 }
 
 .bottom {

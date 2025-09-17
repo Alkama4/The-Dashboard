@@ -1,6 +1,6 @@
 <template>
     <div class="title-card">
-        <router-link :to="`/watch_list/title/${titleDetails.title_id}`" draggable="false">
+        <router-link :to="`/watch_list/title/${titleDetails.title_id}`" draggable="false" class="no-decoration">
             <div
                 class="title-card-thumbnail"
             >
@@ -11,27 +11,10 @@
                     loading="lazy"
                     @load="(event) => event.target.classList.add('loaded')" 
                     @error="imgNotFound = true"
+                    draggable="false"
                 />
             </div>
-            <div class="title-card-gradient"></div>
-            <div class="title-card-details">
-                <div class="details">
-                    <span class="title-card-name">{{ titleDetails.name }}</span>
-                    <div class="title-card-rating">
-                        <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
-                    </div>
-                    <div class="title-card-progress">
-                        <template v-if="titleDetails.type === 'tv'">
-                            <span class="season-after">{{ titleDetails.season_count }}</span>
-                            <span class="episode-after">{{ titleDetails.episode_count }}</span>
-                        </template>
-                        <template v-else>
-                            {{ formatRuntime(titleDetails.movie_runtime) }}
-                        </template>
-                    </div> 
-                </div>
-            </div>
-    
+
             <div class="tag tag-secondary" v-if="titleDetails.favourite">Favourite</div>
             <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">{{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}</div>
             <div 
@@ -47,7 +30,29 @@
             <div class="tag" v-else-if="new Date(titleDetails.release_date) > new Date()">Upcoming</div>
         </router-link>
 
-        <DropdownMenu class="three-dots-wrapper" :options="dropDownOptions"/>
+        <div class="title-card-details">
+            <div class="details">
+                <router-link 
+                    class="title-card-name no-decoration hover-decoration"
+                    draggable="false"
+                >
+                    {{ titleDetails.name }}
+                </router-link>
+                <div class="title-card-rating">
+                    <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
+                </div>
+                <div class="title-card-progress">
+                    <template v-if="titleDetails.type === 'tv'">
+                        <span class="season-after">{{ titleDetails.season_count }}</span>
+                        <span class="episode-after">{{ titleDetails.episode_count }}</span>
+                    </template>
+                    <template v-else>
+                        {{ formatRuntime(titleDetails.movie_runtime) }}
+                    </template>
+                </div> 
+            </div>
+        </div>
+        <DropdownMenu :options="dropDownOptions"/>
     </div>
 </template>
 
@@ -110,22 +115,16 @@ export default {
 /* Base Card Styles */
 .title-card {
     display: flex;
-    background-color: var(--color-background-card);
+    flex-direction: column;
+    /* background-color: var(--color-background-card); */
     width: 220px;
-    aspect-ratio: 2/3;
+    /* height: 400px; */
     position: relative;
     cursor: pointer;
     user-select: none;
     box-shadow: var(--shadow-card);
-    transform: scale(0.95);
+    /* transform: scale(0.95); */
     transition: transform 0.15s var(--cubic-1);
-}
-.title-card a {
-    border-radius: var(--border-radius-medium);
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
-    position: absolute;
 }
 @media (max-width: 900px) {
     .title-card {
@@ -135,11 +134,14 @@ export default {
 
 /* Thumbnail Image */
 .title-card-thumbnail {
-    position: absolute;
-    height: 100%;
+    /* position: absolute; */
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
     width: 100%;
+    aspect-ratio: 2/3;
     background-color: var(--color-background-card-section);
     z-index: 1;
+
 }
 .title-card-thumbnail img {
     width: 100%;
@@ -147,29 +149,16 @@ export default {
     object-fit: cover;
 }
 
-/* Gradient Overlay */
-.title-card-gradient {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(0deg, hsla(0, 0%, 0%, 0.8), hsla(0, 0%, 0%, 0.6) 30%, transparent 60%);
-    z-index: 2;
-    opacity: 0;
-    transition: opacity 0.2s var(--cubic-1);
-}
-
 /* Card Details */
 .title-card-details {
-    position: absolute;
-    bottom: var(--spacing-sm);
-    right: var(--spacing-sm);
-    padding: var(--spacing-xs);
-    border-radius: var(--border-radius-small);
+    position: relative;
     font-size: var(--font-size-sm);
+    margin-top: var(--spacing-sm);
     font-weight: 500;
-    text-align: end;
+    text-align: left;
     color: var(--color-text-white-light);
-    opacity: 0;
-    transform: translateX(15px);
+    opacity: 1;
+    /* transform: translateX(15px); */
     z-index: 3;
     transition: opacity 0.2s var(--cubic-1), transform 0.2s var(--cubic-1);
 }
@@ -179,8 +168,8 @@ export default {
     font-weight: 700;
     color: var(--color-text-white);
     display: -webkit-box;
-    line-clamp: 2;
-    -webkit-line-clamp: 2;
+    line-clamp: 1;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -188,16 +177,10 @@ export default {
 .title-card-rating {
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: start;
     gap: var(--spacing-xs);
 }
 
-/* Progress Details */
-.title-card-progress {
-    display: flex;
-    gap: 3px;
-    justify-content: flex-end;
-}
 
 /* Tag Labels */
 .tag {
@@ -207,43 +190,22 @@ export default {
     z-index: 10;
 }
 
-/* Controls */
-.three-dots-wrapper {
-    opacity: 0;
-    transition: opacity 0.2s var(--cubic-1);
-    position: absolute;
-    top: var(--spacing-sm);
-    right: 0;
-    z-index: 10;
-}
-.three-dots-wrapper::after {
-    content: "";
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: black;
-    filter: blur(40px);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: -1;
-    pointer-events: none;
-}
-
 /* Hover and Touch Interactions */
-.pointer-device .title-card:hover {
+/* .pointer-device .title-card:hover {
     transform: scale(1);
-}
+} */
 
-.title-card:hover .title-card-details,
+/* .title-card:hover .title-card-details,
 .title-card:hover .title-card-gradient,
-.title-card:hover .three-dots-wrapper,
 .touch-device .title-card .title-card-details,
-.touch-device .title-card .title-card-gradient,
-.touch-device .title-card .three-dots-wrapper {
+.touch-device .title-card .title-card-gradient {
     opacity: 1;
     transform: translateX(0);
+} */
+
+.dropdown-menu {
+    top: var(--spacing-sm);
+    right: var(--spacing-xs);
 }
 
 /* Full Width Variant */
