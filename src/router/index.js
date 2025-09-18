@@ -39,6 +39,7 @@ const routes = [
       { path: 'add_title', component: () => import('@/views/WatchList/AddTitlePage.vue'), meta: { title: 'Add Title' } },
       { path: 'title/:titleID', component: () => import('@/views/WatchList/TitleDetailsPage.vue'), meta: { title: 'Title Details' } },
       { path: 'collections', component: () => import('@/views/WatchList/ListCollectionsPage.vue'), meta: { title: 'Collections' } },
+      { path: 'collection/:collectionId', component: () => import('@/views/WatchList/CollectionDetails.vue'), meta: { title: 'Collection Details' } },
       { path: 'search', component: () => import('@/views/WatchList/ListTitlesPage.vue'), meta: { title: 'Search' } },
     ]
   },

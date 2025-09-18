@@ -500,6 +500,12 @@ const fastApi = {
                     session_key: session.getKey()
                 });
             },
+
+            async get(collection_id) {
+                return await getData(`/watch_list/collections/${collection_id}`, {
+                    session_key: session.getKey()
+                });
+            },
         
             async create(name, description) {
                 return await postData('/watch_list/collections', {

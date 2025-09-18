@@ -1,6 +1,6 @@
 <template>
     <div class="collection">
-        <router-link :to="`/watch_list/collection/${collection.collection_id}`" class="no-decoration hover-decoration">
+        <router-link :to="`/watch_list/collection/${collection.collection_id}`" class="no-decoration">
             <div class="title-posters">
                 <img
                     v-for="(title, index) in collection.titles.slice(0, 4)"
@@ -10,10 +10,10 @@
             </div>
             <div class="details">
                 <div class="name">{{ collection.name }}</div>
-                <div class="detail">
+                <!-- <div class="detail">
                     {{ collection.children.length == 0 ? 'no' : collection.children.length }} child collection{{ collection.children.length == 1 ? '' : 's' }}
-                </div>
-                <div class="detail">{{ totalTitleCount }} titles</div>
+                </div> -->
+                <div class="detail">Collection &bull; {{ totalTitleCount }} titles</div>
             </div>
         </router-link>
         <DropdownMenu :options="dropDownOptions"/>
@@ -75,6 +75,11 @@ export default {
     box-sizing: border-box;
     width: 220px;
 }
+@media (max-width: 900px) {
+    .collection {
+        width: 180px;
+    }
+}
 
 .dropdown-menu {
     top: var(--spacing-sm);
@@ -113,6 +118,9 @@ export default {
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+.collection:hover .name {
+    text-decoration: underline;
 }
 
 .detail {
