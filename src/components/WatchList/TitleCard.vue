@@ -28,30 +28,30 @@
             </div>
             <div class="tag tag-primary" v-else-if="titleDetails.new_episodes >= 1">New episodes</div>
             <div class="tag" v-else-if="new Date(titleDetails.release_date) > new Date()">Upcoming</div>
-        </router-link>
 
-        <div class="title-card-details">
-            <div class="details">
-                <router-link 
-                    class="title-card-name no-decoration hover-decoration"
-                    draggable="false"
-                >
-                    {{ titleDetails.name }}
-                </router-link>
-                <div class="title-card-rating">
-                    <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
+            <div class="title-card-details">
+                <div class="details">
+                    <div 
+                        class="title-card-name no-decoration"
+                    >
+                        {{ titleDetails.name }}
+                    </div>
+                    <div class="title-card-rating">
+                        <IconTMDB/>{{ titleDetails.tmdb_vote_average }} &bullet; {{ new Date(titleDetails.release_date).getFullYear() }}
+                    </div>
+                    <div class="title-card-progress">
+                        <template v-if="titleDetails.type === 'tv'">
+                            <span class="season-after">{{ titleDetails.season_count }}</span>
+                            <span class="episode-after">{{ titleDetails.episode_count }}</span>
+                        </template>
+                        <template v-else>
+                            {{ formatRuntime(titleDetails.movie_runtime) }}
+                        </template>
+                    </div> 
                 </div>
-                <div class="title-card-progress">
-                    <template v-if="titleDetails.type === 'tv'">
-                        <span class="season-after">{{ titleDetails.season_count }}</span>
-                        <span class="episode-after">{{ titleDetails.episode_count }}</span>
-                    </template>
-                    <template v-else>
-                        {{ formatRuntime(titleDetails.movie_runtime) }}
-                    </template>
-                </div> 
             </div>
-        </div>
+        </router-link>
+        
         <DropdownMenu :options="dropDownOptions"/>
     </div>
 </template>
@@ -114,7 +114,9 @@ export default {
     position: relative;
     cursor: pointer;
     user-select: none;
-    transition: transform 0.15s var(--cubic-1);
+}
+.pointer-device .title-card:hover .title-card-name {
+    text-decoration: underline;
 }
 @media (max-width: 900px) {
     .title-card {
