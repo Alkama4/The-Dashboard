@@ -1,7 +1,7 @@
 <template>
     <transition name="notification">
         <div v-if="visible" :class="['notification', messageType]" @click="closeThis">
-            <IconCross class="closeIcon" color="var(--color-text-white)" colorHover="var(--color-text-white-hover)"/>
+            <i class="bx bx-x closeIcon"></i>
             <h3> <!-- Header will be placed here based on messageType --> </h3>
             <p>{{ message }}</p>
             <!-- Timer bar at the bottom -->
@@ -11,11 +11,9 @@
 </template>
 
 <script>
-import IconCross from '@/components/icons/IconCross.vue';
 
 export default {
     components: {
-        IconCross,
     },
     emits: ['close'],
     props: {
@@ -140,6 +138,17 @@ export default {
 } .notification.info h3::after {
     content: "Info";
 }
+
+.watchlist .notification.info,
+.watchlist .notification.info h3 {
+    color: var(--color-text-black);
+}
+.watchlist .notification.info:hover,
+.watchlist .notification.info:hover h3 {
+    color: var(--color-text-black-hover);
+}
+
+
 
 .notification.success {
     background-color: var(--color-positive);
