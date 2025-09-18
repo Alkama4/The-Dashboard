@@ -27,8 +27,11 @@
                         >
 
                         <div class="text-details">
+                            <h1>{{ title.name }}</h1>
+
                             <div class="details">
                                 <div>{{ convertToYear(title.release_date) }}</div>
+                                <div>&verbar;</div>
                                 <div>
                                     <template v-if="title.type === 'tv'">
                                         {{ title.season_count }} Seasons, {{ title.episode_count }} Episodes
@@ -37,20 +40,25 @@
                                         {{ convertToTime(title.movie_runtime) }}
                                     </template>
                                 </div>
-                                <div class="rating">
+                                <div>&verbar;</div>
+                                <div>
                                     <IconTMDBColorful right="4px"/>
                                     {{ title.tmdb_vote_average }}
+                                </div>
+                                <div>&verbar;</div>
+                                <div>
+                                    {{ title.age_rating }}
                                 </div>
                             </div>
     
                             <div class="genres">
-                                <div 
+                                <template 
                                     v-for="(genre, index) in title.genres.split(', ')"
                                     :key="index"
                                 >
-                                    <template v-if="index != 0">&ZeroWidthSpace; &bull;</template>
-                                    {{ genre }}
-                                </div>
+                                    <div v-if="index != 0">&bull;</div>
+                                    <div>{{ genre }}</div>
+                                </template>
                             </div>
     
                             <div class="overview">
@@ -68,7 +76,7 @@
                 </transition>
             </div>
 
-            <div class="controls card">
+            <div v-if="showcaseTitles.length && showcaseTitles.length > 1" class="controls card">
                 <i class="bx bx-chevron-left icon-button" @click="prev"></i>
                 <IndicatorDots 
                     :dot-count="showcaseTitles.length" 
@@ -231,10 +239,15 @@ export default {
     flex-direction: column;
     gap: var(--spacing-xs);
 }
+
+.text-details h1 {
+    margin-top: 0;
+    margin-bottom: var(--spacing-sm);
+}
 .details {
     /* font-size: var(--font-size-lg); */
-    font-weight: 600;
-    gap: var(--spacing-md);
+    font-weight: 700;
+    gap: calc(var(--spacing-sm) + var(--spacing-xs));
     color: var(--color-text);
     display: flex;
     flex-direction: row;
@@ -249,14 +262,15 @@ export default {
 
 .genres {
     /* font-size: var(--font-size-lg); */
-    font-weight: 600;
+    font-weight: 500;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    gap: var(--spacing-sm);
 }
 
 .overview {
-    /* max-width: 60ch; */
+    max-width: min(90vw, 1920px, 100%);
     /* color: var(--color-text-light); */
 
     margin-top: var(--spacing-sm);
