@@ -2,24 +2,18 @@
     <div v-if="title_info" class="title-info">
         <div class="background-color-accents" ref="backgroundColorAccents" :style="titleInfoStyle"></div>
 
-        <BackdropSlideShow :imageLinks="backdropUrls"/>
+        <BackdropSlideShow :imageLinks="title_info.title_images?.backdrop"/>
 
         <div class="content-width-medium title-details">
             <div class="poster-next-to-stuff">
                 <div class="poster-holder">
-                    <div v-if="!standAloneBuild" class="poster-placholder">
+                    <div class="poster-placholder">
                         <MissingImage v-if="failedToLoadImages.includes('poster')"/>
                         <img 
-                            v-else
-                            :src="imageUrl(300, title_info.backup_poster_url, title_info.title_id)" 
+                            v-else-if="posterUrl"
+                            :src="posterUrl" 
                             @load="(event) => event.target.classList.add('loaded')"
                             @error="failedToLoadImages.push('poster')"
-                        >
-                    </div>
-                    <div v-else class="poster-placholder">
-                        <img 
-                            :src="imageUrl(300, title_info.backup_poster_url, title_info.title_id)" 
-                            @load="(event) => event.target.classList.add('loaded')"
                         >
                     </div>
                 </div>
@@ -52,8 +46,8 @@
                     class="flex-1"
                     :displayValue="title_info.type === 'movie' 
                         ? title_info.watch_count 
-                        : title_info.seasons.reduce((min, season) => 
-                            season.episodes.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
+                        : title_info?.seasons?.reduce((min, season) => 
+                            season?.episodes?.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
                     @valueUpdated="val => handleTitleWatchClick('title', val, null)"
                 />
                 
@@ -298,7 +292,7 @@
                     </div>
                 </div>
 
-                <div v-if="title_info.trailers.length > 0" class="trailer-container">
+                <div v-if="title_info?.trailers?.length > 0" class="trailer-container">
                     <h3>
                         Trailer
                     </h3>
@@ -318,13 +312,13 @@
             </div>
 
             <WatchNowSection
-                :title-media="title_info?.title_media.movies"
+                :title-media="title_info?.title_media?.movies"
             />
 
             <h3>Extras</h3>
             <div class="aggregator-wrapper">
                 <a 
-                    v-for="(extra, i) in title_info.title_media.extras" 
+                    v-for="(extra, i) in title_info?.title_media?.extras" 
                     :key="i"
                     :href="fileBridgeLink(extra.link)"
                     class="link-button no-decoration hover-decoration"
@@ -415,8 +409,8 @@
                     <div class="episode-tile label">
                     </div>
                     <div 
-                        v-for="(episode, index) in title_info.seasons.reduce((maxSeason, season) => 
-                            season.episodes.length > maxSeason.episodes.length ? season : maxSeason, title_info.seasons[0]).episodes" 
+                        v-for="(episode, index) in title_info?.seasons?.reduce((maxSeason, season) => 
+                            season?.episodes?.length > maxSeason?.episodes?.length ? season : maxSeason, title_info.seasons[0])?.episodes" 
                         :key="episode.id"
                         class="episode-tile label" 
                     >
@@ -611,7 +605,7 @@ import fastApi from '@/utils/fastApi';
 import router from '@/router';
 import { notify } from '@/utils/notification';
 import InfoTooltip from '@/components/common/InfoTooltip.vue';
-import { interpolateBetweenColors, getCssVar, convert, fileBridgeLink } from '@/utils/utils'
+import { interpolateBetweenColors, getCssVar, convert, fileBridgeLink, getMediaUrl } from '@/utils/utils'
 import notFoundPage from '@/views/404Page.vue';
 import { apiUrl, standAloneBuild, isTouchDevice } from '@/utils/config';
 import WatchNowRecursive from '@/components/WatchList/WatchNowRecursive.vue';
@@ -645,7 +639,7 @@ export default {
             isTouchDevice: isTouchDevice,
             apiUrl: apiUrl,
             titleID: this.$route.params.titleID,
-            title_info: null,
+            title_info: {},
             expandedSeason: null,
             waitingForResult: [],
             failedToLoadImages: [],
@@ -743,87 +737,48 @@ export default {
             const [h, s, l] = this.rgbToHsl(rgb);
             return [h, s, Math.min(l, maxAllowedLightness)].join(' ');
         },
-        async getTitleColors() {
-            const resp = await fastApi.colors(this.titleID);
-            if (!resp) return;
+        // async getTitleColors() {
+        //     const resp = await fastApi.colors(this.titleID);
+        //     if (!resp) return;
 
-            // Build colour strings with spaces after commas
-            const colours = resp.colors.map(c => `rgb(${c.rgb.join(', ')})`);
-            this.titleColors = colours.map((c, i) => ({
-                value: c,
-                proportion: convert.toFiNumber(resp.colors[i].proportion, 6)
-            }));
+        //     // Build colour strings with spaces after commas
+        //     const colours = resp.colors.map(c => `rgb(${c.rgb.join(', ')})`);
+        //     this.titleColors = colours.map((c, i) => ({
+        //         value: c,
+        //         proportion: convert.toFiNumber(resp.colors[i].proportion, 6)
+        //     }));
 
-            // Four-layer radial gradients
-            const positions = [
-                "10% 0%",
-                "80% 33%",
-                "20% 66%",
-                "90% 100%"
-            ];
+        //     // Four-layer radial gradients
+        //     const positions = [
+        //         "10% 0%",
+        //         "80% 33%",
+        //         "20% 66%",
+        //         "90% 100%"
+        //     ];
 
-            const gradients = resp.colors.map((c, i) => {
-                const hsl = this.rgbToHslClamped(c.rgb);
-                return `radial-gradient(
-                    circle at ${positions[i]},
-                    hsl(${hsl}) 0%,
-                    transparent 50%
-                )`;
-            });
+        //     const gradients = resp.colors.map((c, i) => {
+        //         const hsl = this.rgbToHslClamped(c.rgb);
+        //         return `radial-gradient(
+        //             circle at ${positions[i]},
+        //             hsl(${hsl}) 0%,
+        //             transparent 50%
+        //         )`;
+        //     });
 
-            // Add the black fade overlay first
-            const fadeHeight = "25%";
-            gradients.unshift(`linear-gradient(
-                to bottom,
-                var(--color-background) 0px,
-                transparent ${fadeHeight},
-                transparent calc(100% - ${fadeHeight}),
-                var(--color-background) 100%
-            )`);
+        //     // Add the black fade overlay first
+        //     const fadeHeight = "25%";
+        //     gradients.unshift(`linear-gradient(
+        //         to bottom,
+        //         var(--color-background) 0px,
+        //         transparent ${fadeHeight},
+        //         transparent calc(100% - ${fadeHeight}),
+        //         var(--color-background) 100%
+        //     )`);
 
-            this.titleInfoStyle = { background: gradients.join(', ') };
+        //     this.titleInfoStyle = { background: gradients.join(', ') };
 
-            this.episodeMapTileBackgroundColors();
-        },
-        toggleHeight(refKey) {
-            // Mark the season as opened to load to dom with v-if to start loading images
-            if (!this.openedSeasons.includes(refKey)) {
-                this.openedSeasons.push(refKey)
-            }
-            
-            // Set a minimal timeout so that the dom change registers before the height is calculated
-            setTimeout(() => {
-                // Change the actual height
-                const element = this.$refs[refKey]?.[0]; // Get the first element
-                if (!element) return;
-
-                if (!element.style.height || element.style.height === "0px") {
-                    element.style.height = element.scrollHeight + "px"; // Expand
-                } else {
-                    element.style.height = "0px"; // Collapse
-                }
-            }, 1)
-        },
-        setHeightToNone(refKey, noTransition = true) {
-            // Change the actual height
-            const element = this.$refs[refKey]?.[0]; // Get the first element because it gives an array (and there is only one)
-            if (element) {
-                if (noTransition) element.style.transition = 'height 0s';
-                element.style.height = "0px"; // Collapse
-                if (noTransition) setTimeout(() => {
-                    element.style.transition = '';
-                }, 1)
-            }
-        },
-        closeAllSeasons(keepRef = "", noTransition = true) {
-            this.title_info.seasons.forEach(season => {
-                const seasonRef = `refSeason${season.season_number}`;
-                // Don't set height for the one that we wan't to be open
-                if (seasonRef != keepRef) {
-                    this.setHeightToNone(seasonRef, noTransition);
-                }
-            })
-        },
+        //     this.episodeMapTileBackgroundColors();
+        // },
         async handleTitleWatchClick(titleOrSeasonOrEpisode, watchCount, customID) {
             // Initially get a confirmation from the user before going through
             if (
@@ -1026,8 +981,8 @@ export default {
             this.modifyWaitingArray("title_info");
         },
         getWatchedStats() {
-            const totalEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
-            const watchedEpisodes = this.title_info.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
+            const totalEpisodes = this.title_info?.seasons?.reduce((sum, season) => sum + season.episodes.length, 0) || 0;
+            const watchedEpisodes = this.title_info?.seasons?.reduce((sum, season) => sum + season.episodes.filter(ep => ep.watch_count >= 1).length, 0) || 0;
             const percentage = totalEpisodes ? ((watchedEpisodes / totalEpisodes) * 100).toFixed(1) + "%" : "0%";
             return `${watchedEpisodes} / ${totalEpisodes} episodes (${percentage})`;
         },
@@ -1082,23 +1037,6 @@ export default {
                     resolve();
                 }, 1)
             });
-        },
-        imageUrl(width, backupUrl, titleId, seasonNumber, episodeNumber) {
-            if (standAloneBuild) {
-                if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
-                if (width == 900 && episodeNumber) width = 300;  // TMDB doesn't have a 900 for episodes so use the largest non-original 300 instead
-                return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            } else {
-                if (!seasonNumber) {
-                    return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
-                } else if (!episodeNumber){
-                    return `${this.apiUrl}/media/image/title/${titleId}/season${seasonNumber}/poster.jpg?width=${width}`;
-                } else if (episodeNumber) {
-                    return `${this.apiUrl}/media/image/title/${titleId}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
-                } else {
-                    return "";
-                }
-            }
         },
         handleWatchTitleNow() {
             const movies = this.title_info.title_media.movies;
@@ -1204,18 +1142,6 @@ export default {
             }
             return options;
         },
-        backdropUrls() {
-            if (!this.title_info || !this.title_info.backdrop_image_count || !this.title_info.title_id) {
-                return [];
-            }
-
-            const cacheBuster = this.title_info.image_version || Date.now(); 
-            let suffix = this.isTouchDevice ? '?width=1200' : '';
-
-            return Array.from({ length: this.title_info.backdrop_image_count }, (_, i) => {
-                return `${this.apiUrl}/media/image/title/${this.title_info.title_id}/backdrop${i + 1}.jpg${suffix}?v=${cacheBuster}`;
-            });
-        },
         menuOptions() {
             const base = [
                 { icon: 'bxs-heart', label: 'Toggle Favourite', action: () => this.handleFavouriteToggle() },
@@ -1247,6 +1173,12 @@ export default {
                 }
             ];
         },
+        posterUrl() {
+            const poster = this.title_info?.title_images?.poster?.[0];
+            const posterPath = poster?.path || false
+            const sourceUrl = poster?.source_url || false
+            return getMediaUrl(posterPath, sourceUrl)
+        }
     },
     async beforeRouteUpdate(to) {
         if (to.hash) {
@@ -1288,7 +1220,7 @@ export default {
             }, 1)
         }
 
-        await this.getTitleColors();
+        // await this.getTitleColors();
     },
     unmounted() {
         window.removeEventListener('darkModeChange', this.episodeMapTileBackgroundColors);

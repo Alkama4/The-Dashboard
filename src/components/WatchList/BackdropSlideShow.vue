@@ -64,6 +64,7 @@
 import { apiUrl, isTouchDevice, standAloneBuild } from '@/utils/config';
 import IndicatorDots from '@/components/WatchList/IndicatorDots.vue';
 import IconChevronDown from '@/components/icons/IconChevronDown.vue';
+import { getMediaUrl } from '@/utils/utils';
 
 export default {
     name: "BackdropSlideShow",
@@ -132,10 +133,10 @@ export default {
         },
         setIndividualData() {
             if (this.imageLinks && this.imageLinks.length) {
-                this.individualData = this.imageLinks.map((link, i) => ({
+                this.individualData = this.imageLinks.map((imgObj, i) => ({
                     number: i,
                     isLoaded: false,
-                    url: link,
+                    url: getMediaUrl(imgObj.path),
                     titleDetails: this.associatedDetails[i]
                 }));
             }

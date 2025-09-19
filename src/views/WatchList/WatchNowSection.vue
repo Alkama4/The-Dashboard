@@ -1,8 +1,8 @@
 <template>
-    <div v-if="titleMedia.length > 0">
+    <div v-if="titleMedia?.length > 0">
         <h3>Watch now</h3>
         <CustomSelect 
-            v-if="titleMedia.length > 1"
+            v-if="titleMedia?.length > 1"
             v-model="activeWatchNowIndex"
             :options="selectOptions"
         />

@@ -52,7 +52,7 @@
                                 <img 
                                     v-else
                                     class="poster" 
-                                    :src="imageUrl(300, season.backup_poster_url, season.season_number)" 
+                                    :src="imageUrl(season.season_images[0]?.path, season.season_images[0]?.source_url)" 
                                     @load="(event) => event.target.classList.add('loaded')"
                                     @error="failedToLoadImages.push('season' + season.season_id)"
                                 />
@@ -123,7 +123,8 @@
                                     <img 
                                         v-else
                                         class="still" 
-                                        :src="imageUrl(900, episode.backup_still_url, season.season_number, episode.episode_number)"
+                                        :src="imageUrl(episode.episode_images[0]?.path, episode.episode_images[0]?.source_url)" 
+
                                         @load="(event) => event.target.classList.add('loaded')"
                                         @error="failedToLoadImages.push('episode' + episode.episode_id)"
                                     >
@@ -196,7 +197,7 @@
 </template>
 
 <script>
-import { getMediaImageUrl, convert } from '@/utils/utils';
+import { convert, getMediaUrl } from '@/utils/utils';
 import MissingImage from '@/components/common/MissingImage.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
@@ -246,8 +247,8 @@ export default {
         formatRuntime(runtime) {
             return convert.toRuntime(runtime);
         },
-        imageUrl(width, backupUrl, seasonNumber, episodeNumber) {
-            return getMediaImageUrl(width, backupUrl, this.titleId, seasonNumber, episodeNumber);
+        imageUrl(path, sourceUrl) {
+            return getMediaUrl(path, sourceUrl);
         },
         getSeasonWatchCount(season) {
             if (!season || !season.episodes || season.episodes.length === 0) {

@@ -214,3 +214,15 @@ export function getMediaImageUrl(width, backupUrl, titleId, seasonNumber, episod
 export function fileBridgeLink(link) {
     return `flbrdge://open?path=${link}`;
 }
+
+export function getMediaUrl(path, sourceUrl) {
+    if (standAloneBuild) {
+        return sourceUrl;
+    } else {
+        if (path) {
+            return `${apiUrl}/media${path}`;
+        } else {
+            return false;
+        }
+    }
+}
