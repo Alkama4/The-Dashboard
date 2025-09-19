@@ -347,21 +347,20 @@ export default {
 /* Next */
 .slide-next-enter-from {
     opacity: 0;
-    transform: translateX(5%);
+    transform: translateX(-5%);   /* slide in from the left */
 }
 .slide-next-leave-to {
     opacity: 0;
-    transform: translateX(-5%);
+    transform: translateX(5%);    /* slide out to the right */
 }
 
 /* Prev */
 .slide-prev-enter-from {
     opacity: 0;
-    transform: translateX(-5%);
+    transform: translateX(5%);    /* slide in from the right */
 }
 .slide-prev-leave-to {
     opacity: 0;
-    transform: translateX(5%);
+    transform: translateX(-5%);   /* slide out to the left */
 }
-
 </style>
