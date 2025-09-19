@@ -190,39 +190,15 @@ export function interpolateBetweenColors(color1, color2, position) {
     return `rgb(${r}, ${g}, ${b})`;
 }
 
-export function getMediaImageUrl(width, backupUrl, titleId, seasonNumber, episodeNumber) {
-    if (standAloneBuild) {
-        // Width remapping rules for TMDB
-        const widthMap = {
-            600: 500,
-            900: episodeNumber ? 300 : 900
-        };
-        const finalWidth = widthMap[width] || width;
-        return `https://image.tmdb.org/t/p/w${finalWidth}${backupUrl}`;
-    }
-
-    const base = `${apiUrl}/media/image/title/${titleId}`;
-    if (!seasonNumber) {
-        return `${base}/poster.jpg?width=${width}`;
-    }
-    if (!episodeNumber) {
-        return `${base}/season${seasonNumber}/poster.jpg?width=${width}`;
-    }
-    return `${base}/season${seasonNumber}/episode${episodeNumber}.jpg?width=${width}`;
-}
-
 export function fileBridgeLink(link) {
     return `flbrdge://open?path=${link}`;
 }
 
-export function getMediaUrl(path, sourceUrl) {
-    if (standAloneBuild) {
+export function getMediaUrl(path, sourceUrl, width) {
+    if (standAloneBuild) 
         return sourceUrl;
-    } else {
-        if (path) {
-            return `${apiUrl}/media${path}`;
-        } else {
-            return false;
-        }
-    }
+    if (!path) 
+        return false;
+    const widthParam = width ? `?width=${width}` : '';
+    return `${apiUrl}/media${path}${widthParam}`;
 }

@@ -7,7 +7,11 @@
                 <MissingImage v-if="imgNotFound"/>
                 <img 
                     v-else
-                    :src="getPosterUrl(titleDetails.title_id, 600, titleDetails.backup_poster_url)" 
+                    :src="getMediaUrl(
+                        titleDetails?.title_images?.poster?.[0]?.path, 
+                        titleDetails?.title_images?.poster?.[0]?.source_url,
+                        600
+                    )"                    
                     loading="lazy"
                     @load="(event) => event.target.classList.add('loaded')" 
                     @error="imgNotFound = true"
@@ -57,7 +61,7 @@
 </template>
 
 <script>
-import { convert, getMediaImageUrl } from '@/utils/utils';
+import { convert, getMediaUrl } from '@/utils/utils';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import MissingImage from '@/components/common/MissingImage.vue';
 import DropdownMenu from '../common/DropdownMenu.vue';
@@ -92,8 +96,8 @@ export default {
         formatRuntime(runtime) {
             return convert.toRuntime(runtime);
         },
-        getPosterUrl(titleId, width, backupUrl) {
-            return getMediaImageUrl(width, backupUrl, titleId);
+        getMediaUrl(path, sourceUrl, width) {
+            return getMediaUrl(path, sourceUrl, width);
         },
         async handleToggleFavourite() {
             const response = await fastApi.watch_list.titles.favourite(this.titleDetails.title_id);

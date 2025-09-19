@@ -23,7 +23,10 @@
                     <div v-if="index === showCaseIndex">
                         <img 
                             class="logo"
-                            :src="`${apiUrl}/media/image/title/${title.title_id}/logo.${title.logo_file_type}${title.logo_file_type != 'svg' ? '?width=900' : ''}`"
+                            :src="getMediaUrl(
+                                title?.title_images?.logo?.[0]?.path, 
+                                title?.title_images?.logo?.[0]?.source_url
+                            )"
                         >
 
                         <div class="text-details">
@@ -53,7 +56,7 @@
     
                             <div class="genres">
                                 <template 
-                                    v-for="(genre, index) in title.genres.split(', ')"
+                                    v-for="(genre, index) in title.genres"
                                     :key="index"
                                 >
                                     <div v-if="index != 0">&bull;</div>
@@ -89,9 +92,12 @@
 
         <div class="backdrop-wrapper">
             <img 
-                v-for="(link, index) in imageLinks" 
+                v-for="(title, index) in showcaseTitles" 
                 :key="index"
-                :src="link"
+                :src="getMediaUrl(
+                    title?.title_images?.backdrop?.[0]?.path, 
+                    title?.title_images?.backdrop?.[0]?.source_url
+                )"
                 class="backdrop"
                 :class="{ active: index === showCaseIndex }"
             >
@@ -103,7 +109,7 @@
 import fastApi from '@/utils/fastApi';
 import { apiUrl, isTouchDevice } from '@/utils/config';
 import IndicatorDots from '@/components/WatchList/IndicatorDots.vue';
-import { convert } from '@/utils/utils';
+import { convert, getMediaUrl } from '@/utils/utils';
 import IconTMDBColorful from '../icons/IconTMDBColorful.vue';
 
 export default {
@@ -140,6 +146,9 @@ export default {
             this.transitionDirection = "slide-prev";
             this.setShowcaseIndex(this.showCaseIndex + 1);
         },
+        getMediaUrl(path, sourceUrl, width) {
+            return getMediaUrl(path, sourceUrl, width);
+        },
         handleKeyDown(event) {
             if (['ArrowLeft', 'a', 'w', 'Backspace'].includes(event.key)) {
                 this.prev();
@@ -157,23 +166,13 @@ export default {
             });
             if (response) {
                 this.showcaseTitles = response;
-                console.log(this.showcaseTitles[0])
+                console.log("this.showcaseTitles", this.showcaseTitles)
             }
         },
     },
     async mounted() {
         await this.fetchShowcaseList();
     },
-    computed: {
-        imageLinks() {
-            const suffix = this.isTouchDevice ? '?width=1200' : '';
-            const result = this.showcaseTitles.map(title => {
-                if (!title.title_id) return [];
-                return `${this.apiUrl}/media/image/title/${title.title_id}/backdrop1.jpg${suffix}`;
-            });
-            return result;
-        }
-    }
 }
 </script>
 

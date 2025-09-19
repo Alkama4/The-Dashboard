@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { getMediaImageUrl } from '@/utils/utils';
+import { getMediaUrl } from '@/utils/utils';
 import DropdownMenu from '../common/DropdownMenu.vue';
 
 export default {
@@ -47,8 +47,8 @@ export default {
         async handleEditCollection(collection) {
             this.$emit('edit-collection', collection);
         },
-        getPosterUrl(titleId, width, backupUrl) {
-            return getMediaImageUrl(width, backupUrl, titleId);
+        getPosterUrl() {
+            return getMediaUrl();
         },
     },
     computed: {

@@ -84,7 +84,10 @@
                 <div class="default-content">
                     <div class="backdrop-wrapper">
                         <img 
-                            :src="backdropUrl(title.title_id)" 
+                            :src="getMediaUrl(
+                                title?.title_images?.backdrop?.[0]?.path, 
+                                title?.title_images?.backdrop?.[0]?.source_url
+                            )"     
                             @load="(event) => event.target.classList.add('loaded')" 
                             loading="lazy"
                             class="backdrop"
@@ -95,7 +98,11 @@
                         <MissingImage v-if="posterNotFound.includes(title.title_id)"/>
                         <img 
                             v-else
-                            :src="posterUrl(title.title_id, 300, title.backup_poster_url)" 
+                            :src="getMediaUrl(
+                                title?.title_images?.poster?.[0]?.path, 
+                                title?.title_images?.poster?.[0]?.source_url,
+                                600
+                            )"
                             @load="(event) => event.target.classList.add('loaded')" 
                             @error="posterNotFound.push(title.title_id)"
                             loading="lazy"
@@ -270,7 +277,7 @@
 import fastApi from '@/utils/fastApi';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import IconHeart from '@/components/icons/IconHeart.vue';
-import { convert } from '@/utils/utils';
+import { convert, getMediaUrl } from '@/utils/utils';
 import CustomSelect from '@/components/common/CustomSelect.vue';
 import IconSortDown from '@/components/icons/IconSortDown.vue';
 import IconSortUp from '@/components/icons/IconSortUp.vue';
@@ -278,7 +285,6 @@ import IconListAdd from '@/components/icons/IconListAdd.vue';
 import IconListRemove from '@/components/icons/IconListRemove.vue';
 import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
 import IconCollection from '@/components/icons/IconCollection.vue';
-import { standAloneBuild } from '@/utils/config';
 import ModalTitleCollections from '@/components/WatchList/ModalTitleCollections.vue';
 import TriStateToggle from '@/components/common/TriStateToggle.vue';
 import BooleanFitlerToggle from '@/components/common/BooleanFitlerToggle.vue';
@@ -409,21 +415,8 @@ export default {
         converToReleaseYear(date) {
             return convert.toFiDate(date, "year");
         },
-        posterUrl(titleId, width, backupUrl) {
-            if (standAloneBuild) {
-                if (width == 600) width = 500;  // TMDB doesn't have a 600 so use 500 instead
-                return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/poster.jpg?width=${width}`;
-            }
-        },
-        backdropUrl(titleId) {
-            // if (process.env.VUE_APP_STANDALONE_BUILD == 'true') {
-            //     if (width == 600) width = 500; 
-            //     return `https://image.tmdb.org/t/p/w${width}${backupUrl}`;
-            // } else {
-                return `${this.apiUrl}/media/image/title/${titleId}/backdrop1.jpg?width=600`;
-            // }
+        getMediaUrl(path, sourceUrl, width) {
+            return getMediaUrl(path, sourceUrl, width);
         },
         async inputTriggeredFetchAllTitles() {
             this.offset = 0;
