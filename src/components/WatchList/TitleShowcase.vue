@@ -22,6 +22,10 @@
                 <transition :name="transitionDirection" mode="out-in">
                     <div v-if="index === showCaseIndex">
                         <img 
+                            v-if="getMediaUrl(
+                                title?.title_images?.logo?.[0]?.path, 
+                                title?.title_images?.logo?.[0]?.source_url
+                            )"
                             class="logo"
                             :src="getMediaUrl(
                                 title?.title_images?.logo?.[0]?.path, 
@@ -63,7 +67,7 @@
                                     <div>{{ genre }}</div>
                                 </template>
                             </div>
-    
+
                             <div class="overview">
                                 {{ title.overview }}
                             </div>
@@ -179,8 +183,9 @@ export default {
 <style scoped>
 .title-showcase {
     width: 100vw;
-    height: 70vh;
-    max-height: 1000px;
+    height: calc(100vh - 60px - var(--spacing-md) - 225px);
+    max-height: 1600px;
+    min-height: 650px;
     position: relative;
 }
 
@@ -201,6 +206,7 @@ export default {
     height: 100%;
     width: 100%;
     max-width: 90vw;
+    padding-bottom: 46px;
     opacity: 0;
     position: absolute;
     transition: opacity 0.5s ease;
@@ -251,6 +257,7 @@ export default {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    row-gap: 0px;
 }
 
 .details > div {
@@ -266,16 +273,17 @@ export default {
     flex-direction: row;
     flex-wrap: wrap;
     gap: var(--spacing-sm);
+    row-gap: 0;
 }
 
 .overview {
     max-width: min(90vw, 1920px, 100%);
     /* color: var(--color-text-light); */
 
-    margin-top: var(--spacing-sm);
+    margin-top: var(--spacing-md);
     display: -webkit-box;
-    line-clamp: 5;
-    -webkit-line-clamp: 5;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -300,29 +308,22 @@ export default {
     top: calc(-1 * var(--height-top-bar));
     left: calc(100% - var(--width));
     width: var(--width);
-    height: calc(100 / 70%);
+    height: 125%;
     /* max-height: 100vw; */
     opacity: 0;
     z-index: -1;
     transition: opacity 0.5s var(--cubic-1);
     /* mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30vh); */
-    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 30%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 30%);
     mask-composite: intersect;
+    filter: blur(8px);
 }
 .title-showcase .backdrop.active {
     opacity: 1;
 }
-@media (max-width: 1500px) {
-    /* .title-showcase .backdrop {
-        --width: 100%;
-        mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.33) 30%);
-    } */
-    .overview {
-        display: -webkit-box;
-        line-clamp: 4;
-        -webkit-line-clamp: 4;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+@media (max-height: 1000px) {
+    .text-details {
+        margin-top: var(--spacing-md);
     }
 }
 @media (max-width: 700px) {
@@ -334,6 +335,12 @@ export default {
     }
     .link-button {
         width: 100%;
+    }
+    .text-details {
+        font-size: var(--font-size-sm);
+    }
+    .overview {
+        font-size: var(--font-size-md);
     }
 }
 
