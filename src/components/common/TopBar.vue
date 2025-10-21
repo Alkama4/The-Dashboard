@@ -1,126 +1,157 @@
 <template>
     <div class="top-bar">
+        <div
+            class="desktop-nav-visual"
+        ></div>
+
         <div class="desktop-nav-wrapper">
-            <div class="top-bar desktop-nav" @mouseleave="handleMouseleave()">
-                <div class="primary-row">
-                    <div class="side">
-                        <router-link 
-                            to="/" 
-                            class="no-decoration website-name"
-                        >
-                            {{ title }}
-                        </router-link>
-                    </div>
-                    <div class="side">
-                        <router-link
-                            v-for="(link, index) in links" 
-                            :key="index"
-                            :to="link.to"
-                            class="no-decoration text-button primary-link desktop-only"
-                            :class="{ 'category-active': $route.path === link.to || $route.path.startsWith(link.to) }"
-                            @mouseover="handleMouseover(index)"
-                        >
-                            {{ link.display }}
-                        </router-link>
-                        <IconDarkMode class="icon-button desktop-only" @click="localToggleDarkMode"/>
-                        <IconMenu size="28px" class="icon-button mobile-only" @click="toggleMenu"/>
-                    </div>
+            <div class="top-bar desktop-nav">
+                <div class="side">
+                    <AppSelector :homeLink="homeLink"/>
                 </div>
-                <div class="secondary-row" ref="secondaryRow">
-                    <div class="secondary-row-content" ref="secondaryRowContent">
-                        <router-link 
-                            v-for="(link, index) in links[mouseoverIndex]?.children" 
-                            :key="index"
-                            class="no-decoration text-button"
-                            :to="link.to"
-                        >
-                            {{ link.display }}
-                        </router-link>
-                    </div>
+                <div class="side">
+                    <component
+                        v-for="(link, index) in links" 
+                        :is="link.path ? 'router-link' : 'div'"
+                        :key="index"
+                        :to="link.path"
+                        class="no-decoration"
+                        :class="{ 
+                            'icon-button': !link.name,
+                            'text-button': link.name,
+                            'desktop-only': link.showOnlyOn == 'desktop',
+                            'mobile-only': link.showOnlyOn == 'mobile'
+                        }"
+                        @click="link.action"
+                    >
+                        <i class='bx' :class="link.icon"></i>
+                        {{ link.name }}
+                    </component>
+
+                    <component
+                        v-for="(link, index) in desktopLinks"
+                        :key="index"
+                        :is="link.path ? 'router-link' : 'div'"
+                        :to="link.path"
+                        class="no-decoration"
+                        :class="{
+                            'icon-button': !link.name,
+                            'text-button': !!link.name,
+                            'desktop-only': !link.mobileLink,
+                            'mobile-only': link.mobileLink
+                        }"
+                        @click="link.action"
+                    >
+                        <i class='bx' :class="link.icon"></i>
+                        {{ link.name }}
+                    </component>
+
+                    <!-- Dark mode button (componentize at some point?) -->
+                    <DarkModeToggle class="desktop-only"/>
+                    
+                    <!-- Mobile only -->
+                    <i class='bx bx-menu icon-button mobile-only' @click="toggleMenu"></i>
                 </div>
             </div>
         </div>
+        
         <div 
             @click="toggleMenu"
             ref="mobileNav"
             class="mobile-nav backdrop"
         >
             <router-link 
-                to="/" 
+                :to="homeLink" 
                 class="no-decoration website-name"
                 :class="{ active: $route.path === '/' }"
             >
-                The Dashboard
+                {{ title }}
             </router-link>
-            <div
-                v-for="(link, index) in links" 
+
+            <router-link
+                v-for="(link, index) in mobileDrawerLinks"
                 :key="index"
-                class="primary-area"
+                :to="link.path"
+                class="no-decoration text-button"
             >
-                <router-link
-                    :to="link.to"
-                    class="no-decoration text-button primary-link"
-                >
-                    {{ link.display }}
-                </router-link>
-                <router-link 
-                    v-for="(child, index) in link.children" 
-                    :key="index" 
-                    :to="child.to"
-                    class="no-decoration text-button primary-link"
-                >
-                    {{ child.display }}
-                </router-link>
+                <i class='bx' :class="link.icon"></i>
+                {{ link.name }}
+            </router-link>
+            
+            <div class="seperator"></div>
+
+            <div class="app-wrapper">
+                <AppLinkButton
+                    v-for="(app, i) in appLinks" 
+                    :key="i" 
+                    :name="app.name"
+                    :path="app.path"
+                    :icon="app.icon"
+                />
             </div>
-            <IconDarkMode class="icon-button dark-mode-toggle" @click="localToggleDarkMode"/>
+
+            <DarkModeToggle/>
         </div>
     </div>
 </template>
 
 <script>
-import IconDarkMode from '@/components/icons/IconDarkMode.vue';
-import IconMenu from '@/components/icons/IconMenu.vue';
-import { toggleDarkMode } from '@/utils/darkMode';
+import AppLinkButton from '../common/AppLinkButton.vue';
+import AppSelector from '../common/AppSelector.vue';
+import getUsername from '@/utils/session.js'
+import DarkModeToggle from './DarkModeToggle.vue';
 
 export default {
     name: 'top-bar',
     components: {
-        IconDarkMode,
-        IconMenu,
+        AppLinkButton,
+        AppSelector,
+        DarkModeToggle,
     },
     props: {
         title: {
             type: Text,
             default: 'The Dashboard',
+        },
+        homeLink: {
+            type: String,
+            default: "/"
+        },
+        desktopLinks: {
+            type: Array,
+            default: () => []
+        },
+        mobileLinks: {
+            type: Array,
+            default: () => []
+        },
+        mobileDrawerLinks: {
+            type: Array,
+            default: () => []
         }
     },
     data() {
         return {
-            links: [
-                { 
-                    display: 'Spendings', 
-                    to: '/spendings',
-                    children: [
-                        { display: 'Analytics', to: '/spendings/analytics' },
-                        { display: 'Add Transaction', to: '/spendings/new_entry' },
-                    ]
+            links: [],
+            appLinks: [
+                {
+                    name: 'Dashboard',
+                    path: '/',
+                    icon: 'bxs-dashboard'
                 },
-                { 
-                    display: 'Watch List', 
-                    to: '/watch_list',
-                    children: [
-                        { display: 'Search', to: '/watch_list/titles' },
-                        { display: 'Collections', to: '/watch_list/collections' },
-                        { display: 'Add Title', to: '/watch_list/add_title' },
-                    ]
+                {
+                    name: 'Spendings',
+                    path: '/spendings',
+                    icon: 'bxs-credit-card'
                 },
-                { 
-                    display: 'Account',
-                    to: '/account',
-                    children: []
-                }
+                {
+                    name: 'Watch list',
+                    path: '/watch_list',
+                    icon: 'bxs-movie'
+                },
             ],
             mouseoverIndex: 0,
+            darkModeState: null,
         };
     },
     methods: {
@@ -136,22 +167,10 @@ export default {
                 document.documentElement.classList.add('no-scroll');
             }
         },
-        localToggleDarkMode() {
-            toggleDarkMode();
-        },
-        handleMouseover(index) {
-            this.mouseoverIndex = index;
-            setTimeout(() => {
-                if (this.links[index].children.length === 0) {
-                    this.$refs.secondaryRow.style.height = "0px";
-                } else {
-                    this.$refs.secondaryRow.style.height = this.$refs.secondaryRowContent.scrollHeight + 'px';
-                }
-            }, 1);
-        },
-        handleMouseleave() {
-            this.$refs.secondaryRow.style.height = "0px";
-            this.mouseoverIndex = null;
+    },
+    computed: {
+        username() {
+            return getUsername()
         }
     }
 };
@@ -162,7 +181,20 @@ export default {
     z-index: var(--z-top-bar);
 }
 
-/* This has the actual styling */
+.desktop-nav-visual {
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+
+    border-bottom: 1px solid var(--color-border);
+    background-color: var(--color-background-top-bar);
+    backdrop-filter: var(--blur-top-bar);
+}
+
 .desktop-nav-wrapper {
     width: 100vw;
     position: fixed;
@@ -170,15 +202,11 @@ export default {
     left: 0;
     display: flex;
     justify-content: center;
-
-    border-bottom: 1px solid var(--color-border);
-    background-color: var(--color-background-top-bar);
-    backdrop-filter: blur(30px);    /* Keep under 1/2 of height */
 }
 
 .desktop-nav {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 
@@ -187,79 +215,86 @@ export default {
 
     width: 100%;
     max-width: var(--width-top-bar);
+    height: 60px;
 
     white-space: nowrap;
 }
-.desktop-nav .primary-row {
-    height: 60px;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-.desktop-nav .primary-row .side {
+.desktop-nav .side {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
-
-.desktop-nav .secondary-row {
-    width: 100%;
-    transition: height 0.2s var(--cubic-1);
-    height: 0;
-    overflow: hidden;
+.search {
+    margin-inline: var(--spacing-xl);
+    margin-left: var(--spacing-xl);
 }
-.desktop-nav .secondary-row-content {
-    display: flex;
-    flex-direction: row;
-    justify-content: end;
+.search:focus-visible {
     width: 100%;
-    padding-top: var(--spacing-sm);
-    padding-bottom: var(--spacing-md);
-    border-top: 2px solid var(--color-border);
 }
-
 
 .website-name {
     font-weight: 800;
     font-size: var(--font-size-logo);
 }
 
+.icon-button,
+.dark-mode-toggle {
+    padding: 6px 10px;
+    border-radius: var(--border-radius-medium);
+    display: flex;
+}
+
 .text-button {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
     color: var(--color-text-light);
     font-size: var(--font-size-small);
     font-weight: 500;
-    padding: 6px 10px;
+    padding: 6px 15px;
     margin-left: 0;
     border-radius: var(--border-radius-medium);
     background-color: #24242400;
     transition: color 0.1s ease-out,
-                background-color 0.1s ease-out;
+                background-color 0.1s ease-out,
+                box-shadow 0.1s ease-out;
+}
+.text-button i {
+    font-size: var(--font-size-lg);
 }
 .pointer-device .text-button:hover {
     color: var(--color-text);
 }
-.text-button:active {
+.pointer-device .text-button:active {
     color: var(--color-text-bold);
 }
 
-.icon-button {
-    padding: var(--spacing-sm);
-}
 
 .desktop-only {
-    display: unset;
+    display: flex;
 }
 .mobile-only {
     display: none;
 }
-@media (max-width: 650px) {
+
+@media (max-width: 1200px) {
+    .search {
+        margin-right: var(--spacing-md);
+    }
+}
+@media (max-width: 900px) {
     .mobile-only {
-        display: unset;
+        display: flex;
     }
     .desktop-only {
         display: none;
     }
+    .search {
+        margin-left: var(--spacing-md);
+        margin-right: var(--spacing-sm);
+    }
 }
+
 
 /* - - - - - Mobile nav - - - - - */
 
@@ -282,6 +317,10 @@ export default {
     margin-bottom: var(--spacing-md)
 }
 
+.mobile-nav .seperator {
+    margin: var(--spacing-md) 0;
+}
+
 .mobile-nav .primary-area {
     display: flex;
     flex-direction: column;
@@ -299,14 +338,33 @@ export default {
     right: 28px;
 }
 
-/* Active link styling */
-.text-button.router-link-active {
-    color: var(--color-text);
-    background-color: var(--color-button-general);
-}
-.pointer-device .text-button.router-link-active:hover {    
-    color: var(--color-text-bold);
-    background-color: var(--color-button-general-hover);
+.mobile-nav .app-wrapper {
+    display: flex;
+    flex-wrap: wrap;
 }
 
+.mobile-nav .app-link-button {
+    flex: 1;
+}
+
+/* Active link styling */
+.text-button.router-link-active,
+.icon-button.router-link-active {
+    color: var(--color-button-nav-text);
+    background-color: var(--color-button-nav-bg);
+}
+
+.pointer-device .text-button.router-link-active:hover,
+.pointer-device .icon-button.router-link-active:hover {    
+    color: var(--color-button-nav-text-hover);
+    background-color: var(--color-button-nav-bg-hover);
+    box-shadow: var(--shadow-button-hover);
+}
+
+.pointer-device .text-button.router-link-active:active,
+.pointer-device .icon-button.router-link-active:active {    
+    color: var(--color-button-nav-text-active);
+    background-color: var(--color-button-nav-bg-active);
+    box-shadow: var(--shadow-button-active);
+}
 </style>

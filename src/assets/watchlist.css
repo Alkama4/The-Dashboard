@@ -85,9 +85,9 @@
     color-scheme: light;
 
     /* General colors */
-    --color-primary: #3f5a79;
-    --color-primary-hover: #4a6788;
-    --color-primary-active: #567597;
+    --color-primary: hsl(0, 0%, 16%);
+    --color-primary-hover: hsl(0, 0%, 26%);
+    --color-primary-active: hsl(0, 0%, 21%);
     --color-primary-opaque: hsla(212, 32%, 36%, 0.5);
 
     --color-secondary: #e01854;
@@ -306,6 +306,25 @@
     background-color: var(--color-primary-hover);
 }
 
-.watchlist .tag-primary {
-    color: var(--color-text-black);
+.watchlist.light-mode .tag-primary {
+    color: var(--color-text-white) !important;
+}
+.watchlist.dark-mode .tag-primary {
+    color: var(--color-text-black) !important;
+}
+
+.watchlist.light-mode .button-primary {
+    color: var(--color-text-white) !important;
+} 
+.watchlist.light-mode .pointer-device .button-primary:hover {
+    color: var(--color-text-white-hover);
+}
+.watchlist.light-mode .pointer-device .button-primary:hover svg {
+    fill: var(--color-text-white-hover);
+}
+.watchlist.light-mode .pointer-device .button-primary:active {
+    color: var(--color-text-white-hover);
+}
+.watchlist.light-mode .button-primary:disabled, .button-primary:hover:disabled, .button-primary:active:disabled  {
+    color: var(--color-text-white);
 }

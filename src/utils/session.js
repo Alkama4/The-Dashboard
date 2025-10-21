@@ -8,6 +8,10 @@ export default {
         return localStorage.getItem('sessionKey');
     },
 
+    getUsername() {
+        return localStorage.getItem('username');
+    },
+
     async login(params = {}) {
         const response = await fastApi.account.login(params);
         if (response?.sessionKey && response?.username) {

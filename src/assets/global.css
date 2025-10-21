@@ -38,6 +38,7 @@
     --cubic-hover-and-snap: cubic-bezier(.21,1.34,.8,.76);
     --cubic-ease-slow-in-normal-out: cubic-bezier(.82,0,.5,1);
     --cubic-ease-slow-in-slow-out: cubic-bezier(.75,0,.25,1);
+    --cubic-overshoot: cubic-bezier(0.4, 1.5, 0.6, 1);
 
     /* Z-indexes */
     --z-index-fullscreen: 10000700;
@@ -68,9 +69,9 @@
     --color-text-white: #e9ebf0;
     --color-text-white-hover: white;
     --color-text-white-light: #aaa;
-    --color-text-black: #292929;
-    --color-text-black-hover: black;
-    --color-text-black-light: #666666;
+    --color-text-black: hsl(0, 0%, 16%);
+    --color-text-black-hover: hsl(0, 0%, 0%);
+    --color-text-black-light: hsl(0, 0%, 28%);
 
     /* Effects */
     --blur-top-bar: blur(30px);    /* Keep under 1/2 of height */
@@ -158,8 +159,12 @@
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 0%, 0.0666);
 
-    --color-button-nav: var(--color-text-light);
-    --color-button-nav-hover: var(--color-text-bold);
+    --color-button-nav-text: var(--color-text);
+    --color-button-nav-text-hover: var(--color-text-bold);
+    --color-button-nav-text-active: var(--color-text-bold);
+    --color-button-nav-bg: var(--color-button-general);
+    --color-button-nav-bg-hover: var(--color-button-general-hover);
+    --color-button-nav-bg-active: var(--color-button-general-active);
 
     --color-button-delete-hover: rgb(212, 37, 37);
     --color-button-delete-active: rgb(182, 29, 29);
@@ -264,8 +269,12 @@
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
 
-    --color-button-nav: var(--color-text-light);
-    --color-button-nav-hover: var(--color-text);
+    --color-button-nav-text: var(--color-text);
+    --color-button-nav-text-hover: var(--color-text-bold);
+    --color-button-nav-text-active: var(--color-text-bold);
+    --color-button-nav-bg: var(--color-button-general);
+    --color-button-nav-bg-hover: var(--color-button-general-hover);
+    --color-button-nav-bg-active: var(--color-button-general-active);
 
     --color-button-delete-hover: rgb(187, 30, 30);
     --color-button-delete-active: rgb(145, 13, 13);
@@ -803,12 +812,11 @@ input[type="file"] {
 }
 
 .card-spacer {
-    width: 85%;
-    height: 8px;
+    min-height: 8px;
+    min-width: 8px;
     border-radius: 100px;
     background-color: var(--color-background);
-    margin: var(--spacing-md) 0;
-    margin-inline: auto;
+    margin: var(--spacing-md);
     box-shadow: inset var(--shadow-card);
 }
 
@@ -849,6 +857,12 @@ input[type="file"] {
 .no-decoration {
     text-decoration: none;
     color: var(--color-text);
+}
+.no-decoration:hover {
+    text-decoration: none !important;
+}
+.no-decoration:hover i {
+    text-decoration: none !important;
 }
 .hover-decoration:hover {
     text-decoration: underline;

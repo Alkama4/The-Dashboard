@@ -1,6 +1,15 @@
 <!-- layouts/DashboardLayout.vue -->
 <template>
-    <TopBar title="Dashboard"/>
+    <top-bar
+        title="Dashboard"
+        homeLink="/"
+        :desktop-links="[
+            { name: 'Account', path: '/account', icon: 'bx-user'},
+        ]"
+        :mobile-drawer-links="[
+            { name: 'Account', path: '/account', icon: 'bx-user'},
+        ]"
+    />
     <main>
         <router-view/>
     </main>

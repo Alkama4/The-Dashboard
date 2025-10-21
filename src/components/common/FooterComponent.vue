@@ -3,7 +3,7 @@
         <div class="upper-row">
             <div class="logo">
                 <router-link class="no-decoration" to="/">
-                    <img src="@/assets/logo.png" class="icon" width="75px" alt="">
+                    <IconLogo/>
                     <span class="text">The Dashboard</span>
                 </router-link>
             </div>
@@ -41,8 +41,13 @@
 </template>
 
 <script>
+import IconLogo from '../icons/IconLogo.vue';
+
 export default {
     name: 'FooterComponent',
+    components: {
+        IconLogo
+    },
     data () {
         return {
             linkStacks: [
@@ -103,7 +108,7 @@ export default {
 .logo .text {
     display: unset;
 }
-.logo .icon {
+.logo .icon-logo {
     display: none;
 }
 
@@ -177,7 +182,7 @@ export default {
     .logo .text {
         display: none;
     }
-    .logo .icon {
+    .logo .icon-logo {
         display: unset;
     }
 

@@ -1,7 +1,17 @@
 <!-- layouts/SpendingsLayout.vue -->
 <template>
-    <TopBar 
+    <top-bar
         title="Spendings"
+        home-link="/spendings"
+        :desktop-links="[
+            { name: 'Analytics', path: '/spendings/analytics', icon: 'bxs-bar-chart-alt-2'},
+            { name: 'New Entry', path: '/spendings/new_entry', icon: 'bx-plus' },
+            { name: '', path: '/spendings/new_entry', icon: 'bx-plus', mobileLink: true},
+        ]"
+        :mobile-drawer-links="[
+            { name: 'Analytics', path: '/spendings/analytics', icon: 'bxs-bar-chart-alt-2'},
+            { name: 'New Entry', path: '/spendings/new_entry', icon: 'bx-plus' },
+        ]"
     />
     <main>
         <router-view />

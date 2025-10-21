@@ -314,9 +314,7 @@ export default {
     z-index: -1;
     transition: opacity 0.5s var(--cubic-1);
     /* mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 30vh); */
-    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 30%);
-    mask-composite: intersect;
-    filter: blur(8px);
+    mask-image: linear-gradient(to top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.33) 30%);
 }
 .title-showcase .backdrop.active {
     opacity: 1;
@@ -341,6 +339,9 @@ export default {
     }
     .overview {
         font-size: var(--font-size-md);
+    }
+    .logo {
+        max-width: 80%;
     }
 }
 

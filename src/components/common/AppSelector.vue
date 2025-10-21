@@ -1,7 +1,7 @@
 <template>
     <div class="app-selector" tabindex="0" @blur="closeDrawerSafe">
         <router-link 
-            to="/watch_list" 
+            :to="homeLink" 
             class="no-decoration website-name"
         >
             {{ activeApp.name }}
@@ -53,7 +53,11 @@ export default {
             ],
         }
     },
-    components: {
+    props: {
+        homeLink: {
+            type: String,
+            default: "/"
+        },
     },
     methods: {
         closeDrawerSafe(e) {
@@ -99,7 +103,7 @@ export default {
     cursor: auto;
     position: absolute;
     padding: var(--spacing-sm);
-    top: 100%;
+    top: calc(100% + var(--spacing-sm));
     left: -10px;
     display: flex;
     flex-direction: column;
@@ -111,25 +115,32 @@ export default {
 .app-option {
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: 12px;
 
     border-radius: var(--border-radius-medium);
 
-    font-weight: 800;
+    font-weight: 500;
     font-size: var(--font-size-lg);
-    padding: 6px var(--spacing-lg);
-    padding-left: var(--spacing-sm);
+    padding: 8px var(--spacing-xl);
+    padding-left: 12px;
 
-    transition: background-color 0.1s ease-out,
-                color 0.1s ease-out;
+    transition: color 0.1s ease-out,
+                background-color 0.1s ease-out,
+                box-shadow 0.1s ease-out;
+}
+.app-option.router-link-active {
+    color: var(--color-button-nav-text);
+    background-color: var(--color-button-nav-bg);
 }
 .app-option:hover {
-    background-color: var(--color-primary);
-    color: var(--color-text-black);
+    color: var(--color-button-nav-text-hover);
+    background-color: var(--color-button-nav-bg-hover);
+    box-shadow: var(--shadow-button-hover);
 }
 .app-option:active {
-    background-color: var(--color-primary-active);
-    color: var(--color-text-black-hover);
+    color: var(--color-button-nav-text-active);
+    background-color: var(--color-button-nav-bg-active);
+    box-shadow: var(--shadow-button-active);
 }
 
 </style>
