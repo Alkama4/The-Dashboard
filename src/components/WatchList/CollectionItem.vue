@@ -3,9 +3,9 @@
         <router-link :to="`/watch_list/collection/${collection.collection_id}`" class="no-decoration">
             <div class="title-posters">
                 <img
-                    v-for="(title, index) in collection.titles.slice(0, 4)"
+                    v-for="(title, index) in collection.preview_titles.slice(0, 4)"
                     :key="index"
-                    :src="getPosterUrl(title.title_id, 300, title.backup_poster_url)"
+                    :src="getPosterUrl(title?.title_images?.poster?.[0]?.path, title?.title_images?.poster?.[0]?.source_url, 300)"
                 >
             </div>
             <div class="details">
@@ -13,7 +13,8 @@
                 <!-- <div class="detail">
                     {{ collection.children.length == 0 ? 'no' : collection.children.length }} child collection{{ collection.children.length == 1 ? '' : 's' }}
                 </div> -->
-                <div class="detail">Collection &bull; {{ totalTitleCount }} titles</div>
+                <div class="detail">{{ collection.total_count }} titles &bull; {{ converToTime(collection.total_length) }}</div>
+                <div class="detail">{{ convertToYear(collection.first_date) }} - {{ convertToYear(collection.last_date) }}</div>
             </div>
         </router-link>
         <DropdownMenu :options="dropDownOptions"/>
@@ -21,7 +22,7 @@
 </template>
 
 <script>
-import { getMediaUrl } from '@/utils/utils';
+import { convert, getMediaUrl } from '@/utils/utils';
 import DropdownMenu from '../common/DropdownMenu.vue';
 
 export default {
@@ -36,7 +37,7 @@ export default {
         return {
             dropDownOptions: [
                 { icon: "bxs-edit-alt", label: "Edit colletction", action: () => this.handleEditCollection(this.collection) },
-                { icon: "bxs-trash", label: "Remove collection", action: () => this.handleRemoveCollection(this.collection.collection_id) },
+                { icon: "bxs-trash", label: "Delete collection", action: () => this.handleRemoveCollection(this.collection.collection_id) },
             ]
         }
     },
@@ -47,9 +48,15 @@ export default {
         async handleEditCollection(collection) {
             this.$emit('edit-collection', collection);
         },
-        getPosterUrl() {
-            return getMediaUrl();
+        getPosterUrl(path, sourceUrl, width) {
+            return getMediaUrl(path, sourceUrl, width);
         },
+        converToTime(minutes) {
+            return convert.toTime(minutes * 60)
+        },
+        convertToYear(date) {
+            return convert.toFiDate(date, "year")
+        }
     },
     computed: {
         totalTitleCount() {

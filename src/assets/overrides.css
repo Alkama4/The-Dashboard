@@ -1,0 +1,12 @@
+.flicking-viewport {
+    position: relative;
+    overflow: hidden;
+    padding-inline: var(--flicking-fade-width);
+    mask-image: linear-gradient(
+        to right, 
+        transparent 0, 
+        black var(--flicking-fade-width), 
+        black calc(100% - var(--flicking-fade-width)), 
+        transparent 100%
+    );
+}

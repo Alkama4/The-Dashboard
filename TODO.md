@@ -174,6 +174,7 @@ This file is a collection of notes for things that need to be done or fixed. It 
         - Use a in watch_list tag instaed of -1 and "< 0"
         - notes `ctrl + s` save
         - Shadow from sides when hovering over backdrop button
+        - When marking the last released episode watched, doesn't update the title status
 
     - Search title
         - Looks generally bad
@@ -253,6 +254,9 @@ This file is a collection of notes for things that need to be done or fixed. It 
     - Production companies table
     - Resized images arent deleted when the original images are
         - Leads to a mismatch of resized and full size images.
+    - Watch queue or similar "I want to watch next" in utd
+        - Along the same lines in utd a "won't watch anymore" tag
+
 
 
 ### Feature ideas that might never see the light of day

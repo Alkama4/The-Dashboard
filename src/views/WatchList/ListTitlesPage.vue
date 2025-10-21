@@ -1,9 +1,11 @@
 <template>
     <div class="list-titles">
         <div class="content-width-medium">
+            <h1>Search</h1>
             <div class="all-titles-list-controls">
-                <div class="extra-options-holder" ref="extraOptionsHolder">
-                    <div class="extra-options" ref="extraOptions">
+                <div class="basic-options">
+                    <input type="text" v-model="allTitlesListOptions.search_term" placeholder="Search for titles">
+                    <div class="option-grid ">
                         <label>Type</label>
                         <TriStateToggle
                             button1-text="TV"
@@ -11,12 +13,22 @@
                             v-model="allTitlesListOptions.title_type"
                             button1-value="tv"
                             button2-value="movie"
-                            unset-value=""
+                            :unset-value="null"
                         />
-                        <label>Watched</label>
-                        <BooleanFitlerToggle
-                            v-model="allTitlesListOptions.watched"
+                        <label>Watch Status</label>
+                        <CustomSelect
+                            v-model="allTitlesListOptions.watch_status"
+                            :options="[
+                                { label: 'Unwatched', value: 'unwatched' },
+                                { label: 'Partially watched', value: 'partially_watched' },
+                                { label: 'Fully watched', value: 'fully_watched' }
+                            ]"
+                            :has-clear-button="true"
                         />
+                    </div>
+                </div>
+                <div class="extra-options" ref="extraOptionsHolder">
+                    <div class="option-grid" ref="extraOptions">
                         <label>Favourite</label>
                         <BooleanFitlerToggle
                             v-model="allTitlesListOptions.favourite"
@@ -24,10 +36,6 @@
                         <label>Released</label>
                         <BooleanFitlerToggle
                             v-model="allTitlesListOptions.released"
-                        />
-                        <label>Title in progress</label>
-                        <BooleanFitlerToggle
-                            v-model="allTitlesListOptions.title_in_progress"
                         />
                         <label>Season in progress</label>
                         <BooleanFitlerToggle
@@ -37,10 +45,15 @@
                         <BooleanFitlerToggle
                             v-model="allTitlesListOptions.in_watchlist"
                         />
+                        <label>Has media</label>
+                        <BooleanFitlerToggle
+                            v-model="allTitlesListOptions.has_media_entry"
+                        />
                         <label>Collection</label>
                         <CustomSelect
                             v-model="allTitlesListOptions.collection_id"
                             :options="allTitlesListCollectionOptions"
+                            :has-clear-button="true"
                         />
                     </div>
                 </div>
@@ -53,7 +66,7 @@
                         <IconChevronDown/>
                     </div>
                 </button>
-                <div class="basic-options">
+                <div class="sortin-options">
                     <div class="flex icon-align">
                         <CustomSelect 
                             v-model="allTitlesListOptions.sort_by" 
@@ -84,6 +97,10 @@
                 <div class="default-content">
                     <div class="backdrop-wrapper">
                         <img 
+                            v-if="getMediaUrl(
+                                title?.title_images?.backdrop?.[0]?.path, 
+                                title?.title_images?.backdrop?.[0]?.source_url
+                            )"  
                             :src="getMediaUrl(
                                 title?.title_images?.backdrop?.[0]?.path, 
                                 title?.title_images?.backdrop?.[0]?.source_url
@@ -95,19 +112,21 @@
                     </div>
             
                     <div class="poster-holder">
-                        <MissingImage v-if="posterNotFound.includes(title.title_id)"/>
                         <img 
-                            v-else
+                            v-if="getMediaUrl(
+                                title?.title_images?.poster?.[0]?.path, 
+                                title?.title_images?.poster?.[0]?.source_url,
+                                600
+                            )"
                             :src="getMediaUrl(
                                 title?.title_images?.poster?.[0]?.path, 
                                 title?.title_images?.poster?.[0]?.source_url,
                                 600
                             )"
-                            @load="(event) => event.target.classList.add('loaded')" 
-                            @error="posterNotFound.push(title.title_id)"
                             loading="lazy"
                             class="poster"
                         >
+                        <MissingImage v-else/>
                     </div>
             
                     <div class="content">
@@ -315,28 +334,26 @@ export default {
             waitingForResult: [],
             titlesArray: [],
             hasMore: false,
-            offset: 0,
+            page: 1,
             allTitlesListSortByOptions: [
-                {label: 'Watched/Modified', value: 'modified'},
-                {label: 'Rating', value: 'rating'},
+                {label: 'Watched/Modified', value: 'last_updated'},
+                {label: 'TMDB Rating', value: 'rating'},
                 {label: 'Popularity', value: 'popularity'},
-                {label: 'Date', value: 'release_date'},
+                {label: 'Release Date', value: 'release_date'},
                 {label: 'Title name', value: 'title_name'},
                 {label: 'Duration', value: 'duration'},
                 {label: 'Details updated', value: 'data_updated'},
             ],
             allTitlesListCollectionOptions: [],
             allTitlesListOptionsDefaults: {
-                title_type: '',
+                title_type: null,
                 collection_id: null,
                 in_watchlist: null,
-                watched: null,
+                watch_status: null,
                 favourite: null,
                 released: null,
-                title_in_progress: null,
-                season_in_progress: null,
-                
-                sort_by: 'modified',
+                has_media_entry: null,
+                sort_by: 'last_updated',
                 direction: 'desc',
             },
             allTitlesListOptions: {},
@@ -371,11 +388,11 @@ export default {
 
             const titlesListedResponse = await fastApi.watch_list.titles.list({
                 ...options,
-                offset: this.offset
+                page: this.page
             });
 
             if (titlesListedResponse) {
-                if (this.offset === 0) {
+                if (this.page === 1) {
                     this.titlesArray = titlesListedResponse.titles;
                 } else {
                     this.titlesArray = this.titlesArray.concat(titlesListedResponse.titles);
@@ -395,7 +412,7 @@ export default {
             }
         },
         async loadMoreTitlesForAllTitlesList() {
-            this.offset += 1;
+            this.page += 1;
             await this.fetchAllTitlesList();
         },
         removeItemFromWaitingArray(item) {
@@ -419,7 +436,7 @@ export default {
             return getMediaUrl(path, sourceUrl, width);
         },
         async inputTriggeredFetchAllTitles() {
-            this.offset = 0;
+            this.page = 1;
             await this.fetchAllTitlesList();
         },
         async handleAddTitleToUserList(title) {
@@ -438,26 +455,6 @@ export default {
                     title.favourite = false;
                 }
             }
-        },
-        // TODO: Update in the future to correctly add a collections name or collection to the title
-        handleTitleCollectionUpdate(payload) {
-            if (payload.titleInCollection) {
-                // const modifiedTitle = this.allTitlesList.find((title) => title.title_id == payload.title.title_id)
-                // modifiedTitle.collections.push(payload.collection);
-            } else {
-                // Pop based on collection data.
-            }
-        },
-        handleCollectionUpdate() {
-            // SOMETHING LIKE THIS CAN BE USED TO FIND AND UPDATE VALUES
-            // const index = this.titleCollectionsData.findIndex(c => c.collection_id === initialCollection.collection_id);
-            // if (index !== -1) {
-            //     this.titleCollectionsData[index] = {
-            //         ...this.titleCollectionsData[index],
-            //         name: editedCollection.name,
-            //         description: editedCollection.description
-            //     };
-            // }
         },
         promptCollections(titleId) {
             this.$refs.modalTitleCollections.prompt(titleId);
@@ -491,12 +488,19 @@ export default {
             }
         },
         castQueryValue(key, val) {
-            const boolKeys = ['in_watchlist', 'watched', 'released', 'favourite', 'title_in_progress', 'season_in_progress'];
+            const boolKeys = [
+                'in_watchlist',
+                'favourite',
+                'released',
+                'has_media_entry',
+            ];
             const intKeys = ['collection_id'];
+            const enumKeys = ['watch_status'];   // ← new
 
             if (val === null || val === 'null') return null;
             if (boolKeys.includes(key)) return val === 'true';
             if (intKeys.includes(key)) return Number(val);
+            if (enumKeys.includes(key)) return val; // string stays as is
             return val;
         },
     },
@@ -535,18 +539,17 @@ export default {
             handler() {
                 const query = { ...this.$route.query };
 
-                console.log(this.allTitlesListOptions.in_watchlist)
-
                 for (const key in this.allTitlesListOptions) {
-                    if (key === 'search_term') continue; // don’t touch search_term
+                    // if (key === 'search_term') continue;
 
                     const val = this.allTitlesListOptions[key];
-                    // const defaultVal = this.allTitlesListOptionsDefaults[key];
+                    const defaultVal = this.allTitlesListOptionsDefaults[key];
 
-                    if ( val == undefined ) {
+                    // Only keep the param when it differs from the default
+                    if (val == undefined || val === defaultVal) {
                         delete query[key];
                     } else {
-                        query[key] = val ;
+                        query[key] = val;
                     }
                 }
 
@@ -564,18 +567,19 @@ export default {
 
                     this.allTitlesListOptions[key] =
                         newQuery[key] !== undefined
-                            ? this.castQueryValue(key, newQuery[key])
-                            : this.allTitlesListOptionsDefaults[key];
+                        ? this.castQueryValue(key, newQuery[key])
+                        : this.allTitlesListOptionsDefaults[key];
                 }
 
                 // fetch with actual query params (not allTitlesListOptions)
-                this.offset = 0;
+                this.page = 1;
                 this.fetchAllTitlesList();
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
+
 
 
 <style scoped>
@@ -632,51 +636,61 @@ export default {
 }
 
 
-.all-titles-list-controls .basic-options {
+.all-titles-list-controls .sortin-options {
     width: 100%;
     display: flex;
     justify-content: end;
     column-gap: var(--spacing-sm);
     margin-top: var(--spacing-md);
 }
-.basic-options .icon-align {
+.sortin-options .icon-align {
     width: 300px;
     max-width: 100%;
 }
-.basic-options .custom-select {
+.sortin-options .custom-select {
     width: 100%;
     min-width: 170px;
 }
 
-.all-titles-list-controls .extra-options-holder {
+.all-titles-list-controls .extra-options {
     height: 0px;
     overflow: hidden;
     transition: height 0.2s ease-out;
 }
-.all-titles-list-controls .extra-options-holder.open {
+.all-titles-list-controls .extra-options.open {
     overflow: visible;
 }
-.extra-options-holder .extra-options {
+.extra-options .custom-select {
+    width: 100%;
+}
+.option-grid {
     width: 100%;
     display: grid;
     grid-template-columns: auto 1fr auto 1fr;
     column-gap: var(--spacing-sm);
     row-gap: var(--spacing-xs);
 }
-.extra-options-holder .custom-select {
-    width: 100%;
-}
 @media(max-width: 850px) {
-    .extra-options-holder .extra-options {
+    .option-grid {
         grid-template-columns: auto 1fr;
     }
 }
-.extra-options label {
+.option-grid label {
     margin: 0;
     align-items: center;
     margin-right: var(--spacing-md);
     display: flex;
     white-space: nowrap;
+}
+.option-grid .custom-select {
+    width: 100%;
+}
+
+.basic-options {
+    margin-bottom: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
 }
 
 .expand-button .rotated {

@@ -2,36 +2,38 @@
     <div>
         <TitleShowcase/>
 
-        <div v-for="(titleList, index) in titleLists" :key="index" class="content-width-extra-large title-list">
+        <div v-for="(titleList, index) in titleLists" :key="index" class="title-list content-width-extra-large">
             <h2>{{ titleList.listName }}</h2>
             <!-- <div class="title-list-text text-light">{{ titleList.text }}</div> -->
-            <div 
-                v-if="titleList.titles == null"
-                class="title-card-placeholder content-not-found"
-            >
-                Try adding titles to your watchlist.
-            </div>
-            <Flicking 
-                v-else-if="titleList.titles.length >= 1"
-                :options="{
-                    align: 'prev',
-                    bound: true,
-                    bounce: '33%',
-                    renderOnlyVisible: false,
-                }"
-            >
-                <TitleCard 
-                    v-for="(data, index) in titleList.titles" 
-                    :key="index" 
-                    :titleDetails="data" 
-                    :class="{ 'last': index == titleList.titles.length - 1 }"
-                    @favourite-toggle="data.favourite = !data.favourite"
-                />
-            </Flicking>
-            <div 
-                v-else
-                class="title-card-placeholder loading-placeholder"
-            >
+            <div class="flicking-wrapper">
+                <div 
+                    v-if="titleList.titles == null"
+                    class="title-card-placeholder content-not-found"
+                >
+                    Try adding titles to your watchlist.
+                </div>
+                <Flicking 
+                    v-else-if="titleList.titles.length >= 1"
+                    :options="{
+                        align: 'prev',
+                        bound: true,
+                        bounce: '33%',
+                        renderOnlyVisible: false,
+                    }"
+                >
+                    <TitleCard 
+                        v-for="(data, index) in titleList.titles" 
+                        :key="index" 
+                        :titleDetails="data" 
+                        :class="{ 'last': index == titleList.titles.length - 1 }"
+                        @favourite-toggle="data.favourite = !data.favourite"
+                    />
+                </Flicking>
+                <div 
+                    v-else
+                    class="title-card-placeholder loading-placeholder"
+                >
+                </div>
             </div>
         </div>
         <div class="content-width-small bottom">
@@ -232,6 +234,10 @@ export default {
 }
 .title-card.last {
     margin-right: 0;
+}
+
+.flicking-wrapper {
+    margin-inline: calc(-1 * var(--flicking-fade-width));
 }
 
 .bottom {

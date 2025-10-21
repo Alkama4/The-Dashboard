@@ -4,7 +4,7 @@
     >
         <div 
             class="selected-option icon-align" 
-            :class="{'invalid-input': invalidState}"
+            :class="{ 'invalid-input': invalidState, 'has-clear': clearButtonVisible }"
             tabindex="0"
             @keydown.down.prevent="handleKeyDown('down')" 
             @keydown.up.prevent="handleKeyDown('up')" 
@@ -16,9 +16,14 @@
             <!-- <span class="longest-option">{{ longestOptionLabel }}</span> -->
             <span v-if="selectedOption?.label" class="visible-option">{{ selectedOption.label }}</span>
             <span v-else class="visible-option text-lighter">Select an option</span>
-            <IconChevronDown size="28px"/>
+            <i class="bx bx-chevron-down chevron"></i>
         </div>
-        <ul v-if="isLogicalOpen" class="options-list" :class="{'hidden': !isStylingOpen}">
+        <i 
+            class="bx bx-x icon-button clear-btn"
+            :class="{'disabled': !clearButtonVisible}"
+            @click.stop.prevent="clearSelection"
+        ></i>
+        <ul v-if="isLogicalOpen" class="options-list" :class="{'hidden': !isStylingOpen, 'has-clear': clearButtonVisible}">
             <li v-for="(option, index) in options" 
                 :key="option.value" 
                 @click="selectOption(option)" 
@@ -32,16 +37,17 @@
 </template>
 
 <script>
-import IconChevronDown from '@/components/icons/IconChevronDown.vue';
-
 export default {
     components: {
-        IconChevronDown,
     },
     props: {
         options: Array,
         modelValue: [String, Number],
         disabled: Boolean,
+        hasClearButton: {
+            type: Boolean,
+            default: false,
+        }
     },
     data() {
         return {
@@ -115,6 +121,11 @@ export default {
         },
         updateSelectedOption() {
             this.selectedOption = this.options.find(opt => opt.value === this.modelValue) || null;
+        },
+        clearSelection() {
+            this.selectedOption = null;
+            this.$emit('update:modelValue', null);
+            this.invalidState = false;
         }
     },
     computed: {
@@ -124,6 +135,9 @@ export default {
                 { label: '' }
             );
             return longestOption.label;
+        },
+        clearButtonVisible() {
+            return this.hasClearButton && this.selectedOption
         }
     },
     watch: {
@@ -150,10 +164,11 @@ export default {
     display: flex;
     justify-content: space-between;
     box-sizing: border-box;
+    position: relative;
     width: 100%;
-    min-width: 100%;
     height: 100%;
     padding-left: var(--spacing-sm);
+    z-index: 10;
 
     font-family: 'Poppins', sans-serif;
     white-space: nowrap;
@@ -164,7 +179,8 @@ export default {
     
     border: 1px solid var(--color-border);
     border-radius: var(--border-radius-medium);
-    transition: border 0.1s ease-out;
+    transition: border 0.1s ease-out,
+                width 0.2s var(--cubic-1);
 }
 .selected-option:hover, 
 .custom-select.is-open .selected-option {
@@ -175,10 +191,12 @@ export default {
     outline-width: 2px;
     outline-color: var(--color-text);
 }
-.custom-select svg {
+.custom-select .chevron {
+    position: absolute;
+    right: 6px;
     transition: transform 0.1s ease-out;
 }
-.custom-select.is-open svg {
+.custom-select.is-open .chevron {
     transform: rotate(180deg);
 }
 
@@ -189,16 +207,35 @@ export default {
 .selected-option .visible-option {
     position: absolute;
 }
-.selected-option svg {
-    position: absolute;
-    right: 6px;
-}
 
 .selected-option .visible-option {
     position: absolute;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-    max-width: calc(100% - 40px); /* adjust based on icon size & padding */
+    width: 100%;
+}
+
+.selected-option.has-clear {
+    width: calc(100% - 40px);
+}
+.options-list.has-clear {
+    width: calc(100% - 40px);
+}
+
+.bx {
+    font-size: var(--font-size-xxl);
+}
+
+.clear-btn {
+    position: absolute;
+    right: var(--spacing-xs);
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    z-index: 5;
+}
+.clear-btn.disabled {
+    pointer-events: none;
 }
 </style>

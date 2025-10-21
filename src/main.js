@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import './assets/poppins.css';
 import './assets/global.css';
+import './assets/overrides.css';
 import router from './router';
 import 'boxicons/css/boxicons.min.css';
 import { notify } from './utils/notification';

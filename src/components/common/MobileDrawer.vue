@@ -126,8 +126,8 @@ export default {
 }
 .drawer {
     width: 100%;
-    border-top-left-radius: var(--border-radius-extra-large);
-    border-top-right-radius: var(--border-radius-extra-large);
+    border-top-left-radius: var(--border-radius-large);
+    border-top-right-radius: var(--border-radius-large);
     border: 1px solid var(--color-border);
     background-color: var(--color-background-card);
     z-index: var(--z-modal);
@@ -157,15 +157,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--border-radius-extra-large);
+    height: var(--border-radius-large);
     transition: background-color 0.1s ease-out;
 }
 .pointer-device .handle:hover {
     background-color: var(--color-background-card-hover);
 }
 .handle .marker {
-    height: 8px;
-    width: 32px;
+    height: 4px;
+    width: 24px;
     border-radius: 100px;
     background-color: var(--color-border);
 }

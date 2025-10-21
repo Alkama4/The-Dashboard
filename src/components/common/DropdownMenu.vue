@@ -1,33 +1,35 @@
 <template>
-    <div 
-        class="dropdown-menu"
-        :class="{'active': isOpen}"
-        @blur="closeMenu"
-        tabindex="0"
-    >
-        <i class="bx bx-dots-vertical-rounded icon-button" @click.stop.prevent="toggleMenu"></i>
-        <ul v-if="isOpen" class="menu card" @click.prevent>
-            <li v-for="(item, index) in options" 
-                :key="index" 
-                @click="handleClick(item)"
-            >
-                <i v-if="item.icon" class="bx" :class="item.icon"></i>
-                <span>{{ item.label }}</span>
-            </li>
-        </ul>
-        <MobileDrawer ref="dropDownDrawer">
-            <ul class="menu mobile">
+        <div 
+            class="dropdown-menu"
+            :class="{'active': isOpen}"
+            @blur="closeMenu"
+            tabindex="0"
+        >
+            <i class="bx bx-dots-vertical-rounded icon-button" @click.stop.prevent="toggleMenu"></i>
+            <ul v-if="isOpen" class="menu card" @click.prevent>
                 <li v-for="(item, index) in options" 
                     :key="index" 
-                    :class="{ 'no-border': index == 0 }"
                     @click="handleClick(item)"
                 >
                     <i v-if="item.icon" class="bx" :class="item.icon"></i>
                     <span>{{ item.label }}</span>
                 </li>
             </ul>
-        </MobileDrawer>
-    </div>
+            <Teleport to="body">
+                <MobileDrawer ref="dropDownDrawer">
+                    <ul class="menu mobile">
+                        <li v-for="(item, index) in options" 
+                            :key="index" 
+                            :class="{ 'no-border': index == 0 }"
+                            @click="handleClick(item)"
+                        >
+                            <i v-if="item.icon" class="bx" :class="item.icon"></i>
+                            <span>{{ item.label }}</span>
+                        </li>
+                    </ul>
+                </MobileDrawer>
+            </Teleport>
+        </div>
 </template>
 
 <script>
@@ -127,19 +129,20 @@ export default {
 
 .menu.mobile {
     position: static;
+    padding: 0;
 }
 .menu.mobile li {
     padding: var(--spacing-md) var(--spacing-sm);
     gap: var(--spacing-md);
     color: var(--color-text);
     font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 1rem;
     border-top: 2px solid var(--color-border);
 }
 .menu.mobile li.no-border {
     border: unset;
 }
 .menu.mobile li i {
-    font-size: var(--font-size-xxl);
+    font-size: var(--font-size-xl);
 }
 </style>

@@ -35,9 +35,7 @@
 
             <div class="title-card-details">
                 <div class="details">
-                    <div 
-                        class="title-card-name no-decoration"
-                    >
+                    <div class="title-card-name no-decoration">
                         {{ titleDetails.name }}
                     </div>
                     <div class="title-card-rating">
@@ -88,7 +86,11 @@ export default {
     props: {
         titleDetails: {
             type: Object,
-            required: true
+            default: () => {}
+        },
+        loading: {
+            type: Boolean,
+            default: false
         }
     },
     emits: ['favouriteToggle'],

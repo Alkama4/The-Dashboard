@@ -1,8 +1,15 @@
 <template>
     <div class="list-collections content-width-extra-large">
-        <h1>Your collections</h1>
-    
-        <!-- <button @click="handleNewCollection">New collection</button> -->
+        <h1>
+            <span>
+                My collections
+            </span>
+            <DropdownMenu
+                :options="[
+                    { icon: 'bx-plus', label: 'New collection', action: () => handleNewCollection() },
+                ]"
+            />
+        </h1>
     
         <div class="collections">            
             <CollectionItem 
@@ -31,10 +38,12 @@ import ModalCollection from '@/components/WatchList/ModalCollection.vue';
 import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
 import { notify } from '@/utils/notification';
 import CollectionItem from '@/components/WatchList/CollectionItem.vue';
+import DropdownMenu from '@/components/common/DropdownMenu.vue';
 
 export default {
     name: 'listCollections',
     components: {
+        DropdownMenu,
         ModalCollection,
         ModalConfirmation,
         CollectionItem,
@@ -115,6 +124,14 @@ export default {
 
 
 <style scoped>
+h1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dropdown-menu {
+    position: relative;
+}
 .collections {
     display: flex;
     flex-direction: row;

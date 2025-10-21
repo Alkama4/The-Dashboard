@@ -1,7 +1,11 @@
 <template>
     <div class="collection-details content-width-extra-large">
         <h1>{{ response?.name }}</h1>
-        <div class="text-light description">{{ response?.description }}</div>
+        <div class="details">
+            <div>
+                {{ convertToYear(response?.first_date) }} - {{ convertToYear(response?.last_date) }} &bull; {{ converToTime(response?.total_length) }}</div>
+            <div class="description">{{ response?.description }}</div>
+        </div>
         <div class="title-wrapper">
             <CollectionItem 
                 v-for="childCollection in response?.children"
@@ -24,6 +28,7 @@
 import fastApi from '@/utils/fastApi';
 import TitleCard from '@/components/WatchList/TitleCard.vue';
 import CollectionItem from '@/components/WatchList/CollectionItem.vue';
+import { convert } from '@/utils/utils';
 
 export default {
     name: 'CollectionDetails',
@@ -43,7 +48,13 @@ export default {
             if (response) {
                 this.response = response;
             }
-        }
+        },
+        converToTime(minutes) {
+            return convert.toTime(minutes * 60)
+        },
+        convertToYear(date) {
+            return convert.toFiDate(date, "")
+        },
     },
     async mounted() {
         await this.queryCollectionData();
@@ -63,11 +74,23 @@ export default {
 
 <style scoped>
 h1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 0;
 }
-.description {
-    margin-bottom: var(--spacing-lg);
+.dropdown-menu {
+    position: relative;
 }
+
+.details {
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-light);
+}
+.description {
+    color: var(--color-text);
+}
+
 .title-wrapper {
     /* margin-top: var(--spacing-lg); */
     display: flex;

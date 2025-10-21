@@ -80,6 +80,8 @@
     --fill-tmdb: linear-gradient(90deg, #90cea1 0%, #3cbec9 56%, #00b3e5 100%);
     --fill-imdb: #e2b616;
 
+    --flicking-fade-width: min(128px, 5vw);
+
     /* - - - - - - - - - - - - - - - - */
     /* - - - - - LIGHT  MODE - - - - - */
     /* - - - - - - - - - - - - - - - - */

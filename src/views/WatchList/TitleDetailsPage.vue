@@ -44,10 +44,7 @@
             <div class="control-button-array">
                 <NumericStepper 
                     class="flex-1"
-                    :displayValue="title_info.type === 'movie' 
-                        ? title_info.watch_count 
-                        : title_info?.seasons?.reduce((min, season) => 
-                            season?.episodes?.reduce((minEp, ep) => Math.min(minEp, ep.watch_count), min), Infinity)"
+                    :displayValue="title_info.watch_count"
                     @valueUpdated="val => handleTitleWatchClick('title', val, null)"
                 />
                 
@@ -58,33 +55,6 @@
                 >
                     <i class="bx bx-chevrons-down"></i> Jump to next episode
                 </button>
-
-                <!-- <button 
-                    v-if="title_info.favourite == null || title_info.favourite == false"
-                    class="button-primary left-button flex-1" 
-                    @click="handleFavouriteToggle"
-                >
-                    <IconHeart/>
-                </button>
-                <button 
-                    v-else
-                    class="red-heart left-button flex-1" 
-                    @click="handleFavouriteToggle" 
-                >
-                    <IconHeart/>
-                </button> -->
-
-                <!-- <button
-                    class="button-primary middle-button flex-1" 
-                    @click="openTitleUpdateModal()"
-                >
-                    <IconRefresh
-                        :class="{
-                            'loading': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0'),
-                            'spin-refresh-icon': waitingForResult.includes('titleUpdate0') || waitingForResult.includes('allUpdate0')
-                        }"
-                    />
-                </button> -->
             </div>
 
             <div class="at-a-glance">
@@ -312,38 +282,8 @@
             </div>
 
             <WatchNowSection
-                :title-media="title_info?.title_media?.movies"
+                :title-media="title_info?.title_media"
             />
-
-            <h3>Extras</h3>
-            <div class="aggregator-wrapper">
-                <a 
-                    v-for="(extra, i) in title_info?.title_media?.extras" 
-                    :key="i"
-                    :href="fileBridgeLink(extra.link)"
-                    class="link-button no-decoration hover-decoration"
-                >
-                    <div>
-                        <div class="name">
-                            [{{ extra.extra_type }}]
-                            {{ extra.parsed_file_name }}
-                        </div>
-                        <div class="tag tag-primary" v-if="extra.hdr_type">
-                            {{ extra.hdr_type }}
-                        </div>
-                        <div class="details flex">
-                            <div>
-                                {{ extra.video_width }} x 
-                                {{ extra.video_height }}
-                            </div>
-                            &ZeroWidthSpace; &bull; &ZeroWidthSpace;
-                            <div>
-                                {{ formatToBytes(extra.file_size) }}
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
             <h3>Link aggregators</h3>
             <div class="aggregator-wrapper">
