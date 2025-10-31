@@ -6,10 +6,6 @@
 					<h1>{{ greeting[0] }}</h1>
 					<span class="header-sub-text">{{ greeting[1] }}</span>
 				</div>
-				<div class="info">
-					<span class="label">Server uptime </span>
-					<span class="value">{{ formattedUptime() || "loading... " }}</span>
-				</div>
 			</div>
 		</div>
         
@@ -52,231 +48,14 @@
                     </a>
                     <DropdownMenu
                         :options="[
-                            { label: 'Edit', action: () => handleServiceLinksCreateOrEdit(service) },
-                            { label: 'Delete', action: () => handleServiceLinkDelete(service.id) },
+                            { label: 'Edit', icon: 'bxs-edit-alt', action: () => handleServiceLinksCreateOrEdit(service) },
+                            { label: 'Delete', icon: 'bxs-trash', action: () => handleServiceLinkDelete(service.id) },
                         ]"
                     />
                 </div>
 			</div>
 		</div>
-
-		<div class="content-width-large server-resource-usage">
-            <div class="icon-align header">
-                <h2>Server resource usage</h2>
-                <div class="icon-align selector">
-                    <CustomSelect 
-                        v-model="serverLogsTimespan" 
-                        :options="serverLogsTimespans"
-                        :disabled="waitingFor.length != 0"
-                        :class="{loading: waitingFor.length != 0}"
-                    />
-                    <IconRefresh size="28px" @click="fetchServerLogs(true)" class="icon-button"/>
-                </div>
-            </div>
-			<div class="data">
-                <div class="widgets">
-                    <ResourceUsageTile
-                        label="CPU Usage"
-                        :current="current.cpuUsage"
-                        :max="current.cpuUsageMax"
-                        :currentFormatted="current.cpuUsageFormatted"
-                        :maxFormatted="current.cpuUsageMaxFormatted"
-                        indicatorColor="var(--color-primary)"
-                        :chartOptionsGenerator="chartValueGenerators.chartCpuUsage"
-                    />
-
-                    <ResourceUsageTile
-                        label="Cpu Clock speed"
-                        :current="current.cpuFreq"
-                        :max="current.cpuFreqMax"
-                        :currentFormatted="current.cpuFreqFormatted"
-                        :maxFormatted="current.cpuFreqMaxFormatted"
-                        indicatorColor="var(--color-quinary)"
-                        usageKey="cpuFreq"
-                        :chartOptionsGenerator="chartValueGenerators.chartCpuFreq"
-                    />
-
-                    <ResourceUsageTile
-                        label="CPU Temp"
-                        :current="current.cpuTemp"
-                        :max="current.cpuTempMax"
-                        :currentFormatted="current.cpuTempFormatted"
-                        :maxFormatted="current.cpuTempMaxFormatted"
-                        indicatorColor="var(--color-secondary)"
-                        :chartOptionsGenerator="chartValueGenerators.chartCpuTemp"
-                    />
-
-                    <ResourceUsageTile
-                        label="RAM Usage"
-                        :current="current.ramUsage"
-                        :max="current.ramUsageMax"
-                        :currentFormatted="current.ramUsageFormatted"
-                        :maxFormatted="current.ramUsageMaxFormatted"
-                        indicatorColor="var(--color-tertiary)"
-                        :chartOptionsGenerator="chartValueGenerators.chartRamUsage"
-                    />
-
-                    <ResourceUsageTile
-                        label="Swap Usage"
-                        :current="current.swapUsage"
-                        :max="current.swapUsageMax"
-                        :currentFormatted="current.swapUsageFormatted"
-                        :maxFormatted="current.swapUsageMaxFormatted"
-                        indicatorColor="var(--color-septenary)"
-                        :chartOptionsGenerator="chartValueGenerators.chartSwapUsage"
-                    />
-
-                    <ResourceUsageTile
-                        label="Network down"
-                        :current="current.netRecv"
-                        :max="current.netRecvMax"
-                        :currentFormatted="current.netRecvFormatted"
-                        :maxFormatted="current.netRecvMaxFormatted"
-                        indicatorColor="var(--color-jokumikalie)"
-                        :chartOptionsGenerator="chartValueGenerators.chartNetUsage"
-                    />
-
-                    <!-- <ResourceUsageTile
-                        label="Network up"
-                        :current="current.netSent"
-                        :max="current.netSentMax"
-                        :currentFormatted="current.netSentFormatted"
-                        :maxFormatted="current.netSentMaxFormatted"
-                        indicatorColor="var(--color-senary)"
-                        :chartOptionsGenerator="chartValueGenerators.chartNetUsage"
-                    /> -->
-                </div>
-				<ChartComponent class="server-resource-chart cpu-usage card" :chartOptionsGenerator="chartValueGenerators.chartCpuUsage"/>
-				<ChartComponent class="server-resource-chart cpu-temp card" :chartOptionsGenerator="chartValueGenerators.chartCpuTemp"/>
-				<ChartComponent class="server-resource-chart network card" :chartOptionsGenerator="chartValueGenerators.chartNetUsage"/>
-
-				<div class="drives" v-if="serverStats.storage.length == 0">
-					<DriveCard 
-						v-for="(drive, index) in [0, 1]" 
-						:key="index"
-						:loadingVersion="true"
-					/>
-				</div>
-
-				<div v-else class="drives">
-					<DriveCard 
-						v-for="(drive, index) in serverStats.storage" 
-						:key="index"
-						:driveProperties="drive"
-					/>
-				</div>
-			</div>
-		</div>
-        
-        <div class="content-width-large">
-            <h2>Docker containers</h2>
-            <div class="containers">
-                <ContainerStack
-                    v-for="(containers, stackName) in containerInfo"
-                    :key="stackName"
-                    :stack-name="stackName"
-                    :containers="containers"
-                    :portainer-url="portainerUrl"
-                />
-            </div>
-        </div>
-
-        <div class="content-width-large">
-			<h2>Fastapi requests</h2>	
-			<div class="fastapi-analysis">
-
-				<ChartComponent class="card fastapi-chart fastapi-over-time" :chartOptionsGenerator="chartValueGenerators.chart10"/>
-				<ChartComponent class="card fastapi-chart fastapi-response-time" :chartOptionsGenerator="chartValueGenerators.chart11"/>
-
-				<div class="single-values">
-					<div class="card">
-						<div class="card-label">Average request processing time</div>
-						<div class="card-value" :class="{
-							'text-loading-placeholder': serverStats.fastapiData.avg_backend_time == undefined
-						}">
-							{{ formatToMs(serverStats.fastapiData.avg_backend_time) }}
-						</div>
-					</div>
-	
-					<div class="card">
-						<div class="card-label">Total requests in 24h</div>
-						<div class="card-value" :class="{
-							'text-loading-placeholder': serverStats.fastapiData.avg_backend_time == undefined
-						}">
-							{{ serverStats.fastapiData.total_requests }} kpl
-						</div>
-					</div>
-	
-					<div class="card">
-						<div class="card-label">Request success rate</div>
-						<div class="card-value" :class="{
-							'text-loading-placeholder': serverStats.fastapiData.success_rate == undefined
-						}">
-							{{ formatToPercentage(serverStats.fastapiData.success_rate) }}
-						</div>
-					</div>
-				</div>
-
-				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-client-ip" :chartOptionsGenerator="chartValueGenerators.chart7"/>
-				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-status-code" :chartOptionsGenerator="chartValueGenerators.chart8"/>
-				<ChartComponent class="card fastapi-chart fastapi-piechart fastapi-request-method" :chartOptionsGenerator="chartValueGenerators.chart9"/>
-				<ChartComponent class="card fastapi-chart fastapi-requests-by-endpoint" :chartOptionsGenerator="chartValueGenerators.chartRequestsByEndpoint"/>
-				<div v-if="serverStats.fastapiData.noErrorCodesFound" class="card fastapi-chart fastapi-error-codes">
-					<h2>Errors</h2>
-					<div class="content-not-found">
-						Your endpoints are so perfect, they put unicorns to shame!
-					</div>
-				</div>
-				<ChartComponent v-else class="card fastapi-chart fastapi-error-codes" :chartOptionsGenerator="chartValueGenerators.chart12"/>
-			</div>
-		</div>
-
-        <div class="flex-column content-width-medium">
-			<h2>Backups</h2>
-			<div class="backups">
-				<div v-for="(backupCategory, categoryName) in backups" :key="categoryName" class="card backup-card">
-					<div class="flex header">
-						<span>{{ categoryName }}</span>
-					</div>
-					<div v-for="(backup, index) in backupCategory" :key="index" class="backup-row">
-						<div class="flex">
-							<IconBackup v-if="backup.backup_direction == 'up'" size="25px"/>
-							<IconBackupDown v-else size="25px"/>
-							<span class="name">
-								{{ backup.backup_name }}
-							</span>
-						</div>
-						<div class="content">
-							<div class="flex">
-								<div class="label-text">
-									<div>Last run</div>
-									<div>Next in</div>
-									<div>Schedule</div>
-								</div>
-								<div>
-									<div :class="backup.status">{{ backup.last_success_time_since }}</div>
-									<div>{{ backup.time_until_next }}</div>
-									<div>{{ backup.schedule }}</div>
-								</div>
-							</div>
-							<div class="path-column">
-								<div class="label-text">
-									<div>Device</div>
-									<div>Source</div>
-									<div>Destination</div>
-								</div>
-								<div>
-									<div>{{ backup.peer_device }}</div>
-									<div class="path hover-decoration" title="Copy to clipboard" @click="copyToClipboard(backup.source_path, 'Path')">{{ backup.source_path }}</div>
-									<div class="path hover-decoration" title="Copy to clipboard" @click="copyToClipboard(backup.destination_path, 'Path')">{{ backup.destination_path }}</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
+		
 		<ServiceLinkModal
 			ref="serviceLinkModal"
 		/>
@@ -293,9 +72,6 @@
 
 <script>
 // Icons
-import IconBackup from '@/components/icons/IconBackup.vue';
-import IconBackupDown from '@/components/icons/IconBackupDown.vue';
-import IconRefresh from '@/components/icons/IconRefresh.vue';
 import IconLinkExternal from '@/components/icons/IconLinkExternal.vue';
 
 // Other
@@ -307,15 +83,9 @@ import {
 	generateTooltipSingleValue,
 	generateTooltipCustomValues,
 	commonChartValues,
-	initialEchartSetup,
 } from '@/utils/chartUtils'
-import ChartComponent from '@/components/common/ChartComponent.vue';
-import CustomSelect from '@/components/common/CustomSelect.vue';
 import { apiUrl, portainerUrl } from '@/utils/config';
 import { setTimeout } from 'core-js';
-import ResourceUsageTile from '@/components/Dashboard/ResourceUsageTile.vue';
-import ContainerStack from '@/components/Dashboard/ContainerStack.vue';
-import DriveCard from '@/components/Dashboard/DriveCard.vue';
 import ServiceLinkModal from '@/components/Dashboard/ServiceLinkModal.vue';
 import IconAdd from '@/components/icons/IconAdd.vue';
 import DropdownMenu from '@/components/common/DropdownMenu.vue';
@@ -325,18 +95,10 @@ import ModalConfirmation from '@/components/common/ModalConfirmation.vue';
 export default {
 	name: 'HomePage',
 	components: {
-		ChartComponent,
-		CustomSelect,
-        ResourceUsageTile,
-        ContainerStack,
-		DriveCard,
 		ServiceLinkModal,
         MissingImage,
 		DropdownMenu,
         ModalConfirmation,
-		IconBackup,
-		IconBackupDown,
-		IconRefresh,
         IconLinkExternal,
 		IconAdd,
 	},
@@ -1351,32 +1113,6 @@ export default {
     async mounted() {
 		// Get services from env
 		this.getServiceLinks();
-
-		// Everything that needs to be done before echarts in one method
-		initialEchartSetup();
-
-		const backupResponse = await fastApi.server.backups();
-		if (backupResponse) {
-			this.backups = backupResponse.backups;
-		}
-		// console.log(this.backups);
-		
-		// Server drives
-		const drivesResponse = await fastApi.server.drives();
-		if (drivesResponse) {
-			for (const drive of Object.entries(drivesResponse)) {
-				this.serverStats.storage.push(drive[1]);
-			}
-		}
-		// console.log(this.serverStats.storage);
-
-        await this.fetchContainerInfo();
-		await this.fetchServerLogs();
-		await this.fetchFastapiLogs();
-
-        setInterval(() =>  {
-            this.secondsPassed += 1;
-        }, 1000);
 	}
 };
 </script>
