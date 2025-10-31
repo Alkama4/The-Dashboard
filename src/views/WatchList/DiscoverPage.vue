@@ -70,101 +70,92 @@ export default {
             waitingForResult: [],
             titleLists: [
                 {
-                    listName: "In progress",
-                    text: "TV-series that you have started but have not finished yet.",
+                    listName: "Your Favourites",
+                    text: "Movies or TV shows you've marked as favourite.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
-                        sort_by: "last_updated",
-                        title_type: "tv",
-                        season_in_progress: true,
-                        in_watchlist: true,
+                        favourite: true
                     }
                 },
                 {
-                    listName: "Movies to watch",
-                    text: "Movies that are on your watch list and that you have yet not watched.",
+                    listName: "In Your Watchlist",
+                    text: "Titles you've added to your watchlist.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
-                        sort_by: "release_date",
-                        title_type: "movie",
-                        watched: false,
-                        released: true,
-                        in_watchlist: true,
-                    }
-                },
-                {
-                    listName: "TV-series to start watching",
-                    text: "TV-series that you are have on you watch list but haven't started to watch yet.",
-                    titles: [],
-                    loading: true,
-                    fetchDetails: {
-                        sort_by: "release_date",
-                        title_type: "tv",
-                        title_in_progress: false,
-                        watched: false,
-                        released: true,
-                        in_watchlist: true,
-                    }
-                },
-                {
-                    listName: "Recently added",
-                    text: "Titles that you recently added to your watchlist.",
-                    titles: [],
-                    loading: true,
-                    fetchDetails: {
-                        sort_by: "last_updated",
-                        watched: false,
-                        in_watchlist: true,
-                    }
-                },
-                {
-                    listName: "New Seasons Available",
-                    text: "TV series you've watched up to the end of a season, and now a new season has been released.",
-                    titles: [],
-                    loading: true,
-                    fetchDetails: {
-                        sort_by: "release_date",
-                        direction: "asc",
-                        title_type: "tv",
-                        title_in_progress: true,
-                        season_in_progress: false,
-                        watched: false,
                         in_watchlist: true
                     }
                 },
                 {
-                    listName: "Your favourites",
-                    text: "Your favourite movies and TV-series.",
+                    listName: "Continue Watching",
+                    text: "Titles you started but haven't finished.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
-                        favourite: true,
-                        in_watchlist: true,
+                        watch_status: "partially_watched"
                     }
                 },
                 {
-                    listName: "Just watched",
-                    text: "The titles you've recently watched or interacted with, such as those you've watched or added to your favorites.",
+                    listName: "Unwatched Movies",
+                    text: "Movies you haven't started yet.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
-                        sortBy: "last_updated",
-                        watched: true,
-                        in_watchlist: true,
+                        title_type: "movie",
+                        watch_status: "unwatched"
                     }
                 },
                 {
-                    listName: "Upcoming titles",
-                    text: "Upcoming titles to look forward to.",
+                    listName: "TV Shows In Progress",
+                    text: "TV series where a season is partially or fully watched.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
+                        title_type: "tv",
+                        season_in_progress: true
+                    }
+                },
+                {
+                    listName: "Recently Updated",
+                    text: "Titles recently updated with new data.",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        sort_by: "data_updated",
+                        direction: "DESC"
+                    }
+                },
+                {
+                    listName: "Highest Rated",
+                    text: "Sorted by rating, highest first.",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        sort_by: "rating",
+                        direction: "DESC"
+                    }
+                },
+                {
+                    listName: "New Releases",
+                    text: "Titles that have been released recently.",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        released: true,
                         sort_by: "release_date",
-                        direction: "asc",
+                        direction: "DESC"
+                    }
+                },
+                {
+                    listName: "Upcoming",
+                    text: "Titles not released yet.",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
                         released: false,
-                        in_watchlist: true,
+                        sort_by: "release_date",
+                        direction: "ASC"
                     }
                 },
             ],
