@@ -331,7 +331,7 @@
         </div>
 
         <!-- TV-SHOW SPECIFIC -->
-        <div class="content-width-medium-unrestricted" v-if="title_info.seasons">
+        <div class="content-width-medium-unrestricted" v-if="title_info?.seasons?.length > 0">
             <h2 id="episode_map">Episode map</h2>
             <!-- <h2 id="episode_map" class="icon-align"><IconTMDB size="42px" style="margin-right: 6px;"/> Episode map</h2> -->
 
@@ -387,7 +387,6 @@
             ref="seasonBrowser"
             :seasons-data="title_info.seasons"
             :title-id="title_info.title_id"
-            :handleWatchEpisodeNow="handleWatchEpisodeNow"
             :handleTitleWatchClick="handleTitleWatchClick"
         />
 
@@ -1016,13 +1015,6 @@ export default {
 
             // Fallback if nothing matched
             router.push(`/watch_list/title/${this.title_info.title_id}#S1E1`);
-        },
-        handleWatchEpisodeNow(episode) {
-            const media = episode.episode_media;
-            if (media) {
-                const chosenMedia = media.reduce((max, obj) => obj.file_size > max.file_size ? obj : max, media[0]);
-                window.location.href = fileBridgeLink(chosenMedia.link);
-            }
         },
         async handleUpdateTitleMediaInfo() {
             const response = await fastApi.watch_list.titles.update_media_info(this.title_info.title_id);

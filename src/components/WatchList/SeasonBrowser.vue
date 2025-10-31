@@ -117,7 +117,12 @@
                                 }"
                                 :id="`S${season.season_number}E${episode.episode_number}`"
                             >
-                                <div class="still-container" @click="handleWatchEpisodeNow(episode)">
+                                
+                                <div 
+                                    class="still-container" 
+                                    @click="episode.episode_media.length > 0 && openEpisodeWatchNow(episode)" 
+                                    :class="{'click-active': episode.episode_media.length > 0}"
+                                >
                                     <HiddenImage v-if="!showSpoilers && episode.watch_count == 0" class="still"/>
                                     <MissingImage v-else-if="failedToLoadImages.includes('episode' + episode.episode_id)" class="still"/>
                                     <img 
@@ -193,11 +198,44 @@
                 </transition>
             </div>
         </div>
+
+        <ModalGeneric header="Watch now" ref="watchNowGM">
+            <div class="watch-now-wrapper">
+                <div v-if="watchNowEpisodeData.episode_media == 0" class="content-not-found">
+                    Try scanning for media from the title options.
+                </div>
+                <a 
+                    :href="fileBridgeLink(media.link)" 
+                    v-for="media in watchNowEpisodeData.episode_media" 
+                    :key="media.media_id" 
+                    class="media-listing no-decoration"
+                >
+                    <i class="bx bxs-movie"></i>
+                    <i class="bx bx-play hover-active"></i>
+                    <div class="text">
+                        <h3>{{ media.parsed_file_name }}</h3>
+                        <div class="details">
+                            {{ activeDetails?.hdr_type }}
+                            <span :class="{'tag tag-primary': activeDetails?.hdr_type}">
+                                {{ activeDetails?.hdr_type ?? 'SDR'}}
+                            </span>
+                            &bull;
+                            <span>{{ calculateResolution(media) }}</span>
+                            &bull;
+                            <span>{{ convertToBytes(media.file_size) }}</span>
+                        </div>
+                        <div class="filename">
+                            {{ fileName(media) }}
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </ModalGeneric>
     </div>
 </template>
 
 <script>
-import { convert, getMediaUrl } from '@/utils/utils';
+import { calculateResolution, convert, fileBridgeLink, getMediaUrl } from '@/utils/utils';
 import MissingImage from '@/components/common/MissingImage.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
@@ -205,6 +243,7 @@ import NumericStepper from '@/components/common/NumericStepper.vue';
 import { newReleaseCutoffDate } from '@/utils/config';
 import HiddenImage from '@/components/WatchList/HiddenImage.vue';
 import CustomToggle from '../common/CustomToggle.vue';
+import ModalGeneric from '../common/ModalGeneric.vue';
 
 export default {
     name: 'SeasonBrowser',
@@ -216,10 +255,6 @@ export default {
         titleId: {
             type: Number,
             default: null,
-        },
-        handleWatchEpisodeNow: {
-            type: Function,
-            required: true,
         },
         handleTitleWatchClick: {
             type: Function,
@@ -233,6 +268,7 @@ export default {
         IconTMDB,
         NumericStepper,
         CustomToggle,
+        ModalGeneric,
     },
     data() {
         return {
@@ -241,6 +277,7 @@ export default {
             transitionDirection: null,
             newReleaseCutoffDate: newReleaseCutoffDate,
             showSpoilers: false,
+            watchNowEpisodeData: null,
         }
     },
     methods: {
@@ -249,6 +286,20 @@ export default {
         },
         imageUrl(path, sourceUrl) {
             return getMediaUrl(path, sourceUrl);
+        },
+        calculateResolution(media) {
+            return calculateResolution(media)
+        },
+        convertToBytes(amount) {
+            return convert.toBytes(amount);
+        },
+        fileBridgeLink(link) {
+            return fileBridgeLink(link);
+        },
+        fileName(media) {
+            if (!media?.link) return '';
+            const parts = media.link.split('/');
+            return parts[parts.length - 1];
         },
         getSeasonWatchCount(season) {
             if (!season || !season.episodes || season.episodes.length === 0) {
@@ -328,6 +379,10 @@ export default {
 
             return `${first.toLocaleDateString("fi-FI", {day: "numeric", month: "short", year: "numeric"})} - ${last.toLocaleDateString("fi-FI", {day: "numeric", month: "short", year: "numeric"})}`;
         },
+        openEpisodeWatchNow(episode) {
+            this.watchNowEpisodeData = episode;
+            this.$refs.watchNowGM.open()
+        }
     },
     watch: {
         activeSeason() {
@@ -534,21 +589,6 @@ export default {
     flex-direction: row;
     gap: var(--spacing-md);
 }
-.episode::after {
-    content: "";
-    width: calc(100% - var(--spacing-lg));
-    height: var(--episode-gap-line-height);
-    position: absolute;
-    bottom: calc(var(--episode-gap-line-height) * -1);
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: var(--color-border);
-    border-radius: var(--episode-gap-line-height);
-    z-index: 2;
-}
-.episode.last::after {
-    display: none;
-}
 
 .episode h3 {
     margin: 0;
@@ -569,6 +609,8 @@ export default {
     aspect-ratio: 16/9;
     background-color: var(--color-background-card-section);
     position: relative;
+}
+.episode .still-container.click-active {
     cursor: pointer;
 }
 
@@ -579,7 +621,7 @@ export default {
     transition: filter 0.1s ease-out;
     filter: brightness(1);
 }
-.episode .still-container:hover .still {
+.episode .still-container.click-active:hover .still {
     filter: brightness(0.5);
 }
 
@@ -591,7 +633,7 @@ export default {
     opacity: 0;
     transition: opacity 0.1s ease-out;
 }
-.episode .still-container:hover .icon-watch-now {
+.episode .still-container.click-active:hover .icon-watch-now {
     opacity: 1;
 }
 
@@ -676,5 +718,66 @@ export default {
     opacity: 0;
     transform: translateX(-50px);
 }
+
+
+.watch-now-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-width: 500px;
+}
+.watch-now-wrapper .content-not-found {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-lg);
+}
+.media-listing {
+    position: relative;
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    transition: background-color 0.1s ease-out;
+}
+.media-listing:hover {
+    background-color: var(--color-background-card-hover);
+}
+
+
+.media-listing i {
+    font-size: 32px;
+    padding-inline: var(--spacing-sm);
+    transition: opacity 0.1s ease-out;
+    opacity: 1;
+}
+
+.media-listing .hover-active {
+    position: absolute;
+    left: var(--spacing-sm);
+    transition: opacity 0.1s ease-out;
+    opacity: 0;
+}
+.media-listing:hover i {
+    opacity: 0;
+}
+.media-listing:hover .hover-active {
+    opacity: 1;
+}
+
+
+
+.media-listing .text {
+    display: flex;
+    flex-direction: column;
+}
+.media-listing h3 {
+    margin: 0;
+}
+/* .media-listing .details {
+    color: var(--color-text-light);    
+} */
+.media-listing .filename {
+    color: var(--color-text-light);    
+}
+
 
 </style>

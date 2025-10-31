@@ -3,9 +3,7 @@
         <h3>Watch now</h3>
         <div class="side-by-side card">
             <div class="chosen-media">
-                <h3 class="master-header">Chosen media</h3>
-                <div class="seperator"></div>
-                <div v-if="activeDetails">
+                <div v-if="activeDetails" class="active-details">
                     <h3>{{ activeDetails?.parsed_file_name }}</h3>
                     <div class="details">
                         <div :class="{'tag tag-primary': activeDetails?.hdr_type}">
@@ -31,8 +29,6 @@
             </div>
             <div class="card-spacer"></div>
             <div>
-                <h3 class="master-header">Found media</h3>
-                <div class="seperator"></div>
                 <div class="options-listed">
                     <h4 v-if="titleMedia?.movies.length > 0">Movies</h4>
                     <div 
@@ -87,7 +83,7 @@
 </template>
 
 <script>
-import { convert, fileBridgeLink } from '@/utils/utils';
+import { calculateResolution, convert, fileBridgeLink } from '@/utils/utils';
 
 export default {
     name: 'WatchNowSection',
@@ -117,17 +113,7 @@ export default {
             }
         },
         calculateResolution(media) {
-            const video_width = media.video_width;
-            const video_height = media.video_height;
-            if (!video_width || !video_height) return 'Unset';
-
-            let height = 0;
-            if ((video_width / video_height) > (16 / 9)) {
-                height = Math.round(video_width * 9 / 16);
-            } else {
-                height = video_height;
-            }
-            return `${height}p`;
+            return calculateResolution(media)
         }
     },
     computed: {
@@ -191,6 +177,18 @@ export default {
     display: flex;
     flex-direction: column;
 }
+.chosen-media h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.active-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+.link-button {
+    margin-top: var(--spacing-md);
+}
 
 .tag-primary {
     padding: 0 var(--spacing-sm);
@@ -202,6 +200,9 @@ export default {
 .options-listed {
     max-height: 400px;
     overflow-y: scroll;
+}
+.options-listed h4:nth-of-type(1) {
+    margin-top: 0;
 }
 .options-listed .option {
     padding: var(--spacing-sm) var(--spacing-sm);
@@ -254,10 +255,6 @@ export default {
 
 .master-header {
     margin-top: 0;
-}
-
-.link-button {
-    margin-top: var(--spacing-md);
 }
 
 .card-spacer {

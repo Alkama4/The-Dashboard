@@ -202,3 +202,18 @@ export function getMediaUrl(path, sourceUrl, width) {
     const widthParam = width ? `?width=${width}` : '';
     return `${apiUrl}/media${path}${widthParam}`;
 }
+
+
+export function calculateResolution(media) {
+    const video_width = media.video_width;
+    const video_height = media.video_height;
+    if (!video_width || !video_height) return 'Unset';
+
+    let height = 0;
+    if ((video_width / video_height) > (16 / 9)) {
+        height = Math.round(video_width * 9 / 16);
+    } else {
+        height = video_height;
+    }
+    return `${height}p`;
+}
