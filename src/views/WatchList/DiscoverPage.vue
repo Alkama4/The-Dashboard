@@ -71,7 +71,6 @@ export default {
             titleLists: [
                 {
                     listName: "Your Favourites",
-                    text: "Movies or TV shows you've marked as favourite.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
@@ -79,17 +78,7 @@ export default {
                     }
                 },
                 {
-                    listName: "In Your Watchlist",
-                    text: "Titles you've added to your watchlist.",
-                    titles: [],
-                    loading: true,
-                    fetchDetails: {
-                        in_watchlist: true
-                    }
-                },
-                {
                     listName: "Continue Watching",
-                    text: "Titles you started but haven't finished.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
@@ -98,17 +87,16 @@ export default {
                 },
                 {
                     listName: "Unwatched Movies",
-                    text: "Movies you haven't started yet.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
                         title_type: "movie",
-                        watch_status: "unwatched"
+                        watch_status: "unwatched",
+                        released: true,
                     }
                 },
                 {
                     listName: "TV Shows In Progress",
-                    text: "TV series where a season is partially or fully watched.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
@@ -118,7 +106,6 @@ export default {
                 },
                 {
                     listName: "Recently Updated",
-                    text: "Titles recently updated with new data.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
@@ -127,8 +114,27 @@ export default {
                     }
                 },
                 {
+                    listName: "Available Movies",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        has_media_entry: true,
+                        title_type: "movie",
+                        watch_status: "unwatched"
+                    }
+                },
+                {
+                    listName: "Available series",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        has_media_entry: true,
+                        title_type: "tv",
+                        watch_status: "unwatched"
+                    }
+                },
+                {
                     listName: "Highest Rated",
-                    text: "Sorted by rating, highest first.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
@@ -137,8 +143,16 @@ export default {
                     }
                 },
                 {
+                    listName: "Most Popular",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        sort_by: "popularity",
+                        direction: "DESC"
+                    }
+                },
+                {
                     listName: "New Releases",
-                    text: "Titles that have been released recently.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
@@ -149,7 +163,6 @@ export default {
                 },
                 {
                     listName: "Upcoming",
-                    text: "Titles not released yet.",
                     titles: [],
                     loading: true,
                     fetchDetails: {
