@@ -568,7 +568,7 @@ import SeasonBrowser from '@/components/WatchList/SeasonBrowser.vue';
 import IconPlay from '@/components/icons/IconPlay.vue';
 import DropdownMenu from '@/components/common/DropdownMenu.vue';
 import TitleTags from '@/components/WatchList/TitleTags.vue';
-import WatchNowSection from './WatchNowSection.vue';
+import WatchNowSection from '@/components/WatchList/WatchNowSection.vue';
 
 export default {
     name: 'TitleDetailsPage',

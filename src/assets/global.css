@@ -1086,6 +1086,11 @@ form.simple-form button {
     background-color: var(--color-button-general);
 }
 
+.tag.tag-small {
+    padding: 0 var(--spacing-sm);
+    align-items: center;
+}
+
 .fullwindow {
     max-height: none !important;
     max-width: none !important;

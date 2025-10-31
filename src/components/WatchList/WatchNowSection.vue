@@ -42,7 +42,7 @@
                         <div>
                             <div class="name">{{ media.parsed_file_name }}</div>
                             <div class="details">
-                                <div :class="{'tag tag-primary': media?.hdr_type}">
+                                <div :class="{'tag tag-primary tag-small': media?.hdr_type}">
                                     {{ media?.hdr_type ?? 'SDR'}}
                                 </div>
                                 &ZeroWidthSpace; &bull; &ZeroWidthSpace;
@@ -189,11 +189,7 @@ export default {
 .link-button {
     margin-top: var(--spacing-md);
 }
-
-.tag-primary {
-    padding: 0 var(--spacing-sm);
-    display: flex;
-    align-items: center;
+.tag-small {
     margin-right: var(--spacing-xs);
 }
 

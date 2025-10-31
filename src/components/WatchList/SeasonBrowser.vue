@@ -120,7 +120,7 @@
                                 
                                 <div 
                                     class="still-container" 
-                                    @click="episode.episode_media.length > 0 && openEpisodeWatchNow(episode)" 
+                                    @click="episode.episode_media.length > 0 && openEpisodeWatchNow(episode, season)" 
                                     :class="{'click-active': episode.episode_media.length > 0}"
                                 >
                                     <HiddenImage v-if="!showSpoilers && episode.watch_count == 0" class="still"/>
@@ -201,23 +201,22 @@
 
         <ModalGeneric header="Watch now" ref="watchNowGM">
             <div class="watch-now-wrapper">
-                <div v-if="watchNowEpisodeData.episode_media == 0" class="content-not-found">
+                <div v-if="watchNowEpisodeMedia.length == 0" class="content-not-found">
                     Try scanning for media from the title options.
                 </div>
                 <a 
                     :href="fileBridgeLink(media.link)" 
-                    v-for="media in watchNowEpisodeData.episode_media" 
+                    v-for="media in watchNowEpisodeMedia" 
                     :key="media.media_id" 
                     class="media-listing no-decoration"
                 >
                     <i class="bx bxs-movie"></i>
                     <i class="bx bx-play hover-active"></i>
                     <div class="text">
-                        <h3>{{ media.parsed_file_name }}</h3>
+                        <h3>{{ media.parsed_file_name }} - S{{ watchNowEpisodeSeasonNumber }} E{{ watchNowEpisodeNumber }}</h3>
                         <div class="details">
-                            {{ activeDetails?.hdr_type }}
-                            <span :class="{'tag tag-primary': activeDetails?.hdr_type}">
-                                {{ activeDetails?.hdr_type ?? 'SDR'}}
+                            <span :class="{'tag tag-primary tag-small': media?.hdr_type}">
+                                {{ media?.hdr_type ?? 'SDR'}}
                             </span>
                             &bull;
                             <span>{{ calculateResolution(media) }}</span>
@@ -277,7 +276,9 @@ export default {
             transitionDirection: null,
             newReleaseCutoffDate: newReleaseCutoffDate,
             showSpoilers: false,
-            watchNowEpisodeData: null,
+            watchNowEpisodeMedia: null,
+            watchNowEpisodeNumber: null,
+            watchNowEpisodeSeasonNumber: null,
         }
     },
     methods: {
@@ -379,8 +380,10 @@ export default {
 
             return `${first.toLocaleDateString("fi-FI", {day: "numeric", month: "short", year: "numeric"})} - ${last.toLocaleDateString("fi-FI", {day: "numeric", month: "short", year: "numeric"})}`;
         },
-        openEpisodeWatchNow(episode) {
-            this.watchNowEpisodeData = episode;
+        openEpisodeWatchNow(episode, season) {
+            this.watchNowEpisodeMedia = episode.episode_media;
+            this.watchNowEpisodeNumber = episode.episode_number;
+            this.watchNowEpisodeSeasonNumber = season.season_number;
             this.$refs.watchNowGM.open()
         }
     },
@@ -772,9 +775,9 @@ export default {
 .media-listing h3 {
     margin: 0;
 }
-/* .media-listing .details {
-    color: var(--color-text-light);    
-} */
+.media-listing .tag-small {
+    margin-right: var(--spacing-xs);
+}
 .media-listing .filename {
     color: var(--color-text-light);    
 }
