@@ -133,9 +133,18 @@ h1 {
     position: relative;
 }
 .collections {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    display: grid;
     gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(0px, 50%, 450px), 1fr));
 }
+/* @media (max-width: 1650px) {
+    .collections {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+@media (max-width: 1100px) {
+    .collections {
+        grid-template-columns: 1fr;
+    }
+} */
 </style>

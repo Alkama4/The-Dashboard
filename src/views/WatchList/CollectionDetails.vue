@@ -6,7 +6,7 @@
                 {{ convertToYear(response?.first_date) }} - {{ convertToYear(response?.last_date) }} &bull; {{ converToTime(response?.total_length) }}</div>
             <div class="description">{{ response?.description }}</div>
         </div>
-        <div class="title-wrapper">
+        <div class="collection-wrapper">
             <CollectionItem 
                 v-for="childCollection in response?.children"
                 :key="childCollection.collection_id"
@@ -89,6 +89,12 @@ h1 {
 }
 .description {
     color: var(--color-text);
+}
+
+.collection-wrapper {
+    display: grid;
+    gap: var(--spacing-md);
+    grid-template-columns: repeat(auto-fit, minmax(clamp(0px, 50%, 450px), 1fr));
 }
 
 .title-wrapper {

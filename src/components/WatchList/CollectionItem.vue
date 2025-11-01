@@ -13,6 +13,7 @@
                 <!-- <div class="detail">
                     {{ collection.children.length == 0 ? 'no' : collection.children.length }} child collection{{ collection.children.length == 1 ? '' : 's' }}
                 </div> -->
+                <div class="description">{{ collection.description }}</div>
                 <div class="detail">{{ collection.total_count }} titles &bull; {{ converToTime(collection.total_length) }}</div>
                 <div class="detail">{{ convertToYear(collection.first_date) }} - {{ convertToYear(collection.last_date) }}</div>
             </div>
@@ -75,45 +76,56 @@ export default {
 
 <style scoped>
 .collection {
+    position: relative;
     display: flex;
     row-gap: var(--spacing-md);
     flex-direction: column;
     position: relative;
     box-sizing: border-box;
-    width: 220px;
+    width: 100%;
+    height: 180px;
+    background-color: var(--color-background-card);
+    border-radius: var(--border-radius-medium);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: background-color 0.1s ease-out;
 }
-@media (max-width: 900px) {
-    .collection {
-        width: 180px;
-    }
+.collection:hover {
+    background-color: var(--color-background-card-hover);
+}
+.collection:active {
+    background-color: var(--color-background-card-active);
 }
 
 .dropdown-menu {
     top: var(--spacing-sm);
     right: var(--spacing-xs);
+    z-index: 15;
 }
 
 .title-posters {
-    width: 100%;
-    aspect-ratio: 2/3;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    border-radius: var(--border-radius-medium);
-    overflow: hidden;
-    background-color: var(--color-background-card);
-    box-shadow: var(--shadow-card);
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: row;
+    mask: linear-gradient(to right, hsla(0, 0%, 0%, 0), hsla(0, 0%, 0%, 0.25));
 }
 .title-posters img {
+    aspect-ratio: 2/3;
     height: 100%;
-    width: 100%;
 }
 
 .details {
     margin-top: var(--spacing-sm);
+    margin-right: var(--spacing-lg);
     display: flex;
+    position: sticky;
     flex-direction: column;
     align-items: start;
+    z-index: 10;
+    padding: var(--spacing-sm) var(--spacing-md);
 }
 
 .name {
@@ -128,6 +140,10 @@ export default {
 }
 .collection:hover .name {
     text-decoration: underline;
+}
+
+.description {
+    white-space: wrap;
 }
 
 .detail {
