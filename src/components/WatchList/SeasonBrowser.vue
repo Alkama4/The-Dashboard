@@ -735,10 +735,11 @@ export default {
 .media-listing {
     position: relative;
     border-radius: var(--border-radius-medium);
-    padding: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: var(--spacing-md);
+    background-color: var(--color-background-card-active);
     transition: background-color 0.1s ease-out;
 }
 .media-listing:hover {
@@ -748,14 +749,13 @@ export default {
 
 .media-listing i {
     font-size: 32px;
-    padding-inline: var(--spacing-sm);
     transition: opacity 0.1s ease-out;
     opacity: 1;
 }
 
 .media-listing .hover-active {
     position: absolute;
-    left: var(--spacing-sm);
+    left: var(--spacing-md);
     transition: opacity 0.1s ease-out;
     opacity: 0;
 }

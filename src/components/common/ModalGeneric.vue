@@ -8,7 +8,7 @@
         }"
         @click.self="close"
     >
-        <IconLoading class="icon-loading" size="42px" v-if="waitingVueShow"/>
+        <i v-if="waitingVueShow" class="bx bx-loader-alt icon-loading"></i>
 
         <div 
             class="modal"
@@ -20,13 +20,12 @@
 
             <div class="default-content" v-if="showDefaultcontent">
                 <h2 class="title">{{ header }}</h2>
-                <IconCross
-                    class="icon-button"
-                    size="36px"
+                <i 
+                    class="bx bx-x icon-button"
                     @click="close"
                     @keydown.enter="close"
                     tabindex="0"
-                />
+                ></i>
             </div>
 
             <div class="content">
@@ -38,14 +37,9 @@
 </template>
 
 <script>
-import IconCross from '@/components/icons/IconCross.vue';
-import IconLoading from '@/components/icons/IconLoading.vue';
-
 export default {
     name: 'ModalGeneric',
     components: {
-        IconCross,
-        IconLoading,
     },
     props: {
         header: {
@@ -176,6 +170,7 @@ export default {
 
 .icon-loading {
     position: absolute;
+    font-size: 42px;
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
@@ -197,7 +192,7 @@ export default {
     width: fit-content;
     height: fit-content;
     box-sizing: border-box;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-large);
     padding: var(--spacing-lg);
     background-color: var(--color-background-card);
     
@@ -240,6 +235,10 @@ export default {
 .default-content .title {
     margin: 0;
 }   
+
+.default-content i {
+    font-size: 36px;
+}
 
 .content {
     overflow-y: auto; /* Enable vertical scrolling */
