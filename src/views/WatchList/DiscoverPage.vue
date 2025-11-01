@@ -3,8 +3,12 @@
         <TitleShowcase/>
 
         <div v-for="(titleList, index) in titleLists" :key="index" class="title-list content-width-extra-large">
-            <h2>{{ titleList.listName }}</h2>
-            <!-- <div class="title-list-text text-light">{{ titleList.text }}</div> -->
+            <h2>
+                <a :href="buildSearchLink(titleList)" class="no-decoration">
+                    <span>{{ titleList.listName }}</span>
+                    <i class="bx bx-chevron-right"></i>
+                </a>
+            </h2>
             <div class="flicking-wrapper">
                 <div 
                     v-if="titleList.titles == null"
@@ -206,6 +210,19 @@ export default {
                 console.error("Error fetching title lists:", error);
             }
         },
+        buildSearchLink(titleList) {
+            let isFirst = true;
+            let link = "/watch_list/search";
+            for (const [key, value] of Object.entries(titleList.fetchDetails)) {
+                if (isFirst) {
+                    isFirst = false;
+                    link += `?${key}=${value}`
+                } else {
+                    link += `&${key}=${value}`
+                }
+            }
+            return link
+        }
     },
     async mounted() {
         this.waitingForResult.push("allTitlesList");
@@ -228,6 +245,22 @@ export default {
     margin-bottom: var(--spacing-xs);
     margin-top: var(--spacing-xl);
 }
+.title-list h2 a {
+    align-items: center;
+    display: flex;
+}
+.title-list h2 i {
+    opacity: 0;
+    transform: translateX(0px);
+    font-size: var(--font-size-xxl);
+    transition: opacity 0.5s var(--cubic-1),
+                transform 0.2s var(--cubic-1);
+}
+.title-list h2:hover i {
+    opacity: 1;
+    transform: translateX(4px);
+}
+
 .title-list .title-list-text {
     margin-top: var(--spacing-xs);
     margin-bottom: var(--spacing-md);
