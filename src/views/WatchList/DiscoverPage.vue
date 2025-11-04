@@ -78,7 +78,8 @@ export default {
                     titles: [],
                     loading: true,
                     fetchDetails: {
-                        favourite: true
+                        favourite: true,
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -86,7 +87,8 @@ export default {
                     titles: [],
                     loading: true,
                     fetchDetails: {
-                        watch_status: "partially_watched"
+                        watch_status: "partially_watched",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -97,6 +99,7 @@ export default {
                         title_type: "movie",
                         watch_status: "unwatched",
                         released: true,
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -105,7 +108,8 @@ export default {
                     loading: true,
                     fetchDetails: {
                         title_type: "tv",
-                        season_in_progress: true
+                        season_in_progress: true,
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -114,7 +118,8 @@ export default {
                     loading: true,
                     fetchDetails: {
                         sort_by: "data_updated",
-                        direction: "DESC"
+                        direction: "DESC",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -124,7 +129,8 @@ export default {
                     fetchDetails: {
                         has_media_entry: true,
                         title_type: "movie",
-                        watch_status: "unwatched"
+                        watch_status: "unwatched",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -134,7 +140,8 @@ export default {
                     fetchDetails: {
                         has_media_entry: true,
                         title_type: "tv",
-                        watch_status: "unwatched"
+                        watch_status: "unwatched",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -143,7 +150,8 @@ export default {
                     loading: true,
                     fetchDetails: {
                         sort_by: "rating",
-                        direction: "DESC"
+                        direction: "DESC",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -152,7 +160,8 @@ export default {
                     loading: true,
                     fetchDetails: {
                         sort_by: "popularity",
-                        direction: "DESC"
+                        direction: "DESC",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -162,7 +171,8 @@ export default {
                     fetchDetails: {
                         released: true,
                         sort_by: "release_date",
-                        direction: "DESC"
+                        direction: "DESC",
+                        in_watchlist: true,
                     }
                 },
                 {
@@ -172,7 +182,16 @@ export default {
                     fetchDetails: {
                         released: false,
                         sort_by: "release_date",
-                        direction: "ASC"
+                        direction: "ASC",
+                        in_watchlist: true,
+                    }
+                },
+                {
+                    listName: "Not in list",
+                    titles: [],
+                    loading: true,
+                    fetchDetails: {
+                        in_watchlist: false,
                     }
                 },
             ],
@@ -268,6 +287,7 @@ export default {
 
 .title-card {
     margin-right: var(--spacing-md);
+    width: clamp(180px, 15vw, 225px);     /* 15vw is just an example */
 }
 .title-card.last {
     margin-right: 0;

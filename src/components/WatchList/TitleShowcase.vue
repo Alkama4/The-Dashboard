@@ -185,7 +185,7 @@ export default {
     width: 100vw;
     height: calc(100vh - 60px - var(--spacing-md) - 225px);
     max-height: 1600px;
-    min-height: 650px;
+    min-height: 700px;
     position: relative;
 }
 
@@ -234,6 +234,9 @@ export default {
 .logo {
     width: 600px;
     max-width: 100%;
+    max-height: 250px;
+    object-fit: contain;
+    object-position: 0;
 }
 
 
@@ -319,7 +322,7 @@ export default {
 .title-showcase .backdrop.active {
     opacity: 1;
 }
-@media (max-height: 1000px) {
+@media (max-height: 1200px) {
     .text-details {
         margin-top: var(--spacing-md);
     }

@@ -116,18 +116,12 @@ export default {
 .title-card {
     display: flex;
     flex-direction: column;
-    width: 220px;
     position: relative;
     cursor: pointer;
     user-select: none;
 }
 .pointer-device .title-card:hover .title-card-name {
     text-decoration: underline;
-}
-@media (max-width: 900px) {
-    .title-card {
-        width: 180px;
-    }
 }
 
 /* Thumbnail Image */

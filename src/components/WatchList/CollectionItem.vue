@@ -90,10 +90,10 @@ export default {
     box-shadow: var(--shadow-card);
     transition: background-color 0.1s ease-out;
 }
-.collection:hover {
+.pointer-device .collection:hover {
     background-color: var(--color-background-card-hover);
 }
-.collection:active {
+.pointer-device .collection:active {
     background-color: var(--color-background-card-active);
 }
 

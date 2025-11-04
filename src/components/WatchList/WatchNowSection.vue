@@ -6,7 +6,7 @@
                 <div v-if="activeDetails" class="active-details">
                     <h3>{{ activeDetails?.parsed_file_name }}</h3>
                     <div class="details">
-                        <div :class="{'tag tag-primary': activeDetails?.hdr_type}">
+                        <div :class="{'tag tag-primary tag-small': activeDetails?.hdr_type}">
                             {{ activeDetails?.hdr_type ?? 'SDR'}}
                         </div>
                         &ZeroWidthSpace; &bull; &ZeroWidthSpace;
