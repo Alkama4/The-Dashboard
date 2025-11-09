@@ -192,7 +192,7 @@ export default {
     width: fit-content;
     height: fit-content;
     box-sizing: border-box;
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-lg);
     padding: var(--spacing-lg);
     background-color: var(--color-background-card);
     

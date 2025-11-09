@@ -147,7 +147,7 @@ export default {
     display: flex;
     width: 100%;
     height: 220px;
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-lg);
     overflow: hidden;
 }
 .drop-area .empty {
@@ -158,7 +158,7 @@ export default {
     height: 100%;
     padding: var(--spacing-xl) var(--spacing-lg);
     
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-lg);
     border: dashed 3px var(--color-border);
 
     flex-direction: column;
@@ -195,7 +195,7 @@ export default {
     border-width: 1px;
     border-style: solid;
     border-color: var(--color-border);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     transition: border-color 0.1s ease-out,
                 outline-color 0.1s ease-out;
 }

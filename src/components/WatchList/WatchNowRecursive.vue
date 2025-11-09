@@ -50,7 +50,7 @@ export default {
 .border {
     margin-top: var(--spacing-md);
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     padding: var(--spacing-md);
     position: relative;
     width: 100%;

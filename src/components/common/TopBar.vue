@@ -240,7 +240,7 @@ export default {
 .icon-button,
 .dark-mode-toggle {
     padding: 6px 10px;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     display: flex;
 }
 
@@ -253,7 +253,7 @@ export default {
     font-weight: 500;
     padding: 6px 15px;
     margin-left: 0;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     background-color: #24242400;
     transition: color 0.1s ease-out,
                 background-color 0.1s ease-out,

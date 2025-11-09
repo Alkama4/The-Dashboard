@@ -381,7 +381,7 @@ export default {
 }
 
 .full-width-slide {
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     --card-height: 300px;
     --card-width: 200px;
     height: calc(var(--card-height) * 0.95);

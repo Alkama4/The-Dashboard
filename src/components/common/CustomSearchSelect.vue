@@ -194,7 +194,7 @@ export default {
     user-select: none;
     
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     transition: border 0.1s ease-out;
 }
 .selected-option:hover, 

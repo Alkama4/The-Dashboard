@@ -68,7 +68,7 @@ export default {
     background-color: var(--color-background-card);
     padding: var(--spacing-md);
     padding-right: calc(var(--spacing-sm) + var(--indicator-width) + var(--spacing-md));
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-lg);
     position: relative;
     overflow: hidden;
     cursor: pointer;

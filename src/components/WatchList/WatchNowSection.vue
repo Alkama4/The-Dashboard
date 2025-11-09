@@ -202,7 +202,7 @@ export default {
 }
 .options-listed .option {
     padding: var(--spacing-sm) var(--spacing-sm);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     cursor: pointer;
     display: grid;
     grid-template-columns: auto 1fr;

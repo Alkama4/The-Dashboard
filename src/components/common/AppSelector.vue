@@ -117,7 +117,7 @@ export default {
     align-items: center;
     gap: 12px;
 
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
 
     font-weight: 500;
     font-size: var(--font-size-lg);

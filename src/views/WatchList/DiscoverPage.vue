@@ -257,7 +257,7 @@ export default {
 .title-card-placeholder {
     height: 414px;
     width: 100%;
-    border-radius: var(--border-radius-large);
+    border-radius: var(--border-radius-lg);
 }
 
 .title-list h2 {

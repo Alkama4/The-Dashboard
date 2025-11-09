@@ -424,7 +424,7 @@ export default {
     bottom: 0;
     left: 0;
     right: 0;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
 }
 .season-tabs button .progress-indicator {
@@ -488,7 +488,7 @@ export default {
     aspect-ratio: 2/3;
     max-width: 300px;
     background-color: var(--color-background-card-section);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
 }
 .season .about .poster {
@@ -607,7 +607,7 @@ export default {
     display: flex;
     width: 300px;
     min-width: 300px;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
     aspect-ratio: 16/9;
     background-color: var(--color-background-card-section);
@@ -734,7 +734,7 @@ export default {
 }
 .media-listing {
     position: relative;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     padding: var(--spacing-sm) var(--spacing-md);
     display: flex;
     align-items: center;

@@ -112,15 +112,16 @@ export default {
     top: 100%;
     right: 0;
     margin: 0;
-    padding: var(--border-radius-small) 0;
-    border-radius: var(--border-radius-small);
+    padding: var(--spacing-xs);
+    border-radius: var(--border-radius-sm);
     list-style: none;
     user-select: none;
     z-index: var(--z-drop-down);
 }
 .menu li {
-    padding: 8px 16px;
+    padding: 6px 16px;
     padding-right: 32px;
+    border-radius: var(--border-radius-xs);
     cursor: pointer;
     white-space: nowrap;
     display: flex;

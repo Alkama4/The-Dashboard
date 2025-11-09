@@ -102,7 +102,7 @@ export default {
     /* left: calc(50% - ((300px + 2 * 15px) / 2)); */
     right: var(--spacing-md);
     padding: var(--spacing-md);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
     color: var(--color-text-white);
     cursor: pointer;
@@ -197,8 +197,8 @@ export default {
     position: absolute;
     bottom: 0;
     left: 0;
-    height: var(--border-radius-small);
-    border-bottom-left-radius: var(--border-radius-small);
+    height: var(--border-radius-xs);
+    border-bottom-left-radius: var(--border-radius-xs);
     background-color: hsla(0, 0%, 100%, 0.333);
     transition: width 0.1s linear; /* Smooth animation */
 }

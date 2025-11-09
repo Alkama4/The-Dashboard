@@ -110,7 +110,7 @@ export default {
 	height: 32px;
 	background-color: var(--color-background-card-section);
 	/* border: 1px solid var(--color-border); */
-	border-radius: var(--border-radius-small);
+	border-radius: var(--border-radius-xs);
 	position: relative;
 }
 .capacityIndicator.loading-placeholder > * {
@@ -118,7 +118,7 @@ export default {
 }
 .capacityIndicator .bar {
 	height: 100%;
-	border-radius: var(--border-radius-small);
+	border-radius: var(--border-radius-xs);
 }
 .capacityIndicator .bar.positiveBackground {
 	background-color: var(--color-positive);

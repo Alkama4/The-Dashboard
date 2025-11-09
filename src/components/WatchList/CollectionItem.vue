@@ -85,7 +85,7 @@ export default {
     width: 100%;
     height: 180px;
     background-color: var(--color-background-card);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
     box-shadow: var(--shadow-card);
     transition: background-color 0.1s ease-out;

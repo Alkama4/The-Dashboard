@@ -88,7 +88,7 @@ export default {
     max-width: 100%;
     height: 40px;
     box-sizing: border-box;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     background-color: var(--color-background-input);
     display: flex;
     align-items: center;
@@ -140,7 +140,7 @@ export default {
 .slider-indicator {
     width: 50%;
     height: 100%;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     display: flex;
     align-items: center;
     justify-content: center;

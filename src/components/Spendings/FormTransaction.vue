@@ -472,7 +472,7 @@ export default {
 .total-amount {
     /* margin-top: var(--spacing-sm); */
     background-color: var(--color-background-input);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     height: 40px;
     display: flex;
     align-items: center;

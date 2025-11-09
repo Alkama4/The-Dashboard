@@ -140,8 +140,8 @@ export default {
 }
 .drawer {
     width: 100%;
-    border-top-left-radius: var(--border-radius-large);
-    border-top-right-radius: var(--border-radius-large);
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
     border: 1px solid var(--color-border);
     background-color: var(--color-background-card);
     z-index: var(--z-modal);
@@ -171,7 +171,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--border-radius-large);
+    height: var(--border-radius-lg);
     transition: background-color 0.1s ease-out;
 }
 .pointer-device .handle:hover {

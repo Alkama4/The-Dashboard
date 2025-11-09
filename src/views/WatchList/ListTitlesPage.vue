@@ -715,7 +715,7 @@ export default {
     min-height: 210px;
     height: fit-content;
     cursor: pointer;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
     background-color: var(--color-background-card);
     transition: transform 0.15s var(--cubic-1);
@@ -733,7 +733,7 @@ export default {
     height: fit-content;
     column-gap: var(--spacing-md);
     width: 100%;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
     transition: transform 0.15s var(--cubic-1);
     box-shadow: var(--shadow-card);
@@ -797,7 +797,7 @@ export default {
     height: 210px;
     width: 140px;
     min-width: 140px;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     background-color: var(--color-background-card-section);
     overflow: hidden;
 }

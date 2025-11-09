@@ -100,7 +100,7 @@ export default {
     padding: 8px;
     background: var(--color-background-card);
     border: 1px solid var(--color-border);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     margin-bottom: var(--spacing-xs);
     display: flex;
     flex-direction: row;

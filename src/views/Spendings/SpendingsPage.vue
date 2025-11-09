@@ -507,7 +507,7 @@ export default {
     justify-content: left; /* Optional: Center horizontally */
     gap: 0.5rem; /* Adds spacing between text and icon */
     padding: 8px var(--spacing-sm);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     z-index: 1;
 }
 .transaction-headers > div svg {
@@ -526,7 +526,7 @@ export default {
 
 .loading-placeholder {
     height: 27px;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
 }
 .column-category .loading-placeholder {
     margin-right: var(--spacing-md) !important;
@@ -546,7 +546,7 @@ export default {
     padding-bottom: var(--spacing-xl);
     margin-top: var(--spacing-sm);
     background-color: var(--color-background-card);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
 }
 
 

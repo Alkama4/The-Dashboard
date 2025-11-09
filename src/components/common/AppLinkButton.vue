@@ -40,7 +40,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     font-weight: 500;
     padding-inline: var(--spacing-sm);
     font-size: var(--font-size-lg);

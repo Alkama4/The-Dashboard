@@ -131,7 +131,7 @@ export default {
 
 /* Thumbnail Image */
 .title-card-thumbnail {
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     overflow: hidden;
     width: 100%;
     aspect-ratio: 2/3;

@@ -410,7 +410,7 @@ export default {
     background-color: var(--color-background-card);
     padding: var(--spacing-md);
     padding-right: calc(var(--spacing-sm) + 20px + var(--spacing-md));
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     position: relative;
     overflow: hidden;
 }

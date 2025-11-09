@@ -528,7 +528,7 @@ h2 {
     border-width: 1px;
     border-style: solid;
     border-color: var(--color-border);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
 
 }
 
@@ -542,7 +542,7 @@ h2 {
     margin: 0;
     padding: var(--spacing-sm);
     padding-left: var(--spacing-md);
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
 
 }
 .drop-down-indicator {
@@ -559,7 +559,7 @@ h2 {
     height: 25px;
     display: flex;
     flex-direction: row;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     background-color: var(--color-background-input-light);
     margin-inline: auto var(--spacing-sm);
     border: 1px solid var(--color-border);
@@ -574,13 +574,13 @@ h2 {
 } 
 .mode-flipper-in-header.exclude .flipper {
     transform: translateX(0);
-    border-top-left-radius: var(--border-radius-small);
-    border-bottom-left-radius: var(--border-radius-small);
+    border-top-left-radius: var(--border-radius-xs);
+    border-bottom-left-radius: var(--border-radius-xs);
 } 
 .mode-flipper-in-header.include .flipper {
     transform: translateX(25px);
-    border-top-right-radius: var(--border-radius-small);
-    border-bottom-right-radius: var(--border-radius-small);
+    border-top-right-radius: var(--border-radius-xs);
+    border-bottom-right-radius: var(--border-radius-xs);
 }
 
 .drop-down-content {
@@ -589,8 +589,8 @@ h2 {
     overflow: scroll;
     background-color: var(--color-background-input-light);
 
-    border-bottom-left-radius: var(--border-radius-small);
-    border-bottom-right-radius: var(--border-radius-small);
+    border-bottom-left-radius: var(--border-radius-xs);
+    border-bottom-right-radius: var(--border-radius-xs);
     transition: height 0.2s ease-out;
 }
 h5 {

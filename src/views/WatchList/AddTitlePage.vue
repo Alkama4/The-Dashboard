@@ -272,7 +272,7 @@ export default {
         width: 200px;
         aspect-ratio: 500/741;
         background-color: var(--color-background-card-section);
-        border-radius: var(--border-radius-medium);
+        border-radius: var(--border-radius-sm);
     }    
     .result .title-texts {
         display: flex;
@@ -327,7 +327,7 @@ export default {
     .result .genre {
         padding: var(--spacing-xs) var(--spacing-sm);
         background-color: var(--color-background-card-section);
-        border-radius: var(--border-radius-small);
+        border-radius: var(--border-radius-xs);
         font-size: var(--font-size-sm);
         font-weight: 500;
         white-space: nowrap;

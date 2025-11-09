@@ -136,7 +136,7 @@
                         <div 
                             class="color-swab"
                             :style="{'background-color': color.value}"
-                            style="height: 100px; width: 150px; border-radius: var(--border-radius-medium);"
+                            style="height: 100px; width: 150px; border-radius: var(--border-radius-sm);"
                         >
                     </div>
                     {{ color.proportion }} <br>
@@ -1349,7 +1349,7 @@ export default {
     bottom: 0;
     z-index: var(--z-title-poster);
     background-color: var(--color-background-card);
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     width: 100%;
     max-width: 100%;
     display: flex;
@@ -1357,7 +1357,7 @@ export default {
     aspect-ratio: 2/3;
 }
 .poster-next-to-stuff .poster-placholder img {
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
     /* max-width: 100%; */
     width: 100%;
     aspect-ratio: 2/3;
@@ -1421,7 +1421,7 @@ iframe {
     width: 550px;
     max-width: 100%;
     margin-inline: auto;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-sm);
 }
 .iframe-container {
     display: flex;
@@ -1551,7 +1551,7 @@ iframe {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: var(--border-radius-small);
+    border-radius: var(--border-radius-xs);
     background-color: var(--color-background-card); /* Default background */
     cursor: pointer;
     user-select: none;
