@@ -1,7 +1,7 @@
 <template>
     <div class="nested-links">
         <template v-for="(value, key) in data" :key="key">
-            <a v-if="typeof value === 'object' && value.link" class="link-button no-decoration hover-decoration" :href="value.link" :alt="value.name">
+            <a v-if="typeof value === 'object' && value.link" class="link-button hover-decoration" :href="value.link" :alt="value.name">
                 <component :is="value.icon" size="32px" />
                 <div class="text">
                     <div class="name">{{ value.name }}</div>

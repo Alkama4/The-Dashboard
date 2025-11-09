@@ -60,7 +60,7 @@
             <div class="at-a-glance">
                 <div class="ratings">
                     <a 
-                        class="short-value no-decoration hover-decoration"
+                        class="short-value hover-decoration"
                         :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
                         target="_blank" 
                         rel="noopener noreferrer" 
@@ -74,7 +74,7 @@
                         </span>
                     </a>
                     <a 
-                        class="short-value no-decoration hover-decoration"
+                        class="short-value hover-decoration"
                         :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
                         target="_blank" 
                         rel="noopener noreferrer" 
@@ -120,7 +120,7 @@
                         :href="`https://www.imdb.com/title/${this.title_info.imdb_id}/awards`" 
                         target="_blank" 
                         rel="noopener noreferrer" 
-                        class="value no-decoration hover-decoration">{{ title_info.awards ?? '-' }}
+                        class="value hover-decoration">{{ title_info.awards ?? '-' }}
                     </a>
                     <span class="text-lighter">Awards & Nominations</span>
                 </div>
@@ -230,7 +230,7 @@
                         <div>IMDB id</div>
                         <div class="value">
                             <a 
-                                class="no-decoration hover-decoration"
+                                class="hover-decoration"
                                 :href="`https://www.imdb.com/title/${this.title_info.imdb_id}`"
                                 target="_blank" 
                                 rel="noopener noreferrer"
@@ -243,7 +243,7 @@
                         <div>TMDB id</div>
                         <div class="value">
                             <a 
-                                class="no-decoration hover-decoration"
+                                class="hover-decoration"
                                 :href="`https://www.themoviedb.org/${this.title_info.type}/${this.title_info.tmdb_id}`" 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
@@ -291,7 +291,7 @@
                     v-for="(aggregator, i) in linkAggregators" 
                     :key="i"
                     :href="aggregator.link"
-                    class="link-button no-decoration hover-decoration"
+                    class="link-button hover-decoration"
                     target="_blank"
                 >
                     <component

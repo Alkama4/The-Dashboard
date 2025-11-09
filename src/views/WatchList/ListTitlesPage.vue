@@ -132,7 +132,7 @@
                     <div class="content">
                         <router-link 
                             :to="`/watch_list/title/${title.title_id}`"
-                            class="title-name no-decoration hover-decoration"
+                            class="title-name hover-decoration"
                             tabindex="-1"
                             @click.stop
                         >

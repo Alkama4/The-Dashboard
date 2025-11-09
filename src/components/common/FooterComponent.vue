@@ -18,7 +18,7 @@
                         v-for="(link, j) in linkStack.links" 
                         :key="j"
                         :to="link.to"
-                        class="no-decoration hover-decoration link"
+                        class="hover-decoration link"
                     >
                         {{ link.display }}
                     </router-link>
@@ -32,9 +32,9 @@
                 &copy; 2024 Aleksi Malkki. All Rights Reserved.
             </div>
             <div class="flex-1 align-right">
-                <a href="https://github.com/Alkama4/The-Dashboard" class="no-decoration hover-decoration">GitHub Repository</a>
-                <a href="https://alkama4.github.io/The-Dashboard/" class="no-decoration hover-decoration">Demo Site</a>
-                <a href="https://github.com/Alkama4/The-Dashboard?tab=Apache-2.0-1-ov-file" class="no-decoration hover-decoration">License</a>
+                <a href="https://github.com/Alkama4/The-Dashboard" class="hover-decoration">GitHub Repository</a>
+                <a href="https://alkama4.github.io/The-Dashboard/" class="hover-decoration">Demo Site</a>
+                <a href="https://github.com/Alkama4/The-Dashboard?tab=Apache-2.0-1-ov-file" class="hover-decoration">License</a>
             </div>
         </div>
     </footer>

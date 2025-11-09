@@ -16,19 +16,19 @@
             v-if="titleInfo.favourite == 1"
             :to="'/watch_list/search?favourite=true'"
             target="_blank"
-            class="tag tag-secondary no-decoration hover-decoration" 
+            class="tag tag-secondary hover-decoration" 
         >
             Favourite
         </router-link>
         <router-link 
             :to="`/watch_list/search?title_type=${titleInfo.type}`"
             target="_blank"
-            class="tag no-decoration hover-decoration"
+            class="tag hover-decoration"
         >
             {{ titleInfo.type == 'tv' ? 'TV-show' : 'Movie' }}
         </router-link>
         <router-link 
-            class="tag no-decoration hover-decoration" 
+            class="tag hover-decoration" 
             v-for="(genre, index) in titleInfo.genres" 
             :key="index"
             target="_blank"

@@ -35,7 +35,7 @@
 
             <div class="title-card-details">
                 <div class="details">
-                    <div class="title-card-name no-decoration">
+                    <div class="title-card-name">
                         {{ titleDetails.name }}
                     </div>
                     <div class="title-card-rating">
