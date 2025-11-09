@@ -6,7 +6,11 @@ import session from './session';
 
 // apiClient to be used in the fastApi methods
 const apiClient = axios.create({
-    baseURL: process.env.VUE_APP_API_URL, // FastAPI base URL
+    baseURL:
+        process.env.NODE_ENV === 'production'
+        ? (process.env.VUE_APP_API_URL || '/api')
+        : (process.env.VUE_APP_DEV_API_URL || 'http://localhost:8000'),
+
     timeout: 0, // Time outs anyway at 5000 if api is not reachable, but if it just takes a long time do not time out
     headers: {
         'Content-Type': 'application/json',
