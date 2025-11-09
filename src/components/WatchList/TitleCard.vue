@@ -19,8 +19,7 @@
                 />
             </div>
 
-            <div class="tag tag-secondary" v-if="titleDetails.favourite">Favourite</div>
-            <div class="tag tag-positive" v-else-if="titleDetails.watch_count >= 1">{{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}</div>
+            <div class="tag tag-positive" v-if="titleDetails.watch_count >= 1">{{ titleDetails.watch_count }} watch{{ titleDetails.watch_count > 1 ? 'es' : '' }}</div>
             <div 
                 class="tag tag-primary"
                 v-else-if="
@@ -54,7 +53,14 @@
             </div>
         </router-link>
         
-        <DropdownMenu :options="dropDownOptions"/>
+        <div class="controls">
+            <i 
+                class="bx bxs-heart icon-button favourite circle-bg"
+                :class="{'active': titleDetails.favourite}"
+                @click.stop="handleToggleFavourite()"
+            ></i>
+            <DropdownMenu :options="dropDownOptions" :bg-mode="true"/>
+        </div>
     </div>
 </template>
 
@@ -76,7 +82,6 @@ export default {
         return {
             imgNotFound: false,
             dropDownOptions: [
-                { icon: "bxs-heart", label: "Toggle Favourite", action: () => this.handleToggleFavourite() },
                 { icon: "bxs-time-five", label: "Add to Queue", action: () => {} },
                 { icon: "bxs-collection", label: "Title Collections", action: () => {} },
                 { icon: "bx-list-minus", label: "Remove Title", action: () => {} },
@@ -133,11 +138,15 @@ export default {
     background-color: var(--color-background-card-section);
     z-index: 1;
     box-shadow: var(--shadow-card);
+    transition: filter 0.1s ease-out;
 }
 .title-card-thumbnail img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+.pointer-device .title-card:hover .title-card-thumbnail {
+    filter: brightness(0.66);
 }
 
 /* Card Details */
@@ -182,10 +191,38 @@ export default {
 
 
 /* Dropdown positioning */
-.dropdown-menu {
+.controls {
+    position: absolute;
     top: var(--spacing-sm);
-    right: var(--spacing-xs);
+    right: var(--spacing-sm);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-xs);
+    opacity: 0;
+    transition: opacity 0.1s ease-out;
 }
+.title-card:hover .controls {
+    opacity: 1;
+}
+.controls .dropdown-menu {
+    position: relative;
+}
+
+.controls i {
+    font-size: var(--font-size-xl);
+}
+
+.controls i.favourite.active {
+    color: var(--color-secondary);
+}
+.pointer-device .controls i.favourite.active:hover {
+    color: var(--color-secondary-hover);
+}
+.pointer-device .controls i.favourite.active:active {
+    color: var(--color-secondary-active);
+}
+
 
 
 /* Season and Episode Formatting */

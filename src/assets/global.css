@@ -18,8 +18,8 @@
     --spacing-xxl: 128px;
     
     /* border radius */
-    --border-radius-small: 4px;
-    --border-radius-medium: 8px;
+    --border-radius-small: 8px;
+    --border-radius-medium: 12px;
     --border-radius-large: 16px;
     --border-radius-extra-large: 32px;
     
@@ -1019,13 +1019,29 @@ form.simple-form button {
     transform: scale(1);
     border-radius: var(--border-radius-small);
     transition: transform 0.1s var(--cubic-bounce-soft-out),
-                color 0.1s var(--cubic-bounce-soft-out) !important;
+                color 0.1s var(--cubic-bounce-soft-out),
+                background-color 0.1s var(--cubic-bounce-soft-out) !important;
 }
-.icon-button:hover {
+.pointer-device .icon-button:hover {
     color: var(--color-text);
 }
-.icon-button:active {
+.pointer-device .icon-button:active {
     color: var(--color-text-bold);
+}
+
+.icon-button.circle-bg {
+    color: var(--color-text);
+    padding: var(--spacing-sm);
+    border-radius: 100px;
+    background-color: hsla(0, 0%, 0%, 0.3);
+}
+.icon-button.circle-bg:hover {
+    background-color: hsla(0, 0%, 0%, 0.5);
+    color: var(--color-text-bold);
+}
+.icon-button.circle-bg:active {
+    background-color: hsla(0, 0%, 0%, 0.5);
+    color: var(--color-text);
 }
 
 .loading {

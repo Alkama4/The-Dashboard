@@ -1,11 +1,16 @@
 <template>
-        <div 
-            class="dropdown-menu"
-            :class="{'active': isOpen}"
-            @blur="closeMenu"
-            tabindex="0"
-        >
-            <i class="bx bx-dots-vertical-rounded icon-button" @click.stop.prevent="toggleMenu"></i>
+    <div 
+        class="dropdown-menu"
+        :class="{'active': isOpen}"
+        @blur="closeMenu"
+        tabindex="0"
+    >
+        <i 
+            class="bx bx-dots-vertical-rounded icon-button" 
+            :class="{'circle-bg': bgMode}"
+            @click.stop.prevent="toggleMenu"
+        ></i>
+        <Transition name="dropdown-fade">
             <ul v-if="isOpen" class="menu card" @click.prevent>
                 <li v-for="(item, index) in options" 
                     :key="index" 
@@ -15,21 +20,22 @@
                     <span>{{ item.label }}</span>
                 </li>
             </ul>
-            <Teleport to="body">
-                <MobileDrawer ref="dropDownDrawer">
-                    <ul class="menu mobile">
-                        <li v-for="(item, index) in options" 
-                            :key="index" 
-                            :class="{ 'no-border': index == 0 }"
-                            @click="handleClick(item)"
-                        >
-                            <i v-if="item.icon" class="bx" :class="item.icon"></i>
-                            <span>{{ item.label }}</span>
-                        </li>
-                    </ul>
-                </MobileDrawer>
-            </Teleport>
-        </div>
+        </Transition>
+        <Teleport to="body">
+            <MobileDrawer ref="dropDownDrawer">
+                <ul class="menu mobile">
+                    <li v-for="(item, index) in options" 
+                        :key="index" 
+                        :class="{ 'no-border': index == 0 }"
+                        @click="handleClick(item)"
+                    >
+                        <i v-if="item.icon" class="bx" :class="item.icon"></i>
+                        <span>{{ item.label }}</span>
+                    </li>
+                </ul>
+            </MobileDrawer>
+        </Teleport>
+    </div>
 </template>
 
 <script>
@@ -46,6 +52,10 @@ export default {
             type: Array,
             required: true // [{ label: "Option 1", action: () => {} }]
         },
+        bgMode: {
+            type: Boolean,
+            default: false,
+        }
     },
     data() {
         return {
@@ -94,7 +104,7 @@ export default {
 }
 
 .dropdown-menu .bx-dots-vertical-rounded {
-    font-size: var(--font-size-xxl);
+    font-size: var(--font-size-xl);
 }
 
 .menu {
@@ -102,19 +112,20 @@ export default {
     top: 100%;
     right: 0;
     margin: 0;
-    padding: var(--border-radius-medium) 0;
-    border-radius: var(--border-radius-medium);
+    padding: var(--border-radius-small) 0;
+    border-radius: var(--border-radius-small);
     list-style: none;
     user-select: none;
     z-index: var(--z-drop-down);
 }
 .menu li {
-    padding: var(--spacing-xs) 12px;
+    padding: 8px 16px;
+    padding-right: 32px;
     cursor: pointer;
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
+    gap: 16px;
     color: var(--color-text-light);
     font-weight: 400;
     font-size: var(--font-size-md);
@@ -145,4 +156,20 @@ export default {
 .menu.mobile li i {
     font-size: var(--font-size-xl);
 }
+
+.dropdown-fade-enter-from {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+.dropdown-fade-enter-active {
+    transition: all 0.2s ease;
+}
+.dropdown-fade-leave-to {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+.dropdown-fade-leave-active {
+    transition: all 0.2s ease;
+}
+
 </style>

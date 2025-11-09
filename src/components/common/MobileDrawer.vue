@@ -2,16 +2,16 @@
     <div class="mobile-drawer">
         <transition name="fade">
             <div 
-                v-if="isOpen"
+                v-if="backdropVisible"
                 class="backdrop"
                 @click.self="close"
             ></div>
         </transition>
         <div 
-            v-if="isOpen"
+            v-if="drawerOnDom"
             class="drawer"
             :class="{ 'snap': !dragging }"
-            :style="{ height: drawerHeight + 'vh' }"
+            :style="{ 'height': drawerHeight + 'vh', 'opacity': drawerOpacity }"
             ref="drawer"
             @mousedown="startDrag"
             @touchstart="startDrag"
@@ -35,10 +35,12 @@ export default {
     name: 'MobileDrawer',
     data() {
         return {
-            isOpen: false,
-            drawerHeight: 50,
+            backdropVisible: false,
+            drawerOnDom: false,
+            drawerHeight: 0,
+            drawerOpacity: 0,
             startY: 0,
-            startHeight: 50,
+            startHeight: 0,
             dragging: false,
             snapPoints: [0, 50, 90],
             touchStartY: 0
@@ -47,12 +49,22 @@ export default {
     methods: {
         open() {
             document.documentElement.classList.add('no-scroll')
-            this.isOpen = true
-            this.drawerHeight = 50
+            this.backdropVisible = true;
+            this.drawerOnDom = true;
+            setTimeout(() => {
+                this.drawerHeight = this.snapPoints[1];
+                this.drawerOpacity = 1;
+            }, 1);
         },
         close() {
-            document.documentElement.classList.remove('no-scroll')
-            this.isOpen = false
+            this.drawerHeight = 0;
+            this.drawerOpacity = 0;
+            this.backdropVisible = false;
+
+            setTimeout(() => {
+                this.drawerOnDom = false;
+                document.documentElement.classList.remove('no-scroll')
+            }, 200);
         },
         startDrag(e) {
             const content = this.$refs.content
@@ -70,6 +82,7 @@ export default {
             this.dragging = true
             this.startY = e.touches ? e.touches[0].clientY : e.clientY
             this.startHeight = this.drawerHeight
+
             window.addEventListener('mousemove', this.onDrag, { passive: false })
             window.addEventListener('mouseup', this.stopDrag)
             window.addEventListener('touchmove', this.onDrag, { passive: false })
@@ -98,6 +111,7 @@ export default {
         },
         stopDrag() {
             this.dragging = false
+            
             window.removeEventListener('mousemove', this.onDrag)
             window.removeEventListener('mouseup', this.stopDrag)
             window.removeEventListener('touchmove', this.onDrag)
@@ -140,7 +154,7 @@ export default {
 }
 
 .drawer.snap {
-    transition: height 0.2s ease-out;
+    transition: height 0.2s var(--cubic-1), opacity 0.2s ease-out;
 }
 
 .fade-enter-active,

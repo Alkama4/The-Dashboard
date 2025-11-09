@@ -261,6 +261,7 @@ export default {
 }
 
 .title-list h2 {
+    width: fit-content;
     margin-bottom: var(--spacing-xs);
     margin-top: var(--spacing-xl);
 }
@@ -270,14 +271,11 @@ export default {
 }
 .title-list h2 i {
     opacity: 0;
-    transform: translateX(0px);
     font-size: var(--font-size-xxl);
-    transition: opacity 0.5s var(--cubic-1),
-                transform 0.2s var(--cubic-1);
+    transition: opacity 0.2s var(--cubic-1);
 }
 .title-list h2:hover i {
     opacity: 1;
-    transform: translateX(4px);
 }
 
 .title-list .title-list-text {
