@@ -191,8 +191,11 @@ export function interpolateBetweenColors(color1, color2, position) {
 }
 
 export function fileBridgeLink(link) {
-    return `flbrdge://open?path=${link}`;
+    // Encode the URL safely for the query‑parameter
+    const safe = encodeURI(link).replace(/\+/g, '%2B');
+    return `flbrdge://open?path=${safe}`;
 }
+
 
 export function getMediaUrl(path, sourceUrl, width) {
     if (standAloneBuild) 
