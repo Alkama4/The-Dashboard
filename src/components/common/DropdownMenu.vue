@@ -69,16 +69,19 @@ export default {
                 this.$refs.dropDownDrawer.open();
             } else {
                 this.isOpen = true;
+                this.$emit('update:isOpen', this.isOpen);
             }
         },
         closeMenu() {
             this.isOpen = false;
+            this.$emit('update:isOpen', this.isOpen);
         },
         toggleMenu() {
             if (isTouchDevice) {
                 this.$refs.dropDownDrawer.open();
             } else {
                 this.isOpen = !this.isOpen;
+                this.$emit('update:isOpen', this.isOpen);
             }
         },
         handleClick(item) {

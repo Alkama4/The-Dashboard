@@ -53,13 +53,13 @@
             </div>
         </router-link>
         
-        <div class="controls">
+        <div class="controls" :class="{'menu-open': menuOpen}">
             <i 
                 class="bx bxs-heart icon-button favourite circle-bg"
                 :class="{'active': titleDetails.favourite}"
                 @click.stop="handleToggleFavourite()"
             ></i>
-            <DropdownMenu :options="dropDownOptions" :bg-mode="true"/>
+            <DropdownMenu :options="dropDownOptions" :bg-mode="true" v-model:isOpen="menuOpen"/>
         </div>
     </div>
 </template>
@@ -81,6 +81,7 @@ export default {
     data() {
         return {
             imgNotFound: false,
+            menuOpen: false,
             dropDownOptions: [
                 { icon: "bxs-time-five", label: "Add to Queue", action: () => {} },
                 { icon: "bxs-collection", label: "Title Collections", action: () => {} },
@@ -203,6 +204,9 @@ export default {
     transition: opacity 0.1s ease-out;
 }
 .title-card:hover .controls {
+    opacity: 1;
+}
+.controls.menu-open {
     opacity: 1;
 }
 .controls .dropdown-menu {
