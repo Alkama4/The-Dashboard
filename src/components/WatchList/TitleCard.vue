@@ -157,7 +157,7 @@ export default {
     margin-top: var(--spacing-sm);
     font-weight: 500;
     text-align: left;
-    color: var(--color-text-5);
+    color: var(--color-text-4);
     opacity: 1;
     z-index: 3;
     transition: opacity 0.2s var(--cubic-1), transform 0.2s var(--cubic-1);

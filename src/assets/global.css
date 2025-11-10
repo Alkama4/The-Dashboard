@@ -62,12 +62,12 @@
 
     --white-0: hsl(0, 0%, 100%);    /* Full bright */
     --white-1: hsl(0, 0%, 92%);     /* Normal text */
-    --white-2: hsl(0, 0%, 86%);     /* light text */
-    --white-3: hsl(0, 0%, 80%);     /* lighter text */
-    --white-4: hsl(0, 0%, 72%);
-    --white-5: hsl(0, 0%, 62%);
-    --white-6: hsl(0, 0%, 48%);
-    --white-7: hsl(0, 0%, 34%);
+    --white-2: hsl(0, 0%, 84%);     /* light text */
+    --white-3: hsl(0, 0%, 72%);     /* lighter text */
+    --white-4: hsl(0, 0%, 60%);
+    --white-5: hsl(0, 0%, 50%);
+    --white-6: hsl(0, 0%, 35%);
+    --white-7: hsl(0, 0%, 33%);
 
     --black-0: hsl(0, 0%, 0%);      /* Full bright */
     --black-1: hsl(0, 0%, 8%);      /* Normal text */

@@ -1,32 +1,28 @@
 <template>
     <div class="combined-buttons numeric-stepper">
         <button 
-            class="left-button" 
+            class="left-button button-primary" 
             @click.stop="handleClick(displayValue + 1)"
         >
+            <i class="bx bx-plus"></i>
             {{ addText }}
         </button>
-        <div class="middle-button value" @click.stop>
+        <!-- <div class="middle-button value" @click.stop>
             {{ displayValue || 0 }}
-        </div>
+        </div> -->
         <button 
             class="right-button" 
             @click.stop="handleClick(displayValue - 1)"
             :disabled="displayValue <= 0"
         >
-            <IconRemove/>
+            <i class="bx bx-minus"></i>
         </button>
     </div>
 </template>
 
 <script>
-import IconRemove from '@/components/icons/IconRemove.vue';
-
 export default {
     name: 'NumericStepper',
-    components: {
-        IconRemove,
-    },
     emits: ['valueUpdated'],
     props: {
         addText: {

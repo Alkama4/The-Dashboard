@@ -96,8 +96,9 @@
                             <DropdownMenu
                                 :options="[
                                     season.showSpoilers 
-                                        ? { label: 'Hide spoilers', icon: 'bxs-hide', action: () => {season.showSpoilers = !season.showSpoilers} }
-                                        : { label: 'Show spoilers', icon: 'bxs-show', action: () => {season.showSpoilers = !season.showSpoilers} },
+                                        ? { label: 'Hide spoilers for season', icon: 'bxs-hide', action: () => {season.showSpoilers = !season.showSpoilers} }
+                                        : { label: 'Show spoilers for season', icon: 'bxs-show', action: () => {season.showSpoilers = !season.showSpoilers} },
+                                        { label: 'Requery Season Data', icon: 'bx-refresh', action: () => {} }
                                 ]"
                             />
                         </div>
@@ -191,7 +192,9 @@
                                         </p>
     
                                     </div>
-                                    <div class="episode-controls">
+                                </div>
+                                <div class="episode-controls">
+                                    <div>
                                         <NumericStepper 
                                             class="modify-watched"
                                             :displayValue="episode.watch_count"
@@ -514,7 +517,7 @@ export default {
     overflow: hidden;
 }
 .season .about .details {
-    color: var(--color-text-3);
+    color: var(--color-text-4);
 }
 .season .details .single-line {
     column-gap: var(--spacing-xs);
@@ -594,7 +597,7 @@ export default {
     /* margin-top: var(--spacing-md); */
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-md);
 }
 
 /* - - - - - EPISODE - - - - -  */
@@ -692,7 +695,7 @@ export default {
     width: 100%;
 }
 .episode .details {
-    color: var(--color-text-3);
+    color: var(--color-text-4);
 }
 .episode p {
     font-size: var(--font-size-sm);
