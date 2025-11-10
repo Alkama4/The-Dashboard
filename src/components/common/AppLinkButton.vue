@@ -44,11 +44,11 @@ export default {
     font-weight: 500;
     padding-inline: var(--spacing-sm);
     font-size: var(--font-size-lg);
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     transition: color 0.1s ease-out;
 }
 .pointer-device .app-link-button:hover {
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 
 .app-link-button i {

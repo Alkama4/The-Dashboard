@@ -80,7 +80,7 @@ export default {
     justify-content: center;
     margin-top: auto;
     width: 100vw;
-    color: var(--color-text-hidden);
+    color: var(--color-text-7);
     border-top: 1px solid var(--color-border);
 }
 
@@ -94,7 +94,7 @@ export default {
 .logo {
     font-weight: 800;
     font-size: var(--font-size-xxl);
-    color: var(--color-text);
+    color: var(--color-text-1);
     display: flex;
     align-items: end;
     padding-left: var(--spacing-lg);
@@ -129,7 +129,7 @@ export default {
 }
 
 .link-stack .link {
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     font-weight: 500;
 }
 
@@ -140,7 +140,7 @@ export default {
     border-top: 1px solid var(--color-border);
 }
 .bottom-row .no-decoration {
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-weight: 500;
     font-size: var(--font-size-xs);
 }

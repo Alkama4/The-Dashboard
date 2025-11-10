@@ -172,7 +172,7 @@ export default {
 
     font-family: 'Poppins', sans-serif;
     white-space: nowrap;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     background-color: var(--color-background-input);
     cursor: pointer;
     user-select: none;
@@ -189,7 +189,7 @@ export default {
 .custom-select.is-open .selected-option {
     outline-style: solid;
     outline-width: 2px;
-    outline-color: var(--color-text);
+    outline-color: var(--color-text-1);
 }
 .custom-select .chevron {
     position: absolute;

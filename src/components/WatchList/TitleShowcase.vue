@@ -256,7 +256,7 @@ export default {
     /* font-size: var(--font-size-lg); */
     font-weight: 700;
     gap: calc(var(--spacing-sm) + var(--spacing-xs));
-    color: var(--color-text);
+    color: var(--color-text-1);
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -281,7 +281,7 @@ export default {
 
 .overview {
     max-width: min(90vw, 1920px, 100%);
-    /* color: var(--color-text-light); */
+    /* color: var(--color-text-3); */
 
     margin-top: var(--spacing-md);
     display: -webkit-box;

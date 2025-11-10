@@ -201,7 +201,7 @@ export default {
 }
 .greeting-area .greeting .header-sub-text {
 	display: inline-block;
-	color: var(--color-text-light);
+	color: var(--color-text-3);
 	margin-top: var(--spacing-xs);
 	/* margin-bottom: calc(var(--spacing-md) + var(--spacing-sm)); */
 }
@@ -213,7 +213,7 @@ export default {
 }
 .greeting-area .info .label {
     font-size: var(--font-size-xs);
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     /* font-weight: 500; */
 }
 .greeting-area .info .value {
@@ -303,7 +303,7 @@ export default {
 }
 
 .service-links .service-description {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-weight: 400;
     font-size: var(--font-size-xs);
 }
@@ -416,7 +416,7 @@ export default {
 }
 .info-tile .label {
     font-size: var(--font-size-xs);
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     margin-bottom: var(--spacing-sm);
 }
 .info-tile .current {
@@ -424,7 +424,7 @@ export default {
     font-weight: 600;
 }
 .info-tile .max {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     /* font-size: var(--font-size-lg); */
 }
 .info-tile .indicator-holder {
@@ -524,20 +524,20 @@ export default {
 
 .server-info-row .endpoint-name {
 	text-align: start;
-	color: var(--color-text-light);
+	color: var(--color-text-3);
 	white-space: nowrap;
 	overflow: hidden;
-	mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+	mask-image: linear-gradient(to right, var(--color-text-1) 80%, rgba(255, 255, 255, 0) 100%);
 }
 .server-info-row .endpoint-value {
 	text-align: end;
-	color: var(--color-text);
+	color: var(--color-text-1);
 	font-weight: 500;
 }
 .server-info-row .endpoint-label {
 	/* Overwrite the properties for the labels */
 	font-weight: 600;
-	color: var(--color-text);
+	color: var(--color-text-1);
 }
 
 .server-info-scroll {
@@ -609,7 +609,7 @@ export default {
 }
 
 .backup-row .name {
-	color: var(--color-text);
+	color: var(--color-text-1);
 	font-weight: 800;
 	padding-left: var(--spacing-sm);
 }
@@ -623,11 +623,11 @@ export default {
 }
 
 .backup-row .schedule {
-	color: var(--color-text-light);
+	color: var(--color-text-3);
 	font-weight: 400;
 }
 .backup-row .label-text {
-	color: var(--color-text-light);
+	color: var(--color-text-3);
 	/* padding-right: var(--spacing-md); */
 	width: 100px;
 	min-width: 100px;
@@ -639,7 +639,7 @@ export default {
 	flex-direction: row;
 	align-items: start;
 	overflow: hidden;
-	mask-image: linear-gradient(to right, var(--color-text) 80%, rgba(255, 255, 255, 0) 100%);
+	mask-image: linear-gradient(to right, var(--color-text-1) 80%, rgba(255, 255, 255, 0) 100%);
 }
 .backup-row .path {
 	white-space: nowrap;

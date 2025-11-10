@@ -107,7 +107,7 @@ export default {
 }
 .container-image {
     font-size: var(--font-size-xs);
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .container-name {
     font-weight: 600;

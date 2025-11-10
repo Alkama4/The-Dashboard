@@ -292,7 +292,7 @@ export default {
 .chart-settings .setting-name {
     display: block;
     align-items: center;
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     font-weight: 500;
     text-align: start;
     margin-right: var(--spacing-md);

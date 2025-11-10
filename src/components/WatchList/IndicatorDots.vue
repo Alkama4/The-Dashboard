@@ -112,15 +112,15 @@ export default {
     min-width: 10px;
     height: 10px;
     border-radius: 5px;
-    background-color: var(--color-text-hidden);
+    background-color: var(--color-text-7);
     transition: background-color 0.2s ease-out, width 0.2s ease-out;
 }
 .dot.active {
-    background-color: var(--color-text-light);
+    background-color: var(--color-text-3);
     width: 20px;
     /* min-width: 20px; */
 }
 .pointer-device .dot-click:hover .dot {
-    background-color: var(--color-text);
+    background-color: var(--color-text-1);
 }
 </style>

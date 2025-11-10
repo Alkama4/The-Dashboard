@@ -847,7 +847,7 @@ export default {
 }
 
 .title-element .tags .tag {
-    color: var(--color-text);
+    color: var(--color-text-1);
     padding: 2px 6px;
 }
 
@@ -858,7 +858,7 @@ export default {
 }
 
 .title-element .detail-list {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     display: inline;
     min-width: 125px;
 }

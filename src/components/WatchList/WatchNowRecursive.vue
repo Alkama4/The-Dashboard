@@ -89,7 +89,7 @@ h4 {
 }
 .link-button .details {
     white-space: nowrap;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-weight: 400;
     font-size: 0.75rem;
 }

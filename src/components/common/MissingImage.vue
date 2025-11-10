@@ -25,7 +25,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-hidden);
+    color: var(--color-text-7);
     font-weight: 700;
     font-size: 32px;
     user-select: none;

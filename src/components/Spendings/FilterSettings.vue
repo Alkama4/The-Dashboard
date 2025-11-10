@@ -53,7 +53,7 @@
                         <div class="flipper"></div>
                     </span>
                     <IconChevronDown 
-                        color="var(--color-text-light)"
+                        color="var(--color-text-3)"
                         class="drop-down-indicator" 
                         :class="{'active': activeDropdown === 'counterparty'}"
                     />
@@ -70,7 +70,7 @@
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!localFilterData.counterparty.selected.includes(counterparty)" color="var(--color-text-light)" />
+                                <IconCheckbox v-if="!localFilterData.counterparty.selected.includes(counterparty)" color="var(--color-text-3)" />
                                 {{ counterparty }}
                             </div>
                         </div>
@@ -81,7 +81,7 @@
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="localFilterData.counterparty.selected.includes(counterparty) && localFilterData.counterparty.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!localFilterData.counterparty.selected.includes(counterparty)" color="var(--color-text-light)" />
+                                <IconCheckbox v-if="!localFilterData.counterparty.selected.includes(counterparty)" color="var(--color-text-3)" />
                                 {{ counterparty }}
                             </div>
                         </div>
@@ -110,7 +110,7 @@
                         <div class="flipper"></div>
                     </span>
                     <IconChevronDown 
-                        color="var(--color-text-light)"
+                        color="var(--color-text-3)"
                         class="drop-down-indicator" 
                         :class="{'active': activeDropdown === 'category'}"
                     />
@@ -127,7 +127,7 @@
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!localFilterData.category.selected.includes(category)" color="var(--color-text-light)" />
+                                <IconCheckbox v-if="!localFilterData.category.selected.includes(category)" color="var(--color-text-3)" />
                                 {{ category }}
                             </div>
                         </div>
@@ -138,7 +138,7 @@
                                 <!-- Conditionally render checked or minus icon -->
                                 <IconCheckboxChecked v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'include'" color="var(--color-primary)" colorHover="var(--color-primary-hover)"/>
                                 <IconCheckboxMinus v-if="localFilterData.category.selected.includes(category) && localFilterData.category.mode === 'exclude'" color="var(--color-negative)" colorHover="var(--color-negative-hover)"/>
-                                <IconCheckbox v-if="!localFilterData.category.selected.includes(category)" color="var(--color-text-light)" />
+                                <IconCheckbox v-if="!localFilterData.category.selected.includes(category)" color="var(--color-text-3)" />
                                 {{ category }}
                             </div>
                         </div>
@@ -471,7 +471,7 @@ export default {
     border-bottom: solid 2px var(--color-border); */
     /* padding: var(--spacing-sm) 0; */
     /* margin: var(--spacing-xs) 0; */
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-style: italic;
 }
 .explanation span {
@@ -548,7 +548,7 @@ h2 {
 .drop-down-indicator {
     margin-left: 0;
     margin-right: 0;
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     transition: transform 0.2s ease-out;
 }
 .drop-down-indicator.active {

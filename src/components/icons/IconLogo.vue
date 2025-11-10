@@ -17,6 +17,6 @@ export default {
     width: 72px;
 }
 .icon-logo path {
-    fill: var(--color-text-bold);
+    fill: var(--color-text-0);
 }
 </style>

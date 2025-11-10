@@ -966,11 +966,11 @@ export default {
     margin-bottom: 0;
 }
 .info-grid .cell .label {
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     font-weight: 500;
 }
 .info-grid .cell .data {
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-weight: 700;
     font-size: 32px;
 }
@@ -999,15 +999,15 @@ export default {
     margin-top: 6px;
 }
 .data-row .name {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-weight: 500;
 }
 .data-row .value {
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 .info-grid .cell .sum-row,
 .info-grid .cell .sum-row .name {
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-weight: 600;
 }
 

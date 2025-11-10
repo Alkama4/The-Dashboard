@@ -64,15 +64,6 @@
         - 600px: table-type, modal full width
     */
 
-    /* Always one color */
-    --color-text-white: hsl(0, 9%, 90%);
-    --color-text-white-hover: hsl(0, 0%, 100%);
-    --color-text-white-light: hsl(0, 0%, 60%);
-    --color-text-black: #292929;
-    --color-text-black-hover: black;
-    --color-text-black-light: #666666;
-
-
     /* Spesific fills */
     --fill-tmdb: linear-gradient(90deg, #90cea1 0%, #3cbec9 56%, #00b3e5 100%);
     --fill-imdb: #e2b616;
@@ -117,19 +108,7 @@
     --color-warning-hover: #d1c648;
 
     /* Text */
-    --color-text: var(--color-text-black);
-    --color-text-bold: var(--color-text-black-hover);
-    --color-text-light: var(--color-text-black-light);
-    --color-text-lighter: #969696;
-    --color-text-hidden: #c4c4c4;
-    --color-text-placeholder: #aaa;
-    --color-text-inverted: #e9ebf0;
-    --color-text-inverted-hover: #ffffff;
-    --color-text-selection: var(--color-text-white-hover);
-
-    --color-border: hsla(0, 0%, 0%, 0.1);
-    --color-border-hover: hsla(0, 0%, 0%, 0.2);
-    --color-border-light: hsla(0, 0%, 0%, 0.3);
+    --color-text-selection: var(--white-0);
 
     /* Backgrounds */
     --color-background: hsl(0, 0%, 93.5%);
@@ -155,8 +134,8 @@
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 0%, 0.0666);
 
-    --color-button-nav: var(--color-text-light);
-    --color-button-nav-hover: var(--color-text-bold);
+    --color-button-nav: var(--color-text-3);
+    --color-button-nav-hover: var(--color-text-0);
 
     --color-button-delete-hover: rgb(212, 37, 37);
     --color-button-delete-active: rgb(182, 29, 29);
@@ -220,20 +199,8 @@
     --color-warning-hover: #d1c648;
         
     /* Text */
-    --color-text: var(--color-text-white);
-    --color-text-bold: var(--color-text-white-hover);
-    --color-text-light: var(--color-text-white-light);
-    --color-text-lighter: hsl(0, 0%, 45%);
-    --color-text-hidden: hsl(0, 0%, 25%);
-    --color-text-placeholder: #666;
-    --color-text-inverted: #292929;
-    --color-text-inverted-hover: #000;
-    --color-text-selection: var(--color-text-black-hover);
-
-    --color-border: hsla(0, 0%, 100%, 0.1);
-    --color-border-hover: hsla(0, 0%, 100%, 0.2);
-    --color-border-light: hsla(0, 0%, 100%, 0.3);
-    
+    --color-text-selection: var(--black-0);
+       
     /* Backgrounds */
     --color-background: hsl(240, 100%, 0%);
     --color-background-backdrop: hsla(0, 0%, 0%, 0.5);
@@ -262,8 +229,8 @@
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
 
-    --color-button-nav: var(--color-text-light);
-    --color-button-nav-hover: var(--color-text);
+    --color-button-nav: var(--color-text-3);
+    --color-button-nav-hover: var(--color-text-1);
 
     --color-button-delete-hover: rgb(187, 30, 30);
     --color-button-delete-active: rgb(145, 13, 13);

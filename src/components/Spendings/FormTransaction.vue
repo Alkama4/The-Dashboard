@@ -479,7 +479,7 @@ export default {
 }
 .total-amount .label {
     padding-left: var(--spacing-sm);
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     font-weight: 500;
 }
 .total-amount .value {
@@ -560,7 +560,7 @@ export default {
     user-select: none;
     cursor: grab;
     font-size: var(--font-size-xl);
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .right-mod-area {
     width: 32px;

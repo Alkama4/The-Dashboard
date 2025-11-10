@@ -131,7 +131,7 @@ export default {
 .name {
     font-size: var(--font-size-lg);
     font-weight: 700;
-    color: var(--color-text);
+    color: var(--color-text-1);
     display: -webkit-box;
     line-clamp: 1;
     -webkit-line-clamp: 1;
@@ -147,7 +147,7 @@ export default {
 }
 
 .detail {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-weight: 500;
     font-size: var(--font-size-xs);
 }

@@ -106,7 +106,7 @@ export default {
     flex-direction: row;
     z-index: var(--z-tooltip);
     
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     /* white-space: nowrap; */
     font-weight: 500;
     font-size: var(--font-size-xs);

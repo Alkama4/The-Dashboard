@@ -1217,7 +1217,7 @@ export default {
     overflow: hidden; */
 }
 .name-and-tagline .title-name .original-title {
-    color: var(--color-text-lighter)
+    color: var(--color-text-5)
 }
 .name-and-tagline .logo-img-wrapper {
     max-height: 120px;
@@ -1234,7 +1234,7 @@ export default {
     object-fit: contain;
 }
 .name-and-tagline .tagline {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 
 @media (max-width: 750px) {
@@ -1470,13 +1470,13 @@ iframe {
     margin-bottom: var(--spacing-xs);
 }
 .title-details .details-grid {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     display: grid;
     grid-template-columns: auto 1fr;
     column-gap: var(--spacing-md);
 }
 .title-details .details-grid .value {
-    color: var(--color-text);
+    color: var(--color-text-1);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1530,7 +1530,7 @@ iframe {
 .aggregator-wrapper .details {
     font-size: var(--font-size-xs);
     font-weight: 400;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 
 
@@ -1560,7 +1560,7 @@ iframe {
     user-select: none;
     font-weight: 600;
     /* border-bottom: 4px solid transparent; */
-    color: var(--color-text);
+    color: var(--color-text-1);
     text-decoration: none;
 }
 .episode-tile:hover {
@@ -1574,12 +1574,12 @@ iframe {
 
 .episode-tile.un-released {
     background-color: var(--color-background-card-section) !important;
-    color: var(--color-text-hidden);
+    color: var(--color-text-7);
 }
 
 .episode-tile.label{
     background-color: transparent;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     text-decoration: none;
     cursor: initial;
     user-select: initial;

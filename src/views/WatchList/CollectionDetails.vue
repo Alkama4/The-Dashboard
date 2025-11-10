@@ -85,10 +85,10 @@ h1 {
 
 .details {
     margin-bottom: var(--spacing-lg);
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .description {
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 
 .collection-wrapper {

@@ -248,7 +248,7 @@ export default {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-size: var(--font-size-xsall);
     font-weight: 500;
     padding: 6px 15px;
@@ -263,10 +263,10 @@ export default {
     font-size: var(--font-size-lg);
 }
 .pointer-device .text-button:hover {
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 .pointer-device .text-button:active {
-    color: var(--color-text-bold);
+    color: var(--color-text-0);
 }
 
 

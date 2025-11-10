@@ -339,7 +339,7 @@ export default {
 
 .backdrop-container .button-holder button svg {
     border-radius: 50%;
-    fill: var(--color-text);
+    fill: var(--color-text-1);
     transition: transform 0.2s var(--cubic-bounce-soft-out);
 }
 .backdrop-container button.left svg {

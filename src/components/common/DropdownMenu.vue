@@ -6,8 +6,8 @@
         @blur="closeMenu"
     >
         <i 
-            class="bx bx-dots-vertical-rounded icon-button circle-bg" 
-            :class="{'hover-circle-bg': !bgMode}"
+            class="bx bx-dots-vertical-rounded icon-button" 
+            :class="{'hover-circle-bg': !bgMode, 'circle-bg': !!bgMode}"
             @click.stop.prevent="toggleMenu"
         ></i>
         <Transition name="dropdown-fade">
@@ -128,7 +128,7 @@ export default {
     white-space: nowrap;
     display: flex;
     align-items: center;
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-weight: 400;
     font-size: var(--font-size-md);
 }
@@ -137,7 +137,7 @@ export default {
 }
 .pointer-device .menu li:hover {
     background: var(--color-background-card-hover);
-    color: var(--color-text-bold);
+    color: var(--color-text-0);
 }
 
 .menu li.dropdown-seperator {
@@ -158,7 +158,7 @@ export default {
 .menu.mobile li {
     padding: var(--spacing-md) var(--spacing-sm);
     gap: var(--spacing-md);
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-weight: 400;
     font-size: 1rem;
     /* border-top: 2px solid var(--color-border); */

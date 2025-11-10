@@ -1,7 +1,7 @@
 <template>
     <div class="drive-card card">
         <div class="name">
-            <IconHDD colorHover="var(--color-text)"/>
+            <IconHDD colorHover="var(--color-text-1)"/>
             <span :class="{'text-loading-placeholder': loadingVersion}">
                 {{ driveProperties?.name }}
             </span>
@@ -90,7 +90,7 @@ export default {
 	grid-template-columns: auto auto;
 }
 .drive-card .text .label {
-	color: var(--color-text-light);
+	color: var(--color-text-3);
 	margin-right: var(--spacing-md);
     white-space: nowrap;
 }

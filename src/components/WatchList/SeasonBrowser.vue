@@ -514,7 +514,7 @@ export default {
     overflow: hidden;
 }
 .season .about .details {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .season .details .single-line {
     column-gap: var(--spacing-xs);
@@ -692,7 +692,7 @@ export default {
     width: 100%;
 }
 .episode .details {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .episode p {
     font-size: var(--font-size-sm);
@@ -822,7 +822,7 @@ export default {
     display: inline-block;
 }
 .media-listing .filename {
-    color: var(--color-text-light);    
+    color: var(--color-text-3);    
 }
 
 

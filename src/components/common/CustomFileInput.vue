@@ -164,7 +164,7 @@ export default {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--color-text-hidden);
+    color: var(--color-text-7);
     font-weight: 600;
     font-size: var(--font-size-md);
     user-select: none;

@@ -82,7 +82,7 @@ export default {
     margin-bottom: var(--spacing-sm);
 }
 .info-tile .max {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     font-weight: 600;
 }
 .info-tile .max.text-loading-placeholder {

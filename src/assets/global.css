@@ -59,21 +59,49 @@
     --z-input-focus: 100;
     --z-app: 0;
 
-    /* Media break off points */
-    /* 
-        - 1500px: table-date-format
-        - 777px: table-notes, form, filter
-        - 745px: top bar
-        - 600px: table-type, modal full width
-    */
+
+    --white-0: hsl(0, 0%, 100%);    /* Full bright */
+    --white-1: hsl(0, 0%, 92%);     /* Normal text */
+    --white-2: hsl(0, 0%, 86%);     /* light text */
+    --white-3: hsl(0, 0%, 80%);     /* lighter text */
+    --white-4: hsl(0, 0%, 72%);
+    --white-5: hsl(0, 0%, 62%);
+    --white-6: hsl(0, 0%, 48%);
+    --white-7: hsl(0, 0%, 34%);
+
+    --black-0: hsl(0, 0%, 0%);      /* Full bright */
+    --black-1: hsl(0, 0%, 8%);      /* Normal text */
+    --black-2: hsl(0, 0%, 16%);     /* light text */
+    --black-3: hsl(0, 0%, 28%);     /* lighter text */
+    --black-4: hsl(0, 0%, 40%);
+    --black-5: hsl(0, 0%, 50%);
+    --black-6: hsl(0, 0%, 65%);
+    --black-7: hsl(0, 0%, 77%);
+
+    --white-transparent-1: hsla(0, 0%, 100%, 0.1);      /* Base */
+    --white-transparent-2: hsla(0, 0%, 100%, 0.15);     /* active */
+    --white-transparent-3: hsla(0, 0%, 100%, 0.2);      /* hover */
+    --white-transparent-4: hsla(0, 0%, 100%, 0.3);
+    --white-transparent-5: hsla(0, 0%, 100%, 0.4);
+    --white-transparent-6: hsla(0, 0%, 100%, 0.5);
+
+    --black-transparent-1: hsla(0, 0%, 0%, 0.1);        /* Base */
+    --black-transparent-2: hsla(0, 0%, 0%, 0.15);       /* active */
+    --black-transparent-3: hsla(0, 0%, 0%, 0.2);        /* hover */
+    --black-transparent-4: hsla(0, 0%, 0%, 0.3);
+    --black-transparent-5: hsla(0, 0%, 0%, 0.4);
+    --black-transparent-6: hsla(0, 0%, 0%, 0.5);
+
 
     /* Always one color */
-    --color-text-white: #e9ebf0;
-    --color-text-white-hover: white;
-    --color-text-white-light: #aaa;
+    --color-text-white: hsl(0, 0%, 93%);
+    --color-text-white-hover: hsl(0, 0%, 100%);
+    --color-text-white-light: hsl(0, 0%, 67%);
     --color-text-black: hsl(0, 0%, 16%);
     --color-text-black-hover: hsl(0, 0%, 0%);
     --color-text-black-light: hsl(0, 0%, 28%);
+
+
 
     /* Effects */
     --blur-top-bar: blur(30px);    /* Keep under 1/2 of height */
@@ -125,20 +153,51 @@
     --color-warning-hover: #d1c648;
 
     /* Text */
-    --color-text: var(--color-text-black);
-    --color-text-bold: var(--color-text-black-hover);
-    --color-text-light: var(--color-text-black-light);
-    --color-text-lighter: #969696;
-    --color-text-hidden: #c4c4c4;
-    --color-text-placeholder: #aaa;
-    --color-text-inverted: #e9ebf0;
-    --color-text-inverted-hover: #ffffff;
-    --color-text-selection: var(--color-text-white-hover);
+    --color-text-0: var(--black-0);
+    --color-text-1: var(--black-1);
+    --color-text-2: var(--black-2);
+    --color-text-3: var(--black-3);
+    --color-text-4: var(--black-4);
+    --color-text-5: var(--black-5);
+    --color-text-6: var(--black-6);
+    --color-text-7: var(--black-7);
 
-    --color-border: hsla(0, 0%, 0%, 0.1);
-    --color-border-hover: hsla(0, 0%, 0%, 0.2);
-    --color-border-active: hsla(0, 0%, 0%, 0.15);
-    --color-border-light: hsla(0, 0%, 0%, 0.3);
+    --color-text-inv-0: var(--white-0);
+    --color-text-inv-1: var(--white-1);
+    --color-text-inv-2: var(--white-2);
+    --color-text-inv-3: var(--white-3);
+    --color-text-inv-4: var(--white-4);
+    --color-text-inv-5: var(--white-5);
+    --color-text-inv-6: var(--white-6);
+    --color-text-inv-7: var(--white-7);
+
+    --color-text-transparent-0: var(--black-transparent-0);
+    --color-text-transparent-1: var(--black-transparent-1);
+    --color-text-transparent-2: var(--black-transparent-2);
+    --color-text-transparent-3: var(--black-transparent-3);
+    --color-text-transparent-4: var(--black-transparent-4);
+    --color-text-transparent-5: var(--black-transparent-5);
+    --color-text-transparent-6: var(--black-transparent-6);
+
+    --color-text-inv-transparent-0: var(--white-transparent-0);
+    --color-text-inv-transparent-1: var(--white-transparent-1);
+    --color-text-inv-transparent-2: var(--white-transparent-2);
+    --color-text-inv-transparent-3: var(--white-transparent-3);
+    --color-text-inv-transparent-4: var(--white-transparent-4);
+    --color-text-inv-transparent-5: var(--white-transparent-5);
+    --color-text-inv-transparent-6: var(--white-transparent-6);
+    
+    --color-text-placeholder: var(--black-6);
+    --color-text-selection: var(--black-0);
+
+    /* Borders */
+    --color-border: var(--black-transparent-1);
+    --color-border-hover: var(--black-transparent-3);
+    --color-border-active: var(--black-transparent-2);
+
+    --color-border-inverted: var(--white-transparent-1);
+    --color-border-inverted-hover: var(--white-transparent-3);
+    --color-border-inverted-active: var(--white-transparent-2);
 
     /* Backgrounds */
     --color-background: hsl(0, 0%, 93.5%);
@@ -164,9 +223,9 @@
     --color-button-clean-hover: hsla(0, 0%, 0%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 0%, 0.0666);
 
-    --color-button-nav-text: var(--color-text);
-    --color-button-nav-text-hover: var(--color-text-bold);
-    --color-button-nav-text-active: var(--color-text-bold);
+    --color-button-nav-text: var(--color-text-1);
+    --color-button-nav-text-hover: var(--color-text-0);
+    --color-button-nav-text-active: var(--color-text-0);
     --color-button-nav-bg: var(--color-button-general);
     --color-button-nav-bg-hover: var(--color-button-general-hover);
     --color-button-nav-bg-active: var(--color-button-general-active);
@@ -232,20 +291,51 @@
     --color-warning-hover: #d1c648;
         
     /* Text */
-    --color-text: var(--color-text-white);
-    --color-text-bold: var(--color-text-white-hover);
-    --color-text-light: var(--color-text-white-light);
-    --color-text-lighter: #888;
-    --color-text-hidden: #555;
-    --color-text-placeholder: #666;
-    --color-text-inverted: #292929;
-    --color-text-inverted-hover: #000;
-    --color-text-selection: var(--color-text-white-hover);
+    --color-text-0: var(--white-0);
+    --color-text-1: var(--white-1);
+    --color-text-2: var(--white-2);
+    --color-text-3: var(--white-3);
+    --color-text-4: var(--white-4);
+    --color-text-5: var(--white-5);
+    --color-text-6: var(--white-6);
+    --color-text-7: var(--white-7);
 
-    --color-border: hsla(0, 0%, 100%, 0.1);
-    --color-border-hover: hsla(0, 0%, 100%, 0.2);
-    --color-border-active: hsla(0, 0%, 100%, 0.15);
-    --color-border-light: hsla(0, 0%, 100%, 0.3);
+    --color-text-inv-0: var(--black-0);
+    --color-text-inv-1: var(--black-1);
+    --color-text-inv-2: var(--black-2);
+    --color-text-inv-3: var(--black-3);
+    --color-text-inv-4: var(--black-4);
+    --color-text-inv-5: var(--black-5);
+    --color-text-inv-6: var(--black-6);
+    --color-text-inv-7: var(--black-7);
+
+    --color-text-transparent-0: var(--white-transparent-0);
+    --color-text-transparent-1: var(--white-transparent-1);
+    --color-text-transparent-2: var(--white-transparent-2);
+    --color-text-transparent-3: var(--white-transparent-3);
+    --color-text-transparent-4: var(--white-transparent-4);
+    --color-text-transparent-5: var(--white-transparent-5);
+    --color-text-transparent-6: var(--white-transparent-6);
+
+    --color-text-inv-transparent-0: var(--black-transparent-0);
+    --color-text-inv-transparent-1: var(--black-transparent-1);
+    --color-text-inv-transparent-2: var(--black-transparent-2);
+    --color-text-inv-transparent-3: var(--black-transparent-3);
+    --color-text-inv-transparent-4: var(--black-transparent-4);
+    --color-text-inv-transparent-5: var(--black-transparent-5);
+    --color-text-inv-transparent-6: var(--black-transparent-6);
+    
+    --color-text-placeholder: var(--white-6);
+    --color-text-selection: var(--white-0);
+
+    /* Borders */
+    --color-border: var(--white-transparent-1);
+    --color-border-hover: var(--white-transparent-3);
+    --color-border-active: var(--white-transparent-2);
+
+    --color-border-inverted: var(--black-transparent-1);
+    --color-border-inverted-hover: var(--black-transparent-3);
+    --color-border-inverted-active: var(--black-transparent-2);
     
     /* Backgrounds */
     --color-background: hsl(0, 0%, 6.3%);
@@ -275,9 +365,9 @@
     --color-button-clean-hover: hsla(0, 0%, 100%, 0.1);
     --color-button-clean-active: hsla(0, 0%, 100%, 0.075);
 
-    --color-button-nav-text: var(--color-text);
-    --color-button-nav-text-hover: var(--color-text-bold);
-    --color-button-nav-text-active: var(--color-text-bold);
+    --color-button-nav-text: var(--color-text-1);
+    --color-button-nav-text-hover: var(--color-text-0);
+    --color-button-nav-text-active: var(--color-text-0);
     --color-button-nav-bg: var(--color-button-general);
     --color-button-nav-bg-hover: var(--color-button-general-hover);
     --color-button-nav-bg-active: var(--color-button-general-active);
@@ -307,7 +397,7 @@ html, body {
     margin: 0;
     font-family: 'Poppins';
     font-size: var(--font-size-md);
-    color: var(--color-text);
+    color: var(--color-text-1);
     background-color: var(--color-background) !important;
     overflow-x: hidden;
 }
@@ -347,7 +437,7 @@ body {
 :focus-visible {
     outline-style: solid;
     outline-width: 2px;
-    outline-color: var(--color-text);
+    outline-color: var(--color-text-1);
 }
 
 /* - - - - GENERIC ELEMENTS - - - - */
@@ -365,7 +455,7 @@ i {
 }
 
 h1, h2, h3, h4 {
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 h1 {
     font-size: var(--font-size-xxl);
@@ -409,7 +499,7 @@ button, .link-button {
     font-family: 'Poppins';
     font-size: var(--font-size-md);
     font-weight: 600;
-    color: var(--color-text);
+    color: var(--color-text-1);
     background-color: var(--color-button-general);
 
     transition: color 0.1s ease-out,
@@ -418,7 +508,7 @@ button, .link-button {
 }
 .pointer-device button:hover, 
 .pointer-device .link-button:hover {
-    color: var(--color-text-bold);
+    color: var(--color-text-0);
     background-color: var(--color-button-general-hover);
     box-shadow: var(--shadow-button-hover);
 }
@@ -426,11 +516,11 @@ button, .link-button {
     text-decoration: underline;
 }
 /* button:hover svg {
-    fill: var(--color-text-bold)
+    fill: var(--color-text-0)
 } */
 .pointer-device button:active, 
 .pointer-device .link-button:active {
-    color: var(--color-text-bold);
+    color: var(--color-text-0);
     background-color: var(--color-button-general-active);
     box-shadow: var(--shadow-button-active);
 }
@@ -440,7 +530,7 @@ button:disabled {
     opacity: 0.6;
 } button:disabled:hover {
     box-shadow: 0 0 0 transparent;
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 button:focus {
     z-index: var(--z-input-focus);
@@ -559,7 +649,7 @@ button.button-transparent:hover {
 /* Inputs */
 label {
     font-weight: 600;
-    color: var(--color-text);
+    color: var(--color-text-1);
     margin-left: 0;
     margin-bottom: 2px;
     margin-right: auto;
@@ -581,7 +671,7 @@ input, textarea {
     width: 100%;
     /* min-width: 82px; */
 
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-size: var(--font-size-md);
     font-family: 'Poppins';
 
@@ -660,74 +750,6 @@ input[type="file"] {
 }
 
 
-/* no ui slider */
-.noUi-target {
-    border-radius: var(--border-radius-xs) !important;
-    border: 1px solid var(--color-border) !important;
-    box-shadow: none !important;    
-    background: transparent !important;
-}
-.noUi-value {
-    font-size: var(--font-size-xs) !important;
-}
-/* .noUi-base {
-    cursor: pointer !important;
-} */
-.noUi-touch-area, .noUi-handle  {
-    cursor: grab !important;
-}
-.noUi-touch-area:active, .noUi-handle:active {
-    cursor: grabbing !important;
-}
-.noUi-handle {
-    border: 1px solid var(--color-border) !important;
-    background-color: var(--color-background-input-strong) !important;
-    box-shadow: none !important;
-    transition: border-color 0.1s ease-out;
-}
-.noUi-handle::before {
-    background-color: var(--color-border-light) !important;
-}
-.noUi-handle::after {
-    background-color: var(--color-border-light) !important;
-}
-.noUi-handle:hover {
-    border: 1px solid var(--color-border-hover) !important;
-}
-.noUi-connect {
-    background-color: var(--color-primary) !important;
-    transition: background-color 0.1s ease-out;
-} .noUi-connect:hover {
-    background-color: var(--color-primary-hover) !important;
-} .noUi-connect:active {
-    background-color: var(--color-primary-active) !important;
-    cursor: ew-resize !important;
-}
-.noUi-connects {
-    background-color: var(--color-background-input-light) !important;
-    border-radius: var(--border-radius-xs) !important;
-}
-.noUi-tooltip {
-    background-color: transparent !important;
-    color: var(--color-text-light) !important;
-    font-size: var(--font-size-xs) !important;
-    border: none !important;
-    bottom: 100% !important;
-}
-.noUi-value {
-    color: var(--color-text-lighter) !important;
-}
-.noUi-marker {
-    background-color: var(--color-border-light) !important;
-}
-.noUi-marker-normal {
-    background-color: var(--color-border-hover) !important;
-}
-/* Blocks clicking when not disabled */
-.noUi-pips-horizontal {
-    pointer-events: none;
-}
-
 /* - - - - CHART TOOLTIP - - - - */
 
 .chart-tooltip {
@@ -744,7 +766,7 @@ input[type="file"] {
     padding-inline: 0;
 }
 .chart-tooltip .header {
-    color: var(--color-text);
+    color: var(--color-text-1);
     font-size: var(--font-size-lg); 
     font-weight: 700;
     margin-bottom: 4px;
@@ -758,7 +780,7 @@ input[type="file"] {
 }
 .chart-tooltip .series-name {
     font-weight: 500;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     padding-left: 0.5rem;
 }
 .chart-tooltip .label > div {
@@ -768,15 +790,15 @@ input[type="file"] {
 }
 .chart-tooltip .value {
     font-weight: 500;
-    color: var(--color-text);
+    color: var(--color-text-1);
     text-align: end;
 }
 
 .chart-tooltip tr.disabled .series-name, .chart-tooltip .disabled .value {
-    color: var(--color-text-hidden)
+    color: var(--color-text-7)
 }
 .chart-tooltip tr.disabled .color-blob {
-    background-color: var(--color-text-hidden) !important;
+    background-color: var(--color-text-7) !important;
 }
 .chart-tooltip .sum-row td > div {
     border-top: 2px solid var(--color-border);
@@ -862,7 +884,7 @@ input[type="file"] {
 
 .no-decoration {
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 .no-decoration:hover {
     text-decoration: none !important;
@@ -872,7 +894,7 @@ input[type="file"] {
 }
 .hover-decoration {
     text-decoration: none;
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 .hover-decoration:hover {
     text-decoration: underline;
@@ -907,7 +929,7 @@ input[type="file"] {
 }
 
 .card .card-label {
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     font-size: var(--font-size-xs);
     font-weight: 500;
 }
@@ -1001,13 +1023,13 @@ form.simple-form button {
 }
 
 .text-light {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .text-lighter {
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
 }
 .text-hidden {
-    color: var(--color-text-hidden);
+    color: var(--color-text-7);
 }
 
 .icon-align {
@@ -1019,7 +1041,7 @@ form.simple-form button {
 
 .icon-button {
     cursor: pointer;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     transform: scale(1);
     border-radius: var(--border-radius-xs);
     transition: transform 0.1s var(--cubic-bounce-soft-out),
@@ -1027,34 +1049,40 @@ form.simple-form button {
                 background-color 0.1s var(--cubic-bounce-soft-out) !important;
 }
 .pointer-device .icon-button:hover {
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 .pointer-device .icon-button:active {
-    color: var(--color-text-bold);
+    color: var(--color-text-0);
 }
 
 .icon-button.circle-bg {
-    color: var(--color-text);
-    padding: var(--spacing-sm);
     border-radius: 100px;
-    background-color: var(--color-border);
+    padding: var(--spacing-sm);
+    color: var(--white-2);
+    background-color: var(--black-transparent-4);
 }
 .icon-button.circle-bg:hover {
-    background-color: var(--color-border-hover);
-    color: var(--color-text-bold);
+    color: var(--white-0);
+    background-color: var(--black-transparent-6);
 }
 .icon-button.circle-bg:active {
-    background-color: var(--color-border-active);
-    color: var(--color-text);
+    color: var(--white-1);
+    background-color: var(--black-transparent-5);
 }
-.icon-button.circle-bg.hover-circle-bg {
+
+.icon-button.hover-circle-bg {
+    border-radius: 100px;
+    padding: var(--spacing-sm);
+    color: var(--text-2);
     background-color: transparent;
 }
-.icon-button.circle-bg.hover-circle-bg:hover {
-    background-color: var(--color-border);
+.icon-button.hover-circle-bg:hover {
+    color: var(--text-0);
+    background-color: var(--color-text-transparent-2);
 }
-.icon-button.circle-bg.hover-circle-bg:active {
-    background-color: var(--color-border-active);
+.icon-button.hover-circle-bg:active {
+    color: var(--text-1);
+    background-color: var(--color-text-transparent-1);
 }
 
 .loading {
@@ -1083,7 +1111,7 @@ form.simple-form button {
     font-weight: 600;
     font-size: var(--font-size-xs);
     white-space: nowrap;
-    color: var(--color-text);
+    color: var(--color-text-1);
     display: flex;
     justify-content: center;
     /* border: 1px solid var(--color-border); */
@@ -1211,7 +1239,7 @@ form.simple-form button {
 
 .content-not-found {
     background-color: var(--color-background-card);
-    color: var(--color-text-hidden);
+    color: var(--color-text-7);
     display: flex;
     flex-direction: column !important;
     justify-content: center;
@@ -1226,7 +1254,7 @@ form.simple-form button {
     padding-inline: calc(22% - var(--spacing-lg));
 }
 .content-not-found::before {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     content: "Looks like there's nothing here.";
 }
 
@@ -1317,7 +1345,7 @@ overflow: hidden;
     transition: opacity 0.2s ease-out;
 }
 .options-list li {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     padding: var(--spacing-xs) var(--spacing-sm);
     cursor: pointer;
     display: -webkit-box;
@@ -1335,7 +1363,7 @@ overflow: hidden;
     opacity: 0;
 }
 .options-list .not-found {
-    color: var(--color-text-lighter) !important;
+    color: var(--color-text-5) !important;
     cursor: auto;
 }
 

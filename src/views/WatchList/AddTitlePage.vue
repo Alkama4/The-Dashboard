@@ -45,7 +45,7 @@
                     <div class="make-space-on-mobile">
                         <h3 class="icon-align">
                             <!-- Title Link -->
-                            <a class="no-decoration" :href="titleLink(title)" style="color: var(--color-text)">
+                            <a class="no-decoration" :href="titleLink(title)" style="color: var(--color-text-1)">
                                 <span v-if="title.title" :title="title.title" class="name">
                                     {{ title.title }}
                                 </span>
@@ -244,7 +244,7 @@ export default {
     .result-placeHolder {
         text-align: center;
         height: 250px;
-        color: var(--color-text-light);
+        color: var(--color-text-3);
         font-weight: 500;
         font-size: var(--font-size-lg);
         
@@ -285,12 +285,12 @@ export default {
     }
 
     .result .external-link-icon {
-        color: var(--color-text-light);
+        color: var(--color-text-3);
         margin-left: var(--spacing-sm);
         transition: color 0.1s ease-out;
     } 
     .result .external-link-icon:hover {
-        color: var(--color-text);
+        color: var(--color-text-1);
     }
     
     .result h3 {
@@ -302,7 +302,7 @@ export default {
         -webkit-box-orient: vertical;
         overflow: hidden;
         /* Adjust the dots color with this */
-        color: var(--color-text-lighter);
+        color: var(--color-text-5);
     }
     .result a.no-decoration {
         margin: 0;
@@ -312,10 +312,10 @@ export default {
         text-decoration: underline;
     }
     .result .name {
-        color: var(--color-text);
+        color: var(--color-text-1);
     }
     .result .original-name {
-        color: var(--color-text-lighter);
+        color: var(--color-text-5);
     }
     
     .result .genres {
@@ -341,7 +341,7 @@ export default {
     }
 
     .result .overview {
-        color: var(--color-text-light);
+        color: var(--color-text-3);
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: justify;

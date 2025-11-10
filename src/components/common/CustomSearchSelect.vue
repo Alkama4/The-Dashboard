@@ -188,7 +188,7 @@ export default {
 
     font-family: 'Poppins', sans-serif;
     white-space: nowrap;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
     background-color: var(--color-background-input);
     cursor: pointer;
     user-select: none;
@@ -220,7 +220,7 @@ export default {
     right: 6px;
 }
 .selected-option .placeholder {
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
 
     position: absolute;
     left: var(--spacing-sm);

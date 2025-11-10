@@ -28,7 +28,7 @@
                     {{ column.label }}
                     <component
                         :is="getSortIcon(column.key)"
-                        :style="{ fill: waitingForResponse ? 'var(--color-text-hidden)' : '' }"
+                        :style="{ fill: waitingForResponse ? 'var(--color-text-7)' : '' }"
                         size="20px"
                     />
                 </div>
@@ -154,7 +154,7 @@
                 </div>
                 <div style="grid-area: c; max-width: 50ch;">
                     <h4>Notes</h4> 
-                    <span :style="transactionToShow.notes ? '' : 'color: var(--color-text-hidden);'">{{ transactionToShow.notes || "(This entry doesn't have notes)" }}</span>
+                    <span :style="transactionToShow.notes ? '' : 'color: var(--color-text-7);'">{{ transactionToShow.notes || "(This entry doesn't have notes)" }}</span>
                 </div>
             </div>
         </ModalGeneric>
@@ -420,7 +420,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: end;
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
     margin: var(--spacing-sm) 0;
 }
 
@@ -432,7 +432,7 @@ export default {
     white-space: nowrap;
     padding: var(--spacing-sm) var(--spacing-sm);
     vertical-align: top;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 
 /* - - - - Different columns - - - - - */
@@ -450,7 +450,7 @@ export default {
     flex: 3;
     overflow: hidden;
     text-align: start;
-    color: var(--color-text);
+    color: var(--color-text-1);
 }
 .transaction-row .column-category {
     /* width: 275px; */
@@ -495,7 +495,7 @@ export default {
 
 .transaction-headers > div {
     /* padding: 6px var(--spacing-sm); */
-    color: var(--color-text);
+    color: var(--color-text-1);
     user-select: none;
     font-weight: 700 !important;
     /* background-color: var(--color-background-th-row); */
@@ -511,11 +511,11 @@ export default {
     z-index: 1;
 }
 .transaction-headers > div svg {
-    fill: var(--color-text-lighter)
+    fill: var(--color-text-5)
 } .pointer-device .transaction-headers > div:hover svg {
-    fill: var(--color-text)
+    fill: var(--color-text-1)
 } .pointer-device .transaction-headers > div:active svg {
-    fill: var(--color-text-bold)
+    fill: var(--color-text-0)
 } .transaction-headers > div.active svg {
     fill: var(--color-primary)
 } .pointer-device .transaction-headers > div.active:hover svg {
@@ -564,7 +564,7 @@ export default {
 }
 .details-modal-content span {
     font-weight: 400;
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 .details-modal-content ul {
     padding-left: var(--spacing-lg);

@@ -227,7 +227,7 @@ export default {
     font-weight: 600;
 }
 .options-listed .option .details {
-    color: var(--color-text-light);
+    color: var(--color-text-3);
 }
 
 .content-not-found {

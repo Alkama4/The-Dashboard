@@ -134,7 +134,7 @@ export default {
 }
 
 .hidden {
-    color: var(--color-text-lighter);
+    color: var(--color-text-5);
 }
 
 .slider-indicator {
