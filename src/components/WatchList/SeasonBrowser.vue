@@ -95,7 +95,9 @@
                             </div>
                             <DropdownMenu
                                 :options="[
-                                    { label: 'Toggle spoilers', icon: 'bxs-hide', action: () => {season.showSpoilers = !season.showSpoilers} },
+                                    season.showSpoilers 
+                                        ? { label: 'Hide spoilers', icon: 'bxs-hide', action: () => {season.showSpoilers = !season.showSpoilers} }
+                                        : { label: 'Show spoilers', icon: 'bxs-show', action: () => {season.showSpoilers = !season.showSpoilers} },
                                 ]"
                             />
                         </div>
@@ -189,7 +191,7 @@
                                         </p>
     
                                     </div>
-                                    <div class="controls">
+                                    <div class="episode-controls">
                                         <NumericStepper 
                                             class="modify-watched"
                                             :displayValue="episode.watch_count"
@@ -681,7 +683,7 @@ export default {
     display: flex;
     width: 100%;
     flex-direction: column;
-    gap: var(--spacing-xs);
+    gap: var(--spacing-sm);
     /* justify-content: space-between; */
 }
 
@@ -702,7 +704,7 @@ export default {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.episode .controls {
+.episode .episode-controls {
     display: flex;
     gap: var(--spacing-md);
 }
