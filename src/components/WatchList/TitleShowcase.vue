@@ -184,7 +184,7 @@ export default {
 .title-showcase {
     width: 100vw;
     height: calc(100vh - 60px - var(--spacing-md) - 225px);
-    max-height: 1600px;
+    max-height: 1100px;
     min-height: 700px;
     position: relative;
 }
@@ -256,7 +256,7 @@ export default {
     /* font-size: var(--font-size-lg); */
     font-weight: 700;
     gap: calc(var(--spacing-sm) + var(--spacing-xs));
-    color: var(--color-text-1);
+    /* color: var(--color-text-1); */
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
