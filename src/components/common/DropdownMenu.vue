@@ -2,8 +2,8 @@
     <div 
         class="dropdown-menu"
         :class="{'active': isOpen}"
-        @blur="closeMenu"
         tabindex="0"
+        @blur="closeMenu"
     >
         <i 
             class="bx bx-dots-vertical-rounded icon-button circle-bg" 
@@ -14,10 +14,11 @@
             <ul v-if="isOpen" class="menu card" @click.prevent>
                 <li v-for="(item, index) in options" 
                     :key="index" 
+                    :class="{ 'dropdown-seperator': item.seperator }"
                     @click="handleClick(item)"
                 >
-                    <i v-if="item.icon" class="bx" :class="item.icon"></i>
-                    <span>{{ item.label }}</span>
+                    <i v-if="item?.icon" class="bx" :class="item?.icon"></i>
+                    <span>{{ item?.label }}</span>
                 </li>
             </ul>
         </Transition>
@@ -26,7 +27,7 @@
                 <ul class="menu mobile">
                     <li v-for="(item, index) in options" 
                         :key="index" 
-                        :class="{ 'no-border': index == 0 }"
+                        :class="{ 'no-border': index == 0, 'dropdown-seperator': item.seperator}"
                         @click="handleClick(item)"
                     >
                         <i v-if="item.icon" class="bx" :class="item.icon"></i>
@@ -119,14 +120,14 @@ export default {
     z-index: var(--z-drop-down);
 }
 .menu li {
-    padding: 6px 16px;
+    padding: 6px 12px;
     padding-right: 32px;
+    gap: 12px;
     border-radius: var(--border-radius-xs);
     cursor: pointer;
     white-space: nowrap;
     display: flex;
     align-items: center;
-    gap: 16px;
     color: var(--color-text);
     font-weight: 400;
     font-size: var(--font-size-md);
@@ -139,6 +140,17 @@ export default {
     color: var(--color-text-bold);
 }
 
+.menu li.dropdown-seperator {
+    height: 1px;
+    padding: 0;
+    margin: 6px 8px;
+    background-color: var(--color-border);
+    cursor: unset;
+}
+.menu li.dropdown-seperator:hover {
+    background-color: var(--color-border);
+}
+
 .menu.mobile {
     position: static;
     padding: 0;
@@ -149,7 +161,7 @@ export default {
     color: var(--color-text);
     font-weight: 400;
     font-size: 1rem;
-    border-top: 2px solid var(--color-border);
+    /* border-top: 2px solid var(--color-border); */
 }
 .menu.mobile li.no-border {
     border: unset;
@@ -172,5 +184,13 @@ export default {
 .dropdown-fade-leave-active {
     transition: all 0.2s ease;
 }
+
+.menu.mobile li.dropdown-seperator {
+    height: 2px;
+    padding: 0;
+    margin: 6px 8px;
+    cursor: unset;
+}
+
 
 </style>

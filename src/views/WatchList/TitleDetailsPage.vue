@@ -1079,9 +1079,11 @@ export default {
             const base = [
                 { icon: 'bxs-heart', label: 'Toggle Favourite', action: () => this.handleFavouriteToggle() },
                 { icon: 'bxs-collection', label: 'Modify Title Collections', action: () => this.promptTitleCollections() },
+                { icon: 'bxs-palette', label: 'Colors Toggle', action: () => { this.showDisplayColors = !this.showDisplayColors } },
+                { seperator: true },
                 { icon: 'bx-refresh', label: 'Requery Title Data ', action: () => this.openTitleUpdateModal() },
                 { icon: 'bxs-file-find', label: 'Scan Media Library for Title', action: () => this.handleUpdateTitleMediaInfo() },
-                { icon: 'bxs-palette', label: 'Colors Toggle', action: () => { this.showDisplayColors = !this.showDisplayColors } },
+                { seperator: true },
             ];
 
             const watchlistAction = this.title_info.in_watch_list

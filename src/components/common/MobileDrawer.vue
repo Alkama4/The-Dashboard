@@ -171,15 +171,15 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: var(--border-radius-lg);
     transition: background-color 0.1s ease-out;
 }
 .pointer-device .handle:hover {
     background-color: var(--color-background-card-hover);
 }
 .handle .marker {
-    height: 4px;
-    width: 24px;
+    height: 6px;
+    margin: 10px 0;
+    width: 42px;
     border-radius: 100px;
     background-color: var(--color-border);
 }
