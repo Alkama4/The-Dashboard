@@ -6,8 +6,8 @@
         tabindex="0"
     >
         <i 
-            class="bx bx-dots-vertical-rounded icon-button" 
-            :class="{'circle-bg': bgMode}"
+            class="bx bx-dots-vertical-rounded icon-button circle-bg" 
+            :class="{'hover-circle-bg': !bgMode}"
             @click.stop.prevent="toggleMenu"
         ></i>
         <Transition name="dropdown-fade">
@@ -127,7 +127,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 16px;
-    color: var(--color-text-light);
+    color: var(--color-text);
     font-weight: 400;
     font-size: var(--font-size-md);
 }
@@ -136,7 +136,7 @@ export default {
 }
 .pointer-device .menu li:hover {
     background: var(--color-background-card-hover);
-    color: var(--color-text);
+    color: var(--color-text-bold);
 }
 
 .menu.mobile {

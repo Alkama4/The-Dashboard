@@ -1,8 +1,9 @@
 :root {
     font-size: 16px;
 
-    --font-size-xs: 0.75rem;
-    --font-size-sm: 0.875rem;
+    --font-size-xxs: 0.75rem;
+    --font-size-xs: 0.875rem;
+    --font-size-sm: 0.925rem;
     --font-size-md: 1rem;
     --font-size-lg: 1.2rem;
     --font-size-xl: 1.6rem;
@@ -136,6 +137,7 @@
 
     --color-border: hsla(0, 0%, 0%, 0.1);
     --color-border-hover: hsla(0, 0%, 0%, 0.2);
+    --color-border-active: hsla(0, 0%, 0%, 0.15);
     --color-border-light: hsla(0, 0%, 0%, 0.3);
 
     /* Backgrounds */
@@ -242,6 +244,7 @@
 
     --color-border: hsla(0, 0%, 100%, 0.1);
     --color-border-hover: hsla(0, 0%, 100%, 0.2);
+    --color-border-active: hsla(0, 0%, 100%, 0.15);
     --color-border-light: hsla(0, 0%, 100%, 0.3);
     
     /* Backgrounds */
@@ -665,7 +668,7 @@ input[type="file"] {
     background: transparent !important;
 }
 .noUi-value {
-    font-size: var(--font-size-sm) !important;
+    font-size: var(--font-size-xs) !important;
 }
 /* .noUi-base {
     cursor: pointer !important;
@@ -707,7 +710,7 @@ input[type="file"] {
 .noUi-tooltip {
     background-color: transparent !important;
     color: var(--color-text-light) !important;
-    font-size: var(--font-size-sm) !important;
+    font-size: var(--font-size-xs) !important;
     border: none !important;
     bottom: 100% !important;
 }
@@ -905,7 +908,7 @@ input[type="file"] {
 
 .card .card-label {
     color: var(--color-text-lighter);
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     font-weight: 500;
 }
 .card .card-value {
@@ -1034,15 +1037,24 @@ form.simple-form button {
     color: var(--color-text);
     padding: var(--spacing-sm);
     border-radius: 100px;
-    background-color: hsla(0, 0%, 0%, 0.3);
+    background-color: var(--color-border);
 }
 .icon-button.circle-bg:hover {
-    background-color: hsla(0, 0%, 0%, 0.5);
+    background-color: var(--color-border-hover);
     color: var(--color-text-bold);
 }
 .icon-button.circle-bg:active {
-    background-color: hsla(0, 0%, 0%, 0.5);
+    background-color: var(--color-border-active);
     color: var(--color-text);
+}
+.icon-button.circle-bg.hover-circle-bg {
+    background-color: transparent;
+}
+.icon-button.circle-bg.hover-circle-bg:hover {
+    background-color: var(--color-border);
+}
+.icon-button.circle-bg.hover-circle-bg:active {
+    background-color: var(--color-border-active);
 }
 
 .loading {
@@ -1069,7 +1081,7 @@ form.simple-form button {
     border-radius: var(--border-radius-xs);
     width: fit-content;
     font-weight: 600;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     white-space: nowrap;
     color: var(--color-text);
     display: flex;

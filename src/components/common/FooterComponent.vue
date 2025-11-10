@@ -142,7 +142,7 @@ export default {
 .bottom-row .no-decoration {
     color: var(--color-text);
     font-weight: 500;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
 }
 
 

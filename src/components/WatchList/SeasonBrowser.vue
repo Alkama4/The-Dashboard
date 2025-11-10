@@ -7,13 +7,6 @@
     >
         <h2 id="seasonBrowserHeader">Season & episode details</h2>
         
-        <div class="icon-align">
-            <CustomToggle v-model="showSpoilers"/>
-            <label class="interactable-label" for="showSpoilers" @click="showSpoilers = !showSpoilers">
-                Show spoilers
-            </label>
-        </div>
-
         <div class="season-tabs" v-if="seasonsData.length > 1">
             <button 
                 v-for="(season, index) in seasonsData"
@@ -46,7 +39,7 @@
                         v-if="activeSeason == season.season_number"
                         :ref="'season' + season.season_number"
                     >
-                        <div class="about card">
+                        <div class="about">
                             <div class="poster-container">
                                 <MissingImage v-if="failedToLoadImages.includes('season' + season.season_id)"/>
                                 <img 
@@ -91,13 +84,19 @@
                                     </div>
                                 </div>
                                 <p :title="season.overview">{{ season.overview }}</p>
-                            </div>
 
-                            <NumericStepper 
-                                v-if="season.episodes.length > 0"
-                                class="modify-watched"
-                                :displayValue="season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
-                                @valueUpdated="val => handleTitleWatchClick('season', val, season.season_id)"
+                                <div class="season-controls icon-align">
+                                    <NumericStepper 
+                                        v-if="season.episodes.length > 0"
+                                        :displayValue="season.episodes.reduce((min, ep) => Math.min(min, ep.watch_count), Infinity)"
+                                        @valueUpdated="val => handleTitleWatchClick('season', val, season.season_id)"
+                                    />
+                                </div>
+                            </div>
+                            <DropdownMenu
+                                :options="[
+                                    { label: 'Toggle spoilers', icon: 'bxs-hide', action: () => {season.showSpoilers = !season.showSpoilers} },
+                                ]"
                             />
                         </div>
 
@@ -118,12 +117,14 @@
                                 :id="`S${season.season_number}E${episode.episode_number}`"
                             >
                                 
-                                <div 
-                                    class="still-container" 
-                                    @click="episode.episode_media.length > 0 && openEpisodeWatchNow(episode, season)" 
+                                <component
+                                    :is="episode.episode_media.length >= 2 || episode.episode_media.length == 0 ? 'div' : 'a'"
+                                    :href="fileBridgeLink(episode?.episode_media[0]?.link)"
+                                    class="still-container no-decoration" 
+                                    @click="episode.episode_media.length >= 2 && openEpisodeWatchNow(episode, season)" 
                                     :class="{'click-active': episode.episode_media.length > 0}"
                                 >
-                                    <HiddenImage v-if="!showSpoilers && episode.watch_count == 0" class="still"/>
+                                    <HiddenImage v-if="!season.showSpoilers && episode.watch_count == 0" class="still"/>
                                     <MissingImage v-else-if="failedToLoadImages.includes('episode' + episode.episode_id)" class="still"/>
                                     <img 
                                         v-else
@@ -145,52 +146,56 @@
                                             Upcoming
                                         </div>
                                     </div>
-                                    <IconPlay class="icon-watch-now" size="64px"/>
-                                </div>
-                                
-                                <div class="text">
-                                    <h3>
-                                        {{ episode.episode_number }}.
-                                        {{ showSpoilers || episode.watch_count >= 1 ? episode.episode_name : 'Episode' }}
-                                    </h3>
-                                    <div class="details">
-                                        <span class="icon-align" >
-                                            <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
-                                            <span class="icon-align">
-                                                <IconTMDB 
-                                                    style="
-                                                        margin-right: 3px; 
-                                                        margin-left: 2px;
-                                                    "
-                                                />
-                                                <template v-if="showSpoilers || episode.watch_count >= 1">
-                                                    {{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} 
-                                                    ({{ episode.tmdb_vote_count ?? '0'}} votes)
-                                                </template>
-                                                <template v-else>
-                                                    ??
-                                                </template>
-                                            </span>
-                                        </span>
-                                        <div>
-                                            {{ 
-                                                episode.air_date ? 
-                                                new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : 
-                                                "No release date"
-                                            }}
-                                        </div>
-                                    </div>
-                                    <p 
-                                        :title="showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Overview hidden. Enable spoilers or watch the episode.'"
-                                    >
-                                        {{ showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Overview hidden. Enable spoilers or watch the episode to show details.' }}
-                                    </p>
+                                    <i class="bx bx-play icon-watch-now"></i>
+                                </component>
 
-                                    <NumericStepper 
-                                        class="modify-watched"
-                                        :displayValue="episode.watch_count"
-                                        @valueUpdated="val => handleTitleWatchClick('episode', val, episode.episode_id)"
-                                    />
+                                <div class="outside-still">
+                                    <div class="text"> 
+                                        <h3>
+                                            {{ episode.episode_number }}.
+                                            {{ season.showSpoilers || episode.watch_count >= 1 ? episode.episode_name : 'Episode' }}
+                                        </h3>
+                                        <div class="details">
+                                            <span class="icon-align" >
+                                                <span>{{ formatRuntime(episode.runtime) }} &bullet;</span>
+                                                <span class="icon-align">
+                                                    <IconTMDB 
+                                                        style="
+                                                            margin-right: 3px; 
+                                                            margin-left: 2px;
+                                                        "
+                                                    />
+                                                    <template v-if="season.showSpoilers || episode.watch_count >= 1">
+                                                        {{ new Date(episode.air_date) > new Date() ? '-' : episode.tmdb_vote_average }} 
+                                                        ({{ episode.tmdb_vote_count ?? '0'}} votes)
+                                                    </template>
+                                                    <template v-else>
+                                                        ??
+                                                    </template>
+                                                </span>
+                                            </span>
+                                            <div>
+                                                {{ 
+                                                    episode.air_date ? 
+                                                    new Date(episode.air_date).toLocaleDateString("fi-FI", {day: "numeric", month: "long", year: "numeric"}) : 
+                                                    "No release date"
+                                                }}
+                                            </div>
+                                        </div>
+                                        <p 
+                                            :title="season.showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Overview hidden. Enable spoilers or watch the episode.'"
+                                        >
+                                            {{ season.showSpoilers || episode.watch_count >= 1 ? episode.overview : 'Overview hidden. Enable spoilers or watch the episode to show details.' }}
+                                        </p>
+    
+                                    </div>
+                                    <div class="controls">
+                                        <NumericStepper 
+                                            class="modify-watched"
+                                            :displayValue="episode.watch_count"
+                                            @valueUpdated="val => handleTitleWatchClick('episode', val, episode.episode_id)"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -236,13 +241,13 @@
 <script>
 import { calculateResolution, convert, fileBridgeLink, getMediaUrl } from '@/utils/utils';
 import MissingImage from '@/components/common/MissingImage.vue';
-import IconPlay from '@/components/icons/IconPlay.vue';
 import IconTMDB from '@/components/icons/IconTMDB.vue';
 import NumericStepper from '@/components/common/NumericStepper.vue';
 import { newReleaseCutoffDate } from '@/utils/config';
 import HiddenImage from '@/components/WatchList/HiddenImage.vue';
 import CustomToggle from '../common/CustomToggle.vue';
 import ModalGeneric from '../common/ModalGeneric.vue';
+import DropdownMenu from '../common/DropdownMenu.vue';
 
 export default {
     name: 'SeasonBrowser',
@@ -263,11 +268,11 @@ export default {
     components: {
         MissingImage,
         HiddenImage,
-        IconPlay,
         IconTMDB,
         NumericStepper,
         CustomToggle,
         ModalGeneric,
+        DropdownMenu,
     },
     data() {
         return {
@@ -441,7 +446,7 @@ export default {
     z-index: 2;
 }
 
-.season-tabs button:hover .progress-indicator {
+.pointer-device .season-tabs button:hover .progress-indicator {
     background-color: var(--color-positive-hover);
 }
 .season-tabs button:active .progress-indicator {
@@ -451,7 +456,7 @@ export default {
 .season-tabs button.button-primary .progress-indicator {
     background-color: var(--color-positive-active);
 }
-.season-tabs button.button-primary:hover .progress-indicator {
+.pointer-device .season-tabs button.button-primary:hover .progress-indicator {
     background-color: var(--color-positive-overshoot);
 }
 
@@ -471,7 +476,7 @@ export default {
     "img text"
     "button button";
     column-gap: var(--spacing-md);
-    margin-bottom: var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
 }
 .season h2 {
     margin: 0;
@@ -517,13 +522,20 @@ export default {
     grid-area: text;
 }
 
+.season .season-controls {
+    margin-top: var(--spacing-md);
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: var(--spacing-sm);
+}
 
-.season .about .modify-watched {
+.season .about .dropdown-menu {
     position: absolute;
-    top: var(--spacing-md);
-    right: var(--spacing-md);
-    margin: 0;
-    width: auto;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    /* margin: 0; */
+    /* width: auto; */
 }
 
 @media (max-width: 750px) {
@@ -580,7 +592,7 @@ export default {
     /* margin-top: var(--spacing-md); */
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-md);
+    gap: var(--spacing-lg);
 }
 
 /* - - - - - EPISODE - - - - -  */
@@ -605,8 +617,8 @@ export default {
 
 .episode .still-container {
     display: flex;
-    width: 300px;
-    min-width: 300px;
+    width: 400px;
+    min-width: 400px;
     border-radius: var(--border-radius-sm);
     overflow: hidden;
     aspect-ratio: 16/9;
@@ -617,6 +629,18 @@ export default {
     cursor: pointer;
 }
 
+.pointer-device .episode .still-container.click-active::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0);
+    border-radius: var(--border-radius-sm);
+    transition: background 0.1s ease-out;
+}
+.pointer-device .episode .still-container.click-active:hover::before {
+    background: rgba(0,0,0,0.33);
+}
+
 .episode .still-container .still {
     width: 100%;
     height: 100%;
@@ -624,19 +648,21 @@ export default {
     transition: filter 0.1s ease-out;
     filter: brightness(1);
 }
-.episode .still-container.click-active:hover .still {
+.pointer-device .episode .still-container.click-active:hover .still {
     filter: brightness(0.5);
 }
 
 .icon-watch-now {
     position: absolute;
+    color: var(--color-text-white);
+    font-size: 64px;
     top: 50%;
     left: 50%;
     transform: translateX(-50%) translateY(-50%);
     opacity: 0;
     transition: opacity 0.1s ease-out;
 }
-.episode .still-container.click-active:hover .icon-watch-now {
+.pointer-device .episode .still-container.click-active:hover .icon-watch-now {
     opacity: 1;
 }
 
@@ -651,6 +677,14 @@ export default {
 }
 
 
+.episode .outside-still {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    /* justify-content: space-between; */
+}
+
 .episode .text {
     /* padding-top: var(--spacing-sm); */
     width: 100%;
@@ -659,21 +693,27 @@ export default {
     color: var(--color-text-light);
 }
 .episode p {
+    font-size: var(--font-size-sm);
     margin-bottom: 0;
     margin-top: 4px;
     display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3;
+    line-clamp: 4;
+    -webkit-line-clamp: 4;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-.episode .modify-watched {
+.episode .controls {
+    display: flex;
+    gap: var(--spacing-md);
+}
+
+/* .episode .modify-watched {
     position: absolute;
     top: var(--spacing-md);
     right: var(--spacing-md);
     margin: 0;
     width: auto;
-}
+} */
 @media (max-width: 850px) {
     .episode .modify-watched {
         margin-top: var(--spacing-sm);
@@ -742,7 +782,7 @@ export default {
     background-color: var(--color-background-card-active);
     transition: background-color 0.1s ease-out;
 }
-.media-listing:hover {
+.pointer-device .media-listing:hover {
     background-color: var(--color-background-card-hover);
 }
 
@@ -759,10 +799,10 @@ export default {
     transition: opacity 0.1s ease-out;
     opacity: 0;
 }
-.media-listing:hover i {
+.pointer-device .media-listing:hover i {
     opacity: 0;
 }
-.media-listing:hover .hover-active {
+.pointer-device .media-listing:hover .hover-active {
     opacity: 1;
 }
 
@@ -777,6 +817,7 @@ export default {
 }
 .media-listing .tag-small {
     margin-right: var(--spacing-xs);
+    display: inline-block;
 }
 .media-listing .filename {
     color: var(--color-text-light);    

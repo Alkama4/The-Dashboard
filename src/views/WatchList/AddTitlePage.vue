@@ -328,7 +328,7 @@ export default {
         padding: var(--spacing-xs) var(--spacing-sm);
         background-color: var(--color-background-card-section);
         border-radius: var(--border-radius-xs);
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xs);
         font-weight: 500;
         white-space: nowrap;
     }

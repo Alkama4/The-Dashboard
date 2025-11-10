@@ -405,32 +405,33 @@
         <ModalConfirmation 
             ref="updateTitleWatchCountCM"
             header="Update watch count"
-            text="Are you sure you want to update the watch count for this title? 
-            This will modify the watch progress for all episodes."
-            affirmative-option="Update Watch Count"
+            text="This will update the watch count for all episodes in this title. 
+            Your existing progress will be overwritten. Continue?"
+            affirmative-option="Update watch count"
         />
         <ModalConfirmation 
             ref="removeTitleWatchCountCM"
-            header="Remove watch count"
-            text="Are you sure you want to remove the watch count for this title? 
-            This will reset the watch progress for all episodes."
-            affirmative-option="Remove Watch Count"
+            header="Reset watch count"
+            text="This will reset the watch count for all episodes in this title.
+            Your existing progress will be cleared. Continue?"
+            affirmative-option="Reset watch count"
         />
+
 
         <!-- Seasons watch/unwatch -->
         <ModalConfirmation 
             ref="markSeasonWatchedCM"
-            header="Mark watched"
-            text="Are you sure you want to mark the entire season as watched?
-            This will mark all episodes in the season as watched, effectively erasing your progress."
-            affirmative-option="Mark as Watched"
+            header="Update watch count"
+            text="This will set every episode in the season to the same watch count.
+            Your individual progress for episodes will be overwritten. Continue?"
+            affirmative-option="Update entire season"
         />
         <ModalConfirmation 
             ref="markSeasonUnwatchedCM"
             header="Reset watch status"
-            text="Are you sure you want to reset the season's watch status?
-            This will mark all episodes in the season as unwatched, effectively erasing your progress."
-            affirmative-option="Reset status"
+            text="This will mark all episodes in this season as unwatched.
+            Your watch progress will be cleared. Continue?"
+            affirmative-option="Reset season"
         />
 
         <!-- Title refresh data -->
@@ -1525,7 +1526,7 @@ iframe {
     padding: var(--spacing-sm) var(--spacing-md);
 }
 .aggregator-wrapper .details {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     font-weight: 400;
     color: var(--color-text-light);
 }

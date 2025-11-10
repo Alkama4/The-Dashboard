@@ -82,7 +82,7 @@ export default {
 .status-badge {
     border-radius: 100px;
     padding: 0 var(--spacing-sm);
-    font-size: var(--font-size-xs);
+    font-size: var(--font-size-xxs);
     color: var(--color-text-white);
     font-weight: 600;
     border: 1px solid var(--color-border);
@@ -106,7 +106,7 @@ export default {
     align-items: center;
 }
 .container-image {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--color-text-light);
 }
 .container-name {
@@ -118,7 +118,7 @@ export default {
 }
 .link-button {
     flex: 1;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     padding-inline: var(--spacing-md);
 }
 

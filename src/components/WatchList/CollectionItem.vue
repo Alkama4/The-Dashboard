@@ -149,7 +149,7 @@ export default {
 .detail {
     color: var(--color-text-light);
     font-weight: 500;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
 }
 
 </style>

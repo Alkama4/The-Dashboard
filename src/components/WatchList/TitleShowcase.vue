@@ -338,7 +338,7 @@ export default {
         width: 100%;
     }
     .text-details {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xs);
     }
     .overview {
         font-size: var(--font-size-md);

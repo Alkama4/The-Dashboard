@@ -891,7 +891,7 @@ export default {
         content: "E";
     }
     .title-element .details {
-        font-size: var(--font-size-sm);
+        font-size: var(--font-size-xs);
         gap: var(--spacing-xs);
     }
     .title-element .tags {
@@ -899,7 +899,7 @@ export default {
         margin-bottom: var(--spacing-xs);
     }
     .title-element .tags .tag {
-        font-size: var(--font-size-xs);
+        font-size: var(--font-size-xxs);
     }
 }
 

@@ -152,7 +152,7 @@ export default {
 /* Card Details */
 .title-card-details {
     position: relative;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     margin-top: var(--spacing-sm);
     font-weight: 500;
     text-align: left;

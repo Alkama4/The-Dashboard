@@ -212,7 +212,7 @@ export default {
     text-align: end;
 }
 .greeting-area .info .label {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--color-text-light);
     /* font-weight: 500; */
 }
@@ -305,7 +305,7 @@ export default {
 .service-links .service-description {
     color: var(--color-text-light);
     font-weight: 400;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
 }
 
 @media (max-width: 1200px) {
@@ -415,7 +415,7 @@ export default {
     overflow: hidden;
 }
 .info-tile .label {
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     color: var(--color-text-lighter);
     margin-bottom: var(--spacing-sm);
 }

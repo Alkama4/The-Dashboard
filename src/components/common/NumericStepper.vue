@@ -1,7 +1,7 @@
 <template>
     <div class="combined-buttons numeric-stepper">
         <button 
-            class="button-primary left-button" 
+            class="left-button" 
             @click.stop="handleClick(displayValue + 1)"
         >
             {{ addText }}
@@ -48,7 +48,7 @@ export default {
 
 <style scoped>
 .numeric-stepper {
-    border: 1px solid var(--color-border);
+    border: 0px solid var(--color-border);
     border-radius: var(--spacing-sm);
     width: fit-content;
     white-space: nowrap;

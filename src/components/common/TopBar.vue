@@ -249,7 +249,7 @@ export default {
     align-items: center;
     gap: var(--spacing-sm);
     color: var(--color-text-light);
-    font-size: var(--font-size-small);
+    font-size: var(--font-size-xsall);
     font-weight: 500;
     padding: 6px 15px;
     margin-left: 0;

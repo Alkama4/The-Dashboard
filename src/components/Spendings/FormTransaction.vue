@@ -456,7 +456,7 @@ export default {
 
 .tool-row button {
     padding: 4px 8px;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-xs);
     font-weight: 500;
     margin: 0;
     white-space: nowrap;
