@@ -1,3 +1,6 @@
+> **Note**: This project has been deprecated. Development has stopped.
+Separate spending-tracking and watchlist apps are being rebuilt.
+
 ## Overview
 "The Dashboard" is a hobby project of mine to learn web development with a js framework and build a local website with all of the stuff around it. The project uses Vue.js for the front end and FastAPI for the backend (which then uses mysql as a database). Initially the plan was to build a simple spending tracker, but the scope has expanded over time. Right now, it has:
 - Manual Spending Tracking: Track and view your spending with basic analysis and graphs.
