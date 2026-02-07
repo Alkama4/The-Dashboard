@@ -1,4 +1,4 @@
-> [!CAUTION]
+> [!IMPORTANT]
 > **Project Deprecated**: Development has stopped. 
 > Separate spending-tracking and watchlist apps are being rebuilt.
 
